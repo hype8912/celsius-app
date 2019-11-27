@@ -6,8 +6,8 @@
 
 ## Install Application on your mobile device
 
-1. [Android users](https://play.google.com/store/apps/details?id=network.celsius.borrower)
-2. iPhone users (under review)
+1. [Android users](https://play.google.com/store/apps/details?id=network.celsius.wallet)
+2. [iPhone users](https://apps.apple.com/us/app/celsius-network/id1387885523)
 
 ## Dev section
 
@@ -103,7 +103,7 @@ $ yarn run set:env:production
 ```bash
 $ yarn run plop
 ```
-- runs plop [More...](https://github.com/amwmedia/plop). Available plops for: _TODO_
+- runs plop [More...](https://github.com/plopjs/plop). Available plops for: _TODO_
 
 ### Tools
 
