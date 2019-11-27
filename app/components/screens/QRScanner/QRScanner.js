@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, SafeAreaView } from "react-native";
 // TODO(sb): RN update dependencies fixes
-// import * as Permissions from "expo-permissions";
 // import { BarCodeScanner } from "expo-barcode-scanner";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,6 +11,8 @@ import QRScannerStyle from "./QRScanner.styles";
 
 import CelText from "../../atoms/CelText/CelText";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
+import { RESULTS } from "react-native-permissions";
 
 @connect(
   () => ({}),
@@ -40,18 +41,14 @@ class QRScannerScreen extends Component {
   }
 
   async componentDidMount() {
-    // const { actions } = this.props;
-    // let permission = await Permissions.getAsync(Permissions.CAMERA);
+    const { actions } = this.props;
+    let perm = await requestForPermission(ALL_PERMISSIONS.CAMERA)
+    actions.setFabType("hide");
 
-    // if (permission.status !== "granted") {
-    //   permission = await Permissions.askAsync(Permissions.CAMERA);
-    // }
-    // actions.setFabType("hide");
-
-    // await this.setState({
-    //   hasCameraPermission: permission.status === "granted",
-    //   handleBarCodeRead: this.handleBarCodeRead,
-    // });
+    await this.setState({
+      hasCameraPermission: perm === RESULTS.GRANTED,
+      handleBarCodeRead: this.handleBarCodeRead,
+    });
   }
 
   handleBarCodeRead = async ({ data }) => {
@@ -80,35 +77,35 @@ class QRScannerScreen extends Component {
     return (
       <View style={style.container}>
         {/* <BarCodeScanner onBarCodeScanned={this.state.handleBarCodeRead}> */}
-          <View style={style.barcodeWrapper}>
+        <View style={style.barcodeWrapper}>
+          <View style={[style.mask, style.maskOverlayColor]} />
+          <View style={style.imageWrapper}>
             <View style={[style.mask, style.maskOverlayColor]} />
-            <View style={style.imageWrapper}>
-              <View style={[style.mask, style.maskOverlayColor]} />
-              <ThemedImage
-                lightSource={require("../../../../assets/images/mask/square-mask-01.png")}
-                darkSource={require("../../../../assets/images/mask/dark-qrcode-mask3x.png")}
-                style={style.image}
-              />
-              <View style={[style.mask, style.maskOverlayColor]} />
-            </View>
-            <View style={[style.mask, style.maskOverlayColor]}>
-              <SafeAreaView style={[style.safeArea]}>
-                <CelText
-                  weight="300"
-                  type="H4"
-                  align="center"
-                  style={style.permission}
-                >
-                  {hasCameraPermission === false
-                    ? "Camera permission is needed in order to scan the QR Code."
-                    : "Please center the QR code in the marked area."}
-                </CelText>
-              </SafeAreaView>
-            </View>
-            <View style={[style.mask, style.maskOverlayColor]}>
-              <View style={style.view} />
-            </View>
+            <ThemedImage
+              lightSource={require("../../../../assets/images/mask/square-mask-01.png")}
+              darkSource={require("../../../../assets/images/mask/dark-qrcode-mask3x.png")}
+              style={style.image}
+            />
+            <View style={[style.mask, style.maskOverlayColor]} />
           </View>
+          <View style={[style.mask, style.maskOverlayColor]}>
+            <SafeAreaView style={[style.safeArea]}>
+              <CelText
+                weight="300"
+                type="H4"
+                align="center"
+                style={style.permission}
+              >
+                {hasCameraPermission === false
+                  ? "Camera permission is needed in order to scan the QR Code."
+                  : "Please center the QR code in the marked area."}
+              </CelText>
+            </SafeAreaView>
+          </View>
+          <View style={[style.mask, style.maskOverlayColor]}>
+            <View style={style.view} />
+          </View>
+        </View>
         {/* </BarCodeScanner> */}
       </View>
     );

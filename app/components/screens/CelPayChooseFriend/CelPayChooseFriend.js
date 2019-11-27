@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 // TODO(sb): RN update dependencies fixes
 // import * as Contacts from "expo-contacts";
-// import * as Permissions from "expo-permissions";
 import { View, ScrollView } from "react-native";
 
 import * as appActions from "../../../redux/actions";
@@ -13,6 +12,7 @@ import CelText from "../../atoms/CelText/CelText";
 import {
   requestForPermission,
   hasPermission,
+  ALL_PERMISSIONS,
 } from "../../../utils/device-permissions";
 import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -112,20 +112,18 @@ class CelPayChooseFriend extends Component {
       ];
 
       await actions.getConnectedContacts();
-      // const permission = await requestForPermission(Permissions.CONTACTS, {
-      //   goToSettings: false,
-      // });
-      // const hasFriends = this.hasFriends();
+      const permission = await requestForPermission(ALL_PERMISSIONS.CONTACTS);
+      const hasFriends = this.hasFriends();
 
-      // navigation.setParams({
-      //   title: permission && hasFriends ? "Choose a friend" : "Import Contacts",
-      //   right: permission && hasFriends ? "search" : "profile",
-      // });
+      navigation.setParams({
+        title: permission && hasFriends ? "Choose a friend" : "Import Contacts",
+        right: permission && hasFriends ? "search" : "profile",
+      });
 
-      // this.setState({
-      //   hasContactPermission: permission,
-      //   isLoading: false,
-      // });
+      this.setState({
+        hasContactPermission: permission,
+        isLoading: false,
+      });
     } catch (err) {
       logger.log({ err });
       this.setState({
@@ -144,7 +142,7 @@ class CelPayChooseFriend extends Component {
       nextProps.contacts.friendsWithApp &&
       nextProps.contacts.friendsWithApp.length > 0
     ) {
-      const permission = await hasPermission(Permissions.CONTACTS);
+      const permission = await hasPermission(ALL_PERMISSIONS.CONTACTS);
       navigation.setParams({
         title: permission ? "Choose a friend" : "Import Contacts",
         right: permission ? "search" : "profile",
@@ -160,9 +158,7 @@ class CelPayChooseFriend extends Component {
     const { actions } = this.props;
 
     try {
-      const permission = await requestForPermission(Permissions.CONTACTS, {
-        goToSettings: false,
-      });
+      const permission = await requestForPermission(ALL_PERMISSIONS.CONTACTS);
       if (permission) {
         const { data } = await Contacts.getContactsAsync({
           fields: [Contacts.Fields.Emails, Contacts.Fields.PhoneNumbers],
@@ -170,7 +166,7 @@ class CelPayChooseFriend extends Component {
         await actions.connectPhoneContacts(data);
         await actions.getConnectedContacts();
       } else {
-        await requestForPermission(Permissions.CONTACTS);
+        await requestForPermission(ALL_PERMISSIONS.CONTACTS);
       }
     } catch (err) {
       logger.log(err);
@@ -197,9 +193,7 @@ class CelPayChooseFriend extends Component {
 
     try {
       await this.importContacts();
-      const permission = await requestForPermission(Permissions.CONTACTS, {
-        goToSettings: false,
-      });
+      const permission = await requestForPermission(ALL_PERMISSIONS.CONTACTS);
 
       navigation.setParams({
         title:

@@ -1,5 +1,4 @@
 // TODO(sb): RN update dependencies fixes
-// import * as Permissions from "expo-permissions";
 // import * as Location from "expo-location";
 import { Platform } from "react-native";
 // import RNAdvertisingId from "react-native-advertising";
@@ -20,10 +19,11 @@ import branchUtil from "../../utils/branch-util";
 import { disableAccessibilityFontScaling } from "../../utils/styles-util";
 import ASSETS from "../../constants/ASSETS";
 import loggerUtil from "../../utils/logger-util";
-import { requestForPermission } from "../../utils/device-permissions";
+import { requestForPermission, ALL_PERMISSIONS } from "../../utils/device-permissions";
 import { hasPassedKYC } from "../../utils/user-util";
 import { showMessage } from "../ui/uiActions";
 import userBehaviorUtil from "../../utils/user-behavior-util";
+import { RESULTS } from "react-native-permissions";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -346,11 +346,9 @@ function setAppsFlyerUID() {
  */
 function getGeolocation() {
   return async dispatch => {
-    // const permission = await requestForPermission(Permissions.LOCATION, {
-    //   goToSettings: false,
-    // });
+    const permission = await requestForPermission(ALL_PERMISSIONS.LOCATION);
 
-    // if (!permission) return;
+    if (permission !== RESULTS.GRANTED) return;
 
     // const location = await Location.getCurrentPositionAsync({});
     // if (location && location.coords) {

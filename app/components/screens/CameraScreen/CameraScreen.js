@@ -12,7 +12,6 @@ import { bindActionCreators } from "redux";
 // TODO(sb): RN update dependencies fixes
 // import * as ImagePicker from "expo-image-picker";
 // import * as ImageManipulator from "expo-image-manipulator";
-// import * as Permissions from "expo-permissions";
 // import { Camera } from "expo-camera";
 
 import * as appActions from "../../../redux/actions";
@@ -23,6 +22,8 @@ import API from "../../../constants/API";
 import CelText from "../../atoms/CelText/CelText";
 import loggerUtil from "../../../utils/logger-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
+import { RESULTS } from "react-native-permissions";
 
 const { height, width } = Dimensions.get("window");
 
@@ -91,40 +92,32 @@ class CameraScreen extends Component {
 
   getCameraPermissions = async () => {
     const { actions } = this.props;
-    // let perm = await Permissions.getAsync(Permissions.CAMERA);
+    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA)
 
-    // if (perm.status !== "granted") {
-    //   perm = await Permissions.askAsync(Permissions.CAMERA);
-    // }
-
-    // if (perm.status === "granted") {
-    //   this.setState({ hasCameraPermission: perm.status === "granted" });
-    // } else {
-    //   actions.showMessage(
-    //     "warning",
-    //     "It looks like you denied Celsius app access to your camera. Please enable it in your phone settings."
-    //   );
-    //   actions.navigateBack();
-    // }
+    if (perm === RESULTS.GRANTED) {
+      this.setState({ hasCameraPermission: true });
+    } else {
+      actions.showMessage(
+        "warning",
+        "It looks like you denied Celsius app access to your camera. Please enable it in your phone settings."
+      );
+      actions.navigateBack();
+    }
   };
 
   getCameraRollPermissions = async () => {
-    // const { actions, cameraRollLastPhoto } = this.props;
-    // let perm = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    const { actions, cameraRollLastPhoto } = this.props;
+    const perm = await requestForPermission(ALL_PERMISSIONS.LIBRARY);
 
-    // if (perm.status !== "granted") {
-    //   perm = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    // }
-
-    // if (perm.status === "granted") {
-    //   if (!cameraRollLastPhoto) actions.getCameraRollPhotos();
-    //   this.setState({ hasCameraRollPermission: perm.status === "granted" });
-    // } else {
-    //   actions.showMessage(
-    //     "warning",
-    //     "It looks like you denied Celsius app access to your camera roll. Please enable it in your phone settings."
-    //   );
-    // }
+    if (perm === RESULTS.GRANTED) {
+      if (!cameraRollLastPhoto) actions.getCameraRollPhotos();
+      this.setState({ hasCameraRollPermission: true });
+    } else {
+      actions.showMessage(
+        "warning",
+        "It looks like you denied Celsius app access to your camera roll. Please enable it in your phone settings."
+      );
+    }
   };
 
   getMaskImage = mask => {

@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-
-// TODO(sb): RN update dependencies fixes
-// import * as Permissions from "expo-permissions";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -19,6 +15,7 @@ import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
 
 @connect(
   state => ({
@@ -49,22 +46,6 @@ class KYCVerifyID extends Component {
     this.selectDocumentType("passport");
   }
 
-  getCameraPermissions = async () => {
-    // let perm = await Permissions.getAsync(Permissions.CAMERA);
-
-    // if (perm.status !== "granted") {
-    //   perm = await Permissions.askAsync(Permissions.CAMERA);
-    // }
-  };
-
-  getCameraRollPermissions = async () => {
-    // let perm = await Permissions.getAsync(Permissions.CAMERA_ROLL);
-
-    // if (perm.status !== "granted") {
-    //   perm = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    // }
-  };
-
   saveFrontImage = photo => {
     const { actions } = this.props;
 
@@ -82,8 +63,8 @@ class KYCVerifyID extends Component {
       mask: "document",
     });
 
-    await this.getCameraPermissions();
-    await this.getCameraRollPermissions();
+    await requestForPermission(ALL_PERMISSIONS.CAMERA);
+    await requestForPermission(ALL_PERMISSIONS.LIBRARY);
     actions.navigateTo("CameraScreen", { onSave: this.saveFrontImage });
   };
 
@@ -104,8 +85,8 @@ class KYCVerifyID extends Component {
       mask: "document",
     });
 
-    await this.getCameraPermissions();
-    await this.getCameraRollPermissions();
+    await requestForPermission(ALL_PERMISSIONS.CAMERA);
+    await requestForPermission(ALL_PERMISSIONS.LIBRARY);
     actions.navigateTo("CameraScreen", { onSave: this.saveBackImage });
   };
 
