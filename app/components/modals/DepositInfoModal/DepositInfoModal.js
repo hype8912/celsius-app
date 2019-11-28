@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 
 import DepositInfoModalStyle from "./DepositInfoModal.styles";
 import MultistepModal from "../MultistepModal/MultistepModal.js";
-import { MODALS, THEMES } from "../../../constants/UI";
+import { MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import * as appActions from "../../../redux/actions";
@@ -160,12 +160,11 @@ class DepositInfoModal extends Component {
           type={"H3"}
           align={"center"}
           margin={"0 20 5 20"}
-          theme={THEMES.LIGHT}
           weight={"700"}
         >
           {title}
         </CelText>
-        <CelText align={"center"} margin={"5 20 0 20"} theme={THEMES.LIGHT}>
+        <CelText align={"center"} margin={"5 20 0 20"}>
           {description}
         </CelText>
         <View style={style.buttonsWrapper}>

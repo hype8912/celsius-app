@@ -9,7 +9,8 @@ const LoseTierModal = props => {
   const { navigateToNextStep, tierTitle } = props;
   return (
     <InfoModal
-      picture={require("../../../../assets/images/modal-alert.png")}
+      picture={require("../../../../assets/images/alert-icon.png")}
+      pictureDimensions={{ width: 30, height: 30 }}
       style={style.container}
       name={MODALS.LOSE_TIER_MODAL}
       heading="Watch out"

@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 
 import PrepaymentSuccessfulModalStyle from "./PrepaymentSuccessfulModal.styles";
 import CelModal from "../CelModal/CelModal.js";
-import { MODALS, THEMES } from "../../../constants/UI";
+import { MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -40,12 +40,11 @@ class PrepaymentSuccessfulModal extends Component {
           type={"H3"}
           align={"center"}
           margin={"0 20 5 20"}
-          theme={THEMES.LIGHT}
           weight={"700"}
         >
           Successfully Prepayed 7 Months of Interest
         </CelText>
-        <CelText align={"center"} margin={"5 20 20 20"} theme={THEMES.LIGHT}>
+        <CelText align={"center"} margin={"5 20 20 20"}>
           This means you don’t need to make any payments in the next 7 months!
           We will let you know when your interest payment resumes.
         </CelText>

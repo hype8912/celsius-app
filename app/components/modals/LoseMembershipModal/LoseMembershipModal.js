@@ -9,7 +9,8 @@ const LoseMembershipModal = props => {
   const { navigateToNextStep } = props;
   return (
     <InfoModal
-      picture={require("../../../../assets/images/modal-alert.png")}
+      picture={require("../../../../assets/images/alert-icon.png")}
+      pictureDimensions={{ width: 30, height: 30 }}
       style={style.container}
       name={MODALS.LOSE_MEMBERSHIP_MODAL}
       heading="Watch out"

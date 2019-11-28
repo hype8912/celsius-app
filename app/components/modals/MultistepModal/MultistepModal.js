@@ -77,9 +77,7 @@ class MultistepModal extends Component {
 
   renderMultiStepPicture() {
     const { imagesArray, imageHeight, imageWidth, top } = this.props;
-
     const position = Animated.divide(this.state.xOffset, width);
-
     return (
       imagesArray &&
       imagesArray.map((step, index) => {

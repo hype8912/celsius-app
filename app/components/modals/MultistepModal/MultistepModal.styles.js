@@ -17,7 +17,7 @@ const base = {
     flex: 1,
   },
   modal: {
-    backgroundColor: "white",
+    backgroundColor: STYLES.COLORS.WHITE,
     width: widthPercentageToDP("90%"),
     marginBottom: heightPercentageToDP("4%"),
     borderRadius: 8,
@@ -72,7 +72,7 @@ const base = {
     flex: 1,
     width: widthPercentageToDP("90%"),
     borderRadius: 25,
-    backgroundColor: "white",
+    backgroundColor: STYLES.COLORS.WHITE,
     marginTop: 40,
   },
   dots: {
@@ -92,7 +92,17 @@ const base = {
 const themed = {
   light: {},
 
-  dark: {},
+  dark: {
+    modal: {
+      backgroundColor: STYLES.COLORS.DARK_HEADER,
+    },
+    screen: {
+      backgroundColor: STYLES.COLORS.DARK_HEADER,
+    },
+    pictureWrapper: {
+      backgroundColor: STYLES.COLORS.DARK_HEADER,
+    },
+  },
 
   celsius: {},
 };

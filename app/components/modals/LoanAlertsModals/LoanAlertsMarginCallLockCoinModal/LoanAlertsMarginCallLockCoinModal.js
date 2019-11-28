@@ -40,7 +40,8 @@ class LoanAlertsMarginCallLockCoinModal extends Component {
     return (
       <CelModal
         name={MODALS.LOAN_ALERT_MODAL}
-        picture={require("../../../../../assets/images/alert.png")}
+        picture={require("../../../../../assets/images/alert-icon.png")}
+        pictureDimensions={{ width: 30, height: 30 }}
       >
         <View style={{ marginHorizontal: 10 }}>
           <CelText

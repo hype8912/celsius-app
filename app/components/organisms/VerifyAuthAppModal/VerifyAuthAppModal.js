@@ -21,7 +21,7 @@ const VerifyAuthAppModal = props => {
           Check your Email!
         </CelText>
         <CelText
-          type="H5"
+          type="H4"
           align="center"
           weight="extra-light"
           margin={"20 0 0 0"}

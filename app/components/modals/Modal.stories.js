@@ -37,6 +37,7 @@ import LoseMembershipModal from "./LoseMembershipModal/LoseMembershipModal";
 import MemoIdModal from "./MemoIdModal/MemoIdModal";
 import ApiKeyRevokeModal from "./ApiKeyRevokeModal/ApiKeyRevokeModal";
 import CalculateLoayltyLevelModal from "./CalculateLoayltyLevelModal/CalculateLoayltyLevelModal";
+import CelPayReceivedModal from "./CelPayReceivedModal/CelPayReceivedModal";
 
 let type = "";
 
@@ -359,5 +360,21 @@ storiesOf("Modals", module)
         Open CalculateLoayltyLevelModal
       </CelButton>
       <CalculateLoayltyLevelModal />
+    </View>
+  ))
+  .add("CelPayReceivedModal", () => (
+    <View style={{ marginBottom: 30 }}>
+      <CelButton
+        onPress={() => store.dispatch(openModal(MODALS.CELPAY_RECEIVED_MODAL))}
+      >
+        Open CelPayReceivedModal
+      </CelButton>
+      <CelPayReceivedModal
+        transfer={{
+          from: { name: "Pera Peric" },
+          amount: "150",
+          coin: "ETH",
+        }}
+      />
     </View>
   ));

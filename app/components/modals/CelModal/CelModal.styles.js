@@ -68,7 +68,14 @@ const base = {
 const themed = {
   light: {},
 
-  dark: {},
+  dark: {
+    modal: {
+      backgroundColor: STYLES.COLORS.DARK_HEADER,
+    },
+    pictureWrapper: {
+      backgroundColor: STYLES.COLORS.DARK_HEADER,
+    },
+  },
 
   celsius: {},
 };

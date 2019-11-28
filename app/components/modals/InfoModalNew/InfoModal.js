@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
 import CelModal from "../CelModal/CelModal";
-import { THEMES } from "../../../constants/UI";
 import InfoModalStyle from "./InfoModal.styles";
 
 const InfoModal = props => {
@@ -34,13 +33,7 @@ const InfoModal = props => {
     >
       <View style={style.modalWrapper}>
         <View>
-          <CelText
-            margin={"0 40 15 40"}
-            align="center"
-            type="H2"
-            weight="bold"
-            theme={THEMES.LIGHT}
-          >
+          <CelText margin={"0 40 15 40"} align="center" type="H2" weight="bold">
             {heading}
           </CelText>
 
@@ -52,7 +45,6 @@ const InfoModal = props => {
                 type="H4"
                 weight={"300"}
                 key={paragraph}
-                theme={THEMES.LIGHT}
               >
                 {paragraph}
               </CelText>

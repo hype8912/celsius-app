@@ -141,6 +141,7 @@ const CACHE_IMAGES = [
     ""
   )}/profile-images/avatar/unicorn/profile-unicorn.png`,
   require("../../assets/images/deer-sad.png"),
+  require("../../assets/images/email-sent.png"),
   require("../../assets/images/security/securityDog/security-dog-illustration.png"),
   require("../../assets/images/security/securityDog/security-dog-illustration-dark.png"),
   require("../../assets/images/security/securityDiane/security-diane-illustration.png"),
@@ -156,6 +157,7 @@ const CACHE_IMAGES = [
   require("../../assets/images/illustrations-v3/monkey-success/monkey-success.png"),
   require("../../assets/images/checkmark-circle.png"), // to remove after modals redesign
   require("../../assets/images/checkmark-square.png"),
+  require("../../assets/images/checkmark.png"),
   require("../../assets/images/coin-stack-icon.png"),
   require("../../assets/images/deposit-icn.png"),
   require("../../assets/images/gift-circle.png"),
@@ -179,6 +181,8 @@ const CACHE_IMAGES = [
   require("../../assets/images/loyaltyIcons/withdraw-icon3x.png"),
   require("../../assets/images/Onboarding-Welcome3x.png"),
   require("../../assets/images/modal-alert.png"),
+  require("../../assets/images/alert.png"),
+  require("../../assets/images/alert-icon.png"),
   require("../../assets/images/kyc-icon.png"),
   require("../../assets/images/coins/dollar-icon.png"),
 ];

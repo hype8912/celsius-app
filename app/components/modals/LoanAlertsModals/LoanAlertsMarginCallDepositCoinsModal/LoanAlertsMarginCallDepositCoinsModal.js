@@ -34,7 +34,8 @@ class LoanAlertsMarginCallDepositCoinsModal extends Component {
     return (
       <InfoModal
         name={MODALS.LOAN_ALERT_MODAL}
-        picture={require("../../../../../assets/images/alert.png")}
+        picture={require("../../../../../assets/images/alert-icon.png")}
+        pictureDimensions={{ width: 30, height: 30 }}
         heading={"Margin Call Warning!"}
         paragraphs={[
           "The value of your collateral has dropped by 30%. To match the value with the current market prices, you can deposit more funds or choose other coins from your wallet.",

@@ -30,6 +30,7 @@ import ProfileStyle from "./Profile.styles";
 import Icon from "../../atoms/Icon/Icon";
 import { getTheme } from "../../../utils/styles-util";
 import Constants from "../../../../constants";
+import ApiKeyRevokeModal from "../../modals/ApiKeyRevokeModal/ApiKeyRevokeModal";
 
 @connect(
   state => ({
@@ -165,7 +166,8 @@ class Profile extends Component {
             Refer your friends
           </IconButton>
           <IconButton
-            onPress={() => actions.openModal(MODALS.REGISTER_PROMO_CODE_MODAL)}
+            // onPress={() => actions.openModal(MODALS.REGISTER_PROMO_CODE_MODAL)}
+            onPress={() => actions.openModal(MODALS.API_KEY_REVOKE_MODAL)}
             margin="0 0 20 0"
             icon="Present"
           >
@@ -322,6 +324,7 @@ class Profile extends Component {
           ) : null}
         </View>
 
+        <ApiKeyRevokeModal />
         <ReferralSendModal />
         <RegisterPromoCodeModal type={"celsius"} />
       </RegularLayout>

@@ -30,7 +30,6 @@ class CelModal extends Component {
     hasCloseButton: true,
     picture: null,
     pictureDimensions: {},
-    onClose: PropTypes.func,
   };
 
   renderPicture = () => {
