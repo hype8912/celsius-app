@@ -166,8 +166,7 @@ class Profile extends Component {
             Refer your friends
           </IconButton>
           <IconButton
-            // onPress={() => actions.openModal(MODALS.REGISTER_PROMO_CODE_MODAL)}
-            onPress={() => actions.openModal(MODALS.API_KEY_REVOKE_MODAL)}
+            onPress={() => actions.openModal(MODALS.REGISTER_PROMO_CODE_MODAL)}
             margin="0 0 20 0"
             icon="Present"
           >
