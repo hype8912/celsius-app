@@ -12,8 +12,8 @@ import { KYC_STATUSES } from "../../../constants/DATA";
 import { hasPassedKYC } from "../../../utils/user-util";
 import { heightPercentageToDP } from "../../../utils/styles-util";
 import { MODALS } from "../../../constants/UI";
-import RejectionReasonsModal from "../../organisms/RejectionReasonsModal/RejectionReasonsModal";
 import * as appActions from "../../../redux/actions";
+import RejectionReasonsModal from "../../organisms/RejectionReasonsModal/RejectionReasonsModal";
 
 @connect(
   state => ({
@@ -94,7 +94,7 @@ class KYCandPromotionsTrigger extends Component {
 
     return (
       <View style={style.textAlignment}>
-        <CelText color={"white"} type={"H5"} weight={"500"} margin={"12 0 0 0"}>
+        <CelText color={"white"} type={"H5"} weight={"500"} margin={"0 0 0 0"}>
           {title}
         </CelText>
         {info && (
@@ -132,7 +132,7 @@ class KYCandPromotionsTrigger extends Component {
             onPress={() =>
               actions.openModal(MODALS.KYC_REJECTION_REASONS_MODAL)
             }
-            margin={"12 0 20 0"}
+            margin={"5 0 20 0"}
             color={STYLES.COLORS.WHITE}
             type={"H6"}
           >
@@ -144,8 +144,8 @@ class KYCandPromotionsTrigger extends Component {
   };
 
   render() {
-    const { rejectionReasons } = this.props;
     const style = KYCandPromotionsTriggerStyle();
+    const { rejectionReasons } = this.props;
 
     if (hasPassedKYC()) return null;
 

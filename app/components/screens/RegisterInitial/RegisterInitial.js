@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+// import { View } from "react-native";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
@@ -12,6 +13,7 @@ import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
 import Separator from "../../atoms/Separator/Separator";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+// import STYLES from "../../../constants/STYLES";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import RegisterPromoCodeModal from "../../organisms/RegisterPromoCodeModal/RegisterPromoCodeModal";
 import RegisterPromoCodeCard from "../../molecules/RegisterPromoCodeCard/RegisterPromoCodeCard";

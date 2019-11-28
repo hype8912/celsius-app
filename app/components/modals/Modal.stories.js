@@ -37,6 +37,7 @@ import LoseMembershipModal from "./LoseMembershipModal/LoseMembershipModal";
 import MemoIdModal from "./MemoIdModal/MemoIdModal";
 import ApiKeyRevokeModal from "./ApiKeyRevokeModal/ApiKeyRevokeModal";
 import CalculateLoayltyLevelModal from "./CalculateLoayltyLevelModal/CalculateLoayltyLevelModal";
+import RejectionReasonsModal from "./RejectionReasonsModal/RejectionReasonsModal";
 import CelPayReceivedModal from "./CelPayReceivedModal/CelPayReceivedModal";
 
 let type = "";
@@ -360,6 +361,18 @@ storiesOf("Modals", module)
         Open CalculateLoayltyLevelModal
       </CelButton>
       <CalculateLoayltyLevelModal />
+    </View>
+  ))
+  .add("RejectionReasonsModal", () => (
+    <View style={{ marginBottom: 30 }}>
+      <CelButton
+        onPress={() =>
+          store.dispatch(openModal(MODALS.KYC_REJECTION_REASONS_MODAL))
+        }
+      >
+        Open RejectionReasonsModal
+      </CelButton>
+      <RejectionReasonsModal />
     </View>
   ))
   .add("CelPayReceivedModal", () => (

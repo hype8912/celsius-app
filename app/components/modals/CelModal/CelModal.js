@@ -25,6 +25,7 @@ class CelModal extends Component {
       PropTypes.number,
     ]),
     pictureDimensions: PropTypes.instanceOf(Object),
+    onClose: PropTypes.func,
   };
   static defaultProps = {
     hasCloseButton: true,
