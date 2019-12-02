@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Linking } from "react-native";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-import CelText from '../../atoms/CelText/CelText';
-import RegularLayout from '../../layouts/RegularLayout/RegularLayout';
+import CelText from "../../atoms/CelText/CelText";
+import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import Card from "../../atoms/Card/Card";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
@@ -21,11 +21,11 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
     callsInProgress: state.api.callsInProgress,
     primeTrustToULink: state.kyc.primeTrustToULink,
   }),
-  dispatch => ({ actions: bindActionCreators(appActions, dispatch) }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class KYCPrimeTrustToU extends Component {
   static propTypes = {};
-  static defaultProps = {}
+  static defaultProps = {};
 
   static navigationOptions = () => ({
     customCenterComponent: <ProgressBar steps={7} currentStep={7} />,
@@ -33,25 +33,36 @@ class KYCPrimeTrustToU extends Component {
   });
 
   componentDidMount() {
-    const { actions } = this.props
+    const { actions } = this.props;
 
-    actions.getPrimeTrustToULink()
+    actions.getPrimeTrustToULink();
   }
 
   togglePTToU = () => {
-    const { actions, appSettings } = this.props
+    const { actions, appSettings } = this.props;
 
     actions.setUserAppSettings({
       accepted_primetrust_custodial_agreement: !appSettings.accepted_primetrust_custodial_agreement,
-    })
-  }
+    });
+  };
 
   render() {
-    const { actions, appSettings, callsInProgress, primeTrustToULink } = this.props
-    const togglingToU = apiUtil.areCallsInProgress([API.SET_APP_SETTINGS], callsInProgress)
-    const startingKYC = apiUtil.areCallsInProgress([API.START_KYC], callsInProgress)
+    const {
+      actions,
+      appSettings,
+      callsInProgress,
+      primeTrustToULink,
+    } = this.props;
+    const togglingToU = apiUtil.areCallsInProgress(
+      [API.SET_APP_SETTINGS],
+      callsInProgress
+    );
+    const startingKYC = apiUtil.areCallsInProgress(
+      [API.START_KYC],
+      callsInProgress
+    );
 
-    if (!primeTrustToULink) return <LoadingScreen />
+    if (!primeTrustToULink) return <LoadingScreen />;
 
     return (
       <RegularLayout>
@@ -60,12 +71,14 @@ class KYCPrimeTrustToU extends Component {
         </CelText>
 
         <CelText type="H4" weight="300" margin="10 0 20 0" align="center">
-          One last thing! To complete your account verification, please carefully read and agree to the
+          One last thing! To complete your account verification, please
+          carefully read and agree to the
           <CelText
             color={STYLES.COLORS.CELSIUS_BLUE}
             onPress={() => Linking.openURL(primeTrustToULink)}
           >
-            {' '}Terms of Use
+            {" "}
+            Terms of Use
           </CelText>
           .
         </CelText>
@@ -84,9 +97,11 @@ class KYCPrimeTrustToU extends Component {
         </Card>
 
         <CelButton
-          onPress={()=> actions.startKYC()}
+          onPress={() => actions.startKYC()}
           margin="20 0 20 0"
-          disabled={!appSettings.accepted_primetrust_custodial_agreement || startingKYC}
+          disabled={
+            !appSettings.accepted_primetrust_custodial_agreement || startingKYC
+          }
           loading={startingKYC}
         >
           Submit Profile Verification
@@ -96,4 +111,4 @@ class KYCPrimeTrustToU extends Component {
   }
 }
 
-export default KYCPrimeTrustToU
+export default KYCPrimeTrustToU;

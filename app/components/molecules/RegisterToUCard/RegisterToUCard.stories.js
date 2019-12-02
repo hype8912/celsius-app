@@ -18,16 +18,11 @@ storiesOf("RegisterToUCard", module)
     <View>
       <View style={{ marginBottom: 10 }}>
         <CelText margin="0 0 5 0">ToU checked</CelText>
-        <RegisterToUCard
-          termsOfUse
-          updateFormField={updateFormField}
-        />
+        <RegisterToUCard termsOfUse updateFormField={updateFormField} />
       </View>
       <View style={{ marginBottom: 10 }}>
         <CelText margin="0 0 5 0">ToU unchecked</CelText>
-        <RegisterToUCard
-          updateFormField={updateFormField}
-        />
+        <RegisterToUCard updateFormField={updateFormField} />
       </View>
     </View>
-  ))
+  ));

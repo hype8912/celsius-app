@@ -39,6 +39,7 @@ const MODALS = {
   LOAN_CANCEL_MODAL: "LOAN_CANCEL_MODAL",
   LOAN_ALERT_MODAL: "LOAN_ALERT_MODAL",
   CONFIRM_WITHDRAWAL_ADDRESS_MODAL: "CONFIRM_WITHDRAWAL_ADDRESS_MODAL",
+  TRANSACTION_FILTER_MODAL: "TRANSACTION_FILTER_MODAL",
   CREATE_NEW_ACCOUNT_MODAL: "CREATE_NEW_ACCOUNT_MODAL",
   PREPAYMENT_SUCCESSFUL_MODAL: "PREPAYMENT_SUCCESSFUL_MODAL",
 };
@@ -162,6 +163,68 @@ const LOAN_ALERTS = {
   MARGIN_CALL_ALERT: "MARGIN_CALL_ALERT",
 };
 
+const TRANSACTION_FILTER_DATE = [
+  {
+    title: "Anytime",
+    value: null,
+  },
+  {
+    title: "Last Day",
+    value: "day",
+  },
+  {
+    title: "Last Week",
+    value: "week",
+  },
+  {
+    title: "Last Month",
+    value: "month",
+  },
+  {
+    title: "Last Three Months",
+    value: "threeMonths",
+  },
+  {
+    title: "Last Six Months",
+    value: "sixMonths",
+  },
+  {
+    title: "Last Year",
+    value: "lastYear",
+  },
+];
+
+const TRANSACTION_FILTER_TYPE = [
+  {
+    title: "All Transactions",
+    value: null,
+  },
+  {
+    title: "Interest",
+    value: "interest",
+    icon: "TransactionInterest",
+  },
+  {
+    title: "Deposits",
+    value: "received",
+    icon: "TransactionReceived",
+  },
+  {
+    title: "CelPay",
+    value: "celpay",
+    icon: "TransactionCelpay",
+  },
+  {
+    title: "Loans",
+    value: "loan",
+    icon: "TransactionLoan",
+  },
+  {
+    title: "Withdrawals",
+    value: "withdraw",
+    icon: "TransactionSent",
+  },
+];
 export {
   KEYBOARD_TYPE,
   MODALS,
@@ -177,4 +240,6 @@ export {
   COIN_CARD_TYPE,
   LOAN_PAYMENT_REASONS,
   LOAN_ALERTS,
+  TRANSACTION_FILTER_DATE,
+  TRANSACTION_FILTER_TYPE,
 };

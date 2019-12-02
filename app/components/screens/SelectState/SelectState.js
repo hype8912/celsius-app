@@ -26,14 +26,18 @@ class SelectState extends Component {
   });
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { allStates } = prevState
-    const { formData } = nextProps
-    const filteredStates = formData.search ? allStates.filter(s => s.value.toLowerCase().includes(formData.search.toLowerCase())) : allStates
+    const { allStates } = prevState;
+    const { formData } = nextProps;
+    const filteredStates = formData.search
+      ? allStates.filter(s =>
+          s.value.toLowerCase().includes(formData.search.toLowerCase())
+        )
+      : allStates;
 
     return {
       ...prevState,
       filteredStates,
-    }
+    };
   }
 
   constructor(props) {
@@ -42,7 +46,7 @@ class SelectState extends Component {
     this.state = {
       allStates: SELECT_VALUES.STATE,
       filteredStates: SELECT_VALUES.STATE,
-      field: props.navigation.getParam('field') || 'state',
+      field: props.navigation.getParam("field") || "state",
     };
   }
 
@@ -50,7 +54,7 @@ class SelectState extends Component {
     const { actions } = this.props;
     await actions.updateFormFields({
       [field]: state.value,
-      search: '',
+      search: "",
       activeSearch: false,
     });
     actions.navigateBack();
@@ -67,9 +71,7 @@ class SelectState extends Component {
     const { field } = this.state;
     const style = SelectStateStyles();
 
-    const isActive =
-      formData[field] &&
-      formData[field] === state.value;
+    const isActive = formData[field] && formData[field] === state.value;
 
     const itemStyle = this.getSelectStyle(style, isActive);
 
@@ -100,16 +102,12 @@ class SelectState extends Component {
     );
   };
 
-  renderImage = (stateName) => {
+  renderImage = stateName => {
     const style = SelectStateStyles();
-    const formattedName = stateName.toLowerCase().replace(' ', '_')
-    const url = `https://raw.githubusercontent.com/RobertMyles/flagfillr/master/state-flags/united-states-of-america-flags/${ formattedName }.png`
+    const formattedName = stateName.toLowerCase().replace(" ", "_");
+    const url = `https://raw.githubusercontent.com/RobertMyles/flagfillr/master/state-flags/united-states-of-america-flags/${formattedName}.png`;
     return (
-      <Image
-        source={{ uri: url }}
-        resizeMode="cover"
-        style={style.flagImage}
-      />
+      <Image source={{ uri: url }} resizeMode="cover" style={style.flagImage} />
     );
   };
 

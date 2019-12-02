@@ -89,9 +89,9 @@ class CameraScreen extends Component {
   }
 
   componentDidUpdate() {
-    const { actions, activeScreen } = this.props
-    if (activeScreen === 'CameraScreen') {
-      actions.setFabType('hide')
+    const { actions, activeScreen } = this.props;
+    if (activeScreen === "CameraScreen") {
+      actions.setFabType("hide");
     }
   }
 

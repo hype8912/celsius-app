@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, FlatList } from "react-native";
+import { View, FlatList, TouchableOpacity } from "react-native";
 import moment from "moment";
-import RNPickerSelect from "react-native-picker-select";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -18,12 +17,15 @@ import EmptyState from "../../atoms/EmptyState/EmptyState";
 import * as appActions from "../../../redux/actions";
 import transactionsUtil from "../../../utils/transactions-util";
 import STYLES from "../../../constants/STYLES";
+import { MODALS } from "../../../constants/UI";
+import TransactionFilterModal from "../../modals/TransactionFilterModal/TransactionFilterModal";
 
 @connect(
   state => ({
     transactions: state.transactions.transactionList,
     currencyRatesShort: state.currencies.currencyRatesShort,
     currencies: state.currencies.rates,
+    formData: state.forms.formData,
     callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -37,12 +39,6 @@ class TransactionsHistory extends Component {
   };
   static defaultProps = {
     margin: "20 0 0 0",
-    filterOptions: [
-      { label: "Withdrawn", value: "withdraw" },
-      { label: "Received", value: "received" },
-      { label: "Interest", value: "interest" },
-      { label: "CelPay", value: "celpay" },
-    ],
     hasFilter: true,
   };
 
@@ -57,24 +53,24 @@ class TransactionsHistory extends Component {
     actions.getAllTransactions(additionalFilter);
   }
 
-  handleFilterChange = filter => {
-    const { actions, additionalFilter } = this.props;
-
-    actions.getAllTransactions({
-      type: filter,
-      ...additionalFilter,
-    });
-    this.setState({ filter });
-  };
-
   prepTransactions() {
-    const { filter } = this.state;
-    const { transactions, additionalFilter, currencyRatesShort } = this.props;
+    const {
+      transactions,
+      additionalFilter,
+      currencyRatesShort,
+      formData,
+    } = this.props;
+
+    const coin = formData.filterTransactionsCoins;
+    const type = formData.filterTransactionsType;
+    const period = formData.filterTransactionsDate;
 
     const transactionsArray = transactionsUtil.filterTransactions(
       transactions,
       {
-        type: filter,
+        coin,
+        type,
+        period,
         ...additionalFilter,
       }
     );
@@ -101,32 +97,24 @@ class TransactionsHistory extends Component {
   }
 
   renderPickerSelect = () => {
-    const { filter } = this.state;
-    const { filterOptions } = this.props;
+    const { actions } = this.props;
     return (
-      <RNPickerSelect
-        placeholder={{ label: "Show only:", color: "rgba(0,0,0,0.5)" }}
-        items={filterOptions}
-        onValueChange={this.handleFilterChange}
-        value={filter || null}
-        style={{ height: 32, width: 32 }}
+      <TouchableOpacity
+        onPress={() => actions.openModal(MODALS.TRANSACTION_FILTER_MODAL)}
+        style={{
+          height: 50,
+          width: 50,
+          paddingTop: 20,
+          alignItems: "flex-end",
+        }}
       >
-        <View
-          style={{
-            height: 50,
-            width: 50,
-            paddingTop: 20,
-            alignItems: "flex-end",
-          }}
-        >
-          <Icon
-            name="Filter"
-            width="16"
-            height="16"
-            fill={STYLES.COLORS.DARK_GRAY}
-          />
-        </View>
-      </RNPickerSelect>
+        <Icon
+          name="Filter"
+          width="16"
+          height="16"
+          fill={STYLES.COLORS.DARK_GRAY}
+        />
+      </TouchableOpacity>
     );
   };
 
@@ -141,21 +129,13 @@ class TransactionsHistory extends Component {
     const style = TransactionsHistoryStyle();
     const margins = getMargins(margin);
     // const transactionType = navigation.getParam('transactionType') || null
+    const transactionsDisplay = this.prepTransactions();
 
     if (
+      !transactionsDisplay.length &&
       apiUtil.areCallsInProgress([API.GET_ALL_TRANSACTIONS], callsInProgress)
     ) {
       return <LoadingState />;
-    }
-
-    const transactionsDisplay = this.prepTransactions();
-    if (!transactionsDisplay || !transactionsDisplay.length) {
-      return (
-        <EmptyState
-          heading="Sorry"
-          paragraphs={["No transactions in your wallet"]}
-        />
-      );
     }
 
     return (
@@ -174,20 +154,28 @@ class TransactionsHistory extends Component {
           {hasFilter && this.renderPickerSelect()}
         </View>
 
-        <FlatList
-          data={transactionsDisplay}
-          renderItem={({ item, index }) => (
-            <TransactionRow
-              transaction={item}
-              index={index}
-              count={transactionsDisplay.length}
-              onPress={() =>
-                actions.navigateTo("TransactionDetails", { id: item.id })
-              }
-            />
-          )}
-          keyExtractor={item => item.id}
-        />
+        {!transactionsDisplay || !transactionsDisplay.length ? (
+          <EmptyState
+            heading="Sorry"
+            paragraphs={["No transactions in your wallet"]}
+          />
+        ) : (
+          <FlatList
+            data={transactionsDisplay}
+            renderItem={({ item, index }) => (
+              <TransactionRow
+                transaction={item}
+                index={index}
+                count={transactionsDisplay.length}
+                onPress={() =>
+                  actions.navigateTo("TransactionDetails", { id: item.id })
+                }
+              />
+            )}
+            keyExtractor={item => item.id}
+          />
+        )}
+        <TransactionFilterModal />
       </View>
     );
   }

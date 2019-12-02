@@ -19,7 +19,7 @@ export default function kycReducer(state = initialState, action) {
       return {
         ...state,
         primeTrustToULink: action.link,
-      }
+      };
 
     default:
       return { ...state };

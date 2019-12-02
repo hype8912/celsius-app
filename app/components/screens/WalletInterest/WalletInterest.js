@@ -12,7 +12,7 @@ import STYLES from "../../../constants/STYLES";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import CelButton from "../../atoms/CelButton/CelButton";
 import WalletInterestStyle from "./WalletInterest.styles";
-import { EMPTY_STATES } from "../../../constants/UI";
+import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import LoadingScreen from "../../screens/LoadingScreen/LoadingScreen";
 import Separator from "../../atoms/Separator/Separator";
@@ -62,7 +62,7 @@ class WalletInterest extends Component {
 
   navigateToAllTransactions = () => {
     const { actions } = this.props;
-    actions.navigateTo("AllTransactions", { transactionType: "interest" });
+    actions.navigateTo("AllTransactions", { transactionType: ["interest"] });
   };
 
   render() {
@@ -125,9 +125,7 @@ class WalletInterest extends Component {
               <Separator margin="10 0 0 0" />
               <TouchableOpacity
                 onPress={() => {
-                  actions.navigateTo("InterestCalculatorScreen", {
-                    purpose: "FROM_WALLET_INTEREST_SCREEN",
-                  });
+                  actions.openModal(MODALS.INTEREST_CALCULATOR_MODAL);
                 }}
                 style={{ marginTop: 10 }}
               >
@@ -157,7 +155,7 @@ class WalletInterest extends Component {
         <View style={style.container}>
           <TransactionsHistory
             hasFilter={false}
-            additionalFilter={{ type: "interest", limit: 5 }}
+            additionalFilter={{ type: ["interest"], limit: 5 }}
           />
 
           <CelButton

@@ -1,6 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
 
-
 const base = {
   container: {
     flex: 1,

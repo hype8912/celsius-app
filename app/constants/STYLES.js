@@ -1,4 +1,5 @@
 const COLORS = {
+  TRANSPARENT: "rgba(0,0,0,0)",
   WHITE: "#fff",
   WHITE_OPACITY7: "rgba(255,255,255,0.7)",
   WHITE_OPACITY5: "rgba(255,255,255,0.5)",

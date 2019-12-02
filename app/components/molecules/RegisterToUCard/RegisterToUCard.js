@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from "prop-types"
+import React from "react";
+import PropTypes from "prop-types";
 import { Linking, View } from "react-native";
 
 import Card from "../../atoms/Card/Card";
@@ -7,11 +7,11 @@ import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 
-const RegisterToUCard = (props) => {
-  const { updateFormField, termsOfUse } = props
+const RegisterToUCard = props => {
+  const { updateFormField, termsOfUse } = props;
   return (
     <Card>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: "row" }}>
         <CelCheckbox
           field="termsOfUse"
           updateFormField={updateFormField}
@@ -27,27 +27,31 @@ const RegisterToUCard = (props) => {
           I have read and agree to the
           <CelText
             color={STYLES.COLORS.CELSIUS_BLUE}
-            onPress={() => Linking.openURL("https://celsius.network/terms-of-use/")}
+            onPress={() =>
+              Linking.openURL("https://celsius.network/terms-of-use/")
+            }
           >
-            {' Terms of Use '}
+            {" Terms of Use "}
           </CelText>
-            and
+          and
           <CelText
             color={STYLES.COLORS.CELSIUS_BLUE}
-            onPress={() => Linking.openURL("https://celsius.network/privacy-policy/")}
+            onPress={() =>
+              Linking.openURL("https://celsius.network/privacy-policy/")
+            }
           >
-            {' Privacy Policy '}
+            {" Privacy Policy "}
           </CelText>
           .
         </CelText>
       </View>
     </Card>
-  )
-}
+  );
+};
 
 RegisterToUCard.propTypes = {
   updateFormField: PropTypes.func.isRequired,
   termsOfUse: PropTypes.bool,
-}
+};
 
-export default RegisterToUCard
+export default RegisterToUCard;

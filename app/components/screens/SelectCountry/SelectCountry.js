@@ -99,7 +99,7 @@ class SelectCountry extends Component {
     await actions.updateFormFields({
       [field]: country,
       state: null,
-      search: '',
+      search: "",
       activeSearch: false,
     });
     actions.navigateBack();

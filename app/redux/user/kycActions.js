@@ -301,7 +301,7 @@ function createKYCDocs() {
         clearTimeout(timeout);
       }, 5000);
 
-      const docType = formData.documentType || kycDocuments.type
+      const docType = formData.documentType || kycDocuments.type;
       const res = await meService.createKYCDocuments({
         front: formData.front,
         back: docType !== "passport" ? formData.back : undefined,
@@ -335,15 +335,15 @@ function createKYCDocs() {
  */
 function startKYC() {
   return async dispatch => {
-    dispatch(startApiCall(API.START_KYC))
+    dispatch(startApiCall(API.START_KYC));
 
     try {
-      await meService.startKYC()
+      await meService.startKYC();
 
       dispatch(showMessage("success", "KYC data successfully submitted!"));
       dispatch(NavActions.navigateTo("WalletLanding"));
 
-      dispatch(startKYCSuccess())
+      dispatch(startKYCSuccess());
 
       appsFlyerUtil.kycStarted();
       userBehaviorUtil.kycStarted();
@@ -351,9 +351,8 @@ function startKYC() {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.START_KYC, err));
     }
-  }
+  };
 }
-
 
 /**
  * @TODO add JSDoc
@@ -478,7 +477,6 @@ function setUtilityBillSuccess() {
   };
 }
 
-
 /**
  * Gets PrimeTrust ToU link
  *
@@ -486,20 +484,19 @@ function setUtilityBillSuccess() {
 function getPrimeTrustToULink() {
   return async dispatch => {
     try {
-      dispatch(startApiCall(API.GET_PRIMETRUST_TOU_LINK))
-      const res = await kycService.getPrimeTrustToULink()
-      dispatch(getPrimeTrustToULinkSuccess(res.data))
-    } catch(err) {
+      dispatch(startApiCall(API.GET_PRIMETRUST_TOU_LINK));
+      const res = await kycService.getPrimeTrustToULink();
+      dispatch(getPrimeTrustToULinkSuccess(res.data));
+    } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_PRIMETRUST_TOU_LINK, err));
     }
-  }
+  };
 }
 
 function getPrimeTrustToULinkSuccess(data) {
   return {
     type: ACTIONS.GET_PRIMETRUST_TOU_LINK_SUCCESS,
     link: data.link,
-  }
+  };
 }
-

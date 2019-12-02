@@ -132,9 +132,15 @@ class SocialSecurityNumber extends Component {
 
             <Card color={STYLES.COLORS.CELSIUS_BLUE} margin="0 0 20 0">
               <CelText color="white">
-                <CelText color="white" weight="semi-bold">Keep in mind! </CelText>
-                You can only enter SSN information once. To be able to change it in the future, please
-                <CelText color="white" weight="semi-bold"> contact our support.</CelText>
+                <CelText color="white" weight="semi-bold">
+                  Keep in mind!{" "}
+                </CelText>
+                You can only enter SSN information once. To be able to change it
+                in the future, please
+                <CelText color="white" weight="semi-bold">
+                  {" "}
+                  contact our support.
+                </CelText>
               </CelText>
             </Card>
 

@@ -32,7 +32,7 @@ class RegisterPromoCodeCard extends Component {
     if (promoCode) {
       return (
         <View style={style.referralBody}>
-          <View style={style.indentation}/>
+          <View style={style.indentation} />
           <View style={style.referralCopy}>
             <CelText type={"H5"} weight={"500"} color={STYLES.COLORS.WHITE}>
               In order to receive your referral reward, you must:
@@ -67,7 +67,7 @@ class RegisterPromoCodeCard extends Component {
     }
     return (
       <View style={style.referralBody}>
-        <View style={style.indentation}/>
+        <View style={style.indentation} />
         <View style={style.referralCopy}>
           <CelText
             margin={"10 0 0 0"}
@@ -180,8 +180,6 @@ class RegisterPromoCodeCard extends Component {
       </Card>
     );
   }
-  ;
-
 }
 
 export default RegisterPromoCodeCard;

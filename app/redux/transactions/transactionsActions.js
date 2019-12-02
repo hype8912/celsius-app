@@ -22,16 +22,15 @@ export {
 /**
  * Gets transactions
  * @param {Object} query
- * @param {number} query.limit
  * @param {string} query.type - one of received|withdraw|interest
  * @param {string} query.coin - eg. BTC|ETH|XRP...
  */
 function getAllTransactions(query = {}) {
   return async dispatch => {
     try {
-      const { limit, type, coin } = query;
+      const { type, coin, period } = query;
       dispatch(startApiCall(API.GET_ALL_TRANSACTIONS));
-      const response = await transactions.getAll({ limit, type, coin });
+      const response = await transactions.getAll({ type, coin, period });
 
       dispatch({
         type: ACTIONS.GET_ALL_TRANSACTIONS_SUCCESS,

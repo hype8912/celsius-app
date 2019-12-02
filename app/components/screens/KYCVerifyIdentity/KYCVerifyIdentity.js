@@ -11,7 +11,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import KYCCheckPhotos from "../KYCCheckPhotos/KYCCheckPhotos";
 import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
-import apiUtil from "../../../utils/api-util"
+import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 
 @connect(
@@ -87,14 +87,30 @@ class KYCVerifyIdentity extends Component {
   };
 
   render() {
-    const { kycDocTypes, user, kycDocuments, navigation, formData, callsInProgress } = this.props;
+    const {
+      kycDocTypes,
+      user,
+      kycDocuments,
+      navigation,
+      formData,
+      callsInProgress,
+    } = this.props;
 
-    if (!kycDocTypes || apiUtil.areCallsInProgress([API.GET_KYC_DOC_TYPES, API.GET_KYC_DOCUMENTS], callsInProgress)) {
+    if (
+      !kycDocTypes ||
+      apiUtil.areCallsInProgress(
+        [API.GET_KYC_DOC_TYPES, API.GET_KYC_DOCUMENTS],
+        callsInProgress
+      )
+    ) {
       return <LoadingScreen />;
     }
 
     const shouldChangeDoc = navigation.getParam("shouldChangeDoc");
-    if ((formData.documentType || (kycDocuments && kycDocuments.type)) && !shouldChangeDoc) {
+    if (
+      (formData.documentType || (kycDocuments && kycDocuments.type)) &&
+      !shouldChangeDoc
+    ) {
       return <KYCCheckPhotos />;
     }
 

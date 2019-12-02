@@ -14,8 +14,8 @@ import { MODALS } from "../../../constants/UI";
 import { PRIMETRUST_KYC_STATES } from "../../../constants/DATA";
 import SsnModal from "../../organisms/SsnModal/SsnModal";
 import SocialSecurityNumber from "../../molecules/SocialSecurityNumber/SocialSecurityNumber";
-import apiUtil from "../../../utils/api-util"
-import {isUSCitizen} from "../../../utils/user-util"
+import apiUtil from "../../../utils/api-util";
+import { isUSCitizen } from "../../../utils/user-util";
 import API from "../../../constants/API";
 
 @connect(
@@ -116,7 +116,7 @@ class KYCTaxpayer extends Component {
           "You have successfully submitted ssn number"
         );
       } else {
-        await actions.startKYC()
+        await actions.startKYC();
       }
     }
     this.setState({ updatingTaxInfo: false });
@@ -125,9 +125,12 @@ class KYCTaxpayer extends Component {
   renderSkipButton = disabled => {
     const { actions, callsInProgress, user } = this.props;
 
-    const isSubmitting = apiUtil.areCallsInProgress([API.START_KYC], callsInProgress)
+    const isSubmitting = apiUtil.areCallsInProgress(
+      [API.START_KYC],
+      callsInProgress
+    );
 
-    if (user.ssn || user.itin) return null
+    if (user.ssn || user.itin) return null;
 
     if (!this.isFromUS()) {
       return (
@@ -161,11 +164,11 @@ class KYCTaxpayer extends Component {
 
   render() {
     const { updatingTaxInfo, isLoading } = this.state;
-    const { actions, user, formData  } = this.props;
+    const { actions, user, formData } = this.props;
 
     if (isLoading) return <LoadingScreen />;
 
-    const isPrimeTrustUser = PRIMETRUST_KYC_STATES.includes(formData.state)
+    const isPrimeTrustUser = PRIMETRUST_KYC_STATES.includes(formData.state);
 
     return (
       <RegularLayout>
@@ -198,7 +201,10 @@ class KYCTaxpayer extends Component {
           </CelButton>
         )}
 
-        {!!((!isPrimeTrustUser && user.ssn) || (!isUSCitizen() && user.itin)) && (
+        {!!(
+          (!isPrimeTrustUser && user.ssn) ||
+          (!isUSCitizen() && user.itin)
+        ) && (
           <CelButton
             onPress={() => actions.startKYC()}
             iconRight="IconArrowRight"

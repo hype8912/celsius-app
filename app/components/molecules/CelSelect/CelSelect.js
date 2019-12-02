@@ -270,12 +270,12 @@ class CelSelect extends Component {
         style={[inputStyle, { flexDirection: "row", alignItems: "center" }]}
       >
         <View style={{ flexDirection: "row" }}>
-        {countryInput
-          ? this.renderImage(
-              [cmpStyle.flagImage, { marginRight: 5 }],
-              this.state.value.alpha2
-            )
-          : null}
+          {countryInput
+            ? this.renderImage(
+                [cmpStyle.flagImage, { marginRight: 5 }],
+                this.state.value.alpha2
+              )
+            : null}
           <CelText type="H4" color={textColor}>
             {value ? value.label || value.name : labelText}
           </CelText>

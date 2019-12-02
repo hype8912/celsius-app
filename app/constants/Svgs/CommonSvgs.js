@@ -722,6 +722,16 @@ export default {
       </G>
     </G>
   ),
+  CheckboxCheckedViewBox: "0 0 14 11",
+  CheckboxChecked: (
+    <G>
+      <Path
+        id="icon-check"
+        className="cls-1"
+        d="M13,.89,12.1.08a.32.32,0,0,0-.46,0L4.87,7.61,1.35,4.43a.33.33,0,0,0-.46,0l-.81.9A.36.36,0,0,0,0,5.58a.3.3,0,0,0,.11.23L4.75,10a.35.35,0,0,0,.16.08H5A.38.38,0,0,0,5.23,10L13,1.35a.29.29,0,0,0,.08-.23A.3.3,0,0,0,13,.89"
+      />
+    </G>
+  ),
   UtilityBillViewBox: "0 0 23.04 30.69",
   UtilityBill: (
     <G>

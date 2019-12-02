@@ -20,6 +20,7 @@ const base = {
     backgroundColor: "white",
     width: widthPercentageToDP("90%"),
     marginBottom: heightPercentageToDP("4%"),
+    maxHeight: heightPercentageToDP("90%"),
     borderRadius: 8,
     zIndex: 3,
   },

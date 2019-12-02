@@ -1,5 +1,5 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from '../../../utils/styles-util';
+import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
 const base = {
@@ -42,19 +42,16 @@ const base = {
   referralCopy: {
     flex: 0.85,
   },
-}
+};
 
 const themed = {
-    light: {
-    },
+  light: {},
 
-    dark: {
-    },
+  dark: {},
 
-    celsius: {
-    }
-}
+  celsius: {},
+};
 
 const RegisterPromoCodeCardStyle = () => getThemedStyle(base, themed);
 
-export default RegisterPromoCodeCardStyle
+export default RegisterPromoCodeCardStyle;

@@ -54,10 +54,12 @@ class KYCCheckPhotos extends Component {
       mask: "document",
     });
 
-    actions.navigateTo("CameraScreen", { onSave: (frontPhoto) => {
-      actions.updateFormField('front', frontPhoto)
-      actions.navigateTo('KYCCheckPhotos')
-    }});
+    actions.navigateTo("CameraScreen", {
+      onSave: frontPhoto => {
+        actions.updateFormField("front", frontPhoto);
+        actions.navigateTo("KYCCheckPhotos");
+      },
+    });
   };
 
   retakeBackPhoto = () => {
@@ -72,10 +74,12 @@ class KYCCheckPhotos extends Component {
       mask: "document",
     });
 
-    actions.navigateTo("CameraScreen", { onSave: (backPhoto) => {
-        actions.updateFormField('back', backPhoto)
-        actions.navigateTo('KYCCheckPhotos')
-      }});
+    actions.navigateTo("CameraScreen", {
+      onSave: backPhoto => {
+        actions.updateFormField("back", backPhoto);
+        actions.navigateTo("KYCCheckPhotos");
+      },
+    });
   };
 
   submitKYCDocs = () => {
@@ -109,7 +113,9 @@ class KYCCheckPhotos extends Component {
     );
     const onlyFrontPhoto =
       (formData.documentType && formData.documentType === "passport") ||
-      (!formData.documentType && kycDocuments && kycDocuments.type === "passport");
+      (!formData.documentType &&
+        kycDocuments &&
+        kycDocuments.type === "passport");
 
     return (
       <RegularLayout>

@@ -26,12 +26,12 @@ function getProps(purpose, componentProps) {
       return {
         ...props,
         image: require("../../assets/images/monkey-on-a-laptop-illustration.png"),
-        heading: "Apply for a loan",
+        heading: "Borrow Cash Instantly",
         paragraphs: [
           "Get a USD or stablecoin loan at the best interest rates on the block!",
         ],
         onPress: () => actions.navigateTo("BorrowChooseLoan"),
-        button: "Apply for a loan",
+        button: "Get Cash",
         secondaryOnPress: () =>
           actions.openModal(MODALS.BORROW_CALCULATOR_MODAL),
         secondaryButton: "Calculate Loan Interest",

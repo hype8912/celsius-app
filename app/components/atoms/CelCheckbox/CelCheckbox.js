@@ -16,9 +16,9 @@ const CelCheckbox = props => {
       style={{ flexDirection: "row", marginBottom: 15, alignItems: "center" }}
       onPress={() => onPress(props.field, !props.value)}
     >
-      { props.loading ? (
+      {props.loading ? (
         <View style={{ marginRight: 10 }}>
-          <Spinner size={24}/>
+          <Spinner size={24} />
         </View>
       ) : (
         <CheckBox
@@ -32,7 +32,7 @@ const CelCheckbox = props => {
         />
       )}
 
-      { props.rightText && (
+      {props.rightText && (
         <CelText
           type="H4"
           weight={props.textWeight}

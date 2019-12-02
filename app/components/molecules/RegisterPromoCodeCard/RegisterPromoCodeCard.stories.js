@@ -23,8 +23,6 @@ storiesOf("RegisterPromoCodeCard", module)
   ))
   .add("without promoCode", () => (
     <View>
-      <RegisterPromoCodeCard
-        openModal={store.dispatch(openModal)}
-      />
+      <RegisterPromoCodeCard openModal={store.dispatch(openModal)} />
     </View>
-  ))
+  ));

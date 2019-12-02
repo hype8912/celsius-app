@@ -52,16 +52,25 @@ function navigateTo(routeName, params) {
  */
 function navigateBack(backScreenName) {
   return (dispatch, getState) => {
-    const { activeScreen } = getState().nav
-
+    const { activeScreen } = getState().nav;
 
     // If back button leads to Camera screens during KYC process, it should be skipped
-    if (activeScreen === 'KYCCheckPhotos' && backScreenName === 'ConfirmCamera') {
-      _navigator.dispatch(NavigationActions.navigate({ routeName: 'KYCAddressInfo' }));
-    } else if (['KTCTaxpayer'].indexOf(activeScreen) && backScreenName === 'ConfirmCamera') {
-      _navigator.dispatch(NavigationActions.navigate({ routeName: 'KYCAddressProof' }));
+    if (
+      activeScreen === "KYCCheckPhotos" &&
+      backScreenName === "ConfirmCamera"
+    ) {
+      _navigator.dispatch(
+        NavigationActions.navigate({ routeName: "KYCAddressInfo" })
+      );
+    } else if (
+      ["KTCTaxpayer"].indexOf(activeScreen) &&
+      backScreenName === "ConfirmCamera"
+    ) {
+      _navigator.dispatch(
+        NavigationActions.navigate({ routeName: "KYCAddressProof" })
+      );
     } else if (backScreenName === "VerifyProfile") {
-    // If back button leads to VerifyProfile, skip it and go back one more screen
+      // If back button leads to VerifyProfile, skip it and go back one more screen
       userBehavior.navigated("Back");
       _navigator.dispatch(StackActions.pop({ n: 1 }));
     } else {
