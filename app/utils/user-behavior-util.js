@@ -15,6 +15,8 @@ const userBehaviorUtil = {
   registrationCompleted,
   kycProfileInfo,
   kycAddressInfo,
+  kycDocumentsSubmitted,
+  kycUtilityBillSubmitted,
   kycTaxPayerInfo,
   kycStarted,
   interestInCEL,
@@ -172,6 +174,20 @@ async function kycProfileInfo() {
  * Fires an event when a user submit KYC address
  */
 async function kycAddressInfo() {
+  await sendEvent("KYC Address Submitted");
+}
+
+/**
+ * Fires an event when a user submits KYC Document photos
+ */
+async function kycDocumentsSubmitted() {
+  await sendEvent("KYC Documents Submitted");
+}
+
+/**
+ * Fires an event when a user submits KYC utility bill photo
+ */
+async function kycUtilityBillSubmitted() {
   await sendEvent("KYC Address Submitted");
 }
 

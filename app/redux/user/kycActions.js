@@ -318,6 +318,8 @@ function createKYCDocs() {
       }
 
       clearTimeout(timeout);
+
+      userBehaviorUtil.kycDocumentsSubmitted();
     } catch (err) {
       clearTimeout(timeout);
       if (err.type === "Validation error") {
@@ -459,6 +461,8 @@ function setUtilityBill(utilityBillPhoto) {
       dispatch(setUtilityBillSuccess());
       dispatch(NavActions.navigateTo("KYCTaxpayer"));
       dispatch(showMessage("success", "Utility bill submitted successfully!"));
+
+      userBehaviorUtil.kycUtilityBillSubmitted();
     } catch (err) {
       clearTimeout(timeout);
       if (err.type === "Validation error") {
