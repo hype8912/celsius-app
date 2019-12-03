@@ -19,7 +19,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import CelInput from "../../atoms/CelInput/CelInput";
 import WithdrawWarningModal from "../../organisms/WithdrawWarningModal/WithdrawWarningModal";
-import MemoIdModal from "../../organisms/MemoIdModal/MemoIdModal";
+import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
 import DestinationTagModal from "../../organisms/DestinationTagModal/DestinationTagModal";
 
 @connect(
@@ -223,7 +223,7 @@ class WithdrawCreateAddress extends Component {
               coin={formData.coin}
               navigateNext={this.handleConfirmWithdrawalFromModal}
             />
-            <MemoIdModal closeModal={actions.closeModal} coin={formData.coin} />
+            <MemoIdModal coin={formData.coin} />
             <DestinationTagModal closeModal={actions.closeModal} />
           </View>
         </View>

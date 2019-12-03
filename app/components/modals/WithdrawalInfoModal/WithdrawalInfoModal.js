@@ -1,19 +1,23 @@
 import React, { Component } from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { View } from "react-native";
+
 import WithdrawalInfoStyle from "./WithdrawalInfoModal.styles";
 import MultistepModal from "../MultistepModal/MultistepModal";
 import { MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
+import formatter from "../../../utils/formatter";
 
 class WithdrawalInfoModal extends Component {
   static propTypes = {
-    // text: PropTypes.string
+    withdrawalSettings: PropTypes.instanceOf(Object),
   };
   static defaultProps = {};
 
   handleModalContent = () => {
+    const { withdrawalSettings } = this.props;
+
     const modalContent = [
       {
         title: "Are you sure you want to withdraw CEL? ",
@@ -27,7 +31,9 @@ class WithdrawalInfoModal extends Component {
         secondButtonPosition: null,
       },
       {
-        title: "Immediate withdrawals under $20,000",
+        title: `Immediate withdrawals under ${formatter.usd(
+          withdrawalSettings.daily_withdrawal_limit
+        )}`,
         body:
           "Celsius enables you to withdraw coins at any time. However, for your security when exceeding this limit withdrawals are delayed for up to twenty-four hours.",
         firstButtonCopy: "Previous Tip",

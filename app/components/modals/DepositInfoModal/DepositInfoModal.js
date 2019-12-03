@@ -26,16 +26,6 @@ class DepositInfoModal extends Component {
     type: "",
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // initial state
-    };
-
-    // binders
-  }
-
   handleMultistepContent = type => {
     const { currencies } = this.props;
 
@@ -153,7 +143,7 @@ class DepositInfoModal extends Component {
 
   renderStepBody = (title, description, buttonText, key) => {
     const style = DepositInfoModalStyle();
-
+    const { actions } = this.props;
     return (
       <View style={style.modalWrapper} key={key}>
         <CelText
@@ -175,6 +165,7 @@ class DepositInfoModal extends Component {
                 : "basic"
             }
             position={"single"}
+            onYes={actions.onClose}
           >
             {buttonText}
           </CelModalButton>

@@ -9,7 +9,7 @@ import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import { widthPercentageToDP } from "../../../utils/styles-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
-import CalculateLoyaltyModal from "../../organisms/CalculateLoyaltyModal/CalculateLoyaltyModal";
+import CalculateLoyaltyLevelModal from "../../modals/CalculateLoyaltyLevelModal/CalculateLoyaltyLevelModal";
 import { MODALS } from "../../../constants/UI";
 
 @connect(
@@ -98,7 +98,7 @@ class MyCelOverivewTab extends Component {
             </CelText>
           </TouchableOpacity>
         </View>
-        <CalculateLoyaltyModal />
+        <CalculateLoyaltyLevelModal closeModal={actions.closeModal} />
       </View>
     );
   }

@@ -84,9 +84,8 @@ class LoanApplicationSuccessModal extends Component {
               Prepay Your Interest
             </CelText>
             <CelText align={"center"} margin={"5 20 0 20"}>
-              Your first interest payment will be due on May 12, 2019. Stay
-              ahead of schedule and submit your first interest payment in
-              advance.
+              Your first interest payment will be due next month. Stay ahead of
+              schedule and submit your first interest payment in advance.
             </CelText>
             <View style={style.buttonsWrapper}>
               <CelModalButton

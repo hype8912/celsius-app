@@ -14,7 +14,6 @@ import * as appActions from "../../../redux/actions";
 class ApiKeyRevokeModal extends Component {
   handleApiKeyRevoke = () => {
     const { actions, apiKey } = this.props;
-
     actions.closeModal();
     actions.revokeAPIKey(apiKey.id);
   };

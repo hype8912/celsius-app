@@ -1,28 +1,29 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import PropTypes from "prop-types";
 
 import InfoModal from "../InfoModalNew/InfoModal.js";
 import RemoveAuthAppModalStyle from "./RemoveAuthAppModal.styles";
 import { MODALS } from "../../../constants/UI";
-import * as appActions from "../../../redux/actions";
 
-@connect(
-  () => ({}),
-  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
-)
 class RemoveAuthAppModal extends Component {
-  removeTwoFactor = async () => {
-    const { actions } = this.props;
-    await actions.closeModal();
+  static propTypes = {
+    navigateTo: PropTypes.func.isRequired,
+    closeModal: PropTypes.func.isRequired,
+    disableTwoFactor: PropTypes.func.isRequired,
+  };
+  static defaultProps = {};
 
-    actions.navigateTo("VerifyProfile", {
-      onSuccess: actions.disableTwoFactor,
+  removeTwoFactor = async () => {
+    const { navigateTo, closeModal, disableTwoFactor } = this.props;
+    await closeModal();
+
+    navigateTo("VerifyProfile", {
+      onSuccess: disableTwoFactor,
     });
   };
 
   render() {
-    const { actions } = this.props;
+    const { closeModal } = this.props;
     const style = RemoveAuthAppModalStyle();
     return (
       <InfoModal
@@ -35,7 +36,7 @@ class RemoveAuthAppModal extends Component {
         yesCopy={"Remove"}
         onYes={this.removeTwoFactor}
         noCopy={"Cancel"}
-        onNo={actions.closeModal}
+        onNo={closeModal}
         noButtonStyle={"red"}
         yesButtonPosition={"left"}
         noButtonPosition={"right"}

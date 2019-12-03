@@ -10,7 +10,7 @@ import CelText from "../../atoms/CelText/CelText";
 import WalletDetailsCard from "../../organisms/WalletDetailsCard/WalletDetailsCard";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
-import CelPayReceivedModal from "../../organisms/CelPayReceivedModal/CelPayReceivedModal";
+import CelPayReceivedModal from "../../modals/CelPayReceivedModal/CelPayReceivedModal";
 import { WALLET_LANDING_VIEW_TYPES, MODALS } from "../../../constants/UI";
 import BecameCelMemberModal from "../../organisms/BecameCelMemberModal/BecameCelMemberModal";
 import { KYC_STATUSES } from "../../../constants/DATA";
@@ -21,10 +21,9 @@ import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import ComingSoonCoins from "../../molecules/ComingSoonCoins/ComingSoonCoins";
 import CoinCards from "../../organisms/CoinCards/CoinCards";
 import WalletLandingStyle from "./WalletLanding.styles";
-import LoanAlertsModal from "../../organisms/LoanAlertsModal/LoanAlertsModal";
 import KYCandPromotionsTrigger from "../../molecules/KYCandPromotionsTrigger/KYCandPromotionsTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
-// import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
+import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 
 @connect(
   state => {
@@ -257,17 +256,12 @@ class WalletLanding extends Component {
             <ComingSoonCoins activeView={activeView} />
           </ExpandableItem>
         </View>
-        <CelPayReceivedModal
-          navigateTo={actions.navigateTo}
-          closeModal={actions.closeModal}
-          transfer={branchTransfer}
-        />
+        <CelPayReceivedModal transfer={branchTransfer} />
         <BecameCelMemberModal
           title={"Congrats! You have earned 1 CEL token!"}
         />
         <EarnInterestCelModal />
-        {/* <LoanAlertsModalWrapper />*/}
-        <LoanAlertsModal />
+        <LoanAlertsModalWrapper />
       </RegularLayout>
     );
   }

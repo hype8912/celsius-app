@@ -12,7 +12,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { MODALS } from "../../../constants/UI";
 import { PRIMETRUST_KYC_STATES } from "../../../constants/DATA";
-import SsnModal from "../../organisms/SsnModal/SsnModal";
+import SsnModal from "../../modals/SsnModal/SsnModal";
 import SocialSecurityNumber from "../../molecules/SocialSecurityNumber/SocialSecurityNumber";
 import apiUtil from "../../../utils/api-util";
 import { isUSCitizen } from "../../../utils/user-util";

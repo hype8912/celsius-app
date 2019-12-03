@@ -17,7 +17,7 @@ import CenterView from "../../../storybook/stories/CenterView";
 import SsnModal from "./SsnModal/SsnModal";
 import WithdrawWarningModal from "./WithdrawWarningModal/WithdrawWarningModal";
 import ChangeWithdrawalAddressModal from "./ChangeWithdrawalAddressModal/ChangeWithdrawalAddressModal";
-import PrepareDollarInterestModal from "./PrepareDollarInterestModal/PrepareDollarInterestModal";
+import PrepayDollarInterestModal from "./PrepayDollarInterestModal/PrepayDollarInterestModal";
 import ApiKeySuccessModal from "./ApiKeySuccessModal/ApiKeySuccessModal";
 import ConfirmWithdrawalAddressModal from "./ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
 import WithdrawInfoModal from "../modals/WithdrawalInfoModal/WithdrawalInfoModal";
@@ -36,7 +36,7 @@ import LoseTierModal from "./LoseTierModal/LoseTierModal";
 import LoseMembershipModal from "./LoseMembershipModal/LoseMembershipModal";
 import MemoIdModal from "./MemoIdModal/MemoIdModal";
 import ApiKeyRevokeModal from "./ApiKeyRevokeModal/ApiKeyRevokeModal";
-import CalculateLoayltyLevelModal from "./CalculateLoayltyLevelModal/CalculateLoayltyLevelModal";
+import CalculateLoyaltyLevelModal from "./CalculateLoyaltyLevelModal/CalculateLoyaltyLevelModal";
 import RejectionReasonsModal from "./RejectionReasonsModal/RejectionReasonsModal";
 import CelPayReceivedModal from "./CelPayReceivedModal/CelPayReceivedModal";
 
@@ -88,16 +88,16 @@ storiesOf("Modals", module)
       <ChangeWithdrawalAddressModal onPressConfirm={action("onPressConfirm")} />
     </View>
   ))
-  .add("PrepareDollarInterestModal", () => (
+  .add("PrepayDollarInterestModal", () => (
     <View style={{ marginBottom: 30 }}>
       <CelButton
         onPress={() =>
           store.dispatch(openModal(MODALS.PREPAY_DOLLAR_INTEREST_MODAL))
         }
       >
-        Open PrepareDollarInterestModal
+        Open PrepayDollarInterestModal
       </CelButton>
-      <PrepareDollarInterestModal onPressConfirm={action("onPressConfirm")} />
+      <PrepayDollarInterestModal onPressConfirm={action("onPressConfirm")} />
     </View>
   ))
   .add("ApiKeySuccessModal", () => (
@@ -189,18 +189,6 @@ storiesOf("Modals", module)
         Open CancelLoanModal
       </CelButton>
       <CancelLoanModal onPressConfirm={action("onPressConfirm")} />
-    </View>
-  ))
-  .add("BecomeCelMemberModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        onPress={() =>
-          store.dispatch(openModal(MODALS.BECAME_CEL_MEMBER_MODAL))
-        }
-      >
-        Open BecomeCelMemberModal
-      </CelButton>
-      <BecomeCelMemberModal />
     </View>
   ))
   .add("CreateNewAccountModal", () => (
@@ -351,16 +339,16 @@ storiesOf("Modals", module)
       <ApiKeyRevokeModal apiKey={"fake-api-key"} />
     </View>
   ))
-  .add("CalculateLoayltyLevelModal", () => (
+  .add("CalculateLoyaltyLevelModal", () => (
     <View style={{ marginBottom: 30 }}>
       <CelButton
         onPress={() =>
           store.dispatch(openModal(MODALS.MY_CEL_LOYALTY_CALCULATOR_MODAL))
         }
       >
-        Open CalculateLoayltyLevelModal
+        Open CalculateLoyaltyLevelModal
       </CelButton>
-      <CalculateLoayltyLevelModal />
+      <CalculateLoyaltyLevelModal />
     </View>
   ))
   .add("RejectionReasonsModal", () => (

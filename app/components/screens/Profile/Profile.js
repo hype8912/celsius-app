@@ -30,7 +30,6 @@ import ProfileStyle from "./Profile.styles";
 import Icon from "../../atoms/Icon/Icon";
 import { getTheme } from "../../../utils/styles-util";
 import Constants from "../../../../constants";
-import ApiKeyRevokeModal from "../../modals/ApiKeyRevokeModal/ApiKeyRevokeModal";
 
 @connect(
   state => ({
@@ -323,7 +322,6 @@ class Profile extends Component {
           ) : null}
         </View>
 
-        <ApiKeyRevokeModal />
         <ReferralSendModal />
         <RegisterPromoCodeModal type={"celsius"} />
       </RegularLayout>

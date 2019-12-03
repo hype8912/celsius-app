@@ -134,8 +134,9 @@ class SecuritySettings extends Component {
         </CelButton>
 
         <RemoveAuthAppModal
-          removeTwoFactor={this.removeTwoFactor}
           closeModal={actions.closeModal}
+          navigateTo={actions.navigateTo}
+          disableTwoFactor={actions.disableTwoFactor}
         />
       </RegularLayout>
     );

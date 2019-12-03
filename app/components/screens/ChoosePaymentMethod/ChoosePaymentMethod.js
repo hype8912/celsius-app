@@ -119,7 +119,7 @@ class ChoosePaymentMethod extends Component {
   };
 
   render() {
-    const { loanSettings } = this.props;
+    const { actions, loanSettings } = this.props;
     if (!loanSettings) return <LoadingScreen />;
 
     const style = ChoosePaymentMethodStyle();
@@ -133,7 +133,11 @@ class ChoosePaymentMethod extends Component {
             <PaymentCard {...i} key={i.cardTitle} />
           ))}
         </RegularLayout>
-        <PrepayDollarInterestModal />
+        <PrepayDollarInterestModal
+          onPressConfirm={() =>
+            actions.navigateTo("LoanPrepaymentPeriod", { type: "dollar" })
+          }
+        />
       </View>
     );
   }

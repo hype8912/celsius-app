@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-// import { View } from 'react-native';
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -12,7 +10,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import STYLES from "../../../constants/STYLES";
 import CelApiDropdown from "../../molecules/CelApiDropdown/CelApiDropdown";
-import ApiKeyRevokeModal from "../../organisms/ApiKeyRevokeModal/ApiKeyRevokeModal";
+import ApiKeyRevokeModal from "../../modals/ApiKeyRevokeModal/ApiKeyRevokeModal";
 
 @connect(
   state => ({

@@ -10,7 +10,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import SwitchButton from "../../organisms/SwitchButton/SwitchButton";
-import ApiKeySuccessModal from "../../organisms/ApiKeySuccessModal/ApiKeySuccessModal";
+import ApiKeySuccessModal from "../../modals/ApiKeySuccessModal/ApiKeySuccessModal";
 
 @connect(
   state => ({

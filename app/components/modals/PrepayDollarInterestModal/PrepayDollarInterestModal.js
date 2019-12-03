@@ -2,7 +2,7 @@ import React from "react";
 import { MODALS } from "../../../constants/UI";
 import InfoModal from "../InfoModalNew/InfoModal";
 
-const PrepareDollarInterestModal = props => {
+const PrepayDollarInterestModal = props => {
   const { onPressConfirm } = props;
   return (
     <InfoModal
@@ -17,4 +17,4 @@ const PrepareDollarInterestModal = props => {
   );
 };
 
-export default PrepareDollarInterestModal;
+export default PrepayDollarInterestModal;

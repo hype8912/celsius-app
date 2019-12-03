@@ -11,7 +11,7 @@ import formatter from "../../../utils/formatter";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { EMPTY_STATES, KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
-import WithdrawInfoModal from "../../organisms/WithdrawInfoModal/WithdrawInfoModal";
+import WithdrawalInfoModal from "../../modals/WithdrawalInfoModal/WithdrawalInfoModal";
 import { KYC_STATUSES, PREDIFINED_AMOUNTS } from "../../../constants/DATA";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { openModal } from "../../../redux/ui/uiActions";
@@ -22,8 +22,8 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import STYLES from "../../../constants/STYLES";
 import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
-import LoseMembershipModal from "../../molecules/LoseMembershipModal/LoseMembershipModal";
-import LoseTierModal from "../../molecules/LoseTierModal/LoseTierModal";
+import LoseMembershipModal from "../../modals/LoseMembershipModal/LoseMembershipModal";
+import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
@@ -413,21 +413,14 @@ class WithdrawEnterAmount extends Component {
 
         <LoseMembershipModal
           navigateToNextStep={() => this.navigateToNextStep(true)}
-          closeModal={actions.closeModal}
         />
         {loyaltyInfo && (
           <LoseTierModal
             navigateToNextStep={() => this.navigateToNextStep(true)}
             tierTitle={loyaltyInfo.tier.title}
-            closeModal={actions.closeModal}
           />
         )}
-        <WithdrawInfoModal
-          type={coin}
-          closeModal={actions.closeModal}
-          toggleKeypad={actions.toggleKeypad}
-          withdrawalSettings={withdrawalSettings}
-        />
+        <WithdrawalInfoModal withdrawalSettings={withdrawalSettings} />
       </RegularLayout>
     );
   }

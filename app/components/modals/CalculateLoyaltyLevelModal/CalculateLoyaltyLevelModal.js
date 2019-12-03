@@ -1,31 +1,22 @@
 import React, { Component } from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { View } from "react-native";
-
-import CalculateLoayltyLevelModalStyle from "./CalculateLoayltyLevelModal.styles";
+import CalculateLoyaltyLevelModalStyle from "./CalculateLoyaltyLevelModal.styles";
 import CelModal from "../CelModal/CelModal.js";
 import { MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelsiusMembershipTable from "../../organisms/CelsiusMembershipTable/CelsiusMembershipTable";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 
-class CalculateLoayltyLevelModal extends Component {
+class CalculateLoyaltyLevelModal extends Component {
   static propTypes = {
-    // text: PropTypes.string
+    closeModal: PropTypes.func.isRequired,
   };
   static defaultProps = {};
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // initial state
-    };
-  }
-
   render() {
-    const style = CalculateLoayltyLevelModalStyle();
-    const { actions } = this.props;
+    const style = CalculateLoyaltyLevelModalStyle();
+    const { closeModal } = this.props;
     return (
       <CelModal
         style={style.container}
@@ -64,7 +55,7 @@ class CalculateLoayltyLevelModal extends Component {
           <CelModalButton
             buttonStyle={"secondary"}
             position={"single"}
-            onPress={() => actions.closeModal()}
+            onPress={closeModal}
           >
             Close
           </CelModalButton>
@@ -74,4 +65,4 @@ class CalculateLoayltyLevelModal extends Component {
   }
 }
 
-export default CalculateLoayltyLevelModal;
+export default CalculateLoyaltyLevelModal;

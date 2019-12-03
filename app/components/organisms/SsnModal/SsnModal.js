@@ -19,9 +19,9 @@ class SsnModal extends Component {
     this.state = {};
   }
 
-  navigate = () => {
+  continue = () => {
     const { actions } = this.props;
-    actions.navigateTo("KYCVerifyID");
+    actions.startKYC();
     actions.closeModal();
   };
 
@@ -36,7 +36,7 @@ class SsnModal extends Component {
           profile is updated. This can be completed at any time.
         </CelText>
 
-        <CelButton onPress={this.navigate}>Continue</CelButton>
+        <CelButton onPress={this.continue}>Continue</CelButton>
       </CelModal>
     );
   }

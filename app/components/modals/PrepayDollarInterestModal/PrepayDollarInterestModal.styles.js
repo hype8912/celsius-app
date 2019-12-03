@@ -11,6 +11,6 @@ const themed = {
   celsius: {},
 };
 
-const PrepareDollarInterestModalStyle = () => getThemedStyle(base, themed);
+const PrepayDollarInterestModalStyle = () => getThemedStyle(base, themed);
 
-export default PrepareDollarInterestModalStyle;
+export default PrepayDollarInterestModalStyle;
