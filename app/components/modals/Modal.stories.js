@@ -39,6 +39,8 @@ import ApiKeyRevokeModal from "./ApiKeyRevokeModal/ApiKeyRevokeModal";
 import CalculateLoyaltyLevelModal from "./CalculateLoyaltyLevelModal/CalculateLoyaltyLevelModal";
 import RejectionReasonsModal from "./RejectionReasonsModal/RejectionReasonsModal";
 import CelPayReceivedModal from "./CelPayReceivedModal/CelPayReceivedModal";
+import ReferralSendModal from "./ReferralSendModal/ReferralSendModal";
+import RegisterPromoCodeModal from "./RegisterPromoCodeModal/RegisterPromoCodeModal";
 
 let type = "";
 
@@ -377,5 +379,27 @@ storiesOf("Modals", module)
           coin: "ETH",
         }}
       />
+    </View>
+  ))
+  .add("ReferralSendModal", () => (
+    <View style={{ marginBottom: 30 }}>
+      <CelButton
+        onPress={() => store.dispatch(openModal(MODALS.REFERRAL_SEND_MODAL))}
+      >
+        Open ReferralSendModal
+      </CelButton>
+      <ReferralSendModal />
+    </View>
+  ))
+  .add("RegisterPromoCodeModal", () => (
+    <View style={{ marginBottom: 30 }}>
+      <CelButton
+        onPress={() =>
+          store.dispatch(openModal(MODALS.REGISTER_PROMO_CODE_MODAL))
+        }
+      >
+        Open RegisterPromoCodeModal
+      </CelButton>
+      <RegisterPromoCodeModal />
     </View>
   ));

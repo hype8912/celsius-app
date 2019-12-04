@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Modal, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Keyboard,
+} from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { BlurView } from "expo-blur";
@@ -31,6 +38,42 @@ class CelModal extends Component {
     hasCloseButton: true,
     picture: null,
     pictureDimensions: {},
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalPosition: { justifyContent: "flex-end" },
+    };
+  }
+
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      this.keyboardDidShow
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      this.keyboardDidHide
+    );
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  keyboardDidShow = () => {
+    this.setState({
+      modalPosition: { justifyContent: "flex-start" },
+    });
+  };
+
+  keyboardDidHide = () => {
+    this.setState({
+      modalPosition: { justifyContent: "flex-end" },
+    });
   };
 
   renderPicture = () => {
@@ -79,6 +122,7 @@ class CelModal extends Component {
       hasCloseButton,
       onClose,
     } = this.props;
+    const { modalPosition } = this.state;
     const style = CelModalStyle();
 
     return (
@@ -88,7 +132,7 @@ class CelModal extends Component {
         onRequestClose={() => actions.closeModal()}
         visible={openedModal === name}
       >
-        <View style={style.wrapper}>
+        <View style={[style.wrapper, modalPosition]}>
           <View style={style.modal}>
             <View style={{ height: picture || hasCloseButton ? 50 : 0 }}>
               {!!hasCloseButton && this.renderClose()}

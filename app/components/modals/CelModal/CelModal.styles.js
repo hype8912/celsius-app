@@ -9,7 +9,6 @@ import STYLES from "../../../constants/STYLES";
 const base = {
   wrapper: {
     alignItems: "center",
-    justifyContent: "flex-end",
     backgroundColor:
       Platform.OS === "android"
         ? "rgba(243,243,243,0.9)"
