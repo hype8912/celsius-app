@@ -16,9 +16,12 @@
 
 ## Additional notes
 
-> What does this implement/fix? Explain your changes. (optional)
-> Are there any scripts that need running (eg. yarn install)?
-> Are there any edge cases that need checking?
-> Are there any specific test instructions?
+```
+What does this implement/fix? Explain your changes.
+Are there any scripts that need running (eg. yarn install)?
+Are there any edge cases that need checking?
+Are there any specific test instructions?
+```
+
 
 [MVPWorkshop Pull Request & Code Review Guidelines](https://docs.google.com/document/d/1TcuU1JBhlGZLtpy0osSNinXQ2piP_yrDuRcXdqaOS_U/edit#heading=h.5b6kpdr4btq8)
