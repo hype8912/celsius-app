@@ -21,6 +21,7 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import WithdrawWarningModal from "../../organisms/WithdrawWarningModal/WithdrawWarningModal";
 import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
 import DestinationTagModal from "../../organisms/DestinationTagModal/DestinationTagModal";
+import ConfirmWithdrawalAddressModal from "../../modals/ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
 
 @connect(
   state => ({
@@ -76,7 +77,7 @@ class WithdrawCreateAddress extends Component {
     }
   };
 
-  handeConfirmWithdrawal = () => {
+  handleConfirmWithdrawal = () => {
     const { actions, formData } = this.props;
 
     if (!formData.coinTag && ["XRP", "XLM", "EOS"].includes(formData.coin)) {
@@ -85,6 +86,7 @@ class WithdrawCreateAddress extends Component {
       actions.navigateTo("VerifyProfile", {
         onSuccess: actions.setCoinWithdrawalAddress,
       });
+      actions.closeModal();
     }
   };
 
@@ -213,7 +215,10 @@ class WithdrawCreateAddress extends Component {
             <View style={style.button}>
               <CelButton
                 disabled={!formData.withdrawAddress}
-                onPress={this.handeConfirmWithdrawal}
+                // onPress={this.handeConfirmWithdrawal}
+                onPress={() =>
+                  actions.openModal(MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL)
+                }
               >
                 Confirm withdrawal
               </CelButton>
@@ -225,6 +230,9 @@ class WithdrawCreateAddress extends Component {
             />
             <MemoIdModal coin={formData.coin} />
             <DestinationTagModal closeModal={actions.closeModal} />
+            <ConfirmWithdrawalAddressModal
+              handleConfirmWithdrawal={this.handleConfirmWithdrawal}
+            />
           </View>
         </View>
       </RegularLayout>

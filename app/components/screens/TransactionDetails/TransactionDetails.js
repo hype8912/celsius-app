@@ -43,6 +43,7 @@ import { MODALS } from "../../../constants/UI";
 import InfoModal from "../../molecules/InfoModal/InfoModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CollateralLoanCard from "../../molecules/CollateralLoanCard/CollateralLoanCard";
+import PrepaymentSuccessfulModal from "../../modals/PrepaymentSuccessfulModal/PrepaymentSuccessfulModal";
 
 @connect(
   state => ({
@@ -209,10 +210,10 @@ class TransactionDetails extends Component {
           <CelButton
             margin="12 0 80 0"
             key={sectionType}
-            onPress={() => actions.navigateTo("WalletLanding")}
+            onPress={() => actions.navigateTo("BorrowLanding")}
             basic
           >
-            Go back to wallet
+            Go back to Loan Overview
           </CelButton>
         ) : null;
       case "button:back:main":
@@ -588,6 +589,7 @@ class TransactionDetails extends Component {
           }}
           yesCopy={"Done"}
         />
+        <PrepaymentSuccessfulModal />
       </RegularLayout>
     );
   }

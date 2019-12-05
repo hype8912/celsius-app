@@ -21,8 +21,7 @@ import Card from "../../atoms/Card/Card";
 )
 class ConfirmWithdrawalAddressModal extends Component {
   static propTypes = {
-    coin: PropTypes.string.isRequired,
-    withdrawalAddress: PropTypes.string.isRequired,
+    handleConfirmWithdrawal: PropTypes.func.isRequired,
   };
   static defaultProps = {};
 
@@ -31,16 +30,13 @@ class ConfirmWithdrawalAddressModal extends Component {
     this.state = {};
   }
 
-  handleConfirmWithdrawalFromModal = () => {
-    const { actions } = this.props;
-    actions.navigateTo("VerifyProfile", {
-      onSuccess: actions.setCoinWithdrawalAddress,
-    });
-    actions.closeModal();
-  };
-
   render() {
-    const { actions, coin, withdrawAddress } = this.props;
+    const {
+      actions,
+      coin,
+      withdrawAddress,
+      handleConfirmWithdrawal,
+    } = this.props;
     const style = ConfirmWithdrawalAddressModalStyle();
 
     return (
@@ -83,7 +79,7 @@ class ConfirmWithdrawalAddressModal extends Component {
           <CelModalButton
             position={"right"}
             margin={"20 0 20 0"}
-            onPress={this.handleConfirmWithdrawalFromModal}
+            onPress={handleConfirmWithdrawal}
           >
             Confirm
           </CelModalButton>

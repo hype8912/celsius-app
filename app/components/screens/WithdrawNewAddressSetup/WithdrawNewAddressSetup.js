@@ -13,6 +13,8 @@ import CelInput from "../../atoms/CelInput/CelInput";
 // import UI from "../../../constants/STYLES";
 import addressUtil from "../../../utils/address-util";
 import CelButton from "../../atoms/CelButton/CelButton";
+import ConfirmWithdrawalAddressModal from "../../modals/ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
+import { MODALS } from "../../../constants/UI";
 
 @connect(
   state => ({
@@ -38,6 +40,7 @@ class WithdrawNewAddressSetup extends Component {
 
   setNewAddress = () => {
     const { actions } = this.props;
+    actions.closeModal();
     actions.setCoinWithdrawalAddress("change-address");
   };
 
@@ -52,8 +55,11 @@ class WithdrawNewAddressSetup extends Component {
   handleScan = code => {
     const { actions } = this.props;
     const address = addressUtil.splitAddressTag(code);
-    actions.updateFormField("withdrawAddress", address.newAddress);
-    actions.updateFormField("coinTag", address.newTag);
+    actions.updateFormFields({
+      withdrawAddress: address.newAddress,
+      coinTag: address.newTag,
+    });
+    actions.openModal(MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL);
   };
 
   handleScanClick = async () => {
@@ -67,7 +73,7 @@ class WithdrawNewAddressSetup extends Component {
   };
 
   render() {
-    const { formData } = this.props;
+    const { formData, actions } = this.props;
     const style = WithdrawalNewAddressSetupStyle();
 
     // const hasTag = addressUtil.hasTag(address.address);
@@ -110,9 +116,17 @@ class WithdrawNewAddressSetup extends Component {
           </CelText>
         </TouchableOpacity>
 
-        <CelButton margin={"20 0 20 0"} onPress={() => this.setNewAddress()}>
+        <CelButton
+          margin={"20 0 20 0"}
+          onPress={() =>
+            actions.openModal(MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL)
+          }
+        >
           Confirm
         </CelButton>
+        <ConfirmWithdrawalAddressModal
+          handleConfirmWithdrawal={this.setNewAddress}
+        />
       </RegularLayout>
     );
   }

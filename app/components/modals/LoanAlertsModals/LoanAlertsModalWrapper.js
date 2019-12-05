@@ -79,7 +79,7 @@ class LoanAlertsModalWrapper extends Component {
         walletSummary,
         loan
       );
-      this.setState(loan, principalCoinWallet, collateralCoinWallet);
+      this.setState({ loan, principalCoinWallet, collateralCoinWallet });
     }
   }
 

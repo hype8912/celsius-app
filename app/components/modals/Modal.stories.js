@@ -144,7 +144,10 @@ storiesOf("Modals", module)
       >
         Open WithdrawalInfoModal
       </CelButton>
-      <WithdrawInfoModal onPressConfirm={action("onPressConfirm")} />
+      <WithdrawInfoModal
+        onPressConfirm={action("onPressConfirm")}
+        withdrawalSettings={{ daily_withdrawal_limit: 100 }}
+      />
     </View>
   ))
   .add("LoanApplicationSuccessModal", () => (

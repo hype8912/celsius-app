@@ -12,9 +12,8 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
 import CelPayReceivedModal from "../../modals/CelPayReceivedModal/CelPayReceivedModal";
 import { WALLET_LANDING_VIEW_TYPES, MODALS } from "../../../constants/UI";
-import BecameCelMemberModal from "../../organisms/BecameCelMemberModal/BecameCelMemberModal";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import EarnInterestCelModal from "../../organisms/EarnInterestCelModal/EarnInterestCelModal";
+// import EarnInterestCelModal from "../../organisms/EarnInterestCelModal/EarnInterestCelModal";
 import { getSecureStoreKey } from "../../../utils/expo-storage";
 import { isUSCitizen } from "../../../utils/user-util";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
@@ -24,6 +23,7 @@ import WalletLandingStyle from "./WalletLanding.styles";
 import KYCandPromotionsTrigger from "../../molecules/KYCandPromotionsTrigger/KYCandPromotionsTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
+import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 
 @connect(
   state => {
@@ -257,10 +257,9 @@ class WalletLanding extends Component {
           </ExpandableItem>
         </View>
         <CelPayReceivedModal transfer={branchTransfer} />
-        <BecameCelMemberModal
-          title={"Congrats! You have earned 1 CEL token!"}
-        />
-        <EarnInterestCelModal />
+        <BecomeCelMemberModal />
+        {/* Temporary disabling this modal */}
+        {/* <EarnInterestCelModal />*/}
         <LoanAlertsModalWrapper />
       </RegularLayout>
     );
