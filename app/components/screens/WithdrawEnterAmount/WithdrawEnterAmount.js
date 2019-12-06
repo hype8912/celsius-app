@@ -420,7 +420,10 @@ class WithdrawEnterAmount extends Component {
             tierTitle={loyaltyInfo.tier.title}
           />
         )}
-        <WithdrawalInfoModal withdrawalSettings={withdrawalSettings} />
+        <WithdrawalInfoModal
+          withdrawalSettings={withdrawalSettings}
+          type={coin}
+        />
       </RegularLayout>
     );
   }

@@ -16,13 +16,30 @@ class WithdrawalInfoModal extends Component {
   static defaultProps = {};
 
   handleModalContent = () => {
-    const { withdrawalSettings } = this.props;
+    const { withdrawalSettings, type } = this.props;
+    let title;
+    let body;
+
+    switch (type) {
+      case "CEL":
+        title = "Are you sure you want to withdraw CEL? ";
+        body =
+          "The longer you HODL and the more you HODL, the more interest you'll earn with Celsius. Withdrawing your funds will reduce the amount of interest you could potentially earn.";
+        break;
+      case "DAI":
+        title = "ATTENTION";
+        body =
+          "Please ensure that your withdrawal address supports SAI (Single Collateral DAI). ";
+        break;
+      default:
+        title = null;
+        body = null;
+    }
 
     const modalContent = [
       {
-        title: "Are you sure you want to withdraw CEL? ",
-        body:
-          "The longer you HODL and the more you HODL, the more interest you'll earn with Celsius. Withdrawing your funds will reduce the amount of interest you could potentially earn.",
+        title,
+        body,
         firstButtonCopy: "Next Tip",
         secondButtonCopy: null,
         firstButtonStyle: "secondary",
@@ -108,21 +125,44 @@ class WithdrawalInfoModal extends Component {
 
   render() {
     const style = WithdrawalInfoStyle();
+    const { type } = this.props;
+    let steps = [];
 
     const modalContent = this.handleModalContent();
+
+    switch (type) {
+      case "CEL":
+        steps = modalContent;
+        break;
+      case "DAI":
+        steps = modalContent;
+        break;
+      default:
+        steps = modalContent.slice(1, 3);
+    }
+
+    const imagesArray =
+      type === "DAI"
+        ? [
+            require("../../../../assets/images/alert-icon.png"),
+            require("../../../../assets/images/modal-withdraw.png"),
+            require("../../../../assets/images/modal-withdraw.png"),
+          ]
+        : [
+            require("../../../../assets/images/modal-withdraw.png"),
+            require("../../../../assets/images/modal-withdraw.png"),
+            require("../../../../assets/images/modal-withdraw.png"),
+          ];
 
     return (
       <MultistepModal
         style={style.container}
         name={MODALS.WITHDRAW_INFO_MODAL}
-        top={30}
-        imagesArray={[
-          require("../../../../assets/images/modal-withdraw.png"),
-          require("../../../../assets/images/modal-withdraw.png"),
-          require("../../../../assets/images/modal-withdraw.png"),
-        ]}
+        top={25}
+        imagesArray={imagesArray}
+        imageWidth={31}
       >
-        {modalContent.map((c, k) =>
+        {steps.map((c, k) =>
           this.renderStep(
             c.title,
             c.body,
