@@ -13,6 +13,7 @@ import {
 import CelText from "../../atoms/CelText/CelText";
 import { THEMES, WELCOME_MESSAGES } from "../../../constants/UI";
 import { isKYCRejectedForever } from "../../../utils/user-util";
+import { STORYBOOK } from "../../../../dev-settings";
 
 const apiCalls = [];
 
@@ -55,6 +56,10 @@ class Home extends Component {
   componentDidUpdate(prevProps) {
     const { user, appInitialized } = this.props;
     SplashScreen.hide();
+
+    if (STORYBOOK) {
+      return prevProps.actions.navigateTo("Storybook");
+    }
 
     if (prevProps.appInitialized === false && appInitialized === true) {
       if (user.id) {
