@@ -124,6 +124,7 @@ class TransactionsHistory extends Component {
       margin,
       callsInProgress,
       hasFilter,
+      transactions,
       // navigation
     } = this.props;
     const style = TransactionsHistoryStyle();
@@ -136,6 +137,15 @@ class TransactionsHistory extends Component {
       apiUtil.areCallsInProgress([API.GET_ALL_TRANSACTIONS], callsInProgress)
     ) {
       return <LoadingState />;
+    }
+
+    if (transactions.length === 0) {
+      return (
+        <EmptyState
+          heading="Sorry"
+          paragraphs={["No transactions in your wallet"]}
+        />
+      );
     }
 
     return (
@@ -157,7 +167,7 @@ class TransactionsHistory extends Component {
         {!transactionsDisplay || !transactionsDisplay.length ? (
           <EmptyState
             heading="Sorry"
-            paragraphs={["No transactions in your wallet"]}
+            paragraphs={["No transactions for given filters in your wallet"]}
           />
         ) : (
           <FlatList

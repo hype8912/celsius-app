@@ -8,15 +8,16 @@ import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
-    height: heightPercentageToDP("24%"),
-    position: "absolute",
-    right: -20,
-    left: -20,
-    top: -20,
+    marginRight: -20,
+    marginLeft: -20,
+    marginTop: -20,
+  },
+  mainWrapper: {
+    flexDirection: "row",
   },
   halfCircleRight: {
     position: "absolute",
-    marginTop: heightPercentageToDP("1%"),
+    marginTop: heightPercentageToDP("2%"),
     left: -heightPercentageToDP("13%"),
     height: heightPercentageToDP("22%"),
     width: heightPercentageToDP("22%"),
@@ -24,9 +25,6 @@ const base = {
     borderRadius: heightPercentageToDP("11%"),
     justifyContent: "center",
     alignItems: "flex-end",
-  },
-  mainWrapper: {
-    flexDirection: "row",
   },
   textAlignment: {
     marginTop: heightPercentageToDP("1.7%"),
@@ -50,6 +48,6 @@ const themed = {
   celsius: {},
 };
 
-const KYCandPromotionsTriggerStyle = () => getThemedStyle(base, themed);
+const BannerStyle = () => getThemedStyle(base, themed);
 
-export default KYCandPromotionsTriggerStyle;
+export default BannerStyle;

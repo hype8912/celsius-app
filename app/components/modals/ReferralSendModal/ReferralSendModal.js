@@ -12,6 +12,7 @@ import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import CelButton from "../../atoms/CelButton/CelButton";
+import userBehaviorUtil from "../../../utils/user-behavior-util";
 
 @connect(
   state => ({
@@ -81,22 +82,24 @@ class ReferralSendModal extends Component {
           <View style={style.copyShareButtonsWrapper}>
             <CopyButton
               copyText={slug}
-              onCopy={() =>
+              onCopy={() => {
+                userBehaviorUtil.userReferring();
                 actions.showMessage(
                   "success",
                   "Promo code key copied to clipboard!"
-                )
-              }
+                );
+              }}
             />
           </View>
         </View>
         <View style={style.shareWrapper}>
           <CelButton
-            onPress={() =>
+            onPress={() => {
               Share.share({
                 message: `Join Celsius Network using my referral code ${slug} when signing up and earn $10 in BTC with your first deposit of $200 or more! #UnbankYourself \n \n${shareLink}`,
-              })
-            }
+              });
+              userBehaviorUtil.userReferring();
+            }}
           >
             Share a unique link
           </CelButton>

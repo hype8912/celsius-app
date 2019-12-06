@@ -20,8 +20,12 @@ import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import ComingSoonCoins from "../../molecules/ComingSoonCoins/ComingSoonCoins";
 import CoinCards from "../../organisms/CoinCards/CoinCards";
 import WalletLandingStyle from "./WalletLanding.styles";
-import KYCandPromotionsTrigger from "../../molecules/KYCandPromotionsTrigger/KYCandPromotionsTrigger";
+import LoanAlertsModal from "../../organisms/LoanAlertsModal/LoanAlertsModal";
+import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
+import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
+import ReferralTrigger from "../../atoms/ReferralTrigger/ReferralTrigger";
+import RejectionReasonsModal from "../../modals/RejectionReasonsModal/RejectionReasonsModal";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 
@@ -44,6 +48,9 @@ import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMem
         ? state.user.profile.kyc.status
         : KYC_STATUSES.collecting,
       depositCompliance: state.compliance.deposit,
+      rejectionReasons: state.user.profile.kyc
+        ? state.user.profile.kyc.rejectionReasons
+        : [],
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -193,6 +200,7 @@ class WalletLanding extends Component {
       branchTransfer,
       depositCompliance,
       kycStatus,
+      rejectionReasons,
     } = this.props;
     const style = WalletLandingStyle();
 
@@ -202,7 +210,8 @@ class WalletLanding extends Component {
 
     return (
       <RegularLayout refreshing={refreshing} pullToRefresh={this.refresh}>
-        <KYCandPromotionsTrigger actions={actions} kycType={kycStatus} />
+        <ReferralTrigger actions={actions} />
+        <KYCTrigger actions={actions} kycType={kycStatus} />
         <View>
           <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
           <WalletDetailsCard
@@ -257,6 +266,10 @@ class WalletLanding extends Component {
           </ExpandableItem>
         </View>
         <CelPayReceivedModal transfer={branchTransfer} />
+        {/* <LoanAlertsModalWrapper />*/}
+        <LoanAlertsModal />
+        <ReferralSendModal />
+        <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <BecomeCelMemberModal />
         {/* Temporary disabling this modal */}
         {/* <EarnInterestCelModal />*/}

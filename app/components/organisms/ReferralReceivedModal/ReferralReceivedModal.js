@@ -10,6 +10,7 @@ import { MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { BRANCH_LINKS } from "../../../constants/DATA";
+import userBehaviorUtil from "../../../utils/user-behavior-util";
 
 // TODO check usage & remove
 @connect(
@@ -19,9 +20,10 @@ import { BRANCH_LINKS } from "../../../constants/DATA";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class ReferralReceivedModal extends Component {
-  closeAndGoToSignup = () => {
+  closeAndGoToSignup = owner => {
     const { actions } = this.props;
 
+    userBehaviorUtil.userReferred(owner);
     actions.closeModal();
     actions.navigateTo("RegisterInitial");
   };
@@ -71,7 +73,7 @@ class ReferralReceivedModal extends Component {
             )}
           </CelText>
         )}
-        <CelButton onPress={this.closeAndGoToSignup} margin="30 0 20 0">
+        <CelButton onPress={this.closeAndGoToSignup(owner)} margin="30 0 20 0">
           Sign Up
         </CelButton>
       </CelModal>
