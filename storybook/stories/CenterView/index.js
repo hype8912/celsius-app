@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import style from "./style";
 
 export default function CenterView({ children }) {
-  return <View style={style.main}>{children}</View>;
+  return <ScrollView style={style.main}>{children}</ScrollView>;
 }
 
 CenterView.defaultProps = {
