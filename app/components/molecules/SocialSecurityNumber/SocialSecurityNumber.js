@@ -131,7 +131,7 @@ class SocialSecurityNumber extends Component {
             </View>
 
             <Card color={STYLES.COLORS.CELSIUS_BLUE} margin="0 0 20 0">
-              <CelText color="white">
+              <CelText color="white" weight="light">
                 <CelText color="white" weight="semi-bold">
                   Keep in mind!{" "}
                 </CelText>

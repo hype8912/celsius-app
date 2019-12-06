@@ -53,7 +53,7 @@ function getProps(purpose, componentProps) {
       return {
         ...props,
         paragraphs: ["Withdraw will be available upon identity verification."],
-        button: "Back to settings",
+        button: "Back to wallet",
         onPress: () => actions.navigateTo("WalletSettings"),
       };
 
@@ -82,7 +82,7 @@ function getProps(purpose, componentProps) {
         ...props,
         image: require("../../assets/images/diane-sad3x.png"),
         paragraphs: ["CelPay will be available upon identity verification."],
-        button: "Back to settings",
+        button: "Back to wallet",
         onPress: () => actions.navigateTo("WalletSettings"),
       };
 
@@ -100,7 +100,7 @@ function getProps(purpose, componentProps) {
       return {
         ...props,
         paragraphs: ["Deposits will be available upon identity verification."],
-        button: "Back to settings",
+        button: "Back to wallet",
         onPress: () => actions.navigateTo("WalletSettings"),
       };
 

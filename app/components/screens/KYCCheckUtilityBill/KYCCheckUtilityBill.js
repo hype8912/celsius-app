@@ -69,7 +69,6 @@ class KYCCheckUtilityBill extends Component {
 
           <CelButton
             basic
-            size="small"
             onPress={this.retakeUtilityBillPhoto}
             margin="15 0 20 0"
           >

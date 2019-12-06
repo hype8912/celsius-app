@@ -124,7 +124,7 @@ class SelectState extends Component {
             <FlatList
               data={filteredStates}
               renderItem={this.renderStates}
-              keyExtractor={state => state.code}
+              keyExtractor={state => state.value}
             />
           ) : (
             <View style={itemStyle}>

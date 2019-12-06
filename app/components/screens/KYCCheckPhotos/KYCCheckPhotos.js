@@ -143,12 +143,7 @@ class KYCCheckPhotos extends Component {
             }}
           />
 
-          <CelButton
-            basic
-            size="small"
-            onPress={this.retakeFrontPhoto}
-            margin="15 0 20 0"
-          >
+          <CelButton basic onPress={this.retakeFrontPhoto} margin="15 0 20 0">
             Retake
           </CelButton>
 
@@ -167,7 +162,6 @@ class KYCCheckPhotos extends Component {
 
               <CelButton
                 basic
-                size="small"
                 onPress={this.retakeBackPhoto}
                 margin="15 0 20 0"
               >

@@ -41,7 +41,7 @@ const base = {
 const themed = {
   light: {
     clearSelectWrapper: {
-      borderColor: STYLES.COLORS.DARK_GRAY1,
+      borderColor: STYLES.COLORS.DARK_GRAY7,
     },
   },
 

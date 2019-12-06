@@ -182,9 +182,6 @@ class CameraScreen extends Component {
       }
 
       actions.startApiCall(API.TAKE_CAMERA_PHOTO);
-      await actions.navigateTo("ConfirmCamera", {
-        onSave: navigation.getParam("onSave"),
-      });
       const photo = await this.camera.takePictureAsync();
       const { size } = this.state;
       let cropWidth;
@@ -231,7 +228,15 @@ class CameraScreen extends Component {
       );
 
       actions.takeCameraPhoto(resizedPhoto);
+      await actions.navigateTo("ConfirmCamera", {
+        onSave: navigation.getParam("onSave"),
+      });
     } catch (err) {
+      actions.apiError(API.TAKE_CAMERA_PHOTO, err);
+      actions.showMessage(
+        "error",
+        "There was an issue with the camera. Please try again or pick an image from your library."
+      );
       loggerUtil.err(err);
     }
   };
@@ -249,18 +254,28 @@ class CameraScreen extends Component {
           width: "100%",
         }}
       >
-        <View style={[style.mask, style.maskOverlayColor]}>
-          <SafeAreaView style={{ flex: 1, marginBottom: 20 }}>
+        <View
+          style={[style.mask, style.maskOverlayColor, { alignItems: "center" }]}
+        >
+          <SafeAreaView
+            style={{
+              flex: 1,
+              alignItems: "center",
+              paddingTop: 20,
+              marginBottom: 20,
+              width,
+            }}
+          >
             <CelText
               type="H3"
               weight="700"
               align="center"
-              margin="15 0 20 0"
-              style={{ paddingHorizontal: 20 }}
+              margin="5 0 20 0"
+              style={{ width: "80%" }}
             >
               {cameraHeading}
             </CelText>
-            <CelText type="H5" align="center" style={{ paddingHorizontal: 20 }}>
+            <CelText type="H5" align="center" style={{ width: "80%" }}>
               {cameraCopy}
             </CelText>
           </SafeAreaView>

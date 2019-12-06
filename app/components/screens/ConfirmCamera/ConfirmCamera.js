@@ -68,6 +68,7 @@ class ConfirmCamera extends Component {
       API.TAKE_CAMERA_PHOTO,
       callsInProgress
     );
+
     return (
       <RegularLayout fabType="hide">
         <View

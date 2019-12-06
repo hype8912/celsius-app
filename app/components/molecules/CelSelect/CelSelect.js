@@ -269,23 +269,28 @@ class CelSelect extends Component {
         onPress={onPress}
         style={[inputStyle, { flexDirection: "row", alignItems: "center" }]}
       >
-        <View style={{ flexDirection: "row" }}>
-          {countryInput
-            ? this.renderImage(
-                [cmpStyle.flagImage, { marginRight: 5 }],
-                this.state.value.alpha2
-              )
-            : null}
-          <CelText type="H4" color={textColor}>
-            {value ? value.label || value.name : labelText}
-          </CelText>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            flex: 1,
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            {countryInput
+              ? this.renderImage(
+                  [cmpStyle.flagImage, { marginRight: 5 }],
+                  this.state.value.alpha2
+                )
+              : null}
+            <CelText type="H4" color={textColor}>
+              {value ? value.label || value.name : labelText}
+            </CelText>
+          </View>
           {!disabled && (
             <View
               style={{
-                flex: 1,
-                marginTop: countryInput ? 11 : 2,
-                position: countryInput ? "absolute" : "relative",
-                marginLeft: countryInput ? 292 : 0,
+                marginTop: 5,
                 justifyContent: "center",
                 alignItems: countryInput ? "center" : "flex-end",
               }}

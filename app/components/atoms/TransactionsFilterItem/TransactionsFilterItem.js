@@ -66,8 +66,21 @@ class TransactionsFilterItem extends Component {
     // Coin icon
     if (item.image_url) {
       if (isActive) {
+        const theme = getTheme();
+
+        if (theme === THEMES.LIGHT) {
+          return (
+            <Image source={{ uri: item.image_url }} style={style.iconWrapper} />
+          );
+        }
+
         return (
-          <Image source={{ uri: item.image_url }} style={style.iconWrapper} />
+          <Icon
+            name={item.icon || "CheckboxChecked"}
+            fill={COLORS.WHITE}
+            height={item.image_url ? "26" : "12"}
+            width={item.image_url ? "26" : "12"}
+          />
         );
       }
       return (
@@ -94,7 +107,7 @@ class TransactionsFilterItem extends Component {
           name={"Close"}
           fill={
             theme === THEMES.LIGHT
-              ? COLORS.DARK_GRAY3
+              ? COLORS.DARK_GRAY7
               : STYLES.COLORS.WHITE_OPACITY5
           }
           height={"16"}
