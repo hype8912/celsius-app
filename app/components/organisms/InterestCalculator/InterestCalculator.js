@@ -220,7 +220,7 @@ class InterestCalculator extends Component {
           )}
         </View>
 
-        <Separator />
+        <Separator margin={"0 0 20 0"} />
 
         <View
           style={{

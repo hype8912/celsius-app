@@ -96,7 +96,6 @@ class LoanOverviewCard extends Component {
     const style = LoanOverviewCardStyle();
     let previousPayments;
     let previous5Payments;
-
     if (loan.amortization_table) {
       previousPayments = loan.amortization_table.filter(p => p.isPaid);
       previous5Payments = previousPayments.slice(-5);

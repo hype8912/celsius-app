@@ -5,13 +5,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-// import ConfirmWithdrawalAddressModalStyle from "./ConfirmWithdrawalAddressModal.styles";
+import ConfirmWithdrawalAddressModalStyle from "./ConfirmWithdrawalAddressModal.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelModal from "../CelModal/CelModal";
 import { MODALS } from "../../../constants/UI";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -22,8 +21,7 @@ import STYLES from "../../../constants/STYLES";
 )
 class ConfirmWithdrawalAddressModal extends Component {
   static propTypes = {
-    coin: PropTypes.string.isRequired,
-    withdrawalAddress: PropTypes.string.isRequired,
+    handleConfirmWithdrawal: PropTypes.func.isRequired,
   };
   static defaultProps = {};
 
@@ -32,17 +30,14 @@ class ConfirmWithdrawalAddressModal extends Component {
     this.state = {};
   }
 
-  handleConfirmWithdrawalFromModal = () => {
-    const { actions } = this.props;
-    actions.navigateTo("VerifyProfile", {
-      onSuccess: actions.setCoinWithdrawalAddress,
-    });
-    actions.closeModal();
-  };
-
   render() {
-    const { actions, coin, withdrawAddress } = this.props;
-    // const style = ConfirmWithdrawalAddressModalStyle();
+    const {
+      actions,
+      coin,
+      withdrawAddress,
+      handleConfirmWithdrawal,
+    } = this.props;
+    const style = ConfirmWithdrawalAddressModalStyle();
 
     return (
       <CelModal name={MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL}>
@@ -63,7 +58,7 @@ class ConfirmWithdrawalAddressModal extends Component {
           >
             {`Your new ${coin} withdrawal address`}
           </CelText>
-          <Card margin={"20 0 20 0"} color={STYLES.COLORS.LIGHT_GRAY}>
+          <Card margin={"20 0 20 0"} color={style.card.backgroundColor}>
             <CelText type={"H2"} weight={"500"} align={"center"}>
               {withdrawAddress}
             </CelText>
@@ -73,7 +68,7 @@ class ConfirmWithdrawalAddressModal extends Component {
         <View style={{ width: "100%", flexDirection: "row" }}>
           <CelModalButton
             position={"left"}
-            buttonStyle={"secondary"}
+            buttonStyle={"red"}
             margin={"20 0 20 0"}
             onPress={() => {
               actions.closeModal();
@@ -84,7 +79,7 @@ class ConfirmWithdrawalAddressModal extends Component {
           <CelModalButton
             position={"right"}
             margin={"20 0 20 0"}
-            onPress={this.handleConfirmWithdrawalFromModal}
+            onPress={handleConfirmWithdrawal}
           >
             Confirm
           </CelModalButton>

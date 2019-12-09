@@ -9,17 +9,16 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { hasPassedKYC } from "../../../utils/user-util";
 import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
-import BorrowCalculatorScreen from "../../organisms/BorrowCalculatorScreen/BorrowCalculatorScreen";
+import BorrowCalculatorScreen from "../BorrowCalculatorScreen/BorrowCalculatorScreen";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { widthPercentageToDP } from "../../../utils/styles-util";
 import LoanOverviewCard from "../../organisms/LoanOverviewCard/LoanOverviewCard";
-import BorrowCalculatorModal from "../../organisms/BorrowCalculatorModal/BorrowCalculatorModal";
 
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import EmptyState from "../../atoms/EmptyState/EmptyState";
-import LoanCancelModal from "../../organisms/LoanCancelModal/LoanCancelModal";
+import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -77,12 +76,14 @@ class BorrowLanding extends Component {
   }
 
   async componentDidMount() {
-    const { actions, loanCompliance } = this.props;
+    const { actions, loanCompliance, formData } = this.props;
+    if (formData.prepayLoanId) {
+      actions.openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL);
+    }
 
     if (loanCompliance.allowed) {
       await actions.getAllLoans();
     }
-
     this.setState({ isLoading: false });
   }
 
@@ -194,7 +195,9 @@ class BorrowLanding extends Component {
             <TouchableOpacity
               style={style.buttonIconText}
               onPress={() => {
-                actions.openModal(MODALS.BORROW_CALCULATOR_MODAL);
+                actions.navigateTo("BorrowCalculatorScreen", {
+                  emitParams: this.emitParams,
+                });
               }}
             >
               <View style={style.buttonItself}>
@@ -262,8 +265,7 @@ class BorrowLanding extends Component {
                 );
               })}
           </Animated.ScrollView>
-          <BorrowCalculatorModal emitParams={this.emitParams} />
-          <LoanCancelModal actions={actions} />
+          <CancelLoanModal actions={actions} />
         </View>
       </RegularLayout>
     );
@@ -272,7 +274,6 @@ class BorrowLanding extends Component {
   renderNoLoans = () => (
     <RegularLayout>
       <EmptyState purpose={EMPTY_STATES.NO_LOANS} />
-      <BorrowCalculatorModal emitParams={this.emitParams} />
     </RegularLayout>
   );
 

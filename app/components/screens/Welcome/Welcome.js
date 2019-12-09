@@ -11,13 +11,14 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import appUtil from "../../../utils/app-util";
-// import ReferralReceivedModal from '../../organisms/ReferralReceivedModal/ReferralReceivedModal';
+import ReferralReceivedModal from "../../modals/ReferralReceivedModal/ReferralReceivedModal";
 // import STYLES from '../../../constants/STYLES';
 
 @connect(
   state => ({
     advertisingId: state.app.advertisingId,
     appsFlyerUID: state.app.appsFlyerUID,
+    referralLink: state.branch.registeredLink,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -45,7 +46,7 @@ class Welcome extends Component {
   };
   render() {
     const style = WelcomeStyle();
-    const { actions } = this.props;
+    const { actions, referralLink } = this.props;
 
     const { revisionId } = this.state;
     return (
@@ -82,6 +83,12 @@ class Welcome extends Component {
             Celsius App version: {revisionId}
           </CelText>
         </View>
+
+        <ReferralReceivedModal
+          navigateTo={actions.navigateTo}
+          closeModal={actions.closeModal}
+          referralLink={referralLink}
+        />
       </RegularLayout>
     );
   }

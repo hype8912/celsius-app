@@ -30,7 +30,7 @@ export default function transactionsReducer(state = initialState, action) {
       return {
         ...state,
         transactionList: {
-          ...state.all,
+          ...state.transactionList,
           ...newTransactions,
         },
       };

@@ -12,7 +12,6 @@ const transactionsService = {
  * @see https://documenter.getpostman.com/view/4207695/S11RLvpb#af790115-ee70-45a8-8693-93bbad0d2327
  *
  * @param {Object} query
- * @param {number} query.limit
  * @param {string} query.type - one of withdraw|received|in progress
  * @param {string} query.coin - eg. eth
  * @returns {Promise}

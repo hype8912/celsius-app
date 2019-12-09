@@ -18,9 +18,10 @@ import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import CelInput from "../../atoms/CelInput/CelInput";
-import WithdrawWarningModal from "../../organisms/WithdrawWarningModal/WithdrawWarningModal";
-import MemoIdModal from "../../organisms/MemoIdModal/MemoIdModal";
-import DestinationTagModal from "../../organisms/DestinationTagModal/DestinationTagModal";
+import WithdrawWarningModal from "../../modals/WithdrawWarningModal/WithdrawWarningModal";
+import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
+import ConfirmWithdrawalAddressModal from "../../modals/ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
+import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 
 @connect(
   state => ({
@@ -76,7 +77,7 @@ class WithdrawCreateAddress extends Component {
     }
   };
 
-  handeConfirmWithdrawal = () => {
+  handleConfirmWithdrawal = () => {
     const { actions, formData } = this.props;
 
     if (!formData.coinTag && ["XRP", "XLM", "EOS"].includes(formData.coin)) {
@@ -85,6 +86,7 @@ class WithdrawCreateAddress extends Component {
       actions.navigateTo("VerifyProfile", {
         onSuccess: actions.setCoinWithdrawalAddress,
       });
+      actions.closeModal();
     }
   };
 
@@ -213,7 +215,10 @@ class WithdrawCreateAddress extends Component {
             <View style={style.button}>
               <CelButton
                 disabled={!formData.withdrawAddress}
-                onPress={this.handeConfirmWithdrawal}
+                // onPress={this.handeConfirmWithdrawal}
+                onPress={() =>
+                  actions.openModal(MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL)
+                }
               >
                 Confirm withdrawal
               </CelButton>
@@ -223,8 +228,11 @@ class WithdrawCreateAddress extends Component {
               coin={formData.coin}
               navigateNext={this.handleConfirmWithdrawalFromModal}
             />
-            <MemoIdModal closeModal={actions.closeModal} coin={formData.coin} />
-            <DestinationTagModal closeModal={actions.closeModal} />
+            <MemoIdModal coin={formData.coin} />
+            <DestinationInfoTagModal closeModal={actions.closeModal} />
+            <ConfirmWithdrawalAddressModal
+              handleConfirmWithdrawal={this.handleConfirmWithdrawal}
+            />
           </View>
         </View>
       </RegularLayout>

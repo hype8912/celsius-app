@@ -55,13 +55,13 @@ const themed = {
 
   dark: {
     leftSegment: {
-      borderColor: STYLES.COLORS.WHITE_OPACITY5,
+      borderColor: STYLES.COLORS.WHITE_OPACITY3,
     },
     left: {
-      borderColor: STYLES.COLORS.WHITE_OPACITY5,
+      borderColor: STYLES.COLORS.WHITE_OPACITY3,
     },
     right: {
-      borderColor: STYLES.COLORS.WHITE_OPACITY5,
+      borderColor: STYLES.COLORS.WHITE_OPACITY3,
     },
     centralText: {
       color: STYLES.COLORS.WHITE_OPACITY5,

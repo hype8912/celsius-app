@@ -334,6 +334,7 @@ function prepayInterest(id) {
         type: ACTIONS.PREPAY_LOAN_INTEREST_SUCCESS,
       });
       dispatch(navigateTo("TransactionDetails", { id: transactionId }));
+      dispatch(openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.PREPAY_LOAN_INTEREST, err));
