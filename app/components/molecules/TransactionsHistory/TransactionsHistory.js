@@ -139,7 +139,7 @@ class TransactionsHistory extends Component {
       return <LoadingState />;
     }
 
-    if (transactions.length === 0) {
+    if (transactions && transactions.length === 0) {
       return (
         <EmptyState
           heading="Sorry"
