@@ -38,6 +38,7 @@
 		A2DEC522237EB337002537E9 /* Barlow-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2DEC510237EB337002537E9 /* Barlow-Light.ttf */; };
 		A2DEC523237EB337002537E9 /* Barlow-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2DEC511237EB337002537E9 /* Barlow-MediumItalic.ttf */; };
 		A2DEC524237EB337002537E9 /* Barlow-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2DEC512237EB337002537E9 /* Barlow-BlackItalic.ttf */; };
+		A2FC8110239E50E400193CE5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2FC810F239E50E400193CE5 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		A2DEC510237EB337002537E9 /* Barlow-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-Light.ttf"; sourceTree = "<group>"; };
 		A2DEC511237EB337002537E9 /* Barlow-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-MediumItalic.ttf"; sourceTree = "<group>"; };
 		A2DEC512237EB337002537E9 /* Barlow-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-BlackItalic.ttf"; sourceTree = "<group>"; };
+		A2FC810F239E50E400193CE5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AEFF2D05579A162FC964D118 /* libPods-celsius.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-celsius.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD02D8639C2EF75B9184103 /* Pods-celsius-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-celsius-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-celsius-tvOSTests/Pods-celsius-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -168,6 +170,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				A2FC810F239E50E400193CE5 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -426,6 +429,7 @@
 				A2DEC521237EB337002537E9 /* Barlow-LightItalic.ttf in Resources */,
 				A2DEC523237EB337002537E9 /* Barlow-MediumItalic.ttf in Resources */,
 				A2DEC516237EB337002537E9 /* Barlow-Italic.ttf in Resources */,
+				A2FC8110239E50E400193CE5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,7 +1,6 @@
 // TODO(sb): RN update dependencies fixes
 // import * as GoogleSignInAndroid from "expo-google-sign-in";
-import { GoogleSignin } from "react-native-google-signin";
-import { Platform } from "react-native";
+import { GoogleSignin } from "@react-native-community/google-signin";
 import * as Facebook from "expo-facebook";
 
 import Constants from "../../../constants";
@@ -286,55 +285,28 @@ function loginFacebook(facebookUser) {
 function authGoogle(authReason) {
   return async dispatch => {
     if (!["login", "register"].includes(authReason)) return;
-
     try {
       let user;
-      if (Platform.OS === "android") {
-        // await GoogleSignInAndroid.initAsync({ clientId: GOOGLE_ANDROID_ID });
-        // await GoogleSignInAndroid.askForPlayServicesAsync();
-        // const isSignedIn = await GoogleSignInAndroid.isSignedInAsync();
-        // if (isSignedIn) await GoogleSignInAndroid.signOutAsync();
-        // const result = await GoogleSignInAndroid.signInAsync();
-
-        if (result.type === "success") {
-          // NOTE: different response for Expo and for standalone app
-          user = result.user;
-          user.email = user.email;
-          user.firstName = user.givenName || user.firstName;
-          user.lastName = user.familyName || user.lastName;
-          user.googleId = user.id || user.uid;
-          user.profilePicture = user.photoURL;
-          user.accessToken = result.access_token || result.accessToken;
-          user.accessToken =
-            !user.accessToken && user.auth
-              ? user.auth.accessToken
-              : user.accessToken;
-        } else {
-          return { cancelled: true };
-        }
-      } else {
-        GoogleSignin.configure({ webClientId: GOOGLE_IOS_ID });
-        await GoogleSignin.hasPlayServices();
-        const isSignedIn = await GoogleSignin.isSignedIn();
-        if (isSignedIn) await GoogleSignin.signOut();
-        const result = await GoogleSignin.signIn();
-        const tokens = await GoogleSignin.getTokens();
-
-        user = result.user;
-        user.email = user.email;
-        user.firstName = user.givenName || user.firstName;
-        user.lastName = user.familyName || user.lastName;
-        user.googleId = user.id || user.uid;
-        user.profilePicture = user.photo;
-        user.accessToken = tokens.accessToken;
-      }
-
+      GoogleSignin.configure({
+        webClientId:
+          "454720582142-e9qpn4qdiq1hscj9l5tsjsupjhmp37cu.apps.googleusercontent.com",
+      });
+      await GoogleSignin.hasPlayServices();
+      const result = await GoogleSignin.signIn();
+      const tokens = await GoogleSignin.getTokens();
+      user = result.user;
+      user.email = user.email;
+      user.firstName = user.givenName || user.firstName;
+      user.lastName = user.familyName || user.lastName;
+      user.googleId = user.id || user.uid;
+      user.profilePicture = user.photo;
+      user.accessToken = tokens.accessToken;
       if (authReason === "login") {
         dispatch(loginGoogle(user));
       } else {
         dispatch(updateFormFields(user));
       }
-    } catch (e) {
+    } catch (error) {
       return { error: true };
     }
   };
