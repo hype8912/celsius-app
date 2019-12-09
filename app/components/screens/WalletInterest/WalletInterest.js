@@ -12,11 +12,10 @@ import STYLES from "../../../constants/STYLES";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import CelButton from "../../atoms/CelButton/CelButton";
 import WalletInterestStyle from "./WalletInterest.styles";
-import { EMPTY_STATES, MODALS } from "../../../constants/UI";
+import { EMPTY_STATES } from "../../../constants/UI";
 import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import LoadingScreen from "../../screens/LoadingScreen/LoadingScreen";
 import Separator from "../../atoms/Separator/Separator";
-import InterestCalculatorModal from "../../organisms/InterestCalculatorModal/InterestCalculatorModal";
 import InterestCalculatorScreen from "../InterestCalculatorScreen/InterestCalculatorScreen";
 import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util";
 
@@ -125,7 +124,7 @@ class WalletInterest extends Component {
               <Separator margin="10 0 0 0" />
               <TouchableOpacity
                 onPress={() => {
-                  actions.openModal(MODALS.INTEREST_CALCULATOR_MODAL);
+                  actions.navigateTo("InterestCalculator");
                 }}
                 style={{ marginTop: 10 }}
               >
@@ -166,7 +165,6 @@ class WalletInterest extends Component {
             See all
           </CelButton>
         </View>
-        <InterestCalculatorModal />
       </RegularLayout>
     );
   }

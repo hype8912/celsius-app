@@ -9,11 +9,10 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { hasPassedKYC } from "../../../utils/user-util";
 import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
-import BorrowCalculatorScreen from "../../organisms/BorrowCalculatorScreen/BorrowCalculatorScreen";
+import BorrowCalculatorScreen from "../BorrowCalculatorScreen/BorrowCalculatorScreen";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { widthPercentageToDP } from "../../../utils/styles-util";
 import LoanOverviewCard from "../../organisms/LoanOverviewCard/LoanOverviewCard";
-import BorrowCalculatorModal from "../../organisms/BorrowCalculatorModal/BorrowCalculatorModal";
 
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
@@ -196,7 +195,7 @@ class BorrowLanding extends Component {
             <TouchableOpacity
               style={style.buttonIconText}
               onPress={() => {
-                actions.openModal(MODALS.BORROW_CALCULATOR_MODAL);
+                actions.navigateTo("BorrowCalculatorScreen");
               }}
             >
               <View style={style.buttonItself}>
@@ -264,7 +263,6 @@ class BorrowLanding extends Component {
                 );
               })}
           </Animated.ScrollView>
-          <BorrowCalculatorModal emitParams={this.emitParams} />
           <CancelLoanModal actions={actions} />
         </View>
       </RegularLayout>
@@ -274,7 +272,6 @@ class BorrowLanding extends Component {
   renderNoLoans = () => (
     <RegularLayout>
       <EmptyState purpose={EMPTY_STATES.NO_LOANS} />
-      <BorrowCalculatorModal emitParams={this.emitParams} />
     </RegularLayout>
   );
 

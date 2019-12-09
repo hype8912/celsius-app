@@ -23,6 +23,7 @@ import PrincipalPayment from "../../components/screens/PrincipalPayment/Principa
 import PrincipalPaymentType from "../../components/screens/PrincipalPaymentType/PrincipalPaymentType";
 import InterestPaymentSettings from "../../components/screens/InterestPaymentSettings/InterestPaymentSettings";
 import BorrowChooseLoan from "../../components/screens/BorrowChooseLoan/BorrowChooseLoan";
+import BorrowCalculatorScreen from "../../components/screens/BorrowCalculatorScreen/BorrowCalculatorScreen";
 
 import {
   defaultNavigationOptions,
@@ -58,6 +59,7 @@ export const borrowFlow = {
     LoanTermsOfUse,
     InterestPaymentSettings,
     BorrowChooseLoan,
+    BorrowCalculatorScreen,
     ...profileFlow.screens,
   },
   props: {

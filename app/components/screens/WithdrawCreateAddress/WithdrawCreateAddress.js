@@ -18,10 +18,10 @@ import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import CelInput from "../../atoms/CelInput/CelInput";
-import WithdrawWarningModal from "../../organisms/WithdrawWarningModal/WithdrawWarningModal";
+import WithdrawWarningModal from "../../modals/WithdrawWarningModal/WithdrawWarningModal";
 import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
-import DestinationTagModal from "../../organisms/DestinationTagModal/DestinationTagModal";
 import ConfirmWithdrawalAddressModal from "../../modals/ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
+import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 
 @connect(
   state => ({
@@ -229,7 +229,7 @@ class WithdrawCreateAddress extends Component {
               navigateNext={this.handleConfirmWithdrawalFromModal}
             />
             <MemoIdModal coin={formData.coin} />
-            <DestinationTagModal closeModal={actions.closeModal} />
+            <DestinationInfoTagModal closeModal={actions.closeModal} />
             <ConfirmWithdrawalAddressModal
               handleConfirmWithdrawal={this.handleConfirmWithdrawal}
             />

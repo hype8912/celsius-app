@@ -15,7 +15,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 // import STYLES from "../../../constants/STYLES";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
-import RegisterPromoCodeModal from "../../organisms/RegisterPromoCodeModal/RegisterPromoCodeModal";
+import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
 import RegisterPromoCodeCard from "../../molecules/RegisterPromoCodeCard/RegisterPromoCodeCard";
 import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
 

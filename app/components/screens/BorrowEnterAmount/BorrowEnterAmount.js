@@ -148,7 +148,6 @@ class BorrowEnterAmount extends Component {
             coin: formData.coin,
             amount: formData.loanAmount,
           });
-          // actions.navigateTo('VerifyProfile', { onSuccess: () => actions.openModal(UI.MODALS.BORROW_CONFIRM)})
         }}
         margin="20 0 0 0"
         iconRight="arrowRight"

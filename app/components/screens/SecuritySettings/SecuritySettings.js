@@ -9,7 +9,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { MODALS } from "../../../constants/UI";
-import RemoveAuthAppModal from "../../organisms/RemoveAuthAppModal/RemoveAuthAppModal";
+import RemoveAuthAppModal from "../../modals/RemoveAuthAppModal/RemoveAuthAppModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 

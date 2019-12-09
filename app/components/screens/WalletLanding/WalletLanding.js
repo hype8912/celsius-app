@@ -11,16 +11,12 @@ import WalletDetailsCard from "../../organisms/WalletDetailsCard/WalletDetailsCa
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
 import CelPayReceivedModal from "../../modals/CelPayReceivedModal/CelPayReceivedModal";
-import { WALLET_LANDING_VIEW_TYPES, MODALS } from "../../../constants/UI";
+import { WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
 import { KYC_STATUSES } from "../../../constants/DATA";
-// import EarnInterestCelModal from "../../organisms/EarnInterestCelModal/EarnInterestCelModal";
-import { getSecureStoreKey } from "../../../utils/expo-storage";
-import { isUSCitizen } from "../../../utils/user-util";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import ComingSoonCoins from "../../molecules/ComingSoonCoins/ComingSoonCoins";
 import CoinCards from "../../organisms/CoinCards/CoinCards";
 import WalletLandingStyle from "./WalletLanding.styles";
-import LoanAlertsModal from "../../organisms/LoanAlertsModal/LoanAlertsModal";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
@@ -93,7 +89,6 @@ class WalletLanding extends Component {
       appSettings,
       currenciesRates,
       currenciesGraphs,
-      user,
     } = this.props;
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -114,17 +109,6 @@ class WalletLanding extends Component {
     if (this.shouldInitializeMembership) {
       actions.getCelsiusMemberStatus();
       this.shouldInitializeMembership = false;
-    }
-    const isCelInterestModalHidden = await getSecureStoreKey(
-      "HIDE_MODAL_INTEREST_IN_CEL"
-    );
-    if (
-      user.celsius_member &&
-      !appSettings.interest_in_cel &&
-      isCelInterestModalHidden !== "ON" &&
-      !isUSCitizen()
-    ) {
-      actions.openModal(MODALS.EARN_INTEREST_CEL);
     }
 
     this.setWalletFetchingInterval();
@@ -267,7 +251,6 @@ class WalletLanding extends Component {
         </View>
         <CelPayReceivedModal transfer={branchTransfer} />
         {/* <LoanAlertsModalWrapper />*/}
-        <LoanAlertsModal />
         <ReferralSendModal />
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <BecomeCelMemberModal />

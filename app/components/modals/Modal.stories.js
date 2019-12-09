@@ -37,7 +37,9 @@ import TransactionFilterModalStories from "./TransactionFilterModal/TransactionF
 import VerifyAuthAppModalStories from "./VerifyAuthAppModal/VerifyAuthAppModal.stories";
 import WithdrawalInfoModalStories from "./WithdrawalInfoModal/WithdrawalInfoModal.stories";
 import WithdrawWarningModalStories from "./WithdrawWarningModal/WithdrawWarningModal.stories";
+import DestinationInfoTagModalStories from "./DestinationInfoTagModal/DestinationInfoTagModal.stories";
 import InterestDueModalStories from "./InterestDueModal/InterestDueModal.stories";
+import ReferralReceivedModalStories from "./ReferralReceivedModal/ReferralReceivedModal.stories";
 
 storiesOf("Modals", module)
   .addDecorator(getStory => (
@@ -47,6 +49,7 @@ storiesOf("Modals", module)
   ))
   .add("All Modals", () => (
     <View>
+      <ReferralReceivedModalStories />
       <DepositInfoModalStories />
       <LoanApplicationSuccessModalStories />
       <WithdrawalInfoModalStories />
@@ -61,6 +64,9 @@ storiesOf("Modals", module)
       <ChangeWithdrawalAddressModalStories />
       <ConfirmWithdrawalAddressModalStories />
       <CreateNewAccountModalStories />
+      <DestinationInfoTagModalStories />
+      <DepositInfoModalStories />
+      <LoanApplicationSuccessModalStories />
       <LoseMembershipModalStories />
       <LoseTierModalStories />
       <MemoIdModalStories />
