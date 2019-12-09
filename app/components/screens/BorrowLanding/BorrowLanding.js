@@ -195,7 +195,9 @@ class BorrowLanding extends Component {
             <TouchableOpacity
               style={style.buttonIconText}
               onPress={() => {
-                actions.navigateTo("BorrowCalculatorScreen");
+                actions.navigateTo("BorrowCalculatorScreen", {
+                  emitParams: this.emitParams,
+                });
               }}
             >
               <View style={style.buttonItself}>

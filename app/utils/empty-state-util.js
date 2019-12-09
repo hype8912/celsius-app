@@ -121,7 +121,7 @@ function getProps(purpose, componentProps) {
         heading: "You have no withdrawal addresses set yet!",
         paragraphs: [],
         button: "Back to settings",
-        onPress: () => actions.navigateTo("WalletLanding"),
+        onPress: () => actions.navigateTo("WalletSettings"),
       };
 
     case EMPTY_STATES.COMPLIANCE:

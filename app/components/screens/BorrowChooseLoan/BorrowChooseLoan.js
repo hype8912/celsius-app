@@ -32,11 +32,25 @@ class BorrowChooseLoan extends Component {
     left: "back",
   });
 
+  constructor(props) {
+    super(props);
+
+    const { loanCompliance } = props;
+    const canBorrowUSD = loanCompliance.loan_coins.includes("USD");
+    const stableCoins = loanCompliance.loan_coins.filter(c => c !== "USD");
+    const canBorrowStable = !!stableCoins.length;
+
+    this.state = { canBorrowUSD, canBorrowStable };
+  }
+
   getCardProps = () => {
     const { actions } = this.props;
+    const { canBorrowUSD, canBorrowStable } = this.state;
 
-    const cardDetails = [
-      {
+    const cardDetails = [];
+
+    if (canBorrowUSD) {
+      cardDetails.push({
         cardTitle: "Borrow Dollars",
         cardCopy: "Take out a cash loan against your crypto.",
         lightImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
@@ -48,8 +62,11 @@ class BorrowChooseLoan extends Component {
             loanType: LOAN_TYPES.USD_LOAN,
           });
         },
-      },
-      {
+      });
+    }
+
+    if (canBorrowStable) {
+      cardDetails.push({
         cardTitle: "Borrow Stablecoins",
         cardCopy: "Take out a loan in one of our supported stable coins.",
         lightImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
@@ -61,8 +78,8 @@ class BorrowChooseLoan extends Component {
             loanType: LOAN_TYPES.STABLE_COIN_LOAN,
           });
         },
-      },
-    ];
+      });
+    }
 
     return cardDetails;
   };

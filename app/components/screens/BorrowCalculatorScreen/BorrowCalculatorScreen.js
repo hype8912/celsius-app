@@ -131,8 +131,9 @@ class BorrowCalculatorScreen extends Component {
   }
 
   getPurposeSpecificProps = () => {
-    const { purpose, actions, emitParams } = this.props;
-    const loanParams = emitParams();
+    const { purpose, actions, emitParams, navigation } = this.props;
+    const emitParamsFunc = emitParams || navigation.getParam("emitParams");
+    const loanParams = emitParamsFunc();
 
     const defaultProps = {
       subtitle: "Calculate your loan interest.",
@@ -227,7 +228,8 @@ class BorrowCalculatorScreen extends Component {
 
   render() {
     const style = BorrowCalculatorScreenStyle();
-    const { formData, purpose, emitParams, kycStatus } = this.props;
+    const { formData, purpose, emitParams, kycStatus, navigation } = this.props;
+    const emitParamsFunc = emitParams || navigation.getParam("emitParams");
     const purposeProps = this.getPurposeSpecificProps();
 
     if (!formData.ltv) return null;
@@ -246,7 +248,7 @@ class BorrowCalculatorScreen extends Component {
           {purposeProps.subtitle}
         </CelText>
         <Separator />
-        <BorrowCalculator emitParams={emitParams} purpose={purpose} />
+        <BorrowCalculator emitParams={emitParamsFunc} purpose={purpose} />
         <Separator />
         <View>
           {!!purposeProps.bottomHeading && (
