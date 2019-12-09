@@ -72,6 +72,7 @@ class CelHeading extends Component {
       return (
         <CelButton
           basic
+          iconRightColor={STYLES.COLORS.GRAY}
           onPress={() => {
             actions.updateFormField("activeSearch", true);
           }}
@@ -143,6 +144,7 @@ class CelHeading extends Component {
       search: (
         <CelButton
           basic
+          iconRightColor={STYLES.COLORS.GRAY}
           onPress={() => {
             actions.updateFormField("activeSearch", true);
           }}

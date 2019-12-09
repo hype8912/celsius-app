@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
 import CelModal from "../CelModal/CelModal";
-import { THEMES } from "../../../constants/UI";
 import InfoModalStyle from "./InfoModal.styles";
 
 const InfoModal = props => {
@@ -15,6 +14,8 @@ const InfoModal = props => {
     pictureDimensions,
     heading,
     paragraphs,
+    yesButtonPosition,
+    noButtonPosition,
     yesButtonStyle,
     onYes,
     yesCopy,
@@ -32,13 +33,7 @@ const InfoModal = props => {
     >
       <View style={style.modalWrapper}>
         <View>
-          <CelText
-            margin={"0 40 15 40"}
-            align="center"
-            type="H2"
-            weight="bold"
-            theme={THEMES.LIGHT}
-          >
+          <CelText margin={"0 40 15 40"} align="center" type="H2" weight="bold">
             {heading}
           </CelText>
 
@@ -50,7 +45,6 @@ const InfoModal = props => {
                 type="H4"
                 weight={"300"}
                 key={paragraph}
-                theme={THEMES.LIGHT}
               >
                 {paragraph}
               </CelText>
@@ -59,13 +53,21 @@ const InfoModal = props => {
 
         <View style={style.buttonWrapper}>
           {yesCopy ? (
-            <CelModalButton buttonStyle={yesButtonStyle} onPress={onYes}>
+            <CelModalButton
+              buttonStyle={yesButtonStyle}
+              onPress={onYes}
+              position={yesButtonPosition}
+            >
               {yesCopy}
             </CelModalButton>
           ) : null}
 
           {noCopy ? (
-            <CelModalButton buttonStyle={noButtonStyle} onPress={onNo}>
+            <CelModalButton
+              buttonStyle={noButtonStyle}
+              onPress={onNo}
+              position={noButtonPosition}
+            >
               {noCopy}
             </CelModalButton>
           ) : null}

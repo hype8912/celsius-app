@@ -161,8 +161,9 @@ function getTransactionType(transaction) {
  * @param {Object} transactions
  * @param {Object} filter
  * @param {number} filter.limit
- * @param {string} filter.coin
- * @param {string} filter.type
+ * @param {Array} filter.coin
+ * @param {Array} filter.type
+ * @param {string} filter.period
  * @returns {Array}
  */
 function filterTransactions(transactions, filter = undefined) {
@@ -175,20 +176,33 @@ function filterTransactions(transactions, filter = undefined) {
   transactionArray = orderTransactionsByDate(transactionArray);
 
   if (filter) {
-    if (filter.coin)
+    if (filter.coin && filter.coin.length > 0)
       transactionArray = transactionArray.filter(
         t =>
-          t.coin.toLowerCase() === filter.coin.toLowerCase() ||
+          filter.coin
+            .map(f => f.toLowerCase())
+            .indexOf(t.coin.toLowerCase()) !== -1 ||
           (t.interest_coin &&
-            t.interest_coin.toLowerCase() === filter.coin.toLowerCase())
+            filter.coin
+              .map(f => f.toLowerCase())
+              .indexOf(t.interest_coin.toLowerCase()) !== -1)
       );
-    if (filter.type)
+
+    if (filter.type && filter.type.length > 0) {
       transactionArray = filterTransactionsByType(
         transactionArray,
         filter.type
       );
-    if (filter.limit)
+    }
+    if (filter.limit) {
       transactionArray = transactionArray.slice(0, filter.limit);
+    }
+    if (filter.period) {
+      transactionArray = filterTransactionsByPeriod(
+        transactionArray,
+        filter.period
+      );
+    }
   }
 
   return transactionArray;
@@ -198,27 +212,121 @@ function filterTransactions(transactions, filter = undefined) {
  * Filters transactions by type
  *
  * @param {Array} transactions
- * @param {string} type one of interest|withdraw|received
+ * @param {Array} types one of interest|withdraw|received/celpay/loan
  * @returns {Array}
  */
-function filterTransactionsByType(transactions, type) {
-  switch (type) {
-    case "interest":
-      return transactions.filter(t => t.type === TRANSACTION_TYPES.INTEREST);
-    case "received":
-      return transactions.filter(t =>
-        [
+function filterTransactionsByType(transactions, types) {
+  if (!types) return transactions;
+  if (!transactions) return [];
+
+  const transactionTypes = [];
+  types.forEach(t => {
+    switch (t) {
+      case "interest":
+        return transactionTypes.push(TRANSACTION_TYPES.INTEREST);
+      case "received":
+        return transactionTypes.push(
           TRANSACTION_TYPES.DEPOSIT_CONFIRMED,
-          TRANSACTION_TYPES.DEPOSIT_PENDING,
-        ].includes(t.type)
-      );
-    case "withdraw":
-      return transactions.filter(t =>
-        [
+          TRANSACTION_TYPES.DEPOSIT_PENDING
+        );
+      case "loan":
+        return transactionTypes.push(
+          TRANSACTION_TYPES.LOAN_INTEREST,
+          TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT,
+          TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED,
+          TRANSACTION_TYPES.COLLATERAL_LIQUIDATED,
+          TRANSACTION_TYPES.COLLATERAL_LOCKED,
+          TRANSACTION_TYPES.COLLATERAL_PENDING,
+          TRANSACTION_TYPES.COLLATERAL_UNLOCKED
+        );
+      case "celpay":
+        return transactionTypes.push(
+          TRANSACTION_TYPES.CELPAY_PENDING,
+          TRANSACTION_TYPES.CELPAY_CLAIMED,
+          TRANSACTION_TYPES.CELPAY_EXPIRED,
+          TRANSACTION_TYPES.CELPAY_ONHOLD,
+          TRANSACTION_TYPES.CELPAY_RECEIVED,
+          TRANSACTION_TYPES.CELPAY_RETURNED,
+          TRANSACTION_TYPES.CELPAY_SENT
+        );
+      case "withdraw":
+        return transactionTypes.push(
           TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED,
           TRANSACTION_TYPES.WITHDRAWAL_PENDING,
           TRANSACTION_TYPES.WITHDRAWAL_CANCELED,
-        ].includes(t.type)
+          TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION,
+          TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW
+        );
+      default:
+        return transactionTypes;
+    }
+  });
+
+  return transactions.filter(t => transactionTypes.includes(t.type));
+}
+
+/**
+ * Filters transactions by period
+ *
+ * @param {Array} transactions
+ * @param {string} period
+ * @returns {Array}
+ */
+function filterTransactionsByPeriod(transactions, period) {
+  switch (period) {
+    case "day":
+      return transactions.filter(t =>
+        moment(t.time).isAfter(
+          moment
+            .utc()
+            .subtract(24, "hours")
+            .format()
+        )
+      );
+    case "week":
+      return transactions.filter(t =>
+        moment(t.time).isAfter(
+          moment
+            .utc()
+            .subtract(7, "days")
+            .format()
+        )
+      );
+    case "month":
+      return transactions.filter(t =>
+        moment(t.time).isAfter(
+          moment
+            .utc()
+            .subtract(1, "months")
+            .format()
+        )
+      );
+    case "threeMonths":
+      return transactions.filter(t =>
+        moment(t.time).isAfter(
+          moment
+            .utc()
+            .subtract(3, "months")
+            .format()
+        )
+      );
+    case "sixMonths":
+      return transactions.filter(t =>
+        moment(t.time).isAfter(
+          moment
+            .utc()
+            .subtract(6, "months")
+            .format()
+        )
+      );
+    case "year":
+      return transactions.filter(t =>
+        moment(t.time).isAfter(
+          moment
+            .utc()
+            .subtract(1, "years")
+            .format()
+        )
       );
     default:
       return transactions;

@@ -15,7 +15,7 @@ import formatter from "../../../utils/formatter";
 import CelInput from "../../atoms/CelInput/CelInput";
 import addressUtil from "../../../utils/address-util";
 import { MODALS } from "../../../constants/UI";
-import InfoModal from "../../molecules/InfoModal/InfoModal";
+import ChangeWithdrawalAddressModal from "../../modals/ChangeWithdrawalAddressModal/ChangeWithdrawalAddressModal";
 
 @connect(
   state => ({
@@ -202,15 +202,7 @@ class WithdrawConfirmAddress extends Component {
             >
               Change withdrawal address
             </CelButton>
-            <InfoModal
-              name={MODALS.CHANGE_WITHDRAWAL_ADDRESS_MODAL}
-              yesCopy={"Change address"}
-              onYes={() => this.navigate()}
-              heading={"Changing a withdrawal address"}
-              paragraphs={[
-                `If changes are made to your current withdrawal address for ${coin}, making a withdraw of ${coin} will be unavailable for the next 24 hours.`,
-              ]}
-            />
+            <ChangeWithdrawalAddressModal onPressConfirm={this.navigate} />
           </View>
         </View>
       </RegularLayout>

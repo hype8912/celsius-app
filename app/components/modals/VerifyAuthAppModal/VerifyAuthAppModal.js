@@ -11,7 +11,7 @@ const VerifyAuthAppModal = props => {
       pictureDimensions={{ width: 40, height: 40 }}
       heading={"Check your Email"}
       paragraphs={[
-        " To complete your Two-Factor verification request follow the email instructions.",
+        "To complete your Two-Factor verification request follow the email instructions.",
       ]}
       yesCopy={"Go To Wallet"}
       onYes={onVerify}

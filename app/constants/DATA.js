@@ -253,6 +253,8 @@ const LOAN_PAYMENT_TYPES = {
   RECEIVING_PRINCIPAL_BACK: "receiving_principal_back",
 };
 
+const PRIMETRUST_KYC_STATES = ["New York", "Washington"];
+
 // TODO: should be returned from BE and set in BO, hadrcoded for now
 const LOAN_INTEREST_COINS = [
   "BTC",
@@ -277,5 +279,6 @@ export {
   LOAN_TYPES,
   LOAN_PAYMENT_TYPES,
   LOAN_TRANSACTION_TYPES,
+  PRIMETRUST_KYC_STATES,
   LOAN_INTEREST_COINS,
 };

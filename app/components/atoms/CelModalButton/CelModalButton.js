@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { TouchableOpacity, View } from "react-native";
 
 import CelModalButtonStyle from "./CelModalButton.styles";
-import STYLES from "../../../constants/STYLES";
 import CelText from "../CelText/CelText";
 
 class CelModalButton extends Component {
@@ -26,32 +25,20 @@ class CelModalButton extends Component {
 
   handleButtonStyle = () => {
     const { buttonStyle } = this.props;
-
+    const style = CelModalButtonStyle();
     switch (buttonStyle) {
       case "secondary":
-        return {
-          backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-        };
+        return style.secondaryButtonStyle;
       case "red":
-        return {
-          backgroundColor: STYLES.COLORS.RED,
-        };
+        return style.redButtonStyle;
       case "disabled":
-        return {
-          backgroundColor: STYLES.COLORS.DISABLED_BASIC_BUTTON25,
-        };
+        return style.disabledButtonStyle;
       case "green":
-        return {
-          backgroundColor: STYLES.COLORS.GREEN,
-        };
+        return style.greenButtonStyle;
       case "white":
-        return {
-          backgroundColor: STYLES.COLORS.WHITE,
-        };
+        return style.whiteButtonStyle;
       default:
-        return {
-          backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-        };
+        return style.defaultButtonStyle;
     }
   };
 
@@ -83,13 +70,6 @@ class CelModalButton extends Component {
     const style = CelModalButtonStyle();
     const borderRadius = this.handleBorderRadius();
     const buttonColor = this.handleButtonStyle();
-    const textColor =
-      buttonStyle === "basic" ||
-      buttonStyle === "red" ||
-      buttonStyle === "disabled" ||
-      buttonStyle === "green"
-        ? STYLES.COLORS.WHITE
-        : STYLES.COLORS.DARK_GRAY;
 
     return (
       <View style={style.container}>
@@ -98,7 +78,7 @@ class CelModalButton extends Component {
           onPress={buttonStyle !== "disabled" ? onPress : null}
           disabled={buttonStyle === "disabled"}
         >
-          <CelText color={textColor} type={"H4"} weight={"500"}>
+          <CelText color={buttonColor.color} type={"H4"} weight={"500"}>
             {children}
           </CelText>
         </TouchableOpacity>

@@ -38,6 +38,8 @@ class BorrowBankAccount extends Component {
   componentDidMount() {
     const { actions, userProfile } = this.props;
     actions.updateFormField("bank_location", { name: userProfile.country });
+    if (userProfile.country === "United States")
+      actions.updateFormField("bank_us_state", userProfile.state);
     this.getExistingBankAccountData();
   }
 
@@ -57,6 +59,7 @@ class BorrowBankAccount extends Component {
       swift: bankAccountInfo.swift,
       iban: bankAccountInfo.iban,
       bank_location: { name: bankAccountInfo.location },
+      bank_us_state: bankAccountInfo.state,
     });
   }
 
@@ -78,6 +81,7 @@ class BorrowBankAccount extends Component {
       swift: formData.swift,
       iban: formData.iban,
       location: formData.bank_location.name,
+      state: formData.bank_us_state,
     };
 
     if (isAmerican) {
@@ -113,6 +117,8 @@ class BorrowBankAccount extends Component {
     if (!formData.iban) formErrors.iban = "Field is required!";
     if (!formData.bank_location.name)
       formErrors.bank_location = "Field is required!";
+    if (!formData.bank_us_state)
+      formErrors.bank_us_state = "Field is required!";
 
     if (this.isAmerican()) {
       delete formErrors.swift;
@@ -163,6 +169,17 @@ class BorrowBankAccount extends Component {
             value={formData.bank_location}
             error={formErrors.bank_location}
           />
+
+          {this.isAmerican() && (
+            <CelSelect
+              type="state"
+              field="bank_us_state"
+              labelText="Bank State"
+              value={formData.bank_us_state}
+              error={formErrors.bank_us_state}
+              margin="0 0 20 0"
+            />
+          )}
 
           <CelInput
             placeholder="Bank name"

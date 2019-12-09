@@ -1,7 +1,9 @@
 import { StatusBar, Platform } from "react-native";
-
+import DeviceInfo from "react-native-device-info";
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+
+const hasNotch = DeviceInfo.hasNotch();
 
 const base = {
   content: {
@@ -9,7 +11,7 @@ const base = {
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    height: 60,
+    height: Platform.OS === "android" && hasNotch ? 30 : 60,
   },
 
   center: {
@@ -25,6 +27,7 @@ const base = {
   right: {
     flex: 1,
     alignItems: "flex-end",
+    top: Platform.OS === "android" && hasNotch ? -30 : 0,
   },
 
   headingBackground: {

@@ -11,6 +11,7 @@ import CelText from "../../atoms/CelText/CelText";
 import CelsiusMembershipTableStyle from "./CelsiusMembershipTable.styles";
 import { addThemeToComponents } from "../../../utils/styles-util";
 import { THEMES } from "../../../constants/UI";
+import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -77,8 +78,8 @@ class CelsiusMembershipTable extends Component {
           </View>
 
           <View style={style.separator}>
-            <CelText type="H7" weight="500">
-              Bonus interest:
+            <CelText type="H7" weight="500" color={STYLES.COLORS.WHITE}>
+              Bonus
             </CelText>
           </View>
 
@@ -109,9 +110,9 @@ class CelsiusMembershipTable extends Component {
           </View>
 
           <View style={style.separator}>
-            <CelText type="H7" weight="500">
+            <CelText type="H7" weight="500" color={STYLES.COLORS.WHITE}>
               {" "}
-              Loan interest discount:{" "}
+              Loan interest
             </CelText>
           </View>
 

@@ -28,7 +28,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 class KYCProfileDetails extends Component {
   static navigationOptions = () => ({
     title: "Profile Details",
-    customCenterComponent: <ProgressBar steps={4} currentStep={1} />,
+    customCenterComponent: <ProgressBar steps={7} currentStep={1} />,
     headerSameColor: true,
   });
 

@@ -19,8 +19,10 @@ import InterestCalculator from "../../organisms/InterestCalculator/InterestCalcu
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class InterestCalculatorScreen extends Component {
-  static navigationOptions = () => ({
-    title: "Interest earned",
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam("purpose")
+      ? "Interest calculator"
+      : "Interest earned",
     right: "profile",
   });
 
@@ -95,7 +97,19 @@ class InterestCalculatorScreen extends Component {
             </CelButton>
           ),
         };
-
+      case "FROM_WALLET_INTEREST_SCREEN":
+        return {
+          heading: "",
+          text: "",
+          button: (
+            <CelButton
+              margin="20 0 0 0"
+              onPress={() => actions.navigateTo("Deposit")}
+            >
+              Deposit More Coins
+            </CelButton>
+          ),
+        };
       default:
         return {
           heading:
@@ -106,22 +120,29 @@ class InterestCalculatorScreen extends Component {
   };
 
   render() {
-    const { purpose } = this.props;
+    const { purpose, navigation } = this.props;
+    const param = purpose || navigation.getParam("purpose");
+    const content = this.getScreenContent(param);
+
     const style = InterestCalculatorScreenStyle();
-    const content = this.getScreenContent(purpose);
+
     return (
       <RegularLayout padding="20 0 100 0">
         <View style={{ paddingHorizontal: 20 }}>
           <View style={style.wrapper}>
-            <CelText type="H2" align="center" weight="bold">
-              Interest calculator
-            </CelText>
+            {purpose && (
+              <View>
+                <CelText type="H2" align="center" weight="bold">
+                  Interest calculator
+                </CelText>
 
-            <CelText align="center" margin="0 0 20 0">
-              {content.heading}
-            </CelText>
+                <CelText align="center" margin="0 0 20 0">
+                  {content.heading}
+                </CelText>
 
-            <Separator />
+                <Separator />
+              </View>
+            )}
             <CelText align="center" margin="20 0 0 0">
               How much do you plan to deposit?
             </CelText>
@@ -135,9 +156,11 @@ class InterestCalculatorScreen extends Component {
           <Separator /> */}
 
         <View style={{ paddingHorizontal: 20 }}>
-          <CelText margin="10 0 10 0" type="H2" align="center" weight="bold">
-            Start earning interest
-          </CelText>
+          {purpose && (
+            <CelText margin="10 0 10 0" type="H2" align="center" weight="bold">
+              Start earning interest
+            </CelText>
+          )}
           <CelText align="center">{content.text}</CelText>
           {content.button ? content.button : null}
         </View>

@@ -74,7 +74,7 @@ class ConfirmYourLoan extends Component {
             resizeMode="cover"
             style={style.flagImage}
           />
-          <CelText type="H3" weight="600" margin={"0 0 0 5"}>
+          <CelText type="H3" weight="600" margin={"0 0 15 5"}>
             {country.name}
           </CelText>
         </View>
@@ -119,7 +119,6 @@ class ConfirmYourLoan extends Component {
             Bank Country
           </CelText>
           {this.showCountry(loan.bank_location)}
-
           {this.renderBankAccountInfo()}
         </Card>
       );

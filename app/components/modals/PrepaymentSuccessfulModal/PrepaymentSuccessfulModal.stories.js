@@ -1,0 +1,25 @@
+import React from "react";
+import { View } from "react-native";
+
+import store from "../../../redux/store";
+import { openModal } from "../../../redux/ui/uiActions";
+import { MODALS } from "../../../constants/UI";
+import CelButton from "../../atoms/CelButton/CelButton";
+import CelText from "../../atoms/CelText/CelText";
+import PrepaymentSuccessfulModal from "./PrepaymentSuccessfulModal";
+
+const PrepaymentSuccessfulModalStories = () => (
+  <View style={{ marginBottom: 30 }}>
+    <CelText margin="0 0 10 0">Prepayment successful modal:</CelText>
+    <CelButton
+      onPress={() =>
+        store.dispatch(openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL))
+      }
+    >
+      Open PrepaymentSuccesfulModalStyle
+    </CelButton>
+    <PrepaymentSuccessfulModal />
+  </View>
+);
+
+export default PrepaymentSuccessfulModalStories;

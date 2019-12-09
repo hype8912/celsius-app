@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View } from "react-native";
 import _ from "lodash";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import moment from "moment";
@@ -21,7 +20,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { LOAN_STATUS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
-import LoanApplicationSuccessModal from "../../organisms/LoanApplicationSuccessModal/LoanApplicationSuccessModal";
+import LoanApplicationSuccessModal from "../../modals/LoanApplicationSuccessModal/LoanApplicationSuccessModal";
 
 @connect(
   state => ({
