@@ -47,6 +47,10 @@ storiesOf("Modals", module)
   ))
   .add("All Modals", () => (
     <View>
+      <DepositInfoModalStories />
+      <LoanApplicationSuccessModalStories />
+      <WithdrawalInfoModalStories />
+
       <InterestDueModalStories />
       <ApiKeyRevokeModalStories />
       <ApiKeySuccessModalStories />
@@ -57,8 +61,6 @@ storiesOf("Modals", module)
       <ChangeWithdrawalAddressModalStories />
       <ConfirmWithdrawalAddressModalStories />
       <CreateNewAccountModalStories />
-      <DepositInfoModalStories />
-      <LoanApplicationSuccessModalStories />
       <LoseMembershipModalStories />
       <LoseTierModalStories />
       <MemoIdModalStories />
@@ -71,7 +73,6 @@ storiesOf("Modals", module)
       <SsnModalStories />
       <TransactionFilterModalStories />
       <VerifyAuthAppModalStories />
-      <WithdrawalInfoModalStories />
       <WithdrawWarningModalStories />
     </View>
   ))

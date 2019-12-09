@@ -423,6 +423,7 @@ class WithdrawEnterAmount extends Component {
         <WithdrawalInfoModal
           withdrawalSettings={withdrawalSettings}
           type={coin}
+          closeModal={actions.closeModal}
         />
       </RegularLayout>
     );

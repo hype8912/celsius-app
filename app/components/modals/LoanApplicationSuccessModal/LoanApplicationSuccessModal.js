@@ -11,6 +11,7 @@ import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import InfoModal from "../InfoModalNew/InfoModal";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import * as appActions from "../../../redux/actions";
+import multiStepUtil from "../../../utils/multistep-modal-util";
 
 @connect(
   state => ({
@@ -69,7 +70,11 @@ class LoanApplicationSuccessModal extends Component {
               your funds will be transferred to your Celsius wallet.
             </CelText>
             <View style={style.buttonsWrapper}>
-              <CelModalButton buttonStyle={"secondary"} position={"single"}>
+              <CelModalButton
+                buttonStyle={"secondary"}
+                position={"single"}
+                onPress={() => multiStepUtil.goToNextStep()}
+              >
                 Next
               </CelModalButton>
             </View>

@@ -12,7 +12,7 @@ const base = {
     ],
   },
   buttonStyle: {
-    flex: 1,
+    // flex: 1,
     borderStyle: "solid",
     justifyContent: "center",
     alignItems: "center",

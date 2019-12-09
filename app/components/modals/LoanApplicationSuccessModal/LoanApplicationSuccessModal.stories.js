@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { action } from "@storybook/addon-actions";
 
 import store from "../../../redux/store";
@@ -9,9 +8,10 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import LoanApplicationSuccessModal from "./LoanApplicationSuccessModal";
 import { updateFormFields } from "../../../redux/forms/formsActions";
+import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
 const LoanApplicationSuccessModalStories = () => (
-  <View style={{ marginBottom: 30 }}>
+  <StoryWrapper title="Loan Application Successful Modal">
     <CelText margin="0 0 10 0">
       Application successful, autoapproved, with possible prepayment modal:
     </CelText>
@@ -27,7 +27,7 @@ const LoanApplicationSuccessModalStories = () => (
         store.dispatch(openModal(MODALS.LOAN_APPLICATION_SUCCESS_MODAL));
       }}
     >
-      Open Multi LoanApplicationSuccessModal
+      Open Autoapproved Loan
     </CelButton>
     <CelText margin="15 0 10 0">Application successful modal:</CelText>
     <CelButton
@@ -41,14 +41,14 @@ const LoanApplicationSuccessModalStories = () => (
         store.dispatch(openModal(MODALS.LOAN_APPLICATION_SUCCESS_MODAL));
       }}
     >
-      Open Info LoanApplicationSuccessModal
+      Open Pending Loan
     </CelButton>
 
     <LoanApplicationSuccessModal
       onPressConfirm={action("onPressConfirm")}
       loanId={42}
     />
-  </View>
+  </StoryWrapper>
 );
 
 export default LoanApplicationSuccessModalStories;
