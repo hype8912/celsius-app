@@ -66,10 +66,8 @@ class LoanOverviewCard extends Component {
 
   payInterest = async () => {
     const { actions, loan } = this.props;
-    actions.navigateTo("ChoosePaymentMethod", {
-      reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
-      id: loan.id,
-    });
+    actions.setActiveLoan(loan.id);
+    actions.openModal(MODALS.INTEREST_DUE_MODAL);
   };
 
   payPrincipal = async () => {
