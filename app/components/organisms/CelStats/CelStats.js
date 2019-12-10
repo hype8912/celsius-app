@@ -50,7 +50,7 @@ class CelStats extends Component {
 
           <View style={style.celTierItem}>
             <CelText type={"H7"} align={"center"}>
-              Total Interest Distributed in CEL
+              Total Interest Distributed in CEL*
             </CelText>
           </View>
           <View style={style.celTierItem}>
@@ -110,9 +110,9 @@ class CelStats extends Component {
                 align={"center"}
                 margin={"30 0 15 0"}
               >
-                {formatter.crypto(i.totalCelInterests, "", {
+                {`${formatter.crypto(i.totalCelInterests, "", {
                   noPrecision: true,
-                })}
+                })}$`}
               </CelText>
             </View>
             <Separator
@@ -151,6 +151,7 @@ class CelStats extends Component {
             </View>
           </View>
         ))}
+        <CelText type={"H7"}>* Weekly figures</CelText>
         <CelText
           type={"H2"}
           weight={"600"}
