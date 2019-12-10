@@ -14,7 +14,7 @@ class InterestDueModal extends Component {
   static propTypes = {
     navigateTo: PropTypes.func,
     closeModal: PropTypes.func,
-    activeLoan: PropTypes.instanceOf(Object),
+    activeLoan: PropTypes.instanceOf(Object).required,
   };
   static defaultProps = {};
 
@@ -93,7 +93,7 @@ class InterestDueModal extends Component {
                 reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
                 id: activeLoan.id,
               });
-              closeModal(MODALS.INTEREST_DUE_MODAL);
+              closeModal();
             }}
           >
             Pay Interest
