@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View } from "react-native";
-import formatter from "../../../utils/formatter";
+import moment from "moment";
 
+import formatter from "../../../utils/formatter";
 import CelModal from "../CelModal/CelModal.js";
 import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import STYLES from "../../../constants/STYLES";
@@ -11,9 +12,9 @@ import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 
 class InterestDueModal extends Component {
   static propTypes = {
-    navigateTo: PropTypes.func.isRequired,
-    closeModal: PropTypes.func.isRequired,
-    activeLoan: PropTypes.instanceOf(Object).isRequired,
+    navigateTo: PropTypes.func,
+    closeModal: PropTypes.func,
+    activeLoan: PropTypes.instanceOf(Object).required,
   };
   static defaultProps = {};
 
@@ -21,6 +22,8 @@ class InterestDueModal extends Component {
     const { activeLoan, closeModal, navigateTo } = this.props;
 
     if (!activeLoan) return null;
+    const instalmentsToBePaid = activeLoan.installments_to_be_paid;
+
     return (
       <CelModal name={MODALS.INTEREST_DUE_MODAL}>
         <CelText type="H2" align="center" weight="bold">
@@ -29,7 +32,10 @@ class InterestDueModal extends Component {
 
         <CelText align="center" margin="10 0 10 0">
           Your interest due is
-          <CelText weight="bold"> {formatter.usd(75)}</CelText>
+          <CelText weight="bold">
+            {" "}
+            {formatter.usd(instalmentsToBePaid.total)}
+          </CelText>
         </CelText>
 
         <View
@@ -55,26 +61,23 @@ class InterestDueModal extends Component {
             </CelText>
           </View>
 
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginBottom: 10,
-            }}
-          >
-            <CelText weight="light">Dec 4 - Jan 5</CelText>
-            <CelText weight="light">{formatter.usd(32.5)}</CelText>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginBottom: 10,
-            }}
-          >
-            <CelText weight="light">Nov 4 - Dec 5</CelText>
-            <CelText weight="light">{formatter.usd(32.5)}</CelText>
-          </View>
+          {instalmentsToBePaid.installments.map(installment => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginBottom: 10,
+              }}
+              key={installment.from}
+            >
+              <CelText weight="light">{`${moment(installment.from).format(
+                "D MMM"
+              )} - ${moment(installment.to).format("D MMM")}`}</CelText>
+              <CelText weight="light">
+                {formatter.usd(installment.amount)}
+              </CelText>
+            </View>
+          ))}
         </View>
 
         <View
@@ -86,11 +89,11 @@ class InterestDueModal extends Component {
         >
           <CelModalButton
             onPress={() => {
-              closeModal();
               navigateTo("ChoosePaymentMethod", {
                 reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
                 id: activeLoan.id,
               });
+              closeModal();
             }}
           >
             Pay Interest

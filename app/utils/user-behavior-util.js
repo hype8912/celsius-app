@@ -36,6 +36,7 @@ const userBehaviorUtil = {
   apiError,
   userReferring,
   userReferred,
+  userStartingReferral,
 };
 
 let userData = {};
@@ -286,6 +287,13 @@ async function changePassword() {
  */
 async function changePin() {
   await sendEvent("PIN Changed");
+}
+
+/**
+ * Fires an event when a user clicks on banner on Wallet screen
+ */
+async function userStartingReferral() {
+  await sendEvent("Referral process started from banner on Wallet screen");
 }
 
 /**

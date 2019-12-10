@@ -103,7 +103,7 @@
     "@storybook/react-native-server": "^5.2.5",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
-    "eslint": "4.17.0",
+    "eslint": "4.18.2",
     "eslint-config-equimper": "2.2.2",
     "eslint-config-prettier": "2.9.0",
     "eslint-plugin-import": "^2.17.2",

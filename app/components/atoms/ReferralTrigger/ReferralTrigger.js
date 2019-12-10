@@ -5,6 +5,7 @@ import Banner from "../../molecules/Banner/Banner";
 import { hasPassedKYC } from "../../../utils/user-util";
 import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
+import userBehaviorUtil from "../../../utils/user-behavior-util";
 
 class ReferralTrigger extends Component {
   static propTypes = {
@@ -46,7 +47,10 @@ class ReferralTrigger extends Component {
       <Banner
         backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
         image={require("../../../../assets/images/present-image.png")}
-        action={() => actions.openModal(MODALS.REFERRAL_SEND_MODAL)}
+        action={() => {
+          actions.openModal(MODALS.REFERRAL_SEND_MODAL);
+          userBehaviorUtil.userStartingReferral();
+        }}
         buttonText={"Share referral code"}
         title={"Refer & Earn!"}
         content={content}

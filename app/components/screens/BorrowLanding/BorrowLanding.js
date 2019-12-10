@@ -19,6 +19,7 @@ import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import EmptyState from "../../atoms/EmptyState/EmptyState";
 import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
+import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -53,6 +54,7 @@ const cardWidth = widthPercentageToDP("70%");
       eligibleCoins,
       maxAmount,
       loyaltyInfo: state.user.loyaltyInfo,
+      activeLoan: state.loans.activeLoan,
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -216,7 +218,7 @@ class BorrowLanding extends Component {
 
   renderDefaultView() {
     const { xOffset } = this.state;
-    const { actions, allLoans, loyaltyInfo } = this.props;
+    const { actions, allLoans, loyaltyInfo, activeLoan } = this.props;
 
     return (
       <RegularLayout padding={"20 0 100 0"}>
@@ -266,6 +268,11 @@ class BorrowLanding extends Component {
               })}
           </Animated.ScrollView>
           <CancelLoanModal actions={actions} />
+          <InterestDueModal
+            closeModal={actions.closeModal}
+            activeLoan={activeLoan}
+            navigateTo={actions.navigateTo}
+          />
         </View>
       </RegularLayout>
     );
