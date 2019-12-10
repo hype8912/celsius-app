@@ -81,7 +81,7 @@ Banner.propTypes = {
   buttonText: PropTypes.string,
   textButtonAction: PropTypes.func,
   backgroundColor: PropTypes.string,
-  image: PropTypes.string,
+  image: PropTypes.number,
 };
 
 export default Banner;
