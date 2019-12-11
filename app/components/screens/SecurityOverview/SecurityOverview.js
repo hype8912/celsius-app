@@ -42,6 +42,14 @@ class SecurityOverview extends Component {
   }
 
   getIcon = item => {
+    if (item.action === "transaction-history") {
+      return {
+        name: "Csv",
+        color: STYLES.COLORS.CELSIUS_BLUE,
+        action: "Transaction History Requested",
+      };
+    }
+
     if (item.action === "withdrawal-request") {
       return {
         name: "CaretUp",
