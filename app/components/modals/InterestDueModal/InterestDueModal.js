@@ -21,7 +21,7 @@ class InterestDueModal extends Component {
   render() {
     const { activeLoan, closeModal, navigateTo } = this.props;
 
-    if (!activeLoan) return null;
+    if (!activeLoan || !activeLoan.installments_to_be_paid) return null;
     const instalmentsToBePaid = activeLoan.installments_to_be_paid;
 
     return (
