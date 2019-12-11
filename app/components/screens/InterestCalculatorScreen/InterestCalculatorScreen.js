@@ -19,10 +19,8 @@ import InterestCalculator from "../../organisms/InterestCalculator/InterestCalcu
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class InterestCalculatorScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam("purpose")
-      ? "Interest calculator"
-      : "Interest earned",
+  static navigationOptions = () => ({
+    title: "Interest calculator",
     right: "profile",
   });
 

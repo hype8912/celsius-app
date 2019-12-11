@@ -108,7 +108,7 @@ class KYCVerifyIdentity extends Component {
 
     const shouldChangeDoc = navigation.getParam("shouldChangeDoc");
     if (
-      (formData.documentType || (kycDocuments && kycDocuments.type)) &&
+      (formData.front || (kycDocuments && kycDocuments.front)) &&
       !shouldChangeDoc
     ) {
       return <KYCCheckPhotos />;

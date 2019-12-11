@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { View } from "react-native";
 
-import LoanApplicationSuccessModalStyle from "./LoanApplicationSuccessModal.styles";
-import MultistepModal from "../MultistepModal/MultistepModal.js";
-import CelText from "../../atoms/CelText/CelText";
 import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import InfoModal from "../InfoModalNew/InfoModal";
-import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import * as appActions from "../../../redux/actions";
+import MultistepModal from "../MultistepModal/MultistepModal";
+import LoanApplicationSuccessModalStyle from "./LoanApplicationSuccessModal.styles";
+import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
+import CelText from "../../atoms/CelText/CelText";
 import multiStepUtil from "../../../utils/multistep-modal-util";
 
 @connect(
@@ -37,13 +37,16 @@ class LoanApplicationSuccessModal extends Component {
   };
 
   render() {
-    const { actions, formData, automaticLoanLimit } = this.props;
+    const { actions } = this.props;
     const style = LoanApplicationSuccessModalStyle();
 
-    if (
-      Number(formData.loanAmount) <= Number(automaticLoanLimit) &&
-      formData.coin !== "USD"
-    )
+    // NOTE: (srdjan) commented after client asked to kick automatic approve loan feature
+
+    // if (
+    //   Number(formData.loanAmount) < Number(automaticLoanLimit) &&
+    //   formData.coin !== "USD"
+    // )
+    if (false) {
       return (
         <MultistepModal
           style={style.container}
@@ -104,7 +107,7 @@ class LoanApplicationSuccessModal extends Component {
           </View>
         </MultistepModal>
       );
-
+    }
     return (
       <InfoModal
         name={MODALS.LOAN_APPLICATION_SUCCESS_MODAL}

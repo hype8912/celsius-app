@@ -5,7 +5,17 @@ const transactionsService = {
   getAll,
   getTransaction,
   cancelWithdrawalService,
+  sendCsvEmail,
 };
+
+/**
+ * Initiates sending of csv of transactions through mail
+ *
+ * @returns {Promise}
+ */
+function sendCsvEmail() {
+  return axios.get(`${apiUrl}/transactions/export/csv`);
+}
 
 /**
  * Gets all filtered transactions for user
