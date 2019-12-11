@@ -49,7 +49,7 @@ class DepositInfoModal extends Component {
             title: "Review your transaction details carefully",
             description:
               "Depositing coins without all required data, such as Destination Tag (XRP) or MemoID (XLM), or incorrect data will result in permanent loss.",
-            buttonText: "I understand",
+            buttonText: "I Understand",
             onPress: () => actions.closeModal(),
           },
         ];
@@ -69,7 +69,7 @@ class DepositInfoModal extends Component {
             title: "Destination Tag is required to deposit XRP",
             description:
               "Sending funds without destination tag or with an incorrect one, will result in loss.",
-            buttonText: "I understand",
+            buttonText: "I Understand",
             onPress: () => actions.closeModal(),
           },
         ];
@@ -89,7 +89,7 @@ class DepositInfoModal extends Component {
             title: "Memo ID is required to deposit XLM",
             description:
               "Sending funds without memo ID or with an incorrect one, will result in loss.",
-            buttonText: "I understand",
+            buttonText: "I Understand",
             onPress: () => actions.closeModal(),
           },
         ];
@@ -109,7 +109,7 @@ class DepositInfoModal extends Component {
             title: "Memo ID is required to deposit EOS",
             description:
               "Sending funds without memo ID or with an incorrect one, will result in loss.",
-            buttonText: "I understand",
+            buttonText: "I Understand",
             onPress: () => actions.closeModal(),
           },
         ];
@@ -128,7 +128,7 @@ class DepositInfoModal extends Component {
         title: `Please ensure only Tether ERC20 tokens are deposited to this address`,
         description:
           "Sending other USDT coins to this address (the Omni Layer version) may result in the permanent loss of funds.",
-        buttonText: "I understand",
+        buttonText: "I Understand",
       };
     }
 
@@ -137,7 +137,7 @@ class DepositInfoModal extends Component {
       title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
       description:
         "Sending any other digital asset to this specific address, will result in permanent loss.",
-      buttonText: "I understand",
+      buttonText: "I Understand",
     };
   };
 
@@ -168,7 +168,7 @@ class DepositInfoModal extends Component {
 
         <View style={style.buttonsWrapper}>
           <CelModalButton
-            buttonStyle={"secondary"}
+            buttonStyle={buttonText === "I Understand" ? "basic" : "secondary"}
             position={"single"}
             onPress={() => onPress()}
           >

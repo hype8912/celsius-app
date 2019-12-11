@@ -19,7 +19,8 @@ class WithdrawalInfoModal extends Component {
   static defaultProps = {};
 
   handleModalContent = () => {
-    const { withdrawalSettings, type } = this.props;
+    const { withdrawalSettings, type, closeModal } = this.props;
+
     let title;
     let body;
 
@@ -88,7 +89,7 @@ class WithdrawalInfoModal extends Component {
         secondButtonCopy: "I Understand",
         secondButtonStyle: "basic",
         secondButtonPosition: "right",
-        onSecondPress: () => multistepModalUtil.goToNextStep(),
+        onSecondPress: () => closeModal(),
       },
     ];
 

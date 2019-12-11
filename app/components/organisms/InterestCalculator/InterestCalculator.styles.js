@@ -30,6 +30,9 @@ const themed = {
     calculatorInfo: {
       color: STYLES.COLORS.MEDIUM_GRAY,
     },
+    showInterestWrapper: {
+      backgroundColor: STYLES.COLORS.WHITE,
+    },
   },
 
   dark: {
@@ -38,6 +41,9 @@ const themed = {
     },
     calculatorInfo: {
       color: STYLES.COLORS.MEDIUM_GRAY,
+    },
+    showInterestWrapper: {
+      backgroundColor: STYLES.COLORS.SEMI_GRAY,
     },
   },
 

@@ -11,12 +11,13 @@ import { BRANCH_LINKS } from "../../../constants/DATA";
 
 const referralLinks = {
   [BRANCH_LINKS.INDIVIDUAL_REFERRAL]: {
-    owner: {},
+    owner: {
+      display_name: "Nuke",
+    },
     link_type: BRANCH_LINKS.INDIVIDUAL_REFERRAL,
     referred_award_amount: 200,
     referred_award_base_currency: "CEL",
     referred_award_coin: "CEL",
-    display_name: "Nuke",
   },
   [BRANCH_LINKS.COMPANY_REFERRAL]: {
     owner: {},
@@ -36,6 +37,7 @@ class ReferralReceivedModalStories extends React.Component {
       activeLink: referralLinks[BRANCH_LINKS.INDIVIDUAL_REFERRAL],
     };
   }
+
   render() {
     return (
       <StoryWrapper title="Referral Received Modal">

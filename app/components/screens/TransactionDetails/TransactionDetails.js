@@ -203,17 +203,6 @@ class TransactionDetails extends Component {
             text="Withdrawn to:"
           />
         );
-      case "button:back":
-        return kycPassed ? (
-          <CelButton
-            margin="12 0 80 0"
-            key={sectionType}
-            onPress={() => actions.navigateTo("BorrowLanding")}
-            basic
-          >
-            Go back to Loan Overview
-          </CelButton>
-        ) : null;
       case "button:back:main":
         return kycPassed ? (
           <CelButton
