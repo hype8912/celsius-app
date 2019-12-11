@@ -338,7 +338,9 @@ class Community extends Component {
         {/* <CommunityDashboard name={"MEET US IN PERSON AT"}/> */}
         <Separator margin="20 0 20 0" />
         <CelText align="center" type="H7">
-          The numbers are showing a dollar value of coins at this moment.
+          The numbers are showing a dollar value of coins at the time of
+          transaction realization. Numbers reflect data in real-time, unless
+          noted otherwise.
         </CelText>
       </RegularLayout>
     );
