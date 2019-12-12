@@ -15,20 +15,32 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import BorrowCalculator from "../../organisms/BorrowCalculator/BorrowCalculator";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { EMPTY_STATES } from "../../../constants/UI";
+import loanUtil from "../../../utils/loan-util";
 
 @connect(
-  state => ({
-    ltv: state.loans.ltvs,
-    theme: state.user.appSettings.theme,
-    formData: state.forms.formData,
-    currencies: state.currencies.rates,
-    loanCompliance: state.compliance.loan,
-    minimumLoanAmount: state.generalData.minimumLoanAmount,
-    walletSummary: state.wallet.summary,
-    kycStatus: state.user.profile.kyc
-      ? state.user.profile.kyc.status
-      : KYC_STATUSES.collecting,
-  }),
+  state => {
+    const loanCompliance = state.compliance.loan;
+    const walletSummary = state.wallet.summary;
+    const eligibleCoins =
+      walletSummary &&
+      walletSummary.coins.filter(coinData =>
+        loanCompliance.collateral_coins.includes(coinData.short)
+      );
+
+    return {
+      ltv: state.loans.ltvs,
+      theme: state.user.appSettings.theme,
+      formData: state.forms.formData,
+      currencies: state.currencies.rates,
+      loanCompliance: state.compliance.loan,
+      minimumLoanAmount: state.generalData.minimumLoanAmount,
+      walletSummary: state.wallet.summary,
+      kycStatus: state.user.profile.kyc
+        ? state.user.profile.kyc.status
+        : KYC_STATUSES.collecting,
+      eligibleCoins,
+    };
+  },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class BorrowCalculatorScreen extends Component {
@@ -130,10 +142,8 @@ class BorrowCalculatorScreen extends Component {
     }
   }
 
-  getPurposeSpecificProps = () => {
-    const { purpose, actions, emitParams, navigation } = this.props;
-    const emitParamsFunc = emitParams || navigation.getParam("emitParams");
-    const loanParams = emitParamsFunc();
+  getPurposeSpecificProps = loanParams => {
+    const { purpose, actions } = this.props;
 
     const defaultProps = {
       subtitle: "Calculate your loan interest.",
@@ -228,9 +238,25 @@ class BorrowCalculatorScreen extends Component {
 
   render() {
     const style = BorrowCalculatorScreenStyle();
-    const { formData, purpose, emitParams, kycStatus, navigation } = this.props;
-    const emitParamsFunc = emitParams || navigation.getParam("emitParams");
-    const purposeProps = this.getPurposeSpecificProps();
+    const {
+      formData,
+      purpose,
+      kycStatus,
+      currencies,
+      ltv,
+      minimumLoanAmount,
+      eligibleCoins,
+    } = this.props;
+
+    const loanParams = loanUtil.emitLoanParams(
+      formData,
+      currencies,
+      ltv,
+      minimumLoanAmount,
+      eligibleCoins
+    );
+
+    const purposeProps = this.getPurposeSpecificProps(loanParams);
 
     if (!formData.ltv) return null;
 
@@ -248,7 +274,7 @@ class BorrowCalculatorScreen extends Component {
           {purposeProps.subtitle}
         </CelText>
         <Separator />
-        <BorrowCalculator emitParams={emitParamsFunc} purpose={purpose} />
+        <BorrowCalculator loanParams={loanParams} purpose={purpose} />
         <Separator />
         <View>
           {!!purposeProps.bottomHeading && (
