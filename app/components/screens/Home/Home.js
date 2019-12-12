@@ -141,7 +141,7 @@ class Home extends Component {
                 width: widthPercentageToDP("18%"),
                 marginLeft: 35,
                 marginRight: 5,
-                alignSelf: "flex-end",
+                alignSelf: "center",
               }}
             />
             <Image
@@ -151,18 +151,17 @@ class Home extends Component {
                 width: widthPercentageToDP("18%"),
                 marginLeft: 5,
                 marginRight: 5,
-                alignSelf: "flex-end",
+                alignSelf: "center",
               }}
             />
             <Image
-              source={require("../../../../assets/images/PartnerLogos/mvp_workshop.png")}
+              source={require("../../../../assets/images/PartnerLogos/prime-trust-llc-vector-logo.png")}
               style={{
                 resizeMode: "contain",
                 width: widthPercentageToDP("22%"),
-                opacity: 0.7,
-                marginLeft: 0,
+                marginLeft: 5,
                 marginRight: 35,
-                alignSelf: "flex-end",
+                alignSelf: "center",
               }}
             />
           </View>
