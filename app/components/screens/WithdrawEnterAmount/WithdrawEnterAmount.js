@@ -76,9 +76,11 @@ class WithdrawEnterAmount extends Component {
     const coinSelectItems = currencies
       .filter(c => withdrawCompliance.coins.includes(c.short))
       .filter(c => {
-        const balanceUsd = walletSummary.coins.filter(
+        const walletCoin = walletSummary.coins.find(
           wCoin => wCoin.short === c.short.toUpperCase()
-        )[0].amount_usd;
+        );
+        const balanceUsd = walletCoin ? walletCoin.amount_usd : 0;
+
         return balanceUsd > 0;
       })
       .map(c => ({ label: `${c.displayName} (${c.short})`, value: c.short }));
