@@ -1,7 +1,8 @@
 // TODO(sb): RN update dependencies fixes
 // import * as GoogleSignInAndroid from "expo-google-sign-in";
 import { GoogleSignin } from "@react-native-community/google-signin";
-import * as Facebook from "expo-facebook";
+// import * as Facebook from "expo-facebook";
+import { LoginManager, AccessToken } from "react-native-fbsdk";
 
 import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
@@ -179,17 +180,15 @@ function twitterGetAccessToken(tokens) {
 function authFacebook(authReason) {
   return async dispatch => {
     if (!["login", "register"].includes(authReason)) return;
-
     try {
-      const { type, token } = await Facebook.logInWithReadPermissionsAsync(
-        FACEBOOK_APP_ID.toString(),
-        {
-          permissions: ["public_profile", "email"],
-          behavior: "system",
-        }
-      );
+      const result = await LoginManager.logInWithPermissions([
+        "public_profile",
+        "email",
+      ]);
 
-      if (type === "success") {
+      if (!result.isCancelled) {
+        const data = await AccessToken.getCurrentAccessToken();
+        const token = data.accessToken.toString();
         const response = await fetch(`${FACEBOOK_URL}${token}`);
 
         const user = await response.json();
