@@ -8,7 +8,6 @@ import BorrowLandingStyle from "./BorrowLanding.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { hasPassedKYC } from "../../../utils/user-util";
 import { EMPTY_STATES, MODALS } from "../../../constants/UI";
-import formatter from "../../../utils/formatter";
 import BorrowCalculatorScreen from "../BorrowCalculatorScreen/BorrowCalculatorScreen";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { widthPercentageToDP } from "../../../utils/styles-util";
@@ -112,61 +111,6 @@ class BorrowLanding extends Component {
     ],
   });
 
-  // TODO (fj) move to loans util
-  emitParams = () => {
-    const {
-      formData,
-      currencies,
-      ltv,
-      minimumLoanAmount,
-      eligibleCoins,
-    } = this.props;
-    const loanParams = {};
-
-    if (formData && formData.coin !== "USD" && formData.ltv) {
-      loanParams.annualInterestPct = formData.ltv.interest;
-      loanParams.totalInterestPct =
-        loanParams.annualInterestPct * (formData.termOfLoan / 12);
-      loanParams.monthlyInterestPct =
-        loanParams.totalInterestPct / formData.termOfLoan;
-
-      loanParams.totalInterest = formatter.usd(
-        Number(loanParams.totalInterestPct * formData.amount)
-      );
-      loanParams.monthlyInterest = formatter.usd(
-        Number(
-          (loanParams.totalInterestPct * formData.amount) / formData.termOfLoan
-        )
-      );
-      loanParams.collateralNeeded =
-        Number(formData.amount) /
-        currencies.find(c => c.short === formData.coin).market_quotes_usd
-          .price /
-        formData.ltv.percent;
-      loanParams.bestLtv = Math.max(...ltv.map(x => x.percent));
-
-      const arrayOfAmountUsd = eligibleCoins.map(c => c.amount_usd);
-
-      const indexOfLargestAmount = arrayOfAmountUsd.indexOf(
-        Math.max(...arrayOfAmountUsd)
-      );
-
-      loanParams.largestAmountCrypto =
-        eligibleCoins[indexOfLargestAmount].amount;
-      loanParams.largestShortCrypto = eligibleCoins[indexOfLargestAmount].short;
-      loanParams.minimumLoanAmountCrypto =
-        minimumLoanAmount /
-        currencies.find(
-          c => c.short === eligibleCoins[indexOfLargestAmount].short
-        ).market_quotes_usd.price;
-      loanParams.missingCollateral = Math.abs(
-        (loanParams.largestAmountCrypto - loanParams.minimumLoanAmountCrypto) /
-          loanParams.bestLtv
-      );
-    }
-    return loanParams;
-  };
-
   hasEnoughForLoan = () => {
     const { minimumLoanAmount, maxAmount } = this.props;
     const minLtv = this.getMinLtv();
@@ -177,6 +121,7 @@ class BorrowLanding extends Component {
   renderCard = () => {
     const style = BorrowLandingStyle();
     const { actions } = this.props;
+
     return (
       <Card padding="12 12 12 12">
         <View style={style.buttonsWrapper}>
@@ -197,9 +142,7 @@ class BorrowLanding extends Component {
             <TouchableOpacity
               style={style.buttonIconText}
               onPress={() => {
-                actions.navigateTo("BorrowCalculatorScreen", {
-                  emitParams: this.emitParams,
-                });
+                actions.navigateTo("BorrowCalculatorScreen");
               }}
             >
               <View style={style.buttonItself}>
@@ -292,25 +235,14 @@ class BorrowLanding extends Component {
 
     if (kycStatus && !hasPassedKYC())
       return (
-        <BorrowCalculatorScreen
-          emitParams={this.emitParams}
-          purpose={EMPTY_STATES.NON_VERIFIED_BORROW}
-        />
+        <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_VERIFIED_BORROW} />
       );
     if (!user.celsius_member)
       return (
-        <BorrowCalculatorScreen
-          emitParams={this.emitParams}
-          purpose={EMPTY_STATES.NON_MEMBER_BORROW}
-        />
+        <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_MEMBER_BORROW} />
       );
     if (!loanCompliance.allowed)
-      return (
-        <BorrowCalculatorScreen
-          emitParams={this.emitParams}
-          purpose={EMPTY_STATES.COMPLIANCE}
-        />
-      );
+      return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
 
     if (!hasLoans) return this.renderNoLoans();
 
