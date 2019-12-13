@@ -17,6 +17,8 @@ import PerformanceGraph from "../../graphs/PerformanceGraph/PerformanceGraph";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelStats from "../../organisms/CelStats/CelStats";
+import STYLES from "../../../constants/STYLES";
+import { TOTAL_ASSETS_AMOUNT } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -46,21 +48,31 @@ class Community extends Component {
     const style = CommunityStyle();
     const usersNum = communityStats.users_num;
     return (
-      <Card padding={"0 0 0 0"}>
+      <Card padding={"0 0 0 0"} color={STYLES.COLORS.CELSIUS_BLUE}>
         <View style={style.imageView}>
-          <ThemedImage
-            lightSource={require("../../../../assets/images/community/dogIllustration.png")}
-            darkSource={require("../../../../assets/images/community/dogIllustration-dark.png")}
-            style={style.communityImage}
-          />
           <View>
-            <CelText weight={"300"} align={"left"} type={"H6"}>
+            <CelText
+              weight={"300"}
+              align={"center"}
+              type={"H6"}
+              color={STYLES.COLORS.WHITE_OPACITY5}
+            >
               Celsius Network counts
             </CelText>
-            <CelText weight={"600"} align={"left"} type={"H1"}>
+            <CelText
+              weight={"600"}
+              align={"center"}
+              type={"H1"}
+              color={STYLES.COLORS.WHITE}
+            >
               {formatter.round(usersNum, { noPrecision: true })}
             </CelText>
-            <CelText weight={"300"} align={"left"} type={"H6"}>
+            <CelText
+              weight={"300"}
+              align={"center"}
+              type={"H6"}
+              color={STYLES.COLORS.WHITE_OPACITY5}
+            >
               members
             </CelText>
           </View>
@@ -256,6 +268,12 @@ class Community extends Component {
     return (
       <RegularLayout>
         {this.renderNetworkCounts()}
+
+        <CommunityDashboard
+          name={`ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}`}
+          info
+          buttonTypes={["Total AUM", "Col. & Cash"]}
+        />
 
         {this.renderDepositCoinSection()}
 
