@@ -2,51 +2,33 @@
 import {
   getThemedStyle,
   heightPercentageToDP,
-  widthPercentageToDP,
 } from "../../../utils/styles-util";
 
 const base = {
   container: {
     flex: 1,
   },
-  twoFactor: {
-    flexDirection: "row",
-    // justifyContent: 'space-between',
-    height: heightPercentageToDP(10),
-  },
-  twoFactorImage: {
-    width: 130,
-    height: 130,
-    resizeMode: "contain",
+  circle: {
     position: "absolute",
-    bottom: -heightPercentageToDP("6%"),
-    left: -widthPercentageToDP("5%"),
+    width: heightPercentageToDP("18%"),
+    height: heightPercentageToDP("18%"),
+    borderRadius: heightPercentageToDP("9%"),
+    justifyContent: "center",
+    alignItems: "stretch",
+    left: -25,
+    bottom: -25,
   },
-  twoFactorText: {
+  card: {
+    overflow: "hidden",
+    flexDirection: "row",
+  },
+  text: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
     // alignContent: 'right',
     alignItems: "flex-end",
-  },
-  email: {
-    flexDirection: "row",
-    // justifyContent: 'space-between',
-    height: heightPercentageToDP(10),
-  },
-  emailImage: {
-    width: 130,
-    height: 130,
-    resizeMode: "contain",
-    position: "absolute",
-    bottom: -heightPercentageToDP("6%"),
-    left: -widthPercentageToDP("5%"),
-  },
-  emailText: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-end",
+    margin: 12,
   },
   userActionsLogWrapper: {
     marginTop: 10,

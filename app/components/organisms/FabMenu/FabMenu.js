@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
+  Keyboard,
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -198,6 +199,7 @@ class FabMenu extends Component {
 
   fabAction = () => {
     const { fabType } = this.props;
+    Keyboard.dismiss();
     switch (fabType) {
       case "main":
         this.toggleMenu();

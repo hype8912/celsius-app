@@ -42,7 +42,8 @@ const COLORS = {
   GREEN: "#4fb895",
   GREEN_OPACITY: "rgba(79,184,149,0.15)",
   ORANGE: "#e19f30",
-  RED: "#ef461a",
+  RED: "rgb(239,70,26)",
+  RED_OPACITY2: "rgba(239,70,26, 0.2)",
 };
 
 const CAMERA_MASK_SIZES = {
