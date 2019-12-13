@@ -14,6 +14,7 @@ import STYLES from "../../../constants/STYLES";
 import { THEMES } from "../../../constants/UI";
 import Icon from "../../atoms/Icon/Icon";
 import { getTheme } from "../../../utils/styles-util";
+import { TOTAL_ASSETS_AMOUNT } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -37,15 +38,12 @@ class CommunityDashboard extends Component {
     const { buttonTypes } = this.props;
 
     this.state = {
-      // initial state
       activeButton: buttonTypes ? buttonTypes[0] : "",
       primaryNumber: "",
       explanation: "",
     };
-    // binders
   }
 
-  // lifecycle methods
   componentDidMount() {
     const { name, communityStats } = this.props;
     if (name === "CELPAY") {
@@ -57,13 +55,19 @@ class CommunityDashboard extends Component {
     if (name === "INTEREST") {
       this.setState({
         primaryNumber: formatter.usd(communityStats.total_interests_usd),
-        explanation: "Total community earn in the last 12 months",
+        explanation: `ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}`,
+      });
+    }
+    if (name === `ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}`) {
+      this.setState({
+        primaryNumber: formatter.usd(TOTAL_ASSETS_AMOUNT.TOTAL_AUM, {
+          precision: 0,
+        }),
+        explanation: "Total Assets Under Management",
       });
     }
   }
 
-  // event hanlders
-  // rendering methods
   handlePress = button => {
     const { name, communityStats } = this.props;
     let number;
@@ -106,6 +110,22 @@ class CommunityDashboard extends Component {
     if (name === "INTEREST" && button === "Rates") {
       explanationText = "Interest rates";
       number = 31000;
+    }
+    if (
+      name === `ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}` &&
+      button === "Total AUM"
+    ) {
+      explanationText = "Total Assets Under Management";
+      number = formatter.usd(TOTAL_ASSETS_AMOUNT.TOTAL_AUM, { precision: 0 });
+    }
+    if (
+      name === `ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}` &&
+      button === "Col. & Cash"
+    ) {
+      explanationText = "Collateral and Cash";
+      number = formatter.usd(TOTAL_ASSETS_AMOUNT.TOTAL_COLLATERAL_AND_CASH, {
+        precision: 0,
+      });
     }
 
     this.setState({
