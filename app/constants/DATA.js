@@ -262,7 +262,7 @@ const LOAN_INTEREST_COINS = [
   "USDC",
   "GUSD",
   "TUSD",
-  "USDT",
+  "USDT ERC20",
   "PAX",
 ];
 
