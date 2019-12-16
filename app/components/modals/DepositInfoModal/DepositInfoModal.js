@@ -16,6 +16,7 @@ import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 @connect(
   state => ({
     currencies: state.currencies.rates,
+    depositCompliance: state.compliance.deposit,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -180,8 +181,16 @@ class DepositInfoModal extends Component {
   };
 
   render() {
-    const { type, actions } = this.props;
+    const { type, actions, depositCompliance } = this.props;
     const style = DepositInfoModalStyle();
+
+    if (
+      (!depositCompliance.coins.includes("XLM") ||
+        !depositCompliance.coins.includes("XRP")) &&
+      (type === "XRP" || type === "XLM")
+    ) {
+      return null;
+    }
 
     if (type === "XRP" || type === "XLM" || type === "EOS" || !type) {
       const multistepContent = this.handleMultistepContent(type);

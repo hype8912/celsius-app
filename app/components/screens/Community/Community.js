@@ -272,7 +272,16 @@ class Community extends Component {
         <CommunityDashboard
           name={`ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}`}
           info
-          buttonTypes={["Total AUM", "Col. & Cash"]}
+          buttonTypes={[
+            {
+              buttonType: "Total AUM",
+              icon: "Total",
+            },
+            {
+              buttonType: "Col. & Cash",
+              icon: "PiggyBank",
+            },
+          ]}
         />
 
         {this.renderDepositCoinSection()}
@@ -303,13 +312,31 @@ class Community extends Component {
         <CommunityDashboard
           name={"CELPAY"}
           info
-          buttonTypes={["Total", "Transactions"]}
+          buttonTypes={[
+            {
+              buttonType: "Total",
+              icon: "Total",
+            },
+            {
+              buttonType: "Transactions",
+              icon: "Transactions",
+            },
+          ]}
         />
 
         <CommunityDashboard
           name={"INTEREST"}
           info
-          buttonTypes={["Earned", "Average"]}
+          buttonTypes={[
+            {
+              buttonType: "Earned",
+              icon: "Earned",
+            },
+            {
+              buttonType: "Average",
+              icon: "Average",
+            },
+          ]}
         />
 
         {/* { this.renderCommunityStatsTable() }*/}
