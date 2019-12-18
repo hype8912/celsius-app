@@ -78,7 +78,7 @@ class WithdrawConfirm extends Component {
           <CelText color={STYLES.COLORS.WHITE}>
             Withdrawing CEL will affect your{" "}
             <CelText weight="bold" color="white">
-              {loyaltyInfo.tier} Loyalty level
+              {loyaltyInfo.tier.title} Loyalty level
             </CelText>{" "}
             and lower your{" "}
             <CelText weight="bold" color="white">

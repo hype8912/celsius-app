@@ -117,7 +117,7 @@ class BorrowBankAccount extends Component {
     if (!formData.iban) formErrors.iban = "Field is required!";
     if (!formData.bank_location.name)
       formErrors.bank_location = "Field is required!";
-    if (!formData.bank_us_state)
+    if (this.isAmerican() && !formData.bank_us_state)
       formErrors.bank_us_state = "Field is required!";
 
     if (this.isAmerican()) {
