@@ -72,7 +72,7 @@ class WithdrawalInfoModal extends Component {
       },
       {
         title: `Immediate withdrawals under ${formatter.usd(
-          withdrawalSettings.daily_withdrawal_limit
+          withdrawalSettings.maximum_withdrawal_amount
         )}`,
         body:
           "Celsius enables you to withdraw coins at any time. However, for your security when exceeding this limit withdrawals are delayed for up to twenty-four hours.",

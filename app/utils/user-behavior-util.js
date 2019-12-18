@@ -191,7 +191,7 @@ async function kycDocumentsSubmitted() {
  * Fires an event when a user submits KYC utility bill photo
  */
 async function kycUtilityBillSubmitted() {
-  await sendEvent("KYC Address Submitted");
+  await sendEvent("KYC Utility Bill Submitted");
 }
 
 /**
