@@ -2,6 +2,7 @@ import moment from "moment";
 
 import { TRANSACTION_TYPES } from "../constants/DATA";
 import STYLES from "../constants/STYLES";
+import formatter from "./formatter";
 
 const transactionsUtil = {
   mapTransaction,
@@ -15,10 +16,67 @@ const transactionsUtil = {
  * @returns {Object}
  */
 function mapTransaction(transaction) {
-  const newTransaction = { ...transaction };
+  let newTransaction = { ...transaction };
+
   newTransaction.type = getTransactionType(newTransaction);
+  newTransaction = maskCelPayUser(newTransaction);
   newTransaction.uiProps = getTransactionProps(newTransaction);
   newTransaction.uiSections = getTransactionSections(newTransaction);
+
+  return newTransaction;
+}
+
+/**
+ * Masks senders and receivers first name, last name and their emails
+ *
+ * @param {Object} transaction
+ * @returns {Object}
+ */
+function maskCelPayUser(transaction) {
+  const newTransaction = { ...transaction };
+
+  if (newTransaction.type.includes("CELPAY")) {
+    if (
+      newTransaction.transfer_data &&
+      newTransaction.transfer_data.claimer &&
+      newTransaction.transfer_data.sender
+    ) {
+      if (
+        newTransaction.transfer_data.claimer.first_name &&
+        newTransaction.transfer_data.claimer.last_name
+      ) {
+        newTransaction.transfer_data.claimer.first_name = formatter.hideTextExceptFirstNLetters(
+          newTransaction.transfer_data.claimer.first_name
+        );
+        newTransaction.transfer_data.claimer.last_name = formatter.hideTextExceptFirstNLetters(
+          newTransaction.transfer_data.claimer.last_name
+        );
+      }
+      if (
+        newTransaction.transfer_data.sender.first_name &&
+        newTransaction.transfer_data.sender.last_name
+      ) {
+        newTransaction.transfer_data.sender.first_name = formatter.hideTextExceptFirstNLetters(
+          newTransaction.transfer_data.sender.first_name
+        );
+        newTransaction.transfer_data.sender.last_name = formatter.hideTextExceptFirstNLetters(
+          newTransaction.transfer_data.sender.last_name
+        );
+      }
+    }
+
+    if (newTransaction.transfer_data.claimer.email) {
+      newTransaction.transfer_data.claimer.email = formatter.maskEmail(
+        newTransaction.transfer_data.claimer.email
+      );
+    }
+
+    if (newTransaction.transfer_data.sender.email) {
+      newTransaction.transfer_data.sender.email = formatter.maskEmail(
+        newTransaction.transfer_data.sender.email
+      );
+    }
+  }
 
   return newTransaction;
 }
