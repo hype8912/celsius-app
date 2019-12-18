@@ -90,7 +90,10 @@ async function err(e, isFatal = false) {
 
     const { profile } = state.user;
     const { lastTenActions } = state.app;
-    const userData = profile && { user_id: profile.id, email: profile.email };
+    const userData = profile.id && {
+      user_id: profile.id,
+      email: profile.email,
+    };
 
     const { activeScreen } = state.nav;
 
@@ -113,7 +116,7 @@ async function err(e, isFatal = false) {
     axios.post(`${API_URL}/graylog`, errorObject);
     userBehaviorUtil.sendEvent("App crushed", errorObject);
 
-    store.dispatch(navigateTo("WalletLanding"));
+    store.dispatch(navigateTo(profile.id ? "WalletLanding" : "Welcome"));
     const action = {
       text: "Open ticket",
       action: () =>
