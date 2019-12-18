@@ -448,10 +448,10 @@ export const ReferrerHODL = ({ transaction, text, lockedValue }) => (
           }}
         >
           <CelText weight="600" type="H4">
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referred.first_name
             )}{" "}
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referred.last_name
             )}
           </CelText>
@@ -472,7 +472,7 @@ export const ReferrerHODL = ({ transaction, text, lockedValue }) => (
         color={STYLES.COLORS.MEDIUM_GRAY}
       >
         If{" "}
-        {formatter.hideTextExceptedFirstNLetters(
+        {formatter.hideTextExceptFirstNLetters(
           transaction.referral_data.referred.first_name
         )}{" "}
         keeps initial deposit until
@@ -533,10 +533,10 @@ export const Referrer = ({ transaction, text }) => (
           }}
         >
           <CelText weight="600" type="H4">
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referred.first_name
             )}{" "}
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referred.last_name
             )}
           </CelText>
@@ -601,10 +601,10 @@ export const Referred = ({ transaction, text }) => (
           }}
         >
           <CelText weight="600" type="H4">
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referrer.first_name
             )}{" "}
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referrer.last_name
             )}
           </CelText>
@@ -669,10 +669,10 @@ export const ReferrerPending = ({ transaction, text }) => (
           }}
         >
           <CelText weight="600" type="H4">
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referred.first_name
             )}{" "}
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referred.last_name
             )}
           </CelText>
@@ -743,10 +743,10 @@ export const ReferredPending = ({ transaction, text }) => (
           }}
         >
           <CelText weight="600" type="H4">
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referrer.first_name
             )}{" "}
-            {formatter.hideTextExceptedFirstNLetters(
+            {formatter.hideTextExceptFirstNLetters(
               transaction.referral_data.referrer.last_name
             )}
           </CelText>
