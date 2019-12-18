@@ -197,7 +197,7 @@ class TransactionsHistory extends Component {
 
         {hasFilter && this.renderEmailButton()}
 
-        {!transactionsDisplay || !transactionsDisplay.length ? (
+        {!transactionsDisplay.length ? (
           <EmptyState
             heading="Sorry"
             paragraphs={["No transactions for given filters in your wallet"]}
