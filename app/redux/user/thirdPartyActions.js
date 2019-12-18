@@ -18,13 +18,7 @@ import { claimAllBranchTransfers } from "../transfers/transfersActions";
 import branchUtil from "../../utils/branch-util";
 import userBehaviorUtil from "../../utils/user-behavior-util";
 
-const {
-  SECURITY_STORAGE_AUTH_KEY,
-  FACEBOOK_APP_ID,
-  FACEBOOK_URL,
-  GOOGLE_ANDROID_ID,
-  GOOGLE_IOS_ID,
-} = Constants;
+const { SECURITY_STORAGE_AUTH_KEY, FACEBOOK_URL } = Constants;
 
 export {
   authTwitter,
@@ -46,8 +40,8 @@ export {
 function authTwitter(type, twitterUser) {
   return (dispatch, getState) => {
     const user = getState().user.profile;
-
     const twitterNames = twitterUser.name.split(" ");
+
     user.firstName = twitterNames.shift();
     user.lastName = twitterNames.join(" ");
 
@@ -190,7 +184,6 @@ function authFacebook(authReason) {
         const data = await AccessToken.getCurrentAccessToken();
         const token = data.accessToken.toString();
         const response = await fetch(`${FACEBOOK_URL}${token}`);
-
         const user = await response.json();
         user.accessToken = token;
 
@@ -285,21 +278,24 @@ function authGoogle(authReason) {
   return async dispatch => {
     if (!["login", "register"].includes(authReason)) return;
     try {
-      let user;
-      GoogleSignin.configure({
-        webClientId:
-          "454720582142-e9qpn4qdiq1hscj9l5tsjsupjhmp37cu.apps.googleusercontent.com",
-      });
+      GoogleSignin.configure();
+      const isSignedId = await GoogleSignin.isSignedIn();
+      if (isSignedId) {
+        await GoogleSignin.signOut();
+      }
+
       await GoogleSignin.hasPlayServices();
+
       const result = await GoogleSignin.signIn();
       const tokens = await GoogleSignin.getTokens();
-      user = result.user;
-      user.email = user.email;
+
+      const user = result.user;
       user.firstName = user.givenName || user.firstName;
       user.lastName = user.familyName || user.lastName;
       user.googleId = user.id || user.uid;
       user.profilePicture = user.photo;
       user.accessToken = tokens.accessToken;
+
       if (authReason === "login") {
         dispatch(loginGoogle(user));
       } else {
