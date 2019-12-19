@@ -249,6 +249,14 @@ PODS:
   - react-native-branch (4.2.1):
     - Branch (= 0.29.0)
     - React
+  - react-native-camera (3.15.0):
+    - React
+    - react-native-camera/RCT (= 3.15.0)
+    - react-native-camera/RN (= 3.15.0)
+  - react-native-camera/RCT (3.15.0):
+    - React
+  - react-native-camera/RN (3.15.0):
+    - React
   - react-native-idfa (4.1.0):
     - React
   - react-native-netinfo (4.6.0):
@@ -340,6 +348,7 @@ DEPENDENCIES:
   - react-native-appsflyer (from `../node_modules/react-native-appsflyer`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-branch (from `../node_modules/react-native-branch`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-idfa (from `../node_modules/react-native-idfa`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
@@ -434,6 +443,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/blur"
   react-native-branch:
     :path: "../node_modules/react-native-branch"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-idfa:
     :path: "../node_modules/react-native-idfa"
   react-native-netinfo:
@@ -518,6 +529,7 @@ SPEC CHECKSUMS:
   react-native-appsflyer: cbc600791ab85fa21a1fe4ad2921b3c3483c04e3
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-branch: cc611a2d0e7e6c7c4cafebc8e59065b89c38002b
+  react-native-camera: 52114c432860b89986c9ee4919d00a48a6ba7abb
   react-native-idfa: 7a029b76f4d5dff76efa6fe4b86be8fadd71c49f
   react-native-netinfo: fa32a5bb986924e9be82a261c262039042dde81e
   react-native-slider: d580f445f51d7c49800e6b3d6c0d3b466b3743f1

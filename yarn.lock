@@ -1682,6 +1682,11 @@
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
 
+"@react-native-community/image-editor@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/image-editor/-/image-editor-2.2.0.tgz#484d0a935d0c9120a81aac2bad58fc92e0a86352"
+  integrity sha512-cMCbGJBe/D5WqRqFkLmkPcotOx2FXFrA7/UoVzTWC0nBmtqqEa36Rpax2jTJkJrqNMqmbbuXPQiwKXBny0gMPw==
+
 "@react-native-community/netinfo@^4.6.0":
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-4.6.0.tgz#fc0b79a226da78371158f885a2f798ff07c926be"
@@ -6557,14 +6562,6 @@ expo-barcode-scanner@^7.0.0:
     lodash "^4.6.0"
     prop-types "^15.6.0"
 
-expo-camera@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-7.0.0.tgz#3beee6c88df4d87dc3d0daefc8a9b3f5864a63bd"
-  integrity sha512-OukSvj9dzrTdADDfMZQlxfCyLjwg/nyTm2u9NDFQh6poEmu+IE2gn5ICnc7pmqR+ctAmU312KiRcLoBe/6sfIw==
-  dependencies:
-    lodash "^4.6.0"
-    prop-types "^15.6.0"
-
 expo-constants@~7.0.0:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-7.0.1.tgz#87be02b6dae5c44a3246537452a0d77af15d46bf"
@@ -6604,11 +6601,6 @@ expo-google-sign-in@^7.0.0:
   integrity sha512-amA2qUt75fSptFFycZJIvdQciOfgd1z3347vDee6JmRldLJq6BvaWoNf/394xyAW6JwQGxpWxhKiy0HQZvKGQQ==
   dependencies:
     invariant "^2.2.4"
-
-expo-image-manipulator@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/expo-image-manipulator/-/expo-image-manipulator-7.0.0.tgz#2306213b30e306e87ddb02f15e35c4f1f4d36a12"
-  integrity sha512-N6DV6QQ4fwppRgntXTk2zydyuSBkpkJCbU/VWohhhP26Pp2Z6ay0OfXz08OdQN2UEStAisx+W1St7cWqwq7tjA==
 
 expo-image-picker@^7.0.0:
   version "7.0.0"
@@ -11529,6 +11521,13 @@ react-native-branch@^4.2.1:
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-4.2.1.tgz#3ed1a071c053b420d11af8aa368142b19e2d5129"
   integrity sha512-wwBCsj3VslS0zG8UAZjx+nNrWgd3CuA24r5muFDzS38oQ4S9oB0NJPafEcWcUT7TPxw/rfpdPLb+JccGvS2/Lg==
 
+react-native-camera@^3.15.0:
+  version "3.15.0"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.15.0.tgz#dd8c7fcf75b347e0b07c1dedeba2ba47504ff80a"
+  integrity sha512-GoRq2gHMvidcMCzj0AjaIbrJy5ZRE1XxLUIGN+M/Ev2r2RXGFWBToGoDvy4KZcwF3THWefVAZL1It+fT8pvxgQ==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-check-box@^2.1.7:
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/react-native-check-box/-/react-native-check-box-2.1.7.tgz#f349d3505a13c15d19949ec4cec40c7adc4f3626"
@@ -11580,6 +11579,11 @@ react-native-idfa@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/react-native-idfa/-/react-native-idfa-4.1.0.tgz#88d56223765054128e287d8e26c3abc04242d13b"
   integrity sha512-jxiww2T9zt5Gaj/h0CHdmXzASgz+X5WAZIoU4heX799lpT7uKBQIMGgCsaJ5iZwEEnwTSERiNropR7sOrZHkCQ==
+
+react-native-image-crop-picker@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.26.1.tgz#3499ff5d4a09c9a9e927eb4f6ff936015ff594f1"
+  integrity sha512-5JdOjQS2V5L/vfb8+jPTUYx4VZPLvhZTyCUjiG0BZCbh+N1L24Kj2C+8EOuWS7xXXHrz5Bpe/eq5lQO1Efc+Yw==
 
 react-native-markdown-renderer@^3.2.8:
   version "3.2.8"

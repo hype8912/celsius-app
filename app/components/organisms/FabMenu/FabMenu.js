@@ -78,6 +78,7 @@ class FabMenu extends Component {
         this.props.fabType !== "hide") ||
       prevProps.kycStatus !== this.props.kycStatus
     ) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         menuItems: this.getMenuItems(this.props.fabType),
       });
