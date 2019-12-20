@@ -37,6 +37,7 @@ const userBehaviorUtil = {
   userReferring,
   userReferred,
   userStartingReferral,
+  userInitiatingLoan,
 };
 
 let userData = {};
@@ -309,6 +310,10 @@ async function userReferring() {
  */
 async function userReferred(owner) {
   await sendEvent(`Referral code received from ${owner}`);
+}
+
+async function userInitiatingLoan() {
+  await sendEvent(`Started loan process from banner on Wallet screen`);
 }
 
 /**

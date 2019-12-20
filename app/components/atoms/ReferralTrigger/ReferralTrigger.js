@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Banner from "../../molecules/Banner/Banner";
-import { hasPassedKYC } from "../../../utils/user-util";
 import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
 import userBehaviorUtil from "../../../utils/user-behavior-util";
@@ -10,6 +9,7 @@ import userBehaviorUtil from "../../../utils/user-behavior-util";
 class ReferralTrigger extends Component {
   static propTypes = {
     actions: PropTypes.instanceOf(Object),
+    steps: PropTypes.string,
   };
   static defaultProps = {};
 
@@ -21,17 +21,8 @@ class ReferralTrigger extends Component {
     };
   }
 
-  componentDidMount() {
-    const trigger = Math.ceil(Math.random() * 5) === 5;
-    this.setState({
-      trigger,
-    });
-  }
-
   render() {
-    const { actions } = this.props;
-    const { trigger } = this.state;
-    if (!trigger || !hasPassedKYC()) return null;
+    const { actions, steps } = this.props;
 
     const content =
       "Earn even more when others sign up for Celsius with your referral code!\n" +
@@ -54,6 +45,9 @@ class ReferralTrigger extends Component {
         buttonText={"Share referral code"}
         title={"Refer & Earn!"}
         content={content}
+        close={() => actions.closeBanner()}
+        type={"referral"}
+        steps={steps}
       />
     );
   }

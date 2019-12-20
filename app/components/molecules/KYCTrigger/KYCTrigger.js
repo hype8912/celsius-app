@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 import STYLES from "../../../constants/STYLES";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC } from "../../../utils/user-util";
 import { MODALS } from "../../../constants/UI";
 import Banner from "../Banner/Banner";
+import { hasPassedKYC } from "../../../utils/user-util";
 
 class KYCTrigger extends Component {
   static propTypes = {
@@ -69,7 +69,9 @@ class KYCTrigger extends Component {
   render() {
     const { actions, kycType } = this.props;
     const kycInfo = this.renderKycInfo();
+
     if (hasPassedKYC()) return null;
+
     return (
       <Banner
         backgroundColor={this.getColor()}
@@ -103,6 +105,8 @@ class KYCTrigger extends Component {
         title={kycInfo.title}
         content={kycInfo.content}
         info={kycInfo.info}
+        close={() => actions.closeBanner()}
+        type={"kyc"}
       />
     );
   }
