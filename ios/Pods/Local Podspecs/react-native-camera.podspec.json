@@ -14,10 +14,20 @@
   "platforms": {
     "ios": "9.0"
   },
-  "default_subspecs": ["RN", "RCT"],
-  "preserve_paths": ["LICENSE", "README.md", "package.json", "index.js"],
+  "default_subspecs": [
+    "RN",
+    "RCT"
+  ],
+  "preserve_paths": [
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "index.js"
+  ],
   "dependencies": {
-    "React": []
+    "React": [
+
+    ]
   },
   "subspecs": [
     {
@@ -31,28 +41,52 @@
     {
       "name": "TextDetector",
       "dependencies": {
-        "react-native-camera/RN": [],
-        "react-native-camera/RCT": [],
-        "Firebase/MLVision": [],
-        "Firebase/MLVisionTextModel": []
+        "react-native-camera/RN": [
+
+        ],
+        "react-native-camera/RCT": [
+
+        ],
+        "Firebase/MLVision": [
+
+        ],
+        "Firebase/MLVisionTextModel": [
+
+        ]
       }
     },
     {
       "name": "FaceDetectorMLKit",
       "dependencies": {
-        "react-native-camera/RN": [],
-        "react-native-camera/RCT": [],
-        "Firebase/MLVision": [],
-        "Firebase/MLVisionFaceModel": []
+        "react-native-camera/RN": [
+
+        ],
+        "react-native-camera/RCT": [
+
+        ],
+        "Firebase/MLVision": [
+
+        ],
+        "Firebase/MLVisionFaceModel": [
+
+        ]
       }
     },
     {
       "name": "BarcodeDetectorMLKit",
       "dependencies": {
-        "react-native-camera/RN": [],
-        "react-native-camera/RCT": [],
-        "Firebase/MLVision": [],
-        "Firebase/MLVisionBarcodeModel": []
+        "react-native-camera/RN": [
+
+        ],
+        "react-native-camera/RCT": [
+
+        ],
+        "Firebase/MLVision": [
+
+        ],
+        "Firebase/MLVisionBarcodeModel": [
+
+        ]
       }
     }
   ]
