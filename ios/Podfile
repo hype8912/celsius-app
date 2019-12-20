@@ -46,9 +46,6 @@ target 'celsius' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
-
-
 
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
 

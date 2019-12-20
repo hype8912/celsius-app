@@ -1,8 +1,8 @@
 // TODO(sb): RN update dependencies fixes
 // import * as GoogleSignInAndroid from "expo-google-sign-in";
-import { GoogleSignin } from "react-native-google-signin";
-import { Platform } from "react-native";
-import * as Facebook from "expo-facebook";
+import { GoogleSignin } from "@react-native-community/google-signin";
+// import * as Facebook from "expo-facebook";
+import { LoginManager, AccessToken } from "react-native-fbsdk";
 
 import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
@@ -18,13 +18,7 @@ import { claimAllBranchTransfers } from "../transfers/transfersActions";
 import branchUtil from "../../utils/branch-util";
 import userBehaviorUtil from "../../utils/user-behavior-util";
 
-const {
-  SECURITY_STORAGE_AUTH_KEY,
-  FACEBOOK_APP_ID,
-  FACEBOOK_URL,
-  GOOGLE_ANDROID_ID,
-  GOOGLE_IOS_ID,
-} = Constants;
+const { SECURITY_STORAGE_AUTH_KEY, FACEBOOK_URL } = Constants;
 
 export {
   authTwitter,
@@ -46,8 +40,8 @@ export {
 function authTwitter(type, twitterUser) {
   return (dispatch, getState) => {
     const user = getState().user.profile;
-
     const twitterNames = twitterUser.name.split(" ");
+
     user.firstName = twitterNames.shift();
     user.lastName = twitterNames.join(" ");
 
@@ -180,19 +174,16 @@ function twitterGetAccessToken(tokens) {
 function authFacebook(authReason) {
   return async dispatch => {
     if (!["login", "register"].includes(authReason)) return;
-
     try {
-      const { type, token } = await Facebook.logInWithReadPermissionsAsync(
-        FACEBOOK_APP_ID.toString(),
-        {
-          permissions: ["public_profile", "email"],
-          behavior: "system",
-        }
-      );
+      const result = await LoginManager.logInWithPermissions([
+        "public_profile",
+        "email",
+      ]);
 
-      if (type === "success") {
+      if (!result.isCancelled) {
+        const data = await AccessToken.getCurrentAccessToken();
+        const token = data.accessToken.toString();
         const response = await fetch(`${FACEBOOK_URL}${token}`);
-
         const user = await response.json();
         user.accessToken = token;
 
@@ -286,55 +277,31 @@ function loginFacebook(facebookUser) {
 function authGoogle(authReason) {
   return async dispatch => {
     if (!["login", "register"].includes(authReason)) return;
-
     try {
-      let user;
-      if (Platform.OS === "android") {
-        // await GoogleSignInAndroid.initAsync({ clientId: GOOGLE_ANDROID_ID });
-        // await GoogleSignInAndroid.askForPlayServicesAsync();
-        // const isSignedIn = await GoogleSignInAndroid.isSignedInAsync();
-        // if (isSignedIn) await GoogleSignInAndroid.signOutAsync();
-        // const result = await GoogleSignInAndroid.signInAsync();
-
-        if (result.type === "success") {
-          // NOTE: different response for Expo and for standalone app
-          user = result.user;
-          user.email = user.email;
-          user.firstName = user.givenName || user.firstName;
-          user.lastName = user.familyName || user.lastName;
-          user.googleId = user.id || user.uid;
-          user.profilePicture = user.photoURL;
-          user.accessToken = result.access_token || result.accessToken;
-          user.accessToken =
-            !user.accessToken && user.auth
-              ? user.auth.accessToken
-              : user.accessToken;
-        } else {
-          return { cancelled: true };
-        }
-      } else {
-        GoogleSignin.configure({ webClientId: GOOGLE_IOS_ID });
-        await GoogleSignin.hasPlayServices();
-        const isSignedIn = await GoogleSignin.isSignedIn();
-        if (isSignedIn) await GoogleSignin.signOut();
-        const result = await GoogleSignin.signIn();
-        const tokens = await GoogleSignin.getTokens();
-
-        user = result.user;
-        user.email = user.email;
-        user.firstName = user.givenName || user.firstName;
-        user.lastName = user.familyName || user.lastName;
-        user.googleId = user.id || user.uid;
-        user.profilePicture = user.photo;
-        user.accessToken = tokens.accessToken;
+      GoogleSignin.configure();
+      const isSignedId = await GoogleSignin.isSignedIn();
+      if (isSignedId) {
+        await GoogleSignin.signOut();
       }
+
+      await GoogleSignin.hasPlayServices();
+
+      const result = await GoogleSignin.signIn();
+      const tokens = await GoogleSignin.getTokens();
+
+      const user = result.user;
+      user.firstName = user.givenName || user.firstName;
+      user.lastName = user.familyName || user.lastName;
+      user.googleId = user.id || user.uid;
+      user.profilePicture = user.photo;
+      user.accessToken = tokens.accessToken;
 
       if (authReason === "login") {
         dispatch(loginGoogle(user));
       } else {
         dispatch(updateFormFields(user));
       }
-    } catch (e) {
+    } catch (error) {
       return { error: true };
     }
   };
