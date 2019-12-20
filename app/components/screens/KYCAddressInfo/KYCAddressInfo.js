@@ -13,12 +13,16 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 @connect(
   state => ({
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
     user: state.user.profile,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -27,7 +31,7 @@ class KYCAddressInfo extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    customCenterComponent: <ProgressBar steps={4} currentStep={2} />,
+    customCenterComponent: <ProgressBar steps={7} currentStep={2} />,
     headerSameColor: true,
   });
 
@@ -91,8 +95,14 @@ class KYCAddressInfo extends Component {
   };
 
   render() {
-    const { formData, formErrors, actions } = this.props;
+    const { formData, formErrors, actions, callsInProgress } = this.props;
     const { updatingAddressInfoInProgress } = this.state;
+
+    if (
+      apiUtil.areCallsInProgress([API.GET_USER_PERSONAL_INFO], callsInProgress)
+    ) {
+      return <LoadingScreen />;
+    }
 
     return (
       <RegularLayout>
@@ -182,7 +192,7 @@ class KYCAddressInfo extends Component {
             iconRight="IconArrowRight"
             loading={updatingAddressInfoInProgress}
           >
-            Your Taxpayer ID
+            Continue
           </CelButton>
         </View>
         <CelButton

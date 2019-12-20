@@ -1,4 +1,4 @@
-import { EMPTY_STATES, MODALS } from "../constants/UI";
+import { EMPTY_STATES } from "../constants/UI";
 import { KYC_STATUSES } from "../constants/DATA";
 
 export default {
@@ -26,14 +26,13 @@ function getProps(purpose, componentProps) {
       return {
         ...props,
         image: require("../../assets/images/monkey-on-a-laptop-illustration.png"),
-        heading: "Apply for a loan",
+        heading: "Borrow Cash Instantly",
         paragraphs: [
           "Get a USD or stablecoin loan at the best interest rates on the block!",
         ],
         onPress: () => actions.navigateTo("BorrowChooseLoan"),
-        button: "Apply for a loan",
-        secondaryOnPress: () =>
-          actions.openModal(MODALS.BORROW_CALCULATOR_MODAL),
+        button: "Get Cash",
+        secondaryOnPress: () => actions.navigateTo("BorrowCalculatorScreen"),
         secondaryButton: "Calculate Loan Interest",
       };
 
@@ -53,8 +52,8 @@ function getProps(purpose, componentProps) {
       return {
         ...props,
         paragraphs: ["Withdraw will be available upon identity verification."],
-        button: "Back to settings",
-        onPress: () => actions.navigateTo("WalletSettings"),
+        button: "Back to wallet",
+        onPress: () => actions.navigateTo("WalletLanding"),
       };
 
     case EMPTY_STATES.MAINTENANCE:
@@ -82,8 +81,8 @@ function getProps(purpose, componentProps) {
         ...props,
         image: require("../../assets/images/diane-sad3x.png"),
         paragraphs: ["CelPay will be available upon identity verification."],
-        button: "Back to settings",
-        onPress: () => actions.navigateTo("WalletSettings"),
+        button: "Back to wallet",
+        onPress: () => actions.navigateTo("WalletLanding"),
       };
 
     case EMPTY_STATES.NON_VERIFIED_DEPOSIT:
@@ -100,8 +99,8 @@ function getProps(purpose, componentProps) {
       return {
         ...props,
         paragraphs: ["Deposits will be available upon identity verification."],
-        button: "Back to settings",
-        onPress: () => actions.navigateTo("WalletSettings"),
+        button: "Back to wallet",
+        onPress: () => actions.navigateTo("WalletLanding"),
       };
 
     case EMPTY_STATES.NON_MEMBER_CELPAY:
@@ -186,7 +185,7 @@ function getProps(purpose, componentProps) {
 }
 
 function getNonVerifiedProps(componentProps) {
-  const { user, actions } = componentProps;
+  const { user } = componentProps;
 
   if (!user.kyc) return {};
 
@@ -206,24 +205,10 @@ function getNonVerifiedProps(componentProps) {
   let aboveHeadingSection = isRejected ? "kyc-rejected" : null;
   aboveHeadingSection = isPending ? "kyc-pending" : aboveHeadingSection;
 
-  const modal = isRejected ? MODALS.KYC_REJECTED_MODAL : null;
-  const modalProps = isRejected
-    ? {
-        name: MODALS.KYC_REJECTED_MODAL,
-        heading: "Identity verification failed",
-        paragraphs: kycRejectionReasons,
-        yesCopy: "Verify identity again",
-        onYes: actions.closeModal,
-        support: true,
-      }
-    : null;
-
   const button = !isPending ? "Verify profile" : null;
 
   return {
     aboveHeadingSection,
-    modalProps,
-    modal,
     button,
   };
 }

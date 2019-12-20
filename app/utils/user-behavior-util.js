@@ -15,6 +15,8 @@ const userBehaviorUtil = {
   registrationCompleted,
   kycProfileInfo,
   kycAddressInfo,
+  kycDocumentsSubmitted,
+  kycUtilityBillSubmitted,
   kycTaxPayerInfo,
   kycStarted,
   interestInCEL,
@@ -32,6 +34,10 @@ const userBehaviorUtil = {
   loanApplied,
   setPin,
   apiError,
+  userReferring,
+  userReferred,
+  userStartingReferral,
+  userInitiatingLoan,
 };
 
 let userData = {};
@@ -176,6 +182,20 @@ async function kycAddressInfo() {
 }
 
 /**
+ * Fires an event when a user submits KYC Document photos
+ */
+async function kycDocumentsSubmitted() {
+  await sendEvent("KYC Documents Submitted");
+}
+
+/**
+ * Fires an event when a user submits KYC utility bill photo
+ */
+async function kycUtilityBillSubmitted() {
+  await sendEvent("KYC Utility Bill Submitted");
+}
+
+/**
  * Fires an event when a user submit KYC taxpayer info
  */
 async function kycTaxPayerInfo() {
@@ -268,6 +288,32 @@ async function changePassword() {
  */
 async function changePin() {
   await sendEvent("PIN Changed");
+}
+
+/**
+ * Fires an event when a user clicks on banner on Wallet screen
+ */
+async function userStartingReferral() {
+  await sendEvent("Referral process started from banner on Wallet screen");
+}
+
+/**
+ * Fires an event when a user copies slug/shares a unique link for referral purposes
+ */
+async function userReferring() {
+  await sendEvent("Referral code shared/copied");
+}
+
+/**
+ * Fires an event when a user has been referred
+ * @param {string} owner of referral link
+ */
+async function userReferred(owner) {
+  await sendEvent(`Referral code received from ${owner}`);
+}
+
+async function userInitiatingLoan() {
+  await sendEvent(`Started loan process from banner on Wallet screen`);
 }
 
 /**

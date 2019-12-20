@@ -11,6 +11,7 @@ export {
   toggleKeypad,
   setKeypadInput,
   setActiveTab,
+  closeBanner,
 };
 
 let msgTimeout;
@@ -168,4 +169,14 @@ function setFabType(fabType) {
  */
 function setActiveTab(activeTab) {
   return { type: ACTIONS.ACTIVE_TAB, activeTab };
+}
+
+/**
+ * Closes all banners, mostly those on wallet landing
+ * @returns {Object} - Action
+ */
+function closeBanner() {
+  return {
+    type: ACTIONS.CLOSE_BANNER,
+  };
 }

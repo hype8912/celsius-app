@@ -16,13 +16,13 @@ import STYLES from "../../../constants/STYLES";
 import Separator from "../../atoms/Separator/Separator";
 import IconButton from "../../organisms/IconButton/IconButton";
 import { MODALS, THEMES } from "../../../constants/UI";
-import ReferralSendModal from "../../organisms/ReferralSendModal/ReferralSendModal";
-import RegisterPromoCodeModal from "../../organisms/RegisterPromoCodeModal/RegisterPromoCodeModal";
+import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
+import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
 import CelButton from "../../atoms/CelButton/CelButton";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import appUtil from "../../../utils/app-util";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import KYCandPromotionsTrigger from "../../molecules/KYCandPromotionsTrigger/KYCandPromotionsTrigger";
+import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import { hasPassedKYC } from "../../../utils/user-util";
 import ProfileStyle from "./Profile.styles";
@@ -109,7 +109,7 @@ class Profile extends Component {
 
     return (
       <RegularLayout>
-        <KYCandPromotionsTrigger actions={actions} kycType={kycStatus} />
+        <KYCTrigger actions={actions} kycType={kycStatus} />
         <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
 
         <View>

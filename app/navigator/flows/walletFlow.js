@@ -1,6 +1,7 @@
 import { createStackNavigator } from "react-navigation-stack";
 import CoinDetails from "../../components/screens/CoinDetails/CoinDetails";
 import WalletLanding from "../../components/screens/WalletLanding/WalletLanding";
+import InterestCalculatorScreen from "../../components/screens/InterestCalculatorScreen/InterestCalculatorScreen";
 import WalletInterest from "../../components/screens/WalletInterest/WalletInterest";
 import AllTransactions from "../../components/screens/AllTransactions/AllTransactions";
 import BalanceHistory from "../../components/screens/BalanceHistory/BalanceHistory";
@@ -28,6 +29,7 @@ export const walletFlow = {
     TransactionDetails,
     Community,
     MyCel,
+    InterestCalculator: InterestCalculatorScreen,
     InterestRates,
     ...depositFlow.screens,
     ...profileFlow.screens,

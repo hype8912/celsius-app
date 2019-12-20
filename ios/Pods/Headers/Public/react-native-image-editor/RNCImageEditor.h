@@ -1,1 +1,0 @@
-../../../../../node_modules/@react-native-community/image-editor/ios/RNCImageEditor.h

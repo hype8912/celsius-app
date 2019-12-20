@@ -39,10 +39,9 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
 import formatter from "../../../utils/formatter";
-import { MODALS } from "../../../constants/UI";
-import InfoModal from "../../molecules/InfoModal/InfoModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CollateralLoanCard from "../../molecules/CollateralLoanCard/CollateralLoanCard";
+import PrepaymentSuccessfulModal from "../../modals/PrepaymentSuccessfulModal/PrepaymentSuccessfulModal";
 
 @connect(
   state => ({
@@ -204,17 +203,6 @@ class TransactionDetails extends Component {
             text="Withdrawn to:"
           />
         );
-      case "button:back":
-        return kycPassed ? (
-          <CelButton
-            margin="12 0 80 0"
-            key={sectionType}
-            onPress={() => actions.navigateTo("WalletLanding")}
-            basic
-          >
-            Go back to wallet
-          </CelButton>
-        ) : null;
       case "button:back:main":
         return kycPassed ? (
           <CelButton
@@ -560,7 +548,7 @@ class TransactionDetails extends Component {
   };
 
   render() {
-    const { transaction, callsInProgress, actions } = this.props;
+    const { transaction, callsInProgress } = this.props;
     const loadingTransactionDetails = apiUtil.areCallsInProgress(
       [API.GET_TRANSACTION_DETAILS],
       callsInProgress
@@ -577,17 +565,7 @@ class TransactionDetails extends Component {
     return (
       <RegularLayout padding="0 0 0 0">
         {sections.map(this.renderSection)}
-        <InfoModal
-          name={MODALS.BORROW_CONFIRM}
-          heading={"Thank you for initiating your loan with Celsius"}
-          paragraphs={[
-            "A member of our team will be in touch with you to sign you on a contract, confirm your banking details and send you your money!",
-          ]}
-          onYes={() => {
-            actions.closeModal(MODALS.BORROW_CONFIRM);
-          }}
-          yesCopy={"Done"}
-        />
+        <PrepaymentSuccessfulModal />
       </RegularLayout>
     );
   }

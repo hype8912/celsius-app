@@ -17,15 +17,25 @@ import API from "../../../constants/API";
   state => ({
     mask: state.camera.mask,
     photo: state.camera.photo,
+    cameraField: state.camera.cameraField,
     cameraHeading: state.camera.cameraHeading,
+    cameraCopy: state.camera.cameraCopy,
     callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class ConfirmCamera extends Component {
   static navigationOptions = () => ({
-    headerSameColor: true,
+    transparent: true,
   });
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: false,
+    };
+  }
 
   savePhoto = () => {
     const { actions, cameraField, photo, navigation } = this.props;
@@ -38,14 +48,27 @@ class ConfirmCamera extends Component {
       actions.updateFormField(cameraField, photo);
       actions.navigateBack();
     }
+    this.setState({
+      isLoading: true,
+    });
   };
 
   render() {
-    const { mask, cameraHeading, photo, actions, callsInProgress } = this.props;
+    const {
+      mask,
+      cameraHeading,
+      photo,
+      actions,
+      callsInProgress,
+      cameraCopy,
+    } = this.props;
+    const { isLoading } = this.state;
+
     const loading = apiUtil.areCallsInProgress(
       API.TAKE_CAMERA_PHOTO,
       callsInProgress
     );
+
     return (
       <RegularLayout fabType="hide">
         <View
@@ -56,17 +79,23 @@ class ConfirmCamera extends Component {
             width: "100%",
           }}
         >
-          <View style={{ flex: 1 }}>
-            <SafeAreaView
-              style={{ flex: 1, flexDirection: "row", marginBottom: 20 }}
-            >
+          <View style={{ flex: 1, marginBottom: 20 }}>
+            <SafeAreaView style={{ flex: 1 }}>
               <CelText
+                type="H3"
                 weight="700"
-                type="H1"
                 align="center"
-                style={{ alignSelf: "flex-end", flex: 1 }}
+                margin="15 0 20 0"
+                style={{ paddingHorizontal: 20 }}
               >
                 {cameraHeading}
+              </CelText>
+              <CelText
+                type="H5"
+                align="center"
+                style={{ paddingHorizontal: 20 }}
+              >
+                {cameraCopy}
               </CelText>
             </SafeAreaView>
           </View>
@@ -140,7 +169,13 @@ class ConfirmCamera extends Component {
               >
                 Retake Photo
               </CelButton>
-              <CelButton onPress={this.savePhoto} white margin="20 0 20 0">
+              <CelButton
+                onPress={this.savePhoto}
+                white
+                margin="20 0 20 0"
+                loading={isLoading}
+                disabled={isLoading}
+              >
                 Use Photo
               </CelButton>
             </View>

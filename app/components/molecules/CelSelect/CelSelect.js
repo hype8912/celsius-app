@@ -188,6 +188,8 @@ class CelSelect extends Component {
           field_name: field,
           hideCallingCodes,
         });
+    } else if (type === "state") {
+      onPress = () => actions.navigateTo("SelectState", { field });
     }
 
     const country = this.props.value ? this.props.value : countries.US;
@@ -227,6 +229,35 @@ class CelSelect extends Component {
       );
     }
 
+    if (type === "state") {
+      return (
+        <TouchableOpacity
+          onPress={onPress}
+          style={[inputStyle, { flexDirection: "row", alignItems: "center" }]}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <CelText type="H4" color={textColor}>
+              {value ? value.label : labelText}
+            </CelText>
+            {!disabled && (
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: countryInput ? 11 : 2,
+                  position: countryInput ? "absolute" : "relative",
+                  marginLeft: countryInput ? 292 : 0,
+                  justifyContent: "center",
+                  alignItems: countryInput ? "center" : "flex-end",
+                }}
+              >
+                <Icon name="CaretDown" height="9" width="15" fill={iconColor} />
+              </View>
+            )}
+          </View>
+        </TouchableOpacity>
+      );
+    }
+
     const countryInput =
       type === "country" &&
       showCountryFlag &&
@@ -238,23 +269,28 @@ class CelSelect extends Component {
         onPress={onPress}
         style={[inputStyle, { flexDirection: "row", alignItems: "center" }]}
       >
-        {countryInput
-          ? this.renderImage(
-              [cmpStyle.flagImage, { marginRight: 5 }],
-              this.state.value.alpha2
-            )
-          : null}
-        <View style={{ flexDirection: "row" }}>
-          <CelText type="H4" color={textColor}>
-            {value ? value.label || value.name : labelText}
-          </CelText>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            flex: 1,
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            {countryInput
+              ? this.renderImage(
+                  [cmpStyle.flagImage, { marginRight: 5 }],
+                  this.state.value.alpha2
+                )
+              : null}
+            <CelText type="H4" color={textColor}>
+              {value ? value.label || value.name : labelText}
+            </CelText>
+          </View>
           {!disabled && (
             <View
               style={{
-                flex: 1,
-                marginTop: countryInput ? 11 : 2,
-                position: countryInput ? "absolute" : "relative",
-                marginLeft: countryInput ? 292 : 0,
+                marginTop: 5,
                 justifyContent: "center",
                 alignItems: countryInput ? "center" : "flex-end",
               }}
@@ -283,7 +319,7 @@ class CelSelect extends Component {
 
     return (
       <View style={[flex ? { flex } : {}, style]}>
-        {type !== "country" && type !== "phone" ? (
+        {!["state", "country", "phone"].includes(type) ? (
           <RNPickerSelect
             disabled={disabled}
             items={items}
@@ -296,12 +332,7 @@ class CelSelect extends Component {
         ) : (
           this.renderSelect()
         )}
-        {/* {type === 'state' &&
-          <SelectStateModal
-            visible={propVisible}
-            onClose={this.selectValue}
-          />
-        } */}
+
         {!!error && (
           <View>
             <CelText margin="5 0 0 0" color="red" style={{ height: 20 }}>

@@ -15,7 +15,6 @@ import Separator from "../../atoms/Separator/Separator";
 import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import Loader from "../../atoms/Loader/Loader";
-import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(
   state => ({
@@ -42,6 +41,14 @@ class SecurityOverview extends Component {
   }
 
   getIcon = item => {
+    if (item.action === "transaction-history") {
+      return {
+        name: "Csv",
+        color: STYLES.COLORS.CELSIUS_BLUE,
+        action: "Transaction History Requested",
+      };
+    }
+
     if (item.action === "withdrawal-request") {
       return {
         name: "CaretUp",
@@ -183,11 +190,31 @@ class SecurityOverview extends Component {
     }
   };
 
+  getCardProps = () => {
+    const { securityOverview } = this.props;
+
+    return {
+      name: securityOverview.is_2fa_set ? "Checked" : "Shield",
+      color: securityOverview.is_2fa_set
+        ? STYLES.COLORS.GREEN
+        : STYLES.COLORS.WHITE,
+      circleColor: securityOverview.is_2fa_set
+        ? STYLES.COLORS.WHITE_OPACITY2
+        : STYLES.COLORS.RED_OPACITY2,
+      fill: securityOverview.is_2fa_set
+        ? STYLES.COLORS.WHITE
+        : STYLES.COLORS.RED,
+      text: securityOverview.is_2fa_set
+        ? STYLES.COLORS.WHITE
+        : STYLES.COLORS.DARK_GRAY,
+    };
+  };
+
   renderStatus = () => {
     const { securityOverview } = this.props;
     if (securityOverview.is_2fa_set) {
       return (
-        <CelText type="H2" weight="600" color={STYLES.COLORS.GREEN}>
+        <CelText type="H2" weight="600" color={STYLES.COLORS.WHITE}>
           {" "}
           ACTIVE{" "}
         </CelText>
@@ -362,6 +389,7 @@ class SecurityOverview extends Component {
     const UserActionsLog = this.renderUserActionsLog;
     const AccountActionsLog = this.renderAccountActionsLog;
     const DeviceLogedIn = this.renderDeviceLogedIn;
+    const cardProps = this.getCardProps();
 
     return (
       <RegularLayout>
@@ -371,17 +399,27 @@ class SecurityOverview extends Component {
             to make it even more secure.
           </CelText>
           <Separator text="Two-factor verification" />
-          <Card margin="40 0 40 0">
-            <View style={style.twoFactor}>
-              <ThemedImage
-                lightSource={require("../../../../assets/images/security/securityDog/security-dog-illustration.png")}
-                darkSource={require("../../../../assets/images/security/securityDog/security-dog-illustration-dark.png")}
-                style={style.twoFactorImage}
+          <Card
+            margin="40 0 40 0"
+            padding={"2 2 2 2"}
+            styles={[style.card, { backgroundColor: cardProps.color }]}
+          >
+            <View
+              style={[style.circle, { backgroundColor: cardProps.circleColor }]}
+            >
+              <Icon
+                name={cardProps.name}
+                fill={cardProps.fill}
+                width={35}
+                height={35}
               />
-              <View style={style.twoFactorText}>
-                <CelText type="H7"> Your Two-Factor Verification is </CelText>
-                <CelText align="right">{this.renderStatus()}</CelText>
-              </View>
+            </View>
+            <View style={style.text}>
+              <CelText type="H7" color={cardProps.text}>
+                {" "}
+                Your Two-Factor Verification is{" "}
+              </CelText>
+              <CelText align="right">{this.renderStatus()}</CelText>
             </View>
           </Card>
           <CelText margin="0 0 20 0">
@@ -391,19 +429,31 @@ class SecurityOverview extends Component {
           </CelText>
           <Separator text="Email confirmation" />
 
-          <Card margin="40 0 40 0">
-            <View style={style.email}>
-              <ThemedImage
-                lightSource={require("../../../../assets/images/security/securityDiane/security-diane-illustration.png")}
-                darkSource={require("../../../../assets/images/security/securityDiane/security-diane-illustration-dark.png")}
-                style={style.emailImage}
+          <Card
+            margin="40 0 40 0"
+            padding={"2 2 2 2"}
+            styles={[style.card, { backgroundColor: STYLES.COLORS.GREEN }]}
+          >
+            <View
+              style={[
+                style.circle,
+                { backgroundColor: STYLES.COLORS.WHITE_OPACITY2 },
+              ]}
+            >
+              <Icon
+                name={"Checked"}
+                fill={STYLES.COLORS.WHITE}
+                width={35}
+                height={35}
               />
-              <View style={style.emailText}>
-                <CelText type="H7">Email confirmation</CelText>
-                <CelText type="H2" weight="600" color={STYLES.COLORS.GREEN}>
-                  ACTIVE
-                </CelText>
-              </View>
+            </View>
+            <View style={style.text}>
+              <CelText type="H7" color={STYLES.COLORS.WHITE}>
+                Email confirmation
+              </CelText>
+              <CelText type="H2" weight="600" color={STYLES.COLORS.WHITE}>
+                ACTIVE
+              </CelText>
             </View>
           </Card>
           <CelText margin="0 0 20 0">

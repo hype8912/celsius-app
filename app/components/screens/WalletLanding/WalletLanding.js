@@ -10,20 +10,18 @@ import CelText from "../../atoms/CelText/CelText";
 import WalletDetailsCard from "../../organisms/WalletDetailsCard/WalletDetailsCard";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
-import CelPayReceivedModal from "../../organisms/CelPayReceivedModal/CelPayReceivedModal";
-import { WALLET_LANDING_VIEW_TYPES, MODALS } from "../../../constants/UI";
-import BecameCelMemberModal from "../../organisms/BecameCelMemberModal/BecameCelMemberModal";
-import { KYC_STATUSES } from "../../../constants/DATA";
-import EarnInterestCelModal from "../../organisms/EarnInterestCelModal/EarnInterestCelModal";
-import { getSecureStoreKey } from "../../../utils/expo-storage";
-import { isUSCitizen } from "../../../utils/user-util";
+import CelPayReceivedModal from "../../modals/CelPayReceivedModal/CelPayReceivedModal";
+import { WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import ComingSoonCoins from "../../molecules/ComingSoonCoins/ComingSoonCoins";
 import CoinCards from "../../organisms/CoinCards/CoinCards";
 import WalletLandingStyle from "./WalletLanding.styles";
-import LoanAlertsModal from "../../organisms/LoanAlertsModal/LoanAlertsModal";
-import KYCandPromotionsTrigger from "../../molecules/KYCandPromotionsTrigger/KYCandPromotionsTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
+import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
+import RejectionReasonsModal from "../../modals/RejectionReasonsModal/RejectionReasonsModal";
+import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
+import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
+import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 
 @connect(
   state => {
@@ -40,10 +38,10 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
       walletSummary: state.wallet.summary,
       currenciesGraphs: state.currencies.graphs,
       user: state.user.profile,
-      kycStatus: state.user.profile.kyc
-        ? state.user.profile.kyc.status
-        : KYC_STATUSES.collecting,
       depositCompliance: state.compliance.deposit,
+      rejectionReasons: state.user.profile.kyc
+        ? state.user.profile.kyc.rejectionReasons
+        : [],
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -86,7 +84,6 @@ class WalletLanding extends Component {
       appSettings,
       currenciesRates,
       currenciesGraphs,
-      user,
     } = this.props;
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -107,17 +104,6 @@ class WalletLanding extends Component {
     if (this.shouldInitializeMembership) {
       actions.getCelsiusMemberStatus();
       this.shouldInitializeMembership = false;
-    }
-    const isCelInterestModalHidden = await getSecureStoreKey(
-      "HIDE_MODAL_INTEREST_IN_CEL"
-    );
-    if (
-      user.celsius_member &&
-      !appSettings.interest_in_cel &&
-      isCelInterestModalHidden !== "ON" &&
-      !isUSCitizen()
-    ) {
-      actions.openModal(MODALS.EARN_INTEREST_CEL);
     }
 
     this.setWalletFetchingInterval();
@@ -192,7 +178,7 @@ class WalletLanding extends Component {
       user,
       branchTransfer,
       depositCompliance,
-      kycStatus,
+      rejectionReasons,
     } = this.props;
     const style = WalletLandingStyle();
 
@@ -202,7 +188,7 @@ class WalletLanding extends Component {
 
     return (
       <RegularLayout refreshing={refreshing} pullToRefresh={this.refresh}>
-        <KYCandPromotionsTrigger actions={actions} kycType={kycStatus} />
+        <BannerCrossroad />
         <View>
           <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
           <WalletDetailsCard
@@ -256,16 +242,14 @@ class WalletLanding extends Component {
             <ComingSoonCoins activeView={activeView} />
           </ExpandableItem>
         </View>
-        <CelPayReceivedModal
-          navigateTo={actions.navigateTo}
-          closeModal={actions.closeModal}
-          transfer={branchTransfer}
-        />
-        <BecameCelMemberModal
-          title={"Congrats! You have earned 1 CEL token!"}
-        />
-        <EarnInterestCelModal />
-        <LoanAlertsModal />
+        <CelPayReceivedModal transfer={branchTransfer} />
+        {/* <LoanAlertsModalWrapper />*/}
+        <ReferralSendModal />
+        <RejectionReasonsModal rejectionReasons={rejectionReasons} />
+        <BecomeCelMemberModal />
+        {/* Temporary disabling this modal */}
+        {/* <EarnInterestCelModal />*/}
+        <LoanAlertsModalWrapper />
       </RegularLayout>
     );
   }

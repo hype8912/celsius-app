@@ -15,7 +15,7 @@ export default {
   capitalize,
   percentage, // TODO check if we need both or a flag will do
   percentageDisplay, // TODO check if we need both or a flag will do
-  hideTextExceptedFirstNLetters,
+  hideTextExceptFirstNLetters,
   maskEmail,
 };
 
@@ -299,7 +299,7 @@ deepmerge.all = function deepmergeAll(array, optionsArgument) {
  * @param {number} n - number of the first letters that will be showen
  * @returns {string}
  */
-function hideTextExceptedFirstNLetters(text, n = 1) {
+function hideTextExceptFirstNLetters(text, n = 1) {
   let hiddenText = "";
   for (let i = n; i < text.length; i++) {
     hiddenText += "x";
@@ -319,9 +319,9 @@ function maskEmail(email) {
 
   const splitedEmailProvider = splitedEmail[1].split(".");
 
-  return `${hideTextExceptedFirstNLetters(
+  return `${hideTextExceptFirstNLetters(
     splitedEmail[0]
-  )}@${hideTextExceptedFirstNLetters(splitedEmailProvider[0])}.${
+  )}@${hideTextExceptFirstNLetters(splitedEmailProvider[0])}.${
     splitedEmailProvider[1]
   }`;
 }

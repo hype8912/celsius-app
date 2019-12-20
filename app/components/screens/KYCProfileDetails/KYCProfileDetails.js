@@ -28,7 +28,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 class KYCProfileDetails extends Component {
   static navigationOptions = () => ({
     title: "Profile Details",
-    customCenterComponent: <ProgressBar steps={4} currentStep={1} />,
+    customCenterComponent: <ProgressBar steps={7} currentStep={1} />,
     headerSameColor: true,
   });
 
@@ -127,7 +127,7 @@ class KYCProfileDetails extends Component {
         first_name: formData.firstName,
         last_name: formData.lastName,
         middle_name: formData.middleName,
-        date_of_birth: `${formData.month}/${formData.day}/${formData.year}`,
+        date_of_birth: `${formData.year}-${formData.month}-${formData.day}`,
         gender: formData.gender,
         citizenship: formData.citizenship.name,
       };

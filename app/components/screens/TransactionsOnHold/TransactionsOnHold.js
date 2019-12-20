@@ -34,7 +34,7 @@ class TransactionsOnHold extends Component {
         </Card>
         <TransactionsHistory
           hasFilter={false}
-          additionalFilter={{ type: "celpay" }}
+          additionalFilter={{ type: ["celpay"] }}
         />
       </RegularLayout>
     );

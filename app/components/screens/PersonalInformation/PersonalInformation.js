@@ -15,7 +15,7 @@ import Separator from "../../atoms/Separator/Separator";
 import CelInput from "../../atoms/CelInput/CelInput";
 import SocialSecurityNumber from "../../molecules/SocialSecurityNumber/SocialSecurityNumber";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import KYCandPromotionsTrigger from "../../molecules/KYCandPromotionsTrigger/KYCandPromotionsTrigger";
+import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 
 @connect(
   state => ({
@@ -101,7 +101,7 @@ class PersonalInformation extends Component {
 
     return (
       <RegularLayout>
-        <KYCandPromotionsTrigger actions={actions} kycType={kycStatus} />
+        <KYCTrigger actions={actions} kycType={kycStatus} />
         <CelText
           margin={"0 0 20 0"}
           align={"center"}

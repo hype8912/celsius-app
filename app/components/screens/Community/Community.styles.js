@@ -39,7 +39,7 @@ const base = {
   },
   imageView: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     margin: 12,
     marginLeft: 5,
   },

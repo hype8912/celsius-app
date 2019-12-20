@@ -5,14 +5,12 @@ import { View, Image, ScrollView, SafeAreaView, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import * as appActions from "../../../redux/actions";
 import Loader from "../../atoms/Loader/Loader";
-import {
-  heightPercentageToDP,
-  widthPercentageToDP,
-  getPadding,
-} from "../../../utils/styles-util";
+import { getPadding } from "../../../utils/styles-util";
 import CelText from "../../atoms/CelText/CelText";
 import { THEMES, WELCOME_MESSAGES } from "../../../constants/UI";
 import { isKYCRejectedForever } from "../../../utils/user-util";
+import { STORYBOOK } from "../../../../dev-settings";
+import HomeStyle from "./Home.styles";
 
 const apiCalls = [];
 
@@ -56,6 +54,10 @@ class Home extends Component {
     const { user, appInitialized } = this.props;
     SplashScreen.hide();
 
+    if (STORYBOOK) {
+      return prevProps.actions.navigateTo("Storybook");
+    }
+
     if (prevProps.appInitialized === false && appInitialized === true) {
       if (user.id) {
         if (!user.has_pin) {
@@ -81,25 +83,16 @@ class Home extends Component {
   render() {
     const { randomMsg } = this.state;
     const paddings = getPadding("0 20 0 20");
+    const style = HomeStyle();
 
     return (
       <ScrollView contentContainerStyle={[{ flexGrow: 1 }, paddings]}>
         <SafeAreaView style={{ flex: 1, justifyContent: "space-between" }}>
           <StatusBar barStyle="dark-content" />
-          <View
-            style={{
-              marginTop: heightPercentageToDP("15%"),
-              alignItems: "center",
-            }}
-          >
+          <View style={style.contentWrapper}>
             <Image
               source={require("../../../../assets/images/splashScreen-celsius-new.png")}
-              style={{
-                resizeMode: "contain",
-                width: widthPercentageToDP("33%"),
-                height: widthPercentageToDP("33%"),
-                marginBottom: 20,
-              }}
+              style={style.celImage}
             />
             <CelText
               theme={THEMES.LIGHT}
@@ -121,44 +114,18 @@ class Home extends Component {
             </CelText>
             <Loader progress={this.state.progress} />
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignSelf: "center",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
+          <View style={style.partnerLogos}>
             <Image
               source={require("../../../../assets/images/PartnerLogos/BitGo.png")}
-              style={{
-                resizeMode: "contain",
-                width: widthPercentageToDP("18%"),
-                marginLeft: 35,
-                marginRight: 5,
-                alignSelf: "flex-end",
-              }}
+              style={style.logoLeft}
             />
             <Image
               source={require("../../../../assets/images/PartnerLogos/DP.png")}
-              style={{
-                resizeMode: "contain",
-                width: widthPercentageToDP("18%"),
-                marginLeft: 5,
-                marginRight: 5,
-                alignSelf: "flex-end",
-              }}
+              style={style.logoMiddle}
             />
             <Image
-              source={require("../../../../assets/images/PartnerLogos/mvp_workshop.png")}
-              style={{
-                resizeMode: "contain",
-                width: widthPercentageToDP("22%"),
-                opacity: 0.7,
-                marginLeft: 0,
-                marginRight: 35,
-                alignSelf: "flex-end",
-              }}
+              source={require("../../../../assets/images/PartnerLogos/prime-trust-llc-vector-logo.png")}
+              style={style.logoRight}
             />
           </View>
         </SafeAreaView>

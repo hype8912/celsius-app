@@ -1,9 +1,12 @@
+import { Linking } from "react-native";
 import axios from "axios/index";
 import Constants from "../../constants";
 import store from "../redux/store";
 import API_URL from "../services/api-url";
 import appUtil from "./app-util";
 import userBehaviorUtil from "./user-behavior-util";
+import { navigateTo } from "../redux/nav/navActions";
+import { showMessage } from "../redux/ui/uiActions";
 
 const { ENV } = Constants;
 
@@ -87,7 +90,10 @@ async function err(e, isFatal = false) {
 
     const { profile } = state.user;
     const { lastTenActions } = state.app;
-    const userData = profile && { user_id: profile.id, email: profile.email };
+    const userData = profile.id && {
+      user_id: profile.id,
+      email: profile.email,
+    };
 
     const { activeScreen } = state.nav;
 
@@ -109,5 +115,22 @@ async function err(e, isFatal = false) {
 
     axios.post(`${API_URL}/graylog`, errorObject);
     userBehaviorUtil.sendEvent("App crushed", errorObject);
+
+    store.dispatch(navigateTo(profile.id ? "WalletLanding" : "Welcome"));
+    const action = {
+      text: "Open ticket",
+      action: () =>
+        Linking.openURL(
+          "https://support.celsius.network/hc/en-us/requests/new"
+        ),
+    };
+    store.dispatch(
+      showMessage(
+        "error",
+        "There was an unexpected crash in the app. It was automatically reported to our development team, they are working hard on fixing it! If the problem persists, please contact support.",
+        false,
+        action
+      )
+    );
   }
 }

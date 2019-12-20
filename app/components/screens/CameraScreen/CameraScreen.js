@@ -9,12 +9,12 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { RESULTS } from "react-native-permissions";
+
 // TODO(sb): RN update dependencies fixes
 // import * as ImagePicker from "expo-image-picker";
-import { RESULTS } from "react-native-permissions";
 import { withNavigationFocus } from "react-navigation";
-import { RNCamera } from "react-native-camera";
-import ImageEditor from "@react-native-community/image-editor";
+import { RNCamera } from "react-native-camera";import ImageEditor from "@react-native-community/image-editor";
 import ImagePicker from "react-native-image-crop-picker";
 import * as appActions from "../../../redux/actions";
 import CameraScreenStyle from "./CameraScreen.styles";
@@ -40,6 +40,7 @@ const { height, width } = Dimensions.get("window");
     cameraHeading: state.camera.cameraHeading,
     cameraCopy: state.camera.cameraCopy,
     mask: state.camera.mask,
+    activeScreen: state.nav.activeScreen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -58,8 +59,7 @@ class CameraScreen extends Component {
       PropTypes.string,
       PropTypes.instanceOf(Object),
     ]),
-    mask: PropTypes.oneOf(["circle", "document"]),
-    onSave: PropTypes.func,
+    mask: PropTypes.oneOf(["circle", "document", "utility"]),
   };
 
   static defaultProps = {
@@ -87,6 +87,13 @@ class CameraScreen extends Component {
     actions.setFabType("hide");
     await this.getCameraPermissions();
     await this.getCameraRollPermissions();
+  }
+
+  componentDidUpdate() {
+    const { actions, activeScreen } = this.props;
+    if (activeScreen === "CameraScreen") {
+      actions.setFabType("hide");
+    }
   }
 
   getCameraPermissions = async () => {
@@ -125,6 +132,11 @@ class CameraScreen extends Component {
         return {
           lightSource: require("../../../../assets/images/mask/card-mask-transparent.png"),
           darkSource: require("../../../../assets/images/mask/dark-card-mask-transparent.png"),
+        };
+      case "utility":
+        return {
+          lightSource: require("../../../../assets/images/mask/bill-mask-markers-light.png"),
+          darkSource: require("../../../../assets/images/mask/bill-mask-markers-dark.png"),
         };
       case "circle":
       default:
@@ -203,14 +215,22 @@ class CameraScreen extends Component {
         });
 
         actions.takeCameraPhoto({ uri: croppedImage });
-      } catch (err) {
+      await actions.navigateTo("ConfirmCamera", {
+        onSave: navigation.getParam("onSave"),
+      });
+    } catch (err) {
+      actions.apiError(API.TAKE_CAMERA_PHOTO, err);
+      actions.showMessage(
+        "error",
+        "There was an issue with the camera. Please try again or pick an image from your library."
+      );
         loggerUtil.err(err);
       }
     }
   };
 
   renderMask = () => {
-    const { mask, cameraHeading } = this.props;
+    const { mask, cameraHeading, cameraCopy } = this.props;
     const imageSource = this.getMaskImage(mask);
     const style = CameraScreenStyle();
     return (
@@ -222,17 +242,29 @@ class CameraScreen extends Component {
           width: "100%",
         }}
       >
-        <View style={[style.mask, style.maskOverlayColor]}>
+        <View
+          style={[style.mask, style.maskOverlayColor, { alignItems: "center" }]}
+        >
           <SafeAreaView
-            style={{ flex: 1, flexDirection: "row", marginBottom: 20 }}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              paddingTop: 20,
+              marginBottom: 20,
+              width,
+            }}
           >
             <CelText
+              type="H3"
               weight="700"
-              type="H1"
               align="center"
-              style={{ alignSelf: "flex-end", flex: 1 }}
+              margin="5 0 20 0"
+              style={{ width: "80%" }}
             >
               {cameraHeading}
+            </CelText>
+            <CelText type="H5" align="center" style={{ width: "80%" }}>
+              {cameraCopy}
             </CelText>
           </SafeAreaView>
         </View>

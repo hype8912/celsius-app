@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View } from "react-native";
+// import { View } from "react-native";
 
 import * as appActions from "../../../redux/actions";
-// import RegisterStyle from "./Register.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -14,12 +13,11 @@ import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
 import Separator from "../../atoms/Separator/Separator";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import STYLES from "../../../constants/STYLES";
-import { KEYBOARD_TYPE, MODALS } from "../../../constants/UI";
-import RegisterPromoCodeModal from "../../organisms/RegisterPromoCodeModal/RegisterPromoCodeModal";
-import Icon from "../../atoms/Icon/Icon";
-import Card from "../../atoms/Card/Card";
-import RegisterInitialStyle from "./RegisterInitial.styles";
+// import STYLES from "../../../constants/STYLES";
+import { KEYBOARD_TYPE } from "../../../constants/UI";
+import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
+import RegisterPromoCodeCard from "../../molecules/RegisterPromoCodeCard/RegisterPromoCodeCard";
+import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
 
 @connect(
   state => ({
@@ -98,163 +96,14 @@ class RegisterInitial extends Component {
     }
   };
 
-  renderPromoCodeBody = () => {
-    const { promoCode, actions } = this.props;
-    const style = RegisterInitialStyle();
-
-    if (promoCode) {
-      return (
-        <View style={style.referralBody}>
-          <View style={style.indentation} />
-          <View style={style.referralCopy}>
-            <CelText type={"H5"} weight={"500"} color={STYLES.COLORS.WHITE}>
-              In order to receive your referral reward, you must:
-            </CelText>
-            <CelText
-              margin={"10 0 0 0"}
-              type={"H6"}
-              weight={"300"}
-              color={STYLES.COLORS.WHITE}
-            >
-              1. Complete KYC (Identity Verification)
-            </CelText>
-            <CelText
-              margin={"10 0 0 0"}
-              type={"H6"}
-              weight={"300"}
-              color={STYLES.COLORS.WHITE}
-            >
-              2. Receive confirmation of account verification
-            </CelText>
-            <CelText
-              margin={"10 0 0 0"}
-              type={"H6"}
-              weight={"300"}
-              color={STYLES.COLORS.WHITE}
-            >
-              3. Deposit $200 or more worth of coins to your Celsius wallet
-            </CelText>
-          </View>
-        </View>
-      );
-    }
-    return (
-      <View style={style.referralBody}>
-        <View style={style.indentation} />
-        <View style={style.referralCopy}>
-          <CelText
-            margin={"10 0 0 0"}
-            type={"H6"}
-            weight={"300"}
-            color={STYLES.COLORS.WHITE}
-          >
-            Enter your referral code then follow the steps below to receive your
-            reward.
-          </CelText>
-          <CelText
-            margin={"10 0 0 0"}
-            type={"H6"}
-            weight={"400"}
-            color={STYLES.COLORS.WHITE}
-          >
-            NOTE: You will NOT be able to enter a referral code after account
-            verification.
-          </CelText>
-          <CelText
-            margin={"10 0 0 0"}
-            type={"H6"}
-            weight={"300"}
-            color={STYLES.COLORS.WHITE}
-          >
-            1. Complete KYC (Identity Verification)
-          </CelText>
-          <CelText
-            margin={"10 0 0 0"}
-            type={"H6"}
-            weight={"300"}
-            color={STYLES.COLORS.WHITE}
-          >
-            2. Receive confirmation of account verification
-          </CelText>
-          <CelText
-            margin={"10 0 0 0"}
-            type={"H6"}
-            weight={"300"}
-            color={STYLES.COLORS.WHITE}
-          >
-            3. Deposit $200 or more worth of coins to your Celsius wallet
-          </CelText>
-          <View style={{ alignItems: "flex-start" }}>
-            <CelButton
-              onPress={() =>
-                actions.openModal(MODALS.REGISTER_PROMO_CODE_MODAL)
-              }
-              color={"white"}
-              textColor={STYLES.COLORS.CELSIUS_BLUE}
-              size={"small"}
-              margin={"20 0 15 0"}
-              style={{ justifyContent: "flex-start" }}
-            >
-              Enter Referral Code
-            </CelButton>
-          </View>
-        </View>
-      </View>
-    );
-  };
-
-  renderReferralCard = () => {
-    const { promoCode } = this.props;
-    const { isExpanded } = this.state;
-    const style = RegisterInitialStyle();
-    return (
-      <Card
-        color={promoCode ? STYLES.COLORS.GREEN : STYLES.COLORS.CELSIUS_BLUE}
-        onPress={() => {
-          this.setState({ isExpanded: !isExpanded });
-        }}
-      >
-        <View style={style.referralHeading}>
-          <View style={style.iconWrapper}>
-            <View style={style.iconStyle}>
-              <Icon
-                name={promoCode ? "Checked" : "Present"}
-                width="20"
-                height="20"
-                fill={
-                  promoCode ? STYLES.COLORS.GREEN : STYLES.COLORS.CELSIUS_BLUE
-                }
-              />
-            </View>
-          </View>
-          <View style={style.titleWrapper}>
-            <CelText
-              type={"H5"}
-              weight={"500"}
-              color={STYLES.COLORS.WHITE}
-              style={{ marginTop: 10 }}
-            >
-              {promoCode ? "Referral Code Activated" : "Have a referral code?"}
-            </CelText>
-            {!promoCode && (
-              <View style={style.caretStyle}>
-                <Icon
-                  name={isExpanded ? "UpArrow" : "DownArrow"}
-                  width="15"
-                  height="15"
-                  fill={STYLES.COLORS.WHITE}
-                />
-              </View>
-            )}
-          </View>
-        </View>
-        {isExpanded && <View>{this.renderPromoCodeBody()}</View>}
-      </Card>
-    );
-  };
-
   render() {
-    const { formData, actions, callsInProgress, formErrors } = this.props;
+    const {
+      formData,
+      actions,
+      callsInProgress,
+      formErrors,
+      promoCode,
+    } = this.props;
 
     const isUsingSocial =
       formData.googleId || formData.facebookId || formData.twitterId;
@@ -348,35 +197,25 @@ class RegisterInitial extends Component {
           />
         )}
 
-        {this.renderReferralCard()}
+        <RegisterToUCard
+          termsOfUse={formData.termsOfUse}
+          updateFormField={actions.updateFormField}
+        />
+
+        <RegisterPromoCodeCard
+          promoCode={promoCode}
+          openModal={actions.openModal}
+        />
 
         <CelButton
-          margin="10 0 10 0"
+          margin="30 0 10 0"
           onPress={this.submitForm}
           iconRight="IconArrowRight"
           loading={registerLoading}
+          disabled={!formData.termsOfUse}
         >
           Create account
         </CelButton>
-
-        <View>
-          <CelText
-            color="rgba(61,72,83,0.5)"
-            type="H4"
-            margin="30 20 0 20"
-            align="center"
-          >
-            By creating an account you agree to our
-            <CelText
-              type="H4"
-              color={STYLES.COLORS.CELSIUS_BLUE}
-              onPress={() => actions.navigateTo("TermsOfUse")}
-            >
-              {" "}
-              Terms of Use
-            </CelText>
-          </CelText>
-        </View>
 
         <RegisterPromoCodeModal type={"register"} />
       </AuthLayout>
