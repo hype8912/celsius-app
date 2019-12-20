@@ -20,6 +20,7 @@ class WithdrawalInfoModal extends Component {
 
   handleModalContent = () => {
     const { type, closeModal } = this.props;
+    multistepModalUtil.setModal();
 
     let title;
     let body;

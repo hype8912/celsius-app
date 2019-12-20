@@ -1,6 +1,7 @@
-// import STYLES from '../../../constants/STYLES';
+import STYLES from "../../../constants/STYLES";
 import {
   getThemedStyle,
+  heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 
@@ -58,6 +59,26 @@ const base = {
   firstLoanButton: {
     marginTop: 20,
     marginBottom: 20,
+  },
+  tabs: {
+    flex: 1,
+    marginHorizontal: widthPercentageToDP("7%"),
+    marginVertical: 15,
+    width: widthPercentageToDP("86%"),
+  },
+  tab: {
+    paddingHorizontal: 5,
+  },
+  activeFilterLine: {
+    height: 1,
+    width: 12,
+    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    marginTop: 3,
+    alignSelf: "center",
+  },
+  noSelectedItems: {
+    marginHorizontal: widthPercentageToDP("7"),
+    marginVertical: heightPercentageToDP("25%"),
   },
 };
 
