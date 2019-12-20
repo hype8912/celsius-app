@@ -108,7 +108,6 @@ class ChangeAvatar extends Component {
 
   static navigationOptions = () => ({
     title: "Change Avatar",
-    right: "settings",
   });
 
   constructor(props) {

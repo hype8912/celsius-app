@@ -12,7 +12,7 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { MODALS } from "../../../constants/UI";
 import UI from "../../../constants/STYLES";
-import VerifyAuthAppModal from "../../organisms/VerifyAuthAppModal/VerifyAuthAppModal";
+import VerifyAuthAppModal from "../../modals/VerifyAuthAppModal/VerifyAuthAppModal";
 
 @connect(
   state => ({

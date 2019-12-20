@@ -16,7 +16,8 @@ class AllTransactions extends Component {
     return {
       title: `${
         transactionType
-          ? transactionType.charAt(0).toUpperCase() + transactionType.slice(1)
+          ? transactionType[0].charAt(0).toUpperCase() +
+            transactionType[0].slice(1)
           : coin || "Transaction"
       } history`,
       right: "profile",

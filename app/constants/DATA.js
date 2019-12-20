@@ -253,6 +253,8 @@ const LOAN_PAYMENT_TYPES = {
   RECEIVING_PRINCIPAL_BACK: "receiving_principal_back",
 };
 
+const PRIMETRUST_KYC_STATES = ["New York", "Washington"];
+
 // TODO: should be returned from BE and set in BO, hadrcoded for now
 const LOAN_INTEREST_COINS = [
   "BTC",
@@ -260,9 +262,15 @@ const LOAN_INTEREST_COINS = [
   "USDC",
   "GUSD",
   "TUSD",
-  "USDT",
+  "USDT ERC20",
   "PAX",
 ];
+
+const TOTAL_ASSETS_AMOUNT = {
+  DATE: "11 DEC 2019", // write in same format every week
+  TOTAL_AUM: 347957867,
+  TOTAL_COLLATERAL_AND_CASH: 126675506,
+};
 
 export {
   BLOCKEXPLORERS,
@@ -277,5 +285,7 @@ export {
   LOAN_TYPES,
   LOAN_PAYMENT_TYPES,
   LOAN_TRANSACTION_TYPES,
+  PRIMETRUST_KYC_STATES,
   LOAN_INTEREST_COINS,
+  TOTAL_ASSETS_AMOUNT,
 };

@@ -17,7 +17,6 @@ import { THEMES } from "../../../constants/UI";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
-import Icon from "../../atoms/Icon/Icon";
 
 @connect(
   state => ({
@@ -36,7 +35,7 @@ class CelHeading extends Component {
    * hideBack
    *
    * @type {string}
-   * right: oneOf(['action', 'signup', 'login', 'settings', 'info', 'search', 'profile', 'logout', 'close'])
+   * right: oneOf(['action', 'signup', 'login', 'info', 'search', 'profile', 'logout', 'close'])
    *
    * @type {function}
    * onInfo
@@ -71,6 +70,7 @@ class CelHeading extends Component {
       return (
         <CelButton
           basic
+          iconRightColor={STYLES.COLORS.GRAY}
           onPress={() => {
             actions.updateFormField("activeSearch", true);
           }}
@@ -125,15 +125,6 @@ class CelHeading extends Component {
           Log in
         </CelButton>
       ),
-      settings: (
-        <TouchableOpacity
-          onPress={() => {
-            this.props.actions.navigateTo("Settings");
-          }}
-        >
-          <Icon fill="primary" name="Settings" width="32" />
-        </TouchableOpacity>
-      ),
       info: onInfo && (
         <CelButton basic onPress={onInfo}>
           Info
@@ -142,6 +133,7 @@ class CelHeading extends Component {
       search: (
         <CelButton
           basic
+          iconRightColor={STYLES.COLORS.GRAY}
           onPress={() => {
             actions.updateFormField("activeSearch", true);
           }}

@@ -1,4 +1,5 @@
 const COLORS = {
+  TRANSPARENT: "rgba(0,0,0,0)",
   WHITE: "#fff",
   WHITE_OPACITY7: "rgba(255,255,255,0.7)",
   WHITE_OPACITY5: "rgba(255,255,255,0.5)",
@@ -32,6 +33,8 @@ const COLORS = {
   DARK_GRAY_OPACITY: "rgba(61, 72, 83, 0.15)",
   DARK_TOGGLE_FOREGROUND: "#79828B",
   DARK_TOGGLE_BACKGROUND: "#404D59",
+  DARK_BUTTON_GRAY: "#344250",
+  DARK_SECONDARY_BUTTON_GRAY: "#4B5763",
   CELSIUS_BLUE: "#4156A6",
   MODAL_BASIC_BUTTON: "rgba(65,86,166)",
   DISABLED_BASIC_BUTTON25: "rgba(65,86,166,0.25)",
@@ -39,7 +42,8 @@ const COLORS = {
   GREEN: "#4fb895",
   GREEN_OPACITY: "rgba(79,184,149,0.15)",
   ORANGE: "#e19f30",
-  RED: "#ef461a",
+  RED: "rgb(239,70,26)",
+  RED_OPACITY2: "rgba(239,70,26, 0.2)",
 };
 
 const CAMERA_MASK_SIZES = {
@@ -50,6 +54,10 @@ const CAMERA_MASK_SIZES = {
   document: {
     width: 300,
     height: 183,
+  },
+  utility: {
+    width: 286,
+    height: 341,
   },
 };
 

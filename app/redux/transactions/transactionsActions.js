@@ -17,21 +17,45 @@ export {
   getTransactionDetails,
   withdrawCrypto,
   cancelWithdrawal,
+  sendCsvEmail,
 };
+
+/**
+ * Sends csv file to your mail with all transactions
+ */
+
+function sendCsvEmail() {
+  return async (dispatch, getState) => {
+    try {
+      const user = getState().user.profile;
+      dispatch(startApiCall(API.GET_CSV_EMAIL));
+      await transactions.sendCsvEmail();
+      dispatch(
+        showMessage(
+          "info",
+          `Check your mail. We've started creating your CSV file and will email it to ${user.email} when it's ready. This could take a few minutes.`
+        )
+      );
+      dispatch({ type: ACTIONS.GET_CSV_EMAIL_SUCCESS });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_CSV_EMAIL, err));
+    }
+  };
+}
 
 /**
  * Gets transactions
  * @param {Object} query
- * @param {number} query.limit
  * @param {string} query.type - one of received|withdraw|interest
  * @param {string} query.coin - eg. BTC|ETH|XRP...
  */
 function getAllTransactions(query = {}) {
   return async dispatch => {
     try {
-      const { limit, type, coin } = query;
+      const { type, coin, period } = query;
       dispatch(startApiCall(API.GET_ALL_TRANSACTIONS));
-      const response = await transactions.getAll({ limit, type, coin });
+      const response = await transactions.getAll({ type, coin, period });
 
       dispatch({
         type: ACTIONS.GET_ALL_TRANSACTIONS_SUCCESS,

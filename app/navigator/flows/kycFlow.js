@@ -9,7 +9,10 @@ import TransactionDetails from "../../components/screens/TransactionDetails/Tran
 import KYCProfileDetails from "../../components/screens/KYCProfileDetails/KYCProfileDetails";
 import KYCAddressInfo from "../../components/screens/KYCAddressInfo/KYCAddressInfo";
 import KYCTaxpayer from "../../components/screens/KYCTaxpayer/KYCTaxpayer";
-import KYCVerifyID from "../../components/screens/KYCVerifyID/KYCVerifyID";
+import KYCVerifyIdentity from "../../components/screens/KYCVerifyIdentity/KYCVerifyIdentity";
+import KYCCheckPhotos from "../../components/screens/KYCCheckPhotos/KYCCheckPhotos";
+import KYCAddressProof from "../../components/screens/KYCAddressProof/KYCAddressProof";
+import KYCPrimeTrustToU from "../../components/screens/KYCPrimeTrustToU/KYCPrimeTrustToU";
 import KYCFinalRejection from "../../components/screens/KYCFinalRejection/KYCFinalRejection";
 import { profileFlow } from "./profileFlow";
 import { walletFlow } from "./walletFlow";
@@ -21,7 +24,10 @@ const kycFlow = {
     KYCProfileDetails,
     KYCAddressInfo,
     KYCTaxpayer,
-    KYCVerifyID,
+    KYCVerifyIdentity,
+    KYCAddressProof,
+    KYCCheckPhotos,
+    KYCPrimeTrustToU,
     KYCFinalRejection,
     ...profileFlow.screens,
     ...walletFlow.screens,

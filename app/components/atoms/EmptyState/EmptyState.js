@@ -12,7 +12,6 @@ import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import ContactSupport from "../ContactSupport/ContactSupport";
 import emptyStateUtil from "../../../utils/empty-state-util";
 import STYLES from "../../../constants/STYLES";
-import InfoModal from "../../molecules/InfoModal/InfoModal";
 
 @connect(
   state => ({
@@ -53,7 +52,9 @@ class EmptyState extends Component {
       case "kyc-rejected":
         return (
           <CelButton
-            onPress={() => actions.openModal(MODALS.KYC_REJECTED_MODAL)}
+            onPress={() =>
+              actions.openModal(MODALS.KYC_REJECTION_REASONS_MODAL)
+            }
             basic
             textColor={STYLES.COLORS.RED}
             iconRight={"IconChevronRight"}
@@ -76,21 +77,6 @@ class EmptyState extends Component {
             Identity Confirmation in Progress
           </CelText>
         );
-      default:
-        return null;
-    }
-  }
-
-  renderModal() {
-    const emptyStateProps = {
-      ...this.state,
-      ...this.props,
-    };
-    const { modal, modalProps } = emptyStateProps;
-
-    switch (modal) {
-      case MODALS.KYC_REJECTED_MODAL:
-        return <InfoModal {...modalProps} />;
       default:
         return null;
     }
@@ -154,7 +140,6 @@ class EmptyState extends Component {
         ) : null}
 
         {support ? <ContactSupport /> : null}
-        {this.renderModal()}
       </View>
     );
   }

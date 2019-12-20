@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { View } from "react-native";
 
-import LoanApplicationSuccessModalStyle from "./LoanApplicationSuccessModal.styles";
-import MultistepModal from "../MultistepModal/MultistepModal.js";
-import CelText from "../../atoms/CelText/CelText";
-import { LOAN_PAYMENT_REASONS, MODALS, THEMES } from "../../../constants/UI";
+import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import InfoModal from "../InfoModalNew/InfoModal";
-import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import * as appActions from "../../../redux/actions";
+import MultistepModal from "../MultistepModal/MultistepModal";
+import LoanApplicationSuccessModalStyle from "./LoanApplicationSuccessModal.styles";
+import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
+import CelText from "../../atoms/CelText/CelText";
+import multiStepUtil from "../../../utils/multistep-modal-util";
 
 @connect(
   state => ({
@@ -36,39 +37,47 @@ class LoanApplicationSuccessModal extends Component {
   };
 
   render() {
-    const { actions, formData, automaticLoanLimit } = this.props;
+    const { actions } = this.props;
     const style = LoanApplicationSuccessModalStyle();
 
-    if (
-      Number(formData.loanAmount) <= Number(automaticLoanLimit) &&
-      formData.coin !== "USD"
-    )
+    // NOTE: (srdjan) commented after client asked to kick automatic approve loan feature
+
+    // if (
+    //   Number(formData.loanAmount) < Number(automaticLoanLimit) &&
+    //   formData.coin !== "USD"
+    // )
+    if (false) {
       return (
         <MultistepModal
           style={style.container}
           name={MODALS.LOAN_APPLICATION_SUCCESS_MODAL}
           top={30}
           imagesArray={[
-            require("../../../../assets/images/checkmark-square.png"),
+            require("../../../../assets/images/checkmark.png"),
             require("../../../../assets/images/coin-stack-icon.png"),
           ]}
+          imageHeight={25}
+          imageWidth={25}
         >
           <View style={style.modalWrapper}>
             <CelText
               type={"H3"}
               align={"center"}
               margin={"0 20 5 20"}
-              theme={THEMES.LIGHT}
               weight={"700"}
             >
               Loan Successfully Initiated
             </CelText>
-            <CelText align={"center"} margin={"5 20 0 20"} theme={THEMES.LIGHT}>
+            <CelText align={"center"} margin={"5 20 0 20"}>
               Thank you for initiating your loan with Celsius. Once approved,
               your funds will be transferred to your Celsius wallet.
             </CelText>
             <View style={style.buttonsWrapper}>
-              <CelModalButton buttonStyle={"secondary"} position={"single"}>
+              <CelModalButton
+                buttonStyle={"secondary"}
+                position={"single"}
+                onPress={() => multiStepUtil.goToNextStep()}
+              >
                 Next
               </CelModalButton>
             </View>
@@ -78,15 +87,13 @@ class LoanApplicationSuccessModal extends Component {
               type={"H3"}
               align={"center"}
               margin={"0 20 5 20"}
-              theme={THEMES.LIGHT}
               weight={"700"}
             >
               Prepay Your Interest
             </CelText>
-            <CelText align={"center"} margin={"5 20 0 20"} theme={THEMES.LIGHT}>
-              Your first interest payment will be due on May 12, 2019. Stay
-              ahead of schedule and submit your first interest payment in
-              advance.
+            <CelText align={"center"} margin={"5 20 0 20"}>
+              Your first interest payment will be due next month. Stay ahead of
+              schedule and submit your first interest payment in advance.
             </CelText>
             <View style={style.buttonsWrapper}>
               <CelModalButton
@@ -100,17 +107,17 @@ class LoanApplicationSuccessModal extends Component {
           </View>
         </MultistepModal>
       );
-
+    }
     return (
       <InfoModal
         name={MODALS.LOAN_APPLICATION_SUCCESS_MODAL}
-        picture={require("../../../../assets/images/checkmark-square.png")}
+        picture={require("../../../../assets/images/checkmark.png")}
         heading={"Loan Successfully Initiated"}
+        pictureDimensions={{ height: 25, width: 25 }}
         paragraphs={[
           "Thank you for initiating your loan with Celsius. Once approved, your funds will be transferred to your Celsius wallet.",
         ]}
         yesCopy={"Continue"}
-        pictureDimensions={{ width: 30, height: 30 }}
         onYes={actions.closeModal}
       />
     );

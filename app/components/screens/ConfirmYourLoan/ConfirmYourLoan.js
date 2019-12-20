@@ -74,7 +74,7 @@ class ConfirmYourLoan extends Component {
             resizeMode="cover"
             style={style.flagImage}
           />
-          <CelText type="H3" weight="600" margin={"0 0 0 5"}>
+          <CelText type="H3" weight="600" margin={"0 0 15 5"}>
             {country.name}
           </CelText>
         </View>
@@ -119,7 +119,6 @@ class ConfirmYourLoan extends Component {
             Bank Country
           </CelText>
           {this.showCountry(loan.bank_location)}
-
           {this.renderBankAccountInfo()}
         </Card>
       );
@@ -514,7 +513,7 @@ class ConfirmYourLoan extends Component {
               <Card color={style.grayCard.color}>
                 <CelText type="H6" weight="300">{`If ${
                   loan.coin
-                } drops bellow ${formatter.usd(
+                } drops below ${formatter.usd(
                   loan.margin_call_price
                 )}, you will be required to add collateral to meet the minimum LTV.`}</CelText>
               </Card>

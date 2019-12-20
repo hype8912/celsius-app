@@ -11,11 +11,10 @@ const base = {
   },
   buttonsWrapper: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     marginTop: 20,
     height: 50,
   },
-  modalCopy: {},
 };
 
 const themed = {

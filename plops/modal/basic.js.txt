@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 
 import {{pascalCase name}}Style from "./{{pascalCase name}}.styles";
-import CelModal form "../CelModal/CelModal.js"
+import CelModal from "../CelModal/CelModal.js"
 import {MODALS} from "../../../constants/UI";
 
 class {{pascalCase name}} extends Component {
@@ -34,7 +34,7 @@ class {{pascalCase name}} extends Component {
         style={style.container}
         name={}
       >
-        <{{pascalCase name}} />
+
       </CelModal>
     );
   }

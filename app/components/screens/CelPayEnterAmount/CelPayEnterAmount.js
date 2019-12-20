@@ -18,8 +18,8 @@ import formatter from "../../../utils/formatter";
 import cryptoUtil from "../../../utils/crypto-util";
 import { isMalisaPusonja } from "../../../utils/user-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
-import LoseTierModal from "../../molecules/LoseTierModal/LoseTierModal";
-import LoseMembershipModal from "../../molecules/LoseMembershipModal/LoseMembershipModal";
+import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
+import LoseMembershipModal from "../../modals/LoseMembershipModal/LoseMembershipModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 
 @connect(
@@ -349,15 +349,11 @@ class CelPayEnterAmount extends Component {
           purpose={KEYPAD_PURPOSES.CELPAY}
         />
 
-        <LoseMembershipModal
-          navigateToNextStep={this.navigateToNextStep}
-          closeModal={actions.closeModal}
-        />
+        <LoseMembershipModal navigateToNextStep={this.navigateToNextStep} />
         {loyaltyInfo && (
           <LoseTierModal
             navigateToNextStep={this.navigateToNextStep}
             tierTitle={loyaltyInfo.tier.title}
-            closeModal={actions.closeModal}
           />
         )}
       </RegularLayout>

@@ -17,6 +17,8 @@ import PerformanceGraph from "../../graphs/PerformanceGraph/PerformanceGraph";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelStats from "../../organisms/CelStats/CelStats";
+import STYLES from "../../../constants/STYLES";
+import { TOTAL_ASSETS_AMOUNT } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -46,21 +48,31 @@ class Community extends Component {
     const style = CommunityStyle();
     const usersNum = communityStats.users_num;
     return (
-      <Card padding={"0 0 0 0"}>
+      <Card padding={"0 0 0 0"} color={STYLES.COLORS.CELSIUS_BLUE}>
         <View style={style.imageView}>
-          <ThemedImage
-            lightSource={require("../../../../assets/images/community/dogIllustration.png")}
-            darkSource={require("../../../../assets/images/community/dogIllustration-dark.png")}
-            style={style.communityImage}
-          />
           <View>
-            <CelText weight={"300"} align={"left"} type={"H6"}>
+            <CelText
+              weight={"300"}
+              align={"center"}
+              type={"H6"}
+              color={STYLES.COLORS.WHITE_OPACITY5}
+            >
               Celsius Network counts
             </CelText>
-            <CelText weight={"600"} align={"left"} type={"H1"}>
+            <CelText
+              weight={"600"}
+              align={"center"}
+              type={"H1"}
+              color={STYLES.COLORS.WHITE}
+            >
               {formatter.round(usersNum, { noPrecision: true })}
             </CelText>
-            <CelText weight={"300"} align={"left"} type={"H6"}>
+            <CelText
+              weight={"300"}
+              align={"center"}
+              type={"H6"}
+              color={STYLES.COLORS.WHITE_OPACITY5}
+            >
               members
             </CelText>
           </View>
@@ -257,6 +269,21 @@ class Community extends Component {
       <RegularLayout>
         {this.renderNetworkCounts()}
 
+        <CommunityDashboard
+          name={`ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}`}
+          info
+          buttonTypes={[
+            {
+              buttonType: "Total AUM",
+              icon: "Total",
+            },
+            {
+              buttonType: "Col. & Cash",
+              icon: "PiggyBank",
+            },
+          ]}
+        />
+
         {this.renderDepositCoinSection()}
 
         {this.renderDepositTotalSection()}
@@ -285,13 +312,31 @@ class Community extends Component {
         <CommunityDashboard
           name={"CELPAY"}
           info
-          buttonTypes={["Total", "Transactions"]}
+          buttonTypes={[
+            {
+              buttonType: "Total",
+              icon: "Total",
+            },
+            {
+              buttonType: "Transactions",
+              icon: "Transactions",
+            },
+          ]}
         />
 
         <CommunityDashboard
           name={"INTEREST"}
           info
-          buttonTypes={["Earned", "Average"]}
+          buttonTypes={[
+            {
+              buttonType: "Earned",
+              icon: "Earned",
+            },
+            {
+              buttonType: "Average",
+              icon: "Average",
+            },
+          ]}
         />
 
         {/* { this.renderCommunityStatsTable() }*/}
@@ -338,7 +383,9 @@ class Community extends Component {
         {/* <CommunityDashboard name={"MEET US IN PERSON AT"}/> */}
         <Separator margin="20 0 20 0" />
         <CelText align="center" type="H7">
-          The numbers are showing a dollar value of coins at this moment.
+          The numbers are showing a dollar value of coins at the time of
+          transaction realization. Numbers reflect data in real-time, unless
+          noted otherwise.
         </CelText>
       </RegularLayout>
     );

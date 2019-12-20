@@ -9,7 +9,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { MODALS } from "../../../constants/UI";
-import RemoveAuthAppModal from "../../organisms/RemoveAuthAppModal/RemoveAuthAppModal";
+import RemoveAuthAppModal from "../../modals/RemoveAuthAppModal/RemoveAuthAppModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 
@@ -86,14 +86,6 @@ class SecuritySettings extends Component {
       });
     }
   };
-  removeTwoFactor = async () => {
-    const { actions } = this.props;
-    await actions.closeModal();
-
-    actions.navigateTo("VerifyProfile", {
-      onSuccess: actions.disableTwoFactor,
-    });
-  };
 
   render() {
     const { actions, is2FAEnabled, user, kycStatus } = this.props;
@@ -142,8 +134,9 @@ class SecuritySettings extends Component {
         </CelButton>
 
         <RemoveAuthAppModal
-          removeTwoFactor={this.removeTwoFactor}
           closeModal={actions.closeModal}
+          navigateTo={actions.navigateTo}
+          disableTwoFactor={actions.disableTwoFactor}
         />
       </RegularLayout>
     );

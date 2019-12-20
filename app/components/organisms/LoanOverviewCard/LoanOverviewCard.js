@@ -66,10 +66,8 @@ class LoanOverviewCard extends Component {
 
   payInterest = async () => {
     const { actions, loan } = this.props;
-    actions.navigateTo("ChoosePaymentMethod", {
-      reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
-      id: loan.id,
-    });
+    actions.setActiveLoan(loan.id);
+    actions.openModal(MODALS.INTEREST_DUE_MODAL);
   };
 
   payPrincipal = async () => {
@@ -96,7 +94,6 @@ class LoanOverviewCard extends Component {
     const style = LoanOverviewCardStyle();
     let previousPayments;
     let previous5Payments;
-
     if (loan.amortization_table) {
       previousPayments = loan.amortization_table.filter(p => p.isPaid);
       previous5Payments = previousPayments.slice(-5);

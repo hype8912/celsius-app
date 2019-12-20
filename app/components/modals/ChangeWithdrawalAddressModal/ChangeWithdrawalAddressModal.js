@@ -4,6 +4,7 @@ import InfoModal from "../InfoModalNew/InfoModal";
 
 const ChangeWithdrawalAddressModal = props => {
   const { onPressConfirm } = props;
+
   return (
     <InfoModal
       name={MODALS.CHANGE_WITHDRAWAL_ADDRESS_MODAL}

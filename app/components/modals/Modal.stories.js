@@ -2,31 +2,44 @@ import React from "react";
 import { View } from "react-native";
 import { Provider } from "react-redux";
 import { storiesOf } from "@storybook/react-native/dist";
-import { action } from "@storybook/addon-actions";
 import store from "../../redux/store";
 import { openModal } from "../../redux/ui/uiActions";
-import {
-  updateFormField,
-  updateFormFields,
-} from "../../redux/forms/formsActions";
 import { MODALS } from "../../constants/UI";
-import ACTIONS from "../../constants/ACTIONS";
 import CelButton from "../atoms/CelButton/CelButton";
-import VerifyAuthAppModal from "./VerifyAuthAppModal/VerifyAuthAppModal";
 import CenterView from "../../../storybook/stories/CenterView";
-import SsnModal from "./SsnModal/SsnModal";
-import WithdrawWarningModal from "./WithdrawWarningModal/WithdrawWarningModal";
-import ChangeWithdrawalAddressModal from "./ChangeWithdrawalAddressModal/ChangeWithdrawalAddressModal";
-import PrepareDollarInterestModal from "./PrepareDollarInterestModal/PrepareDollarInterestModal";
-import ApiKeySuccessModal from "./ApiKeySuccessModal/ApiKeySuccessModal";
-import ConfirmWithdrawalAddressModal from "./ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
-import WithdrawInfoModal from "../modals/WithdrawalInfoModal/WithdrawalInfoModal";
-import LoanApplicationSuccessModal from "./LoanApplicationSuccessModal/LoanApplicationSuccessModal";
-import CancelLoanModal from "./CancelLoanModal/CancelLoanModal";
-import BecomeCelMemberModal from "./BecomeCelMemberModal/BecomeCelMemberModal";
-import DepositInfoModal from "./DepositInfoModal/DepositInfoModal";
+import LoanAlertsPayoutPrincipalModal from "./LoanAlertsModals/LoanAlertsPayoutPrincipalModal/LoanAlertsPayoutPrincipalModal";
+import LoanAlertsMarginCallDepositCoinsModal from "./LoanAlertsModals/LoanAlertsMarginCallDepositCoinsModal/LoanAlertsMarginCallDepositCoinsModal";
+import LoanAlertsDepositCoinsModal from "./LoanAlertsModals/LoanAlertsDepositCoinsModal/LoanAlertsDepositCoinsModal";
+import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsModals/LoanAlertsMarginCallLockCoinModal/LoanAlertsMarginCallLockCoinModal";
 
-let type = "";
+import ApiKeyRevokeModalStories from "./ApiKeyRevokeModal/ApiKeyRevokeModal.stories";
+import ApiKeySuccessModalStories from "./ApiKeySuccessModal/ApiKeySuccessModal.stories";
+import BecomeCelMemberModalStories from "./BecomeCelMemberModal/BecomeCelMemberModal.stories";
+import CalculateLoyaltyLevelModalStories from "./CalculateLoyaltyLevelModal/CalculateLoyaltyLevelModal.stories";
+import CancelLoanModalStories from "./CancelLoanModal/CancelLoanModal.stories";
+import CelPayReceivedModalStories from "./CelPayReceivedModal/CelPayReceivedModal.stories";
+import ChangeWithdrawalAddressModalStories from "./ChangeWithdrawalAddressModal/ChangeWithdrawalAddressModal.stories";
+import ConfirmWithdrawalAddressModalStories from "./ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal.stories";
+import CreateNewAccountModalStories from "./CreateNewAccountModal/CreateNewAccountModal.stories";
+import DepositInfoModalStories from "./DepositInfoModal/DepositInfoModal.stories";
+import LoanApplicationSuccessModalStories from "./LoanApplicationSuccessModal/LoanApplicationSuccessModal.stories";
+import LoseMembershipModalStories from "./LoseMembershipModal/LoseMembershipModal.stories";
+import LoseTierModalStories from "./LoseTierModal/LoseTierModal.stories";
+import MemoIdModalStories from "./MemoIdModal/MemoIdModal.stories";
+import PrepayDollarInterestModalStories from "./PrepayDollarInterestModal/PrepayDollarInterestModal.stories";
+import PrepaymentSuccessfulModalStories from "./PrepaymentSuccessfulModal/PrepaymentSuccessfulModal.stories";
+import ReferralSendModalStories from "./ReferralSendModal/ReferralSendModal.stories";
+import RegisterPromoCodeModalStories from "./RegisterPromoCodeModal/RegisterPromoCodeModal.stories";
+import RejectionReasonsModalStories from "./RejectionReasonsModal/RejectionReasonsModal.stories";
+import RemoveAuthAppModalStories from "./RemoveAuthAppModal/RemoveAuthAppModal.stories";
+import SsnModalStories from "./SsnModal/SsnModal.stories";
+import TransactionFilterModalStories from "./TransactionFilterModal/TransactionFilterModal.stories";
+import VerifyAuthAppModalStories from "./VerifyAuthAppModal/VerifyAuthAppModal.stories";
+import WithdrawalInfoModalStories from "./WithdrawalInfoModal/WithdrawalInfoModal.stories";
+import WithdrawWarningModalStories from "./WithdrawWarningModal/WithdrawWarningModal.stories";
+import DestinationInfoTagModalStories from "./DestinationInfoTagModal/DestinationInfoTagModal.stories";
+import InterestDueModalStories from "./InterestDueModal/InterestDueModal.stories";
+import ReferralReceivedModalStories from "./ReferralReceivedModal/ReferralReceivedModal.stories";
 
 storiesOf("Modals", module)
   .addDecorator(getStory => (
@@ -34,180 +47,78 @@ storiesOf("Modals", module)
       <CenterView>{getStory()}</CenterView>
     </Provider>
   ))
-  .add("VerifyAuthAppModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        onPress={() => store.dispatch(openModal(MODALS.VERIFY_AUTHAPP_MODAL))}
-      >
-        Open VerifyAuthAppModal
-      </CelButton>
-      <VerifyAuthAppModal onVerify={action("onVerify prop fn")} />
-    </View>
-  ))
-  .add("SsnModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton onPress={() => store.dispatch(openModal(MODALS.SSN_MODAL))}>
-        Open SsnModal
-      </CelButton>
-      <SsnModal />
-    </View>
-  ))
-  .add("WithdrawWarningModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        onPress={() => store.dispatch(openModal(MODALS.WITHDRAW_WARNING_MODAL))}
-      >
-        Open WithdrawWarningModal
-      </CelButton>
-      <WithdrawWarningModal />
-    </View>
-  ))
-  .add("ChangeWithdrawalAddressModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        onPress={() =>
-          store.dispatch(openModal(MODALS.CHANGE_WITHDRAWAL_ADDRESS_MODAL))
-        }
-      >
-        Open ChangeWithdrawalAddressModal
-      </CelButton>
-      <ChangeWithdrawalAddressModal onPressConfirm={action("onPressConfirm")} />
-    </View>
-  ))
-  .add("PrepareDollarInterestModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        onPress={() =>
-          store.dispatch(openModal(MODALS.PREPAY_DOLLAR_INTEREST_MODAL))
-        }
-      >
-        Open PrepareDollarInterestModal
-      </CelButton>
-      <PrepareDollarInterestModal onPressConfirm={action("onPressConfirm")} />
-    </View>
-  ))
-  .add("ApiKeySuccessModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        onPress={() => {
-          store.dispatch(openModal(MODALS.GENERATE_API_KEY_MODAL));
-          store.dispatch({
-            type: ACTIONS.CREATE_API_KEY_SUCCESS,
-            apiKey: "1234-5678-1234-5678",
-          });
-        }}
-      >
-        Open ApiKeySuccessModal
-      </CelButton>
-      <ApiKeySuccessModal />
-    </View>
-  ))
-  .add("ConfirmWithdrawalAddressModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        onPress={() => {
-          store.dispatch(
-            updateFormField(
-              "withdrawAddress",
-              "2Mawkjflkwjafk394LfIOEslwdksaKJLdKJkl"
-            )
-          );
-          store.dispatch(updateFormField("coin", "BTC"));
-          store.dispatch(openModal(MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL));
-        }}
-      >
-        Open ConfirmWithdrawalAddressModal
-      </CelButton>
-      <ConfirmWithdrawalAddressModal />
-    </View>
-  ))
-  .add("WithdrawalInfoModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        onPress={() => store.dispatch(openModal(MODALS.WITHDRAW_INFO_MODAL))}
-      >
-        Open WithdrawalInfoModal
-      </CelButton>
-      <WithdrawInfoModal onPressConfirm={action("onPressConfirm")} />
-    </View>
-  ))
-  .add("LoanApplicationSuccessModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        style={{ marginBottom: 5 }}
-        onPress={() => {
-          store.dispatch(
-            updateFormFields({
-              loanAmount: 1,
-              coin: "CEL",
-            })
-          );
-          store.dispatch(openModal(MODALS.LOAN_APPLICATION_SUCCESS_MODAL));
-        }}
-      >
-        Open Multi LoanApplicationSuccessModal
-      </CelButton>
-      <CelButton
-        onPress={() => {
-          store.dispatch(
-            updateFormFields({
-              loanAmount: 1000000000,
-              coin: "USD",
-            })
-          );
-          store.dispatch(openModal(MODALS.LOAN_APPLICATION_SUCCESS_MODAL));
-        }}
-      >
-        Open Info LoanApplicationSuccessModal
-      </CelButton>
+  .add("All Modals", () => (
+    <View>
+      <ReferralReceivedModalStories />
+      <DepositInfoModalStories />
+      <LoanApplicationSuccessModalStories />
+      <WithdrawalInfoModalStories />
 
-      <LoanApplicationSuccessModal
-        onPressConfirm={action("onPressConfirm")}
-        loanId={42}
-      />
+      <InterestDueModalStories />
+      <ApiKeyRevokeModalStories />
+      <ApiKeySuccessModalStories />
+      <BecomeCelMemberModalStories />
+      <CalculateLoyaltyLevelModalStories />
+      <CancelLoanModalStories />
+      <CelPayReceivedModalStories />
+      <ChangeWithdrawalAddressModalStories />
+      <ConfirmWithdrawalAddressModalStories />
+      <CreateNewAccountModalStories />
+      <DestinationInfoTagModalStories />
+      <DepositInfoModalStories />
+      <LoanApplicationSuccessModalStories />
+      <LoseMembershipModalStories />
+      <LoseTierModalStories />
+      <MemoIdModalStories />
+      <PrepayDollarInterestModalStories />
+      <PrepaymentSuccessfulModalStories />
+      <ReferralSendModalStories />
+      <RegisterPromoCodeModalStories />
+      <RejectionReasonsModalStories />
+      <RemoveAuthAppModalStories />
+      <SsnModalStories />
+      <TransactionFilterModalStories />
+      <VerifyAuthAppModalStories />
+      <WithdrawWarningModalStories />
     </View>
   ))
-  .add("CancelLoanModal", () => (
+  .add("LoanAlertsPayoutPrincipalModal", () => (
     <View style={{ marginBottom: 30 }}>
       <CelButton
-        onPress={() => store.dispatch(openModal(MODALS.LOAN_CANCEL_MODAL))}
+        onPress={() => store.dispatch(openModal(MODALS.LOAN_ALERT_MODAL))}
       >
-        Open CancelLoanModal
+        Open LoanAlertsPayoutPrincipalModal
       </CelButton>
-      <CancelLoanModal onPressConfirm={action("onPressConfirm")} />
+      <LoanAlertsPayoutPrincipalModal />
     </View>
   ))
-  .add("BecomeCelMemberModal", () => (
+  .add("LoanAlertsDepositCoinsModal", () => (
     <View style={{ marginBottom: 30 }}>
       <CelButton
-        onPress={() =>
-          store.dispatch(openModal(MODALS.BECAME_CEL_MEMBER_MODAL))
-        }
+        onPress={() => store.dispatch(openModal(MODALS.LOAN_ALERT_MODAL))}
       >
-        Open BecomeCelMemberModal
+        Open LoanAlertsDepositCoinsModal
       </CelButton>
-      <BecomeCelMemberModal />
+      <LoanAlertsDepositCoinsModal />
     </View>
   ))
-  .add("DepositInfoModal", () => (
+  .add("LoanAlertsMarginCallDepositCoinsModal", () => (
     <View style={{ marginBottom: 30 }}>
       <CelButton
-        style={{ marginBottom: 5 }}
-        onPress={() => {
-          type = "USDT ERC20";
-          store.dispatch(openModal(MODALS.DEPOSIT_INFO_MODAL));
-        }}
+        onPress={() => store.dispatch(openModal(MODALS.LOAN_ALERT_MODAL))}
       >
-        Open Multi DepositInfoModal
+        Open LoanAlertsMarginCallDepositCoinsModal
       </CelButton>
+      <LoanAlertsMarginCallDepositCoinsModal yesCopy={"Deposit coins"} />
+    </View>
+  ))
+  .add("LoanAlertsMarginCallLockCoinModal", () => (
+    <View style={{ marginBottom: 30 }}>
       <CelButton
-        onPress={() => {
-          type = "XRP";
-          store.dispatch(openModal(MODALS.DEPOSIT_INFO_MODAL));
-        }}
+        onPress={() => store.dispatch(openModal(MODALS.LOAN_ALERT_MODAL))}
       >
-        Open Info DepositInfoModal
+        Open LoanAlertsMarginCallLockCoinModal
       </CelButton>
-      <DepositInfoModal onPressConfirm={action("onPressConfirm")} type={type} />
+      <LoanAlertsMarginCallLockCoinModal />
     </View>
   ));

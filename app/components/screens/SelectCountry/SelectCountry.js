@@ -96,9 +96,12 @@ class SelectCountry extends Component {
 
   onCountrySelect = async (field, country) => {
     const { actions } = this.props;
-    await actions.updateFormField(field, country);
-    await actions.updateFormField("search", "");
-    await actions.updateFormField("activeSearch", false);
+    await actions.updateFormFields({
+      [field]: country,
+      state: null,
+      search: "",
+      activeSearch: false,
+    });
     actions.navigateBack();
   };
 

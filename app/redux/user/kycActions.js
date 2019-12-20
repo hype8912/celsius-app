@@ -6,13 +6,13 @@ import { closeModal, showMessage } from "../ui/uiActions";
 import usersService from "../../services/users-service";
 import meService from "../../services/me-service";
 import apiUtil from "../../utils/api-util";
-import logger from "../../utils/logger-util";
 import { setFormErrors } from "../forms/formsActions";
-import { KYC_STATUSES } from "../../constants/DATA";
+import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../../constants/DATA";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util";
 import userBehaviorUtil from "../../utils/user-behavior-util";
+import kycService from "../../services/kyc-service";
 
 // TODO move to user/profile actions
 // TODO move to user/profile actions
@@ -22,9 +22,13 @@ export {
   updateProfileAddressInfo,
   updateTaxpayerInfo,
   getKYCDocuments,
-  verifyKYCDocs,
+  createKYCDocs,
   sendVerificationSMS,
   verifySMS,
+  getUtilityBill,
+  setUtilityBill,
+  startKYC,
+  getPrimeTrustToULink,
   // pollKYCStatus,
 };
 
@@ -87,6 +91,7 @@ function updateProfileAddressInfo(profileAddressInfo) {
           ? formData.state
           : formData.country.name;
       const { kyc } = getState().compliance.app;
+
       if (!kyc) {
         dispatch(
           showMessage(
@@ -95,7 +100,7 @@ function updateProfileAddressInfo(profileAddressInfo) {
           )
         );
       } else {
-        dispatch(NavActions.navigateTo("KYCTaxpayer"));
+        dispatch(NavActions.navigateTo("KYCVerifyIdentity"));
       }
       userBehaviorUtil.kycAddressInfo();
       return {
@@ -282,50 +287,71 @@ export function verifySMSSuccess() {
  * @TODO add JSDoc
  */
 let timeout;
-function verifyKYCDocs() {
+function createKYCDocs() {
   return async (dispatch, getState) => {
-    const { formData } = getState().forms;
-    let callName;
-    let res;
+    dispatch(startApiCall(API.CREATE_KYC_DOCUMENTS));
 
     try {
+      const { formData } = getState().forms;
+      const { kycDocuments } = getState().user;
       timeout = setTimeout(() => {
         dispatch(
           showMessage("info", "Please be patient, this may take a bit longer.")
         );
         clearTimeout(timeout);
       }, 5000);
-      callName = API.CREATE_KYC_DOCUMENTS;
-      dispatch(startApiCall(API.CREATE_KYC_DOCUMENTS));
-      res = await meService.createKYCDocuments({
+
+      const docType = formData.documentType || kycDocuments.type;
+      const res = await meService.createKYCDocuments({
         front: formData.front,
-        back: formData.documentType !== "passport" ? formData.back : undefined,
-        type: formData.documentType,
+        back: docType !== "passport" ? formData.back : undefined,
+        type: docType || kycDocuments,
       });
+
       dispatch(createKYCDocumentsSuccess(res.data));
+      dispatch(showMessage("success", "Successfully submitted KYC Documents!"));
 
-      callName = API.START_KYC;
-      dispatch(startApiCall(API.START_KYC));
-      await meService.startKYC();
-      dispatch(startKYCSuccess());
+      if (formData.state && PRIMETRUST_KYC_STATES.includes(formData.state)) {
+        dispatch(NavActions.navigateTo("KYCAddressProof"));
+      } else {
+        dispatch(NavActions.navigateTo("KYCTaxpayer"));
+      }
 
-      dispatch(NavActions.navigateTo("WalletFab"));
       clearTimeout(timeout);
-      dispatch(
-        showMessage("success", "KYC verification proccess has started!")
-      );
 
-      appsFlyerUtil.kycStarted();
-      userBehaviorUtil.kycStarted();
+      userBehaviorUtil.kycDocumentsSubmitted();
     } catch (err) {
       clearTimeout(timeout);
-      logger.err({ err });
       if (err.type === "Validation error") {
         dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
       } else {
         dispatch(showMessage("error", err.msg));
       }
-      dispatch(apiError(callName, err));
+      dispatch(apiError(API.CREATE_KYC_DOCUMENTS, err));
+    }
+  };
+}
+
+/**
+ * @TODO add JSDoc
+ */
+function startKYC() {
+  return async dispatch => {
+    dispatch(startApiCall(API.START_KYC));
+
+    try {
+      await meService.startKYC();
+
+      dispatch(showMessage("success", "KYC data successfully submitted!"));
+      dispatch(NavActions.navigateTo("WalletLanding"));
+
+      dispatch(startKYCSuccess());
+
+      appsFlyerUtil.kycStarted();
+      userBehaviorUtil.kycStarted();
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.START_KYC, err));
     }
   };
 }
@@ -391,5 +417,90 @@ function getKYCStatusSuccess(status) {
   return {
     type: ACTIONS.GET_KYC_STATUS_SUCCESS,
     kyc: status,
+  };
+}
+
+function getUtilityBill() {
+  return async dispatch => {
+    dispatch(startApiCall(API.GET_UTILITY_BILL));
+    try {
+      const res = await kycService.getUtilityBill();
+      dispatch(getUtilityBillSuccess(res.data));
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_UTILITY_BILL, err));
+    }
+  };
+}
+
+function getUtilityBillSuccess(utilityBill) {
+  return {
+    type: ACTIONS.GET_UTILITY_BILL_SUCCESS,
+    utilityBill,
+  };
+}
+
+/**
+ * Gets KYC Utility Bill photo
+ *
+ * @params {Object} - utilityBillPhoto
+ */
+function setUtilityBill(utilityBillPhoto) {
+  return async dispatch => {
+    dispatch(startApiCall(API.SET_UTILITY_BILL));
+    try {
+      timeout = setTimeout(() => {
+        dispatch(
+          showMessage("info", "Please be patient, this may take a bit longer.")
+        );
+        clearTimeout(timeout);
+      }, 5000);
+
+      await kycService.setUtilityBill(utilityBillPhoto);
+
+      dispatch(setUtilityBillSuccess());
+      dispatch(NavActions.navigateTo("KYCTaxpayer"));
+      dispatch(showMessage("success", "Utility bill submitted successfully!"));
+
+      userBehaviorUtil.kycUtilityBillSubmitted();
+    } catch (err) {
+      clearTimeout(timeout);
+      if (err.type === "Validation error") {
+        dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
+      } else {
+        dispatch(showMessage("error", err.msg));
+      }
+      dispatch(apiError(API.SET_UTILITY_BILL, err));
+    }
+  };
+}
+
+function setUtilityBillSuccess() {
+  return {
+    type: ACTIONS.SET_UTILITY_BILL_SUCCESS,
+  };
+}
+
+/**
+ * Gets PrimeTrust ToU link
+ *
+ */
+function getPrimeTrustToULink() {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_PRIMETRUST_TOU_LINK));
+      const res = await kycService.getPrimeTrustToULink();
+      dispatch(getPrimeTrustToULinkSuccess(res.data));
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_PRIMETRUST_TOU_LINK, err));
+    }
+  };
+}
+
+function getPrimeTrustToULinkSuccess(data) {
+  return {
+    type: ACTIONS.GET_PRIMETRUST_TOU_LINK_SUCCESS,
+    link: data.link,
   };
 }
