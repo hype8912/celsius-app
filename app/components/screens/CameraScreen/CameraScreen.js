@@ -9,11 +9,12 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { RESULTS } from "react-native-permissions";
+
 // TODO(sb): RN update dependencies fixes
 // import * as ImagePicker from "expo-image-picker";
 // import * as ImageManipulator from "expo-image-manipulator";
 // import { Camera } from "expo-camera";
-
 import * as appActions from "../../../redux/actions";
 import CameraScreenStyle from "./CameraScreen.styles";
 import Icon from "../../atoms/Icon/Icon";
@@ -22,8 +23,10 @@ import API from "../../../constants/API";
 import CelText from "../../atoms/CelText/CelText";
 import loggerUtil from "../../../utils/logger-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
-import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
-import { RESULTS } from "react-native-permissions";
+import {
+  ALL_PERMISSIONS,
+  requestForPermission,
+} from "../../../utils/device-permissions";
 
 const { height, width } = Dimensions.get("window");
 
@@ -41,6 +44,11 @@ const { height, width } = Dimensions.get("window");
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class CameraScreen extends Component {
+  static navigationOptions = () => ({
+    headerSameColor: false,
+    transparent: true,
+  });
+
   static propTypes = {
     cameraField: PropTypes.string,
     cameraHeading: PropTypes.string,
@@ -57,16 +65,6 @@ class CameraScreen extends Component {
     cameraField: "lastPhoto",
     cameraHeading: "Take Photo",
     mask: "circle",
-  };
-
-  static navigationOptions = () => ({
-    headerSameColor: false,
-    transparent: true,
-  });
-
-  static defaultProps = {
-    cameraField: "lastPhoto",
-    cameraHeading: "Take Photo",
   };
 
   constructor(props) {
@@ -99,7 +97,7 @@ class CameraScreen extends Component {
 
   getCameraPermissions = async () => {
     const { actions } = this.props;
-    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA)
+    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
 
     if (perm === RESULTS.GRANTED) {
       this.setState({ hasCameraPermission: true });
