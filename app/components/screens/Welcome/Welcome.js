@@ -12,6 +12,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import appUtil from "../../../utils/app-util";
 import ReferralReceivedModal from "../../modals/ReferralReceivedModal/ReferralReceivedModal";
+
 // import STYLES from '../../../constants/STYLES';
 
 @connect(
@@ -44,6 +45,7 @@ class Welcome extends Component {
     const { actions } = this.props;
     actions.navigateTo("Login");
   };
+
   render() {
     const style = WelcomeStyle();
     const { actions, referralLink } = this.props;
@@ -53,13 +55,13 @@ class Welcome extends Component {
       <RegularLayout fabType="hide">
         <View style={style.wrapper}>
           <Image
-            source={require("../../../../assets/images/Onboarding-Welcome3x.png")}
-            style={{ height: 140, resizeMode: "contain" }}
+            source={require("../../../../assets/images/splashScreen-celsius-new.png")}
+            style={style.celImage}
           />
           <CelText weight="bold" align="center" type="H1" style={style.title}>
-            Welcome to Celsius Network
+            Welcome!
           </CelText>
-          <CelText weight="light" align="center" style={style.subtitle}>
+          <CelText weight="300" align="center" style={style.subtitle}>
             A new way to earn, borrow and pay on the blockchain. Let’s bring the
             next 100M people into crypto together.
           </CelText>

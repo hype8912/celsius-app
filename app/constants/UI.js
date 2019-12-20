@@ -133,7 +133,7 @@ const WELCOME_MESSAGES = [
   {
     title: "Security is our Top Priority",
     text:
-      "Did you know Celsius uses BitGo as its custodian? This way we can give top security to all our customers. Be sure to turn on two-factor authentication in your profile settings to make the app as secure as possible!",
+      "Celsius uses BitGo as its custodian to provide top security to all of our customers. Make your app as secure as possible by reviewing your security settings in your profile.",
   },
 ];
 
