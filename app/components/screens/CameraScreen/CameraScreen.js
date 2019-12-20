@@ -156,7 +156,12 @@ class CameraScreen extends Component {
   takePhoto = async camera => {
     if (camera) {
       const { actions, mask, navigation } = this.props;
-      const options = { quality: 0.5, base64: true };
+      const options = {
+        quality: 0.5,
+        orientation: RNCamera.Constants.Orientation.auto,
+        pauseAfterCapture: true,
+        fixOrientation: true
+      };
 
       try {
         if (!this.state.hasCameraPermission) {
@@ -187,32 +192,6 @@ class CameraScreen extends Component {
           (cropWidth / STYLES.CAMERA_MASK_SIZES[mask].width) *
           STYLES.CAMERA_MASK_SIZES[mask].height;
 
-        // const imageManipulations = [
-        //   {
-        //     resize: { ...photo },
-        //   },
-        //   {
-        //     crop: {
-        //       originX: (photo.width - cropWidth) / 2,
-        //       originY: (photo.height - cropHeight) / 2,
-        //       width: cropWidth,
-        //       height: cropHeight,
-        //     },
-        //   },
-        // ];
-        //
-        // if (cameraType === "front") { //<-- add cameraType in props
-        //   imageManipulations.push({
-        //     flip: "horizontal",
-        //   });
-        // }
-
-        // const resizedPhoto = await ImageManipulator.manipulateAsync(
-        //   photo.uri,
-        //   imageManipulations,
-        //   { compress: 0.95, format: "jpeg" }
-        // );
-
         const croppedImage = await ImageEditor.cropImage(photo.uri, {
           offset: {
             x: (photo.width - cropWidth) / 2,
@@ -220,7 +199,7 @@ class CameraScreen extends Component {
           },
           size: { width: cropWidth, height: cropHeight },
           displaySize: { width: cropWidth, height: cropHeight },
-          resizeMode: "contain",
+          resizeMode: "cover",
         });
 
         actions.takeCameraPhoto({ uri: croppedImage });

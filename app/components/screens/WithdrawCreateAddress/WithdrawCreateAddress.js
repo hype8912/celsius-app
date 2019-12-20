@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, TouchableOpacity, Keyboard } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { RESULTS } from "react-native-permissions";
 
 import cryptoUtil from "../../../utils/crypto-util";
 import { MODALS } from "../../../constants/UI";
@@ -20,7 +21,6 @@ import WithdrawWarningModal from "../../organisms/WithdrawWarningModal/WithdrawW
 import MemoIdModal from "../../organisms/MemoIdModal/MemoIdModal";
 import DestinationTagModal from "../../organisms/DestinationTagModal/DestinationTagModal";
 import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
-import { RESULTS } from "react-native-permissions";
 
 @connect(
   state => ({
