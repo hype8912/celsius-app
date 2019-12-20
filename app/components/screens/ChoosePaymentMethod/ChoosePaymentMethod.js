@@ -7,7 +7,7 @@ import * as appActions from "../../../redux/actions";
 import ChoosePaymentMethodStyle from "./ChoosePaymentMethod.styles";
 import PaymentCard from "../../organisms/PaymentCard/PaymentCard";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import PrepayDollarInterestModal from "../../organisms/PrepayDollarInterestModal/PrepayDollarInterestModal";
+import PrepayDollarInterestModal from "../../modals/PrepayDollarInterestModal/PrepayDollarInterestModal";
 import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
@@ -119,7 +119,7 @@ class ChoosePaymentMethod extends Component {
   };
 
   render() {
-    const { loanSettings } = this.props;
+    const { actions, loanSettings } = this.props;
     if (!loanSettings) return <LoadingScreen />;
 
     const style = ChoosePaymentMethodStyle();
@@ -133,7 +133,11 @@ class ChoosePaymentMethod extends Component {
             <PaymentCard {...i} key={i.cardTitle} />
           ))}
         </RegularLayout>
-        <PrepayDollarInterestModal />
+        <PrepayDollarInterestModal
+          onPressConfirm={() =>
+            actions.navigateTo("LoanPrepaymentPeriod", { type: "dollar" })
+          }
+        />
       </View>
     );
   }

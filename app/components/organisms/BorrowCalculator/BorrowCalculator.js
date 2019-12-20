@@ -39,6 +39,7 @@ let timeout;
 class BorrowCalculator extends Component {
   static propTypes = {
     purpose: PropTypes.string,
+    loanParams: PropTypes.instanceOf(Object),
   };
   constructor(props) {
     super(props);
@@ -110,7 +111,6 @@ class BorrowCalculator extends Component {
 
   updateSliderItems = () => {
     const { formData, themeModal } = this.props;
-    this.calculateLoanParams();
     this.sliderItems = [
       {
         value: 6,
@@ -170,11 +170,6 @@ class BorrowCalculator extends Component {
       },
     ];
   };
-  calculateLoanParams = () => {
-    const { emitParams } = this.props;
-    const loanParams = emitParams();
-    this.setState({ loanParams });
-  };
 
   changeAmount = (field, value) => {
     const { actions, minimumLoanAmount } = this.props;
@@ -188,12 +183,11 @@ class BorrowCalculator extends Component {
         );
       }, 3000);
     }
-
     actions.updateFormField(field, value);
   };
 
   render() {
-    const { coinSelectItems, loanParams } = this.state;
+    const { coinSelectItems } = this.state;
     const {
       actions,
       formData,
@@ -203,6 +197,7 @@ class BorrowCalculator extends Component {
       minimumLoanAmount,
       loyaltyInfo,
       currencies,
+      loanParams,
     } = this.props;
 
     const style = BorrowCalculatorStyle(themeModal || theme);

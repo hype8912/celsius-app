@@ -210,7 +210,7 @@ class VerifyProfile extends Component {
         )}
         <View>
           {forgotPin && (
-            <ContactSupport copy="Forgot your code? Contact out support at app@celsius.network." />
+            <ContactSupport copy="Forgot your code? Contact our support at app@celsius.network." />
           )}
         </View>
       </View>

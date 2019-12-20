@@ -41,7 +41,7 @@ const base = {
   },
 
   tierData: {
-    paddingVertical: 10,
+    paddingVertical: 12,
   },
   tierDataLast: {
     paddingVertical: 10,

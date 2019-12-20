@@ -103,7 +103,7 @@ class CoinDetails extends Component {
     const { actions } = this.props;
     const { currency } = this.state;
 
-    actions.navigateTo("AllTransactions", { coin: currency.short });
+    actions.navigateTo("AllTransactions", { coin: [currency.short] });
   };
 
   goToCelPay = () => {
@@ -352,7 +352,7 @@ class CoinDetails extends Component {
           <TransactionsHistory
             hasFilter={false}
             additionalFilter={{
-              coin: coinDetails && coinDetails.short,
+              coin: [coinDetails && coinDetails.short],
               limit: 5,
             }}
           />

@@ -17,6 +17,7 @@ const initialState = {
   loyaltyInfo: null, // TODO move to profile
   securityOverview: {}, // TODO move to security
   kycDocuments: undefined, // TODO move to kycReducer
+  utilityBill: undefined, // TODO move to kycReducer
   contacts: {
     // TODO move to profileReducer
     friendsWithApp: [],
@@ -193,6 +194,12 @@ export default (state = initialState, action) => {
         securityOverview: {
           ...action.overview,
         },
+      };
+
+    case ACTIONS.GET_UTILITY_BILL_SUCCESS:
+      return {
+        ...state,
+        utilityBill: action.utilityBill,
       };
 
     default:

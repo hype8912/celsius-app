@@ -6,6 +6,7 @@ import store from "../redux/store";
 
 const loanUtil = {
   mapLoan,
+  emitLoanParams,
 };
 
 function mapLoan(loan) {
@@ -244,6 +245,57 @@ function getMarginCallParams(loan) {
     hasEnoughOriginalCoin,
     hasEnoughOtherCoins,
   };
+}
+
+function emitLoanParams(
+  formData,
+  currencies,
+  ltv,
+  minimumLoanAmount,
+  eligibleCoins
+) {
+  const loanParams = {};
+
+  if (formData && formData.coin !== "USD" && formData.ltv) {
+    loanParams.annualInterestPct = formData.ltv.interest;
+    loanParams.totalInterestPct =
+      loanParams.annualInterestPct * (formData.termOfLoan / 12);
+    loanParams.monthlyInterestPct =
+      loanParams.totalInterestPct / formData.termOfLoan;
+
+    loanParams.totalInterest = formatter.usd(
+      Number(loanParams.totalInterestPct * formData.amount)
+    );
+    loanParams.monthlyInterest = formatter.usd(
+      Number(
+        (loanParams.totalInterestPct * formData.amount) / formData.termOfLoan
+      )
+    );
+    loanParams.collateralNeeded =
+      Number(formData.amount) /
+      currencies.find(c => c.short === formData.coin).market_quotes_usd.price /
+      formData.ltv.percent;
+    loanParams.bestLtv = Math.max(...ltv.map(x => x.percent));
+
+    const arrayOfAmountUsd = eligibleCoins.map(c => c.amount_usd);
+
+    const indexOfLargestAmount = arrayOfAmountUsd.indexOf(
+      Math.max(...arrayOfAmountUsd)
+    );
+
+    loanParams.largestAmountCrypto = eligibleCoins[indexOfLargestAmount].amount;
+    loanParams.largestShortCrypto = eligibleCoins[indexOfLargestAmount].short;
+    loanParams.minimumLoanAmountCrypto =
+      minimumLoanAmount /
+      currencies.find(
+        c => c.short === eligibleCoins[indexOfLargestAmount].short
+      ).market_quotes_usd.price;
+    loanParams.missingCollateral = Math.abs(
+      (loanParams.largestAmountCrypto - loanParams.minimumLoanAmountCrypto) /
+        loanParams.bestLtv
+    );
+  }
+  return loanParams;
 }
 
 export default loanUtil;

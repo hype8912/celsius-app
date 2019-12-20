@@ -4,5 +4,6 @@
     "USE_MOCK_MARGIN_CALLS": false,
     "USE_MOCK_LOAN_INFO": false,
     "USE_MOCK_TRANSACTIONS": false
-  }
+  },
+  "STORYBOOK": false
 }

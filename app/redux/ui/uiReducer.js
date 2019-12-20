@@ -12,6 +12,7 @@ const initialState = {
   activeTab: undefined,
 
   isKeypadOpen: false,
+  isBannerVisible: true,
 };
 
 export default (state = initialState, action) => {
@@ -75,6 +76,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         activeTab: action.activeTab,
+      };
+
+    case ACTIONS.CLOSE_BANNER:
+      return {
+        ...state,
+        isBannerVisible: false,
       };
 
     default:

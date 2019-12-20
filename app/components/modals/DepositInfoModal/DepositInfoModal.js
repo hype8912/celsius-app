@@ -6,15 +6,17 @@ import { bindActionCreators } from "redux";
 
 import DepositInfoModalStyle from "./DepositInfoModal.styles";
 import MultistepModal from "../MultistepModal/MultistepModal.js";
-import { MODALS, THEMES } from "../../../constants/UI";
+import { MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
-import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import * as appActions from "../../../redux/actions";
 import InfoModal from "../InfoModalNew/InfoModal";
+import multiStepUtil from "../../../utils/multistep-modal-util";
+import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 
 @connect(
   state => ({
     currencies: state.currencies.rates,
+    depositCompliance: state.compliance.deposit,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -26,18 +28,8 @@ class DepositInfoModal extends Component {
     type: "",
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // initial state
-    };
-
-    // binders
-  }
-
   handleMultistepContent = type => {
-    const { currencies } = this.props;
+    const { currencies, actions } = this.props;
 
     const coinName = currencies.find(coin => coin.short === type);
     let steps;
@@ -51,13 +43,15 @@ class DepositInfoModal extends Component {
             description:
               "Depositing a different coin than selected will result in permanent loss of funds.",
             buttonText: "Continue",
+            onPress: () => multiStepUtil.goToNextStep(),
           },
           {
             image: require("../../../../assets/images/deposit-icn.png"),
             title: "Review your transaction details carefully",
             description:
               "Depositing coins without all required data, such as Destination Tag (XRP) or MemoID (XLM), or incorrect data will result in permanent loss.",
-            buttonText: "I understand",
+            buttonText: "I Understand",
+            onPress: () => actions.closeModal(),
           },
         ];
         return steps;
@@ -69,13 +63,15 @@ class DepositInfoModal extends Component {
             description:
               "Sending any other digital asset to this specific address, will result in permanent loss.",
             buttonText: "Continue",
+            onPress: () => multiStepUtil.goToNextStep(),
           },
           {
             image: { uri: coinName.image_url },
             title: "Destination Tag is required to deposit XRP",
             description:
               "Sending funds without destination tag or with an incorrect one, will result in loss.",
-            buttonText: "I understand",
+            buttonText: "I Understand",
+            onPress: () => actions.closeModal(),
           },
         ];
         return steps;
@@ -87,13 +83,15 @@ class DepositInfoModal extends Component {
             description:
               "Sending any other digital asset to this specific address, will result in permanent loss.",
             buttonText: "Continue",
+            onPress: () => multiStepUtil.goToNextStep(),
           },
           {
             image: { uri: coinName.image_url },
             title: "Memo ID is required to deposit XLM",
             description:
               "Sending funds without memo ID or with an incorrect one, will result in loss.",
-            buttonText: "I understand",
+            buttonText: "I Understand",
+            onPress: () => actions.closeModal(),
           },
         ];
         return steps;
@@ -105,13 +103,15 @@ class DepositInfoModal extends Component {
             description:
               "Sending any other digital asset to this specific address, will result in permanent loss.",
             buttonText: "Continue",
+            onPress: () => multiStepUtil.goToNextStep(),
           },
           {
             image: { uri: coinName.image_url },
             title: "Memo ID is required to deposit EOS",
             description:
               "Sending funds without memo ID or with an incorrect one, will result in loss.",
-            buttonText: "I understand",
+            buttonText: "I Understand",
+            onPress: () => actions.closeModal(),
           },
         ];
         return steps;
@@ -129,7 +129,7 @@ class DepositInfoModal extends Component {
         title: `Please ensure only Tether ERC20 tokens are deposited to this address`,
         description:
           "Sending other USDT coins to this address (the Omni Layer version) may result in the permanent loss of funds.",
-        buttonText: "I understand",
+        buttonText: "I Understand",
       };
     }
 
@@ -138,7 +138,7 @@ class DepositInfoModal extends Component {
       title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
       description:
         "Sending any other digital asset to this specific address, will result in permanent loss.",
-      buttonText: "I understand",
+      buttonText: "I Understand",
     };
   };
 
@@ -151,31 +151,27 @@ class DepositInfoModal extends Component {
     return imagesArray;
   };
 
-  renderStepBody = (title, description, buttonText, key) => {
+  renderStepBody = (title, description, buttonText, key, onPress) => {
     const style = DepositInfoModalStyle();
-
     return (
       <View style={style.modalWrapper} key={key}>
         <CelText
           type={"H3"}
           align={"center"}
           margin={"0 20 5 20"}
-          theme={THEMES.LIGHT}
           weight={"700"}
         >
           {title}
         </CelText>
-        <CelText align={"center"} margin={"5 20 0 20"} theme={THEMES.LIGHT}>
+        <CelText align={"center"} margin={"5 20 0 20"}>
           {description}
         </CelText>
+
         <View style={style.buttonsWrapper}>
           <CelModalButton
-            buttonStyle={
-              buttonText === "Continue" || buttonText === "Next"
-                ? "secondary"
-                : "basic"
-            }
+            buttonStyle={buttonText === "I Understand" ? "basic" : "secondary"}
             position={"single"}
+            onPress={() => onPress()}
           >
             {buttonText}
           </CelModalButton>
@@ -185,8 +181,16 @@ class DepositInfoModal extends Component {
   };
 
   render() {
-    const { type, actions } = this.props;
+    const { type, actions, depositCompliance } = this.props;
     const style = DepositInfoModalStyle();
+
+    if (
+      (!depositCompliance.coins.includes("XLM") ||
+        !depositCompliance.coins.includes("XRP")) &&
+      (type === "XRP" || type === "XLM")
+    ) {
+      return null;
+    }
 
     if (type === "XRP" || type === "XLM" || type === "EOS" || !type) {
       const multistepContent = this.handleMultistepContent(type);
@@ -202,7 +206,13 @@ class DepositInfoModal extends Component {
           top={25}
         >
           {multistepContent.map((s, k) =>
-            this.renderStepBody(s.title, s.description, s.buttonText, k)
+            this.renderStepBody(
+              s.title,
+              s.description,
+              s.buttonText,
+              k,
+              s.onPress
+            )
           )}
         </MultistepModal>
       );

@@ -7,6 +7,7 @@ const base = {
   },
   buttonWrapper: {
     height: 50,
+    flexDirection: "row",
   },
 };
 

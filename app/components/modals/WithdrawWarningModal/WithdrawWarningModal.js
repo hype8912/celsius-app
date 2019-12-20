@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
-import { MODALS, THEMES } from "../../../constants/UI";
+import { MODALS } from "../../../constants/UI";
 
 import WithdrawWarningModalStyle from "./WithdrawWarningModal.styles";
 import CelText from "../../atoms/CelText/CelText";
@@ -39,24 +39,12 @@ class WithdrawWarningModal extends Component {
         shouldRenderCloseButton={false}
       >
         <View style={style.wrapper}>
-          <CelText
-            type="H2"
-            weight="bold"
-            align="center"
-            margin={"0 30 15 30"}
-            theme={THEMES.LIGHT}
-          >
+          <CelText type="H2" weight="bold" align="center" margin={"0 30 15 30"}>
             You Didn't Enter {tagUpperCase}
           </CelText>
-          <CelText
-            type="H4"
-            weight="300"
-            align="center"
-            margin={"0 0 15 0"}
-            theme={THEMES.LIGHT}
-          >
+          <CelText type="H4" weight="300" align="center" margin={"0 0 15 0"}>
             To prevent
-            <CelText type="H4" weight="600" theme={THEMES.LIGHT}>
+            <CelText type="H4" weight="600">
               {" permanent loss "}
             </CelText>
             of your funds, please check if your address has a{" "}
@@ -74,7 +62,6 @@ class WithdrawWarningModal extends Component {
               value={this.state.isChecked}
               onChange={(field, value) => this.setState({ isChecked: value })}
               rightText={`My address doesn't have a\n${tag}`}
-              theme={THEMES.LIGHT}
             />
           </View>
         </View>

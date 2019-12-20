@@ -24,11 +24,11 @@ import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import IconButton from "../../organisms/IconButton/IconButton";
-import DestinationTagModal from "../../organisms/DestinationTagModal/DestinationTagModal";
-import MemoIdModal from "../../organisms/MemoIdModal/MemoIdModal";
-import DepositInfoModal from "../../organisms/DepositInfoModal/DepositInfoModal";
+import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
+import DepositInfoModal from "../../modals/DepositInfoModal/DepositInfoModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import formatter from "../../../utils/formatter";
+import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 
 @connect(
   state => ({
@@ -512,12 +512,9 @@ class Deposit extends Component {
             </IconButton>
           </View>
         ) : null}
-        <DestinationTagModal closeModal={actions.closeModal} />
-        <MemoIdModal
-          closeModal={actions.closeModal}
-          coin={formData.selectedCoin}
-        />
-        <DepositInfoModal type={coin} closeModal={actions.closeModal} />
+        <DestinationInfoTagModal closeModal={actions.closeModal} />
+        <MemoIdModal coin={formData.selectedCoin} />
+        <DepositInfoModal type={coin} />
       </RegularLayout>
     );
   }

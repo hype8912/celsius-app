@@ -1,23 +1,24 @@
-PR Checklist:
-- [ ] I have named the PR correctly
-- [ ] I have added correct destination branch
-- [ ] I have added at least two reviewers
-- [ ] I have assigned the PR to myself
-- [ ] I have merged develop or main feature into my feature branch and resolved all conflicts
-- [ ] I have tested all new features locally
-- [ ] I have tested relevant flow locally
-- [ ] I have tested Dark mode
+## Checklist (Mandatory):
 
-### How to name a PR
-- If it includes only one issue `CN-1234 Issue name`
-- If it includes many issues `CN-1234, CN-2345, CN-3456 What was updated/changed/added`
-- If the PR is not ready yet, add `[DRAFT]` in front of the name
-- Do not name the PR starting with `feature/` or `Feature/`
+- [ ] I have named the PR correctly (Check PR1)
+- [ ] Check the commit’s or even all commits message styles matches our requested structure. (issue number, etc.) (Check CR10)
+- [ ] I have tested new code locally (Check CR3)
+- [ ] I have done a smoke test of the larger feature locally (Check CR3)
+- [ ] I have added at least two reviewers (Check PR5)
+- [ ] I have assigned the PR to myself (Check PR4)
+- [ ] I have merged develop (parent) branch into my feature branch and resolved all conflicts (Check PR7)
 
-### How to test locally
-1. Test happy path
-2. Test other paths
-3. Remove all warnings
+## Checklist (Optional):
 
-### How to relevant flow locally
-- If working on part of CelPay, check the whole happy path
+- [ ] I have added necessary documentation, including instructions how to test (Check CR8)
+- [ ] I have added tests that prove my fix/implementation is effective or that my feature works
+- [ ] I have written the code according to the adopted style guide? (Check CR7)
+
+## Additional notes
+
+> What does this implement/fix? Explain your changes. (optional)
+> Are there any scripts that need running (eg. yarn install)?
+> Are there any edge cases that need checking?
+> Are there any specific test instructions?
+
+[MVPWorkshop Pull Request & Code Review Guidelines](https://docs.google.com/document/d/1TcuU1JBhlGZLtpy0osSNinXQ2piP_yrDuRcXdqaOS_U/edit#heading=h.5b6kpdr4btq8)

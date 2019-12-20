@@ -11,14 +11,19 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { MODALS } from "../../../constants/UI";
-import SsnModal from "../../organisms/SsnModal/SsnModal";
+import { PRIMETRUST_KYC_STATES } from "../../../constants/DATA";
+import SsnModal from "../../modals/SsnModal/SsnModal";
 import SocialSecurityNumber from "../../molecules/SocialSecurityNumber/SocialSecurityNumber";
+import apiUtil from "../../../utils/api-util";
+import { isUSCitizen } from "../../../utils/user-util";
+import API from "../../../constants/API";
 
 @connect(
   state => ({
     user: state.user.profile,
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -28,7 +33,7 @@ class KYCTaxpayer extends Component {
 
   static navigationOptions = () => ({
     title: "Taxpayer ID",
-    customCenterComponent: <ProgressBar steps={4} currentStep={3} />,
+    customCenterComponent: <ProgressBar steps={7} currentStep={6} />,
     headerSameColor: true,
   });
 
@@ -79,53 +84,95 @@ class KYCTaxpayer extends Component {
     return usCitizen;
   };
 
+  isForPrimeTrust = () => {
+    const { formData, user } = this.props;
+    return (
+      PRIMETRUST_KYC_STATES.includes(formData.state) ||
+      PRIMETRUST_KYC_STATES.includes(user.state)
+    );
+  };
+
   submitTaxpayerInfo = async () => {
     const { actions, formData } = this.props;
-    let updateTaxInfo;
-    const errors = {};
+    let userTaxInfo;
     if (this.isFromUS()) {
-      // TODO(ns): this if statement does nothing and is unnecessary, should be removed
-      if (
-        !formData.ssn1 ||
-        formData.ssn1.length < 3 ||
-        (!formData.ssn2 || formData.ssn2.length < 2) ||
-        (!formData.ssn3 || formData.ssn3.length < 4)
-      ) {
-        errors.ssn = "Please enter valid SSN.";
-        actions.setFormErrors(errors);
-        return;
-      }
-
-      updateTaxInfo = {
+      userTaxInfo = {
         ssn: formData.ssn1 + formData.ssn2 + formData.ssn3,
       };
     } else {
-      updateTaxInfo = {
+      userTaxInfo = {
         national_id: formData.national_id,
         itin: formData.itin,
       };
     }
     this.setState({ updatingTaxInfo: true });
-    const response = await actions.updateTaxpayerInfo(updateTaxInfo);
+    const response = await actions.updateTaxpayerInfo(userTaxInfo);
 
     if (response.success) {
-      actions.navigateTo("KYCVerifyID");
-      actions.showMessage(
-        "success",
-        "You have successfully submitted ssn number"
-      );
+      if (PRIMETRUST_KYC_STATES.includes(formData.state)) {
+        actions.navigateTo("KYCPrimeTrustToU");
+        actions.showMessage(
+          "success",
+          "You have successfully submitted ssn number"
+        );
+      } else {
+        await actions.startKYC();
+      }
     }
     this.setState({ updatingTaxInfo: false });
   };
 
+  renderSkipButton = disabled => {
+    const { actions, callsInProgress, user } = this.props;
+
+    const isSubmitting = apiUtil.areCallsInProgress(
+      [API.START_KYC],
+      callsInProgress
+    );
+
+    if (user.ssn || user.itin) return null;
+
+    if (!this.isFromUS()) {
+      return (
+        <CelButton
+          onPress={() => actions.startKYC()}
+          disabled={disabled || isSubmitting}
+          laoding={isSubmitting}
+          basic
+          margin="20 0 20 0"
+        >
+          Submit without Taxpayer ID
+        </CelButton>
+      );
+    }
+
+    if (!this.isForPrimeTrust()) {
+      return (
+        <CelButton
+          onPress={() => actions.openModal(MODALS.SSN_MODAL)}
+          disabled={disabled || isSubmitting}
+          basic
+          margin="20 0 20 0"
+        >
+          Submit without SSN
+        </CelButton>
+      );
+    }
+
+    return null;
+  };
+
   render() {
-    const { actions } = this.props;
     const { updatingTaxInfo, isLoading } = this.state;
+    const { actions, user, formData } = this.props;
 
     if (isLoading) return <LoadingScreen />;
+
+    const isPrimeTrustUser = PRIMETRUST_KYC_STATES.includes(formData.state);
+
     return (
       <RegularLayout>
-        <CelText weight={"700"} type={"H1"} align="center">
+        <CelText weight={"700"} type={"H2"} align="center">
           {this.isFromUS() ? "Social Security Number" : "Taxpayer ID"}
         </CelText>
 
@@ -145,25 +192,28 @@ class KYCTaxpayer extends Component {
           updatingTaxInfo={updatingTaxInfo}
         />
 
-        {this.isFromUS() ? (
+        {!!(isPrimeTrustUser && user.ssn) && (
           <CelButton
-            onPress={() => actions.openModal(MODALS.SSN_MODAL)}
-            disabled={updatingTaxInfo}
-            basic
-            margin="20 0 20 0"
+            onPress={() => actions.navigateTo("KYCPrimeTrustToU")}
+            iconRight="IconArrowRight"
           >
-            Skip
-          </CelButton>
-        ) : (
-          <CelButton
-            onPress={() => actions.navigateTo("KYCVerifyID")}
-            disabled={updatingTaxInfo}
-            basic
-            margin="20 0 20 0"
-          >
-            Skip
+            Continue
           </CelButton>
         )}
+
+        {!!(
+          (!isPrimeTrustUser && user.ssn) ||
+          (!isUSCitizen() && user.itin)
+        ) && (
+          <CelButton
+            onPress={() => actions.startKYC()}
+            iconRight="IconArrowRight"
+          >
+            Submit KYC data
+          </CelButton>
+        )}
+
+        {this.renderSkipButton(updatingTaxInfo)}
         <SsnModal />
       </RegularLayout>
     );
