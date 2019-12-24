@@ -16,6 +16,8 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import addressUtil from "../../../utils/address-util";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
+import LoanBannerCard from "../../atoms/LoanCard/LoanBannerCard";
+import { isLoanBannerVisible } from "../../../utils/ui-util";
 
 @connect(
   state => ({
@@ -25,6 +27,8 @@ import InfoBox from "../../atoms/InfoBox/InfoBox";
     user: state.user.profile,
     loyaltyInfo: state.user.loyaltyInfo,
     withdrawalSettings: state.generalData.withdrawalSettings,
+    communityStats: state.community.stats,
+    isBannerVisible: state.ui.isBannerVisible,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -179,6 +183,9 @@ class WithdrawConfirm extends Component {
           <CelText align="center" margin="20 0 20 0" color="gray">
             {disclaimerText}
           </CelText>
+          {isLoanBannerVisible() && (
+            <LoanBannerCard type={"half"} actions={actions} />
+          )}
         </Card>
       </RegularLayout>
     );

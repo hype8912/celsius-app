@@ -221,12 +221,7 @@ class CelHeading extends Component {
         {customCenterComponent ? (
           <Fragment>{customCenterComponent}</Fragment>
         ) : (
-          <CelText
-            style={style.headerTitle}
-            align="center"
-            weight="medium"
-            type="H3"
-          >
+          <CelText align="center" weight="medium" type="H3">
             {title || ""}
           </CelText>
         )}
@@ -238,7 +233,7 @@ class CelHeading extends Component {
     const { formData } = this.props;
     const scene = this.props.scene.descriptor;
     const style = CelHeadingStyle();
-    const paddings = getPadding("15 20 15 20");
+    const paddings = getPadding("15 15 15 15");
     const leftStyle = formData.activeSearch
       ? [style.left, { flexDirection: "row", flex: 2 }]
       : style.left;
@@ -284,14 +279,12 @@ class CelHeading extends Component {
   render() {
     let containerStyle;
     const scene = this.props.scene.descriptor;
-    const { headerSameColor, transparent } = scene.options;
+    const { transparent } = scene.options;
     const { theme } = this.props;
     const style = CelHeadingStyle();
     const statusBarColor = this.getStatusBarTextColor(theme);
 
-    if (headerSameColor) {
-      containerStyle = style.sameBackground;
-    } else if (transparent) {
+    if (transparent) {
       containerStyle = style.transparentBackground;
     } else {
       containerStyle = style.headingBackground;

@@ -31,7 +31,7 @@ class LoanTrigger extends Component {
         image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
         action={() => {
           actions.navigateTo("BorrowChooseLoan");
-          userBehaviorUtil.userInitiatingLoan();
+          userBehaviorUtil.userInitiatingLoanOnWallet();
         }}
         buttonText={"Get a loan"}
         title={"Did you know..."}

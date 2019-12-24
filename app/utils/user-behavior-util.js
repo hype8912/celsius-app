@@ -37,7 +37,9 @@ const userBehaviorUtil = {
   userReferring,
   userReferred,
   userStartingReferral,
-  userInitiatingLoan,
+  userInitiatingLoanOnWallet,
+  userInitiatingLoanOnWithdraw,
+  userInitiatingLoanOnWithdrawConfirm,
 };
 
 let userData = {};
@@ -312,8 +314,27 @@ async function userReferred(owner) {
   await sendEvent(`Referral code received from ${owner}`);
 }
 
-async function userInitiatingLoan() {
+/**
+ * FIres event when user a user starts loan process on wallet screen
+ */
+async function userInitiatingLoanOnWallet() {
   await sendEvent(`Started loan process from banner on Wallet screen`);
+}
+
+/**
+ * FIres event when user a user starts loan process on Withdraw screen
+ */
+async function userInitiatingLoanOnWithdraw() {
+  await sendEvent(`Started loan process from banner on Withdraw screen`);
+}
+
+/**
+ * FIres event when user a user starts loan process on Withdraw Confirm screen
+ */
+async function userInitiatingLoanOnWithdrawConfirm() {
+  await sendEvent(
+    `Started loan process from banner on Withdraw Confirm screen`
+  );
 }
 
 /**

@@ -29,6 +29,8 @@ import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
+import LoanBannerCard from "../../atoms/LoanCard/LoanBannerCard";
+import { isLoanBannerVisible } from "../../../utils/ui-util";
 
 @connect(
   state => ({
@@ -44,6 +46,11 @@ import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
     keypadOpen: state.ui.isKeypadOpen,
     withdrawalSettings: state.generalData.withdrawalSettings,
     loyaltyInfo: state.user.loyaltyInfo,
+    ltvs: state.loans.ltvs,
+    communityStats: state.community.stats,
+    isBannerVisible: state.ui.isBannerVisible,
+    maximumDiscount:
+      state.generalData.celUtilityTiers.PLATINUM.loan_interest_bonus,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -244,6 +251,8 @@ class WithdrawEnterAmount extends Component {
       loyaltyInfo,
       kycStatus,
       withdrawCompliance,
+      maximumDiscount,
+      ltvs,
     } = this.props;
 
     const style = WithdrawEnterAmountStyle();
@@ -295,15 +304,26 @@ class WithdrawEnterAmount extends Component {
       hours = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[0];
       minutes = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[1];
     }
+
+    const lowestInterest = ltvs[0].interest * (1 - maximumDiscount);
+
     return (
       <RegularLayout padding="0 0 0 0">
         <View style={style.container}>
-          <BalanceView
-            opacity={0.65}
-            coin={coin}
-            crypto={coinData.amount}
-            usd={coinData.amount_usd}
-          />
+          {isLoanBannerVisible() ? (
+            <LoanBannerCard
+              type={"full"}
+              actions={actions}
+              lowestInterest={lowestInterest}
+            />
+          ) : (
+            <BalanceView
+              opacity={0.65}
+              coin={coin}
+              crypto={coinData.amount}
+              usd={coinData.amount_usd}
+            />
+          )}
           <View style={style.wrapper}>
             <View>
               <CoinPicker
