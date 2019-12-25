@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import {
   Image as RNImage,
   View,
@@ -217,7 +217,9 @@ class CelHeading extends Component {
     return (
       <View style={style.center}>
         {customCenterComponent ? (
-          <Fragment>{customCenterComponent}</Fragment>
+          <View style={style.customCenterComponent}>
+            {customCenterComponent}
+          </View>
         ) : (
           <CelText align="center" weight="medium" type="H3">
             {title || ""}
