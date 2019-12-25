@@ -26,6 +26,7 @@ import EmptyState from "../../atoms/EmptyState/EmptyState";
 import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
 import STYLES from "../../../constants/STYLES";
+import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -94,6 +95,7 @@ class BorrowLanding extends Component {
       await actions.getAllLoans();
     }
     this.setState({ isLoading: false });
+    actions.checkForLoanAlerts();
   }
 
   getMinLtv = () => {
@@ -279,6 +281,8 @@ class BorrowLanding extends Component {
             </CelText>
           </View>
         )}
+
+        <LoanAlertsModalWrapper />
       </RegularLayout>
     );
   }

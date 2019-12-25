@@ -243,12 +243,9 @@ class WalletLanding extends Component {
           </ExpandableItem>
         </View>
         <CelPayReceivedModal transfer={branchTransfer} />
-        {/* <LoanAlertsModalWrapper />*/}
         <ReferralSendModal />
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <BecomeCelMemberModal />
-        {/* Temporary disabling this modal */}
-        {/* <EarnInterestCelModal />*/}
         <LoanAlertsModalWrapper />
       </RegularLayout>
     );
