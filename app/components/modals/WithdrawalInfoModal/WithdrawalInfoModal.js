@@ -20,7 +20,6 @@ class WithdrawalInfoModal extends Component {
 
   handleModalContent = () => {
     const { type, closeModal } = this.props;
-    multistepModalUtil.setModal();
 
     let title;
     let body;
@@ -144,7 +143,7 @@ class WithdrawalInfoModal extends Component {
             require("../../../../assets/images/modal-withdraw.png"),
             require("../../../../assets/images/modal-withdraw.png"),
           ];
-    if (type === "CEL" || type === "DAI") {
+    if (type === "CEL" || type === "DAI" || !type) {
       return (
         <MultistepModal
           style={style.container}

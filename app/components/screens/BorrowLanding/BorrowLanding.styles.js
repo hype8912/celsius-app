@@ -67,7 +67,7 @@ const base = {
     width: widthPercentageToDP("86%"),
   },
   tab: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 8,
   },
   activeFilterLine: {
     height: 1,
