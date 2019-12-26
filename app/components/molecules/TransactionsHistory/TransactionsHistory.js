@@ -195,7 +195,7 @@ class TransactionsHistory extends Component {
           {hasFilter && this.renderPickerSelect()}
         </View>
 
-        {hasFilter && this.renderEmailButton()}
+        {this.renderEmailButton()}
 
         {!transactionsDisplay.length ? (
           <EmptyState

@@ -17,11 +17,13 @@ class IconButton extends Component {
     hideIconRight: PropTypes.bool,
     onPress: PropTypes.func,
     color: PropTypes.oneOf(["white", "blue"]),
+    disabled: PropTypes.bool,
   };
   static defaultProps = {
     margin: "20 0 20 0",
     padding: "0 18 0 18",
     hideIconRight: false,
+    disabled: false,
   };
 
   getColors() {
@@ -90,7 +92,7 @@ class IconButton extends Component {
 
   render() {
     const { primary } = this.getColors();
-    const { margin, padding, onPress } = this.props;
+    const { margin, padding, onPress, disabled } = this.props;
     const style = IconButtonStyle();
     const containerStyle = [
       style.container,
@@ -101,7 +103,11 @@ class IconButton extends Component {
 
     if (onPress) {
       return (
-        <TouchableOpacity style={containerStyle} onPress={onPress}>
+        <TouchableOpacity
+          disabled={disabled}
+          style={containerStyle}
+          onPress={onPress}
+        >
           <IconButtonContent />
         </TouchableOpacity>
       );
