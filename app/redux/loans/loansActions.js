@@ -468,7 +468,10 @@ function checkForLoanAlerts() {
 
     const loanAlerts = [];
     allLoans.forEach(l => {
-      if (l.installments_to_be_paid) {
+      if (
+        l.installments_to_be_paid &&
+        Number(l.installments_to_be_paid.total)
+      ) {
         loanAlerts.push({ id: l.id, type: LOAN_ALERTS.INTEREST_ALERT });
       }
 

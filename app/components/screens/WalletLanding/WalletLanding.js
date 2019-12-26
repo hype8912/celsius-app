@@ -86,6 +86,7 @@ class WalletLanding extends Component {
       currenciesGraphs,
     } = this.props;
 
+    actions.checkForLoanAlerts();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     if (appSettings && appSettings.accepted_terms_of_use === false) {
@@ -107,7 +108,6 @@ class WalletLanding extends Component {
     }
 
     this.setWalletFetchingInterval();
-    actions.checkForLoanAlerts();
   };
 
   componentDidUpdate(prevProps) {

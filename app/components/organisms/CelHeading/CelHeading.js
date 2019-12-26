@@ -279,12 +279,14 @@ class CelHeading extends Component {
   render() {
     let containerStyle;
     const scene = this.props.scene.descriptor;
-    const { transparent } = scene.options;
+    const { transparent, headerSameColor } = scene.options;
     const { theme } = this.props;
     const style = CelHeadingStyle();
     const statusBarColor = this.getStatusBarTextColor(theme);
 
-    if (transparent) {
+    if (headerSameColor) {
+      containerStyle = style.sameBackground;
+    } else if (transparent) {
       containerStyle = style.transparentBackground;
     } else {
       containerStyle = style.headingBackground;

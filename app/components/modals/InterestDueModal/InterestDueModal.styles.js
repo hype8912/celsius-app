@@ -1,16 +1,27 @@
 // import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
+import STYLES from "../../../constants/STYLES";
 
 const base = {
-  container: {
-    flex: 1,
+  installmentsWrapper: {
+    borderRadius: 5,
+    padding: 10,
+    margin: 10,
   },
 };
 
 const themed = {
-  light: {},
+  light: {
+    installmentsWrapper: {
+      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    },
+  },
 
-  dark: {},
+  dark: {
+    installmentsWrapper: {
+      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
+    },
+  },
 
   celsius: {},
 };

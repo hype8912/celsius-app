@@ -55,7 +55,14 @@ class Banner extends Component {
       <View style={[style.container, { backgroundColor }]}>
         <View style={style.mainWrapper}>
           <TouchableOpacity
-            style={{ position: "absolute", right: 10, top: 0 }}
+            style={{
+              position: "absolute",
+              right: 10,
+              top: 0,
+              width: 40,
+              height: 40,
+              zIndex: 1,
+            }}
             onPress={close}
           >
             <Icon name="Close" fill={"white"} width="25" />

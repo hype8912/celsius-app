@@ -13,7 +13,7 @@ import { MODALS } from "../../../constants/UI";
 class RegisterPromoCodeCard extends Component {
   static propTypes = {
     promoCode: PropTypes.string,
-    openModal: PropTypes.string.isRequired,
+    openModal: PropTypes.func.isRequired,
   };
   static defaultProps = {};
 

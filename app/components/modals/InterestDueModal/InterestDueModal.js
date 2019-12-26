@@ -6,9 +6,9 @@ import moment from "moment";
 import formatter from "../../../utils/formatter";
 import CelModal from "../CelModal/CelModal.js";
 import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
+import InterestDueModalStyle from "./InterestDueModal.styles";
 import CelButton from "../../atoms/CelButton/CelButton";
 
 class InterestDueModal extends Component {
@@ -30,6 +30,7 @@ class InterestDueModal extends Component {
   render() {
     const { activeLoan, closeModal, navigateTo, alert } = this.props;
 
+    const style = InterestDueModalStyle();
     if (!activeLoan || !activeLoan.installments_to_be_paid) return null;
     const instalmentsToBePaid = activeLoan.installments_to_be_paid;
     const modalName = alert
@@ -50,14 +51,7 @@ class InterestDueModal extends Component {
           </CelText>
         </CelText>
 
-        <View
-          style={{
-            backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-            borderRadius: 5,
-            padding: 10,
-            margin: 10,
-          }}
-        >
+        <View style={style.installmentsWrapper}>
           <View
             style={{
               flexDirection: "row",

@@ -87,6 +87,8 @@ class BorrowLanding extends Component {
 
   async componentDidMount() {
     const { actions, loanCompliance, formData } = this.props;
+    actions.checkForLoanAlerts();
+
     if (formData.prepayLoanId) {
       actions.openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL);
     }
@@ -95,7 +97,6 @@ class BorrowLanding extends Component {
       await actions.getAllLoans();
     }
     this.setState({ isLoading: false });
-    actions.checkForLoanAlerts();
   }
 
   getMinLtv = () => {
@@ -212,11 +213,7 @@ class BorrowLanding extends Component {
               <CelText
                 type={"H6"}
                 weight={item === filter ? "500" : "300"}
-                color={
-                  item === filter
-                    ? STYLES.COLORS.CELSIUS_BLUE
-                    : STYLES.COLORS.DARK_GRAY5
-                }
+                color={item === filter ? STYLES.COLORS.CELSIUS_BLUE : undefined}
               >
                 {item}
               </CelText>
