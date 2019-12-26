@@ -44,10 +44,10 @@ class ContactRow extends Component {
   render() {
     const { contact, onPress, hasApp } = this.props;
     const styles = ContactRowStyle();
-    const imgUrl = contact.profile_image
-      ? { uri: contact.profile_image }
+    const imgUrl = contact.item.profile_image
+      ? { uri: contact.item.profile_image }
       : require("../../../../assets/images/empty-profile/empty-profile.png");
-    const networkImage = this.getNetworkImageUrl(contact.network);
+    const networkImage = this.getNetworkImageUrl(contact.item.network);
 
     return (
       <TouchableOpacity onPress={onPress} style={styles.container}>
@@ -65,9 +65,9 @@ class ContactRow extends Component {
             />
           </View>
           <View style={styles.info}>
-            <CelText type="H3">{contact.name}</CelText>
+            <CelText type="H3">{contact.item.name}</CelText>
             <CelText color={STYLES.COLORS.CELSIUS_BLUE} type="H6">
-              {this.getContactPreference(contact)}
+              {this.getContactPreference(contact.item)}
             </CelText>
           </View>
         </View>
