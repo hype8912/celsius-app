@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, TouchableOpacity, Keyboard } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { RESULTS } from "react-native-permissions";
 
 import cryptoUtil from "../../../utils/crypto-util";
 import { MODALS } from "../../../constants/UI";
@@ -20,8 +21,10 @@ import WithdrawWarningModal from "../../modals/WithdrawWarningModal/WithdrawWarn
 import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
 import ConfirmWithdrawalAddressModal from "../../modals/ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
-import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
-import { RESULTS } from "react-native-permissions";
+import {
+  ALL_PERMISSIONS,
+  requestForPermission,
+} from "../../../utils/device-permissions";
 
 @connect(
   state => ({
@@ -61,7 +64,7 @@ class WithdrawCreateAddress extends Component {
 
   handleScanClick = async () => {
     const { actions } = this.props;
-    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA)
+    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
     if (perm.status === RESULTS.GRANTED) {
       actions.navigateTo("QRScanner", {
         onScan: this.handleScan,
@@ -185,25 +188,25 @@ class WithdrawCreateAddress extends Component {
               </React.Fragment>
             )}
             {formData.coin &&
-              cryptoUtil.isERC20(formData.coin.toLowerCase()) ? (
-                <InfoBox
-                  color={"white"}
-                  backgroundColor={STYLES.COLORS.ORANGE}
-                  titleText={
-                    "Note: we use a smart-contract to send ERC20 tokens, some wallets do not support such transactions."
-                  }
-                  left
-                />
-              ) : (
-                <InfoBox
-                  color={"white"}
-                  backgroundColor={STYLES.COLORS.ORANGE}
-                  titleText={
-                    "Changing your withdrawal address will make a withdrawal of your coin unavailable for 24 hours."
-                  }
-                  left
-                />
-              )}
+            cryptoUtil.isERC20(formData.coin.toLowerCase()) ? (
+              <InfoBox
+                color={"white"}
+                backgroundColor={STYLES.COLORS.ORANGE}
+                titleText={
+                  "Note: we use a smart-contract to send ERC20 tokens, some wallets do not support such transactions."
+                }
+                left
+              />
+            ) : (
+              <InfoBox
+                color={"white"}
+                backgroundColor={STYLES.COLORS.ORANGE}
+                titleText={
+                  "Changing your withdrawal address will make a withdrawal of your coin unavailable for 24 hours."
+                }
+                left
+              />
+            )}
             <View style={style.button}>
               <CelButton
                 disabled={!formData.withdrawAddress}

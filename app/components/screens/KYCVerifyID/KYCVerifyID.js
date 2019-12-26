@@ -30,14 +30,14 @@ import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-per
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class KYCVerifyID extends Component {
-  static propTypes = {};
-  static defaultProps = {};
-
   static navigationOptions = () => ({
     title: "Verify ID",
     customCenterComponent: <ProgressBar steps={4} currentStep={4} />,
     headerSameColor: true,
   });
+
+  static propTypes = {};
+  static defaultProps = {};
 
   componentDidMount() {
     const { actions } = this.props;

@@ -1,1 +1,0 @@
-../../../../../node_modules/react-native-idfa/ios/IDFA/PTRIDFA.h

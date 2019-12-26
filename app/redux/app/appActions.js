@@ -4,6 +4,7 @@ import { Platform } from "react-native";
 // import RNAdvertisingId from "react-native-advertising";
 import { IDFA } from "react-native-idfa";
 import appsFlyer from "react-native-appsflyer";
+import Geolocation from "@react-native-community/geolocation";
 import Constants from "../../../constants";
 import store from "../../redux/store";
 import * as actions from "../actions";
@@ -19,7 +20,10 @@ import branchUtil from "../../utils/branch-util";
 import { disableAccessibilityFontScaling } from "../../utils/styles-util";
 import ASSETS from "../../constants/ASSETS";
 import loggerUtil from "../../utils/logger-util";
-import { requestForPermission, ALL_PERMISSIONS } from "../../utils/device-permissions";
+import {
+  requestForPermission,
+  ALL_PERMISSIONS,
+} from "../../utils/device-permissions";
 import { hasPassedKYC } from "../../utils/user-util";
 import { showMessage } from "../ui/uiActions";
 import userBehaviorUtil from "../../utils/user-behavior-util";
@@ -350,13 +354,14 @@ function getGeolocation() {
 
     if (permission !== RESULTS.GRANTED) return;
 
-    // const location = await Location.getCurrentPositionAsync({});
-    // if (location && location.coords) {
-    //   dispatch({
-    //     type: ACTIONS.SET_GEOLOCATION,
-    //     geoLat: location.coords.latitude,
-    //     geoLong: location.coords.longitude,
-    //   });
-    // }
+    Geolocation.getCurrentPosition(location => {
+      if (location && location.coords) {
+        dispatch({
+          type: ACTIONS.SET_GEOLOCATION,
+          geoLat: location.coords.latitude,
+          geoLong: location.coords.longitude,
+        });
+      }
+    });
   };
 }

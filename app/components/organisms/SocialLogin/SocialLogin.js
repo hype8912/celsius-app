@@ -32,7 +32,7 @@ class SocialLogin extends Component {
     actions.twitterOpen();
   };
 
-  handleError = (err) => {
+  handleError = err => {
     console.log(err);
   };
 
@@ -61,7 +61,6 @@ class SocialLogin extends Component {
             <Icon name="Twitter" height="35" width="35" fill="#bdc1c3" />
           </TWLoginButton>
         </View>
-
       </View>
     );
   }

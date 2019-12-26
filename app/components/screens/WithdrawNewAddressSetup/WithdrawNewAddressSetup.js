@@ -14,7 +14,10 @@ import addressUtil from "../../../utils/address-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ConfirmWithdrawalAddressModal from "../../modals/ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
 import { MODALS } from "../../../constants/UI";
-import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
+import {
+  ALL_PERMISSIONS,
+  requestForPermission,
+} from "../../../utils/device-permissions";
 
 @connect(
   state => ({
@@ -56,7 +59,7 @@ class WithdrawNewAddressSetup extends Component {
 
   handleScanClick = async () => {
     const { actions } = this.props;
-    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA)
+    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
     if (perm === RESULTS.GRANTED) {
       actions.navigateTo("QRScanner", {
         onScan: this.handleScan,

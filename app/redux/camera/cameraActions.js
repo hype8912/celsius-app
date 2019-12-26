@@ -1,4 +1,4 @@
-import { CameraRoll } from "react-native";
+import CameraRoll from "@react-native-community/cameraroll";
 
 import ACTIONS from "../../constants/ACTIONS";
 import { apiError, startApiCall } from "../api/apiActions";
@@ -29,9 +29,9 @@ function getCameraRollPhotos() {
     };
 
     dispatch(startApiCall(API.GET_CAMERA_ROLL));
-
     try {
       const photos = await CameraRoll.getPhotos(config);
+
       // console.log('photos', photos)
       dispatch(getCameraRollPhotosSuccess(photos));
     } catch (err) {

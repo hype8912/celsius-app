@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 // TODO(sb): RN update dependencies fixes
-// import * as Contacts from "expo-contacts";
 import { View, ScrollView } from "react-native";
+import Contacts from 'react-native-contacts'
 
 import * as appActions from "../../../redux/actions";
-
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelText from "../../atoms/CelText/CelText";
 import {
@@ -154,16 +153,35 @@ class CelPayChooseFriend extends Component {
     this.subs.forEach(sub => sub.remove());
   }
 
+  getContacts = () => {
+    return new Promise( (resolve, reject) => {
+      const data = []
+      Contacts.getAll((err, contacts) => {
+        if (!err) {
+          contacts.map(contact => {
+            const c = {
+              name: contact.displayName,
+              phoneNumbers: contact.phoneNumbers,
+              emails: contact.emailAddresses
+            }
+            return data.push(c)
+          })
+          resolve(data)
+        } else {
+          reject(err)
+        }
+      });
+    })
+  }
+
+
   importContacts = async () => {
     const { actions } = this.props;
-
     try {
       const permission = await requestForPermission(ALL_PERMISSIONS.CONTACTS);
       if (permission) {
-        const { data } = await Contacts.getContactsAsync({
-          fields: [Contacts.Fields.Emails, Contacts.Fields.PhoneNumbers],
-        });
-        await actions.connectPhoneContacts(data);
+        const data = await this.getContacts()
+        await actions.connectPhoneContacts( data);
         await actions.getConnectedContacts();
       } else {
         await requestForPermission(ALL_PERMISSIONS.CONTACTS);

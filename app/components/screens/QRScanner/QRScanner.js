@@ -5,14 +5,14 @@ import { View, SafeAreaView } from "react-native";
 // import { BarCodeScanner } from "expo-barcode-scanner";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import { RESULTS } from "react-native-permissions";
+import { RNCamera } from "react-native-camera";
 import * as appActions from "../../../redux/actions";
 import QRScannerStyle from "./QRScanner.styles";
-
 import CelText from "../../atoms/CelText/CelText";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
-import { RESULTS } from "react-native-permissions";
+
 
 @connect(
   () => ({}),
@@ -42,7 +42,7 @@ class QRScannerScreen extends Component {
 
   async componentDidMount() {
     const { actions } = this.props;
-    let perm = await requestForPermission(ALL_PERMISSIONS.CAMERA)
+    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA)
     actions.setFabType("hide");
 
     await this.setState({
@@ -76,7 +76,13 @@ class QRScannerScreen extends Component {
 
     return (
       <View style={style.container}>
-        {/* <BarCodeScanner onBarCodeScanned={this.state.handleBarCodeRead}> */}
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          onBarCodeRead={this.state.handleBarCodeRead}
+          type={RNCamera.Constants.Type.back}
+        >
         <View style={style.barcodeWrapper}>
           <View style={[style.mask, style.maskOverlayColor]} />
           <View style={style.imageWrapper}>
@@ -107,6 +113,7 @@ class QRScannerScreen extends Component {
           </View>
         </View>
         {/* </BarCodeScanner> */}
+        </RNCamera>
       </View>
     );
   };

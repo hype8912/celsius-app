@@ -151,7 +151,7 @@ class CelHeading extends Component {
               style={style.profilePicture}
               source={{
                 uri: profilePicture,
-                cache: 'default',
+                cache: "default",
               }}
               resizeMethod="resize"
               resizeMode="cover"
