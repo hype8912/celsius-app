@@ -7,8 +7,8 @@ import MultistepModal from "../MultistepModal/MultistepModal";
 import { MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
-import formatter from "../../../utils/formatter";
 import multistepModalUtil from "../../../utils/multistep-modal-util";
+import InfoModal from "../InfoModalNew/InfoModal";
 
 class WithdrawalInfoModal extends Component {
   static propTypes = {
@@ -19,7 +19,7 @@ class WithdrawalInfoModal extends Component {
   static defaultProps = {};
 
   handleModalContent = () => {
-    const { withdrawalSettings, type, closeModal } = this.props;
+    const { type, closeModal } = this.props;
 
     let title;
     let body;
@@ -51,32 +51,11 @@ class WithdrawalInfoModal extends Component {
       onSecondPress: null,
     };
 
-    const middleStepButtons = !title
-      ? firstStepButtons
-      : {
-          firstButtonCopy: "Previous Tip",
-          firstButtonStyle: "secondary",
-          firstButtonPosition: "left",
-          onFirstPress: () => multistepModalUtil.goToPrevStep(),
-          secondButtonCopy: "Next Tip",
-          secondButtonStyle: "secondary",
-          secondButtonPosition: "right",
-          onSecondPress: () => multistepModalUtil.goToNextStep(),
-        };
-
     const modalContent = [
       {
         title,
         body,
         ...firstStepButtons,
-      },
-      {
-        title: `Immediate withdrawals under ${formatter.usd(
-          withdrawalSettings.maximum_withdrawal_amount
-        )}`,
-        body:
-          "Celsius enables you to withdraw coins at any time. However, for your security when exceeding this limit withdrawals are delayed for up to twenty-four hours.",
-        ...middleStepButtons,
       },
       {
         title: "Check your withdrawal address",
@@ -138,7 +117,7 @@ class WithdrawalInfoModal extends Component {
 
   render() {
     const style = WithdrawalInfoStyle();
-    const { type } = this.props;
+    const { type, closeModal } = this.props;
     let steps = [];
 
     const modalContent = this.handleModalContent();
@@ -159,24 +138,35 @@ class WithdrawalInfoModal extends Component {
         ? [
             require("../../../../assets/images/alert-icon.png"),
             require("../../../../assets/images/modal-withdraw.png"),
-            require("../../../../assets/images/modal-withdraw.png"),
           ]
         : [
             require("../../../../assets/images/modal-withdraw.png"),
             require("../../../../assets/images/modal-withdraw.png"),
-            require("../../../../assets/images/modal-withdraw.png"),
           ];
+    if (type === "CEL" || type === "DAI" || !type) {
+      return (
+        <MultistepModal
+          style={style.container}
+          name={MODALS.WITHDRAW_INFO_MODAL}
+          top={25}
+          imagesArray={imagesArray}
+          imageWidth={31}
+        >
+          {steps.map(this.renderStep)}
+        </MultistepModal>
+      );
+    }
 
     return (
-      <MultistepModal
-        style={style.container}
+      <InfoModal
         name={MODALS.WITHDRAW_INFO_MODAL}
-        top={25}
-        imagesArray={imagesArray}
-        imageWidth={31}
-      >
-        {steps.map(this.renderStep)}
-      </MultistepModal>
+        picture={require("../../../../assets/images/modal-withdraw.png")}
+        heading={modalContent[1].title}
+        paragraphs={[modalContent[1].body]}
+        pictureDimensions={{ height: 31, width: 31 }}
+        yesCopy={"I Understand"}
+        onYes={closeModal}
+      />
     );
   }
 }

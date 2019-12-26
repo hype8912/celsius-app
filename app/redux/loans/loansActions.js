@@ -6,7 +6,7 @@ import { navigateTo } from "../nav/navActions";
 import loansService from "../../services/loans-service";
 import formatter from "../../utils/formatter";
 import loanUtil from "../../utils/loan-util";
-import { MODALS } from "../../constants/UI";
+import { MODALS, LOAN_ALERTS } from "../../constants/UI";
 import userBehaviorUtil from "../../utils/user-behavior-util";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 
@@ -466,14 +466,15 @@ function checkForLoanAlerts() {
   return (dispatch, getState) => {
     const { allLoans } = getState().loans;
 
-    const LOAN_ALERTS = {
-      INTEREST_ALERT: "INTEREST_ALERT",
-      PRINCIPAL_ALERT: "PRINCIPAL_ALERT",
-      MARGIN_CALL_ALERT: "MARGIN_CALL_ALERT",
-    };
-
     const loanAlerts = [];
     allLoans.forEach(l => {
+      if (
+        l.installments_to_be_paid &&
+        Number(l.installments_to_be_paid.total)
+      ) {
+        loanAlerts.push({ id: l.id, type: LOAN_ALERTS.INTEREST_ALERT });
+      }
+
       if (l.margin_call_activated) {
         loanAlerts.push({ id: l.id, type: LOAN_ALERTS.MARGIN_CALL_ALERT });
       }

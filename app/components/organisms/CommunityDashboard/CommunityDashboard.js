@@ -38,7 +38,7 @@ class CommunityDashboard extends Component {
     const { buttonTypes } = this.props;
 
     this.state = {
-      activeButton: buttonTypes ? buttonTypes[0] : "",
+      activeButton: buttonTypes ? buttonTypes[0].buttonType : "",
       primaryNumber: "",
       explanation: "",
     };
@@ -150,17 +150,17 @@ class CommunityDashboard extends Component {
           <View style={style.buttonWrapper}>
             {buttonTypes.map(button => (
               <TouchableOpacity
-                key={button}
+                key={button.buttonType}
                 style={style.button}
-                onPress={() => this.handlePress(button)}
+                onPress={() => this.handlePress(button.buttonType)}
               >
                 <View style={style.innerStyle}>
                   <Icon
-                    name={button}
+                    name={button.icon}
                     height={18}
                     width={18}
                     fill={
-                      activeButton === button
+                      activeButton === button.buttonType
                         ? STYLES.COLORS.CELSIUS_BLUE
                         : STYLES.COLORS.MEDIUM_GRAY
                     }
@@ -171,14 +171,16 @@ class CommunityDashboard extends Component {
                     weight={"500"}
                     align={"center"}
                     color={
-                      activeButton === button
+                      activeButton === button.buttonType
                         ? STYLES.COLORS.CELSIUS_BLUE
                         : STYLES.COLORS.MEDIUM_GRAY
                     }
                   >
-                    {button.toUpperCase()}
+                    {button.buttonType.toUpperCase()}
                   </CelText>
-                  {activeButton === button && <View style={style.active} />}
+                  {activeButton === button.buttonType && (
+                    <View style={style.active} />
+                  )}
                 </View>
               </TouchableOpacity>
             ))}

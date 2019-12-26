@@ -80,27 +80,27 @@ class CelNumpad extends Component {
   };
 
   componentDidMount = () => {
-    const { autofocus, toggleKeypad, setKeypadInput, field } = this.props;
+    const { autofocus, toggleKeypad, setKeypadInput } = this.props;
     if (this.inputRef) {
-      setKeypadInput(this.inputRef, field);
+      setKeypadInput(this.inputRef);
       if (autofocus) toggleKeypad();
     }
   };
 
   componentDidUpdate(prevProps) {
-    const { isFocused, setKeypadInput, field } = this.props;
+    const { isFocused, setKeypadInput } = this.props;
 
     if (prevProps.isFocused === true && isFocused === false) {
-      setKeypadInput(false, field);
+      setKeypadInput(false);
     }
     if (prevProps.isFocused === false && isFocused === true) {
-      setKeypadInput(this.inputRef, field);
+      setKeypadInput(this.inputRef);
     }
   }
 
   componentWillUnmount = () => {
-    const { setKeypadInput, field } = this.props;
-    setKeypadInput(false, field);
+    const { setKeypadInput } = this.props;
+    setKeypadInput(false);
   };
 
   changeInputText = text => {

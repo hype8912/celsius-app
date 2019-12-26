@@ -133,7 +133,25 @@ const WELCOME_MESSAGES = [
   {
     title: "Security is our Top Priority",
     text:
-      "Did you know Celsius uses BitGo as its custodian? This way we can give top security to all our customers. Be sure to turn on two-factor authentication in your profile settings to make the app as secure as possible!",
+      "Celsius uses BitGo as its custodian to provide top security to all of our customers. Make your app as secure as possible by reviewing your security settings in your profile.",
+  },
+];
+
+const LOAN_BANNER_MESSAGES = [
+  {
+    title: "Got crypto but need cash?",
+    content:
+      "Don’t sell your coins - borrow against them with a low-interest loan from Celsius.",
+  },
+  {
+    title: "Did you know?",
+    content:
+      "You can use your crypto as collateral to get a USD or stablecoin loan. Keep the upside potential of your coins and get the cash you need.",
+  },
+  {
+    title: "Why sell your coins?",
+    content:
+      "You can borrow against them to get the cash you need at rates you deserve. Keep calm and HODL on!",
   },
 ];
 
@@ -156,6 +174,15 @@ const LOAN_ALERTS = {
   PRINCIPAL_ALERT: "PRINCIPAL_ALERT",
   MARGIN_CALL_ALERT: "MARGIN_CALL_ALERT",
 };
+
+const LOAN_FILTER_ITEMS = [
+  "ALL",
+  "ACTIVE",
+  "PENDING",
+  "COMPLETED",
+  "REFINANCED",
+  "CANCELED",
+];
 
 const TRANSACTION_FILTER_DATE = [
   {
@@ -234,6 +261,8 @@ export {
   COIN_CARD_TYPE,
   LOAN_PAYMENT_REASONS,
   LOAN_ALERTS,
+  LOAN_FILTER_ITEMS,
   TRANSACTION_FILTER_DATE,
   TRANSACTION_FILTER_TYPE,
+  LOAN_BANNER_MESSAGES,
 };

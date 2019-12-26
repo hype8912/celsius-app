@@ -302,14 +302,14 @@ deepmerge.all = function deepmergeAll(array, optionsArgument) {
 function hideTextExceptFirstNLetters(text, n = 1) {
   let hiddenText = "";
   for (let i = n; i < text.length; i++) {
-    hiddenText += "x";
+    hiddenText += "*";
   }
 
   return text[0] + hiddenText;
 }
 
 /**
- * Mask email in format Nxxxxxx@gxxxx.com
+ * Mask email in format N******@g*****.com
  *
  * @param {string} email
  * @returns {string}

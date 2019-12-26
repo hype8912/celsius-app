@@ -30,6 +30,8 @@ import ProfileStyle from "./Profile.styles";
 import Icon from "../../atoms/Icon/Icon";
 import { getTheme } from "../../../utils/styles-util";
 import Constants from "../../../../constants";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
 
 @connect(
   state => ({
@@ -40,6 +42,7 @@ import Constants from "../../../../constants";
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -101,12 +104,28 @@ class Profile extends Component {
     actions.openModal(MODALS.REFERRAL_SEND_MODAL);
   };
 
+  sendCsvRequest = async () => {
+    const { actions } = this.props;
+    await actions.sendCsvEmail();
+  };
+
   render() {
-    const { profilePicture, user, actions, kycStatus } = this.props;
+    const {
+      profilePicture,
+      user,
+      actions,
+      kycStatus,
+      callsInProgress,
+    } = this.props;
     const { revisionId } = this.state;
     const style = ProfileStyle();
     const theme = getTheme();
     const { ENV } = Constants;
+
+    const disabled = apiUtil.areCallsInProgress(
+      [API.GET_CSV_EMAIL],
+      callsInProgress
+    );
 
     return (
       <RegularLayout>
@@ -215,6 +234,23 @@ class Profile extends Component {
               Appearance
             </IconButton>
           </ExpandableItem>
+
+          <ExpandableItem heading={"REPORTS"} isExpanded margin={"0 0 10 0"}>
+            <CelText margin={"0 0 20 0"}>
+              Receive your total transaction history report via email.
+            </CelText>
+            <IconButton
+              onPress={() => this.sendCsvRequest()}
+              margin="0 0 20 0"
+              icon="Mail"
+              color={"blue"}
+              hideIconRight
+              disabled={disabled}
+            >
+              Download transaction history
+            </IconButton>
+          </ExpandableItem>
+
           <Separator margin={"0 0 20 0"} text={"FOLLOW US"} />
 
           <View style={style.socialIcons}>

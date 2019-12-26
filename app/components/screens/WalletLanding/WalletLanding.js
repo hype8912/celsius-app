@@ -12,18 +12,16 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
 import CelPayReceivedModal from "../../modals/CelPayReceivedModal/CelPayReceivedModal";
 import { WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
-import { KYC_STATUSES } from "../../../constants/DATA";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import ComingSoonCoins from "../../molecules/ComingSoonCoins/ComingSoonCoins";
 import CoinCards from "../../organisms/CoinCards/CoinCards";
 import WalletLandingStyle from "./WalletLanding.styles";
-import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
-import ReferralTrigger from "../../atoms/ReferralTrigger/ReferralTrigger";
 import RejectionReasonsModal from "../../modals/RejectionReasonsModal/RejectionReasonsModal";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
+import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 
 @connect(
   state => {
@@ -40,9 +38,6 @@ import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMem
       walletSummary: state.wallet.summary,
       currenciesGraphs: state.currencies.graphs,
       user: state.user.profile,
-      kycStatus: state.user.profile.kyc
-        ? state.user.profile.kyc.status
-        : KYC_STATUSES.collecting,
       depositCompliance: state.compliance.deposit,
       rejectionReasons: state.user.profile.kyc
         ? state.user.profile.kyc.rejectionReasons
@@ -91,6 +86,7 @@ class WalletLanding extends Component {
       currenciesGraphs,
     } = this.props;
 
+    actions.checkForLoanAlerts();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     if (appSettings && appSettings.accepted_terms_of_use === false) {
@@ -112,7 +108,6 @@ class WalletLanding extends Component {
     }
 
     this.setWalletFetchingInterval();
-    actions.checkForLoanAlerts();
   };
 
   componentDidUpdate(prevProps) {
@@ -183,7 +178,6 @@ class WalletLanding extends Component {
       user,
       branchTransfer,
       depositCompliance,
-      kycStatus,
       rejectionReasons,
     } = this.props;
     const style = WalletLandingStyle();
@@ -194,8 +188,7 @@ class WalletLanding extends Component {
 
     return (
       <RegularLayout refreshing={refreshing} pullToRefresh={this.refresh}>
-        <ReferralTrigger actions={actions} />
-        <KYCTrigger actions={actions} kycType={kycStatus} />
+        <BannerCrossroad />
         <View>
           <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
           <WalletDetailsCard
@@ -250,12 +243,9 @@ class WalletLanding extends Component {
           </ExpandableItem>
         </View>
         <CelPayReceivedModal transfer={branchTransfer} />
-        {/* <LoanAlertsModalWrapper />*/}
         <ReferralSendModal />
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <BecomeCelMemberModal />
-        {/* Temporary disabling this modal */}
-        {/* <EarnInterestCelModal />*/}
         <LoanAlertsModalWrapper />
       </RegularLayout>
     );
