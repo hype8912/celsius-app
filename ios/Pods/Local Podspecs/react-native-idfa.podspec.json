@@ -1,0 +1,22 @@
+{
+  "name": "react-native-idfa",
+  "version": "4.1.0",
+  "summary": "Android and iOS module for react-native to read IDFA (advertising identifier)",
+  "authors": "Tomas Roos <ptomasroos@gmail.com>",
+  "homepage": "https://github.com/ptomasroos/react-native-idfa",
+  "license": "MIT",
+  "platforms": {
+    "ios": "7.0"
+  },
+  "source": {
+    "git": "https://github.com/ptomasroos/react-native-idfa.git",
+    "tag": "4.1.0"
+  },
+  "source_files": "ios/IDFA/*.{h,m}",
+  "frameworks": "AdSupport",
+  "dependencies": {
+    "React": [
+
+    ]
+  }
+}
