@@ -151,7 +151,7 @@ class CelStats extends Component {
             </View>
           </View>
         ))}
-        <CelText type={"H7"}>* Weekly figures</CelText>
+        <CelText type={"H7"}>* Cumulative figures in USD values</CelText>
         <CelText
           type={"H2"}
           weight={"600"}

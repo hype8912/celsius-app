@@ -189,7 +189,7 @@ class PersonalInformation extends Component {
           </View>
         )}
 
-        {!!user.lastName && (
+        {!!user.last_name && (
           <View>
             <CelText margin={"0 0 10 0"} type={"H4"} weight={"300"}>
               Last name

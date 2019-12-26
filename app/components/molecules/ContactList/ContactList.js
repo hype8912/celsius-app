@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View } from "react-native";
+import { View, FlatList } from "react-native";
 
 import ContactListStyle from "./ContactList.styles";
 import ContactRow from "../../atoms/ContactRow/ContactRow";
@@ -34,14 +34,8 @@ class ContactList extends Component {
     }).isRequired,
   };
 
-  renderSeparator = () => (
-    <View style={{ marginTop: 25 }}>
-      <Separator />
-    </View>
-  );
-
-  renderContactsWithApp = () => {
-    const { contacts, onContactPress } = this.props;
+  sortedContacts = () => {
+    const { contacts } = this.props;
 
     const sortedContacts = contacts.friendsWithApp.sort((a, b) => {
       if (!a.name || !b.name) return -1;
@@ -52,15 +46,14 @@ class ContactList extends Component {
       return 0;
     });
 
-    return sortedContacts.map(contact => (
-      <ContactRow
-        key={contact.id}
-        contact={contact}
-        hasApp
-        onPress={() => onContactPress(contact)}
-      />
-    ));
+    return sortedContacts;
   };
+
+  renderSeparator = () => (
+    <View style={{ marginTop: 25 }}>
+      <Separator />
+    </View>
+  );
 
   renderContactsWithoutApp = () => {
     const { contacts } = this.props;
@@ -78,24 +71,32 @@ class ContactList extends Component {
   };
 
   render() {
-    const { contacts } = this.props;
+    const { contacts, onContactPress } = this.props;
     const style = ContactListStyle();
-    const RenderContactsWithApp = this.renderContactsWithApp;
+    // const RenderContactsWithApp = this.renderContactsWithApp;
+
+    const sortedContacts = this.sortedContacts();
 
     return (
-      <ScrollView
-        style={style.container}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 100 }}
-      >
-        <View>
-          {contacts.friendsWithApp && contacts.friendsWithApp.length ? (
-            <RenderContactsWithApp />
-          ) : (
-            <EmptyState purpose={EMPTY_STATES.NO_CONTACTS} />
-          )}
-        </View>
-      </ScrollView>
+      <View>
+        {contacts.friendsWithApp && contacts.friendsWithApp.length ? (
+          <FlatList
+            style={style.container}
+            data={sortedContacts}
+            initialNumToRender={10}
+            renderItem={contact => (
+              <ContactRow
+                key={contact.id}
+                contact={contact}
+                hasApp
+                onPress={() => onContactPress(contact)}
+              />
+            )}
+          />
+        ) : (
+          <EmptyState purpose={EMPTY_STATES.NO_CONTACTS} />
+        )}
+      </View>
     );
   }
 }

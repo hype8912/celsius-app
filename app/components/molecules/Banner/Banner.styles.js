@@ -38,6 +38,18 @@ const base = {
     height: 40,
     resizeMode: "contain",
   },
+  dotWrapper: {
+    width: 48,
+    height: 26,
+    flexDirection: "row",
+  },
+  dot: {
+    height: 6,
+    width: 6,
+    marginHorizontal: 5,
+    marginVertical: 10,
+    borderRadius: 3,
+  },
 };
 
 const themed = {

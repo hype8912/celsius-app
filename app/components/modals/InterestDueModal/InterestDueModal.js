@@ -6,26 +6,39 @@ import moment from "moment";
 import formatter from "../../../utils/formatter";
 import CelModal from "../CelModal/CelModal.js";
 import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
+import InterestDueModalStyle from "./InterestDueModal.styles";
+import CelButton from "../../atoms/CelButton/CelButton";
 
 class InterestDueModal extends Component {
   static propTypes = {
     navigateTo: PropTypes.func,
     closeModal: PropTypes.func,
     activeLoan: PropTypes.instanceOf(Object).required,
+    alert: PropTypes.bool,
   };
   static defaultProps = {};
 
-  render() {
-    const { activeLoan, closeModal, navigateTo } = this.props;
+  seeLoanDetails = () => {
+    const { closeModal, navigateTo, activeLoan } = this.props;
 
+    closeModal();
+    navigateTo("LoanRequestDetails", { id: activeLoan.id });
+  };
+
+  render() {
+    const { activeLoan, closeModal, navigateTo, alert } = this.props;
+
+    const style = InterestDueModalStyle();
     if (!activeLoan || !activeLoan.installments_to_be_paid) return null;
     const instalmentsToBePaid = activeLoan.installments_to_be_paid;
+    const modalName = alert
+      ? MODALS.LOAN_ALERT_MODAL
+      : MODALS.INTEREST_DUE_MODAL;
 
     return (
-      <CelModal name={MODALS.INTEREST_DUE_MODAL}>
+      <CelModal name={modalName}>
         <CelText type="H2" align="center" weight="bold">
           Interest Payment
         </CelText>
@@ -38,14 +51,7 @@ class InterestDueModal extends Component {
           </CelText>
         </CelText>
 
-        <View
-          style={{
-            backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-            borderRadius: 5,
-            padding: 10,
-            margin: 10,
-          }}
-        >
+        <View style={style.installmentsWrapper}>
           <View
             style={{
               flexDirection: "row",
@@ -79,6 +85,12 @@ class InterestDueModal extends Component {
             </View>
           ))}
         </View>
+
+        {alert && (
+          <CelButton basic onPress={this.seeLoanDetails}>
+            See Loan Details
+          </CelButton>
+        )}
 
         <View
           style={{

@@ -8,6 +8,7 @@ import LoanAlertsPayoutPrincipalModal from "./LoanAlertsPayoutPrincipalModal/Loa
 import LoanAlertsDepositCoinsModal from "./LoanAlertsDepositCoinsModal/LoanAlertsDepositCoinsModal";
 import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsMarginCallLockCoinModal/LoanAlertsMarginCallLockCoinModal";
 import LoanAlertsMarginCallDepositCoinsModal from "./LoanAlertsMarginCallDepositCoinsModal/LoanAlertsMarginCallDepositCoinsModal";
+import InterestDueModal from "../InterestDueModal/InterestDueModal";
 
 @connect(
   state => ({
@@ -19,10 +20,25 @@ import LoanAlertsMarginCallDepositCoinsModal from "./LoanAlertsMarginCallDeposit
 )
 class LoanAlertsModalWrapper extends Component {
   static getDerivedStateFromProps(nextProps) {
-    const activeAlert =
-      nextProps.loanAlerts && nextProps.loanAlerts.length
-        ? nextProps.loanAlerts[0]
-        : null;
+    let activeAlert;
+
+    if (nextProps.loanAlerts && nextProps.loanAlerts.length) {
+      activeAlert = nextProps.loanAlerts.find(
+        la => la.type === LOAN_ALERTS.INTEREST_ALERT
+      );
+      activeAlert =
+        activeAlert ||
+        nextProps.loanAlerts.find(
+          la => la.type === LOAN_ALERTS.PRINCIPAL_ALERT
+        );
+      activeAlert =
+        activeAlert ||
+        nextProps.loanAlerts.find(
+          la => la.type === LOAN_ALERTS.MARGIN_CALL_ALERT
+        );
+    } else {
+      activeAlert = null;
+    }
 
     const loan = LoanAlertsModalWrapper.getLoan(
       activeAlert,
@@ -124,11 +140,25 @@ class LoanAlertsModalWrapper extends Component {
     return null;
   };
 
+  renderInterestModal = loan => {
+    const { actions } = this.props;
+    return (
+      <InterestDueModal
+        closeModal={actions.closeModal}
+        activeLoan={loan}
+        navigateTo={actions.navigateTo}
+        alert
+      />
+    );
+  };
+
   render() {
     const { activeAlert, loan } = this.state;
     if (!activeAlert || !loan) return null;
 
     switch (activeAlert.type) {
+      case LOAN_ALERTS.INTEREST_ALERT:
+        return this.renderInterestModal(loan);
       case LOAN_ALERTS.PRINCIPAL_ALERT:
         return this.renderPrincipalModal(loan);
       case LOAN_ALERTS.MARGIN_CALL_ALERT:

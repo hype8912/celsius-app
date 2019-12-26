@@ -63,18 +63,18 @@ function maskCelPayUser(transaction) {
           newTransaction.transfer_data.sender.last_name
         );
       }
-    }
 
-    if (newTransaction.transfer_data.claimer.email) {
-      newTransaction.transfer_data.claimer.email = formatter.maskEmail(
-        newTransaction.transfer_data.claimer.email
-      );
-    }
+      if (newTransaction.transfer_data.claimer.email) {
+        newTransaction.transfer_data.claimer.email = formatter.maskEmail(
+          newTransaction.transfer_data.claimer.email
+        );
+      }
 
-    if (newTransaction.transfer_data.sender.email) {
-      newTransaction.transfer_data.sender.email = formatter.maskEmail(
-        newTransaction.transfer_data.sender.email
-      );
+      if (newTransaction.transfer_data.sender.email) {
+        newTransaction.transfer_data.sender.email = formatter.maskEmail(
+          newTransaction.transfer_data.sender.email
+        );
+      }
     }
   }
 
