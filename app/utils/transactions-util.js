@@ -386,6 +386,31 @@ function filterTransactionsByPeriod(transactions, period) {
             .format()
         )
       );
+    case "yearToDate":
+      return transactions.filter(t =>
+        moment(t.time).isBetween(
+          moment
+            .utc()
+            .startOf("year")
+            .format(),
+          moment.utc().format()
+        )
+      );
+    case "prevYear":
+      return transactions.filter(t =>
+        moment(t.time).isBetween(
+          moment
+            .utc()
+            .subtract(1, "years")
+            .startOf("year")
+            .format(),
+          moment
+            .utc()
+            .subtract(1, "years")
+            .endOf("year")
+            .format()
+        )
+      );
     default:
       return transactions;
   }

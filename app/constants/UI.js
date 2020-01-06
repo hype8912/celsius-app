@@ -210,8 +210,16 @@ const TRANSACTION_FILTER_DATE = [
     value: "sixMonths",
   },
   {
-    title: "Last Year",
+    title: "Last 12 months",
     value: "lastYear",
+  },
+  {
+    title: "Year to Date",
+    value: "yearToDate",
+  },
+  {
+    title: "Previous year",
+    value: "prevYear",
   },
 ];
 
