@@ -67,8 +67,8 @@ class Profile extends Component {
 
   async componentDidMount() {
     const { user, actions } = this.props;
-    actions.profileTaxpayerInfo();
-    actions.getUserAppSettings();
+    await actions.profileTaxpayerInfo();
+    await actions.getUserAppSettings();
     this.initForm(user);
 
     const appVersion = await appUtil.getRevisionId();
