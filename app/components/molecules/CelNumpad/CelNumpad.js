@@ -88,7 +88,12 @@ class CelNumpad extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { isFocused, setKeypadInput } = this.props;
+    const { isFocused, setKeypadInput, toggleKeypad } = this.props;
+
+    if (prevProps.isFocused === true && isFocused === true) {
+      setKeypadInput(this.inputRef);
+      toggleKeypad();
+    }
 
     if (prevProps.isFocused === true && isFocused === false) {
       setKeypadInput(false);

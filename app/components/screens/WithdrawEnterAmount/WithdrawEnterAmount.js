@@ -424,9 +424,9 @@ class WithdrawEnterAmount extends Component {
             value={
               formData.isUsd ? formData.amountUsd : formData.amountCrypto || ""
             }
+            toggleKeypad={() => ({})}
             updateFormField={actions.updateFormField}
             setKeypadInput={actions.setKeypadInput}
-            toggleKeypad={actions.toggleKeypad}
             onPress={this.handleAmountChange}
             purpose={KEYPAD_PURPOSES.WITHDRAW}
             autofocus={false}

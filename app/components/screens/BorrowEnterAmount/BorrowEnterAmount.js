@@ -270,11 +270,11 @@ class BorrowEnterAmount extends Component {
           {this.renderButton()}
 
           <CelNumpad
+            toggleKeypad={() => ({})}
             field={"loanAmount"}
             value={formData.loanAmount || ""}
             updateFormField={actions.updateFormField}
             setKeypadInput={actions.setKeypadInput}
-            toggleKeypad={actions.toggleKeypad}
             onPress={this.handleAmountChange}
             purpose={KEYPAD_PURPOSES.BORROW}
           />
