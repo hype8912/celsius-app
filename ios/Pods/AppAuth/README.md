@@ -2,19 +2,19 @@
 [![Build Status](https://travis-ci.org/openid/AppAuth-iOS.svg?branch=master)](https://travis-ci.org/openid/AppAuth-iOS)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-AppAuth for iOS and macOS is a client SDK for communicating with
-[OAuth 2.0](https://tools.ietf.org/html/rfc6749) and
-[OpenID Connect](http://openid.net/specs/openid-connect-core-1_0.html) providers.
+AppAuth for iOS and macOS is a client SDK for communicating with 
+[OAuth 2.0](https://tools.ietf.org/html/rfc6749) and 
+[OpenID Connect](http://openid.net/specs/openid-connect-core-1_0.html) providers. 
 It strives to
 directly map the requests and responses of those specifications, while following
 the idiomatic style of the implementation language. In addition to mapping the
 raw protocol flows, convenience methods are available to assist with common
 tasks like performing an action with fresh tokens.
 
-It follows the best practices set out in
+It follows the best practices set out in 
 [RFC 8252 - OAuth 2.0 for Native Apps](https://tools.ietf.org/html/rfc8252)
 including using `SFAuthenticationSession` and `SFSafariViewController` on iOS
-for the auth request. `UIWebView` and `WKWebView` are explicitly _not_
+for the auth request. `UIWebView` and `WKWebView` are explicitly *not*
 supported due to the security and usability reasons explained in
 [Section 8.12 of RFC 8252](https://tools.ietf.org/html/rfc8252#section-8.12).
 
@@ -99,14 +99,14 @@ Then run `carthage bootstrap`.
 ### Static Library
 
 You can also use AppAuth as a static library. This requires linking the library
-and your project and including the headers. Suggested configuration:
+and your project and including the headers.  Suggested configuration:
 
 1. Create an Xcode Workspace.
 2. Add `AppAuth.xcodeproj` to your Workspace.
 3. Include libAppAuth as a linked library for your target (in the "General ->
-   Linked Framework and Libraries" section of your target).
+Linked Framework and Libraries" section of your target).
 4. Add `AppAuth-iOS/Source` to your search paths of your target ("Build Settings ->
-   "Header Search Paths").
+"Header Search Paths").
 
 ## Auth Flow
 
@@ -175,7 +175,7 @@ And your main class, a property to store the auth state:
 @property(nonatomic, strong, nullable) OIDAuthState *authState;
 ```
 
-Then, initiate the authorization request. By using the
+Then, initiate the authorization request. By using the 
 `authStateByPresentingAuthorizationRequest` convenience method, the token
 exchange will be performed automatically, and everything will be protected with
 PKCE (if the server supports it). AppAuth also allows you to perform these
@@ -212,7 +212,7 @@ appDelegate.currentAuthorizationFlow =
 }];
 ```
 
-_Handling the Redirect_
+*Handling the Redirect*
 
 The authorization response URL is returned to the app via the iOS openURL
 app delegate method, so you need to pipe this through to the current
@@ -245,7 +245,6 @@ processed by the app. AppAuth takes care of managing the local HTTP server
 lifecycle for you.
 
 > #### :bulb: Alternative: Custom URI Schemes
->
 > Custom URI schemes are also supported on macOS, but some browsers display
 > an interstitial which reduces the usability. For an example on using custom
 > URI schemes with macOS, See `Example-Mac`.
@@ -273,7 +272,7 @@ _redirectHTTPHandler = [[OIDRedirectHTTPHandler alloc] initWithSuccessURL:succes
 NSURL *redirectURI = [_redirectHTTPHandler startHTTPListener:nil];
 ```
 
-Then, initiate the authorization request. By using the
+Then, initiate the authorization request. By using the 
 `authStateByPresentingAuthorizationRequest` convenience method, the token
 exchange will be performed automatically, and everything will be protected with
 PKCE (if the server supports it). By assigning the return value to the
