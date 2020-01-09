@@ -61,7 +61,7 @@
     "react-native-branch": "^4.2.1",
     "react-native-camera": "^3.15.0",
     "react-native-check-box": "^2.1.7",
-    "react-native-code-push": "^5.7.0",
+    "react-native-code-push": "^6.0.0",
     "react-native-contacts": "^5.0.6",
     "react-native-device-info": "^5.3.0",
     "react-native-fbsdk": "^1.1.1",
