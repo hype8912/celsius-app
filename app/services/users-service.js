@@ -119,12 +119,14 @@ function registerGoogle(googleUser) {
  * @param {Object} user
  * @param {string} user.email
  * @param {string} user.password
+ * @param {string} user.reCaptchaKey
  * @return {Promise}
  */
-function login({ email, password }) {
+function login({ email, password, reCaptchaKey }) {
   return axios.post(`${apiUrl}/users/login`, {
     email,
     password,
+    reCaptchaKey
   });
 }
 

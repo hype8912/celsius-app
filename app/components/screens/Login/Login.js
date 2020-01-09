@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
@@ -11,8 +10,9 @@ import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
-import { KEYBOARD_TYPE } from "../../../constants/UI";
+import { KEYBOARD_TYPE, MODALS } from "../../../constants/UI";
 import Constants from "../../../../constants";
+import ReCaptchaModal from "../../modals/ReCaptchaModal/ReCaptchaModal";
 
 @connect(
   state => ({
@@ -28,8 +28,30 @@ class Login extends Component {
 
   loginUser = () => {
     const { actions } = this.props;
-    actions.loginUser();
+    actions.openModal(MODALS.RECAPTCHA_MODAL)
   };
+
+  onMessage = event => {
+    const { actions } = this.props
+    if (event && event.nativeEvent.data) {
+      if (['cancel', 'error', 'expired'].includes(event.nativeEvent.data)) {
+        return;
+      }
+      actions.closeModal();
+      actions.updateFormField('reCaptchaKey',event.nativeEvent.data)
+      actions.loginUser();
+    }
+  };
+
+  renderCaptcha = () => {
+    const { actions } = this.props
+    return (
+        <ReCaptchaModal
+          onMessage={this.onMessage}
+          closeModal={actions.closeModal}
+        />
+    )
+  }
 
   render() {
     const { formData, callsInProgress, actions } = this.props;
@@ -79,6 +101,8 @@ class Login extends Component {
           }}
         />
 
+        {this.renderCaptcha()}
+
         <CelButton
           margin="10 0 40 0"
           onPress={this.loginUser}
@@ -103,6 +127,7 @@ class Login extends Component {
             </CelButton>
           </>
         ) : null}
+
       </AuthLayout>
     );
   }
