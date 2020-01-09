@@ -21,7 +21,6 @@ function celPayFriend() {
     try {
       const {
         amountCrypto,
-        amountUsd,
         friend,
         coin,
         code,
@@ -32,7 +31,7 @@ function celPayFriend() {
       const transfer = {
         amount: amountCrypto,
         coin: coin.toUpperCase(),
-        friend_id: friend.id,
+        friend_id: friend.item.id,
         message,
       };
 
@@ -48,13 +47,12 @@ function celPayFriend() {
       });
 
       let msg;
-      if (amountUsd >= 50) {
-        msg = `Check your email and confirm your CelPay transaction!`;
-      } else {
-        const names = friend.name ? friend.name.split(" ") : undefined;
-        msg = `Successfully sent ${formatter.crypto(amountCrypto, coin)}`;
-        if (names && names[0]) msg += ` to ${names[0]}!`;
-      }
+      const names = friend.item.name ? friend.item.name.split(" ") : undefined;
+      msg = `Check your email and confirm your CelPay transaction ${formatter.crypto(
+        amountCrypto,
+        coin
+      )}`;
+      if (names && names[0]) msg += ` to ${names[0]}!`;
 
       dispatch(showMessage("success", msg));
       dispatch(clearForm());
