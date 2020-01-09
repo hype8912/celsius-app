@@ -174,7 +174,11 @@ function initInterceptors() {
 
       if (!err.msg) err.msg = defaultMsg;
 
-      userBehaviorUtil.apiError(err);
+      userBehaviorUtil.apiError({
+        ...err,
+        url: error.config.url,
+        method: error.config.method,
+      });
 
       if (err.status === 401 && err.slug === "SESSION_EXPIRED") {
         store.dispatch(actions.expireSession());

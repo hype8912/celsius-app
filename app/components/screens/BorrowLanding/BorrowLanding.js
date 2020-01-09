@@ -26,6 +26,7 @@ import EmptyState from "../../atoms/EmptyState/EmptyState";
 import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
 import STYLES from "../../../constants/STYLES";
+import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -86,6 +87,8 @@ class BorrowLanding extends Component {
 
   async componentDidMount() {
     const { actions, loanCompliance, formData } = this.props;
+    actions.checkForLoanAlerts();
+
     if (formData.prepayLoanId) {
       actions.openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL);
     }
@@ -210,11 +213,7 @@ class BorrowLanding extends Component {
               <CelText
                 type={"H6"}
                 weight={item === filter ? "500" : "300"}
-                color={
-                  item === filter
-                    ? STYLES.COLORS.CELSIUS_BLUE
-                    : STYLES.COLORS.DARK_GRAY5
-                }
+                color={item === filter ? STYLES.COLORS.CELSIUS_BLUE : undefined}
               >
                 {item}
               </CelText>
@@ -279,6 +278,8 @@ class BorrowLanding extends Component {
             </CelText>
           </View>
         )}
+
+        <LoanAlertsModalWrapper />
       </RegularLayout>
     );
   }

@@ -50,26 +50,32 @@ function showMessage(msgType, text, disableClear, action) {
  * @param {Object} field - active field for keypad input
  */
 let _keypadInputRef = null;
-let _activeField = null;
-function setKeypadInput(input, field) {
+function setKeypadInput(input) {
   return (dispatch, getState) => {
     const { isKeypadOpen } = getState().ui;
+    const { activeScreen } = getState().nav;
 
-    if (input === false && field === _activeField) {
+    if (
+      input === false &&
+      _keypadInputRef &&
+      activeScreen === _keypadInputRef.activeScreen
+    ) {
       // close keypad
-      if (isKeypadOpen)
+      if (isKeypadOpen) {
         dispatch({
           type: ACTIONS.TOGGLE_KEYPAD,
           isKeypadOpen: false,
         });
+      }
 
       _keypadInputRef = null;
-      _activeField = null;
     }
 
-    if (input && field !== _activeField) {
-      _keypadInputRef = input;
-      _activeField = field;
+    if (input) {
+      _keypadInputRef = {
+        ...input,
+        activeScreen,
+      };
     }
   };
 }
@@ -79,7 +85,7 @@ function setKeypadInput(input, field) {
  *
  * @param {boolean} shouldOpen - if keypad should be turned on or off
  */
-function toggleKeypad(shouldOpen) {
+function toggleKeypad(shouldOpen = false) {
   return dispatch => {
     if (_keypadInputRef) {
       const isFocused = _keypadInputRef.isFocused();

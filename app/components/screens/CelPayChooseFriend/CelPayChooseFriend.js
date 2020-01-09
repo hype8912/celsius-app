@@ -291,12 +291,11 @@ class CelPayChooseFriend extends Component {
             Refresh contacts
           </CelButton>
         </View>
-        <View style={{ marginBottom: 20 }}>
-          <ContactList
-            contacts={contacts}
-            onContactPress={this.handleContactPress}
-          />
-        </View>
+
+        <ContactList
+          contacts={contacts}
+          onContactPress={this.handleContactPress}
+        />
       </View>
     );
   };

@@ -267,9 +267,9 @@ const LOAN_INTEREST_COINS = [
 ];
 
 const TOTAL_ASSETS_AMOUNT = {
-  DATE: "11 DEC 2019", // write in same format every week
-  TOTAL_AUM: 347957867,
-  TOTAL_COLLATERAL_AND_CASH: 126675506,
+  DATE: "01 JAN 2020", // write in same format every week
+  TOTAL_AUM: 384449576,
+  TOTAL_COLLATERAL_AND_CASH: 122344035,
 };
 
 export {

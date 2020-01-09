@@ -63,18 +63,18 @@ function maskCelPayUser(transaction) {
           newTransaction.transfer_data.sender.last_name
         );
       }
-    }
 
-    if (newTransaction.transfer_data.claimer.email) {
-      newTransaction.transfer_data.claimer.email = formatter.maskEmail(
-        newTransaction.transfer_data.claimer.email
-      );
-    }
+      if (newTransaction.transfer_data.claimer.email) {
+        newTransaction.transfer_data.claimer.email = formatter.maskEmail(
+          newTransaction.transfer_data.claimer.email
+        );
+      }
 
-    if (newTransaction.transfer_data.sender.email) {
-      newTransaction.transfer_data.sender.email = formatter.maskEmail(
-        newTransaction.transfer_data.sender.email
-      );
+      if (newTransaction.transfer_data.sender.email) {
+        newTransaction.transfer_data.sender.email = formatter.maskEmail(
+          newTransaction.transfer_data.sender.email
+        );
+      }
     }
   }
 
@@ -383,6 +383,31 @@ function filterTransactionsByPeriod(transactions, period) {
           moment
             .utc()
             .subtract(1, "years")
+            .format()
+        )
+      );
+    case "yearToDate":
+      return transactions.filter(t =>
+        moment(t.time).isBetween(
+          moment
+            .utc()
+            .startOf("year")
+            .format(),
+          moment.utc().format()
+        )
+      );
+    case "prevYear":
+      return transactions.filter(t =>
+        moment(t.time).isBetween(
+          moment
+            .utc()
+            .subtract(1, "years")
+            .startOf("year")
+            .format(),
+          moment
+            .utc()
+            .subtract(1, "years")
+            .endOf("year")
             .format()
         )
       );

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import {
   Image,
   View,
@@ -219,7 +219,9 @@ class CelHeading extends Component {
     return (
       <View style={style.center}>
         {customCenterComponent ? (
-          <Fragment>{customCenterComponent}</Fragment>
+          <View style={style.customCenterComponent}>
+            {customCenterComponent}
+          </View>
         ) : (
           <CelText align="center" weight="medium" type="H3">
             {title || ""}
@@ -279,12 +281,14 @@ class CelHeading extends Component {
   render() {
     let containerStyle;
     const scene = this.props.scene.descriptor;
-    const { transparent } = scene.options;
+    const { transparent, headerSameColor } = scene.options;
     const { theme } = this.props;
     const style = CelHeadingStyle();
     const statusBarColor = this.getStatusBarTextColor(theme);
 
-    if (transparent) {
+    if (headerSameColor) {
+      containerStyle = style.sameBackground;
+    } else if (transparent) {
       containerStyle = style.transparentBackground;
     } else {
       containerStyle = style.headingBackground;

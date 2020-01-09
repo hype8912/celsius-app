@@ -1,6 +1,9 @@
 import { Platform } from "react-native";
 // import DeviceInfo from "react-native-device-info";
-import { getThemedStyle } from "../../../utils/styles-util";
+import {
+  getThemedStyle,
+  heightPercentageToDP,
+} from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
 // const hasNotch = DeviceInfo.hasNotch();
@@ -22,7 +25,11 @@ const base = {
     justifyContent: "center",
     flex: 1,
   },
-
+  customCenterComponent: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: heightPercentageToDP("2.5%"),
+  },
   left: {
     alignItems: "flex-start",
     justifyContent: "center",
