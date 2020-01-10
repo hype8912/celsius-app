@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Share, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import moment from "moment";
 
 import ReferralSendModalStyle from "./ReferralSendModal.styles";
 import CelModal from "../CelModal/CelModal.js";
@@ -83,6 +84,7 @@ class ReferralSendModal extends Component {
             <CopyButton
               copyText={slug}
               onCopy={() => {
+                actions.setBannerProps({ lastReferral: moment.utc().format() });
                 userBehaviorUtil.userReferring();
                 actions.showMessage(
                   "success",
@@ -95,6 +97,7 @@ class ReferralSendModal extends Component {
         <View style={style.shareWrapper}>
           <CelButton
             onPress={() => {
+              actions.setBannerProps({ lastReferral: moment.utc().format() });
               Share.share({
                 message: `Join Celsius Network using my referral code ${slug} when signing up and earn $10 in BTC with your first deposit of $200 or more! #UnbankYourself \n \n${shareLink}`,
               });

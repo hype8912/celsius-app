@@ -250,6 +250,7 @@ function initAppData(initToken = null) {
     await dispatch(actions.getCurrencyRates());
     await dispatch(actions.getCurrencyGraphs());
     await dispatch(actions.getInitialCelsiusData());
+    await dispatch(actions.setBannerProps());
 
     // get user token
     const token =
@@ -268,10 +269,14 @@ function initAppData(initToken = null) {
 
       // get all KYC document types and claimed transfers for non-verified users
       const { profile } = getState().user;
+      const { bannerProps } = getState().ui;
       if (profile) {
         await dispatch(actions.getUserAppSettings());
         await dispatch(actions.getLoyaltyInfo());
         await dispatch(actions.getComplianceInfo());
+        await dispatch(
+          actions.setBannerProps({ sessionCount: bannerProps.sessionCount + 1 })
+        );
 
         if (!profile.kyc || (profile.kyc && !hasPassedKYC())) {
           await dispatch(actions.getAllTransfers(TRANSFER_STATUSES.claimed));

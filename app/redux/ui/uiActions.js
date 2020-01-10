@@ -1,4 +1,6 @@
+import { AsyncStorage } from "react-native";
 import ACTIONS from "../../constants/ACTIONS";
+import loggerUtil from "../../utils/logger-util";
 
 export {
   openFabMenu,
@@ -12,6 +14,7 @@ export {
   setKeypadInput,
   setActiveTab,
   closeBanner,
+  setBannerProps,
 };
 
 let msgTimeout;
@@ -184,5 +187,42 @@ function setActiveTab(activeTab) {
 function closeBanner() {
   return {
     type: ACTIONS.CLOSE_BANNER,
+  };
+}
+
+/**
+ * Sets active tab in CelTabs
+ * @params {Object} newBannerProps
+ * @params {number} newBannerProps.sessionCount - number of sessions since last install on device
+ * @params {string} newBannerProps.lastReferral - time of the last referral initiated by user
+ * @returns {Object} - Action
+ */
+function setBannerProps(newBannerProps = null) {
+  return async (dispatch, getState) => {
+    let bannerProps;
+    try {
+      bannerProps = getState().ui.bannerProps;
+
+      if (!newBannerProps) {
+        bannerProps = JSON.parse(await AsyncStorage.getItem("bannerProps"));
+      } else {
+        bannerProps = {
+          ...bannerProps,
+          ...newBannerProps,
+        };
+      }
+
+      bannerProps.sessionCount = bannerProps.sessionCount
+        ? Number(bannerProps.sessionCount)
+        : 0;
+      await AsyncStorage.setItem("bannerProps", JSON.stringify(bannerProps));
+    } catch (err) {
+      loggerUtil.log(err);
+    }
+
+    dispatch({
+      type: ACTIONS.SET_BANNER_PROPS,
+      bannerProps,
+    });
   };
 }
