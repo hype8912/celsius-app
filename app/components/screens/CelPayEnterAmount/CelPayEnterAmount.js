@@ -342,11 +342,12 @@ class CelPayEnterAmount extends Component {
         <CelNumpad
           field={formData.isUsd ? "amountUsd" : "amountCrypto"}
           value={formData.isUsd ? formData.amountUsd : formData.amountCrypto}
-          toggleKeypad={() => ({})}
+          toggleKeypad={actions.toggleKeypad}
           updateFormField={actions.updateFormField}
           setKeypadInput={actions.setKeypadInput}
           onPress={this.handleAmountChange}
           purpose={KEYPAD_PURPOSES.CELPAY}
+          autofocus={false}
         />
 
         <LoseMembershipModal navigateToNextStep={this.navigateToNextStep} />

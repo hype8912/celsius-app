@@ -85,7 +85,7 @@ function setKeypadInput(input) {
  *
  * @param {boolean} shouldOpen - if keypad should be turned on or off
  */
-function toggleKeypad(shouldOpen = true) {
+function toggleKeypad(shouldOpen = false) {
   return dispatch => {
     if (_keypadInputRef) {
       const isFocused = _keypadInputRef.isFocused();

@@ -124,7 +124,6 @@ class BorrowEnterAmount extends Component {
         <CelButton
           onPress={() => {
             actions.navigateTo("Deposit");
-            actions.toggleKeypad();
           }}
           margin="40 0 0 0"
         >
@@ -270,7 +269,8 @@ class BorrowEnterAmount extends Component {
           {this.renderButton()}
 
           <CelNumpad
-            toggleKeypad={() => ({})}
+            autofocus={false}
+            toggleKeypad={actions.toggleKeypad}
             field={"loanAmount"}
             value={formData.loanAmount || ""}
             updateFormField={actions.updateFormField}
