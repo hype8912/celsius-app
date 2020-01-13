@@ -13,6 +13,7 @@ const initialState = {
 
   isKeypadOpen: false,
   isBannerVisible: true,
+  bannerProps: {},
 };
 
 export default (state = initialState, action) => {
@@ -82,6 +83,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isBannerVisible: false,
+      };
+
+    case ACTIONS.SET_BANNER_PROPS:
+      return {
+        ...state,
+        bannerProps: {
+          ...action.bannerProps,
+        },
       };
 
     default:

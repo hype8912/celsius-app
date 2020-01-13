@@ -77,10 +77,9 @@ class CelNumpad extends Component {
   };
 
   componentDidMount = () => {
-    const { autofocus, toggleKeypad, setKeypadInput } = this.props;
+    const { setKeypadInput } = this.props;
     if (this.inputRef) {
       setKeypadInput(this.inputRef);
-      if (autofocus) toggleKeypad();
     }
   };
 
@@ -149,7 +148,7 @@ class CelNumpad extends Component {
   }
 
   render() {
-    const { purpose, value, isFocused } = this.props;
+    const { purpose, value, isFocused, autofocus } = this.props;
     const style = CelNumpadStyle();
     const buttons = BUTTONS[purpose];
 
@@ -198,6 +197,7 @@ class CelNumpad extends Component {
         ref={input => {
           this.inputRef = input;
         }}
+        autoFocus={autofocus}
       />
     );
   }

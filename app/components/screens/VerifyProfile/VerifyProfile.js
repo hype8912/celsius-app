@@ -60,6 +60,7 @@ class VerifyProfile extends Component {
     const activeScreen = navigation.getParam("activeScreen");
     // actions.logoutUser()
     actions.getPreviousPinScreen(activeScreen);
+
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
   };
 
@@ -137,7 +138,6 @@ class VerifyProfile extends Component {
 
     if (newValue.length === 4) {
       this.setState({ loading: true });
-      actions.toggleKeypad();
       actions.checkPIN(this.onCheckSuccess, this.onCheckError);
     }
   };
