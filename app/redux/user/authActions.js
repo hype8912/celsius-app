@@ -57,6 +57,7 @@ function loginUser() {
       const res = await usersService.login({
         email: formData.email,
         password: formData.password,
+        reCaptchaKey: formData.reCaptchaKey,
       });
 
       // add token to expo storage

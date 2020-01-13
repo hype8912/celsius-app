@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import Constants from 'expo-constants';
 import { View, Image } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";

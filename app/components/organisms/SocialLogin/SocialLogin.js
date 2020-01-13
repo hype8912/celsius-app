@@ -28,12 +28,12 @@ class SocialLogin extends Component {
 
   onOpenTwitter = () => {
     const { actions } = this.props;
-    this.fakeTwitterButton.onButtonPress();
+
     actions.twitterOpen();
   };
 
-  setFakeTwitterButton = component => {
-    this.fakeTwitterButton = component;
+  handleError = err => {
+    console.log(err);
   };
 
   render() {
@@ -48,20 +48,19 @@ class SocialLogin extends Component {
           <TouchableOpacity onPress={() => actions.authGoogle(type)}>
             <Icon name="Google" height="35" width="35" fill="#bdc1c3" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.onOpenTwitter}>
-            <Icon name="Twitter" height="35" width="35" fill="#bdc1c3" />
-          </TouchableOpacity>
-        </View>
 
-        <TWLoginButton
-          ref={this.setFakeTwitterButton}
-          style={style.fakeTwitterButton}
-          onGetAccessToken={actions.twitterGetAccessToken}
-          onSuccess={this.onTwitterSuccess}
-          closeText="< Back to Celsius"
-          onClose={actions.twitterClose}
-          onError={this.handleError}
-        />
+          <TWLoginButton
+            type="TouchableOpacity"
+            onGetAccessToken={actions.twitterGetAccessToken}
+            onSuccess={this.onTwitterSuccess}
+            closeText="< Back to Celsius"
+            onClose={actions.twitterClose}
+            onError={this.handleError}
+            onPress={this.onOpenTwitter}
+          >
+            <Icon name="Twitter" height="35" width="35" fill="#bdc1c3" />
+          </TWLoginButton>
+        </View>
       </View>
     );
   }

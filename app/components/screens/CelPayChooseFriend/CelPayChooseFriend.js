@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as Contacts from "expo-contacts";
-import * as Permissions from "expo-permissions";
+// TODO(sb): RN update dependencies fixes
 import { View, ScrollView } from "react-native";
+import Contacts from "react-native-contacts";
 
 import * as appActions from "../../../redux/actions";
-
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelText from "../../atoms/CelText/CelText";
 import {
   requestForPermission,
   hasPermission,
+  ALL_PERMISSIONS,
 } from "../../../utils/device-permissions";
 import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -111,9 +111,7 @@ class CelPayChooseFriend extends Component {
       ];
 
       await actions.getConnectedContacts();
-      const permission = await requestForPermission(Permissions.CONTACTS, {
-        goToSettings: false,
-      });
+      const permission = await requestForPermission(ALL_PERMISSIONS.CONTACTS);
       const hasFriends = this.hasFriends();
 
       navigation.setParams({
@@ -143,7 +141,7 @@ class CelPayChooseFriend extends Component {
       nextProps.contacts.friendsWithApp &&
       nextProps.contacts.friendsWithApp.length > 0
     ) {
-      const permission = await hasPermission(Permissions.CONTACTS);
+      const permission = await hasPermission(ALL_PERMISSIONS.CONTACTS);
       navigation.setParams({
         title: permission ? "Choose a friend" : "Import Contacts",
         right: permission ? "search" : "profile",
@@ -155,21 +153,37 @@ class CelPayChooseFriend extends Component {
     this.subs.forEach(sub => sub.remove());
   }
 
+  getContacts = () => {
+    return new Promise((resolve, reject) => {
+      const data = [];
+      Contacts.getAll((err, contacts) => {
+        if (!err) {
+          contacts.map(contact => {
+            const c = {
+              name: contact.displayName,
+              phoneNumbers: contact.phoneNumbers,
+              emails: contact.emailAddresses,
+            };
+            return data.push(c);
+          });
+          resolve(data);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  };
+
   importContacts = async () => {
     const { actions } = this.props;
-
     try {
-      const permission = await requestForPermission(Permissions.CONTACTS, {
-        goToSettings: false,
-      });
+      const permission = await requestForPermission(ALL_PERMISSIONS.CONTACTS);
       if (permission) {
-        const { data } = await Contacts.getContactsAsync({
-          fields: [Contacts.Fields.Emails, Contacts.Fields.PhoneNumbers],
-        });
+        const data = await this.getContacts();
         await actions.connectPhoneContacts(data);
         await actions.getConnectedContacts();
       } else {
-        await requestForPermission(Permissions.CONTACTS);
+        await requestForPermission(ALL_PERMISSIONS.CONTACTS);
       }
     } catch (err) {
       logger.log(err);
@@ -196,9 +210,7 @@ class CelPayChooseFriend extends Component {
 
     try {
       await this.importContacts();
-      const permission = await requestForPermission(Permissions.CONTACTS, {
-        goToSettings: false,
-      });
+      const permission = await requestForPermission(ALL_PERMISSIONS.CONTACTS);
 
       navigation.setParams({
         title:

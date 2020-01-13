@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import BorrowLoanOption from "../../components/screens/BorrowLoanOption/BorrowLoanOption";
 import BorrowCollateral from "../../components/screens/BorrowCollateral/BorrowCollateral";
 import LoanPaymentList from "../../components/screens/LoanPaymentList/LoanPaymentList";

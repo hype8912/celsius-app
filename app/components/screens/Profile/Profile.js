@@ -2,13 +2,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import React, { Component } from "react";
 // import Constants from 'expo-constants';
-import {
-  Image as RNImage,
-  Linking,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Image } from "react-native-expo-image-cache";
+import { Image, Linking, TouchableOpacity, View } from "react-native";
 import * as appActions from "../../../redux/actions";
 
 import CelText from "../../atoms/CelText/CelText";
@@ -143,11 +137,14 @@ class Profile extends Component {
                   borderWidth: 4,
                   borderColor: STYLES.COLORS.WHITE,
                 }}
-                uri={profilePicture}
+                source={{
+                  uri: profilePicture,
+                  cache: "default",
+                }}
                 resizeMethod="resize"
               />
             ) : (
-              <RNImage
+              <Image
                 style={{
                   width: 100,
                   height: 100,

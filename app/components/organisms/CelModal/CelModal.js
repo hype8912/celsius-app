@@ -12,7 +12,7 @@ import {
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { BlurView } from "expo-blur";
+import { BlurView } from "@react-native-community/blur";
 
 import * as appActions from "../../../redux/actions";
 import CelModalStyle from "./CelModal.styles";
@@ -370,15 +370,14 @@ class CelModal extends Component {
             tint={"dark"}
             intensity={100}
             style={StyleSheet.absoluteFill}
-          >
-            <TouchableOpacity
-              style={style.outsideCloseModal}
-              onPress={() => {
-                actions.closeModal();
-                if (onClose) onClose();
-              }}
-            />
-          </BlurView>
+          />
+          <TouchableOpacity
+            style={style.outsideCloseModal}
+            onPress={() => {
+              actions.closeModal();
+              if (onClose) onClose();
+            }}
+          />
         </View>
       </Modal>
     );

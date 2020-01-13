@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { View, TouchableOpacity, Keyboard } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as Permissions from "expo-permissions";
+import { RESULTS } from "react-native-permissions";
 
 import cryptoUtil from "../../../utils/crypto-util";
-
 import { MODALS } from "../../../constants/UI";
 import addressUtil from "../../../utils/address-util";
 import * as appActions from "../../../redux/actions";
@@ -22,6 +21,10 @@ import WithdrawWarningModal from "../../modals/WithdrawWarningModal/WithdrawWarn
 import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
 import ConfirmWithdrawalAddressModal from "../../modals/ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
+import {
+  ALL_PERMISSIONS,
+  requestForPermission,
+} from "../../../utils/device-permissions";
 
 @connect(
   state => ({
@@ -52,14 +55,6 @@ class WithdrawCreateAddress extends Component {
     };
   }
 
-  getCameraPermissions = async () => {
-    let perm = await Permissions.getAsync(Permissions.CAMERA);
-    if (perm.status !== "granted") {
-      perm = await Permissions.askAsync(Permissions.CAMERA);
-    }
-    return perm;
-  };
-
   handleScan = code => {
     const { actions } = this.props;
     const address = addressUtil.splitAddressTag(code);
@@ -69,8 +64,8 @@ class WithdrawCreateAddress extends Component {
 
   handleScanClick = async () => {
     const { actions } = this.props;
-    const perm = await this.getCameraPermissions();
-    if (perm.status === "granted") {
+    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
+    if (perm.status === RESULTS.GRANTED) {
       actions.navigateTo("QRScanner", {
         onScan: this.handleScan,
       });

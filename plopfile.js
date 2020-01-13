@@ -1,5 +1,4 @@
 const componentGen = require("./plops/component/componentGen");
-const modalGen = require("./plops/modal/modalGen");
 const reduxGen = require("./plops/redux/reduxGen");
 const screenGen = require("./plops/screen/screenGen");
 const serviceGen = require("./plops/service/serviceGen");
@@ -8,7 +7,6 @@ const versionGen = require("./plops/version/versionGen");
 
 module.exports = function(plop) {
   plop.setGenerator("component", componentGen);
-  plop.setGenerator("modal", modalGen);
   plop.setGenerator("redux", reduxGen);
   plop.setGenerator("screen", screenGen);
   plop.setGenerator("service", serviceGen);

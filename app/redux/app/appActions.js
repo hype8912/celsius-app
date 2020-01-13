@@ -1,9 +1,10 @@
-import * as Permissions from "expo-permissions";
-import * as Location from "expo-location";
+// TODO(sb): RN update dependencies fixes
+// import * as Location from "expo-location";
 import { Platform } from "react-native";
-import RNAdvertisingId from "react-native-advertising";
+// import RNAdvertisingId from "react-native-advertising";
 import { IDFA } from "react-native-idfa";
 import appsFlyer from "react-native-appsflyer";
+import Geolocation from "@react-native-community/geolocation";
 import Constants from "../../../constants";
 import store from "../../redux/store";
 import * as actions from "../actions";
@@ -19,10 +20,14 @@ import branchUtil from "../../utils/branch-util";
 import { disableAccessibilityFontScaling } from "../../utils/styles-util";
 import ASSETS from "../../constants/ASSETS";
 import loggerUtil from "../../utils/logger-util";
-import { requestForPermission } from "../../utils/device-permissions";
+import {
+  requestForPermission,
+  ALL_PERMISSIONS,
+} from "../../utils/device-permissions";
 import { hasPassedKYC } from "../../utils/user-util";
 import { showMessage } from "../ui/uiActions";
 import userBehaviorUtil from "../../utils/user-behavior-util";
+import { RESULTS } from "react-native-permissions";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -319,8 +324,8 @@ function setAdvertisingId() {
       const res = await IDFA.getIDFA();
       userAID = res;
     } else {
-      const res = await RNAdvertisingId.getAdvertisingId();
-      userAID = res.advertisingId;
+      // const res = await RNAdvertisingId.getAdvertisingId();
+      // userAID = res.advertisingId;
     }
     dispatch({
       type: ACTIONS.SET_ADVERTISING_ID,
@@ -350,19 +355,18 @@ function setAppsFlyerUID() {
  */
 function getGeolocation() {
   return async dispatch => {
-    const permission = await requestForPermission(Permissions.LOCATION, {
-      goToSettings: false,
+    const permission = await requestForPermission(ALL_PERMISSIONS.LOCATION);
+
+    if (permission !== RESULTS.GRANTED) return;
+
+    Geolocation.getCurrentPosition(location => {
+      if (location && location.coords) {
+        dispatch({
+          type: ACTIONS.SET_GEOLOCATION,
+          geoLat: location.coords.latitude,
+          geoLong: location.coords.longitude,
+        });
+      }
     });
-
-    if (!permission) return;
-
-    const location = await Location.getCurrentPositionAsync({});
-    if (location && location.coords) {
-      dispatch({
-        type: ACTIONS.SET_GEOLOCATION,
-        geoLat: location.coords.latitude,
-        geoLong: location.coords.longitude,
-      });
-    }
   };
 }

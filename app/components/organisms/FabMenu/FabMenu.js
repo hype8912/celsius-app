@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { BlurView } from "expo-blur";
+import { BlurView } from "@react-native-community/blur";
 import * as appActions from "../../../redux/actions";
 
 import FabMenuStyle from "./FabMenu.styles";
@@ -79,6 +79,7 @@ class FabMenu extends Component {
         this.props.fabType !== "hide") ||
       prevProps.kycStatus !== this.props.kycStatus
     ) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         menuItems: this.getMenuItems(this.props.fabType),
       });
@@ -271,11 +272,12 @@ class FabMenu extends Component {
 
     if (Platform.OS !== "android") {
       return (
-        <BlurView
-          tint={tintColor}
-          intensity={100}
-          style={[StyleSheet.absoluteFill]}
-        >
+        <>
+          <BlurView
+            tint={tintColor}
+            intensity={100}
+            style={[StyleSheet.absoluteFill]}
+          />
           <Card
             styles={style.helpCard}
             size={"half"}
@@ -301,7 +303,7 @@ class FabMenu extends Component {
           <View style={style.menuContainer}>
             {menuItems.map(this.renderMenuRow)}
           </View>
-        </BlurView>
+        </>
       );
     }
     return (

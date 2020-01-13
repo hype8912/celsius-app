@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Image, ScrollView, TouchableOpacity } from "react-native";
-import * as Permissions from "expo-permissions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -14,6 +13,12 @@ import Separator from "../../atoms/Separator/Separator";
 import Spinner from "../../atoms/Spinner/Spinner";
 import STYLES from "../../../constants/STYLES";
 import ChangeAvatarStyle from "./ChangeAvatar.styles";
+import {
+  ALL_PERMISSIONS,
+  getPermissionStatus,
+  requestForPermission,
+} from "../../../utils/device-permissions";
+import { RESULTS } from "react-native-permissions";
 
 const { API_URL } = Constants;
 
@@ -139,22 +144,6 @@ class ChangeAvatar extends Component {
   //   this.setState({ activeImage: imgSrc.url });
   // }
 
-  getCameraPermissions = async () => {
-    let perm = await Permissions.getAsync(Permissions.CAMERA);
-
-    if (perm.status !== "granted") {
-      perm = await Permissions.askAsync(Permissions.CAMERA);
-    }
-  };
-
-  getCameraRollPermissions = async () => {
-    let perm = await Permissions.getAsync(Permissions.CAMERA_ROLL);
-
-    if (perm.status !== "granted") {
-      perm = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    }
-  };
-
   updateProfilePicture = imgSrc => {
     const { actions, callsInProgress } = this.props;
 
@@ -180,8 +169,8 @@ class ChangeAvatar extends Component {
       mask: "circle",
     });
 
-    await this.getCameraPermissions();
-    await this.getCameraRollPermissions();
+    await requestForPermission(ALL_PERMISSIONS.CAMERA);
+    await requestForPermission(ALL_PERMISSIONS.LIBRARY);
     actions.navigateTo("CameraScreen", { onSave: this.saveCameraPhoto });
   };
 

@@ -40,6 +40,7 @@ import WithdrawWarningModalStories from "./WithdrawWarningModal/WithdrawWarningM
 import DestinationInfoTagModalStories from "./DestinationInfoTagModal/DestinationInfoTagModal.stories";
 import InterestDueModalStories from "./InterestDueModal/InterestDueModal.stories";
 import ReferralReceivedModalStories from "./ReferralReceivedModal/ReferralReceivedModal.stories";
+import ReCaptchaModalStories from "./ReCaptchaModal/ReCaptchaModal.stories";
 
 storiesOf("Modals", module)
   .addDecorator(getStory => (
@@ -80,6 +81,7 @@ storiesOf("Modals", module)
       <TransactionFilterModalStories />
       <VerifyAuthAppModalStories />
       <WithdrawWarningModalStories />
+      <ReCaptchaModalStories />
     </View>
   ))
   .add("LoanAlertsPayoutPrincipalModal", () => (

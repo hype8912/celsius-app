@@ -58,6 +58,7 @@ class VerifyProfile extends Component {
   componentDidMount = () => {
     const { navigation, actions } = this.props;
     const activeScreen = navigation.getParam("activeScreen");
+    // actions.logoutUser()
     actions.getPreviousPinScreen(activeScreen);
 
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });

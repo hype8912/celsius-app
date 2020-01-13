@@ -1,5 +1,6 @@
-import * as Font from "expo-font";
-import { Asset } from "expo-asset";
+// TODO(sb): RN update dependencies fixes
+// import * as Font from "expo-font";
+// import { Asset } from "expo-asset";
 import React from "react";
 import { Image, Platform } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
@@ -121,7 +122,7 @@ async function cacheImages(images) {
     if (typeof image === "string") {
       await Image.prefetch(images[i]);
     } else {
-      await Asset.fromModule(images[i]).downloadAsync();
+      // await Asset.fromModule(images[i]).downloadAsync();
     }
   }
 }
@@ -134,9 +135,9 @@ async function cacheImages(images) {
  */
 // Fonts are preloaded using Expo.Font.loadAsync(font).
 async function cacheFonts(fonts) {
-  for (let i = 0; i < fonts.length; i++) {
-    await Font.loadAsync(fonts[i]);
-  }
+  // for (let i = 0; i < fonts.length; i++) {
+  //   await Font.loadAsync(fonts[i]);
+  // }
 }
 
 /**

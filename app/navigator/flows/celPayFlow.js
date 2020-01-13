@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import CelPayChooseFriend from "../../components/screens/CelPayChooseFriend/CelPayChooseFriend";
 import CelPayMessage from "../../components/screens/CelPayMessage/CelPayMessage";
 import CelPayEnterAmount from "../../components/screens/CelPayEnterAmount/CelPayEnterAmount";

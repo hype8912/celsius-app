@@ -1,8 +1,5 @@
-import {
-  createAppContainer,
-  createStackNavigator,
-  createSwitchNavigator,
-} from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 
 import Home from "../components/screens/Home/Home";
 import Community from "../components/screens/Community/Community";

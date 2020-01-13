@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Constants from "expo-constants";
+import DeviceInfo from "react-native-device-info";
 import { View, TouchableOpacity, TextInput } from "react-native";
 import { withNavigationFocus } from "react-navigation";
 
@@ -47,10 +47,7 @@ const BUTTONS = {
   ],
 };
 
-// Todo(sb): Model is undefined
-const deviceModel = Constants.platform.ios
-  ? Constants.platform.ios.model
-  : Constants.platform.android.model;
+const deviceModel = DeviceInfo.getModel();
 const shouldShowCustomKeypad = PHONES_WITH_CUSTOM_KEYPAD.includes(deviceModel);
 
 const KEYBOARDS = {

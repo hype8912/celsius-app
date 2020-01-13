@@ -9,11 +9,13 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as ImagePicker from "expo-image-picker";
-import * as ImageManipulator from "expo-image-manipulator";
-import * as Permissions from "expo-permissions";
-import { Camera } from "expo-camera";
 
+// TODO(sb): RN update dependencies fixes
+import { RESULTS } from "react-native-permissions";
+import { withNavigationFocus } from "react-navigation";
+import { RNCamera } from "react-native-camera";
+import ImageEditor from "@react-native-community/image-editor";
+import ImagePicker from "react-native-image-crop-picker";
 import * as appActions from "../../../redux/actions";
 import CameraScreenStyle from "./CameraScreen.styles";
 import Icon from "../../atoms/Icon/Icon";
@@ -22,6 +24,10 @@ import API from "../../../constants/API";
 import CelText from "../../atoms/CelText/CelText";
 import loggerUtil from "../../../utils/logger-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import {
+  ALL_PERMISSIONS,
+  requestForPermission,
+} from "../../../utils/device-permissions";
 
 const { height, width } = Dimensions.get("window");
 
@@ -39,6 +45,11 @@ const { height, width } = Dimensions.get("window");
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class CameraScreen extends Component {
+  static navigationOptions = () => ({
+    headerSameColor: false,
+    transparent: true,
+  });
+
   static propTypes = {
     cameraField: PropTypes.string,
     cameraHeading: PropTypes.string,
@@ -48,23 +59,14 @@ class CameraScreen extends Component {
       PropTypes.string,
       PropTypes.instanceOf(Object),
     ]),
-    mask: PropTypes.oneOf(["circle", "document", "utility"]),
+    mask: PropTypes.oneOf(["circle", "document"]),
+    onSave: PropTypes.func,
   };
 
   static defaultProps = {
     cameraField: "lastPhoto",
     cameraHeading: "Take Photo",
     mask: "circle",
-  };
-
-  static navigationOptions = () => ({
-    headerSameColor: false,
-    transparent: true,
-  });
-
-  static defaultProps = {
-    cameraField: "lastPhoto",
-    cameraHeading: "Take Photo",
   };
 
   constructor(props) {
@@ -81,7 +83,7 @@ class CameraScreen extends Component {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { actions } = this.props;
     actions.setFabType("hide");
     await this.getCameraPermissions();
@@ -97,14 +99,10 @@ class CameraScreen extends Component {
 
   getCameraPermissions = async () => {
     const { actions } = this.props;
-    let perm = await Permissions.getAsync(Permissions.CAMERA);
+    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
 
-    if (perm.status !== "granted") {
-      perm = await Permissions.askAsync(Permissions.CAMERA);
-    }
-
-    if (perm.status === "granted") {
-      this.setState({ hasCameraPermission: perm.status === "granted" });
+    if (perm === RESULTS.GRANTED) {
+      this.setState({ hasCameraPermission: true });
     } else {
       actions.showMessage(
         "warning",
@@ -116,15 +114,11 @@ class CameraScreen extends Component {
 
   getCameraRollPermissions = async () => {
     const { actions, cameraRollLastPhoto } = this.props;
-    let perm = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    const perm = await requestForPermission(ALL_PERMISSIONS.LIBRARY);
 
-    if (perm.status !== "granted") {
-      perm = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    }
-
-    if (perm.status === "granted") {
+    if (perm === RESULTS.GRANTED) {
       if (!cameraRollLastPhoto) actions.getCameraRollPhotos();
-      this.setState({ hasCameraRollPermission: perm.status === "granted" });
+      this.setState({ hasCameraRollPermission: true });
     } else {
       actions.showMessage(
         "warning",
@@ -156,88 +150,77 @@ class CameraScreen extends Component {
 
   pickImage = async () => {
     const { actions, mask, navigation } = this.props;
-    const result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [
-        STYLES.CAMERA_MASK_SIZES[mask].width,
-        STYLES.CAMERA_MASK_SIZES[mask].height,
-      ],
-    });
-    if (result.cancelled) {
-      return;
-    }
-    actions.navigateTo("ConfirmCamera", {
-      onSave: navigation.getParam("onSave"),
-    });
-    actions.takeCameraPhoto(result);
-  };
-
-  takePhoto = async () => {
-    if (!this.camera) return;
-
-    const { actions, mask, navigation, cameraType } = this.props;
     try {
-      if (!this.state.hasCameraPermission) {
-        return await this.getCameraPermissions();
+      const result = await ImagePicker.openPicker({
+        width: STYLES.CAMERA_MASK_SIZES[mask].width,
+        height: STYLES.CAMERA_MASK_SIZES[mask].height,
+        cropping: true,
+      });
+      if (result.cancelled) {
+        return;
       }
-
-      actions.startApiCall(API.TAKE_CAMERA_PHOTO);
-      const photo = await this.camera.takePictureAsync();
-      const { size } = this.state;
-      let cropWidth;
-
-      if (photo.width / photo.height > size.width / size.height) {
-        const coef = photo.width * (size.height / photo.height);
-        const overScan = ((coef - size.width) * 0.5) / coef;
-        cropWidth = photo.width - 2 * size.width * overScan;
-        cropWidth =
-          (cropWidth * STYLES.CAMERA_MASK_SIZES[mask].width) / size.width;
-      } else {
-        cropWidth =
-          (STYLES.CAMERA_MASK_SIZES[mask].width / size.width) * photo.width;
-      }
-
-      const cropHeight =
-        (cropWidth / STYLES.CAMERA_MASK_SIZES[mask].width) *
-        STYLES.CAMERA_MASK_SIZES[mask].height;
-
-      const imageManipulations = [
-        {
-          resize: { ...photo },
-        },
-        {
-          crop: {
-            originX: (photo.width - cropWidth) / 2,
-            originY: (photo.height - cropHeight) / 2,
-            width: cropWidth,
-            height: cropHeight,
-          },
-        },
-      ];
-
-      if (cameraType === "front") {
-        imageManipulations.push({
-          flip: "horizontal",
-        });
-      }
-
-      const resizedPhoto = await ImageManipulator.manipulateAsync(
-        photo.uri,
-        imageManipulations,
-        { compress: 0.95, format: "jpeg" }
-      );
-
-      actions.takeCameraPhoto(resizedPhoto);
-      await actions.navigateTo("ConfirmCamera", {
+      actions.navigateTo("ConfirmCamera", {
         onSave: navigation.getParam("onSave"),
       });
+      actions.takeCameraPhoto({ uri: result.path });
     } catch (err) {
-      actions.apiError(API.TAKE_CAMERA_PHOTO, err);
-      actions.showMessage(
-        "error",
-        "There was an issue with the camera. Please try again or pick an image from your library."
-      );
       loggerUtil.err(err);
+    }
+  };
+
+  takePhoto = async camera => {
+    if (camera) {
+      const { actions, mask, navigation } = this.props;
+      const options = {
+        quality: 0.5,
+        orientation: RNCamera.Constants.Orientation.auto,
+        pauseAfterCapture: true,
+        fixOrientation: true,
+      };
+
+      try {
+        if (!this.state.hasCameraPermission) {
+          return await this.getCameraPermissions();
+        }
+        const photo = await camera.takePictureAsync(options);
+
+        actions.startApiCall(API.TAKE_CAMERA_PHOTO);
+        await actions.navigateTo("ConfirmCamera", {
+          onSave: navigation.getParam("onSave"),
+        });
+
+        const { size } = this.state;
+        let cropWidth;
+
+        if (photo.width / photo.height > size.width / size.height) {
+          const coef = photo.width * (size.height / photo.height);
+          const overScan = ((coef - size.width) * 0.5) / coef;
+          cropWidth = photo.width - 2 * size.width * overScan;
+          cropWidth =
+            (cropWidth * STYLES.CAMERA_MASK_SIZES[mask].width) / size.width;
+        } else {
+          cropWidth =
+            (STYLES.CAMERA_MASK_SIZES[mask].width / size.width) * photo.width;
+        }
+
+        const cropHeight =
+          (cropWidth / STYLES.CAMERA_MASK_SIZES[mask].width) *
+          STYLES.CAMERA_MASK_SIZES[mask].height;
+
+        const croppedImage = await ImageEditor.cropImage(photo.uri, {
+          offset: {
+            x: (photo.width - cropWidth) / 2,
+            y: (photo.height - cropHeight) / 2,
+          },
+          size: { width: cropWidth, height: cropHeight },
+          displaySize: { width: cropWidth, height: cropHeight },
+          resizeMode: "cover",
+        });
+
+        actions.takeCameraPhoto({ uri: croppedImage });
+      } catch (err) {
+        loggerUtil.err(err);
+      }
     }
   };
 
@@ -309,9 +292,12 @@ class CameraScreen extends Component {
     const { cameraType, actions, cameraRollLastPhoto } = this.props;
     const style = CameraScreenStyle();
     const Mask = this.renderMask;
+    const isFocused = this.props.navigation.isFocused();
+
+    if (!isFocused) return null;
 
     return (
-      <Camera
+      <RNCamera
         ref={ref => {
           this.camera = ref;
         }}
@@ -319,7 +305,7 @@ class CameraScreen extends Component {
           this.setState({ size: event.nativeEvent.layout });
         }}
         style={style.camera}
-        type={Camera.Constants.Type[cameraType]}
+        type={RNCamera.Constants.Type[cameraType]}
       >
         <Mask />
         <SafeAreaView style={style.bottomView}>
@@ -334,7 +320,10 @@ class CameraScreen extends Component {
               )}
             </TouchableOpacity>
 
-            <TouchableOpacity style={{ flex: 1 }} onPress={this.takePhoto}>
+            <TouchableOpacity
+              style={{ flex: 1 }}
+              onPress={() => this.takePhoto(this.camera)}
+            >
               <Icon
                 name="Shutter"
                 fill={STYLES.COLORS.CELSIUS_BLUE}
@@ -357,9 +346,9 @@ class CameraScreen extends Component {
             </TouchableOpacity>
           </View>
         </SafeAreaView>
-      </Camera>
+      </RNCamera>
     );
   }
 }
 
-export default CameraScreen;
+export default withNavigationFocus(CameraScreen);

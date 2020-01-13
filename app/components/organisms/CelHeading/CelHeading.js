@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import {
-  Image as RNImage,
+  Image,
   View,
   SafeAreaView,
   StatusBar,
   TouchableOpacity,
 } from "react-native";
-import { Image } from "react-native-expo-image-cache";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -150,12 +149,15 @@ class CelHeading extends Component {
           {profilePicture ? (
             <Image
               style={style.profilePicture}
-              uri={profilePicture}
+              source={{
+                uri: profilePicture,
+                cache: "default",
+              }}
               resizeMethod="resize"
               resizeMode="cover"
             />
           ) : (
-            <RNImage
+            <Image
               style={style.profilePicture}
               source={require("../../../../assets/images/empty-profile/empty-profile.png")}
               resizeMethod="resize"
