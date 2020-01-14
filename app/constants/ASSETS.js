@@ -187,6 +187,7 @@ const CACHE_IMAGES = [
   require("../../assets/images/coins/dollar-icon.png"),
   require("../../assets/images/present-image.png"),
   require("../../assets/images/illustration-borrow-dollars_white.png"),
+  require("../../assets/images/icon-send.png"),
 ];
 
 export default {
