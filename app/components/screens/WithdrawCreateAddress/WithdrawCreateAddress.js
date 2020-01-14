@@ -65,7 +65,7 @@ class WithdrawCreateAddress extends Component {
   handleScanClick = async () => {
     const { actions } = this.props;
     const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
-    if (perm.status === RESULTS.GRANTED) {
+    if (perm === RESULTS.GRANTED) {
       actions.navigateTo("QRScanner", {
         onScan: this.handleScan,
       });

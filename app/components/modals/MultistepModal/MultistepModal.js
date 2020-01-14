@@ -5,6 +5,7 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
