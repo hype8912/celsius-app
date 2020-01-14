@@ -27,9 +27,6 @@ export {
   getCelsiusMemberStatus,
   getUserAppSettings,
   setUserAppSettings,
-  // TODO move to contacts
-  connectPhoneContacts,
-  getConnectedContacts,
   // TODO move to KYC actions
   getLinkedBankAccount,
   linkBankAccount,
@@ -234,71 +231,6 @@ function checkTwoFactor(onSuccess, onError) {
       dispatch(updateFormField("code", ""));
       dispatch(toggleKeypad());
     }
-  };
-}
-
-/**
- * Saves all contacts from users Phonebook
- * @param {Object[]} contacts
- */
-function connectPhoneContacts(contacts) {
-  return async dispatch => {
-    dispatch(startApiCall(API.CONNECT_PHONE_CONTACTS));
-
-    try {
-      await usersService.connectPhoneContacts(contacts);
-      dispatch({ type: ACTIONS.CONNECT_PHONE_CONTACTS_SUCCESS });
-    } catch (err) {
-      logger.err(err);
-    }
-  };
-}
-
-/**
- * Gets all contacts for user
- */
-function getConnectedContacts() {
-  return async (dispatch, getState) => {
-    dispatch(startApiCall(API.GET_CONNECT_CONTACTS));
-    const { activeScreen } = getState().nav;
-    const { friendsWithApp } = getState().user.contacts;
-
-    try {
-      const res = await usersService.getConnectedContacts();
-      dispatch(getConnectedContactsSuccess(res.data.contacts));
-      const newFriendsWithApp = res.data.contacts.friendsWithApp;
-
-      if (friendsWithApp.length !== newFriendsWithApp.length) {
-        const action =
-          activeScreen === "CelPayChooseFriend"
-            ? {
-                text: "Go to CelPay",
-                action: () => dispatch(navigateTo("CelPayChooseFriend")),
-              }
-            : null;
-        dispatch(
-          showMessage(
-            "success",
-            "Congrats! Your contacts have been added to your wallet. Get started with CelPay and transfer crypto between friends faster and easier than ever before.",
-            false,
-            action
-          )
-        );
-      }
-    } catch (err) {
-      logger.err(err);
-    }
-  };
-}
-
-/**
- * TODO add JSDoc
- */
-function getConnectedContactsSuccess(contacts) {
-  return {
-    type: ACTIONS.GET_CONNECTED_CONTACTS_SUCCESS,
-    callName: API.GET_CONNECT_CONTACTS,
-    contacts,
   };
 }
 
