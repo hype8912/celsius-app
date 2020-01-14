@@ -15,10 +15,8 @@ import STYLES from "../../../constants/STYLES";
 import ChangeAvatarStyle from "./ChangeAvatar.styles";
 import {
   ALL_PERMISSIONS,
-  getPermissionStatus,
   requestForPermission,
 } from "../../../utils/device-permissions";
-import { RESULTS } from "react-native-permissions";
 
 const { API_URL } = Constants;
 
