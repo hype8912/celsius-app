@@ -10,9 +10,9 @@ import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
-import { KEYBOARD_TYPE, MODALS } from "../../../constants/UI";
+import { KEYBOARD_TYPE } from "../../../constants/UI";
 import Constants from "../../../../constants";
-import ReCaptchaModal from "../../modals/ReCaptchaModal/ReCaptchaModal";
+import GoogleReCaptcha from "../../../utils/recaptcha-util";
 
 @connect(
   state => ({
@@ -26,32 +26,45 @@ class Login extends Component {
     right: "signup",
   });
 
-  loginUser = () => {
-    const { actions } = this.props;
-    actions.openModal(MODALS.RECAPTCHA_MODAL)
-  };
+  // loginUser = () => {
+  //   const { actions } = this.props;
+  //   actions.loginUser()
+  // };
 
-  onMessage = event => {
-    const { actions } = this.props
-    if (event && event.nativeEvent.data) {
-      if (['cancel', 'error', 'expired'].includes(event.nativeEvent.data)) {
-        return;
-      }
-      actions.closeModal();
-      actions.updateFormField('reCaptchaKey',event.nativeEvent.data)
-      actions.loginUser();
-    }
+  // onMessage = event => {
+  //   console.log('event je: ', event)
+  //   const { actions } = this.props
+  //   if (event && event.nativeEvent.data) {
+  //     console.log('event je: ', event)
+  //     console.log('nativeEvent je: ', event.nativeEvent)
+  //     console.log('data je: ', event.nativeEvent.data)
+  //     if (['cancel', 'error', 'expired'].includes(event.nativeEvent.data)) {
+  //       return;
+  //     }
+  //     actions.closeModal();
+  //     actions.updateFormField('reCaptchaKey',event.nativeEvent.data)
+  //     actions.loginUser();
+  //   }
+  // };
+
+  reCaptchaPassed = event => {
+    const { actions } = this.props;
+    actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
+    actions.loginUser();
   };
 
   renderCaptcha = () => {
-    const { actions } = this.props
+    const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
     return (
-        <ReCaptchaModal
-          onMessage={this.onMessage}
-          closeModal={actions.closeModal}
-        />
-    )
-  }
+      <GoogleReCaptcha
+        siteKey={RECAPTCHA_KEY}
+        url={RECAPTCHA_URL}
+        languageCode="en"
+        onMessage={this.onMessage}
+        reCaptchaPassed={this.reCaptchaPassed}
+      />
+    );
+  };
 
   render() {
     const { formData, callsInProgress, actions } = this.props;
@@ -103,13 +116,13 @@ class Login extends Component {
 
         {this.renderCaptcha()}
 
-        <CelButton
-          margin="10 0 40 0"
-          onPress={this.loginUser}
-          loading={loginLoading}
-        >
-          Log in
-        </CelButton>
+        {/*<CelButton*/}
+        {/*  margin="10 0 40 0"*/}
+        {/*  onPress={this.loginUser}*/}
+        {/*  loading={loginLoading}*/}
+        {/*>*/}
+        {/*  Log in*/}
+        {/*</CelButton>*/}
 
         {ENV === "STAGING" ? (
           <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
@@ -127,7 +140,6 @@ class Login extends Component {
             </CelButton>
           </>
         ) : null}
-
       </AuthLayout>
     );
   }
