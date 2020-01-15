@@ -194,7 +194,7 @@ class SocialSecurityNumber extends Component {
             <View
               style={{
                 flexWrap: "wrap",
-                alignContent: "center",
+                alignSelf: "center",
                 justifyContent: "center",
                 paddingBottom: 20,
               }}

@@ -41,6 +41,7 @@ class BorrowCalculator extends Component {
     purpose: PropTypes.string,
     loanParams: PropTypes.instanceOf(Object),
   };
+
   constructor(props) {
     super(props);
 
@@ -359,43 +360,50 @@ class BorrowCalculator extends Component {
             </Card>
           </View>
           <Card color={"#4156A6"}>
-            <CelText type={"H6"} align={"center"}>
+            <CelText type={"H6"} align={"center"} color={STYLES.COLORS.WHITE}>
               Reduce your interest rate by
             </CelText>
             <CelText
               weight={"600"}
               type={"H3"}
               align={"center"}
+              color={STYLES.COLORS.WHITE}
             >{`${formatter.percentage(
               loyaltyInfo.tier.loanInterestBonus
             )}%`}</CelText>
-            <CelText type={"H6"} align={"center"}>
+            <CelText type={"H6"} align={"center"} color={STYLES.COLORS.WHITE}>
               by paying out in CEL
             </CelText>
             <Separator
               margin={"10 0 10 0"}
               color={StyleSheet.flatten(style.separator).color}
             />
-            <CelText type={"H6"} align={"center"}>
+            <CelText type={"H6"} align={"center"} color={STYLES.COLORS.WHITE}>
               Monthly Interest
             </CelText>
             <CelText
               weight={"600"}
               type={"H3"}
               align={"center"}
-            >{`${formatter.round(monthly) || 0} CEL`}</CelText>
+              color={STYLES.COLORS.WHITE}
+            >
+              {`${formatter.round(monthly) || 0} CEL`}
+            </CelText>
             <Separator
               margin={"10 0 10 0"}
               color={StyleSheet.flatten(style.separator).color}
             />
-            <CelText type={"H6"} align={"center"}>
+            <CelText type={"H6"} align={"center"} color={STYLES.COLORS.WHITE}>
               Total Interest
             </CelText>
             <CelText
               weight={"600"}
               type={"H3"}
               align={"center"}
-            >{`${formatter.round(total) || 0} CEL`}</CelText>
+              color={STYLES.COLORS.WHITE}
+            >
+              {`${formatter.round(total) || 0} CEL`}
+            </CelText>
           </Card>
         </Card>
         <CelText
