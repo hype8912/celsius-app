@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 
 import ProgressBarStyle from "./ProgressBar.styles";
+import { getMargins } from "../../../utils/styles-util";
 
 // TODO check Loader.js
 class ProgressBar extends Component {
@@ -10,8 +11,11 @@ class ProgressBar extends Component {
     steps: PropTypes.number.isRequired,
     currentStep: PropTypes.number.isRequired,
     width: PropTypes.number,
+    margin: PropTypes.string,
   };
-  static defaultProps = {};
+  static defaultProps = {
+    margin: "0 0 0 0",
+  };
 
   renderSteps = () => {
     const { steps, currentStep } = this.props;
@@ -38,10 +42,12 @@ class ProgressBar extends Component {
   };
 
   render() {
+    const { margin } = this.props;
     const style = ProgressBarStyle();
     const Steps = this.renderSteps;
+    const margins = getMargins(margin);
     return (
-      <View style={style.container}>
+      <View style={[style.container, margins]}>
         <Steps />
       </View>
     );

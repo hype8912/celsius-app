@@ -5,6 +5,8 @@ import { Platform } from "react-native";
 import { IDFA } from "react-native-idfa";
 import appsFlyer from "react-native-appsflyer";
 import Geolocation from "@react-native-community/geolocation";
+import { RESULTS } from "react-native-permissions";
+
 import Constants from "../../../constants";
 import store from "../../redux/store";
 import * as actions from "../actions";
@@ -27,7 +29,6 @@ import {
 import { hasPassedKYC } from "../../utils/user-util";
 import { showMessage } from "../ui/uiActions";
 import userBehaviorUtil from "../../utils/user-behavior-util";
-import { RESULTS } from "react-native-permissions";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 

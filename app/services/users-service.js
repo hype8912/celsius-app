@@ -26,8 +26,6 @@ const usersService = {
   updateProfileTaxpayerInfo,
 
   // TODO move to user-data-service
-  connectPhoneContacts,
-  getConnectedContacts,
   getLinkedBankAccount,
   linkBankAccount,
   getCelsiusMemberStatus,
@@ -126,7 +124,7 @@ function login({ email, password, reCaptchaKey }) {
   return axios.post(`${apiUrl}/users/login`, {
     email,
     password,
-    reCaptchaKey
+    reCaptchaKey,
   });
 }
 
@@ -318,27 +316,6 @@ async function addExpoPushToken(token) {
 
 function getLoyaltyInfo() {
   return axios.get(`${apiUrl}/user/loyalty`);
-}
-
-/**
- * Connects contacts from device phone book
- * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#0b117565-209f-4b10-8f5a-a02c63815330
- *
- * @param {Object} contacts - @todo check payload
- * @return {Promise}
- */
-function connectPhoneContacts(contacts) {
-  return axios.post(`${apiUrl}/users/friends/contacts`, { contacts });
-}
-
-/**
- * Gets all contacts for user
- * @note not in Postman
- *
- * @return {Promise}
- */
-function getConnectedContacts() {
-  return axios.get(`${apiUrl}/users/friends`);
 }
 
 /**

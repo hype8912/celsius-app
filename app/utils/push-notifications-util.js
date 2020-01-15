@@ -11,7 +11,7 @@ export default {
 /**
  * Registers the user for push notifications service
  */
-let pushNotificationsRegistered = false;
+const pushNotificationsRegistered = false;
 export async function registerForPushNotificationsAsync() {
   if (pushNotificationsRegistered) {
     return;
