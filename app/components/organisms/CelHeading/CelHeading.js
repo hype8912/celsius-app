@@ -58,6 +58,17 @@ class CelHeading extends Component {
     };
   }
 
+  componentDidMount() {
+    this.getStatusBarTextColor();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { theme } = this.props;
+    if (prevProps.theme !== theme) {
+      this.getStatusBarTextColor();
+    }
+  }
+
   getLeftContent = sceneProps => {
     const { hideBack, right } = sceneProps;
     const { actions, scenes, formData } = this.props;
@@ -195,20 +206,20 @@ class CelHeading extends Component {
     }[rightType];
   };
 
-  getStatusBarTextColor = theme => {
-    const { message } = this.props;
-
-    if (message && message.text) return "light-content";
-
+  getStatusBarTextColor = () => {
+    const { message, theme } = this.props;
+    if (message && message.text) {
+      return StatusBar.setBarStyle("light-content");
+    }
     switch (theme) {
       case THEMES.LIGHT:
-        return "dark-content";
+        return StatusBar.setBarStyle("dark-content");
       case THEMES.DARK:
-        return "light-content";
+        return StatusBar.setBarStyle("light-content");
       case THEMES.CELSIUS:
-        return "light-content";
+        return StatusBar.setBarStyle("light-content");
       default:
-        return "light-content";
+        return StatusBar.setBarStyle("light-content");
     }
   };
 
@@ -282,9 +293,7 @@ class CelHeading extends Component {
     let containerStyle;
     const scene = this.props.scene.descriptor;
     const { transparent, headerSameColor } = scene.options;
-    const { theme } = this.props;
     const style = CelHeadingStyle();
-    const statusBarColor = this.getStatusBarTextColor(theme);
 
     if (headerSameColor) {
       containerStyle = style.sameBackground;
@@ -298,7 +307,7 @@ class CelHeading extends Component {
 
     return (
       <SafeAreaView style={containerStyle}>
-        <StatusBar barStyle={statusBarColor} />
+        <StatusBar />
         <Content />
       </SafeAreaView>
     );
