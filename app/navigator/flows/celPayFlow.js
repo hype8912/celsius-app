@@ -2,6 +2,8 @@ import { createStackNavigator } from "react-navigation-stack";
 import CelPayChooseFriend from "../../components/screens/CelPayChooseFriend/CelPayChooseFriend";
 import CelPayMessage from "../../components/screens/CelPayMessage/CelPayMessage";
 import CelPayEnterAmount from "../../components/screens/CelPayEnterAmount/CelPayEnterAmount";
+import CelPayLanding from "../../components/screens/CelPayLanding/CelPayLanding";
+
 import {
   defaultNavigationOptions,
   transitionConfig,
@@ -11,6 +13,7 @@ import { profileFlow } from "./profileFlow";
 
 export const celPayFlow = {
   screens: {
+    CelPayLanding,
     CelPayChooseFriend,
     CelPayEnterAmount,
     CelPayMessage,

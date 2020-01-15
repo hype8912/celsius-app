@@ -565,28 +565,28 @@ function getTransactionProps(transaction) {
         title: coin => `${coin} Claimed`,
         color: STYLES.COLORS.GREEN,
         iconName: "TransactionSent",
-        statusText: "Claimed",
+        statusText: "CelPay Claimed",
       };
     case TRANSACTION_TYPES.CELPAY_SENT:
       return {
         title: coin => `${coin} Sent`,
         color: STYLES.COLORS.CELSIUS_BLUE,
         iconName: "TransactionSent",
-        statusText: "Sent",
+        statusText: "CelPay Sent",
       };
     case TRANSACTION_TYPES.CELPAY_RECEIVED:
       return {
         title: () => `CelPay Received`,
         color: STYLES.COLORS.GREEN,
         iconName: "TransactionReceived",
-        statusText: "Received",
+        statusText: "CelPay Received",
       };
     case TRANSACTION_TYPES.CELPAY_RETURNED:
       return {
         title: () => `Canceled Transaction`,
         color: STYLES.COLORS.RED,
         iconName: "TransactionCanceled",
-        statusText: "Returned",
+        statusText: "CelPay Returned",
       };
 
     case TRANSACTION_TYPES.CELPAY_ONHOLD:
@@ -594,7 +594,7 @@ function getTransactionProps(transaction) {
         title: coin => `Received ${coin}`,
         color: STYLES.COLORS.ORANGE,
         iconName: "ReceiveArrowTransactions",
-        statusText: "On Hold",
+        statusText: "CelPay On Hold",
       };
 
     case TRANSACTION_TYPES.COLLATERAL_PENDING:

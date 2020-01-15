@@ -187,6 +187,10 @@ const CACHE_IMAGES = [
   require("../../assets/images/coins/dollar-icon.png"),
   require("../../assets/images/present-image.png"),
   require("../../assets/images/illustration-borrow-dollars_white.png"),
+  require("../../assets/images/hands-in-the-air.png"),
+  require("../../assets/images/money-currency-union.png"),
+  require("../../assets/images/money-currency-union-dark.png"),
+  require("../../assets/images/hands-in-the-air-dark.png"),
   require("../../assets/images/icon-send.png"),
 ];
 
