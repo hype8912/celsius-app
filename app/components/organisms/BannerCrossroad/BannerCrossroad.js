@@ -64,11 +64,11 @@ class BannerCrossroad extends Component {
 
     const currentDate = moment.utc().format();
 
-    if (this.isPowerOfTwo(bannerProps.sessionCount)) return null;
-    if (!isBannerVisible) return null;
-
     if (!hasPassedKYC())
       return <KYCTrigger actions={actions} kycType={kycStatus} />;
+
+    if (this.isPowerOfTwo(bannerProps.sessionCount)) return null;
+    if (!isBannerVisible) return null;
 
     if (isLoanBannerVisible()) {
       if (!bannerSwitch)
