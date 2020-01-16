@@ -8,8 +8,9 @@ import Banner from "./Banner";
 import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
 import { openModal } from "../../../redux/ui/uiActions";
+import userBehaviorUtil from "../../../utils/user-behavior-util";
 
-storiesOf("Banner", module)
+storiesOf("Banner/Trigger", module)
   .addDecorator(getStory => (
     <Provider store={store}>
       <CenterView>{getStory()}</CenterView>
@@ -45,7 +46,7 @@ storiesOf("Banner", module)
       />
     </View>
   ))
-  .add("NoKYC/Referral", () => (
+  .add("NoKYC/Referral Trigger", () => (
     <View style={{ marginBottom: 30 }}>
       <Banner
         backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
@@ -62,4 +63,16 @@ storiesOf("Banner", module)
         }
       />
     </View>
-  ));
+  ))
+  .add("Loan Trigger", () => (
+  <View style={{ marginBottom: 30 }}>
+    <Banner
+      backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
+      image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
+      action={() => {}}
+      buttonText={"Get a loan"}
+      title={"Did you know..."}
+      content={`Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending money you need at the lowest rates in the industry!`}
+    />
+  </View>
+));

@@ -40,6 +40,8 @@ import WithdrawWarningModalStories from "./WithdrawWarningModal/WithdrawWarningM
 import DestinationInfoTagModalStories from "./DestinationInfoTagModal/DestinationInfoTagModal.stories";
 import InterestDueModalStories from "./InterestDueModal/InterestDueModal.stories";
 import ReferralReceivedModalStories from "./ReferralReceivedModal/ReferralReceivedModal.stories";
+import ConfirmCelPayModalStories from "./ConfirmCelPayModal/ConfirmCelPayModal.stories";
+import CelPayInfoModalStories from "./CelPayInfoModal/CelPayInfoModal.stories";
 
 storiesOf("Modals", module)
   .addDecorator(getStory => (
@@ -53,7 +55,7 @@ storiesOf("Modals", module)
       <DepositInfoModalStories />
       <LoanApplicationSuccessModalStories />
       <WithdrawalInfoModalStories />
-
+      <ConfirmCelPayModalStories />
       <InterestDueModalStories />
       <ApiKeyRevokeModalStories />
       <ApiKeySuccessModalStories />
@@ -80,6 +82,7 @@ storiesOf("Modals", module)
       <TransactionFilterModalStories />
       <VerifyAuthAppModalStories />
       <WithdrawWarningModalStories />
+      <CelPayInfoModalStories/>
     </View>
   ))
   .add("LoanAlertsPayoutPrincipalModal", () => (
