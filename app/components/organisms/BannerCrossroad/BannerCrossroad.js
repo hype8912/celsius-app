@@ -72,8 +72,8 @@ class BannerCrossroad extends Component {
 
     if (isLoanBannerVisible()) {
       if (!bannerSwitch)
-        return <ReferralTrigger steps={"multi"} actions={actions} />;
-      return <LoanTrigger steps={"multi"} actions={actions} />;
+        return <ReferralTrigger actions={actions} />;
+      return <LoanTrigger actions={actions} />;
     }
     if (
       !bannerProps.lastReferral ||
@@ -84,7 +84,7 @@ class BannerCrossroad extends Component {
           .format()
       )
     )
-      return <ReferralTrigger steps={"single"} actions={actions} />;
+      return <ReferralTrigger actions={actions} />;
     return null;
   }
 }

@@ -20,8 +20,6 @@ class Banner extends Component {
     backgroundColor: PropTypes.string,
     image: PropTypes.number,
     close: PropTypes.func,
-    type: PropTypes.string,
-    steps: PropTypes.oneOf(["multi", "single"]),
   };
 
   static defaultProps = {};
@@ -29,7 +27,6 @@ class Banner extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      types: ["referral", "loan"],
     };
   }
 
@@ -45,15 +42,11 @@ class Banner extends Component {
       backgroundColor,
       image,
       close,
-      type,
-      steps,
     } = this.props;
-    const { types } = this.state;
     const style = BannerStyle();
 
     return (
       <View style={[style.container, { backgroundColor }]}>
-        <View style={style.mainWrapper}>
           <TouchableOpacity
             style={{
               position: "absolute",
@@ -67,28 +60,12 @@ class Banner extends Component {
           >
             <Icon name="Close" fill={"white"} width="25" />
           </TouchableOpacity>
-          <View style={style.halfCircleRight}>
+        <View style={style.circleWrapper}>
+          <View style={style.halfCircle}>
             <Image style={style.image} source={image} />
           </View>
+        </View>
           <View style={style.textAlignment}>
-            <View style={style.dotWrapper}>
-              {type !== "kyc" && steps === "multi"
-                ? types.map(d => (
-                    <View
-                      key={d}
-                      style={[
-                        style.dot,
-                        {
-                          backgroundColor:
-                            d === type
-                              ? STYLES.COLORS.WHITE
-                              : STYLES.COLORS.WHITE_OPACITY5,
-                        },
-                      ]}
-                    />
-                  ))
-                : null}
-            </View>
             <CelText
               color={"white"}
               type={"H4"}
@@ -138,7 +115,6 @@ class Banner extends Component {
               </TouchableOpacity>
             )}
           </View>
-        </View>
       </View>
     );
   }

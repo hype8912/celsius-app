@@ -2,53 +2,41 @@
 import {
   getThemedStyle,
   heightPercentageToDP,
-  widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
+    flexDirection: "row",
+    flex: 1,
     marginRight: -20,
     marginLeft: -20,
     marginTop: -20,
   },
-  mainWrapper: {
-    flexDirection: "row",
+  circleWrapper: {
+    flex: 0.2,
   },
-  halfCircleRight: {
+  halfCircle: {
     position: "absolute",
+    justifyContent: "center",
+    alignItems: "flex-end",
     marginTop: heightPercentageToDP("2%"),
     left: -heightPercentageToDP("13%"),
     height: heightPercentageToDP("22%"),
     width: heightPercentageToDP("22%"),
-    backgroundColor: STYLES.COLORS.WHITE_OPACITY2,
     borderRadius: heightPercentageToDP("11%"),
-    justifyContent: "center",
-    alignItems: "flex-end",
-  },
-  textAlignment: {
-    marginTop: heightPercentageToDP("1.7%"),
-    alignItems: "flex-start",
-    paddingLeft: widthPercentageToDP("22%"),
-    paddingRight: widthPercentageToDP("2%"),
+    backgroundColor: STYLES.COLORS.WHITE_OPACITY2,
   },
   image: {
+    resizeMode: "contain",
     marginRight: heightPercentageToDP("3%"),
     width: 40,
     height: 40,
-    resizeMode: "contain",
   },
-  dotWrapper: {
-    width: 48,
-    height: 26,
-    flexDirection: "row",
-  },
-  dot: {
-    height: 6,
-    width: 6,
-    marginHorizontal: 5,
-    marginVertical: 10,
-    borderRadius: 3,
+  textAlignment: {
+    flex: 0.80,
+    alignItems: "flex-start",
+    marginTop: heightPercentageToDP("1.7%"),
   },
 };
 
