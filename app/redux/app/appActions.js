@@ -119,7 +119,7 @@ function loadCelsiusAssets() {
   return async dispatch => {
     dispatch({ type: ACTIONS.START_LOADING_ASSETS });
 
-    await appUtil.cacheFonts(ASSETS.FONTS);
+    // await appUtil.cacheFonts(ASSETS.FONTS);
     await appUtil.cacheImages(ASSETS.CACHE_IMAGES);
 
     dispatch({ type: ACTIONS.FINISH_LOADING_ASSETS });

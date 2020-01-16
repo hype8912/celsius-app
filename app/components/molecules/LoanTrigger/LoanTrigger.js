@@ -9,7 +9,6 @@ import userBehaviorUtil from "../../../utils/user-behavior-util";
 class LoanTrigger extends Component {
   static propTypes = {
     actions: PropTypes.instanceOf(Object),
-    steps: PropTypes.string,
   };
   static defaultProps = {};
 
@@ -20,7 +19,7 @@ class LoanTrigger extends Component {
   }
 
   render() {
-    const { actions, steps } = this.props;
+    const { actions } = this.props;
     // const style = LoanTriggerStyle();
 
     const content = `Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending money you need at the lowest rates in the industry!`;
@@ -37,8 +36,6 @@ class LoanTrigger extends Component {
         title={"Did you know..."}
         content={content}
         close={() => actions.closeBanner()}
-        type={"loan"}
-        steps={steps}
       />
     );
   }

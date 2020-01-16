@@ -9,7 +9,6 @@ import userBehaviorUtil from "../../../utils/user-behavior-util";
 class ReferralTrigger extends Component {
   static propTypes = {
     actions: PropTypes.instanceOf(Object),
-    steps: PropTypes.string,
   };
   static defaultProps = {};
 
@@ -17,12 +16,11 @@ class ReferralTrigger extends Component {
     super(props);
 
     this.state = {
-      trigger: false,
     };
   }
 
   render() {
-    const { actions, steps } = this.props;
+    const { actions } = this.props;
 
     const content =
       "Earn even more when others sign up for Celsius with your referral code!\n" +
@@ -46,8 +44,6 @@ class ReferralTrigger extends Component {
         title={"Refer & Earn!"}
         content={content}
         close={() => actions.closeBanner()}
-        type={"referral"}
-        steps={steps}
       />
     );
   }

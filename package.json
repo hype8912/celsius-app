@@ -19,7 +19,7 @@
     "plop": "plop",
     "prettier:format": "prettier --trailing-comma --write \"app/**/*.js\"",
     "prettier:hook": "pretty-quick --staged",
-    "pre:commit": "yarn prettier:hook",
+    "pre:commit": "yarn prettier:hook && yarn lint",
     "storybook": "(adb reverse tcp:7007 tcp:7007 || true) && start-storybook"
   },
   "husky": {

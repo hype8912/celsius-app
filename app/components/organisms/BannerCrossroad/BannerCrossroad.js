@@ -64,16 +64,16 @@ class BannerCrossroad extends Component {
 
     const currentDate = moment.utc().format();
 
-    if (this.isPowerOfTwo(bannerProps.sessionCount)) return null;
-    if (!isBannerVisible) return null;
-
     if (!hasPassedKYC())
       return <KYCTrigger actions={actions} kycType={kycStatus} />;
 
+    if (this.isPowerOfTwo(bannerProps.sessionCount)) return null;
+    if (!isBannerVisible) return null;
+
     if (isLoanBannerVisible()) {
       if (!bannerSwitch)
-        return <ReferralTrigger steps={"multi"} actions={actions} />;
-      return <LoanTrigger steps={"multi"} actions={actions} />;
+        return <ReferralTrigger actions={actions} />;
+      return <LoanTrigger actions={actions} />;
     }
     if (
       !bannerProps.lastReferral ||
@@ -84,7 +84,7 @@ class BannerCrossroad extends Component {
           .format()
       )
     )
-      return <ReferralTrigger steps={"single"} actions={actions} />;
+      return <ReferralTrigger actions={actions} />;
     return null;
   }
 }
