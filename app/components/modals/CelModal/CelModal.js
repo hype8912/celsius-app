@@ -141,9 +141,12 @@ class CelModal extends Component {
             {children}
           </View>
           <BlurView
-            tint={"dark"}
-            intensity={100}
-            style={StyleSheet.absoluteFill}
+            blurType={"dark"}
+            blurAmount={100}
+            style={[
+              StyleSheet.absoluteFill,
+              { backgroundColor: "transparent" },
+            ]}
           />
           <TouchableOpacity
             style={style.outsideCloseModal}

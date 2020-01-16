@@ -35,7 +35,7 @@ export default {
   initInternetConnectivityListener,
   pollBackendStatus,
   cacheImages,
-  cacheFonts,
+  // cacheFonts,
   recursiveMap,
   getRevisionId,
 };
@@ -134,11 +134,11 @@ async function cacheImages(images) {
  * @returns {Array} - array of promises
  */
 // Fonts are preloaded using Expo.Font.loadAsync(font).
-async function cacheFonts(fonts) {
-  // for (let i = 0; i < fonts.length; i++) {
-  //   await Font.loadAsync(fonts[i]);
-  // }
-}
+// async function cacheFonts(fonts) {
+// for (let i = 0; i < fonts.length; i++) {
+//   await Font.loadAsync(fonts[i]);
+// }
+// }
 
 /**
  * Change all nested react elemnets through fn()

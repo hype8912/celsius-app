@@ -7,8 +7,8 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
-import apiUtil from "../../../utils/api-util";
-import API from "../../../constants/API";
+// import apiUtil from "../../../utils/api-util";
+// import API from "../../../constants/API";
 import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import Constants from "../../../../constants";
@@ -47,37 +47,36 @@ class Login extends Component {
   //   }
   // };
 
-  reCaptchaPassed = (event) => {
-    const { actions } = this.props
-    actions.updateFormField('reCaptchaKey',event.nativeEvent.data)
+  reCaptchaPassed = event => {
+    const { actions } = this.props;
+    actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
     actions.loginUser();
-  }
+  };
 
   renderCaptcha = () => {
     const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
     return (
-        <GoogleReCaptcha
-          siteKey={RECAPTCHA_KEY}
-          url={RECAPTCHA_URL}
-          languageCode='en'
-          onMessage={this.onMessage}
-          reCaptchaPassed={this.reCaptchaPassed}
-        />
-
-    )
-  }
+      <GoogleReCaptcha
+        siteKey={RECAPTCHA_KEY}
+        url={RECAPTCHA_URL}
+        languageCode="en"
+        onMessage={this.onMessage}
+        reCaptchaPassed={this.reCaptchaPassed}
+      />
+    );
+  };
 
   render() {
-    const { formData, callsInProgress, actions } = this.props;
-    const loginLoading = apiUtil.areCallsInProgress(
-      [
-        API.LOGIN_USER,
-        API.LOGIN_USER_FACEBOOK,
-        API.LOGIN_USER_GOOGLE,
-        API.LOGIN_USER_TWITTER,
-      ],
-      callsInProgress
-    );
+    const { formData, actions } = this.props;
+    // const loginLoading = apiUtil.areCallsInProgress(
+    //   [
+    //     API.LOGIN_USER,
+    //     API.LOGIN_USER_FACEBOOK,
+    //     API.LOGIN_USER_GOOGLE,
+    //     API.LOGIN_USER_TWITTER,
+    //   ],
+    //   callsInProgress <--from props
+    // );
 
     // Disabling forgot pass on Staging regarding to its bug on Staging environment
     const { ENV } = Constants;
@@ -117,13 +116,13 @@ class Login extends Component {
 
         {this.renderCaptcha()}
 
-        {/*<CelButton*/}
+        {/* <CelButton*/}
         {/*  margin="10 0 40 0"*/}
         {/*  onPress={this.loginUser}*/}
         {/*  loading={loginLoading}*/}
-        {/*>*/}
+        {/* >*/}
         {/*  Log in*/}
-        {/*</CelButton>*/}
+        {/* </CelButton>*/}
 
         {ENV === "STAGING" ? (
           <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
@@ -141,7 +140,6 @@ class Login extends Component {
             </CelButton>
           </>
         ) : null}
-
       </AuthLayout>
     );
   }

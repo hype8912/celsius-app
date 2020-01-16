@@ -5,6 +5,7 @@ import { TWLoginButton } from "react-native-simple-twitter";
 
 import SocialLoginStyle from "./SocialLogin.styles";
 import Icon from "../../atoms/Icon/Icon";
+import loggerUtil from "../../../utils/logger-util";
 
 class SocialLogin extends Component {
   static propTypes = {
@@ -33,7 +34,7 @@ class SocialLogin extends Component {
   };
 
   handleError = err => {
-    console.log(err);
+    loggerUtil.err(err);
   };
 
   render() {
