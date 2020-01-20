@@ -273,11 +273,13 @@ class FabMenu extends Component {
     if (Platform.OS !== "android") {
       return (
         <>
-          <BlurView
-            tint={tintColor}
-            intensity={100}
-            style={[StyleSheet.absoluteFill]}
-          />
+          { Platform.OS === 'ios' && <BlurView
+            blurType={tintColor}
+            blurAmount={15}
+            style={[
+              StyleSheet.absoluteFill
+            ]}
+          />}
           <Card
             styles={style.helpCard}
             size={"half"}

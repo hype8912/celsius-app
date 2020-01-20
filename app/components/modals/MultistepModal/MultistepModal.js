@@ -216,17 +216,6 @@ class MultistepModal extends Component {
             </Animated.ScrollView>
           </ScrollView>
         </View>
-        <BlurView
-          tint={"dark"}
-          intensity={100}
-          style={StyleSheet.absoluteFill}
-        />
-        <TouchableOpacity
-          style={style.outsideCloseModal}
-          onPress={() => {
-            actions.closeModal();
-          }}
-        />
       </CelModal>
     );
   }
