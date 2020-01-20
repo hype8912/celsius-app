@@ -144,6 +144,7 @@ class WithdrawalInfoModal extends Component {
             require("../../../../assets/images/modal-withdraw.png"),
           ];
     if (type === "CEL" || type === "DAI" || !type) {
+      // NOTE (djenader): !type is mandatory
       return (
         <MultistepModal
           style={style.container}

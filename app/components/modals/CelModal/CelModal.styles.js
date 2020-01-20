@@ -9,10 +9,6 @@ import STYLES from "../../../constants/STYLES";
 const base = {
   wrapper: {
     alignItems: "center",
-    backgroundColor:
-      Platform.OS === "android"
-        ? "rgba(243,243,243,0.9)"
-        : "rgba(243,243,243,0)",
     flex: 1,
   },
   modal: {
@@ -66,7 +62,11 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    outsideCloseModal: {
+      backgroundColor: Platform.OS === "android" ? STYLES.COLORS.LIGHT_MODAL_OUTSIDE_BACKGROUND_COLOR : null
+    }
+  },
 
   dark: {
     modal: {
@@ -75,6 +75,9 @@ const themed = {
     pictureWrapper: {
       backgroundColor: STYLES.COLORS.DARK_HEADER,
     },
+    outsideCloseModal: {
+     backgroundColor: Platform.OS === "android" ? STYLES.COLORS.DARK_MODAL_OUTSIDE_BACKGROUND_COLOR : null
+    }
   },
 
   celsius: {},

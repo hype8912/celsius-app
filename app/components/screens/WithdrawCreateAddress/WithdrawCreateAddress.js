@@ -223,7 +223,7 @@ class WithdrawCreateAddress extends Component {
               coin={formData.coin}
               navigateNext={this.handleConfirmWithdrawalFromModal}
             />
-            <MemoIdModal coin={formData.coin} />
+            <MemoIdModal coin={formData.coin} closeModal={actions.closeModal} />
             <DestinationInfoTagModal closeModal={actions.closeModal} />
             <ConfirmWithdrawalAddressModal
               handleConfirmWithdrawal={this.handleConfirmWithdrawal}

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   Keyboard,
+  Platform
 } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -13,13 +14,14 @@ import { BlurView } from "@react-native-community/blur";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-import { MODALS } from "../../../constants/UI";
+import { MODALS, THEMES } from "../../../constants/UI";
 import CelModalStyle from "./CelModal.styles";
 import Icon from "../../atoms/Icon/Icon";
 
 @connect(
   state => ({
     openedModal: state.ui.openedModal,
+    theme: state.user.appSettings.theme,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -57,6 +59,9 @@ class CelModal extends Component {
       "keyboardDidHide",
       this.keyboardDidHide
     );
+    const tintColor = this.getTintColor();
+    // eslint-disable-next-line react/no-did-update-set-state
+    this.setState({tintColor})
   }
 
   componentWillUnmount() {
@@ -74,6 +79,18 @@ class CelModal extends Component {
     this.setState({
       modalPosition: { justifyContent: "flex-end" },
     });
+  };
+
+  getTintColor = () => {
+    const { theme } = this.props;
+    switch (theme) {
+      case THEMES.DARK:
+      case THEMES.CELSIUS:
+        return THEMES.DARK;
+      case THEMES.LIGHT:
+      default:
+        return THEMES.LIGHT;
+    }
   };
 
   renderPicture = () => {
@@ -122,9 +139,8 @@ class CelModal extends Component {
       hasCloseButton,
       onClose,
     } = this.props;
-    const { modalPosition } = this.state;
+    const { modalPosition, tintColor } = this.state;
     const style = CelModalStyle();
-
     return (
       <Modal
         animationType="fade"
@@ -140,14 +156,13 @@ class CelModal extends Component {
             </View>
             {children}
           </View>
-          <BlurView
-            blurType={"dark"}
-            blurAmount={100}
+        { Platform.OS === 'ios' && <BlurView
+            blurType={tintColor}
+            blurAmount={15}
             style={[
-              StyleSheet.absoluteFill,
-              { backgroundColor: "transparent" },
+              StyleSheet.absoluteFill
             ]}
-          />
+          /> }
           <TouchableOpacity
             style={style.outsideCloseModal}
             onPress={() => {

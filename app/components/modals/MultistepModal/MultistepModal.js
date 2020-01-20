@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import {
-  View,
-  Animated,
-  ScrollView,
-  Dimensions,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Animated, ScrollView, Dimensions } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { BlurView } from "@react-native-community/blur";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
@@ -164,7 +156,7 @@ class MultistepModal extends Component {
   }
 
   render() {
-    const { name, children, verticalScroll, imagesArray, actions } = this.props;
+    const { name, children, verticalScroll, imagesArray } = this.props;
     const { xOffset } = this.state;
 
     const style = MultistepModalStyles();
@@ -216,17 +208,6 @@ class MultistepModal extends Component {
             </Animated.ScrollView>
           </ScrollView>
         </View>
-        <BlurView
-          tint={"dark"}
-          intensity={100}
-          style={StyleSheet.absoluteFill}
-        />
-        <TouchableOpacity
-          style={style.outsideCloseModal}
-          onPress={() => {
-            actions.closeModal();
-          }}
-        />
       </CelModal>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Keyboard, View } from "react-native";
+import { Keyboard, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -16,6 +16,8 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import addressUtil from "../../../utils/address-util";
 import { MODALS } from "../../../constants/UI";
 import ChangeWithdrawalAddressModal from "../../modals/ChangeWithdrawalAddressModal/ChangeWithdrawalAddressModal";
+import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
+import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 
 @connect(
   state => ({
@@ -170,11 +172,18 @@ class WithdrawConfirmAddress extends Component {
 
             {hasTag ? (
               <View>
-                <View style={style.containerWithMargin}>
+                <TouchableOpacity
+                  style={style.containerWithMargin}
+                  onPress={() =>
+                    formData.coin.toLowerCase() === "xrp"
+                      ? actions.openModal(MODALS.DESTINATION_TAG_MODAL)
+                      : actions.openModal(MODALS.MEMO_ID_MODAL)
+                  }
+                >
                   <CelText type={"H5"} style={style.tagText}>
                     {tagText}
                   </CelText>
-                </View>
+                </TouchableOpacity>
 
                 <InfoBox
                   left
@@ -203,6 +212,8 @@ class WithdrawConfirmAddress extends Component {
               Change withdrawal address
             </CelButton>
             <ChangeWithdrawalAddressModal onPressConfirm={this.navigate} />
+            <MemoIdModal coin={formData.coin} closeModal={actions.closeModal} />
+            <DestinationInfoTagModal closeModal={actions.closeModal} />
           </View>
         </View>
       </RegularLayout>

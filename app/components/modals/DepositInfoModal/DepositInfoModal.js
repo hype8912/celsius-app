@@ -193,6 +193,7 @@ class DepositInfoModal extends Component {
     }
 
     if (type === "XRP" || type === "XLM" || type === "EOS" || !type) {
+      // NOTE (djenader): !type is mandatory
       const multistepContent = this.handleMultistepContent(type);
       const imagesArray = this.handleStepImages();
 
