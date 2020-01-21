@@ -47,27 +47,19 @@
 }
 
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    if (![RNBranch.branch application:application openURL:url sourceApplication:sourceApplication annotation:annotation]) {
-        // do other deep link routing for the Facebook SDK, Pinterest SDK, etc 
-        // [[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
-    }
-    return YES;
-}
+// Initialize the Branch Session at the top of existing application:didFinishLaunchingWithOptions:
 
 
-
-// Add the openURL and continueUserActivity functions 
+// Add the openURL and continueUserActivity functions
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     if (![RNBranch.branch application:app openURL:url options:options]) {
+        // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
     }
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-    [RNBranch continueUserActivity:userActivity];
-    // [[AppsFlyerTracker sharedTracker] continueUserActivity:userActivity restorationHandler:restorationHandler];
-    return YES;
+    return [RNBranch continueUserActivity:userActivity];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
