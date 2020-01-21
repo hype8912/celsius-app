@@ -19,7 +19,7 @@ const FONTS = [
   },
   { "Barlow-Regular": require("../../assets/fonts/Barlow/Barlow-Regular.ttf") },
   {
-    "Barlow-RegularItalic": require("../../assets/fonts/Barlow/Barlow-RegularItalic.ttf"),
+    "Barlow-RegularItalic": require("../../assets/fonts/Barlow/Barlow-Italic.ttf"),
   },
   { "Barlow-Medium": require("../../assets/fonts/Barlow/Barlow-Medium.ttf") },
   {

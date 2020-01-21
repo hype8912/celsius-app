@@ -775,7 +775,7 @@ export const NoteSection = ({ text }) =>
   text ? (
     <View style={{ width: "100%", paddingHorizontal: 20, paddingVertical: 20 }}>
       <CelText>Note:</CelText>
-      <CelText italic>{text}</CelText>
+      <CelText italic margin="5 0 0 0">{text}</CelText>
     </View>
   ) : null;
 

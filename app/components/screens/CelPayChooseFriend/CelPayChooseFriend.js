@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View } from "react-native";
 import Contacts from "react-native-contacts";
-import reactotron from "reactotron-react-native";
 
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -19,6 +18,13 @@ import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import Spinner from "../../atoms/Spinner/Spinner";
+import CircleButton from "../../atoms/CircleButton/CircleButton";
+
+const loadingText =
+  "Your contacts are being imported. This make take a couple of minutes, so we'll let you know once the import is complete. \n" +
+  "\n" +
+  "Only contacts with Celsius accounts will appear in this list. You can CelPay any of your friends at any time by sharing a unique CelPay link."
 
 @connect(
   state => ({
@@ -41,6 +47,7 @@ class CelPayChooseFriend extends Component {
       loadingContacts: false,
       totalContacts: 0,
       loadedContacts: 0,
+      hasImportedContacts: false,
     };
   }
 
@@ -111,7 +118,7 @@ class CelPayChooseFriend extends Component {
           this.setState({ loadedContacts });
         }
 
-        this.setState({ loadingContacts: false });
+        this.setState({ loadingContacts: false, hasImportedContacts: true });
       } else {
         await requestForPermission(ALL_PERMISSIONS.CONTACTS);
       }
@@ -136,7 +143,6 @@ class CelPayChooseFriend extends Component {
 
   filterContacts = () => {
     const { contacts, formData } = this.props;
-    reactotron.log({ formData });
     return formData.search
       ? contacts.filter(c =>
           c.name.toLowerCase().includes(formData.search.toLowerCase())
@@ -149,17 +155,26 @@ class CelPayChooseFriend extends Component {
   renderFTUX = () => {
     return (
       <RegularLayout>
-        <View>
-          <CelText type="H2" align="center" margin="20 0 0 0">
+        <View style={{ paddingTop: 60 }}>
+          <CircleButton
+            icon="Contacts"
+            iconSize={28}
+          />
+
+          <CelText weight="bold" type="H2" align="center" margin="20 0 0 0">
             CelPay your way!
           </CelText>
 
+          <CelText align="center" margin="20 0 0 0">
+            Import your contacts to transfer crypto quickly and easily between friends. Only friends with the Celsius app will appear in your contacts list.
+          </CelText>
+
           <CelButton margin="20 0 20 0" onPress={this.importContacts}>
-            Import Device Contacts
+            Import Contacts
           </CelButton>
 
           <CelButton margin="20 0 20 0" basic onPress={this.sendLink}>
-            Send as link
+            CelPay with a link
           </CelButton>
         </View>
       </RegularLayout>
@@ -169,16 +184,21 @@ class CelPayChooseFriend extends Component {
   renderNoFirends = () => {
     const { search } = this.props.formData;
     const text = search
-      ? `No contact named ${search}`
-      : "None of your contacts";
+      ? `None of your friends named ${search}`
+      : "None of your friends";
     return (
-      <View>
-        <CelText type="H2" align="center">
-          No contacts
+      <View style={{ paddingTop: 60 }}>
+        <CircleButton
+          icon="Contacts"
+          iconSize={28}
+        />
+
+        <CelText weight="bold" type="H2" align="center" margin="25 0 0 0">
+          No friends
         </CelText>
 
-        <CelText align="center">
-          {text} has a Celsius account. You can still send them money as a link
+        <CelText align="center" margin="4 0 30 0">
+          { text } has installed Celsius App. You can still CelPay them with a link.
         </CelText>
 
         <CelButton onPress={this.sendLink}>Send as link</CelButton>
@@ -186,55 +206,91 @@ class CelPayChooseFriend extends Component {
     );
   };
 
-  render() {
+  renderLoadingContacts = () => {
+    return (
+      <RegularLayout>
+        { this.renderProgressBar() }
+
+        <View style={{ alignItems: "center", paddingTop: 60 }}>
+          <Spinner size={50} />
+        </View>
+
+        <CelText align="center" margin="20 0 16 0">
+          { loadingText }
+        </CelText>
+
+        <CelButton
+          onPress={this.sendLink}
+          basic
+        >
+          Send as Link >
+        </CelButton>
+      </RegularLayout>
+    )
+  }
+
+  renderProgressBar = () => {
     const {
-      hasContactPermission,
-      loadingContacts,
       totalContacts,
       loadedContacts,
+    } = this.state;
+
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 10,
+        }}
+      >
+        <ProgressBar
+          steps={totalContacts}
+          currentStep={loadedContacts}
+          margin="10 0 10 0"
+        />
+        <CelText>
+          {loadedContacts} of {totalContacts} contacts loaded
+        </CelText>
+      </View>
+
+    )
+  }
+
+  render() {
+    const {
+      loadingContacts,
+      hasImportedContacts,
     } = this.state;
     const { callsInProgress } = this.props;
 
     const hasFriends = this.hasFriends();
     if (
-      !hasFriends &&
       apiUtil.areCallsInProgress([API.GET_CONNECT_CONTACTS], callsInProgress) &&
       !loadingContacts
     ) {
       return <LoadingScreen />;
     }
 
-    if ((!hasContactPermission || !hasFriends) && !loadingContacts) {
+    if (!hasFriends && !loadingContacts && !hasImportedContacts) {
       return this.renderFTUX();
     }
 
+    if (!hasFriends && loadingContacts) {
+      return this.renderLoadingContacts();
+    }
+
     const filteredContacts = this.filterContacts();
-    reactotron.log({ filteredContacts });
     return (
       <RegularLayout>
         <View style={{ flex: 1, width: "100%" }}>
-          {loadingContacts ? (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 10,
-              }}
-            >
-              <ProgressBar
-                steps={totalContacts}
-                currentStep={loadedContacts}
-                margin="10 0 10 0"
-              />
-              <CelText>
-                {loadedContacts} of {totalContacts} contacts loaded
-              </CelText>
-            </View>
-          ) : (
-            <CelButton margin="15 0 15 0" onPress={this.importContacts} basic>
-              Refresh contacts
-            </CelButton>
-          )}
+          {loadingContacts
+            ? this.renderProgressBar()
+            : (
+              <CelButton margin="15 0 15 0" onPress={this.importContacts} basic>
+                Refresh contacts
+              </CelButton>
+            )
+          }
 
           {filteredContacts.length ? (
             <ContactList

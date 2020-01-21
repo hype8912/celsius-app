@@ -10,6 +10,9 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../../components/atoms/CelButton/CelButton";
 // import CelTextArea from '../../atoms/CelTextArea/CelTextArea';
 import CelInput from "../../atoms/CelInput/CelInput";
+import { MODALS } from "../../../constants/UI";
+import ConfirmCelPayModal from "../../modals/ConfirmCelPayModal/ConfirmCelPayModal";
+
 
 @connect(
   state => ({
@@ -49,7 +52,10 @@ class CelPayMessage extends Component {
     const { actions } = this.props;
 
     actions.navigateTo("VerifyProfile", {
-      onSuccess: actions.celPayFriend,
+      onSuccess: () => {
+        actions.navigateBack();
+        actions.openModal(MODALS.CONFIRM_CELPAY_MODAL)
+      },
     });
   };
 
@@ -77,6 +83,7 @@ class CelPayMessage extends Component {
             Send {formatter.crypto(formData.amountCrypto, formData.coin)}
           </CelButton>
         </View>
+        <ConfirmCelPayModal/>
       </RegularLayout>
     );
   }

@@ -94,6 +94,9 @@ function getTransactionType(transaction) {
     if (transaction.nature === "withdrawal") {
       return TRANSACTION_TYPES.WITHDRAWAL_CANCELED;
     }
+    if (transaction.nature === "outbound_transfer") {
+      return TRANSACTION_TYPES.CELPAY_CANCELED;
+    }
     return TRANSACTION_TYPES.CANCELED;
   }
 
@@ -192,7 +195,15 @@ function getTransactionType(transaction) {
     if (
       !transaction.transfer_data.claimed_at &&
       !transaction.transfer_data.cleared_at &&
-      !transaction.transfer_data.expired_at
+      !transaction.transfer_data.expired_at &&
+      !transaction.transfer_data.is_confirmed
+    )
+      return TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION;
+    if (
+      !transaction.transfer_data.claimed_at &&
+      !transaction.transfer_data.cleared_at &&
+      !transaction.transfer_data.expired_at &&
+      transaction.transfer_data.is_confirmed
     )
       return TRANSACTION_TYPES.CELPAY_PENDING;
     if (
@@ -299,7 +310,9 @@ function filterTransactionsByType(transactions, types) {
         );
       case "celpay":
         return transactionTypes.push(
+          TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION,
           TRANSACTION_TYPES.CELPAY_PENDING,
+          TRANSACTION_TYPES.CELPAY_CANCELED,
           TRANSACTION_TYPES.CELPAY_CLAIMED,
           TRANSACTION_TYPES.CELPAY_EXPIRED,
           TRANSACTION_TYPES.CELPAY_ONHOLD,
@@ -553,20 +566,15 @@ function getTransactionProps(transaction) {
         statusText: "Bonus",
       };
 
+    case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
     case TRANSACTION_TYPES.CELPAY_PENDING:
       return {
-        title: () => `Waiting to be accepted`,
+        title: () => "CelPay Pending",
         color: STYLES.COLORS.ORANGE,
         iconName: "TransactionSent",
-        statusText: "Pending",
+        statusText: "CelPay Pending",
       };
     case TRANSACTION_TYPES.CELPAY_CLAIMED:
-      return {
-        title: coin => `${coin} Claimed`,
-        color: STYLES.COLORS.GREEN,
-        iconName: "TransactionSent",
-        statusText: "CelPay Claimed",
-      };
     case TRANSACTION_TYPES.CELPAY_SENT:
       return {
         title: coin => `${coin} Sent`,
@@ -577,7 +585,7 @@ function getTransactionProps(transaction) {
     case TRANSACTION_TYPES.CELPAY_RECEIVED:
       return {
         title: () => `CelPay Received`,
-        color: STYLES.COLORS.GREEN,
+        color: STYLES.COLORS.CELSIUS_BLUE,
         iconName: "TransactionReceived",
         statusText: "CelPay Received",
       };
@@ -596,6 +604,15 @@ function getTransactionProps(transaction) {
         iconName: "ReceiveArrowTransactions",
         statusText: "CelPay On Hold",
       };
+
+    case TRANSACTION_TYPES.CELPAY_CANCELED:
+      return {
+        title: () => "CelPay Canceled",
+        color: STYLES.COLORS.RED,
+        iconName: "TransactionCanceled",
+        statusText: "CelPay Canceled",
+      };
+
 
     case TRANSACTION_TYPES.COLLATERAL_PENDING:
       return {
@@ -809,17 +826,26 @@ function getTransactionSections(transaction) {
       return ["info", "date", "time", "status"];
 
     case TRANSACTION_TYPES.CELPAY_PENDING:
+    case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
       return [
         "info",
         "sentTo",
         "date",
         "time",
         "status",
-        "type",
+        "note",
+        "card:share:link",
+        "button:cancel:celpay",
+      ];
+    case TRANSACTION_TYPES.CELPAY_CANCELED:
+      return [
+        "info",
+        "sentTo",
+        "date",
+        "time",
+        "status",
         "note",
         "button:celpay:another",
-        "button:cancel:celpay",
-        "button:back",
       ];
     case TRANSACTION_TYPES.CELPAY_CLAIMED:
       return [
@@ -828,7 +854,6 @@ function getTransactionSections(transaction) {
         "date",
         "time",
         "status",
-        "type",
         "note",
         "button:celpay:another",
         "button:back",
@@ -840,7 +865,6 @@ function getTransactionSections(transaction) {
         "date",
         "time",
         "status",
-        "type",
         "note",
         "button:celpay:another",
         "button:back",
@@ -852,7 +876,6 @@ function getTransactionSections(transaction) {
         "date",
         "time",
         "status",
-        "type",
         "note",
         "button:celpay:friend",
         "button:back",
@@ -864,7 +887,6 @@ function getTransactionSections(transaction) {
         "date",
         "time",
         "status",
-        "type",
         "note",
         "button:celpay:another",
         "button:back",
@@ -875,7 +897,6 @@ function getTransactionSections(transaction) {
         "date",
         "time",
         "status",
-        "type",
         "note",
         "button:celpay:another",
         "button:back",
@@ -886,7 +907,6 @@ function getTransactionSections(transaction) {
         "date",
         "time",
         "status",
-        "type",
         "note",
         "button:celpay:friend",
         "button:back",

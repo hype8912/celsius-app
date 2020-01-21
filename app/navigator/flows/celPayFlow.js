@@ -21,7 +21,7 @@ export const celPayFlow = {
     ...profileFlow.screens,
   },
   props: {
-    initialRouteName: "CelPayChooseFriend",
+    initialRouteName: "CelPayLanding",
     defaultNavigationOptions,
     transitionConfig,
   },

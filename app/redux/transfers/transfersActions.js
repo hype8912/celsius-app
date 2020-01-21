@@ -102,7 +102,7 @@ function cancelTransfer(transferHash) {
     try {
       const res = await transferService.cancel(transferHash);
       dispatch(cancelTransferSuccess(res.data));
-      dispatch(showMessage("success", "Transaction canceled"));
+      dispatch(showMessage("error", "CelPay Canceled"));
       dispatch(getAllTransactions());
       dispatch(navigateTo("WalletLanding"));
     } catch (err) {

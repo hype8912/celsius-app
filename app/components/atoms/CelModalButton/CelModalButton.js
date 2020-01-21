@@ -4,6 +4,8 @@ import { TouchableOpacity, View } from "react-native";
 
 import CelModalButtonStyle from "./CelModalButton.styles";
 import CelText from "../CelText/CelText";
+import Spinner from "../Spinner/Spinner";
+import STYLES from "../../../constants/STYLES";
 
 class CelModalButton extends Component {
   static propTypes = {
@@ -17,6 +19,7 @@ class CelModalButton extends Component {
       "green",
       "white",
     ]),
+    loading: PropTypes.bool,
   };
   static defaultProps = {
     buttonStyle: "basic",
@@ -66,7 +69,7 @@ class CelModalButton extends Component {
   };
 
   render() {
-    const { children, onPress, buttonStyle } = this.props;
+    const { children, onPress, buttonStyle, loading } = this.props;
     const style = CelModalButtonStyle();
     const borderRadius = this.handleBorderRadius();
     const buttonColor = this.handleButtonStyle();
@@ -78,9 +81,13 @@ class CelModalButton extends Component {
           onPress={buttonStyle !== "disabled" ? onPress : null}
           disabled={buttonStyle === "disabled"}
         >
-          <CelText color={buttonColor.color} type={"H4"} weight={"500"}>
-            {children}
-          </CelText>
+          { loading ? (
+            <Spinner size={25} color={STYLES.COLORS.WHITE} />
+          ) : (
+            <CelText color={buttonColor.color} type={"H4"} weight={"500"}>
+              {children}
+            </CelText>
+          ) }
         </TouchableOpacity>
       </View>
     );

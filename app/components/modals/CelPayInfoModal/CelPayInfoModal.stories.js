@@ -14,7 +14,7 @@ const CelPayInfoModalStories = () => (
     <CelButton onPress={() => store.dispatch(openModal(MODALS.CELPAY_INFO_MODAL))}>
       Open CelPayInfoModal
     </CelButton>
-    <CelPayInfoModal/>
+    <CelPayInfoModal maxTransferAmount="1234" />
   </View>
 );
 

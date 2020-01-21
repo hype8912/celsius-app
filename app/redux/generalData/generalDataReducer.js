@@ -55,6 +55,7 @@ export default function generalDataReducer(state = initialState(), action) {
         minimumLoanAmount: action.minimumLoanAmount,
         celUtilityTiers: action.celUtilityTiers,
         withdrawalSettings: action.withdrawalSettings,
+        celPaySettings: action.celPaySettings,
         automaticLoanLimit: action.automaticLoanLimit,
       };
 

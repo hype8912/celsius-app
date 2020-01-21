@@ -40,7 +40,7 @@ export default function transactionsReducer(state = initialState, action) {
       transactionDetails = transactionsUtil.mapTransaction(action.transaction);
       return {
         ...state,
-        transactionDetails,
+        transactionDetails: { ...transactionDetails },
       };
     default:
       return { ...state };

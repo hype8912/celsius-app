@@ -8,7 +8,6 @@ import Banner from "./Banner";
 import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
 import { openModal } from "../../../redux/ui/uiActions";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
 
 storiesOf("Banner/Trigger", module)
   .addDecorator(getStory => (

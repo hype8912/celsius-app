@@ -32,6 +32,7 @@ function getInitialCelsiusData() {
         automaticLoanLimit: res.data.auto_maximum_threshold,
         celUtilityTiers: res.data.cel_utility_tiers,
         withdrawalSettings: res.data.withdrawal_settings,
+        celPaySettings: res.data.cel_pay_settings,
       });
     } catch (err) {
       dispatch(showMessage("error", err.msg));
