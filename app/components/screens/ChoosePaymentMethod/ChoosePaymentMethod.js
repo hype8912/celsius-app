@@ -5,12 +5,12 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 
 import ChoosePaymentMethodStyle from "./ChoosePaymentMethod.styles";
-import PaymentCard from "../../organisms/PaymentCard/PaymentCard";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PrepayDollarInterestModal from "../../modals/PrepayDollarInterestModal/PrepayDollarInterestModal";
 import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 
 @connect(
   state => ({
@@ -78,26 +78,26 @@ class ChoosePaymentMethod extends Component {
 
     const cardProps = [
       {
-        cardTitle: `${formatter.capitalize(pay)} with CEL`,
-        cardCopy: `Pay up to ${celDiscount} less interest when you choose to ${pay} your monthly payment in CEL.`,
-        onPressAction: () => actions.navigateTo("PaymentCel", { reason, id }),
+        textButton: `${formatter.capitalize(pay)} with CEL`,
+        explanation: `Pay up to ${celDiscount} less interest when you choose to ${pay} your monthly payment in CEL.`,
+        onPress: () => actions.navigateTo("PaymentCel", { reason, id }),
         lightImage: require("../../../../assets/images/icons/cel.png"),
         darkImage: require("../../.././../assets/images/icons/cel-dark.png"),
         isActive: activeCards.cel,
       },
       {
-        cardTitle: `${formatter.capitalize(pay)} with crypto`,
-        cardCopy: `Use coins from your wallet to ${pay} your loan interest.`,
-        onPressAction: () =>
+        textButton: `${formatter.capitalize(pay)} with crypto`,
+        explanation: `Use coins from your wallet to ${pay} your loan interest.`,
+        onPress: () =>
           actions.navigateTo("LoanPaymentCoin", { reason, id }),
         lightImage: require("../../../../assets/images/icons/crypto.png"),
         darkImage: require("../../.././../assets/images/icons/crypto-dark.png"),
         isActive: activeCards.coin,
       },
       {
-        cardTitle: `${formatter.capitalize(pay)} with Dollars`,
-        cardCopy: `Get all the information necessary to ${pay} your interest in dollars.`,
-        onPressAction: () => {
+        textButton: `${formatter.capitalize(pay)} with Dollars`,
+        explanation: `Get all the information necessary to ${pay} your interest in dollars.`,
+        onPress: () => {
           if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
             actions.updateFormField("coin", "USD");
             actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
@@ -130,7 +130,7 @@ class ChoosePaymentMethod extends Component {
       <View style={style.container}>
         <RegularLayout>
           {cardProps.map(i => (
-            <PaymentCard {...i} key={i.cardTitle} />
+            <MultiInfoCardButton {...i} key={i.cardTitle} />
           ))}
         </RegularLayout>
         <PrepayDollarInterestModal

@@ -54,6 +54,15 @@ export default function formsReducer(state = initialState, action) {
         ...state,
         formErrors: {},
       };
+
+    case ACTIONS.SET_ACTIVE_SCREEN:
+      return {
+        ...state,
+        formData: {
+          ...state.formData,
+          activeSearch: false,
+        }
+      };
     default:
       return { ...state };
   }

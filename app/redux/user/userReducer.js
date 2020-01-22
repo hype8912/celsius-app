@@ -18,11 +18,6 @@ const initialState = {
   securityOverview: {}, // TODO move to security
   kycDocuments: undefined, // TODO move to kycReducer
   utilityBill: undefined, // TODO move to kycReducer
-  contacts: {
-    // TODO move to profileReducer
-    friendsWithApp: [],
-    friendsWithoutApp: [],
-  },
 };
 
 export default (state = initialState, action) => {
@@ -135,15 +130,6 @@ export default (state = initialState, action) => {
         profile: {
           ...state.profile,
           individual_referral_link: action.link,
-        },
-      };
-
-    case ACTIONS.GET_CONNECTED_CONTACTS_SUCCESS:
-      return {
-        ...state,
-        contacts: {
-          friendsWithApp: [...action.contacts.friendsWithApp],
-          friendsWithoutApp: [...action.contacts.friendsWithoutApp],
         },
       };
 

@@ -10,8 +10,8 @@ import CelText from "../../atoms/CelText/CelText";
 import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { getPadding } from "../../../utils/styles-util";
-import PaymentCard from "../../organisms/PaymentCard/PaymentCard";
 import { LOAN_TYPES } from "../../../constants/DATA";
+import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 
 @connect(
   state => ({
@@ -51,11 +51,11 @@ class BorrowChooseLoan extends Component {
 
     if (canBorrowUSD) {
       cardDetails.push({
-        cardTitle: "Borrow Dollars",
-        cardCopy: "Take out a cash loan against your crypto.",
+        textButton: "Borrow Dollars",
+        explanation: "Take out a cash loan against your crypto.",
         lightImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
         darkImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
-        onPressAction: () => {
+        onPress: () => {
           actions.navigateTo("BorrowEnterAmount");
           actions.updateFormFields({
             coin: "USD",
@@ -67,11 +67,11 @@ class BorrowChooseLoan extends Component {
 
     if (canBorrowStable) {
       cardDetails.push({
-        cardTitle: "Borrow Stablecoins",
-        cardCopy: "Take out a loan in one of our supported stable coins.",
+        textButton: "Borrow Stablecoins",
+        explanation: "Take out a loan in one of our supported stable coins.",
         lightImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
         darkImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
-        onPressAction: () => {
+        onPress: () => {
           actions.navigateTo("BorrowEnterAmount");
           actions.updateFormFields({
             coin: "USDC",
@@ -101,7 +101,7 @@ class BorrowChooseLoan extends Component {
             What type of currency would you like to borrow?
           </CelText>
           {cardDetails.map(i => (
-            <PaymentCard {...i} key={i.cardTitle} />
+            <MultiInfoCardButton {...i} key={i.cardTitle} />
           ))}
         </View>
       </RegularLayout>

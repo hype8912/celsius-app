@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { WebView } from "react-native-webview";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -33,18 +33,16 @@ const patchPostMessageJsCode = `(${String(function() {
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-
 class GoogleReCaptcha extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      captchaHeight:150
-    }
+      captchaHeight: 150,
+    };
   }
 
   generateTheWebViewContent = key => {
-    const originalForm =
-      `<!DOCTYPE html>
+    const originalForm = `<!DOCTYPE html>
        <html>
         <head>
         <meta charset="UTF-8">
@@ -103,28 +101,32 @@ class GoogleReCaptcha extends Component {
      `;
 
     return originalForm;
-  }
+  };
 
   onMsg = event => {
-    const { formData, reCaptchaPassed } = this.props
+    const { formData, reCaptchaPassed } = this.props;
 
-    if (event && event.nativeEvent.data && event.nativeEvent.data === 'increaseReCap') {
-      if (formData.reCaptchaKey) { reCaptchaPassed(event) }
+    if (
+      event &&
+      event.nativeEvent.data &&
+      event.nativeEvent.data === "increaseReCap"
+    ) {
+      if (formData.reCaptchaKey) {
+        reCaptchaPassed(event);
+      }
       this.setState({
-        captchaHeight:500
-      })
-    }
-    else {
-      reCaptchaPassed(event)
-      this.setState({captchaHeight: 150})
+        captchaHeight: 500,
+      });
+    } else {
+      reCaptchaPassed(event);
+      this.setState({ captchaHeight: 150 });
     }
   };
 
-
-  render(){
-    const { siteKey, style, url } = this.props
-    const { captchaHeight } = this.state
-    return(
+  render() {
+    const { siteKey, style, url } = this.props;
+    const { captchaHeight } = this.state;
+    return (
       <WebView
         originWhitelist={["*"]}
         mixedContentMode={"always"}
@@ -132,13 +134,20 @@ class GoogleReCaptcha extends Component {
         javaScriptEnabled
         injectedJavaScript={patchPostMessageJsCode}
         automaticallyAdjustContentInsets
-        style={[{ backgroundColor: "transparent", width: "100%" , height: captchaHeight}, style]}
+        style={[
+          {
+            backgroundColor: "transparent",
+            width: "100%",
+            height: captchaHeight,
+          },
+          style,
+        ]}
         source={{
           html: this.generateTheWebViewContent(siteKey),
-          baseUrl: `${url}`
+          baseUrl: `${url}`,
         }}
       />
-    )
+    );
   }
-
-} export default GoogleReCaptcha
+}
+export default GoogleReCaptcha;

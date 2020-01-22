@@ -1,9 +1,8 @@
-import { Share } from "react-native";
 
 import ACTIONS from "../../constants/ACTIONS";
 import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
-import { showMessage } from "../ui/uiActions";
+import { closeModal, showMessage } from "../ui/uiActions";
 import { clearForm } from "../forms/formsActions";
 import transfersService from "../../services/transfer-service";
 import formatter from "../../utils/formatter";
@@ -58,11 +57,11 @@ function celPayFriend() {
       dispatch(clearForm());
       dispatch(
         navigateTo("TransactionDetails", {
-          form: "celPay",
           id: transferData.transaction_id,
           hideBack: true,
         })
       );
+      dispatch(closeModal());
 
       await celUtilityUtil.refetchMembershipIfChanged(transfer.coin);
 
@@ -82,7 +81,6 @@ function celPayShareLink() {
     try {
       const {
         amountCrypto,
-        amountUsd,
         coin,
         code,
         pin,
@@ -104,22 +102,7 @@ function celPayShareLink() {
         transfer: transferData,
       });
 
-      const branchLink = transferRes.data.branch_link;
-
-      const shareMsg = `You got ${formatter.crypto(
-        amountCrypto,
-        coin
-      )}! Click on the link to claim it ${branchLink}`;
-      await Share.share({ message: shareMsg, title: "Celsius CelPay" });
-
-      let msg;
-      if (amountUsd >= 50) {
-        msg = `Check your email and confirm your CelPay transaction!`;
-      } else {
-        msg = `Successfully sent ${formatter.crypto(amountCrypto, coin)}!`;
-      }
-
-      dispatch(showMessage("success", msg));
+      dispatch(showMessage("success", "An email verification has been sent. Check your inbox."));
       dispatch(clearForm());
       dispatch(
         navigateTo("TransactionDetails", {
@@ -127,6 +110,7 @@ function celPayShareLink() {
           hideBack: true,
         })
       );
+      dispatch(closeModal());
 
       await celUtilityUtil.refetchMembershipIfChanged(transfer.coin);
 

@@ -21,6 +21,7 @@ import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import LoseMembershipModal from "../../modals/LoseMembershipModal/LoseMembershipModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
+import ConfirmCelPayModal from "../../modals/ConfirmCelPayModal/ConfirmCelPayModal";
 
 @connect(
   state => ({
@@ -32,6 +33,7 @@ import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
     withdrawalAddresses: state.wallet.withdrawalAddresses,
     loyaltyInfo: state.user.loyaltyInfo,
     keypadOpen: state.ui.isKeypadOpen,
+    celPaySettings: state.generalData.celPaySettings,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -39,11 +41,10 @@ class CelPayEnterAmount extends Component {
   static propTypes = {};
   static defaultProps = {};
 
-  static navigationOptions = ({ navigation }) => {
-    const { params } = navigation.state;
+  static navigationOptions = () => {
     return {
       right: "profile",
-      title: params && params.title ? params.title : "CelPay",
+      title: "Enter Amount",
     };
   };
 
@@ -148,7 +149,7 @@ class CelPayEnterAmount extends Component {
     formatter.removeDecimalZeros(formatter.floor10(amountUsd, -2) || "");
 
   handleAmountChange = (newValue, predefined = { label: "" }) => {
-    const { formData, currencyRatesShort, actions, walletSummary } = this.props;
+    const { formData, currencyRatesShort, actions, walletSummary, celPaySettings } = this.props;
     const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
 
     const splitedValue = newValue.toString().split(".");
@@ -211,8 +212,9 @@ class CelPayEnterAmount extends Component {
     if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto)) {
       return actions.showMessage("warning", "Insufficient funds!");
     }
-    if (!isMalisaPusonja() && cryptoUtil.isGreaterThan(amountUsd, 1000)) {
-      return actions.showMessage("warning", "Daily CelPay limit is $1,000!");
+
+    if (!isMalisaPusonja() && cryptoUtil.isGreaterThan(amountUsd, celPaySettings.maximum_transfer_amount)) {
+      return actions.showMessage("warning", `You have surpassed the daily limit. Please enter an amount below ${ formatter.usd(celPaySettings.maximum_transfer_amount) } to continue.`);
     }
 
     this.setState({ activePeriod: predefined });
@@ -263,7 +265,10 @@ class CelPayEnterAmount extends Component {
       actions.closeModal();
     } else {
       actions.navigateTo("VerifyProfile", {
-        onSuccess: actions.celPayShareLink,
+        onSuccess: () => {
+          actions.navigateBack();
+          actions.openModal(MODALS.CONFIRM_CELPAY_MODAL)
+        },
       });
       actions.closeModal();
     }
@@ -333,6 +338,7 @@ class CelPayEnterAmount extends Component {
                 !(formData.amountCrypto && Number(formData.amountCrypto) > 0)
               }
               onPress={this.handleNextStep}
+              iconRight="IconArrowRight"
             >
               {this.getButtonCopy()}
             </CelButton>
@@ -357,6 +363,7 @@ class CelPayEnterAmount extends Component {
             tierTitle={loyaltyInfo.tier.title}
           />
         )}
+        <ConfirmCelPayModal/>
       </RegularLayout>
     );
   }

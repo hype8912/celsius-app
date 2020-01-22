@@ -34,7 +34,7 @@ class SocialLogin extends Component {
   };
 
   handleError = err => {
-    loggerUtil.err(err);
+    loggerUtil.log(err);
   };
 
   render() {

@@ -24,29 +24,3 @@ export const getDepositEligibleCoins = createSelector(
     return [...eligibleCoins];
   }
 );
-
-const getSearchFormData = state => state.forms.formData.search;
-const getContacts = state => state.user.contacts;
-
-export const getFilteredContacts = createSelector(
-  getSearchFormData,
-  getContacts,
-  (searchTerm, contacts) => {
-    let filteredContacts = {};
-
-    if (searchTerm) {
-      filteredContacts = {
-        friendsWithApp: contacts.friendsWithApp.filter(
-          c => c.name && c.name.toLowerCase().includes(searchTerm.toLowerCase())
-        ),
-        friendsWithoutApp: contacts.friendsWithoutApp.filter(
-          c => c.name && c.name.toLowerCase().includes(searchTerm.toLowerCase())
-        ),
-      };
-
-      return filteredContacts;
-    }
-
-    return contacts;
-  }
-);

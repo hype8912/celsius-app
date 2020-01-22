@@ -75,18 +75,21 @@ class CelHeading extends Component {
     const backScreenName = scenes[this.props.index - 1]
       ? scenes[this.props.index - 1].route.routeName
       : "";
+    const style = CelHeadingStyle();
 
     // if search is active and right part of header is type of search
     if (right === "search" && formData.activeSearch)
       return (
-        <CelButton
-          basic
-          iconRightColor={STYLES.COLORS.GRAY}
-          onPress={() => {
-            actions.updateFormField("activeSearch", true);
-          }}
-          iconRight="Search"
-        />
+        <View style={style.leftContentButton}>
+          <CelButton
+            basic
+            iconRightColor={STYLES.COLORS.GRAY}
+            onPress={() => {
+              actions.updateFormField("activeSearch", true);
+            }}
+            iconRight="Search"
+          />
+        </View>
       );
 
     // By default if scene prop hideBack is true or it's first screen in the stack, hide back arrow
@@ -258,7 +261,7 @@ class CelHeading extends Component {
             <View
               style={[
                 {
-                  width: "100%",
+                  width: "90%",
                   justifyContent: "center",
                   paddingTop: 20,
                   alignSelf: "center",
@@ -272,11 +275,7 @@ class CelHeading extends Component {
                 basic
                 margin="0 0 0 0"
                 field="search"
-                placeholder={
-                  scene.state.routeName === "SelectCoin"
-                    ? "Select a coin"
-                    : "Dialing code, country…"
-                }
+                placeholder="Search..."
                 type="text"
                 value={this.props.formData.search}
               />

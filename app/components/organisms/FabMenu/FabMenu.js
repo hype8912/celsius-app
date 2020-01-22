@@ -116,7 +116,7 @@ class FabMenu extends Component {
       main[1].push({
         iconName: "CelPay",
         label: "CelPay",
-        screen: "CelPayChooseFriend",
+        screen: "CelPayLanding",
       });
     if (loanCompliance.allowed)
       main[1].push({

@@ -42,6 +42,7 @@ import formatter from "../../../utils/formatter";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CollateralLoanCard from "../../molecules/CollateralLoanCard/CollateralLoanCard";
 import PrepaymentSuccessfulModal from "../../modals/PrepaymentSuccessfulModal/PrepaymentSuccessfulModal";
+import SendCelPayLinkCard from "../../molecules/SendCelPayLinkCard/SendCelPayLinkCard";
 
 @connect(
   state => ({
@@ -69,15 +70,22 @@ class TransactionDetails extends Component {
 
   constructor(props) {
     super(props);
+
+    this.interval = null;
+
     this.state = {
       loading: true,
     };
   }
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
     const { actions, navigation } = this.props;
     const transactionId = navigation.getParam("id");
-    await actions.getTransactionDetails(transactionId);
+
+    actions.getTransactionDetails(transactionId);
+    this.interval = setInterval(() => {
+      actions.getTransactionDetails(transactionId);
+    }, 15000)
   };
 
   componentDidUpdate(prevProps) {
@@ -97,6 +105,10 @@ class TransactionDetails extends Component {
         actions.getBranchIndividualLink();
       }
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   handleShareLink = async () => {
@@ -228,9 +240,9 @@ class TransactionDetails extends Component {
           <CelButton
             margin="30 0 0 0"
             key={sectionType}
-            onPress={() => actions.navigateTo("CelPayChooseFriend")}
+            onPress={() => actions.navigateTo("CelPayLanding")}
           >
-            CelPay another friend
+            Start another CelPay
           </CelButton>
         ) : null;
       case "button:celpay:friend":
@@ -238,7 +250,7 @@ class TransactionDetails extends Component {
           <CelButton
             margin="16 0 10 0"
             key={sectionType}
-            onPress={() => actions.navigateTo("CelPayChooseFriend")}
+            onPress={() => actions.navigateTo("CelPayLanding")}
           >
             CelPay a friend
           </CelButton>
@@ -542,19 +554,26 @@ class TransactionDetails extends Component {
         );
       case "info:box":
         return <SsnInfo key={sectionType} navigateTo={actions.navigateTo} />;
+      case "card:share:link":
+        return <SendCelPayLinkCard transaction={transaction} key={sectionType}/>;
       default:
         return null;
     }
   };
 
   render() {
-    const { transaction, callsInProgress } = this.props;
+    const { transaction, callsInProgress, navigation } = this.props;
+    const transactionId = navigation.getParam("id");
     const loadingTransactionDetails = apiUtil.areCallsInProgress(
       [API.GET_TRANSACTION_DETAILS],
       callsInProgress
     );
 
-    if (loadingTransactionDetails || !transaction)
+    if (
+      loadingTransactionDetails ||
+      !transaction ||
+      (transactionId && transaction.id !== transactionId)
+    )
       return (
         <RegularLayout padding="0 0 0 0">
           <LoadingState />
@@ -563,7 +582,7 @@ class TransactionDetails extends Component {
 
     const sections = transaction.uiSections;
     return (
-      <RegularLayout padding="0 0 0 0">
+      <RegularLayout padding="0 0 120 0">
         {sections.map(this.renderSection)}
         <PrepaymentSuccessfulModal />
       </RegularLayout>

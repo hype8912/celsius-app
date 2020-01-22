@@ -20,6 +20,7 @@ import nav from "./nav/navReducer";
 import community from "./community/communityReducer";
 import compliance from "./compliance/complianceReducer";
 import kyc from "./kyc/kycReducer";
+import contacts from "./contacts/contactsReducer";
 // NOTE(fj): plop reduxGen importing new Reducer here
 
 const appReducers = combineReducers({
@@ -42,6 +43,7 @@ const appReducers = combineReducers({
   community,
   compliance,
   kyc,
+  contacts,
   // NOTE(fj): plop reduxGen inserting new Reducer here
 });
 

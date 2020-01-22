@@ -111,7 +111,7 @@ class CoinDetails extends Component {
     const { actions } = this.props;
 
     actions.updateFormField("coin", currency.short);
-    actions.navigateTo("CelPayChooseFriend");
+    actions.navigateTo("CelPayLanding");
   };
 
   render() {

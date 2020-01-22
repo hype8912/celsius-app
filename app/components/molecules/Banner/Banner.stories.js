@@ -1,13 +1,22 @@
 import React from "react";
+import { View } from "react-native";
+import { Provider } from "react-redux";
+import { storiesOf } from "@storybook/react-native/dist";
+import store from "../../../redux/store";
+import CenterView from "../../../../storybook/stories/CenterView";
 import Banner from "./Banner";
 import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
 import { openModal } from "../../../redux/ui/uiActions";
-import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
-const BannerStories = () => (
-  <StoryWrapper title="Banner">
-    <StoryWrapper>
+storiesOf("Banner/Trigger", module)
+  .addDecorator(getStory => (
+    <Provider store={store}>
+      <CenterView>{getStory()}</CenterView>
+    </Provider>
+  ))
+  .add("Pending", () => (
+    <View style={{ marginBottom: 30 }}>
       <Banner
         backgroundColor={STYLES.COLORS.ORANGE}
         image={require("../../../../assets/images/kyc-icon.png")}
@@ -17,8 +26,11 @@ const BannerStories = () => (
         }
         info={"additional info"}
       />
-    </StoryWrapper>
-    <StoryWrapper>
+    </View>
+  ))
+
+  .add("Rejected", () => (
+    <View style={{ marginBottom: 30 }}>
       <Banner
         backgroundColor={STYLES.COLORS.RED}
         image={require("../../../../assets/images/kyc-icon.png")}
@@ -31,8 +43,10 @@ const BannerStories = () => (
           "Please go through the verification process again or contact our support for help."
         }
       />
-    </StoryWrapper>
-    <StoryWrapper>
+    </View>
+  ))
+  .add("NoKYC/Referral Trigger", () => (
+    <View style={{ marginBottom: 30 }}>
       <Banner
         backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
         image={require("../../../../assets/images/present-image.png")}
@@ -47,8 +61,17 @@ const BannerStories = () => (
           "\n"
         }
       />
-    </StoryWrapper>
-  </StoryWrapper>
-);
-
-export default BannerStories;
+    </View>
+  ))
+  .add("Loan Trigger", () => (
+  <View style={{ marginBottom: 30 }}>
+    <Banner
+      backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
+      image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
+      action={() => {}}
+      buttonText={"Get a loan"}
+      title={"Did you know..."}
+      content={`Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending money you need at the lowest rates in the industry!`}
+    />
+  </View>
+));

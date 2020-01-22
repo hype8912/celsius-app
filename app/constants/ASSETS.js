@@ -19,7 +19,7 @@ const FONTS = [
   },
   { "Barlow-Regular": require("../../assets/fonts/Barlow/Barlow-Regular.ttf") },
   {
-    "Barlow-RegularItalic": require("../../assets/fonts/Barlow/Barlow-RegularItalic.ttf"),
+    "Barlow-RegularItalic": require("../../assets/fonts/Barlow/Barlow-Italic.ttf"),
   },
   { "Barlow-Medium": require("../../assets/fonts/Barlow/Barlow-Medium.ttf") },
   {
@@ -187,6 +187,11 @@ const CACHE_IMAGES = [
   require("../../assets/images/coins/dollar-icon.png"),
   require("../../assets/images/present-image.png"),
   require("../../assets/images/illustration-borrow-dollars_white.png"),
+  require("../../assets/images/hands-in-the-air.png"),
+  require("../../assets/images/money-currency-union.png"),
+  require("../../assets/images/money-currency-union-dark.png"),
+  require("../../assets/images/hands-in-the-air-dark.png"),
+  require("../../assets/images/icon-send.png"),
 ];
 
 export default {
