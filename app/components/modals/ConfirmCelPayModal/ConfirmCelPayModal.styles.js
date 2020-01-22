@@ -1,10 +1,14 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from '../../../utils/styles-util';
+import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
-    container: {
-        flex: 1
-    },
+  container: {
+    flex: 1,
+  },
+  scrollViewContainer: {
+    marginLeft: 20,
+    marginRight: 20,
+  },
   amount: {
     justifyContent: "center",
     alignItems: "center",
@@ -14,20 +18,17 @@ const base = {
     justifyContent: "flex-end",
     marginTop: 20,
     height: 50,
-  }
-}
+  },
+};
 
 const themed = {
-    light: {
-    },
+  light: {},
 
-    dark: {
-    },
+  dark: {},
 
-    celsius: {
-    }
-}
+  celsius: {},
+};
 
 const ConfirmCelPayModalStyle = () => getThemedStyle(base, themed);
 
-export default ConfirmCelPayModalStyle
+export default ConfirmCelPayModalStyle;
