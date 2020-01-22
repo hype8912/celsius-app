@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, TouchableOpacity, Clipboard, BackHandler } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { NavigationEvents } from "react-navigation";
 
 import * as appActions from "../../../redux/actions";
 import VerifyProfileStyle from "./VerifyProfile.styles";
@@ -62,6 +63,7 @@ class VerifyProfile extends Component {
     actions.getPreviousPinScreen(activeScreen);
 
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
+    this.openKeypad()
   };
 
   componentWillUpdate(nextProps) {
@@ -80,6 +82,11 @@ class VerifyProfile extends Component {
       "hardwareBackPress",
       this.handleBackButtonClick
     );
+  }
+
+  openKeypad = () => {
+    const { actions } = this.props
+    actions.toggleKeypad(true)
   }
 
   onCheckSuccess = async () => {
@@ -266,6 +273,7 @@ class VerifyProfile extends Component {
 
     return (
       <RegularLayout padding="0 0 0 0" fabType={"hide"}>
+        <NavigationEvents onDidFocus={()=>this.openKeypad()}/>
         <View style={style.container}>
           {showType ? this.render2FA() : this.renderPIN()}
           <CelNumpad
