@@ -1,22 +1,13 @@
 import React from "react";
-import { View } from "react-native";
-import { Provider } from "react-redux";
-import { storiesOf } from "@storybook/react-native/dist";
-import store from "../../../redux/store";
-import CenterView from "../../../../storybook/stories/CenterView";
 import Banner from "./Banner";
 import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
 import { openModal } from "../../../redux/ui/uiActions";
+import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
-storiesOf("Banner", module)
-  .addDecorator(getStory => (
-    <Provider store={store}>
-      <CenterView>{getStory()}</CenterView>
-    </Provider>
-  ))
-  .add("Pending", () => (
-    <View style={{ marginBottom: 30 }}>
+const BannerStories = () => (
+  <StoryWrapper title="Banner">
+    <StoryWrapper>
       <Banner
         backgroundColor={STYLES.COLORS.ORANGE}
         image={require("../../../../assets/images/kyc-icon.png")}
@@ -26,11 +17,8 @@ storiesOf("Banner", module)
         }
         info={"additional info"}
       />
-    </View>
-  ))
-
-  .add("Rejected", () => (
-    <View style={{ marginBottom: 30 }}>
+    </StoryWrapper>
+    <StoryWrapper>
       <Banner
         backgroundColor={STYLES.COLORS.RED}
         image={require("../../../../assets/images/kyc-icon.png")}
@@ -43,10 +31,8 @@ storiesOf("Banner", module)
           "Please go through the verification process again or contact our support for help."
         }
       />
-    </View>
-  ))
-  .add("NoKYC/Referral", () => (
-    <View style={{ marginBottom: 30 }}>
+    </StoryWrapper>
+    <StoryWrapper>
       <Banner
         backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
         image={require("../../../../assets/images/present-image.png")}
@@ -61,5 +47,8 @@ storiesOf("Banner", module)
           "\n"
         }
       />
-    </View>
-  ));
+    </StoryWrapper>
+  </StoryWrapper>
+);
+
+export default BannerStories;

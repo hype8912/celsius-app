@@ -43,4 +43,5 @@ class DotsBar extends Component {
     );
   }
 }
+
 export default DotsBar;

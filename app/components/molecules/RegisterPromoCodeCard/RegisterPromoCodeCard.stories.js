@@ -1,28 +1,21 @@
 import React from "react";
-import { View } from "react-native";
-import { Provider } from "react-redux";
-import { storiesOf } from "@storybook/react-native/dist";
 import store from "../../../redux/store";
 import { openModal } from "../../../redux/ui/uiActions";
-import CenterView from "../../../../storybook/stories/CenterView";
 import RegisterPromoCodeCard from "./RegisterPromoCodeCard";
+import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
-storiesOf("RegisterPromoCodeCard", module)
-  .addDecorator(getStory => (
-    <Provider store={store}>
-      <CenterView>{getStory()}</CenterView>
-    </Provider>
-  ))
-  .add("with promoCode", () => (
-    <View>
+const RegisterPromoCodeCardStories = () => (
+  <StoryWrapper title="RegisterPromoCodeCard">
+    <StoryWrapper title="with Promo Code">
       <RegisterPromoCodeCard
         promoCode="Hello World"
         openModal={store.dispatch(openModal)}
       />
-    </View>
-  ))
-  .add("without promoCode", () => (
-    <View>
+    </StoryWrapper>
+    <StoryWrapper title="without Promo Code">
       <RegisterPromoCodeCard openModal={store.dispatch(openModal)} />
-    </View>
-  ));
+    </StoryWrapper>
+  </StoryWrapper>
+);
+
+export default RegisterPromoCodeCardStories;

@@ -1,0 +1,14 @@
+import React from "react";
+
+import {{pascalCase name}} from "../{{pascalCase name}}/{{pascalCase name}}";
+import StoryWrapper from "../StoryWrapper/StoryWrapper";
+
+const {{pascalCase name}}Stories = () => (
+  <StoryWrapper title="{{pascalCase name}}">
+    <StoryWrapper title="Default state">
+      <{{pascalCase name}} />
+    </StoryWrapper>
+  </StoryWrapper>
+);
+
+export default {{pascalCase name}}Stories;

@@ -14,11 +14,26 @@ const InterestDueModalStories = () => (
     <CelButton
       onPress={() => store.dispatch(openModal(MODALS.INTEREST_DUE_MODAL))}
     >
-      Open InterestDueModal
+      Open modal
     </CelButton>
     <InterestDueModal
       activeLoan={{
         id: "hello",
+        installments_to_be_paid: {
+          total: 1400,
+          installments: [
+            {
+              from: new Date("12-20-2019"),
+              to: new Date("01-20-2020"),
+              amount: 700,
+            },
+            {
+              from: new Date("01-20-2020"),
+              to: new Date("02-20-2020"),
+              amount: 700,
+            },
+          ],
+        },
       }}
       navigateTo={() => {}}
       closeModal={() => {}}
