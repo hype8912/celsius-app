@@ -37,7 +37,10 @@ const base = {
     minWidth: "15%",
     height: headerHeight,
   },
-
+  lefContentButton: {
+    marginTop: 15,
+    height: 30
+  },
   right: {
     alignItems: "flex-end",
     justifyContent: "center",
