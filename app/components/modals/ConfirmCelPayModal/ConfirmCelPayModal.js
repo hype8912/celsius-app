@@ -193,7 +193,7 @@ class ConfirmCelPayModal extends Component {
             margin={"20 0 0 0"}
             size={"fill"}
           >
-            <CelText align={"center"} weight={"300"}>
+            <CelText align={"center"} weight={"300"} color={STYLES.COLORS.DARK_GRAY7}>
               Follow instructions in email to complete this CelPay.
             </CelText>
           </Card>
