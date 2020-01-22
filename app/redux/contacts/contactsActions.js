@@ -8,15 +8,18 @@ export { connectPhoneContacts, getContacts };
 
 /**
  * Saves all contacts from users Phonebook
- * @param {Object[]} contacts
+ *
+ * @param {Array} contacts - batch of phone contacts
+ * @param {Object} opts
+ * @param {Boolean} opts.clearExistingContacts - should clear all users contacts
  */
-function connectPhoneContacts(contacts) {
+function connectPhoneContacts(contacts, opts) {
   return async dispatch => {
     dispatch(startApiCall(API.CONNECT_PHONE_CONTACTS));
 
     try {
-      await contactsService.connectPhoneContacts(contacts);
-      dispatch({ type: ACTIONS.CONNECT_PHONE_CONTACTS_SUCCESS });
+      const res = await contactsService.connectPhoneContacts(contacts, opts);
+      dispatch({ type: ACTIONS.CONNECT_PHONE_CONTACTS_SUCCESS, contacts: res.data.contacts });
     } catch (err) {
       logger.err(err);
     }

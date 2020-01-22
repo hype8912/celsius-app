@@ -100,7 +100,7 @@ class CelPayChooseFriend extends Component {
 
         let position = 0;
         // Set batch size for sending to BE
-        const batchSize = 150;
+        const batchSize = 50;
         const contactBatches = [];
         // Slice contacts into batches
         while (position < phoneContacts.length) {
@@ -112,8 +112,7 @@ class CelPayChooseFriend extends Component {
 
         // Connect batches of contacts
         for (let i = 0; i < contactBatches.length; i++) {
-          await actions.connectPhoneContacts(contactBatches[i]);
-          await actions.getContacts();
+          await actions.connectPhoneContacts(contactBatches[i], { clearExistingContacts: i === 0 });
           loadedContacts += contactBatches[i].length;
           this.setState({ loadedContacts });
         }

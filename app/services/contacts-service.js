@@ -10,11 +10,12 @@ const contactsService = {
  * Connects contacts from device phone book
  * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#0b117565-209f-4b10-8f5a-a02c63815330
  *
- * @param {Object} contacts - @todo check payload
- * @return {Promise}
+ * @param {Array} contacts - batch of phone contacts
+ * @param {Object} opts
+ * @param {Boolean} opts.clearExistingContacts - should clear all users contacts
  */
-function connectPhoneContacts(contacts) {
-  return axios.post(`${apiUrl}/users/friends/contacts`, { contacts });
+function connectPhoneContacts(contacts, opts) {
+  return axios.post(`${apiUrl}/users/friends/contacts`, { contacts, clearExistingContacts: opts.clearExistingContacts });
 }
 
 /**
