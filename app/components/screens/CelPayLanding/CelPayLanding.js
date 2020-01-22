@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-// import { View } from 'react-native';
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-// import CelPayLandingStyle from "./CelPayLanding.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";

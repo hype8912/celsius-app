@@ -35,7 +35,7 @@ const base = {
     backgroundColor: STYLES.COLORS.GREEN,
   },
   whiteButtonStyle: {
-    color: STYLES.COLORS.WHITE,
+    color: STYLES.COLORS.DARK_GRAY,
     backgroundColor: STYLES.COLORS.WHITE,
   },
   defaultButtonStyle: {

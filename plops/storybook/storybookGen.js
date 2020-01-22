@@ -1,6 +1,5 @@
 module.exports = {
-  description:
-    "Creates React Native component and style files inside /components",
+  description: "Creates Storybook story file inside /components and wires it",
   prompts: [
     {
       type: "list",
@@ -13,28 +12,8 @@ module.exports = {
       name: "name",
       message: "What is your React Component name?",
     },
-    {
-      type: "list",
-      name: "complexity",
-      message: "What is the complexity of your React Component?",
-      choices: ["dumb", "smart", "connected"],
-    },
   ],
   actions: [
-    {
-      type: "add",
-      path:
-        "app/components/{{type}}s/{{pascalCase name}}/{{pascalCase name}}.js",
-      templateFile: "plops/component/{{complexity}}.js.txt",
-    },
-    {
-      type: "add",
-      path:
-        "app/components/{{type}}s/{{pascalCase name}}/{{pascalCase name}}.styles.js",
-      templateFile: "plops/component/component.styles.js.txt",
-    },
-
-    // stories file setup
     {
       type: "add",
       path:

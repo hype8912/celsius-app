@@ -7,11 +7,8 @@ import "./rn-addons";
 configure(() => {
   // require('./stories');
   require("./stories/Styleguide/Styleguide.stories");
-  require("../app/components/atoms/CelText/CelText.stories");
-  require("../app/components/atoms/CelButton/CelButton.stories");
-  require("../app/components/molecules/Banner/Banner.stories");
-  require("../app/components/molecules/RegisterPromoCodeCard/RegisterPromoCodeCard.stories");
-  require("../app/components/molecules/RegisterToUCard/RegisterToUCard.stories");
+  require("../app/components/atoms/Atoms.stories");
+  require("../app/components/molecules/Molecules.stories");
   require("../app/components/modals/Modal.stories");
 }, module);
 

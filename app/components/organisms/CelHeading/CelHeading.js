@@ -75,11 +75,12 @@ class CelHeading extends Component {
     const backScreenName = scenes[this.props.index - 1]
       ? scenes[this.props.index - 1].route.routeName
       : "";
+    const style = CelHeadingStyle();
 
     // if search is active and right part of header is type of search
     if (right === "search" && formData.activeSearch)
       return (
-        <View style={{ marginTop: 15, height: 30 }}>
+        <View style={style.leftContentButton}>
           <CelButton
             basic
             iconRightColor={STYLES.COLORS.GRAY}
