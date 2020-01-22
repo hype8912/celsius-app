@@ -256,6 +256,12 @@ const TRANSACTION_FILTER_TYPE = [
     icon: "TransactionSent",
   },
 ];
+
+const CEL_PAY_TYPES = {
+  LINK: "LINK",
+  FRIEND: "FRIEND",
+}
+
 export {
   KEYBOARD_TYPE,
   MODALS,
@@ -275,4 +281,5 @@ export {
   TRANSACTION_FILTER_DATE,
   TRANSACTION_FILTER_TYPE,
   LOAN_BANNER_MESSAGES,
+  CEL_PAY_TYPES,
 };

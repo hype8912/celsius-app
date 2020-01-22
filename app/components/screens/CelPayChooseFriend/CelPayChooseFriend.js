@@ -20,6 +20,8 @@ import apiUtil from "../../../utils/api-util";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { CEL_PAY_TYPES } from "../../../constants/UI";
 
 const loadingText =
   "Your contacts are being imported. This make take a couple of minutes, so we'll let you know once the import is complete. \n" +
@@ -118,6 +120,8 @@ class CelPayChooseFriend extends Component {
         }
 
         this.setState({ loadingContacts: false, hasImportedContacts: true });
+        const { contacts } = this.props
+        mixpanelAnalytics.importedContacts(contacts.length);
       } else {
         await requestForPermission(ALL_PERMISSIONS.CONTACTS);
       }
@@ -131,6 +135,8 @@ class CelPayChooseFriend extends Component {
 
     actions.updateFormField("friend", undefined);
     actions.navigateTo("CelPayEnterAmount");
+
+    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK)
   };
 
   handleContactPress = async contact => {
@@ -138,6 +144,8 @@ class CelPayChooseFriend extends Component {
 
     actions.updateFormField("friend", contact);
     actions.navigateTo("CelPayEnterAmount");
+
+    mixpanelAnalytics.choseCelPayFriend();
   };
 
   filterContacts = () => {

@@ -13,9 +13,10 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { hasPassedKYC } from "../../../utils/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
-import { EMPTY_STATES, MODALS } from "../../../constants/UI";
+import { CEL_PAY_TYPES, EMPTY_STATES, MODALS } from "../../../constants/UI";
 import cryptoUtil from "../../../utils/crypto-util";
 import CelPayInfoModal from "../../modals/CelPayInfoModal/CelPayInfoModal";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -26,6 +27,7 @@ import CelPayInfoModal from "../../modals/CelPayInfoModal/CelPayInfoModal";
     celpayCompliance: state.compliance.celpay,
     walletSummary: state.wallet.summary,
     celPaySettings: state.generalData.celPaySettings,
+    navHistory: state.nav.history,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -38,13 +40,30 @@ class CelPayLanding extends Component {
   });
 
   componentDidMount() {
-    this.props.actions.openModal(MODALS.CELPAY_INFO_MODAL);
+    const { navHistory, actions } = this.props
+
+    actions.openModal(MODALS.CELPAY_INFO_MODAL);
+    mixpanelAnalytics.navigatedToCelPay(navHistory[0])
   }
 
   navigateToAllTransactions = () => {
     const { actions } = this.props;
     actions.navigateTo("AllTransactions", { transactionType: ["celpay"] });
   };
+
+  sendAsLink = () => {
+    const { actions } = this.props
+
+    actions.navigateTo("CelPayEnterAmount")
+    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK)
+  }
+
+  sendToFriend = () => {
+    const { actions } = this.props
+
+    actions.navigateTo("CelPayChooseFriend")
+    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.FRIEND)
+  }
 
   render() {
     // const style = CelPayLandingStyle();
@@ -92,14 +111,14 @@ class CelPayLanding extends Component {
           explanation={"Send a direct link with your preferred apps."}
           darkImage={require("../../../../assets/images/hands-in-the-air-dark.png")}
           lightImage={require("../../../../assets/images/hands-in-the-air.png")}
-          onPress={() => actions.navigateTo("CelPayEnterAmount")}
+          onPress={this.sendAsLink}
         />
         <MultiInfoCardButton
           textButton={"Send to contacts"}
           explanation={`Send crypto to other Celsians on the network.`}
           darkImage={require("../../../../assets/images/money-currency-union-dark.png")}
           lightImage={require("../../../../assets/images/money-currency-union.png")}
-          onPress={() => actions.navigateTo("CelPayChooseFriend")}
+          onPress={this.sendToFriend}
         />
 
         <TransactionsHistory

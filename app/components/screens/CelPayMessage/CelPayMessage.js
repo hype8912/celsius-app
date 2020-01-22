@@ -12,6 +12,7 @@ import CelButton from "../../../components/atoms/CelButton/CelButton";
 import CelInput from "../../atoms/CelInput/CelInput";
 import { MODALS } from "../../../constants/UI";
 import ConfirmCelPayModal from "../../modals/ConfirmCelPayModal/ConfirmCelPayModal";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 
 @connect(
@@ -49,7 +50,7 @@ class CelPayMessage extends Component {
   }
 
   handleSend = () => {
-    const { actions } = this.props;
+    const { actions, formData } = this.props;
 
     actions.navigateTo("VerifyProfile", {
       onSuccess: () => {
@@ -57,6 +58,10 @@ class CelPayMessage extends Component {
         actions.openModal(MODALS.CONFIRM_CELPAY_MODAL)
       },
     });
+
+    if (formData.message) {
+      mixpanelAnalytics.addedNote();
+    }
   };
 
   // Link coin and amount from previous screen

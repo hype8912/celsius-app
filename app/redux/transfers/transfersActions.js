@@ -9,7 +9,9 @@ import { getWalletSummary } from "../wallet/walletActions";
 import { getAllTransactions } from "../transactions/transactionsActions";
 import { MODALS } from "../../constants/UI";
 import formatter from "../../utils/formatter";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
+// TODO: move to celpay actions
 export {
   getAllTransfers,
   claimTransfer,
@@ -105,6 +107,7 @@ function cancelTransfer(transferHash) {
       dispatch(showMessage("error", "CelPay Canceled"));
       dispatch(getAllTransactions());
       dispatch(navigateTo("WalletLanding"));
+      mixpanelAnalytics.canceledCelPay()
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CANCEL_TRANSFER, err));
