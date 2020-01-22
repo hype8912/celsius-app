@@ -20,6 +20,8 @@ import apiUtil from "../../../utils/api-util";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { CEL_PAY_TYPES } from "../../../constants/UI";
 
 const loadingText =
   "Your contacts are being imported. This make take a couple of minutes, so we'll let you know once the import is complete. \n" +
@@ -100,7 +102,7 @@ class CelPayChooseFriend extends Component {
 
         let position = 0;
         // Set batch size for sending to BE
-        const batchSize = 150;
+        const batchSize = 50;
         const contactBatches = [];
         // Slice contacts into batches
         while (position < phoneContacts.length) {
@@ -112,13 +114,14 @@ class CelPayChooseFriend extends Component {
 
         // Connect batches of contacts
         for (let i = 0; i < contactBatches.length; i++) {
-          await actions.connectPhoneContacts(contactBatches[i]);
-          await actions.getContacts();
+          await actions.connectPhoneContacts(contactBatches[i], { clearExistingContacts: i === 0 });
           loadedContacts += contactBatches[i].length;
           this.setState({ loadedContacts });
         }
 
         this.setState({ loadingContacts: false, hasImportedContacts: true });
+        const { contacts } = this.props
+        mixpanelAnalytics.importedContacts(contacts.length);
       } else {
         await requestForPermission(ALL_PERMISSIONS.CONTACTS);
       }
@@ -132,6 +135,8 @@ class CelPayChooseFriend extends Component {
 
     actions.updateFormField("friend", undefined);
     actions.navigateTo("CelPayEnterAmount");
+
+    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK)
   };
 
   handleContactPress = async contact => {
@@ -139,6 +144,8 @@ class CelPayChooseFriend extends Component {
 
     actions.updateFormField("friend", contact);
     actions.navigateTo("CelPayEnterAmount");
+
+    mixpanelAnalytics.choseCelPayFriend();
   };
 
   filterContacts = () => {

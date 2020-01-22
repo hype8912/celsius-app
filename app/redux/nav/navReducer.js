@@ -5,6 +5,7 @@ import ACTIONS from "../../constants/ACTIONS";
  */
 const initialState = {
   activeScreen: "",
+  history: [],
 };
 
 export default function navReducer(state = initialState, action) {
@@ -14,6 +15,7 @@ export default function navReducer(state = initialState, action) {
       return {
         ...state,
         activeScreen: screenName,
+        history: [screenName, ...state.history],
       };
     }
     default:

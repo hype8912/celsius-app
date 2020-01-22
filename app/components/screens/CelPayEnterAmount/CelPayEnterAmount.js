@@ -22,6 +22,7 @@ import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import LoseMembershipModal from "../../modals/LoseMembershipModal/LoseMembershipModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import ConfirmCelPayModal from "../../modals/ConfirmCelPayModal/ConfirmCelPayModal";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -272,6 +273,8 @@ class CelPayEnterAmount extends Component {
       });
       actions.closeModal();
     }
+
+    mixpanelAnalytics.enteredAmount(formData.coin, Number(formData.amountUsd), Number(formData.amountCrypto));
   };
 
   render() {

@@ -1,4 +1,3 @@
-
 import ACTIONS from "../../constants/ACTIONS";
 import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
@@ -8,7 +7,8 @@ import transfersService from "../../services/transfer-service";
 import formatter from "../../utils/formatter";
 import { navigateTo } from "../nav/navActions";
 import celUtilityUtil from "../../utils/cel-utility-util";
-import userBehaviorUtil from "../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import { CEL_PAY_TYPES } from "../../constants/UI";
 
 export { celPayFriend, celPayShareLink };
 
@@ -65,7 +65,7 @@ function celPayFriend() {
 
       await celUtilityUtil.refetchMembershipIfChanged(transfer.coin);
 
-      userBehaviorUtil.celpayCompleted(transferData, friend.id);
+      mixpanelAnalytics.initiatedCelPay(CEL_PAY_TYPES.FRIEND)
     } catch (err) {
       dispatch(apiError(API.CREATE_TRANSFER, err));
       dispatch(showMessage("error", err.msg));
@@ -114,7 +114,7 @@ function celPayShareLink() {
 
       await celUtilityUtil.refetchMembershipIfChanged(transfer.coin);
 
-      userBehaviorUtil.celpayCompleted(transferData);
+      mixpanelAnalytics.initiatedCelPay(CEL_PAY_TYPES.LINK)
     } catch (err) {
       dispatch(apiError(API.CREATE_TRANSFER, err));
       dispatch(showMessage("error", err.msg));

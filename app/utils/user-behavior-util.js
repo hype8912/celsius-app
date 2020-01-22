@@ -30,7 +30,6 @@ const userBehaviorUtil = {
   changePassword,
   changePin,
   withdrawCompleted,
-  celpayCompleted,
   loanApplied,
   setPin,
   apiError,
@@ -352,31 +351,6 @@ async function withdrawCompleted(withdrawTransaction) {
     coin: withdrawTransaction.coin,
     amount_crypto: withdrawTransaction.amount.toString(),
     amount_usd: amountUsd.toString(),
-  });
-}
-
-/**
- * Fires an event when a user finishes a CelPay
- *
- * @param {object} celPayTransfer
- * @param {string} celPayTransfer.amount
- * @param {string} celPayTransfer.coin - eg. BTC|ETH
- * @param {uuid} celPayTransfer.id
- * @param {uuid} friendId
- */
-async function celpayCompleted(celPayTransfer, friendId) {
-  const { currencyRatesShort } = store.getState().currencies;
-
-  const amountUsd =
-    celPayTransfer.amount *
-    currencyRatesShort[celPayTransfer.coin.toLowerCase()];
-
-  await sendEvent("CelPay initiated", {
-    id: celPayTransfer.id,
-    coin: celPayTransfer.coin,
-    amount_crypto: celPayTransfer.amount.toString(),
-    amount_usd: amountUsd.toString(),
-    friendId,
   });
 }
 

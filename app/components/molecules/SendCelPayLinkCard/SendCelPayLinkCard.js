@@ -8,6 +8,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
 import { getPadding } from "../../../utils/styles-util";
 import formatter from "../../../utils/formatter";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics"
 
 class SendCelPayLinkCard extends React.Component {
   static propTypes = {
@@ -24,6 +25,7 @@ class SendCelPayLinkCard extends React.Component {
       transaction.coin
     )}! Click on the link to claim it ${branchLink}`;
     Share.share({ message: shareMsg, title: "Celsius CelPay" });
+    mixpanelAnalytics.sharedCelPayLink()
   }
 
   render() {
