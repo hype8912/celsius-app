@@ -570,8 +570,8 @@ class TransactionDetails extends Component {
     );
 
     if (
-      loadingTransactionDetails ||
       !transaction ||
+      loadingTransactionDetails &&
       (transactionId && transaction.id !== transactionId)
     )
       return (
