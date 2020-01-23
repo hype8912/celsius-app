@@ -20,14 +20,14 @@ class Banner extends Component {
     backgroundColor: PropTypes.string,
     image: PropTypes.number,
     close: PropTypes.func,
-    noClose: PropTypes.bool,
   };
 
   static defaultProps = {};
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+    };
   }
 
   render() {
@@ -42,13 +42,11 @@ class Banner extends Component {
       backgroundColor,
       image,
       close,
-      noClose,
     } = this.props;
     const style = BannerStyle();
 
     return (
       <View style={[style.container, { backgroundColor }]}>
-        {!noClose && (
           <TouchableOpacity
             style={{
               position: "absolute",
@@ -62,62 +60,61 @@ class Banner extends Component {
           >
             <Icon name="Close" fill={"white"} width="25" />
           </TouchableOpacity>
-        )}
         <View style={style.circleWrapper}>
           <View style={style.halfCircle}>
             <Image style={style.image} source={image} />
           </View>
         </View>
-        <View style={style.textAlignment}>
-          <CelText
-            color={"white"}
-            type={"H4"}
-            weight={"500"}
-            margin={"0 0 0 0"}
-          >
-            {title}
-          </CelText>
-          {!!info && (
+          <View style={style.textAlignment}>
             <CelText
               color={"white"}
-              type={"H7"}
-              weight={"300"}
-              margin={"8 0 0 0"}
+              type={"H4"}
+              weight={"500"}
+              margin={"0 0 0 0"}
             >
-              {info}
+              {title}
             </CelText>
-          )}
-          <CelText
-            color={"white"}
-            type={"H6"}
-            weight={"300"}
-            margin={"8 0 15 0"}
-          >
-            {content}
-          </CelText>
-          {!!action && (
-            <CelButton
-              margin={"0 0 15 0"}
-              color={"white"}
-              size={"small"}
-              onPress={action}
-              textColor={backgroundColor}
-            >
-              {buttonText}
-            </CelButton>
-          )}
-          {!!textButtonAction && (
-            <TouchableOpacity onPress={textButtonAction}>
+            {!!info && (
               <CelText
-                margin={"5 0 20 0"}
-                color={STYLES.COLORS.WHITE}
-                type={"H6"}
+                color={"white"}
+                type={"H7"}
+                weight={"300"}
+                margin={"8 0 0 0"}
               >
-                {textButtonText}
+                {info}
               </CelText>
-            </TouchableOpacity>
-          )}
-        </View>
+            )}
+            <CelText
+              color={"white"}
+              type={"H6"}
+              weight={"300"}
+              margin={"8 0 15 0"}
+            >
+              {content}
+            </CelText>
+            {!!action && (
+              <CelButton
+                margin={"0 0 15 0"}
+                color={"white"}
+                size={"small"}
+                onPress={action}
+                textColor={backgroundColor}
+              >
+                {buttonText}
+              </CelButton>
+            )}
+            {!!textButtonAction && (
+              <TouchableOpacity onPress={textButtonAction}>
+                <CelText
+                  margin={"5 0 20 0"}
+                  color={STYLES.COLORS.WHITE}
+                  type={"H6"}
+                >
+                  {textButtonText}
+                </CelText>
+              </TouchableOpacity>
+            )}
+          </View>
       </View>
     );
   }

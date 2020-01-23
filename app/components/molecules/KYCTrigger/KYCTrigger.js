@@ -105,7 +105,7 @@ class KYCTrigger extends Component {
         title={kycInfo.title}
         content={kycInfo.content}
         info={kycInfo.info}
-        noClose
+        close={() => actions.closeBanner()}
       />
     );
   }

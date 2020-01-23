@@ -55,7 +55,6 @@ class KYCCheckPhotos extends Component {
     });
 
     actions.navigateTo("CameraScreen", {
-      hideBack: true,
       onSave: frontPhoto => {
         actions.updateFormField("front", frontPhoto);
         actions.navigateTo("KYCCheckPhotos");
@@ -76,7 +75,6 @@ class KYCCheckPhotos extends Component {
     });
 
     actions.navigateTo("CameraScreen", {
-      hideBack: true,
       onSave: backPhoto => {
         actions.updateFormField("back", backPhoto);
         actions.navigateTo("KYCCheckPhotos");
