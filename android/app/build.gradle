@@ -132,7 +132,7 @@ android {
         applicationId "network.celsius.wallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 58
+        versionCode 59
         versionName "4.2.0"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
