@@ -1,6 +1,6 @@
 import { NavigationActions, StackActions } from "react-navigation";
 import ACTIONS from "../../constants/ACTIONS";
-import userBehavior from "../../utils/user-behavior-util";
+import userBehavior from "../../utils/mixpanel-analytics";
 
 let _navigator;
 

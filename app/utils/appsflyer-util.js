@@ -3,7 +3,7 @@ import appsFlyer from "react-native-appsflyer";
 
 import store from "../redux/store";
 import appUtil from "./app-util";
-import userBehaviorUtil from "./user-behavior-util";
+import mixpanelAnalytics from "./mixpanel-analytics";
 import loggerUtil from "./logger-util";
 import constants from "../../constants";
 
@@ -49,7 +49,7 @@ async function appsFlyerEvent(event, payload) {
       ...appInfo,
       ...payload,
     });
-    userBehaviorUtil.sendEvent("Appsflyer event", {
+    mixpanelAnalytics.appsflyerEvent( {
       event,
       payload,
       response,

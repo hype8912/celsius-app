@@ -28,7 +28,7 @@ import {
 } from "../../utils/device-permissions";
 import { hasPassedKYC } from "../../utils/user-util";
 import { showMessage } from "../ui/uiActions";
-import userBehaviorUtil from "../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -198,7 +198,7 @@ function handleAppStateChange(nextAppState) {
             })
           );
         }
-        userBehaviorUtil.sessionStarted("Foreground");
+        mixpanelAnalytics.sessionStarted("Foreground");
         // Fix for CN-4253, CN-4235, CN-4205
         // dispatch(getGeolocation());
       }
@@ -225,7 +225,7 @@ function handleAppStateChange(nextAppState) {
           startOfBackgroundTimer = new Date().getTime();
         }
 
-        userBehaviorUtil.sessionEnded("Background");
+        mixpanelAnalytics.sessionEnded("Background");
       }
     }
 
@@ -269,7 +269,7 @@ function initAppData(initToken = null) {
     const { expiredSession } = getState().user;
 
     if (token && !expiredSession) {
-      userBehaviorUtil.sessionStarted("Init app");
+      mixpanelAnalytics.sessionStarted("Init app");
       registerForPushNotificationsAsync();
       dispatch(actions.claimAllBranchTransfers());
 

@@ -10,7 +10,7 @@ import { MODALS } from "../../../../constants/UI";
 import CelText from "../../../atoms/CelText/CelText";
 import CelButton from "../../../atoms/CelButton/CelButton";
 import { BRANCH_LINKS } from "../../../../constants/DATA";
-import userBehaviorUtil from "../../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../../utils/mixpanel-analytics";
 
 // TODO check usage & remove
 @connect(
@@ -23,7 +23,7 @@ class ReferralReceivedModal extends Component {
   closeAndGoToSignup = owner => {
     const { actions } = this.props;
 
-    userBehaviorUtil.userReferred(owner);
+    mixpanelAnalytics.userReferred(owner);
     actions.closeModal();
     actions.navigateTo("RegisterInitial");
   };

@@ -11,7 +11,7 @@ import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../../constants/DATA";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util";
-import userBehaviorUtil from "../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import kycService from "../../services/kyc-service";
 
 // TODO move to user/profile actions
@@ -45,7 +45,7 @@ function updateProfileInfo(profileInfo) {
         profileInfo
       );
       dispatch(updateProfileInfoSuccess(updatedProfileData.data));
-      userBehaviorUtil.kycProfileInfo();
+      mixpanelAnalytics.kycProfileInfo();
       return {
         success: true,
       };
@@ -102,7 +102,7 @@ function updateProfileAddressInfo(profileAddressInfo) {
       } else {
         dispatch(NavActions.navigateTo("KYCVerifyIdentity"));
       }
-      userBehaviorUtil.kycAddressInfo();
+      mixpanelAnalytics.kycAddressInfo();
       return {
         success: true,
       };
@@ -132,7 +132,7 @@ function updateTaxpayerInfo(profileTaxpayerInfo) {
         profileTaxpayerInfo
       );
       await dispatch(updateProfileTaxpayerInfoSuccess(updatedProfileData.data));
-      userBehaviorUtil.kycTaxPayerInfo();
+      mixpanelAnalytics.kycTaxPayerInfo();
       return {
         success: true,
       };
@@ -319,7 +319,7 @@ function createKYCDocs() {
 
       clearTimeout(timeout);
 
-      userBehaviorUtil.kycDocumentsSubmitted();
+      mixpanelAnalytics.kycDocumentsSubmitted();
     } catch (err) {
       clearTimeout(timeout);
       if (err.type === "Validation error") {
@@ -348,7 +348,7 @@ function startKYC() {
       dispatch(startKYCSuccess());
 
       appsFlyerUtil.kycStarted();
-      userBehaviorUtil.kycStarted();
+      mixpanelAnalytics.kycStarted();
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.START_KYC, err));
@@ -462,7 +462,7 @@ function setUtilityBill(utilityBillPhoto) {
       dispatch(NavActions.navigateTo("KYCTaxpayer"));
       dispatch(showMessage("success", "Utility bill submitted successfully!"));
 
-      userBehaviorUtil.kycUtilityBillSubmitted();
+      mixpanelAnalytics.kycUtilityBillSubmitted();
     } catch (err) {
       clearTimeout(timeout);
       if (err.type === "Validation error") {

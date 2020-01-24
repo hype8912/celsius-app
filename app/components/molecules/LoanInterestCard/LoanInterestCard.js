@@ -13,7 +13,7 @@ import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import LoanInterestCardStyle from "./LoanInterestCard.styles";
 import Separator from "../../atoms/Separator/Separator";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -64,7 +64,7 @@ class LoanInterestCard extends Component {
       amountCollateralUsd,
       ltv: loanToValue,
     });
-    userBehaviorUtil.loanLTV(loanToValue);
+    mixpanelAnalytics.loanLTV(loanToValue);
     actions.navigateTo("BorrowLoanTerm");
   };
 

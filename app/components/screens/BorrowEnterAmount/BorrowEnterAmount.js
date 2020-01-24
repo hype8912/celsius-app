@@ -18,7 +18,7 @@ import { getPadding } from "../../../utils/styles-util";
 import Icon from "../../atoms/Icon/Icon";
 import BorrowEnterAmountStyle from "./BorrowEnterAmount.styles";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 let timeout;
 
@@ -142,8 +142,8 @@ class BorrowEnterAmount extends Component {
           actions.navigateTo("BorrowCollateral");
           actions.toggleKeypad();
           actions.getLinkedBankAccount();
-          await userBehaviorUtil.loanType(formData.loanType);
-          await userBehaviorUtil.loanAmount({
+          await mixpanelAnalytics.loanType(formData.loanType);
+          await mixpanelAnalytics.loanAmount({
             coin: formData.coin,
             amount: formData.loanAmount,
           });

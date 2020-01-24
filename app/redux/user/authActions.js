@@ -24,7 +24,7 @@ import { setFormErrors, updateFormField } from "../forms/formsActions";
 import meService from "../../services/me-service";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import branchUtil from "../../utils/branch-util";
-import userBehaviorUtil from "../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -121,7 +121,7 @@ function registerUser() {
       );
       await dispatch(initAppData());
 
-      userBehaviorUtil.sessionStarted("User registred");
+      mixpanelAnalytics.sessionStarted("User registred");
       dispatch(claimAllBranchTransfers());
       dispatch({
         type: ACTIONS.REGISTER_USER_SUCCESS,
@@ -179,7 +179,7 @@ function resetPassword(currentPassword, newPassword) {
 
       dispatch(showMessage("success", "Password successfully changed."));
       dispatch(resetPasswordSuccess());
-      userBehaviorUtil.changePassword();
+      mixpanelAnalytics.changePassword();
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.RESET_PASSWORD, err));
@@ -212,7 +212,7 @@ function logoutUser() {
       await dispatch(navigateTo("Welcome"));
       dispatch(showVerifyScreen(false));
 
-      userBehaviorUtil.sessionEnded("Logout user");
+      mixpanelAnalytics.sessionEnded("Logout user");
     } catch (err) {
       logger.err(err);
     }
@@ -270,7 +270,7 @@ function setPin() {
       });
       dispatch({ type: ACTIONS.SET_PIN_SUCCESS });
       dispatch({ type: ACTIONS.CLEAR_FORM });
-      userBehaviorUtil.setPin();
+      mixpanelAnalytics.setPin();
       return true;
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -303,7 +303,7 @@ function changePin() {
       dispatch({ type: ACTIONS.CLEAR_FORM });
       dispatch(showMessage("success", "Successfully changed PIN number"));
       dispatch(navigateTo("SecuritySettings"));
-      userBehaviorUtil.changePin();
+      mixpanelAnalytics.changePin();
       return true;
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -341,7 +341,7 @@ function createAccount() {
     const user = getState().user.profile;
     if (user.id) {
       appsFlyerUtil.registrationCompleted(user);
-      userBehaviorUtil.registrationCompleted(user);
+      mixpanelAnalytics.registrationCompleted(user);
     }
   };
 }

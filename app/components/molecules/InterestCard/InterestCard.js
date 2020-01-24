@@ -16,7 +16,7 @@ import { isUSCitizen } from "../../../utils/user-util";
 import Badge from "../../atoms/Badge/Badge";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import Separator from "../../atoms/Separator/Separator";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -52,7 +52,7 @@ class InterestCard extends Component {
       },
     });
 
-    userBehaviorUtil.interestInCEL({
+    mixpanelAnalytics.interestInCEL({
       ...interestInCoins,
       [coin]: value,
     });

@@ -1,6 +1,4 @@
-import userBehaviorUtil from "../user-behavior-util";
-
-const { sendEvent } = userBehaviorUtil;
+import { sendEvent } from "../mixpanel-util";
 
 const celPayAnalytics = {
   navigatedToCelPay,
@@ -13,7 +11,6 @@ const celPayAnalytics = {
   sharedCelPayLink,
   canceledCelPay,
 }
-
 
 /**
  * Fires when user navigates to CelPayLanding screen

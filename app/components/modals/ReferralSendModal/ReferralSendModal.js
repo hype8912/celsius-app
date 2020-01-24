@@ -13,7 +13,7 @@ import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import CelButton from "../../atoms/CelButton/CelButton";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -85,7 +85,7 @@ class ReferralSendModal extends Component {
               copyText={slug}
               onCopy={() => {
                 actions.setBannerProps({ lastReferral: moment.utc().format() });
-                userBehaviorUtil.userReferring();
+                mixpanelAnalytics.userReferring();
                 actions.showMessage(
                   "success",
                   "Promo code key copied to clipboard!"
@@ -101,7 +101,7 @@ class ReferralSendModal extends Component {
               Share.share({
                 message: `Join Celsius Network using my referral code ${slug} when signing up and earn $10 in BTC with your first deposit of $200 or more! #UnbankYourself \n \n${shareLink}`,
               });
-              userBehaviorUtil.userReferring();
+              mixpanelAnalytics.userReferring();
             }}
           >
             Share a unique link

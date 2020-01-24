@@ -10,7 +10,7 @@ import celUtilityUtil from "../../utils/cel-utility-util";
 import { getWalletSummary } from "../wallet/walletActions";
 import { TRANSACTION_TYPES } from "../../constants/DATA";
 import mockTransactions from "../../mock-data/transactions.mock";
-import userBehaviorUtil from "../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
 export {
   getAllTransactions,
@@ -157,7 +157,7 @@ function withdrawCrypto() {
       dispatch(showMessage("success", "An email verification has been sent."));
       dispatch(clearForm());
 
-      userBehaviorUtil.withdrawCompleted(res.data.transaction);
+      mixpanelAnalytics.withdrawCompleted(res.data.transaction);
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.WITHDRAW_CRYPTO, err));

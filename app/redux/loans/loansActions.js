@@ -7,7 +7,7 @@ import loansService from "../../services/loans-service";
 import formatter from "../../utils/formatter";
 import loanUtil from "../../utils/loan-util";
 import { MODALS, LOAN_ALERTS } from "../../constants/UI";
-import userBehaviorUtil from "../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 
 export {
@@ -82,7 +82,7 @@ function applyForALoan() {
       }
 
       appsFlyerUtil.loanApplied(res.data);
-      userBehaviorUtil.loanApplied(res.data);
+      mixpanelAnalytics.loanApplied(res.data);
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.APPLY_FOR_LOAN, err));

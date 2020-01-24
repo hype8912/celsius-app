@@ -13,7 +13,7 @@ import Icon from "../../atoms/Icon/Icon";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import CollateralCoinCard from "../../molecules/CollateralCoinCard/CollateralCoinCard";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -32,7 +32,7 @@ class BorrowCollateral extends Component {
   handleSelectCoin = coin => {
     const { actions } = this.props;
     actions.updateFormField("collateralCoin", coin);
-    userBehaviorUtil.loanCollateral(coin);
+    mixpanelAnalytics.loanCollateral(coin);
 
     actions.navigateTo("BorrowLoanOption");
   };

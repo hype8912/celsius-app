@@ -4,7 +4,7 @@ import Constants from "../../constants";
 import store from "../redux/store";
 import API_URL from "../services/api-url";
 import appUtil from "./app-util";
-import userBehaviorUtil from "./user-behavior-util";
+import mixpanelAnalytics from "./mixpanel-analytics";
 import { navigateTo } from "../redux/nav/navActions";
 import { showMessage } from "../redux/ui/uiActions";
 
@@ -114,7 +114,7 @@ async function err(e, isFatal = false) {
     };
 
     axios.post(`${API_URL}/graylog`, errorObject);
-    userBehaviorUtil.sendEvent("App crushed", errorObject);
+    mixpanelAnalytics.appCrushed(errorObject);
 
     store.dispatch(navigateTo(profile.id ? "WalletLanding" : "Welcome"));
     const action = {

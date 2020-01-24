@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Banner from "../../molecules/Banner/Banner";
 import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 class ReferralTrigger extends Component {
   static propTypes = {
@@ -38,7 +38,7 @@ class ReferralTrigger extends Component {
         image={require("../../../../assets/images/present-image.png")}
         action={() => {
           actions.openModal(MODALS.REFERRAL_SEND_MODAL);
-          userBehaviorUtil.userStartingReferral();
+          mixpanelAnalytics.userStartingReferral();
         }}
         buttonText={"Share referral code"}
         title={"Refer & Earn!"}
