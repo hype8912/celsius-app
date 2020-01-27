@@ -436,7 +436,7 @@ class WithdrawEnterAmount extends Component {
         <LoseMembershipModal
           navigateToNextStep={() => this.navigateToNextStep(true)}
         />
-        {loyaltyInfo && (
+        {(loyaltyInfo && loyaltyInfo.tier_level !== 0) && (
           <LoseTierModal
             navigateToNextStep={() => this.navigateToNextStep(true)}
             tierTitle={loyaltyInfo.tier.title}
