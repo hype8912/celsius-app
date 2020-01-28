@@ -78,7 +78,7 @@ class ConfirmCelPayModal extends Component {
           <CelText align={"center"} type={"H1"}>
             {formatter.crypto(formData.amountCrypto, formData.coin)}
           </CelText>
-          <CelText align={"center"} type={"H3"}>
+          <CelText align={"center"} type={"H3"} style={style.dollarColor}>
             {formatter.usd(formData.amountUsd)}
           </CelText>
 
@@ -86,7 +86,7 @@ class ConfirmCelPayModal extends Component {
 
           <View style={style.amount}>
             <CelText type="H6">New wallet balance:</CelText>
-            <CelText type="H6" weight="bold">
+            <CelText type="H6" weight="400">
               {formatter.crypto(newBalanceCrypto, formData.coin)} |{" "}
               {formatter.usd(newBalanceUsd)}
             </CelText>
@@ -95,11 +95,11 @@ class ConfirmCelPayModal extends Component {
           <Separator color={STYLES.COLORS.MEDIUM_GRAY1} margin={"0 0 0 0"} />
 
           {formData.friend ? (
-            <View style={{ paddingHorizontal: 20 }}>
+            <View style={style.sentTo}>
               <CelText
                 style={{ color: STYLES.COLORS.MEDIUM_GRAY }}
                 type="H6"
-                margin="5 0 5 0"
+                margin="0 0 5 0"
               >
                 Send to:
               </CelText>
@@ -142,21 +142,20 @@ class ConfirmCelPayModal extends Component {
                       flex: 1,
                       flexDirection: "column",
                       alignContent: "center",
+                      justifyContent: "center",
                       paddingLeft: 10,
                     }}
                   >
                     <CelText weight="600" type="H4">
                       {formData.friend.item.name}
                     </CelText>
-                    <CelText
+                    {formData.friend.item.email ? <CelText
                       style={{ paddingTop: 5 }}
                       color={STYLES.COLORS.CELSIUS_BLUE}
                       type="H6"
                     >
-                      {formData.friend.item.email
-                        ? formData.friend.item.email
-                        : null}
-                    </CelText>
+                      {formData.friend.item.email}
+                    </CelText>  : null}
                   </View>
                 )}
                 <View style={{ paddingTop: 10 }}>
@@ -181,7 +180,7 @@ class ConfirmCelPayModal extends Component {
                     style={{ color: STYLES.COLORS.MEDIUM_GRAY }}
                     margin="5 0 5 0"
                   >
-                    {formData.message}
+                   Note: {formData.message}
                   </CelText>
                 </View>
               )}
@@ -193,7 +192,7 @@ class ConfirmCelPayModal extends Component {
             margin={"20 0 0 0"}
             size={"fill"}
           >
-            <CelText align={"center"} weight={"300"} color={STYLES.COLORS.DARK_GRAY7}>
+            <CelText align={"center"} weight={"300"} type={"H6"} color={STYLES.COLORS.DARK_GRAY7}>
               Follow instructions in email to complete this CelPay.
             </CelText>
           </Card>

@@ -7,6 +7,7 @@ const base = {
   cardWrapper: {
     flex: 1,
     flexDirection: "row",
+    justifyContent: "space-evenly"
   },
   imageWrapper: {
       justifyContent: "center",
@@ -16,10 +17,7 @@ const base = {
   image: {
     width: widthPercentageToDP("9%"),
     height: heightPercentageToDP("5.3%"),
-  },
-  icon: { marginTop: heightPercentageToDP("1.8%") },
-  buttonWrapper: {
-    flexDirection: "row",
+    resizeMode: "contain"
   },
   explanationWrapper: {
     flex: 0.75

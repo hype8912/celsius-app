@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import formatter from "../../../utils/formatter";
 
 import * as appActions from "../../../redux/actions";
 import CelPayMessageStyle from "./CelPayMessage.styles";
@@ -25,7 +24,7 @@ class CelPayMessage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
     return {
-      title: params && params.title ? params.title : "Send",
+      title: params && params.title ? params.title : "Enter note to CelPay",
       right: "profile",
     };
   };
@@ -78,6 +77,7 @@ class CelPayMessage extends Component {
             field="message"
             value={formData.message}
             numberOfLines={5}
+            autoFocus
           />
 
           <CelButton
@@ -85,7 +85,7 @@ class CelPayMessage extends Component {
             margin="0 0 0 0"
             onPress={this.handleSend}
           >
-            Send {formatter.crypto(formData.amountCrypto, formData.coin)}
+            Send {formData.coin}
           </CelButton>
         </View>
         <ConfirmCelPayModal/>

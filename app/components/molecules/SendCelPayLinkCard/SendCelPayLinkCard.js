@@ -31,7 +31,7 @@ class SendCelPayLinkCard extends React.Component {
   render() {
     const { transaction } = this.props
 
-    const padding = getPadding("20 20 20 20")
+    const padding = getPadding("0 20 20 20")
 
     // Sent to friend pending email verification
     if (transaction.transfer_data.claimer && transaction.type === TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION) {
@@ -56,7 +56,7 @@ class SendCelPayLinkCard extends React.Component {
             </CelText>
 
             <CelButton margin="16 0 0 0" onPress={this.shareCelPayLink} disabled>
-              Share CelPay link
+              CelPay
             </CelButton>
           </Card>
         </View>
@@ -73,7 +73,7 @@ class SendCelPayLinkCard extends React.Component {
             </CelText>
 
             <CelButton margin="16 0 0 0" onPress={this.shareCelPayLink}>
-              Share CelPay link
+              CelPay
             </CelButton>
           </Card>
         </View>

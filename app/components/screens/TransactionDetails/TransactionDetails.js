@@ -278,7 +278,7 @@ class TransactionDetails extends Component {
             }
             basic
           >
-            Cancel transaction
+            Cancel CelPay
           </CelButton>
         );
       case "button:applyForLoan":

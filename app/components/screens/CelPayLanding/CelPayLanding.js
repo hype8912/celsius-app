@@ -99,14 +99,14 @@ class CelPayLanding extends Component {
     return (
       <RegularLayout>
         <MultiInfoCardButton
-          textButton={"Share as a link"}
+          textButton={"Share as a link >"}
           explanation={"Send a direct link with your preferred apps."}
           darkImage={require("../../../../assets/images/hands-in-the-air-dark.png")}
           lightImage={require("../../../../assets/images/hands-in-the-air.png")}
           onPress={this.sendAsLink}
         />
         <MultiInfoCardButton
-          textButton={"Send to contacts"}
+          textButton={"Send to contacts >"}
           explanation={`Send crypto to other Celsians on the network.`}
           darkImage={require("../../../../assets/images/money-currency-union-dark.png")}
           lightImage={require("../../../../assets/images/money-currency-union.png")}

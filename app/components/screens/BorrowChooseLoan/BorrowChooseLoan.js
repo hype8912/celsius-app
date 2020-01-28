@@ -51,7 +51,7 @@ class BorrowChooseLoan extends Component {
 
     if (canBorrowUSD) {
       cardDetails.push({
-        textButton: "Borrow Dollars",
+        textButton: "Borrow Dollars >",
         explanation: "Take out a cash loan against your crypto.",
         lightImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
         darkImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
@@ -67,7 +67,7 @@ class BorrowChooseLoan extends Component {
 
     if (canBorrowStable) {
       cardDetails.push({
-        textButton: "Borrow Stablecoins",
+        textButton: "Borrow Stablecoins >",
         explanation: "Take out a loan in one of our supported stable coins.",
         lightImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
         darkImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),

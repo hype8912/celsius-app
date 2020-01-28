@@ -78,7 +78,7 @@ class ChoosePaymentMethod extends Component {
 
     const cardProps = [
       {
-        textButton: `${formatter.capitalize(pay)} with CEL`,
+        textButton: `${formatter.capitalize(pay)} with CEL >`,
         explanation: `Pay up to ${celDiscount} less interest when you choose to ${pay} your monthly payment in CEL.`,
         onPress: () => actions.navigateTo("PaymentCel", { reason, id }),
         lightImage: require("../../../../assets/images/icons/cel.png"),
@@ -86,7 +86,7 @@ class ChoosePaymentMethod extends Component {
         isActive: activeCards.cel,
       },
       {
-        textButton: `${formatter.capitalize(pay)} with crypto`,
+        textButton: `${formatter.capitalize(pay)} with crypto >`,
         explanation: `Use coins from your wallet to ${pay} your loan interest.`,
         onPress: () =>
           actions.navigateTo("LoanPaymentCoin", { reason, id }),
@@ -95,7 +95,7 @@ class ChoosePaymentMethod extends Component {
         isActive: activeCards.coin,
       },
       {
-        textButton: `${formatter.capitalize(pay)} with Dollars`,
+        textButton: `${formatter.capitalize(pay)} with Dollars >`,
         explanation: `Get all the information necessary to ${pay} your interest in dollars.`,
         onPress: () => {
           if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {

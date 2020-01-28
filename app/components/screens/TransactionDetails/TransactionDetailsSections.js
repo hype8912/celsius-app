@@ -774,8 +774,9 @@ export const ReferredPending = ({ transaction, text }) => (
 export const NoteSection = ({ text }) =>
   text ? (
     <View style={{ width: "100%", paddingHorizontal: 20, paddingVertical: 20 }}>
-      <CelText>Note:</CelText>
-      <CelText italic margin="5 0 0 0">{text}</CelText>
+      <CelText type="H6">Note:</CelText>
+      <CelText type="H6" italic margin="5 0 0 0">{text}</CelText>
+      <Separator margin={"20 0 0 0"}/>
     </View>
   ) : null;
 

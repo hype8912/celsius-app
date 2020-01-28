@@ -30,7 +30,7 @@ class Support extends Component {
         <MultiInfoCardButton
           darkImage={require("../../../../assets/images/icons/help-center-dark.png")}
           lightImage={require("../../../../assets/images/icons/help-center.png")}
-          textButton={"Help Center"}
+          textButton={"Help Center >"}
           explanation={"Check answers to most common questions."}
           onPress={() =>
             Linking.openURL("https://support.celsius.network/hc/en-us")
@@ -39,7 +39,7 @@ class Support extends Component {
         <MultiInfoCardButton
           darkImage={require("../../../../assets/images/icons/support-dark.png")}
           lightImage={require("../../../../assets/images/icons/support.png")}
-          textButton={"Submit Ticket"}
+          textButton={"Submit Ticket >"}
           explanation={"Our support team is here to help you solve any problem you may have."}
           onPress={() =>
             Linking.openURL(

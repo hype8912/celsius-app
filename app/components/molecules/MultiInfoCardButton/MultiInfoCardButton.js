@@ -5,12 +5,6 @@ import { View } from "react-native";
 import MultiInfoCardStyle from "./MultiInfoCardButton.styles";
 import CelText from "../../atoms/CelText/CelText";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
-import {
-  getTheme,
-  heightPercentageToDP,
-  widthPercentageToDP
-} from "../../../utils/styles-util";
-import Icon from "../../atoms/Icon/Icon";
 import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
 import Badge from "../../atoms/Badge/Badge";
@@ -43,8 +37,6 @@ class MultiInfoCardButton extends Component {
       isActive
     } = this.props;
 
-    const theme = getTheme();
-
     const style = MultiInfoCardStyle();
     return (
       <Card onPress={onPress} padding={"20 20 20 10"}>
@@ -57,7 +49,6 @@ class MultiInfoCardButton extends Component {
             />
           </View>
           <View style={style.explanationWrapper}>
-            <View style={style.buttonWrapper}>
               <CelText
                 weight={"500"}
                 type={"H3"}
@@ -66,14 +57,6 @@ class MultiInfoCardButton extends Component {
               >
                 {textButton}
               </CelText>
-              <Icon
-                width={widthPercentageToDP("5%")}
-                height={heightPercentageToDP("2%")}
-                name={"IconChevronRight"}
-                fill={theme === "dark" ? STYLES.COLORS.CELSIUS_BLUE : STYLES.COLORS.SEMI_GRAY}
-                style={style.icon}
-              />
-            </View>
             {isActive ? (
               <View style={style.active}>
                 <Badge
