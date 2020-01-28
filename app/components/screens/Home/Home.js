@@ -46,8 +46,12 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    const { actions, appInitialized } = this.props;
+    const { actions, appInitialized, navigation } = this.props;
     if (!appInitialized) await actions.initCelsiusApp();
+
+    navigation.setParams({
+      fab: false,
+    });
   }
 
   componentDidUpdate(prevProps) {
