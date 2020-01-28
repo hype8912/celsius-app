@@ -10,7 +10,6 @@ import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
-import CelButton from "../../atoms/CelButton/CelButton";
 import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import { hasPassedKYC } from "../../../utils/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
@@ -50,13 +49,6 @@ class BalanceHistory extends Component {
     };
   }
 
-  handleGetAllTransactions = async () => {
-    const { actions } = this.props;
-
-    await actions.navigateTo("AllTransactions");
-    await actions.getAllTransactions();
-  };
-
   render() {
     const { walletSummary } = this.props;
     const style = BalanceHistoryStyle();
@@ -88,10 +80,6 @@ class BalanceHistory extends Component {
               hasFilter={false}
               additionalFilter={{ limit: 5 }}
             />
-
-            <CelButton basic onPress={() => this.handleGetAllTransactions()}>
-              See all
-            </CelButton>
           </View>
         </View>
       </RegularLayout>

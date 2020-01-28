@@ -49,6 +49,8 @@ class ContactRow extends Component {
       : require("../../../../assets/images/empty-profile/empty-profile.png");
     const networkImage = this.getNetworkImageUrl(contact.item.network);
 
+    const name = contact.item.name.includes('null') ? contact.item.name.split(" ")[0] : contact.item.name;
+
     return (
       <TouchableOpacity onPress={onPress} style={styles.container}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -65,7 +67,7 @@ class ContactRow extends Component {
             />
           </View>
           <View style={styles.info}>
-            <CelText type="H3">{contact.item.name}</CelText>
+            <CelText type="H3">{name}</CelText>
             <CelText color={STYLES.COLORS.CELSIUS_BLUE} type="H6">
               {this.getContactPreference(contact.item)}
             </CelText>

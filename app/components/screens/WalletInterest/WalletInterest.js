@@ -59,11 +59,6 @@ class WalletInterest extends Component {
     this.setState({ loading: false });
   }
 
-  navigateToAllTransactions = () => {
-    const { actions } = this.props;
-    actions.navigateTo("AllTransactions", { transactionType: ["interest"] });
-  };
-
   render() {
     const {
       walletSummary,
@@ -156,14 +151,6 @@ class WalletInterest extends Component {
             hasFilter={false}
             additionalFilter={{ type: ["interest"], limit: 5 }}
           />
-
-          <CelButton
-            basic
-            margin="0 0 15 0"
-            onPress={this.navigateToAllTransactions}
-          >
-            See all
-          </CelButton>
         </View>
       </RegularLayout>
     );

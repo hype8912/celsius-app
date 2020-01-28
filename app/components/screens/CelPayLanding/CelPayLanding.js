@@ -43,11 +43,6 @@ class CelPayLanding extends Component {
     mixpanelAnalytics.navigatedToCelPay(navHistory[0])
   }
 
-  navigateToAllTransactions = () => {
-    const { actions } = this.props;
-    actions.navigateTo("AllTransactions", { transactionType: ["celpay"] });
-  };
-
   sendAsLink = () => {
     const { actions } = this.props
 
@@ -122,13 +117,6 @@ class CelPayLanding extends Component {
           hasFilter={false}
           additionalFilter={{ type: ["celpay"], limit: 5 }}
         />
-        <CelButton
-          basic
-          margin="0 0 15 0"
-          onPress={this.navigateToAllTransactions}
-        >
-          See all
-        </CelButton>
 
         <CelPayInfoModal close={actions.closeModal} maxTransferAmount={celPaySettings.maximum_transfer_amount}/>
       </RegularLayout>
