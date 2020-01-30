@@ -6,7 +6,6 @@ import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
-import CelButton from "../../atoms/CelButton/CelButton";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { hasPassedKYC } from "../../../utils/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
@@ -37,25 +36,25 @@ class CelPayLanding extends Component {
   });
 
   componentDidMount() {
-    const { navHistory, actions } = this.props
+    const { navHistory, actions } = this.props;
 
     actions.openModal(MODALS.CELPAY_INFO_MODAL);
-    mixpanelAnalytics.navigatedToCelPay(navHistory[0])
+    mixpanelAnalytics.navigatedToCelPay(navHistory[0]);
   }
 
   sendAsLink = () => {
-    const { actions } = this.props
+    const { actions } = this.props;
 
-    actions.navigateTo("CelPayEnterAmount")
-    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK)
-  }
+    actions.navigateTo("CelPayEnterAmount");
+    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK);
+  };
 
   sendToFriend = () => {
-    const { actions } = this.props
+    const { actions } = this.props;
 
-    actions.navigateTo("CelPayChooseFriend")
-    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.FRIEND)
-  }
+    actions.navigateTo("CelPayChooseFriend");
+    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.FRIEND);
+  };
 
   render() {
     // const style = CelPayLandingStyle();
@@ -118,7 +117,10 @@ class CelPayLanding extends Component {
           additionalFilter={{ type: ["celpay"], limit: 5 }}
         />
 
-        <CelPayInfoModal close={actions.closeModal} maxTransferAmount={celPaySettings.maximum_transfer_amount}/>
+        <CelPayInfoModal
+          close={actions.closeModal}
+          maxTransferAmount={celPaySettings.maximum_transfer_amount}
+        />
       </RegularLayout>
     );
   }

@@ -8,6 +8,13 @@ import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
 import Badge from "../../atoms/Badge/Badge";
+import Icon from "../../atoms/Icon/Icon";
+import {
+  getTheme,
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
+import { THEMES } from "../../../constants/UI";
 
 class MultiInfoCardButton extends Component {
   static propTypes = {
@@ -16,16 +23,18 @@ class MultiInfoCardButton extends Component {
     textButton: PropTypes.string,
     explanation: PropTypes.string,
     onPress: PropTypes.func,
-    isActive: PropTypes.bool,
+    label: PropTypes.string,
+    disabled: PropTypes.bool,
   };
-  static defaultProps = {};
+  static defaultProps = {
+    disabled: false,
+  };
 
   constructor(props) {
     super(props);
 
     this.state = {};
   }
-
 
   render() {
     const {
@@ -34,43 +43,74 @@ class MultiInfoCardButton extends Component {
       textButton,
       explanation,
       onPress,
-      isActive
+      label,
+      disabled,
     } = this.props;
 
     const style = MultiInfoCardStyle();
+    const theme = getTheme();
     return (
-      <Card onPress={onPress} padding={"20 20 20 10"}>
+      <Card onPress={onPress} padding={"20 20 20 10"} disabled={disabled}>
         <View style={style.cardWrapper}>
           <View style={style.imageWrapper}>
             <ThemedImage
-              style={style.image}
+              style={[style.image, disabled ? { opacity: 0.3 } : null]}
               darkSource={darkImage}
               lightSource={lightImage}
             />
           </View>
           <View style={style.explanationWrapper}>
-              <CelText
-                weight={"500"}
-                type={"H3"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
-                margin={"0 0 0 0"}
+            <CelText
+              weight={"500"}
+              type={"H3"}
+              color={STYLES.COLORS.CELSIUS_BLUE}
+              margin={"0 0 0 0"}
+              style={disabled ? { opacity: 0.3 } : null}
+            >
+              {textButton}
+              <View
+                style={{
+                  height: heightPercentageToDP("2.5%"),
+                  width: widthPercentageToDP("4.5%"),
+                }}
               >
-                {textButton}
-              </CelText>
-            {isActive ? (
+                <Icon
+                  name={"IconChevronRight"}
+                  fill={
+                    disabled
+                      ? STYLES.COLORS.DARK_GRAY3
+                      : STYLES.COLORS.DARK_GRAY5
+                  }
+                  height={heightPercentageToDP("2.5%")}
+                  width={widthPercentageToDP("2.5%")}
+                  style={style.chevronStyle}
+                />
+              </View>
+            </CelText>
+            {label ? (
               <View style={style.active}>
                 <Badge
-                  color={STYLES.COLORS.GREEN}
-                  style={{ alignItems: "flex-start" }}
+                  color={
+                    theme === THEMES.LIGHT
+                      ? STYLES.COLORS.GREEN
+                      : STYLES.COLORS.MEDIUM_GRAY3
+                  }
+                  style={{ alignItems: "flex-start", opacity: 1, zIndex: 100 }}
                 >
                   <CelText type="H5" color="white">
-                    Currently active
+                    {label}
                   </CelText>
                 </Badge>
               </View>
             ) : null}
             {!!explanation && (
-              <CelText weight={"200"} type={"H4"} align={"left"} margin={"10 0 0 0"}>
+              <CelText
+                weight={"200"}
+                type={"H4"}
+                align={"left"}
+                margin={"10 0 0 0"}
+                style={disabled ? { opacity: 0.3 } : null}
+              >
                 {explanation}
               </CelText>
             )}
