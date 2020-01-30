@@ -86,7 +86,7 @@ class ConfirmCelPayModal extends Component {
 
           <View style={style.amount}>
             <CelText type="H6">New wallet balance:</CelText>
-            <CelText type="H6" weight="400">
+            <CelText type="H6" weight="500">
               {formatter.crypto(newBalanceCrypto, formData.coin)} |{" "}
               {formatter.usd(newBalanceUsd)}
             </CelText>
@@ -179,8 +179,11 @@ class ConfirmCelPayModal extends Component {
                   <CelText
                     style={{ color: STYLES.COLORS.MEDIUM_GRAY }}
                     margin="5 0 5 0"
+                    type="H6"
                   >
-                   Note: {formData.message}
+                   Note: <CelText style={{ color: STYLES.COLORS.MEDIUM_GRAY }} italic type="H6">
+                    {formData.message}
+                  </CelText>
                   </CelText>
                 </View>
               )}

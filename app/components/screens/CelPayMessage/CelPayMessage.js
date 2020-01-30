@@ -21,10 +21,9 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class CelPayMessage extends Component {
-  static navigationOptions = ({ navigation }) => {
-    const { params } = navigation.state;
+  static navigationOptions = () => {
     return {
-      title: params && params.title ? params.title : "Enter note to CelPay",
+      title: "Enter note to CelPay",
       right: "profile",
     };
   };

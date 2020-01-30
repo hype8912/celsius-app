@@ -64,7 +64,7 @@ const base = {
 const themed = {
   light: {
     outsideCloseModal: {
-      backgroundColor: Platform.OS === "android" ? STYLES.COLORS.LIGHT_MODAL_OUTSIDE_BACKGROUND_COLOR : null
+      backgroundColor: Platform.OS === "android" ? STYLES.COLORS.LIGHT_MODAL_ANDROID__OUTSIDE_BACKGROUND_COLOR : null
     }
   },
 
@@ -76,7 +76,7 @@ const themed = {
       backgroundColor: STYLES.COLORS.DARK_HEADER,
     },
     outsideCloseModal: {
-     backgroundColor: Platform.OS === "android" ? STYLES.COLORS.DARK_MODAL_OUTSIDE_BACKGROUND_COLOR : null
+     backgroundColor: Platform.OS === "android" ? STYLES.COLORS.DARK_MODAL_ANDROID_OUTSIDE_BACKGROUND_COLOR : null
     }
   },
 

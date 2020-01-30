@@ -45,14 +45,15 @@ const base = {
 const themed = {
   light: {
     background: {
-      opacity: 0.95,
+      opacity: 0.97,
       backgroundColor: "white",
     },
   },
 
   dark: {
     background: {
-      backgroundColor: "rgba(21, 30, 39, 0.98)",
+      opacity: 0.99,
+      backgroundColor: "rgb(21, 30, 39)",
     },
   },
 
