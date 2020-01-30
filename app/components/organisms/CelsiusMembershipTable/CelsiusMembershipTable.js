@@ -54,17 +54,17 @@ class CelsiusMembershipTable extends Component {
           <View style={style.minPercentage}>
             <View style={style.tierData}>
               <CelText type="H7" weight="500">
-                {`< ${formatter.percentage(
-                  celUtilityTiers.SILVER.maximum_cel_percentage
-                )}%`}
+                {formatter.percentage(celUtilityTiers.SILVER.minimum_cel_percentage)}
+                -
+                {formatter.percentage(celUtilityTiers.SILVER.maximum_cel_percentage)}%
               </CelText>
             </View>
             <Separator vertical height={"60%"} margin="7 0 0 5" />
             <View style={style.tierData}>
               <CelText type="H7" weight="500">
-                {`< ${formatter.percentage(
-                  celUtilityTiers.GOLD.maximum_cel_percentage
-                )}%`}
+                {formatter.percentage(celUtilityTiers.GOLD.minimum_cel_percentage)}
+                -
+                {formatter.percentage(celUtilityTiers.GOLD.maximum_cel_percentage)}%
               </CelText>
             </View>
             <Separator vertical height={"60%"} margin="7 0 0 2" />
