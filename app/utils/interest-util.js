@@ -32,11 +32,11 @@ function getUserInterestForCoin(coinShort) {
           appSettings.interest_in_cel_per_coin[coinShort] === null)) &&
       coinShort !== "CEL";
     interestRateDisplay = !inCEL
-      ? formatter.percentageDisplay(interestRates[coinShort].rate)
-      : formatter.percentageDisplay(interestRates[coinShort].cel_rate);
+      ? formatter.percentageDisplay(interestRates[coinShort].compound_rate)
+      : formatter.percentageDisplay(interestRates[coinShort].compound_cel_rate);
     interestRate = !inCEL
-      ? interestRates[coinShort].rate
-      : interestRates[coinShort].cel_rate;
+      ? interestRates[coinShort].compound_rate
+      : interestRates[coinShort].compound_cel_rate;
   }
 
   return {

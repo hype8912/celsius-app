@@ -67,8 +67,6 @@ class InterestRateInfoTable extends Component {
     const { style, interestRates } = this.props;
     const additionalStyle = style || {};
 
-    // const styles = InterestRateInfoTableStyle();
-
     return (
       <View style={[[additionalStyle]]}>
         {interestRates ? this.renderInterestTable() : null}
