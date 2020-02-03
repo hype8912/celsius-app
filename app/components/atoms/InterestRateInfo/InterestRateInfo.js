@@ -92,7 +92,7 @@ class InterestRateInfo extends Component {
                 {currencyInfo.short}
               </CelText>
               <CelText type={"H7"} weight="bold" style={styles.regRateText}>
-                {formatter.percentageDisplay(rate.rate)}
+                {formatter.percentageDisplay(rate.compound_rate)}
               </CelText>
             </View>
             {currencyInfo.short === "CEL" ? null : (
@@ -105,7 +105,7 @@ class InterestRateInfo extends Component {
                   CEL
                 </CelText>
                 <CelText type={"H7"} weight="bold" style={styles.celRateText}>
-                  {formatter.percentageDisplay(rate.cel_rate)}
+                  {formatter.percentageDisplay(rate.compound_cel_rate)}
                 </CelText>
               </View>
             )}
