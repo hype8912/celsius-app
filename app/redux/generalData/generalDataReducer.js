@@ -68,6 +68,11 @@ export default function generalDataReducer(state = initialState(), action) {
           (1 + Number(action.loyaltyInfo.earn_interest_bonus)) *
           state.interestRates[coinShort].rate
         ).toString();
+
+        interestRates[coinShort].compound_rate =
+          Math.pow(1 + state.interestRates[coinShort].rate / 52, 52) - 1;
+        interestRates[coinShort].compound_cel_rate =
+          Math.pow(1 + state.interestRates[coinShort].cel_rate / 52, 52) - 1;
       });
 
       return {
