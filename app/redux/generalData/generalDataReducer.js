@@ -63,9 +63,15 @@ export default function generalDataReducer(state = initialState(), action) {
 
       // NOTE(fj) BE returns cel_rate as "0" every time
       Object.keys(state.interestRates).forEach(coinShort => {
+        let rate = state.interestRates[coinShort].rate;
+
+        if (coinShort === "BTC") {
+          rate = "0.0600";
+        }
+
         interestRates[coinShort].cel_rate = (
           (1 + Number(action.loyaltyInfo.earn_interest_bonus)) *
-          state.interestRates[coinShort].rate
+          rate
         ).toString();
 
         interestRates[coinShort].compound_rate =
