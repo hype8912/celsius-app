@@ -10,6 +10,7 @@ function initialState() {
     automaticLoanLimit: undefined,
     celUtilityTiers: undefined,
     withdrawalSettings: undefined,
+    buyCoinsSettings: undefined,
 
     kycDocTypes: undefined, // TODO move to kycReducer
     backendStatus: undefined, // TODO move to appReducer ?
@@ -52,11 +53,12 @@ export default function generalDataReducer(state = initialState(), action) {
       return {
         ...state,
         interestRates,
-        minimumLoanAmount: action.minimumLoanAmount,
-        celUtilityTiers: action.celUtilityTiers,
-        withdrawalSettings: action.withdrawalSettings,
-        celPaySettings: action.celPaySettings,
-        automaticLoanLimit: action.automaticLoanLimit,
+        minimumLoanAmount: action.minimum_usd_amount,
+        automaticLoanLimit: action.auto_maximum_threshold,
+        celUtilityTiers: action.cel_utility_tiers,
+        withdrawalSettings: action.withdrawal_settings,
+        celPaySettings: action.cel_pay_settings,
+        buyCoinsSettings: action.buy_coins,
       };
 
     case ACTIONS.GET_LOYALTY_INFO_SUCCESS:

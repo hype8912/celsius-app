@@ -26,13 +26,7 @@ function getInitialCelsiusData() {
 
       dispatch({
         type: ACTIONS.GET_INITIAL_CELSIUS_DATA_SUCCESS,
-        interestRates: res.data.interest_rates,
-        ltvs: res.data.borrow_ltvs,
-        minimumLoanAmount: res.data.minimum_usd_amount,
-        automaticLoanLimit: res.data.auto_maximum_threshold,
-        celUtilityTiers: res.data.cel_utility_tiers,
-        withdrawalSettings: res.data.withdrawal_settings,
-        celPaySettings: res.data.cel_pay_settings,
+        ...res.data,
       });
     } catch (err) {
       dispatch(showMessage("error", err.msg));
