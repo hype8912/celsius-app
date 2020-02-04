@@ -17,6 +17,7 @@ import * as appActions from "../../../redux/actions";
 import { MODALS, THEMES } from "../../../constants/UI";
 import CelModalStyle from "./CelModal.styles";
 import Icon from "../../atoms/Icon/Icon";
+import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -59,9 +60,6 @@ class CelModal extends Component {
       "keyboardDidHide",
       this.keyboardDidHide
     );
-    const tintColor = this.getTintColor();
-    // eslint-disable-next-line react/no-did-update-set-state
-    this.setState({tintColor})
   }
 
   componentWillUnmount() {
@@ -83,13 +81,20 @@ class CelModal extends Component {
 
   getTintColor = () => {
     const { theme } = this.props;
+
     switch (theme) {
       case THEMES.DARK:
       case THEMES.CELSIUS:
-        return THEMES.DARK;
+        return {
+          color: STYLES.COLORS.DARK_MODAL_OUTSIDE_BACKGROUND_COLOR,
+          blur: 15
+        };
       case THEMES.LIGHT:
       default:
-        return THEMES.LIGHT;
+        return {
+          color: STYLES.COLORS.LIGHT_MODAL_OUTSIDE_BACKGROUND_COLOR,
+          blur: 12
+        };
     }
   };
 
@@ -139,8 +144,10 @@ class CelModal extends Component {
       hasCloseButton,
       onClose,
     } = this.props;
-    const { modalPosition, tintColor } = this.state;
+    const { modalPosition } = this.state;
     const style = CelModalStyle();
+    const tintColor = this.getTintColor();
+
     return (
       <Modal
         animationType="fade"
@@ -157,8 +164,8 @@ class CelModal extends Component {
             {children}
           </View>
         { Platform.OS === 'ios' && <BlurView
-            blurType={tintColor}
-            blurAmount={15}
+            blurType={tintColor.color}
+            blurAmount={tintColor.blur}
             style={[
               StyleSheet.absoluteFill
             ]}

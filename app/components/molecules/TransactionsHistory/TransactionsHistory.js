@@ -55,6 +55,11 @@ class TransactionsHistory extends Component {
     actions.getAllTransactions(additionalFilter);
   }
 
+  componentWillUnmount() {
+      const {actions} = this.props;
+      actions.clearForm()
+  }
+
   prepTransactions() {
     const {
       transactions,
@@ -100,8 +105,9 @@ class TransactionsHistory extends Component {
 
   handleGetAllTransactions = async () => {
     const { actions, additionalFilter } = this.props;
-    if (additionalFilter && additionalFilter.type) {
-      await actions.navigateTo("AllTransactions", { transactionType: additionalFilter.type});
+
+    if (additionalFilter) {
+      await actions.navigateTo("AllTransactions", { additionalFilter});
     } else {
       await actions.navigateTo("AllTransactions");
     }

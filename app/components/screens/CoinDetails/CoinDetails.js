@@ -267,7 +267,7 @@ class CoinDetails extends Component {
                           align="justify"
                           type="H5"
                           color="white"
-                        >{`${interestRate.display} APR`}</CelText>
+                        >{`${interestRate.display} APY`}</CelText>
                       </Badge>
                     </View>
                   )}
@@ -356,14 +356,6 @@ class CoinDetails extends Component {
               limit: 5,
             }}
           />
-
-          <CelButton
-            basic
-            margin="0 0 15 0"
-            onPress={this.navigateToAllTransactions}
-          >
-            See all
-          </CelButton>
         </View>
       </RegularLayout>
     );

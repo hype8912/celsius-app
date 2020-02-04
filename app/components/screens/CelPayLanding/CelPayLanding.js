@@ -33,6 +33,7 @@ class CelPayLanding extends Component {
 
   static navigationOptions = () => ({
     title: "Choose how to CelPay",
+    right: "profile",
   });
 
   componentDidMount() {

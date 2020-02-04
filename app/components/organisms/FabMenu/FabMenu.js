@@ -150,10 +150,16 @@ class FabMenu extends Component {
     switch (theme) {
       case THEMES.DARK:
       case THEMES.CELSIUS:
-        return THEMES.DARK;
+        return {
+          color: STYLES.COLORS.DARK_FAB_OUTSIDE_BACKGROUND_COLOR,
+          blur: 15
+        };
       case THEMES.LIGHT:
       default:
-        return THEMES.LIGHT;
+        return {
+          color: "light",
+          blur: 12
+        };
     }
   };
 
@@ -274,8 +280,8 @@ class FabMenu extends Component {
       return (
         <>
           { Platform.OS === 'ios' && <BlurView
-            blurType={tintColor}
-            blurAmount={15}
+            blurType={tintColor.color}
+            blurAmount={tintColor.blur}
             style={[
               StyleSheet.absoluteFill
             ]}

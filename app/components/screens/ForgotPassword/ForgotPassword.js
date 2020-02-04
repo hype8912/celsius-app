@@ -9,6 +9,7 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -49,7 +50,9 @@ class ForgotPassword extends Component {
         <CelButton
           margin="10 0 40 0"
           iconRight="IconArrowRight"
-          onPress={() => actions.sendResetLink()}
+          onPress={() => {
+            actions.sendResetLink();
+          }}
           loading={loading}
         >
           Send reset link

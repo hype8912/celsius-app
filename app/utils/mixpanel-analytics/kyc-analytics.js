@@ -1,4 +1,5 @@
 import { sendEvent } from "../mixpanel-util";
+import store from "../../redux/store";
 
 const kycAnalytics = {
   kycProfileInfo,
@@ -7,8 +8,7 @@ const kycAnalytics = {
   kycUtilityBillSubmitted,
   kycTaxPayerInfo,
   kycStarted,
-}
-
+};
 
 /**
  * Fires an event when a user submit KYC personal details
@@ -49,8 +49,18 @@ async function kycTaxPayerInfo() {
  * Fires an event when a user starts KYC verification
  */
 async function kycStarted() {
-  await sendEvent("KYC verification started");
+  const { documentType, ssn, itin } = store.getState().forms.formData;
+
+  const nationalId = store.getState().forms.formData.national_id;
+  let taxpayerInfo = false;
+  const document = "No document";
+
+  if (ssn || itin || nationalId) taxpayerInfo = true;
+
+  await sendEvent("KYC verification started", {
+    document_type: documentType || document,
+    taxpayer_info: taxpayerInfo,
+  });
 }
 
-
-export default kycAnalytics
+export default kycAnalytics;
