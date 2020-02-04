@@ -151,6 +151,7 @@ function sendResetLink() {
       dispatch(showMessage("info", "Email sent!"));
       dispatch(navigateTo("Login"));
       dispatch({ type: ACTIONS.SEND_RESET_LINK_SUCCESS });
+      mixpanelAnalytics.forgottenPassword()
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.SEND_RESET_LINK, err));
@@ -232,6 +233,7 @@ function logoutFromAllDevices() {
       });
 
       await dispatch(logoutUser());
+      await mixpanelAnalytics.loggedOutOfAllSessions()
       dispatch(
         showMessage("success", "Successfully logged out from all devices.")
       );
