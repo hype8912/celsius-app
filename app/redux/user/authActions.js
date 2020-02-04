@@ -228,15 +228,14 @@ function logoutFromAllDevices() {
     try {
       dispatch(startApiCall(API.LOGOUT_FROM_ALL_DEVICES));
       await usersService.invalidateSession();
+      await mixpanelAnalytics.loggedOutOfAllSessions()
       dispatch({
         type: ACTIONS.LOGOUT_FROM_ALL_DEVICES_SUCCESS,
       });
-
-      await dispatch(logoutUser());
-      await mixpanelAnalytics.loggedOutOfAllSessions()
       dispatch(
         showMessage("success", "Successfully logged out from all devices.")
       );
+      await dispatch(logoutUser());
     } catch (err) {
       logger.err(err);
     }
