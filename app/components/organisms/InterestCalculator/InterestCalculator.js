@@ -126,14 +126,17 @@ class InterestCalculator extends Component {
     const weeklyInterest =
       (formData.amountCrypto *
         (earnInterestIn && formData.coin !== "CEL"
-          ? interestRateForCoin.cel_rate
+          ? interestRateForCoin.compound_cel_rate
           : interestRateForCoin.rate)) /
       52;
+
+
+
     const yearlyInterest =
       formData.amountCrypto *
       (earnInterestIn && formData.coin !== "CEL"
-        ? interestRateForCoin.cel_rate
-        : interestRateForCoin.rate);
+        ? interestRateForCoin.compound_cel_rate
+        : interestRateForCoin.compound_rate);
     const noCelCardStyle = [style.earningCard];
     const celCardStyle = [style.earningCard];
 
@@ -156,6 +159,7 @@ class InterestCalculator extends Component {
     const interestInCelPerYear =
       (yearlyInterest * currencyRatesShort[selectedCoin.toLowerCase()]) /
       currencyRatesShort.cel;
+
     return (
       <>
         {formData.coin !== "CEL" && (
@@ -181,7 +185,7 @@ class InterestCalculator extends Component {
             }
           >
             <CelText color={noCelTextColor} align={"center"} weight="bold">
-              {formatter.percentageDisplay(interestRateForCoin.rate, true)}
+              {formatter.percentageDisplay(interestRateForCoin.compound_rate, true)}
               <CelText type="H4" weight="600" color={noCelTextColor}>
                 %
               </CelText>
@@ -201,7 +205,7 @@ class InterestCalculator extends Component {
             >
               <CelText color={celTextColor} align={"center"} weight="bold">
                 {formatter.percentageDisplay(
-                  interestRateForCoin.cel_rate,
+                  interestRateForCoin.compound_cel_rate,
                   true
                 )}
                 <CelText
