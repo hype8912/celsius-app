@@ -31,22 +31,6 @@ class Login extends Component {
   //   actions.loginUser()
   // };
 
-  // onMessage = event => {
-  //   console.log('event je: ', event)
-  //   const { actions } = this.props
-  //   if (event && event.nativeEvent.data) {
-  //     console.log('event je: ', event)
-  //     console.log('nativeEvent je: ', event.nativeEvent)
-  //     console.log('data je: ', event.nativeEvent.data)
-  //     if (['cancel', 'error', 'expired'].includes(event.nativeEvent.data)) {
-  //       return;
-  //     }
-  //     actions.closeModal();
-  //     actions.updateFormField('reCaptchaKey',event.nativeEvent.data)
-  //     actions.loginUser();
-  //   }
-  // };
-
   reCaptchaPassed = event => {
     const { actions } = this.props;
     actions.updateFormField("reCaptchaKey", event.nativeEvent.data);

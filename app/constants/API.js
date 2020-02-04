@@ -133,4 +133,9 @@ export default {
 
   // terms of use
   GET_LOAN_TERMS_OF_USE: "GET_LOAN_TERMS_OF_USE",
+
+  // simplex calls
+  GET_QUOTE: "GET_QUOTE",
+  CREATE_PAYMENT_REQUEST: "CREATE_PAYMENT_REQUEST",
+  GET_PAYMENT_FOR_USER: "GET_PAYMENT_FOR_USER",
 };
