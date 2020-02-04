@@ -356,14 +356,6 @@ class CoinDetails extends Component {
               limit: 5,
             }}
           />
-
-          <CelButton
-            basic
-            margin="0 0 15 0"
-            onPress={this.navigateToAllTransactions}
-          >
-            See all
-          </CelButton>
         </View>
       </RegularLayout>
     );
