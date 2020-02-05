@@ -9,6 +9,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 import { MODALS } from "../../../constants/UI";
 import GetCoinsInfoModal from "../../modals/GetCoinsInfoModal/GetCoinsInfoModal";
+import { updateFormFields } from "../../../redux/actions";
 
 @connect(
   () => ({}),
@@ -42,6 +43,8 @@ class SimplexGetCoins extends Component {
           darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
           lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
           onPress={() => {
+            actions.updateFormField("simplexData", { paymentMethod: "Credit Card" },
+            )
             actions.navigateTo("GetCoinsEnterAmount");
           }}
         />
