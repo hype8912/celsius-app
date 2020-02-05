@@ -8,7 +8,6 @@ class GetCoinsInfoModal extends React.Component {
   goNext = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("GetCoinsChooseAmount");
     actions.closeModal();
   };
 

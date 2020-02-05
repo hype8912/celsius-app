@@ -25,6 +25,12 @@ class SimplexGetCoins extends Component {
     right: "profile",
   });
 
+  componentDidMount() {
+    const { actions } = this.props
+
+    actions.openModal(MODALS.GET_COINS_INFO_MODAL);
+  }
+
   render() {
     const { actions } = this.props;
 
@@ -36,7 +42,7 @@ class SimplexGetCoins extends Component {
           darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
           lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
           onPress={() => {
-            actions.openModal(MODALS.GET_COINS_INFO_MODAL);
+            actions.navigateTo("GetCoinsEnterAmount");
           }}
         />
         <MultiInfoCardButton
@@ -47,7 +53,7 @@ class SimplexGetCoins extends Component {
           label={"COMING SOON!"}
           disabled
         />
-        <GetCoinsInfoModal actions={actions} />
+        <GetCoinsInfoModal actions={actions}/>
       </RegularLayout>
     );
   }

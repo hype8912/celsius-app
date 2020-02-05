@@ -49,16 +49,15 @@ export default function generalDataReducer(state = initialState(), action) {
         interestRates[coinShort] = interestRates[coinShort] || {};
         interestRates[coinShort].rate = action.interestRates[coinShort].rate;
       });
-
       return {
         ...state,
         interestRates,
-        minimumLoanAmount: action.minimum_usd_amount,
-        automaticLoanLimit: action.auto_maximum_threshold,
-        celUtilityTiers: action.cel_utility_tiers,
-        withdrawalSettings: action.withdrawal_settings,
-        celPaySettings: action.cel_pay_settings,
-        buyCoinsSettings: action.buy_coins,
+        minimumLoanAmount: action.minimumLoanAmount,
+        celUtilityTiers: action.celUtilityTiers,
+        withdrawalSettings: action.withdrawalSettings,
+        celPaySettings: action.celPaySettings,
+        automaticLoanLimit: action.automaticLoanLimit,
+        buyCoinsSettings: action.buyCoinsSettings
       };
 
     case ACTIONS.GET_LOYALTY_INFO_SUCCESS:
