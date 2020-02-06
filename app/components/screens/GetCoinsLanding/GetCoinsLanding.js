@@ -9,12 +9,15 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 import { MODALS } from "../../../constants/UI";
 import GetCoinsInfoModal from "../../modals/GetCoinsInfoModal/GetCoinsInfoModal";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
-  () => ({}),
+  state => ({
+    navHistory: state.nav.history,
+  }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-class SimplexGetCoins extends Component {
+class GetCoinsLanding extends Component {
   static propTypes = {
     type: PropTypes.string,
   };
@@ -26,9 +29,9 @@ class SimplexGetCoins extends Component {
   });
 
   componentDidMount() {
-    const { actions } = this.props
-
+    const { actions, navHistory } = this.props
     actions.openModal(MODALS.GET_COINS_INFO_MODAL);
+    mixpanelAnalytics.navigatedToBuyCoins(navHistory[0]);
   }
 
   render() {
@@ -43,6 +46,7 @@ class SimplexGetCoins extends Component {
           lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
           onPress={() => {
             actions.navigateTo("GetCoinsEnterAmount");
+            mixpanelAnalytics.choseBuyCoinsType("CARD")
           }}
         />
         <MultiInfoCardButton
@@ -59,4 +63,4 @@ class SimplexGetCoins extends Component {
   }
 }
 
-export default SimplexGetCoins;
+export default GetCoinsLanding;
