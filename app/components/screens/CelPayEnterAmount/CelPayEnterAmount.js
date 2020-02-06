@@ -299,8 +299,6 @@ class CelPayEnterAmount extends Component {
       c => c.short === formData.coin.toUpperCase()
     )[0];
 
-    console.log("formData celpay: ", formData);
-
     return (
       <RegularLayout padding="0 0 0 0" fabType={"hide"}>
         <View style={style.container}>

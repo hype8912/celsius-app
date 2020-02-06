@@ -4,7 +4,17 @@ import apiUrl from "./api-url";
 const simplexService = {
   getQuote,
   createPaymentRequest,
+  getAllPayments,
 };
+
+/**
+ * Gets all Simplex payment requests for user
+ *
+ * @returns {Promise}
+ */
+function getAllPayments() {
+  return axios.get(`${apiUrl}/simplex/payment`);
+}
 
 /**
  * Gets Simplex quote for a user
@@ -14,12 +24,12 @@ const simplexService = {
  * @param {string} amount
  * @returns {Promise}
  */
-function getQuote( coin, fiatCurrency, requestedCurrency, amount) {
+function getQuote(coin, fiatCurrency, requestedCurrency, amount) {
   return axios.post(`${apiUrl}/simplex/quote`, {
     coin,
     fiat_currency: fiatCurrency,
     requested_currency: requestedCurrency,
-    amount
+    amount,
   });
 }
 
@@ -34,7 +44,14 @@ function getQuote( coin, fiatCurrency, requestedCurrency, amount) {
  * @param {string} fiatBaseAmount
  * @returns {Promise}
  */
-function createPaymentRequest(quoteId, coin, amount, fiatTotalAmount, fiatCurrency, fiatBaseAmount) {
+function createPaymentRequest(
+  quoteId,
+  coin,
+  amount,
+  fiatTotalAmount,
+  fiatCurrency,
+  fiatBaseAmount
+) {
   return axios.post(`${apiUrl}/simplex/payment`, {
     quote_id: quoteId,
     coin,

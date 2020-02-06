@@ -10,6 +10,7 @@ import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCa
 import { MODALS } from "../../../constants/UI";
 import GetCoinsInfoModal from "../../modals/GetCoinsInfoModal/GetCoinsInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import SimplexPaymentsHistory from "../../molecules/SimplexPaymentsHistory/SimplexPaymentsHistory";
 
 @connect(
   state => ({
@@ -57,6 +58,9 @@ class GetCoinsLanding extends Component {
           label={"COMING SOON!"}
           disabled
         />
+
+        <SimplexPaymentsHistory />
+
         <GetCoinsInfoModal actions={actions}/>
       </RegularLayout>
     );

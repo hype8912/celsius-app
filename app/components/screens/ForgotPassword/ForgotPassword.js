@@ -9,7 +9,6 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({

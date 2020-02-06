@@ -5,7 +5,8 @@ import ACTIONS from "../../constants/ACTIONS";
  */
 function initialState() {
   return {
-    simplexData: {}
+    simplexData: {},
+    payments: [],
   };
 }
 
@@ -22,8 +23,14 @@ export default function simplexReducer(state = initialState(), action) {
         ...state,
         simplexData: {
           ...state.simplexData,
-          ...action.paymentRequest
+          ...action.paymentRequest,
         },
+      };
+
+    case ACTIONS.GET_PAYMENT_REQUESTS_SUCCESS:
+      return {
+        ...state,
+        payments: action.payments,
       };
 
     default:

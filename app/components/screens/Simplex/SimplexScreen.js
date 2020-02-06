@@ -22,18 +22,17 @@ const patchPostMessageJsCode = `(${String(function() {
 @connect(
   state => ({
     simplexData: state.simplex.simplexData,
-    fabType: state.ui.fabType
+    fabType: state.ui.fabType,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-
 class SimplexScreen extends Component {
   componentDidMount() {
-    const {actions} = this.props
-    actions.setFabType('hide');
+    const { actions } = this.props;
+    actions.setFabType("hide");
   }
 
-  generateWebViewContent = (data) => {
+  generateWebViewContent = data => {
     const originalForm = `<!DOCTYPE html>
        <html>
         <head>
@@ -65,7 +64,7 @@ class SimplexScreen extends Component {
       </html>
      `;
     return originalForm;
-  }
+  };
 
   // onMsg = event => {
   //   // do something after receiving msg
@@ -75,13 +74,13 @@ class SimplexScreen extends Component {
   render() {
     const { simplexData } = this.props;
     return (
-        <WebView
-          // onMessage={this.onMsg}
-          javaScriptEnabled
-          injectedJavaScript={patchPostMessageJsCode}
-          automaticallyAdjustContentInsets
-          source={{html: this.generateWebViewContent(simplexData)}}
-        />
+      <WebView
+        // onMessage={this.onMsg}
+        javaScriptEnabled
+        injectedJavaScript={patchPostMessageJsCode}
+        automaticallyAdjustContentInsets
+        source={{ html: this.generateWebViewContent(simplexData) }}
+      />
     );
   }
 }
