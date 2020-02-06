@@ -4,25 +4,36 @@ import API from "../../constants/API";
 import { showMessage } from "../ui/uiActions";
 import simplexService from "../../services/simplex-service";
 import { navigateTo } from "../nav/navActions";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
 export { simplexGetQuote, simplexCreatePaymentRequest, getAllSimplexPayments };
 
 /**
  * Gets info for Simplex request
- * @param {string} coin
- * @param {string} fiatCurrency
- * @param {string} requestedCurrency
- * @param {string} amount
  */
-function simplexGetQuote(coin, fiatCurrency, requestedCurrency, amount ) {
-  return async (dispatch) => {
+function simplexGetQuote() {
+  return async (dispatch, getState) => {
+    const { formData } = getState().forms;
     try {
       dispatch(startApiCall(API.GET_QUOTE));
-      const quote = await simplexService.getQuote(coin, fiatCurrency, requestedCurrency, amount);
+      const quote = await simplexService.getQuote(
+        formData.coin,
+        "USD",
+        formData.coin,
+        formData.amountCrypto
+      );
       dispatch({
         type: ACTIONS.GET_QUOTE_SUCCESS,
         quote: quote.data,
       });
+
+      mixpanelAnalytics.enteredBuyCoinsAmount(
+        "CARD",
+        formData.coin,
+        "USD",
+        formData.amountCrypto,
+        formData.amountUsd
+      );
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_QUOTE, err));
@@ -35,19 +46,30 @@ function simplexGetQuote(coin, fiatCurrency, requestedCurrency, amount ) {
  * @param {object} args
  */
 
-function simplexCreatePaymentRequest (args) {
+function simplexCreatePaymentRequest(args) {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
       const { pin, code } = formData;
       dispatch(startApiCall(API.CREATE_PAYMENT_REQUEST));
-      const paymentRequest = await simplexService.createPaymentRequest(args, {pin, code});
+      const paymentRequest = await simplexService.createPaymentRequest(args, {
+        pin,
+        code,
+      });
 
       dispatch({
         type: ACTIONS.CREATE_PAYMENT_REQUEST_SUCCESS,
         paymentRequest: paymentRequest.data,
       });
       dispatch(navigateTo("Simplex"));
+
+      mixpanelAnalytics.initiatedBuyCoinsRequest(
+        "CARD",
+        formData.coin,
+        "USD",
+        formData.amountCrypto,
+        formData.amountUsd
+      );
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CREATE_PAYMENT_REQUEST, err));

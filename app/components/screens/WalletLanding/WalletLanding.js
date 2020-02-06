@@ -199,9 +199,12 @@ class WalletLanding extends Component {
           />
           <CelButton
             onPress={() => actions.navigateTo("GetCoinsLanding")}
-            style={{ marginTop: 20 }}
+            style={{ alignSelf: "flex-start" }}
+            margin="10 0 2 0"
+            size="small"
+            iconRight="IconArrowRight"
           >
-            Get Coins
+            Buy Coins
           </CelButton>
           <View style={style.depositWrapper}>
             <CelText style={style.depositedCoins} weight="500">

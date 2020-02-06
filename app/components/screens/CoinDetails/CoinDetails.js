@@ -30,6 +30,7 @@ const { COLORS } = STYLES;
     currencyRatesShort: state.currencies.currencyRatesShort,
     interestRates: state.generalData.interestRates,
     celpayCompliance: state.compliance.celpay,
+    buyCoinsSettings: state.generalData.buyCoinsSettings,
     coinAmount: state.graph.coinLastValue,
     appSettings: state.user.appSettings,
   }),
@@ -113,6 +114,12 @@ class CoinDetails extends Component {
     actions.navigateTo("CelPayLanding");
   };
 
+  goToBuyCoins = () => {
+    const { currency } = this.state;
+    const { actions } = this.props;
+    actions.navigateTo("GetCoinsLanding", { coin: currency.short });
+  };
+
   render() {
     const { currency } = this.state;
     const {
@@ -121,6 +128,7 @@ class CoinDetails extends Component {
       celpayCompliance,
       currencies,
       appSettings,
+      buyCoinsSettings,
     } = this.props;
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
@@ -133,6 +141,9 @@ class CoinDetails extends Component {
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short);
+    const isCoinEligibleForBuying = buyCoinsSettings.supported_coins.includes(
+      currency.short
+    );
 
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
@@ -176,7 +187,7 @@ class CoinDetails extends Component {
                     <View style={style.buttonIcon}>
                       <Icon fill="primary" name="Deposit" width="25" />
                     </View>
-                    <CelText>Deposit</CelText>
+                    <CelText type="H6">Deposit</CelText>
                   </View>
                 </TouchableOpacity>
                 <Separator vertical height={"35%"} top={20} />
@@ -193,12 +204,39 @@ class CoinDetails extends Component {
                         <Icon fill="primary" name="CelPay" width="25" />
                       </View>
 
-                      <CelText>CelPay</CelText>
+                      <CelText type="H6">CelPay</CelText>
                     </View>
                   </TouchableOpacity>
                 )}
 
                 {isCoinEligibleForCelPay && (
+                  <Separator vertical height={"35%"} top={20} />
+                )}
+
+                {isCoinEligibleForBuying && (
+                  <TouchableOpacity
+                    onPress={this.goToBuyCoins}
+                    style={{
+                      marginLeft: widthPercentageToDP("6.9%"),
+                      marginRight: widthPercentageToDP("6.9%"),
+                    }}
+                  >
+                    <View style={style.buttonItself}>
+                      <View
+                        style={[
+                          style.buttonIcon,
+                          { transform: [{ rotate: "180deg" }] },
+                        ]}
+                      >
+                        <Icon fill="primary" name="CelPay" width="25" />
+                      </View>
+
+                      <CelText type="H6">Buy</CelText>
+                    </View>
+                  </TouchableOpacity>
+                )}
+
+                {isCoinEligibleForBuying && (
                   <Separator vertical height={"35%"} top={20} />
                 )}
 
@@ -214,7 +252,7 @@ class CoinDetails extends Component {
                     <View style={style.buttonIcon}>
                       <Icon fill="primary" name="Withdraw" width="25" />
                     </View>
-                    <CelText>Withdraw</CelText>
+                    <CelText type="H6">Withdraw</CelText>
                   </View>
                 </TouchableOpacity>
               </View>

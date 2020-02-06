@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { View } from "react-native";
+import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
 
 import * as appActions from "../../../redux/actions";
 import GetCoinsEnterAmountStyle from "./GetCoinsEnterAmount.styles";
-import RegularLayout from '../../layouts/RegularLayout/RegularLayout';
+import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
@@ -27,69 +26,68 @@ import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConf
     depositCompliance: state.compliance.deposit,
     currencies: state.currencies.rates,
   }),
-  dispatch => ({ actions: bindActionCreators(appActions, dispatch) }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class GetCoinsEnterAmount extends Component {
   static propTypes = {};
-  static defaultProps = {}
+  static defaultProps = {};
 
   static navigationOptions = () => ({
     title: "Get Coins",
-    right: "profile"
+    right: "profile",
   });
 
   constructor(props) {
-    super(props)
+    super(props);
     const {
       currencies,
       depositCompliance,
       buyCoinsSettings,
-      actions
-    } = this.props
+      actions,
+    } = this.props;
 
     const availableCoins = currencies
       .filter(c => depositCompliance.coins.includes(c.short))
       .filter(c => buyCoinsSettings.supported_coins.includes(c.short))
-      .map(c => ({ label: `${formatter.capitalize(c.name)} (${c.short})`, value: c.short }))
+      .map(c => ({
+        label: `${formatter.capitalize(c.name)} (${c.short})`,
+        value: c.short,
+      }));
 
     actions.updateFormFields({
       amountUsd: "",
       amountCrypto: "",
-    })
+    });
     this.state = {
       availableCoins,
-    }
+    };
   }
 
   handleCoinSelect = (field, value) => {
-    const { actions } = this.props
+    const { actions } = this.props;
     actions.updateFormFields({
       [field]: value,
       amountUsd: "",
-      amountCrypto: ""
+      amountCrypto: "",
     });
-  }
+  };
 
   handleNextStep = () => {
-    const {
-      buyCoinsSettings,
-      formData,
-      actions
-    } = this.props
+    const { buyCoinsSettings, formData, actions } = this.props;
 
     if (Number(formData.amountUsd) < buyCoinsSettings.min_payment_amount) {
       return actions.showMessage("warning", "Minimum amount to buy is $50.");
     }
-    actions.simplexGetQuote(formData.coin, "USD", formData.coin, formData.amountCrypto)
-    actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL)
-  }
+    actions.simplexGetQuote();
+    actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL);
+  };
 
-  coinPrice = (coin) => {
-    const { currencies } = this.props
+  coinPrice = coin => {
+    const { currencies } = this.props;
 
-    const selectedCoin = currencies && currencies.find(c => c.short === coin)
-    return selectedCoin
-  }
+    const selectedCoin = currencies && currencies.find(c => c.short === coin);
+    return selectedCoin;
+  };
 
   getUsdValue = amountUsd =>
     formatter.removeDecimalZeros(formatter.floor10(amountUsd, -2) || "");
@@ -164,16 +162,13 @@ class GetCoinsEnterAmount extends Component {
   };
 
   render() {
-    const {
-      actions,
-      formData,
-      keypadOpen,
-      simplexData
-    } = this.props
-    const { availableCoins } = this.state
+    const { actions, formData, keypadOpen } = this.props;
+    const { availableCoins } = this.state;
     const style = GetCoinsEnterAmountStyle();
 
-    const coinPrice = this.coinPrice(formData.coin) && this.coinPrice(formData.coin).market_quotes_usd.price
+    const coinPrice =
+      this.coinPrice(formData.coin) &&
+      this.coinPrice(formData.coin).market_quotes_usd.price;
     return (
       <RegularLayout fabType={"hide"} padding={"0 0 0 0"}>
         <View style={style.fiatSection}>
@@ -184,7 +179,7 @@ class GetCoinsEnterAmount extends Component {
               onChange={this.handleCoinSelect}
               coin={formData.coin}
               field="coin"
-              defaultSelected={"BTC"}
+              defaultSelected={formData.coin || "BTC"}
               availableCoins={availableCoins}
               navigateTo={actions.navigateTo}
             />
@@ -204,17 +199,12 @@ class GetCoinsEnterAmount extends Component {
             />
           </View>
         </View>
-        <CelText
-          align={"center"}
-          color={STYLES.COLORS.MEDIUM_GRAY}
-        >
+        <CelText align={"center"} color={STYLES.COLORS.MEDIUM_GRAY}>
           1 {formData.coin} ≈ {coinPrice}$
         </CelText>
         <CelButton
           margin="20 0 0 0"
-          disabled={
-            !(formData.amountUsd && Number(formData.amountUsd) > 0)
-          }
+          disabled={!(formData.amountUsd && Number(formData.amountUsd) > 0)}
           onPress={this.handleNextStep}
           iconRight={
             formData.amountUsd && Number(formData.amountUsd) > 0
@@ -236,10 +226,10 @@ class GetCoinsEnterAmount extends Component {
           purpose={KEYPAD_PURPOSES.BUY_COINS}
           autofocus={false}
         />
-       <GetCoinsConfirmModal />
+        <GetCoinsConfirmModal />
       </RegularLayout>
     );
   }
 }
 
-export default GetCoinsEnterAmount
+export default GetCoinsEnterAmount;

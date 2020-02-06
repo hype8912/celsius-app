@@ -12,7 +12,8 @@ import Card from "../Card/Card";
 import CoinIcon from "../CoinIcon/CoinIcon";
 import cryptoUtil from "../../../utils/crypto-util";
 
-@connect(state => ({
+@connect(
+  state => ({
     walletCurrencies: state.currencies.rates,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -80,7 +81,11 @@ class InterestRateInfo extends Component {
                 color={STYLES.COLORS.CELSIUS_BLUE}
                 type={"H7"}
                 weight={"300"}
-                onPress={() => actions.navigateTo("GetCoinsLanding")}
+                onPress={() =>
+                  actions.navigateTo("GetCoinsLanding", {
+                    coin: currencyInfo.short,
+                  })
+                }
               >
                 {`Buy ${currencyInfo.short}`}
               </CelText>

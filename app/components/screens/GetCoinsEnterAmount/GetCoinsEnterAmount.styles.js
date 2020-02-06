@@ -1,9 +1,12 @@
+import { Dimensions } from "react-native";
 import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from '../../../utils/styles-util';
+import { getThemedStyle, widthPercentageToDP } from '../../../utils/styles-util';
+
+const { width } = Dimensions.get("window");
 
 const base = {
   container: {
-    flex: 1
+    flex: 1,
   },
   fiatSection: {
     alignItems: "center",
@@ -19,6 +22,8 @@ const base = {
     alignContent: "center",
     justifyContent: "center",
     marginTop: 20,
+    width: width - widthPercentageToDP("10%"),
+    marginHorizontal: 20
   },
 }
 

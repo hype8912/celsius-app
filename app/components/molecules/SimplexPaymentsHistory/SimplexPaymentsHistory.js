@@ -10,15 +10,19 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
 import * as appActions from "../../../redux/actions";
-import { SIMPLEX_PAYMENT_STATUSES, TRANSACTION_TYPES } from "../../../constants/DATA";
+import {
+  SIMPLEX_PAYMENT_STATUSES,
+  TRANSACTION_TYPES,
+} from "../../../constants/DATA";
 import STYLES from "../../../constants/STYLES";
+import EmptyState from "../../atoms/EmptyState/EmptyState";
 
 @connect(
   state => ({
     simplexPayments: state.simplex.payments,
     currencyRatesShort: state.currencies.currencyRatesShort,
     currencies: state.currencies.rates,
-    callsInProgress: state.api.callsInProgress
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -38,40 +42,38 @@ class SimplexPaymentsHistory extends Component {
           color: STYLES.COLORS.ORANGE,
           iconName: "TransactionReceived",
           statusText: "Pending",
-        }
+        };
       case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
         return {
           color: STYLES.COLORS.GREEN,
           iconName: "TransactionReceived",
           statusText: "Confirmed",
-        }
+        };
       case TRANSACTION_TYPES.CANCELED:
         return {
           color: STYLES.COLORS.RED,
           iconName: "TransactionReceived",
           statusText: "Canceled",
-        }
+        };
     }
   }
 
   getType(payment) {
     switch (payment.status) {
       case SIMPLEX_PAYMENT_STATUSES.PENDING:
-        return TRANSACTION_TYPES.DEPOSIT_PENDING
+        return TRANSACTION_TYPES.DEPOSIT_PENDING;
 
       case SIMPLEX_PAYMENT_STATUSES.APPROVED:
-        return TRANSACTION_TYPES.DEPOSIT_CONFIRMED
+        return TRANSACTION_TYPES.DEPOSIT_CONFIRMED;
 
       case SIMPLEX_PAYMENT_STATUSES.REFUNDED:
       case SIMPLEX_PAYMENT_STATUSES.CANCELLED:
-        return TRANSACTION_TYPES.CANCELED
+        return TRANSACTION_TYPES.CANCELED;
     }
   }
 
   prepPayments() {
-    const {
-      simplexPayments,
-    } = this.props;
+    const { simplexPayments } = this.props;
 
     const paymentsDisplay = simplexPayments.map(p => ({
       ...p,
@@ -98,7 +100,7 @@ class SimplexPaymentsHistory extends Component {
       !payments.length &&
       apiUtil.areCallsInProgress([API.GET_PAYMENT_REQUESTS], callsInProgress)
     ) {
-      return <LoadingState/>;
+      return <LoadingState />;
     }
 
     return (
@@ -111,9 +113,20 @@ class SimplexPaymentsHistory extends Component {
           </View>
         </View>
 
+        {!payments.length && (
+          <View>
+            <EmptyState
+              heading="No payment requests"
+              paragraphs={[
+                "It looks like you don't have any payment requests at the moment.",
+              ]}
+            />
+          </View>
+        )}
+
         <View>
           <FlatList
-            data={payments}
+            data={payments.reverse()}
             renderItem={({ item, index }) => (
               <TransactionRow
                 transaction={item}

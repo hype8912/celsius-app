@@ -30,9 +30,13 @@ class GetCoinsLanding extends Component {
   });
 
   componentDidMount() {
-    const { actions, navHistory } = this.props
+    const { actions, navHistory, navigation } = this.props;
     actions.openModal(MODALS.GET_COINS_INFO_MODAL);
     mixpanelAnalytics.navigatedToBuyCoins(navHistory[0]);
+    const coin = navigation.getParam("coin");
+    if (coin) {
+      actions.updateFormField("coin", coin);
+    }
   }
 
   render() {
@@ -46,10 +50,11 @@ class GetCoinsLanding extends Component {
           darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
           lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
           onPress={() => {
-            actions.updateFormField("simplexData", { paymentMethod: "Credit Card" },
-            )
+            actions.updateFormField("simplexData", {
+              paymentMethod: "Credit Card",
+            });
             actions.navigateTo("GetCoinsEnterAmount");
-            mixpanelAnalytics.choseBuyCoinsType("CARD")
+            mixpanelAnalytics.choseBuyCoinsType("CARD");
           }}
         />
         <MultiInfoCardButton
@@ -63,7 +68,7 @@ class GetCoinsLanding extends Component {
 
         <SimplexPaymentsHistory />
 
-        <GetCoinsInfoModal actions={actions}/>
+        <GetCoinsInfoModal actions={actions} />
       </RegularLayout>
     );
   }

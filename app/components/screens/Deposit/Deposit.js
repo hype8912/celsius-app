@@ -205,7 +205,7 @@ class Deposit extends Component {
     if (collateralObj) {
       collateralMissing = formatter.crypto(
         loan.margin_call.margin_call_usd_amount /
-        currencyRatesShort[collateralCoin.toLowerCase()],
+          currencyRatesShort[collateralCoin.toLowerCase()],
         collateralCoin,
         { precision: 4 }
       );
@@ -302,7 +302,7 @@ class Deposit extends Component {
     <View
       style={{ marginTop: 50, justifyContent: "center", alignItems: "center" }}
     >
-      <Spinner/>
+      <Spinner />
     </View>
   );
 
@@ -355,7 +355,7 @@ class Deposit extends Component {
       );
     }
     if (!depositCompliance.allowed) {
-      return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }}/>;
+      return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }} />;
     }
 
     const link = cryptoUtil.provideLink(formData.selectedCoin);
@@ -416,7 +416,7 @@ class Deposit extends Component {
                 </View>
 
                 <View style={styles.copyShareWrapper}>
-                  <Separator/>
+                  <Separator />
                   <View style={styles.copyShareButtonsWrapper}>
                     <CopyButton
                       copyText={destinationTag || memoId}
@@ -427,8 +427,8 @@ class Deposit extends Component {
                         )
                       }
                     />
-                    <Separator vertical/>
-                    <ShareButton shareText={destinationTag || memoId}/>
+                    <Separator vertical />
+                    <ShareButton shareText={destinationTag || memoId} />
                   </View>
                 </View>
               </Card>
@@ -454,7 +454,7 @@ class Deposit extends Component {
                 </CelText>
 
                 <View style={styles.copyShareWrapper}>
-                  <Separator/>
+                  <Separator />
                   <View style={styles.copyShareButtonsWrapper}>
                     <CopyButton
                       onCopy={() =>
@@ -467,7 +467,7 @@ class Deposit extends Component {
                         useAlternateAddress ? alternateAddress : address
                       }
                     />
-                    <Separator vertical/>
+                    <Separator vertical />
                     <ShareButton
                       shareText={
                         useAlternateAddress ? alternateAddress : address
@@ -498,17 +498,21 @@ class Deposit extends Component {
                 color={STYLES.COLORS.CELSIUS_BLUE}
                 type={"H4"}
                 weight={"300"}
-                onPress={() => actions.navigateTo("GetCoinsLanding")}
+                onPress={() =>
+                  actions.navigateTo("GetCoinsLanding", {
+                    coin: formData.selectedCoin,
+                  })
+                }
               >
                 {cryptoUtil.provideText(formData.selectedCoin)}
               </CelText>
             )}
 
             {alternateAddress &&
-            this.renderSwitchAddressBlock(
-              alternateAddress,
-              formData.selectedCoin
-            )}
+              this.renderSwitchAddressBlock(
+                alternateAddress,
+                formData.selectedCoin
+              )}
           </View>
         ) : null}
 
@@ -525,9 +529,9 @@ class Deposit extends Component {
             </IconButton>
           </View>
         ) : null}
-        <DestinationInfoTagModal closeModal={actions.closeModal}/>
-        <MemoIdModal coin={formData.selectedCoin}/>
-        <DepositInfoModal type={coin}/>
+        <DestinationInfoTagModal closeModal={actions.closeModal} />
+        <MemoIdModal coin={formData.selectedCoin} />
+        <DepositInfoModal type={coin} />
       </RegularLayout>
     );
   }

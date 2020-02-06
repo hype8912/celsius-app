@@ -3,6 +3,7 @@ import WebView from "react-native-webview";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 // fix https://github.com/facebook/react-native/issues/10865
 const patchPostMessageJsCode = `(${String(function() {
@@ -23,6 +24,7 @@ const patchPostMessageJsCode = `(${String(function() {
   state => ({
     simplexData: state.simplex.simplexData,
     fabType: state.ui.fabType,
+    formData: state.forms.formData,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -67,26 +69,45 @@ class SimplexScreen extends Component {
   };
 
   onMsg = event => {
-    const {actions} = this.props
-    if (event && event.nativeEvent && event.nativeEvent.data === 'success') {
+    const { actions, formData } = this.props;
+    if (event && event.nativeEvent && event.nativeEvent.data === "success") {
       // user passed successfully
       actions.resetToFlow("WalletLanding");
+      mixpanelAnalytics.finishedSimplexFlow(
+        "CARD",
+        formData.coin,
+        "USD",
+        formData.amountUsd,
+        formData.amountCrypto,
+        "success"
+      );
     } else {
       // user doesn't passed successfully
-      actions.showMessage("warning", "Simplex request failed. Please try again later.")
+      actions.showMessage(
+        "warning",
+        "Simplex request failed. Please try again later."
+      );
+      mixpanelAnalytics.finishedSimplexFlow(
+        "CARD",
+        formData.coin,
+        "USD",
+        formData.amountUsd,
+        formData.amountCrypto,
+        "fail"
+      );
     }
-  }
+  };
 
   render() {
     const { simplexData } = this.props;
     return (
-        <WebView
-          onMessage={this.onMsg}
-          javaScriptEnabled
-          injectedJavaScript={patchPostMessageJsCode}
-          automaticallyAdjustContentInsets
-          source={{html: this.generateWebViewContent(simplexData)}}
-        />
+      <WebView
+        onMessage={this.onMsg}
+        javaScriptEnabled
+        injectedJavaScript={patchPostMessageJsCode}
+        automaticallyAdjustContentInsets
+        source={{ html: this.generateWebViewContent(simplexData) }}
+      />
     );
   }
 }
