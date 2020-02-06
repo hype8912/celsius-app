@@ -46,6 +46,8 @@ class GetCoinsLanding extends Component {
           darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
           lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
           onPress={() => {
+            actions.updateFormField("simplexData", { paymentMethod: "Credit Card" },
+            )
             actions.navigateTo("GetCoinsEnterAmount");
             mixpanelAnalytics.choseBuyCoinsType("CARD")
           }}

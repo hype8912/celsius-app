@@ -66,21 +66,27 @@ class SimplexScreen extends Component {
     return originalForm;
   };
 
-  // onMsg = event => {
-  //   // do something after receiving msg
-  //   console.log('WebView event is: ', event)
-  // }
+  onMsg = event => {
+    const {actions} = this.props
+    if (event && event.nativeEvent && event.nativeEvent.data === 'success') {
+      // user passed successfully
+      actions.resetToFlow("WalletLanding");
+    } else {
+      // user doesn't passed successfully
+      actions.showMessage("warning", "Simplex request failed. Please try again later.")
+    }
+  }
 
   render() {
     const { simplexData } = this.props;
     return (
-      <WebView
-        // onMessage={this.onMsg}
-        javaScriptEnabled
-        injectedJavaScript={patchPostMessageJsCode}
-        automaticallyAdjustContentInsets
-        source={{ html: this.generateWebViewContent(simplexData) }}
-      />
+        <WebView
+          onMessage={this.onMsg}
+          javaScriptEnabled
+          injectedJavaScript={patchPostMessageJsCode}
+          automaticallyAdjustContentInsets
+          source={{html: this.generateWebViewContent(simplexData)}}
+        />
     );
   }
 }

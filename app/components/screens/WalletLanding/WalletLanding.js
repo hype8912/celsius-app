@@ -197,7 +197,6 @@ class WalletLanding extends Component {
             navigateTo={actions.navigateTo}
             openModal={actions.openModal}
           />
-          {/* TODO: remove after get proper design */}
           <CelButton
             onPress={() => actions.navigateTo("GetCoinsLanding")}
             style={{ marginTop: 20 }}

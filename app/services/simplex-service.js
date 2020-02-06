@@ -24,7 +24,7 @@ function getAllPayments() {
  * @param {string} amount
  * @returns {Promise}
  */
-function getQuote(coin, fiatCurrency, requestedCurrency, amount) {
+function getQuote( coin, fiatCurrency, requestedCurrency, amount) {
   return axios.post(`${apiUrl}/simplex/quote`, {
     coin,
     fiat_currency: fiatCurrency,
@@ -35,30 +35,14 @@ function getQuote(coin, fiatCurrency, requestedCurrency, amount) {
 
 /**
  * Creates Payment Request for Simplex
- *
- * @param {string} quoteId
- * @param {string} coin
- * @param {string} amount
- * @param {string} fiatCurrency
- * @param {string} fiatTotalAmount
- * @param {string} fiatBaseAmount
+ * @param {object} args
+ * @param {object} verification
  * @returns {Promise}
  */
-function createPaymentRequest(
-  quoteId,
-  coin,
-  amount,
-  fiatTotalAmount,
-  fiatCurrency,
-  fiatBaseAmount
-) {
+function createPaymentRequest(args, verification) {
   return axios.post(`${apiUrl}/simplex/payment`, {
-    quote_id: quoteId,
-    coin,
-    amount,
-    fiat_amount: fiatTotalAmount,
-    fiat_currency: fiatCurrency,
-    fiat_base_amount: fiatBaseAmount,
+    ...args,
+    ...verification,
   });
 }
 

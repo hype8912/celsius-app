@@ -14,34 +14,15 @@ export { simplexGetQuote, simplexCreatePaymentRequest, getAllSimplexPayments };
  * @param {string} requestedCurrency
  * @param {string} amount
  */
-function simplexGetQuote(coin, fiatCurrency, requestedCurrency, amount) {
-  return async dispatch => {
+function simplexGetQuote(coin, fiatCurrency, requestedCurrency, amount ) {
+  return async (dispatch) => {
     try {
       dispatch(startApiCall(API.GET_QUOTE));
-      const quote = await simplexService.getQuote(
-        coin,
-        fiatCurrency,
-        requestedCurrency,
-        amount
-      );
-      const quoteId = quote.data.quote_id;
-      const fiatTotalAmount = quote.data.fiat_money.total_amount;
-      const fiatBaseAmount = quote.data.fiat_money.base_amount;
+      const quote = await simplexService.getQuote(coin, fiatCurrency, requestedCurrency, amount);
       dispatch({
         type: ACTIONS.GET_QUOTE_SUCCESS,
         quote: quote.data,
       });
-      // TODO: after implementation of Simplex, remove this line of code. simplexCreatePaymentRequest function will be called in separate action (screen, modal, button).
-      dispatch(
-        simplexCreatePaymentRequest(
-          quoteId,
-          coin,
-          amount,
-          fiatTotalAmount,
-          fiatCurrency,
-          fiatBaseAmount
-        )
-      );
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_QUOTE, err));
@@ -51,34 +32,16 @@ function simplexGetQuote(coin, fiatCurrency, requestedCurrency, amount) {
 
 /**
  * Creates Simplex request
- * @param {string} quoteId
- * @param {string} coin
- * @param {string} fiatCurrency
- * @param {string} fiatTotalAmount
- * @param {string} fiatBaseAmount
- * @param {string} requestedCurrency
- * @param {string} amount
+ * @param {object} args
  */
 
-function simplexCreatePaymentRequest(
-  quoteId,
-  coin,
-  amount,
-  fiatTotalAmount,
-  fiatCurrency,
-  fiatBaseAmount
-) {
-  return async dispatch => {
+function simplexCreatePaymentRequest (args) {
+  return async (dispatch, getState) => {
     try {
+      const { formData } = getState().forms;
+      const { pin, code } = formData;
       dispatch(startApiCall(API.CREATE_PAYMENT_REQUEST));
-      const paymentRequest = await simplexService.createPaymentRequest(
-        quoteId,
-        coin,
-        amount,
-        fiatTotalAmount,
-        fiatCurrency,
-        fiatBaseAmount
-      );
+      const paymentRequest = await simplexService.createPaymentRequest(args, {pin, code});
 
       dispatch({
         type: ACTIONS.CREATE_PAYMENT_REQUEST_SUCCESS,

@@ -10,11 +10,12 @@ import RegularLayout from '../../layouts/RegularLayout/RegularLayout';
 import STYLES from "../../../constants/STYLES";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { KEYPAD_PURPOSES } from "../../../constants/UI";
+import { KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
+import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConfirmModal";
 
 @connect(
   state => ({
@@ -61,10 +62,11 @@ class GetCoinsEnterAmount extends Component {
   }
 
   handleCoinSelect = (field, value) => {
-
     const { actions } = this.props
     actions.updateFormFields({
       [field]: value,
+      amountUsd: "",
+      amountCrypto: ""
     });
   }
 
@@ -78,6 +80,8 @@ class GetCoinsEnterAmount extends Component {
     if (Number(formData.amountUsd) < buyCoinsSettings.min_payment_amount) {
       return actions.showMessage("warning", "Minimum amount to buy is $50.");
     }
+    actions.simplexGetQuote(formData.coin, "USD", formData.coin, formData.amountCrypto)
+    actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL)
   }
 
   coinPrice = (coin) => {
@@ -164,6 +168,7 @@ class GetCoinsEnterAmount extends Component {
       actions,
       formData,
       keypadOpen,
+      simplexData
     } = this.props
     const { availableCoins } = this.state
     const style = GetCoinsEnterAmountStyle();
@@ -231,6 +236,7 @@ class GetCoinsEnterAmount extends Component {
           purpose={KEYPAD_PURPOSES.BUY_COINS}
           autofocus={false}
         />
+       <GetCoinsConfirmModal />
       </RegularLayout>
     );
   }
