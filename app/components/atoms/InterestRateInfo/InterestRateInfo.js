@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { View, Linking } from "react-native";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
+import * as appActions from "../../../redux/actions";
 import InterestRateInfoStyle from "./InterestRateInfo.styles";
 import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
@@ -11,13 +13,15 @@ import CoinIcon from "../CoinIcon/CoinIcon";
 import cryptoUtil from "../../../utils/crypto-util";
 
 @connect(state => ({
-  walletCurrencies: state.currencies.rates,
-}))
+    walletCurrencies: state.currencies.rates,
+  }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
+)
 class InterestRateInfo extends Component {
   capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
   render() {
-    const { currency, rate, walletCurrencies, compact } = this.props;
+    const { currency, rate, walletCurrencies, compact, actions } = this.props;
 
     if (!currency || !walletCurrencies) {
       return null;
@@ -66,6 +70,17 @@ class InterestRateInfo extends Component {
                 type={"H7"}
                 weight={"300"}
                 onPress={() => Linking.openURL(link)}
+              >
+                {`Buy ${currencyInfo.short}`}
+              </CelText>
+            )}
+            {cryptoUtil.buyInApp(currencyInfo.short) && (
+              <CelText
+                align={"center"}
+                color={STYLES.COLORS.CELSIUS_BLUE}
+                type={"H7"}
+                weight={"300"}
+                onPress={() => actions.navigateTo("GetCoinsLanding")}
               >
                 {`Buy ${currencyInfo.short}`}
               </CelText>

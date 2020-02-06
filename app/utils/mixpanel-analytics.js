@@ -6,6 +6,7 @@ import authAnalytics from "./mixpanel-analytics/auth-analytics";
 import walletAnalytics from "./mixpanel-analytics/wallet-analytics";
 import marketingAnalytics from "./mixpanel-analytics/marketing-analytics";
 import generalAnalytics from "./mixpanel-analytics/general-analytics";
+import buyCoinsAnalytics from "./mixpanel-analytics/buy-coins-analytics";
 
 export default {
   ...celPayAnalytics,
@@ -16,4 +17,5 @@ export default {
   ...walletAnalytics,
   ...marketingAnalytics,
   ...generalAnalytics,
+  ...buyCoinsAnalytics,
 }

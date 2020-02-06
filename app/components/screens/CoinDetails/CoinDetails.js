@@ -8,7 +8,6 @@ import formatter from "../../../utils/formatter";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
-import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import CoinDetailsStyle from "./CoinDetails.styles";

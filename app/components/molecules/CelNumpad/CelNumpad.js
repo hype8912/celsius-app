@@ -45,6 +45,12 @@ const BUTTONS = {
     ["7", "8", "9"],
     ["", "0", "<"],
   ],
+  [KEYPAD_PURPOSES.BUY_COINS]: [
+    ["1", "2", "3"],
+    ["4", "5", "6"],
+    ["7", "8", "9"],
+    ["", "0", "<"],
+  ],
 };
 
 const deviceModel = DeviceInfo.getModel();
@@ -57,6 +63,7 @@ const KEYBOARDS = {
   [KEYPAD_PURPOSES.AMOUNT]: KEYBOARD_TYPE.NUMERIC,
   [KEYPAD_PURPOSES.INTEREST_CALCULATOR]: KEYBOARD_TYPE.NUMERIC,
   [KEYPAD_PURPOSES.BORROW]: KEYBOARD_TYPE.NUMBER_PAD,
+  [KEYPAD_PURPOSES.BUY_COINS]: KEYBOARD_TYPE.NUMBER_PAD,
 };
 
 class CelNumpad extends Component {
