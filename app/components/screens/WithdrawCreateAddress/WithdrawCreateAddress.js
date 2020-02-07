@@ -69,6 +69,11 @@ class WithdrawCreateAddress extends Component {
       actions.navigateTo("QRScanner", {
         onScan: this.handleScan,
       });
+    } else {
+      actions.showMessage(
+        "info",
+        "You need enable camera permissions in device settings in order to scan a QR code."
+      );
     }
   };
 
@@ -143,9 +148,9 @@ class WithdrawCreateAddress extends Component {
               field="withdrawAddress"
               placeholder={"Withdrawal address"}
               value={formData.withdrawAddress}
-              type="text-area"
               multiline
-              numberOfLines={formData.withdrawAddress ? 2 : 1}
+              numberOfLines={2}
+              type="text-area"
               returnKeyType={hasTag ? "next" : "done"}
               blurOnSubmit={!hasTag}
               onSubmitEditing={() =>

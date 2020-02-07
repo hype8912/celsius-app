@@ -54,7 +54,6 @@ class WithdrawNewAddressSetup extends Component {
       withdrawAddress: address.newAddress,
       coinTag: address.newTag,
     });
-    actions.openModal(MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL);
   };
 
   handleScanClick = async () => {
@@ -64,15 +63,17 @@ class WithdrawNewAddressSetup extends Component {
       actions.navigateTo("QRScanner", {
         onScan: this.handleScan,
       });
+    } else {
+      actions.showMessage(
+        "info",
+        "You need enable camera permissions in device settings in order to scan a QR code."
+      );
     }
   };
 
   render() {
     const { formData, actions } = this.props;
     const style = WithdrawalNewAddressSetupStyle();
-
-    // const hasTag = addressUtil.hasTag(address.address);
-    // const addressDisplay = addressUtil.splitAddressTag(address.address);
 
     return (
       <RegularLayout>
@@ -89,7 +90,7 @@ class WithdrawNewAddressSetup extends Component {
           margin={"30 0 0 0"}
           multiline
           type={"text-area"}
-          numberOfLines={formData.withdrawAddress ? 3 : 1}
+          numberOfLines={2}
         />
 
         {["XRP", "XLM", "EOS"].indexOf(formData.coin) !== -1 && (

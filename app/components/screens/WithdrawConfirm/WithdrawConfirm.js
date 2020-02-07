@@ -34,7 +34,7 @@ import { isLoanBannerVisible } from "../../../utils/ui-util";
 )
 class WithdrawConfirm extends Component {
   static navigationOptions = () => ({
-    title: "Confirm withdrawal details ",
+    title: "Confirm withdrawal",
   });
 
   componentDidMount() {
@@ -167,7 +167,11 @@ class WithdrawConfirm extends Component {
             <Separator />
             <View style={styles.address}>
               <CelText type="H6">Withdrawal address:</CelText>
-              <CelText style={styles.lineHeight} type="H6">
+              <CelText
+                style={[styles.lineHeight, { flexShrink: 1 }]}
+                type="H6"
+                weight="bold"
+              >
                 {address}
               </CelText>
             </View>
