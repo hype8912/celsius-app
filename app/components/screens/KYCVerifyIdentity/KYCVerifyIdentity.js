@@ -57,7 +57,10 @@ class KYCVerifyIdentity extends Component {
       mask: "document",
     });
 
-    actions.navigateTo("CameraScreen", { onSave: this.saveFrontPhoto });
+    actions.navigateTo("CameraScreen", {
+      hideBack: true,
+      onSave: this.saveFrontPhoto,
+    });
   };
 
   saveFrontPhoto = frontPhoto => {

@@ -32,11 +32,6 @@ function isERC20(currency) {
 
 function hasLinkToBuy(currency) {
   return [
-    "BCH",
-    "BTC",
-    "ETH",
-    "XRP",
-    "LTC",
     "TUSD",
     "USDC",
     "PAX",
@@ -46,11 +41,21 @@ function hasLinkToBuy(currency) {
     "TGBP",
     "CEL",
     "DASH",
-    "XLM",
     "OMG",
     "ZEC",
     "DAI",
   ].includes(currency);
+}
+
+function buyInApp(currency) {
+  return [
+    "BTC",
+    "BCH",
+    "ETH",
+    "LTC",
+    "XRP",
+    "XLM"
+  ].includes(currency)
 }
 
 function provideLink(currency) {
@@ -121,19 +126,19 @@ function provideText(currency) {
   let text;
   switch (currency) {
     case "BCH":
-      text = `Buy ${currency} on MoonPay`;
+      text = `Buy ${currency} in App`;
       break;
     case "BTC":
-      text = `Buy ${currency} on MoonPay`;
+      text = `Buy ${currency} in App`;
       break;
     case "ETH":
-      text = `Buy ${currency} on MoonPay`;
+      text = `Buy ${currency} in App`;
       break;
     case "LTC":
-      text = `Buy ${currency} on MoonPay`;
+      text = `Buy ${currency} in App`;
       break;
     case "XRP":
-      text = `Buy ${currency} on MoonPay`;
+      text = `Buy ${currency} in App`;
       break;
     case "TUSD":
       text = `Buy ${currency} from TrustToken`;
@@ -163,7 +168,7 @@ function provideText(currency) {
       text = `Buy ${currency}`;
       break;
     case "XLM":
-      text = `Buy ${currency} on MoonPay`;
+      text = `Buy ${currency} in App`;
       break;
     case "OMG":
       text = `Buy ${currency} on MoonPay`;
@@ -192,4 +197,5 @@ export default {
   hasLinkToBuy,
   provideLink,
   provideText,
+  buyInApp
 };

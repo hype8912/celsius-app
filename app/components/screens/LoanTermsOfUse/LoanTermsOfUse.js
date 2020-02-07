@@ -18,7 +18,7 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import Icon from "../../atoms/Icon/Icon";
 import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -85,7 +85,7 @@ class LoanTermsOfUse extends Component {
 
   continue = () => {
     const { actions } = this.props;
-    userBehaviorUtil.loanToUAgreed();
+    mixpanelAnalytics.loanToUAgreed();
 
     actions.navigateTo("VerifyProfile", {
       onSuccess: () => actions.applyForALoan(),

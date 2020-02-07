@@ -27,16 +27,15 @@ class AllTransactions extends Component {
   render() {
     const { navigation } = this.props;
     const style = AllTransactionsStyle();
-    const transactionType = navigation.getParam("transactionType");
-    const coin = navigation.getParam("coin");
+    const additionalFilter = navigation.getParam("additionalFilter");
 
     return (
       <RegularLayout>
         <View style={style.container}>
           <TransactionsHistory
-            hasFilter={!(transactionType || coin)}
+            hasFilter={!(additionalFilter.type || additionalFilter.coin)}
             additionalFilter={
-              transactionType || coin ? { coin, type: transactionType } : null
+              additionalFilter.type || additionalFilter.coin ? { coin: additionalFilter.coin, type: additionalFilter.type } : null
             }
           />
         </View>

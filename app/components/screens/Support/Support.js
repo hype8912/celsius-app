@@ -40,7 +40,9 @@ class Support extends Component {
           darkImage={require("../../../../assets/images/icons/support-dark.png")}
           lightImage={require("../../../../assets/images/icons/support.png")}
           textButton={"Submit Ticket"}
-          explanation={"Our support team is here to help you solve any problem you may have."}
+          explanation={
+            "Our support team is here to help you solve any problem you may have."
+          }
           onPress={() =>
             Linking.openURL(
               "https://support.celsius.network/hc/en-us/requests/new"

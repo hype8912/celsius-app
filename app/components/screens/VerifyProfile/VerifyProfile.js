@@ -14,6 +14,7 @@ import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
+import store from "../../../redux/store";
 
 @connect(
   state => ({
@@ -63,7 +64,7 @@ class VerifyProfile extends Component {
     actions.getPreviousPinScreen(activeScreen);
 
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
-    this.openKeypad()
+    this.openKeypad();
   };
 
   componentWillUpdate(nextProps) {
@@ -85,9 +86,9 @@ class VerifyProfile extends Component {
   }
 
   openKeypad = () => {
-    const { actions } = this.props
-    actions.toggleKeypad(true)
-  }
+    const { actions } = this.props;
+    actions.toggleKeypad(true);
+  };
 
   onCheckSuccess = async () => {
     this.setState({ loading: true });
@@ -265,6 +266,9 @@ class VerifyProfile extends Component {
   render() {
     const { value } = this.state;
     const { is2FAEnabled, actions, navigation } = this.props;
+    const { appState } = store.getState().app;
+    const hideBack = navigation.getParam("hideBack"); // CN-4644 show FAB on Verity Screen except after login and come from background
+
     const showType =
       this.getVerifyType(navigation.getParam("show", null)) || is2FAEnabled;
     const field = showType ? "code" : "pin";
@@ -272,8 +276,13 @@ class VerifyProfile extends Component {
     const style = VerifyProfileStyle();
 
     return (
-      <RegularLayout padding="0 0 0 0" fabType={"hide"}>
-        <NavigationEvents onDidFocus={()=>this.openKeypad()}/>
+      <RegularLayout
+        padding="0 0 0 0"
+        fabType={
+          hideBack || appState.match(/inactive|background/) ? "hide" : "main"
+        }
+      >
+        <NavigationEvents onDidFocus={() => this.openKeypad()} />
         <View style={style.container}>
           {showType ? this.render2FA() : this.renderPIN()}
           <CelNumpad

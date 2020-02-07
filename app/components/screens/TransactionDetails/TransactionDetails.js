@@ -278,7 +278,7 @@ class TransactionDetails extends Component {
             }
             basic
           >
-            Cancel transaction
+            Cancel CelPay
           </CelButton>
         );
       case "button:applyForLoan":
@@ -570,8 +570,8 @@ class TransactionDetails extends Component {
     );
 
     if (
-      loadingTransactionDetails ||
       !transaction ||
+      loadingTransactionDetails &&
       (transactionId && transaction.id !== transactionId)
     )
       return (

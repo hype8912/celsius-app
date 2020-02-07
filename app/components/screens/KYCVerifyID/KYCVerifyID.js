@@ -15,7 +15,10 @@ import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
+import {
+  ALL_PERMISSIONS,
+  requestForPermission,
+} from "../../../utils/device-permissions";
 
 @connect(
   state => ({
@@ -65,7 +68,10 @@ class KYCVerifyID extends Component {
 
     await requestForPermission(ALL_PERMISSIONS.CAMERA);
     await requestForPermission(ALL_PERMISSIONS.LIBRARY);
-    actions.navigateTo("CameraScreen", { onSave: this.saveFrontImage });
+    actions.navigateTo("CameraScreen", {
+      hideBack: true,
+      onSave: this.saveFrontImage,
+    });
   };
 
   saveBackImage = photo => {
@@ -87,7 +93,10 @@ class KYCVerifyID extends Component {
 
     await requestForPermission(ALL_PERMISSIONS.CAMERA);
     await requestForPermission(ALL_PERMISSIONS.LIBRARY);
-    actions.navigateTo("CameraScreen", { onSave: this.saveBackImage });
+    actions.navigateTo("CameraScreen", {
+      hideBack: true,
+      onSave: this.saveFrontImage,
+    });
   };
 
   isFormValid = () => {

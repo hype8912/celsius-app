@@ -192,6 +192,10 @@ const CACHE_IMAGES = [
   require("../../assets/images/money-currency-union-dark.png"),
   require("../../assets/images/hands-in-the-air-dark.png"),
   require("../../assets/images/icon-send.png"),
+  require("../../assets/images/icons/bank-wire-dark.png"),
+  require("../../assets/images/icons/bank-wire-light.png"),
+  require("../../assets/images/icons/credit-card-dark.png"),
+  require("../../assets/images/icons/credit-card-light.png"),
 ];
 
 export default {

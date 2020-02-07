@@ -10,7 +10,6 @@ import Card from "../../atoms/Card/Card";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
-import CelButton from "../../atoms/CelButton/CelButton";
 import WalletInterestStyle from "./WalletInterest.styles";
 import { EMPTY_STATES } from "../../../constants/UI";
 import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
@@ -58,11 +57,6 @@ class WalletInterest extends Component {
     await actions.getUserAppSettings();
     this.setState({ loading: false });
   }
-
-  navigateToAllTransactions = () => {
-    const { actions } = this.props;
-    actions.navigateTo("AllTransactions", { transactionType: ["interest"] });
-  };
 
   render() {
     const {
@@ -156,14 +150,6 @@ class WalletInterest extends Component {
             hasFilter={false}
             additionalFilter={{ type: ["interest"], limit: 5 }}
           />
-
-          <CelButton
-            basic
-            margin="0 0 15 0"
-            onPress={this.navigateToAllTransactions}
-          >
-            See all
-          </CelButton>
         </View>
       </RegularLayout>
     );

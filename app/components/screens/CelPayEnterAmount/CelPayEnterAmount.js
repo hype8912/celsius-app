@@ -56,6 +56,7 @@ class CelPayEnterAmount extends Component {
       celpayCompliance,
       formData,
       walletSummary,
+      actions
     } = this.props;
 
     const coinSelectItems = currencies
@@ -70,6 +71,11 @@ class CelPayEnterAmount extends Component {
 
     this.setNavigationParams();
 
+    actions.updateFormFields({
+      amountUsd: "",
+      amountCrypto: "",
+    })
+
     this.state = {
       coinSelectItems,
       activePeriod: { label: "", value: "" },
@@ -81,7 +87,7 @@ class CelPayEnterAmount extends Component {
         (coinSelectItems &&
           coinSelectItems.length > 0 &&
           coinSelectItems[0].value) ||
-          ""
+        ""
       );
     }
   }
@@ -127,8 +133,8 @@ class CelPayEnterAmount extends Component {
         : undefined;
     const screenTitle = names
       ? `Send to ${names[0] ? names[0] : ""} ${
-          !!names[1] && !!names[1][0] ? names[1][0] : ""
-        }`
+        !!names[1] && !!names[1][0] ? names[1][0] : ""
+      }`
       : "CelPay";
 
     navigation.setParams({
@@ -215,7 +221,7 @@ class CelPayEnterAmount extends Component {
     }
 
     if (!isMalisaPusonja() && cryptoUtil.isGreaterThan(amountUsd, celPaySettings.maximum_transfer_amount)) {
-      return actions.showMessage("warning", `You have surpassed the daily limit. Please enter an amount below ${ formatter.usd(celPaySettings.maximum_transfer_amount) } to continue.`);
+      return actions.showMessage("warning", `You have surpassed the daily limit. Please enter an amount below ${formatter.usd(celPaySettings.maximum_transfer_amount)} to continue.`);
     }
 
     this.setState({ activePeriod: predefined });
@@ -359,8 +365,8 @@ class CelPayEnterAmount extends Component {
           autofocus={false}
         />
 
-        <LoseMembershipModal navigateToNextStep={this.navigateToNextStep} />
-        {loyaltyInfo && (
+        <LoseMembershipModal navigateToNextStep={this.navigateToNextStep}/>
+        {(loyaltyInfo && loyaltyInfo.tier_level !== 0) && (
           <LoseTierModal
             navigateToNextStep={this.navigateToNextStep}
             tierTitle={loyaltyInfo.tier.title}

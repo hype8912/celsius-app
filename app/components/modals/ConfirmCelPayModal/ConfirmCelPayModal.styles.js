@@ -19,6 +19,12 @@ const base = {
     marginTop: 20,
     height: 50,
   },
+  sentTo: {
+    paddingHorizontal: 20,
+    marginTop: 20
+  },
+  dollarColor: {opacity: 0.5},
+
 };
 
 const themed = {

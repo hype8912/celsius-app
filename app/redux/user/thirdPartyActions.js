@@ -16,7 +16,7 @@ import usersService from "../../services/users-service";
 import { initAppData } from "../app/appActions";
 import { claimAllBranchTransfers } from "../transfers/transfersActions";
 import branchUtil from "../../utils/branch-util";
-import userBehaviorUtil from "../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
 const { SECURITY_STORAGE_AUTH_KEY, FACEBOOK_URL } = Constants;
 
@@ -418,7 +418,7 @@ function registerSocialSuccess(network, token, user) {
       user,
     });
 
-    userBehaviorUtil.sessionStarted("User register social");
+    mixpanelAnalytics.sessionStarted("User register social");
     dispatch(claimAllBranchTransfers());
 
     await dispatch(initAppData(token));

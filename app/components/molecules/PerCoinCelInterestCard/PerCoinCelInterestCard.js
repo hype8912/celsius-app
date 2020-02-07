@@ -16,7 +16,7 @@ import STYLES from "../../../constants/STYLES";
 import { isUSResident } from "../../../utils/user-util";
 import PerCoinCelInterestCardStyle from "./PerCoinCelInterestCard.styles";
 import ScrollMore from "../../atoms/ScrollMore/ScrollMore";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -138,7 +138,7 @@ class PerCoinCelInterestCard extends Component {
       interest_in_cel: !areAllCoinsOff,
       interest_in_cel_per_coin: interestInCelPerCoin,
     });
-    userBehaviorUtil.interestInCEL(interestInCelPerCoin);
+    mixpanelAnalytics.interestInCEL(interestInCelPerCoin);
     this.setState({ isLoading: false });
   };
 

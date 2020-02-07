@@ -18,6 +18,7 @@ const CoinSwitch = props => {
     updateFormField,
     coin,
     amountColor,
+    doubleTilde,
     theme: inheritTheme,
   } = props;
 
@@ -47,7 +48,7 @@ const CoinSwitch = props => {
           style={{ marginBottom: 28 }}
         />
       ) : (
-        <View style={{ width: 40 }} />
+        <View style={{ width: 40 }}/>
       )}
       {props.onAmountPress ? (
         <View>
@@ -82,7 +83,7 @@ const CoinSwitch = props => {
               color={STYLES.COLORS.MEDIUM_GRAY}
               size={STYLES.FONTSIZE.H2 - lowerValue.length / 2}
             >
-              {lowerValue}
+              {doubleTilde && "≈"} {lowerValue}
             </CelText>
           </View>
         </View>
@@ -119,7 +120,7 @@ const CoinSwitch = props => {
               style={{ height: getScaledFont(STYLES.FONTSIZE.H2) }}
               size={STYLES.FONTSIZE.H2 - lowerValue.length / 2}
             >
-              {lowerValue}
+              {doubleTilde && "≈"} {lowerValue}
             </CelText>
           </View>
         </View>

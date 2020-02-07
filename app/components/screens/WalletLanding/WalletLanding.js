@@ -22,6 +22,7 @@ import RejectionReasonsModal from "../../modals/RejectionReasonsModal/RejectionR
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
+import CelButton from "../../atoms/CelButton/CelButton";
 
 @connect(
   state => {
@@ -196,6 +197,15 @@ class WalletLanding extends Component {
             navigateTo={actions.navigateTo}
             openModal={actions.openModal}
           />
+          <CelButton
+            onPress={() => actions.navigateTo("GetCoinsLanding")}
+            style={{ alignSelf: "flex-start" }}
+            margin="10 0 2 0"
+            size="small"
+            iconRight="IconArrowRight"
+          >
+            Buy Coins
+          </CelButton>
           <View style={style.depositWrapper}>
             <CelText style={style.depositedCoins} weight="500">
               Deposited coins

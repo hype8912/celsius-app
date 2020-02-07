@@ -10,6 +10,7 @@ function initialState() {
     automaticLoanLimit: undefined,
     celUtilityTiers: undefined,
     withdrawalSettings: undefined,
+    buyCoinsSettings: undefined,
 
     kycDocTypes: undefined, // TODO move to kycReducer
     backendStatus: undefined, // TODO move to appReducer ?
@@ -48,7 +49,6 @@ export default function generalDataReducer(state = initialState(), action) {
         interestRates[coinShort] = interestRates[coinShort] || {};
         interestRates[coinShort].rate = action.interestRates[coinShort].rate;
       });
-
       return {
         ...state,
         interestRates,
@@ -57,6 +57,7 @@ export default function generalDataReducer(state = initialState(), action) {
         withdrawalSettings: action.withdrawalSettings,
         celPaySettings: action.celPaySettings,
         automaticLoanLimit: action.automaticLoanLimit,
+        buyCoinsSettings: action.buyCoinsSettings
       };
 
     case ACTIONS.GET_LOYALTY_INFO_SUCCESS:
@@ -68,6 +69,11 @@ export default function generalDataReducer(state = initialState(), action) {
           (1 + Number(action.loyaltyInfo.earn_interest_bonus)) *
           state.interestRates[coinShort].rate
         ).toString();
+
+        interestRates[coinShort].compound_rate =
+          Math.pow(1 + state.interestRates[coinShort].rate / 52, 52) - 1;
+        interestRates[coinShort].compound_cel_rate =
+          Math.pow(1 + state.interestRates[coinShort].cel_rate / 52, 52) - 1;
       });
 
       return {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, Image } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
@@ -22,7 +22,6 @@ import STYLES from "../../../constants/STYLES";
 class EmptyState extends Component {
   static propTypes = {
     purpose: PropTypes.oneOf(Object.keys(EMPTY_STATES)),
-    image: PropTypes.string,
     aboveHeadingSection: PropTypes.element,
     heading: PropTypes.string,
     paragraphs: PropTypes.instanceOf(Array),
@@ -88,7 +87,6 @@ class EmptyState extends Component {
       ...this.props,
     };
     const {
-      image,
       heading,
       paragraphs,
       onPress,
@@ -101,12 +99,6 @@ class EmptyState extends Component {
 
     return (
       <View style={style.container}>
-        <View>
-          <Image
-            source={image || require("../../../../assets/images/diane-sad.png")}
-            style={{ width: 140, height: 140, resizeMode: "contain" }}
-          />
-        </View>
 
         {this.renderAboveHeadingSection()}
 

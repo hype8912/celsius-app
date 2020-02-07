@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // import LoanTriggerStyle from "./LoanTrigger.styles";
 import Banner from "../Banner/Banner";
 import STYLES from "../../../constants/STYLES";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 class LoanTrigger extends Component {
   static propTypes = {
@@ -30,7 +30,7 @@ class LoanTrigger extends Component {
         image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
         action={() => {
           actions.navigateTo("BorrowChooseLoan");
-          userBehaviorUtil.userInitiatingLoanOnWallet();
+          mixpanelAnalytics.userInitiatingLoanOnWallet();
         }}
         buttonText={"Get a loan"}
         title={"Did you know..."}

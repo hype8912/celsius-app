@@ -23,4 +23,6 @@ export * from "./graph/graphActions";
 export * from "./community/communityActions";
 export * from "./compliance/complianceActions";
 export * from "./contacts/contactsActions";
+export * from "./simplex/simplexActions";
+
 // NOTE(fj): plop reduxGen importing new Actions here

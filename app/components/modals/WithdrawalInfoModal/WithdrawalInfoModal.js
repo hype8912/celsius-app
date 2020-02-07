@@ -30,6 +30,11 @@ class WithdrawalInfoModal extends Component {
         body =
           "The longer you HODL and the more you HODL, the more interest you'll earn with Celsius. Withdrawing your funds will reduce the amount of interest you could potentially earn.";
         break;
+      case "DASH":
+        title = "ATTENTION";
+        body =
+          "We use multi-sig DASH wallet addresses that start with a \"7\" while regular DASH addresses start with an \"X\". These two address types can send to each other just fine and neither of them is invalid. If you experience any issues the cause is your wallet’s address validator. You will have to route your transaction through a wallet that does not have this problem.";
+        break;
       case "DAI":
         title = "ATTENTION";
         body =
@@ -129,12 +134,15 @@ class WithdrawalInfoModal extends Component {
       case "DAI":
         steps = modalContent;
         break;
+      case "DASH":
+        steps = modalContent;
+        break;
       default:
         steps = modalContent.slice(1, 3);
     }
 
     const imagesArray =
-      type === "DAI"
+      (["DASH", "DAI"].includes(type))
         ? [
             require("../../../../assets/images/alert-icon.png"),
             require("../../../../assets/images/modal-withdraw.png"),
@@ -143,7 +151,7 @@ class WithdrawalInfoModal extends Component {
             require("../../../../assets/images/modal-withdraw.png"),
             require("../../../../assets/images/modal-withdraw.png"),
           ];
-    if (type === "CEL" || type === "DAI" || !type) {
+    if (["DASH", "DAI", "CEL"].includes(type) || !type) {
       // NOTE (djenader): !type is mandatory
       return (
         <MultistepModal

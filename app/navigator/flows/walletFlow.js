@@ -8,6 +8,10 @@ import BalanceHistory from "../../components/screens/BalanceHistory/BalanceHisto
 import TransactionDetails from "../../components/screens/TransactionDetails/TransactionDetails";
 import Community from "../../components/screens/Community/Community";
 import MyCel from "../../components/screens/MyCel/MyCel";
+import Simplex from "../../components/screens/Simplex/SimplexScreen";
+import GetCoinsLanding from "../../components/screens/GetCoinsLanding/GetCoinsLanding";
+
+import GetCoinsEnterAmount from "../../components/screens/GetCoinsEnterAmount/GetCoinsEnterAmount";
 import {
   defaultNavigationOptions,
   transitionConfig,
@@ -28,7 +32,10 @@ export const walletFlow = {
     AllTransactions,
     TransactionDetails,
     Community,
+    GetCoinsLanding,
+    GetCoinsEnterAmount,
     MyCel,
+    Simplex,
     InterestCalculator: InterestCalculatorScreen,
     InterestRates,
     ...depositFlow.screens,

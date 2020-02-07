@@ -11,7 +11,7 @@ import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBa
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
 import { BANK_ACCOUNT_TYPE } from "../../../constants/DATA";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -94,7 +94,7 @@ class BorrowBankAccount extends Component {
 
     this.setState({ isLoading: true });
     await actions.linkBankAccount(bankAccountInfo);
-    await userBehaviorUtil.loanBankInfo();
+    await mixpanelAnalytics.loanBankInfo();
     this.setState({ isLoading: false });
   };
 

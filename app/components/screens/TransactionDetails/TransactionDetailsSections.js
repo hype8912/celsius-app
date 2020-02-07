@@ -63,7 +63,9 @@ export const BasicSection = ({ label, value, noSeparator = false }) => (
   </View>
 );
 
-export const BasicCardSection = ({ label, value, coin, monthly, total }) => (
+export const BasicCardSection = ({ label, value, coin, monthly, total }) => {
+  const coinSize = coin === 'USDT ERC20' ? "H6" : "H4";
+  return (
   <View style={{ width: "100%", paddingHorizontal: 20 }}>
     <View
       style={{
@@ -79,17 +81,17 @@ export const BasicCardSection = ({ label, value, coin, monthly, total }) => (
       <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
         <View>
           <CelText type={"H6"}>Monthly Interest</CelText>
-          <CelText type={"H4"} weight={"600"}>
+          <CelText type={coinSize} weight={"600"}>
             {" "}
             {formatter.crypto(monthly, coin.toUpperCase(), { precision: 2 })}
           </CelText>
         </View>
-        <Separator vertical />
+        <Separator vertical/>
         <View>
           <CelText type={"H6"}>Total Interest</CelText>
           <CelText
             color={STYLES.COLORS.CELSIUS_BLUE}
-            type={"H4"}
+            type={coinSize}
             weight={"600"}
           >
             {formatter.crypto(total, coin.toUpperCase(), { precision: 2 })}
@@ -98,7 +100,8 @@ export const BasicCardSection = ({ label, value, coin, monthly, total }) => (
       </View>
     </Card>
   </View>
-);
+  )
+};
 
 export const CollateralSection = ({ coinAmount, coin }) => (
   <View style={{ paddingHorizontal: 20 }}>
@@ -774,8 +777,9 @@ export const ReferredPending = ({ transaction, text }) => (
 export const NoteSection = ({ text }) =>
   text ? (
     <View style={{ width: "100%", paddingHorizontal: 20, paddingVertical: 20 }}>
-      <CelText>Note:</CelText>
-      <CelText italic margin="5 0 0 0">{text}</CelText>
+      <CelText type="H6">Note:</CelText>
+      <CelText type="H6" italic margin="5 0 0 0">{text}</CelText>
+      <Separator margin={"20 0 0 0"}/>
     </View>
   ) : null;
 

@@ -6,7 +6,6 @@ import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
-import CelButton from "../../atoms/CelButton/CelButton";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { hasPassedKYC } from "../../../utils/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
@@ -34,33 +33,29 @@ class CelPayLanding extends Component {
 
   static navigationOptions = () => ({
     title: "Choose how to CelPay",
+    right: "profile",
   });
 
   componentDidMount() {
-    const { navHistory, actions } = this.props
+    const { navHistory, actions } = this.props;
 
     actions.openModal(MODALS.CELPAY_INFO_MODAL);
-    mixpanelAnalytics.navigatedToCelPay(navHistory[0])
+    mixpanelAnalytics.navigatedToCelPay(navHistory[0]);
   }
-
-  navigateToAllTransactions = () => {
-    const { actions } = this.props;
-    actions.navigateTo("AllTransactions", { transactionType: ["celpay"] });
-  };
 
   sendAsLink = () => {
-    const { actions } = this.props
+    const { actions } = this.props;
 
-    actions.navigateTo("CelPayEnterAmount")
-    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK)
-  }
+    actions.navigateTo("CelPayEnterAmount");
+    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK);
+  };
 
   sendToFriend = () => {
-    const { actions } = this.props
+    const { actions } = this.props;
 
-    actions.navigateTo("CelPayChooseFriend")
-    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.FRIEND)
-  }
+    actions.navigateTo("CelPayChooseFriend");
+    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.FRIEND);
+  };
 
   render() {
     // const style = CelPayLandingStyle();
@@ -104,14 +99,14 @@ class CelPayLanding extends Component {
     return (
       <RegularLayout>
         <MultiInfoCardButton
-          textButton={"Share as a link"}
+          textButton={"Share as a link >"}
           explanation={"Send a direct link with your preferred apps."}
           darkImage={require("../../../../assets/images/hands-in-the-air-dark.png")}
           lightImage={require("../../../../assets/images/hands-in-the-air.png")}
           onPress={this.sendAsLink}
         />
         <MultiInfoCardButton
-          textButton={"Send to contacts"}
+          textButton={"Send to contacts >"}
           explanation={`Send crypto to other Celsians on the network.`}
           darkImage={require("../../../../assets/images/money-currency-union-dark.png")}
           lightImage={require("../../../../assets/images/money-currency-union.png")}
@@ -122,15 +117,11 @@ class CelPayLanding extends Component {
           hasFilter={false}
           additionalFilter={{ type: ["celpay"], limit: 5 }}
         />
-        <CelButton
-          basic
-          margin="0 0 15 0"
-          onPress={this.navigateToAllTransactions}
-        >
-          See all
-        </CelButton>
 
-        <CelPayInfoModal close={actions.closeModal} maxTransferAmount={celPaySettings.maximum_transfer_amount}/>
+        <CelPayInfoModal
+          close={actions.closeModal}
+          maxTransferAmount={celPaySettings.maximum_transfer_amount}
+        />
       </RegularLayout>
     );
   }

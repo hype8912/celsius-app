@@ -45,10 +45,15 @@ const { height, width } = Dimensions.get("window");
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class CameraScreen extends Component {
-  static navigationOptions = () => ({
-    headerSameColor: false,
-    transparent: true,
-  });
+  static navigationOptions = ({ navigation }) => {
+    const hideBack = navigation.getParam("hideBack");
+
+    return {
+      headerSameColor: false,
+      transparent: true,
+      hideBack,
+    };
+  };
 
   static propTypes = {
     cameraField: PropTypes.string,

@@ -83,16 +83,15 @@ class ChoosePaymentMethod extends Component {
         onPress: () => actions.navigateTo("PaymentCel", { reason, id }),
         lightImage: require("../../../../assets/images/icons/cel.png"),
         darkImage: require("../../.././../assets/images/icons/cel-dark.png"),
-        isActive: activeCards.cel,
+        label: activeCards.cel ? "Currently active" : null,
       },
       {
         textButton: `${formatter.capitalize(pay)} with crypto`,
         explanation: `Use coins from your wallet to ${pay} your loan interest.`,
-        onPress: () =>
-          actions.navigateTo("LoanPaymentCoin", { reason, id }),
+        onPress: () => actions.navigateTo("LoanPaymentCoin", { reason, id }),
         lightImage: require("../../../../assets/images/icons/crypto.png"),
         darkImage: require("../../.././../assets/images/icons/crypto-dark.png"),
-        isActive: activeCards.coin,
+        label: activeCards.coin ? "Currently active" : null,
       },
       {
         textButton: `${formatter.capitalize(pay)} with Dollars`,
@@ -107,7 +106,7 @@ class ChoosePaymentMethod extends Component {
         },
         lightImage: require("../../../../assets/images/icons/dollars.png"),
         darkImage: require("../../../../assets/images/icons/dollars-dark.png"),
-        isActive: activeCards.usd,
+        label: activeCards.usd ? "Currently active" : null,
       },
     ];
 

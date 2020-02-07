@@ -16,7 +16,7 @@ import { isUSCitizen } from "../../../utils/user-util";
 import Badge from "../../atoms/Badge/Badge";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import Separator from "../../atoms/Separator/Separator";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -52,7 +52,7 @@ class InterestCard extends Component {
       },
     });
 
-    userBehaviorUtil.interestInCEL({
+    mixpanelAnalytics.interestInCEL({
       ...interestInCoins,
       [coin]: value,
     });
@@ -94,7 +94,9 @@ class InterestCard extends Component {
                 color={STYLES.COLORS.GREEN}
               >
                 <CelText align="justify" type="H5" color="white">
-                  {formatter.percentageDisplay(interestRates[coin].cel_rate)}
+                  {formatter.percentageDisplay(
+                    interestRates[coin].compound_cel_rate
+                  )}
                 </CelText>
               </Badge>
             </View>

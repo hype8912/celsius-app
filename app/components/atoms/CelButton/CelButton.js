@@ -8,7 +8,7 @@ import { getMargins } from "../../../utils/styles-util";
 import CelText from "../CelText/CelText";
 import Spinner from "../Spinner/Spinner";
 import STYLES from "../../../constants/STYLES";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 const buttonSizes = ["small", "medium"];
 
@@ -79,7 +79,7 @@ class CelButton extends Component {
   handlePress = () => {
     const { onPress, children } = this.props;
 
-    userBehaviorUtil.buttonPressed(children);
+    mixpanelAnalytics.buttonPressed(children);
     onPress();
   };
 

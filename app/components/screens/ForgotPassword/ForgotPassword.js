@@ -49,7 +49,9 @@ class ForgotPassword extends Component {
         <CelButton
           margin="10 0 40 0"
           iconRight="IconArrowRight"
-          onPress={() => actions.sendResetLink()}
+          onPress={() => {
+            actions.sendResetLink();
+          }}
           loading={loading}
         >
           Send reset link

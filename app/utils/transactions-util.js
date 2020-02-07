@@ -835,6 +835,7 @@ function getTransactionSections(transaction) {
         "status",
         "note",
         "card:share:link",
+        "button:back",
         "button:cancel:celpay",
       ];
     case TRANSACTION_TYPES.CELPAY_CANCELED:

@@ -11,11 +11,13 @@ import Separator from "../Separator/Separator";
 class TransactionRow extends Component {
   static propTypes = {
     transaction: PropTypes.instanceOf(Object).isRequired,
-    onPress: PropTypes.func.isRequired,
+    onPress: PropTypes.func,
     count: PropTypes.number.isRequired,
     index: PropTypes.number.isRequired,
   };
-  static defaultProps = {};
+  static defaultProps = {
+    onPress: () => {},
+  };
 
   constructor(props) {
     super(props);

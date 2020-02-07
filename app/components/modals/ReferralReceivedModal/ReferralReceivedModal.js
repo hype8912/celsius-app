@@ -5,7 +5,7 @@ import { View } from "react-native";
 import ReferralReceivedModalStyle from "./ReferralReceivedModal.styles";
 import CelModal from "../CelModal/CelModal.js";
 import { MODALS } from "../../../constants/UI";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
 import { BRANCH_LINKS } from "../../../constants/DATA";
@@ -24,7 +24,7 @@ class ReferralReceivedModal extends Component {
 
     closeModal();
     navigateTo("RegisterInitial");
-    userBehaviorUtil.userReferred(owner);
+    mixpanelAnalytics.userReferred(owner);
   };
 
   render() {

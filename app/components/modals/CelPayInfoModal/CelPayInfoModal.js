@@ -14,9 +14,9 @@ const CelPayInfoModal = props => {
       pictureDimensions={{ width: 30, height: 30 }}
       style={style.container}
       name={MODALS.CELPAY_INFO_MODAL}
-      heading={`Send up to ${ formatter.usd(maxTransferAmount) } worth of crypto directly to your contacts`}
+      heading={`Use CelPay to send crypto to your contacts`}
       paragraphs={[
-        "You do not need to know the recepient’s wallet address. You can send it through various share options.",
+        `No addresses needed - send up to ${ formatter.usd(maxTransferAmount) } worth of crypto quickly and easily one-touch sharing options.`,
       ]}
       yesCopy={"Start CelPay"}
       onYes={close}

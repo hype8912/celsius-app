@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { View, Linking } from "react-native";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
+import * as appActions from "../../../redux/actions";
 import InterestRateInfoStyle from "./InterestRateInfo.styles";
 import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
@@ -10,14 +12,17 @@ import Card from "../Card/Card";
 import CoinIcon from "../CoinIcon/CoinIcon";
 import cryptoUtil from "../../../utils/crypto-util";
 
-@connect(state => ({
-  walletCurrencies: state.currencies.rates,
-}))
+@connect(
+  state => ({
+    walletCurrencies: state.currencies.rates,
+  }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
+)
 class InterestRateInfo extends Component {
   capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
   render() {
-    const { currency, rate, walletCurrencies, compact } = this.props;
+    const { currency, rate, walletCurrencies, compact, actions } = this.props;
 
     if (!currency || !walletCurrencies) {
       return null;
@@ -70,6 +75,21 @@ class InterestRateInfo extends Component {
                 {`Buy ${currencyInfo.short}`}
               </CelText>
             )}
+            {cryptoUtil.buyInApp(currencyInfo.short) && (
+              <CelText
+                align={"center"}
+                color={STYLES.COLORS.CELSIUS_BLUE}
+                type={"H7"}
+                weight={"300"}
+                onPress={() =>
+                  actions.navigateTo("GetCoinsLanding", {
+                    coin: currencyInfo.short,
+                  })
+                }
+              >
+                {`Buy ${currencyInfo.short}`}
+              </CelText>
+            )}
           </View>
 
           <CelText margin="8 0 2 0" type={"H7"} style={styles.regularRateText}>
@@ -92,7 +112,7 @@ class InterestRateInfo extends Component {
                 {currencyInfo.short}
               </CelText>
               <CelText type={"H7"} weight="bold" style={styles.regRateText}>
-                {formatter.percentageDisplay(rate.rate)}
+                {formatter.percentageDisplay(rate.compound_rate)}
               </CelText>
             </View>
             {currencyInfo.short === "CEL" ? null : (
@@ -105,7 +125,7 @@ class InterestRateInfo extends Component {
                   CEL
                 </CelText>
                 <CelText type={"H7"} weight="bold" style={styles.celRateText}>
-                  {formatter.percentageDisplay(rate.cel_rate)}
+                  {formatter.percentageDisplay(rate.compound_cel_rate)}
                 </CelText>
               </View>
             )}

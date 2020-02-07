@@ -12,7 +12,7 @@ import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
 import STYLES from "../../../constants/STYLES";
 import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import { LOAN_TYPES } from "../../../constants/DATA";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -71,7 +71,7 @@ class BorrowLoanTerm extends Component {
           margin="50 0 30 0"
           onPress={() => {
             actions.navigateTo("ConfirmYourLoan");
-            userBehaviorUtil.loanTerms(formData.termOfLoan);
+            mixpanelAnalytics.loanTerms(formData.termOfLoan);
           }}
           iconRight="IconArrowRight"
         >
@@ -84,7 +84,7 @@ class BorrowLoanTerm extends Component {
         margin="50 0 30 0"
         onPress={() => {
           actions.navigateTo("BorrowBankAccount");
-          userBehaviorUtil.loanTerms(formData.termOfLoan);
+          mixpanelAnalytics.loanTerms(formData.termOfLoan);
         }}
         iconRight="IconArrowRight"
       >

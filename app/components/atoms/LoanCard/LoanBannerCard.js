@@ -5,7 +5,7 @@ import { TouchableOpacity, View } from "react-native";
 import LoanCardStyle from "./LoanBannerCard.styles";
 import STYLES from "../../../constants/STYLES";
 import CelText from "../CelText/CelText";
-import userBehaviorUtil from "../../../utils/user-behavior-util";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import Icon from "../Icon/Icon";
 import CelButton from "../CelButton/CelButton";
 import { LOAN_BANNER_MESSAGES } from "../../../constants/UI";
@@ -70,7 +70,7 @@ class LoanBannerCard extends Component {
             <CelText
               onPress={() => {
                 actions.navigateTo("BorrowChooseLoan");
-                userBehaviorUtil.userInitiatingLoanOnWithdraw();
+                mixpanelAnalytics.userInitiatingLoanOnWithdraw();
               }}
               color={STYLES.COLORS.WHITE}
               type="H6"
@@ -83,7 +83,7 @@ class LoanBannerCard extends Component {
             <CelButton
               onPress={() => {
                 actions.navigateTo("BorrowChooseLoan");
-                userBehaviorUtil.userInitiatingLoanOnWithdrawConfirm();
+                mixpanelAnalytics.userInitiatingLoanOnWithdrawConfirm();
               }}
               color={"white"}
               size={"small"}

@@ -491,6 +491,23 @@ class Deposit extends Component {
               </CelText>
             )}
 
+            {cryptoUtil.buyInApp(formData.selectedCoin) && (
+              <CelText
+                margin={"20 0 20 0"}
+                align={"center"}
+                color={STYLES.COLORS.CELSIUS_BLUE}
+                type={"H4"}
+                weight={"300"}
+                onPress={() =>
+                  actions.navigateTo("GetCoinsLanding", {
+                    coin: formData.selectedCoin,
+                  })
+                }
+              >
+                {cryptoUtil.provideText(formData.selectedCoin)}
+              </CelText>
+            )}
+
             {alternateAddress &&
               this.renderSwitchAddressBlock(
                 alternateAddress,

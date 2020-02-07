@@ -12,7 +12,7 @@ import { getSecureStoreKey } from "../utils/expo-storage";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { isKYCRejectedForever } from "./user-util";
-import userBehaviorUtil from "./user-behavior-util";
+import mixpanelAnalytics from "./mixpanel-analytics";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -174,7 +174,7 @@ function initInterceptors() {
 
       if (!err.msg) err.msg = defaultMsg;
 
-      userBehaviorUtil.apiError({
+      mixpanelAnalytics.apiError({
         ...err,
         url: error.config.url,
         method: error.config.method,
