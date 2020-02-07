@@ -77,8 +77,13 @@ class GetCoinsEnterAmount extends Component {
     const { buyCoinsSettings, formData, actions } = this.props;
 
     if (Number(formData.amountUsd) < buyCoinsSettings.min_payment_amount) {
-      return actions.showMessage("warning", "Minimum amount to buy is $50.");
+      return actions.showMessage("warning", `Minimum amount you can buy is ${formatter.usd(buyCoinsSettings.min_payment_amount)}`);
     }
+
+    if (Number(formData.amountUsd) > buyCoinsSettings.max_payment_amount) {
+      return actions.showMessage("warning", `Maximum amount you can buy is ${formatter.usd(buyCoinsSettings.max_payment_amount)}`);
+    }
+
     actions.simplexGetQuote();
     actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL);
   };
