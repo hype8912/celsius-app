@@ -25,7 +25,7 @@ class LoanBannerCard extends Component {
       randomMsg:
         LOAN_BANNER_MESSAGES[
           Math.floor(Math.random() * LOAN_BANNER_MESSAGES.length)
-        ],
+          ],
     };
   }
 
@@ -39,11 +39,11 @@ class LoanBannerCard extends Component {
     const text =
       type === "full"
         ? {
-            title: "Need cash?",
-            content: `Don’t sell your crypto - borrow against it! Get a USD or stablecoin loan starting at ${formatter.percentage(
-              lowestInterest
-            )}% APR and keep the upside potential of your coins!`,
-          }
+          title: "Need cash?",
+          content: `Don’t sell your crypto - borrow against it! Get a USD or stablecoin loan starting at ${formatter.percentage(
+            lowestInterest
+          )}% APR and keep the upside potential of your coins!`,
+        }
         : randomMsg;
 
     return (
@@ -52,7 +52,7 @@ class LoanBannerCard extends Component {
           style={{ position: "absolute", right: 10, top: 0 }}
           onPress={() => actions.closeBanner()}
         >
-          <Icon name="Close" fill={STYLES.COLORS.WHITE} width="25" />
+          <Icon name="Close" fill={STYLES.COLORS.WHITE} width="25"/>
         </TouchableOpacity>
         <CelText
           color={STYLES.COLORS.WHITE}
@@ -77,7 +77,7 @@ class LoanBannerCard extends Component {
               margin="3 0 0 0"
               weight={"500"}
             >
-              {"Get a loan >"}
+              {"Get a loan"}
             </CelText>
           ) : (
             <CelButton

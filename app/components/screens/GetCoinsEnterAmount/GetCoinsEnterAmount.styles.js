@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
 import STYLES from '../../../constants/STYLES';
-import { getThemedStyle, widthPercentageToDP } from '../../../utils/styles-util';
+import { getThemedStyle, heightPercentageToDP, widthPercentageToDP } from '../../../utils/styles-util';
 
 const { width } = Dimensions.get("window");
 
@@ -10,6 +10,7 @@ const base = {
   },
   fiatSection: {
     alignItems: "center",
+    marginTop: heightPercentageToDP("3%")
   },
   fiatWrapper: {
     backgroundColor: STYLES.COLORS.WHITE,

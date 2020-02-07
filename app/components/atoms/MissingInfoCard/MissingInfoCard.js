@@ -20,21 +20,21 @@ const MissingInfoCard = props => {
   if (!user.email) {
     title = "Your email is missing from your profile.";
     body = "Your email is required in order to receive interest.";
-    cta = "Contact support >";
+    cta = "Contact support";
     onPress = () => Linking.openURL("mailto:app@celsius.network");
   }
 
   if (!hasAddress()) {
     title = "Your address is missing from your profile.";
     body = "Residency details are required in order to receive interest.";
-    cta = "Contact support >";
+    cta = "Contact support";
     onPress = () => Linking.openURL("mailto:app@celsius.network");
   }
 
   if (!hasSSN()) {
     title = "Your Social Security Number is missing from your profile.";
     body = "Taxpayer details (SSN) are required in order to receive interest.";
-    cta = "Enter your SSN >";
+    cta = "Enter your SSN";
     onPress = () => navigateTo("PersonalInformation");
   }
 

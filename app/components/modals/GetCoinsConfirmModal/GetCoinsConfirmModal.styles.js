@@ -11,7 +11,7 @@ const base = {
     marginTop: 20,
     marginBottom: 40,
     borderRadius: 8,
-    padding: 20
+    padding: 10
   },
   transferData: {
     marginHorizontal: 20

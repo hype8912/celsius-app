@@ -15,6 +15,7 @@ import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConfirmModal";
+import { heightPercentageToDP } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -33,7 +34,7 @@ class GetCoinsEnterAmount extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Get Coins",
+    title: "Buy Coins",
     right: "profile",
   });
 
@@ -76,8 +77,13 @@ class GetCoinsEnterAmount extends Component {
     const { buyCoinsSettings, formData, actions } = this.props;
 
     if (Number(formData.amountUsd) < buyCoinsSettings.min_payment_amount) {
-      return actions.showMessage("warning", "Minimum amount to buy is $50.");
+      return actions.showMessage("warning", `Minimum amount you can buy is ${formatter.usd(buyCoinsSettings.min_payment_amount)}`);
     }
+
+    if (Number(formData.amountUsd) > buyCoinsSettings.max_payment_amount) {
+      return actions.showMessage("warning", `Maximum amount you can buy is ${formatter.usd(buyCoinsSettings.max_payment_amount)}`);
+    }
+
     actions.simplexGetQuote();
     actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL);
   };
@@ -92,45 +98,28 @@ class GetCoinsEnterAmount extends Component {
   getUsdValue = amountUsd =>
     formatter.removeDecimalZeros(formatter.floor10(amountUsd, -2) || "");
 
-  handleAmountChange = (newValue, predefined = { label: "" }) => {
-    const { formData, currencyRatesShort, actions, walletSummary } = this.props;
+  handleAmountChange = (newValue) => {
+    const { formData, currencyRatesShort, actions } = this.props;
     const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
 
     const splitedValue = newValue.toString().split(".");
 
     if (splitedValue && splitedValue.length > 2) return;
 
-    const {
-      amount_usd: balanceUsd,
-      amount: balanceCrypto,
-    } = walletSummary.coins.find(c => c.short === formData.coin.toUpperCase());
-
     let amountUsd;
     let amountCrypto;
 
     if (formData.isUsd) {
       // if no predefined label is forwarded and the value is in usd
-      if (predefined.label.length === 0) {
-        amountUsd = formatter.setCurrencyDecimals(newValue, "USD");
-        amountCrypto = amountUsd / coinRate;
-      } else {
-        amountUsd = predefined.label === "ALL" ? balanceUsd : newValue;
-        amountUsd = this.getUsdValue(amountUsd);
-        amountCrypto =
-          predefined.label === "ALL" ? balanceCrypto : amountUsd / coinRate;
-        amountCrypto = formatter.removeDecimalZeros(amountCrypto);
-      }
+      amountUsd = formatter.setCurrencyDecimals(newValue, "USD");
+      amountCrypto = amountUsd / coinRate;
+
       // if no predefined label is forwarded and the value is no in usd (crypto)
-    } else if (predefined.label.length === 0) {
+    } else {
       amountCrypto = formatter.setCurrencyDecimals(newValue);
       amountUsd = amountCrypto * coinRate;
       amountUsd = this.getUsdValue(amountUsd);
       if (amountUsd === "0") amountUsd = "";
-    } else {
-      amountCrypto = predefined.label === "ALL" ? balanceCrypto : newValue;
-      amountCrypto = formatter.removeDecimalZeros(amountCrypto);
-      amountUsd = predefined.label === "ALL" ? balanceUsd : predefined.value;
-      amountUsd = this.getUsdValue(amountUsd);
     }
 
     // Change value '.' to '0.'
@@ -152,8 +141,6 @@ class GetCoinsEnterAmount extends Component {
     ) {
       amountCrypto = amountCrypto[1];
     }
-
-    this.setState({ activePeriod: predefined });
 
     actions.updateFormFields({
       amountCrypto: amountCrypto.toString(),
@@ -199,11 +186,15 @@ class GetCoinsEnterAmount extends Component {
             />
           </View>
         </View>
-        <CelText align={"center"} color={STYLES.COLORS.MEDIUM_GRAY}>
+        <CelText
+          align={"center"}
+          color={STYLES.COLORS.MEDIUM_GRAY}
+          margin={"25 0 15 0"}
+        >
           1 {formData.coin} ≈ {coinPrice}$
         </CelText>
         <CelButton
-          margin="20 0 0 0"
+          margin="10 0 0 0"
           disabled={!(formData.amountUsd && Number(formData.amountUsd) > 0)}
           onPress={this.handleNextStep}
           iconRight={
@@ -226,7 +217,7 @@ class GetCoinsEnterAmount extends Component {
           purpose={KEYPAD_PURPOSES.BUY_COINS}
           autofocus
         />
-        <GetCoinsConfirmModal />
+        <GetCoinsConfirmModal/>
       </RegularLayout>
     );
   }

@@ -17,8 +17,7 @@ const base = {
     flex: 0.25,
   },
   image: {
-    width: widthPercentageToDP("9%"),
-    height: heightPercentageToDP("5.3%"),
+    width: widthPercentageToDP("12%"),
     resizeMode: "contain",
   },
   explanationWrapper: {

@@ -72,7 +72,7 @@ function navigateBack(backScreenName) {
     } else if (backScreenName === "VerifyProfile") {
       // If back button leads to VerifyProfile, skip it and go back one more screen
       userBehavior.navigated("Back");
-      _navigator.dispatch(StackActions.pop({ n: 1 }));
+      _navigator.dispatch(StackActions.pop({ n: 2 }));
     } else {
       _navigator.dispatch(NavigationActions.back());
     }

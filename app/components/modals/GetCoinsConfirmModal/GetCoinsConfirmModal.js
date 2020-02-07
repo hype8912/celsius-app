@@ -11,6 +11,7 @@ import Separator from "../../atoms/Separator/Separator";
 import * as appActions from "../../../redux/actions";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import formatter from "../../../utils/formatter";
+import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -86,13 +87,17 @@ class GetCoinsConfirmModal extends Component {
             {formatter.crypto(cryptoAmount, formData.coin)}
           </CelText>
           <View style={style.infoBlock}>
-            <CelText align={"center"} type={"H6"}>
+            <CelText
+              align={"center"}
+              type={"H6"}
+              color={STYLES.COLORS.MEDIUM_GRAY}
+            >
               {formData.coin} amount is an estimate. Actual amount will be based
               on exchange rate at the moment of processing the order.
             </CelText>
           </View>
           <View style={style.transferData}>
-            <Separator />
+            <Separator/>
             <View style={style.transferDataItem}>
               <CelText type={"H6"} align={"left"}>
                 Payment Method:
@@ -101,7 +106,7 @@ class GetCoinsConfirmModal extends Component {
                 {formData.simplexData.paymentMethod}
               </CelText>
             </View>
-            <Separator />
+            <Separator/>
             <View style={style.transferDataItem}>
               <CelText type={"H6"} align={"left"}>
                 Delivery:
@@ -110,7 +115,7 @@ class GetCoinsConfirmModal extends Component {
                 0-1 day
               </CelText>
             </View>
-            <Separator />
+            <Separator/>
             <View style={style.transferDataItem}>
               <CelText type={"H6"} align={"left"}>
                 Price:
@@ -119,7 +124,7 @@ class GetCoinsConfirmModal extends Component {
                 {formatter.usd(baseAmount)}
               </CelText>
             </View>
-            <Separator />
+            <Separator/>
             <View style={style.transferDataItem}>
               <CelText type={"H6"} align={"left"}>
                 Fee ({formatter.percentage(feeInPct)}%):
@@ -128,7 +133,7 @@ class GetCoinsConfirmModal extends Component {
                 {formatter.usd(fee)}
               </CelText>
             </View>
-            <Separator />
+            <Separator/>
             <View style={style.transferDataItem}>
               <CelText type={"H6"} align={"left"}>
                 Transfer Amount:
