@@ -16,11 +16,17 @@ function simplexGetQuote() {
     const { formData } = getState().forms;
     try {
       dispatch(startApiCall(API.GET_QUOTE));
+
+      const requestedCurrency = formData.isUsd ? "USD" : formData.coin;
+      const amount = formData.isUsd
+        ? formData.amountUsd
+        : formData.amountCrypto;
+
       const quote = await simplexService.getQuote(
         formData.coin,
         "USD",
-        formData.coin,
-        formData.amountCrypto
+        requestedCurrency,
+        amount
       );
       dispatch({
         type: ACTIONS.GET_QUOTE_SUCCESS,

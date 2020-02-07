@@ -224,7 +224,7 @@ class GetCoinsEnterAmount extends Component {
           setKeypadInput={actions.setKeypadInput}
           onPress={this.handleAmountChange}
           purpose={KEYPAD_PURPOSES.BUY_COINS}
-          autofocus={false}
+          autofocus
         />
         <GetCoinsConfirmModal />
       </RegularLayout>
