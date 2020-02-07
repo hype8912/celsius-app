@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import WebView from "react-native-webview";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import LoadingState from "../../atoms/LoadingState/LoadingState";
 
 // fix https://github.com/facebook/react-native/issues/10865
 const patchPostMessageJsCode = `(${String(function() {
@@ -29,8 +31,27 @@ const patchPostMessageJsCode = `(${String(function() {
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class SimplexScreen extends Component {
+  static navigationOptions = () => ({
+    title: "Get Coins",
+  });
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      webViewLoaded: false,
+    };
+  }
+
   componentDidMount() {
     const { actions } = this.props;
+    const self = this;
+
+    const interval = setInterval(() => {
+      self.setState({ webViewLoaded: true });
+      clearInterval(interval);
+    }, 2000);
+
     actions.setFabType("hide");
   }
 
@@ -100,14 +121,21 @@ class SimplexScreen extends Component {
 
   render() {
     const { simplexData } = this.props;
+    const { webViewLoaded } = this.state;
+
     return (
-      <WebView
-        onMessage={this.onMsg}
-        javaScriptEnabled
-        injectedJavaScript={patchPostMessageJsCode}
-        automaticallyAdjustContentInsets
-        source={{ html: this.generateWebViewContent(simplexData) }}
-      />
+      <View style={{ flex: 1 }}>
+        {!webViewLoaded && <LoadingState heading="Please wait..." />}
+
+        <WebView
+          style={{ opacity: webViewLoaded ? 1 : 0 }}
+          onMessage={this.onMsg}
+          javaScriptEnabled
+          injectedJavaScript={patchPostMessageJsCode}
+          automaticallyAdjustContentInsets
+          source={{ html: this.generateWebViewContent(simplexData) }}
+        />
+      </View>
     );
   }
 }
