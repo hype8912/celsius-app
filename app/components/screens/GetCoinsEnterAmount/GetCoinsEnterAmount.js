@@ -33,7 +33,7 @@ class GetCoinsEnterAmount extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Get Coins",
+    title: "Buy Coins",
     right: "profile",
   });
 
@@ -92,7 +92,7 @@ class GetCoinsEnterAmount extends Component {
   getUsdValue = amountUsd =>
     formatter.removeDecimalZeros(formatter.floor10(amountUsd, -2) || "");
 
-  handleAmountChange = (newValue, predefined = { label: "" }) => {
+  handleAmountChange = (newValue) => {
     const { formData, currencyRatesShort, actions, walletSummary } = this.props;
     const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
 
@@ -100,37 +100,20 @@ class GetCoinsEnterAmount extends Component {
 
     if (splitedValue && splitedValue.length > 2) return;
 
-    const {
-      amount_usd: balanceUsd,
-      amount: balanceCrypto,
-    } = walletSummary.coins.find(c => c.short === formData.coin.toUpperCase());
-
     let amountUsd;
     let amountCrypto;
 
     if (formData.isUsd) {
       // if no predefined label is forwarded and the value is in usd
-      if (predefined.label.length === 0) {
-        amountUsd = formatter.setCurrencyDecimals(newValue, "USD");
-        amountCrypto = amountUsd / coinRate;
-      } else {
-        amountUsd = predefined.label === "ALL" ? balanceUsd : newValue;
-        amountUsd = this.getUsdValue(amountUsd);
-        amountCrypto =
-          predefined.label === "ALL" ? balanceCrypto : amountUsd / coinRate;
-        amountCrypto = formatter.removeDecimalZeros(amountCrypto);
-      }
+      amountUsd = formatter.setCurrencyDecimals(newValue, "USD");
+      amountCrypto = amountUsd / coinRate;
+
       // if no predefined label is forwarded and the value is no in usd (crypto)
-    } else if (predefined.label.length === 0) {
+    } else {
       amountCrypto = formatter.setCurrencyDecimals(newValue);
       amountUsd = amountCrypto * coinRate;
       amountUsd = this.getUsdValue(amountUsd);
       if (amountUsd === "0") amountUsd = "";
-    } else {
-      amountCrypto = predefined.label === "ALL" ? balanceCrypto : newValue;
-      amountCrypto = formatter.removeDecimalZeros(amountCrypto);
-      amountUsd = predefined.label === "ALL" ? balanceUsd : predefined.value;
-      amountUsd = this.getUsdValue(amountUsd);
     }
 
     // Change value '.' to '0.'
@@ -152,8 +135,6 @@ class GetCoinsEnterAmount extends Component {
     ) {
       amountCrypto = amountCrypto[1];
     }
-
-    this.setState({ activePeriod: predefined });
 
     actions.updateFormFields({
       amountCrypto: amountCrypto.toString(),
@@ -226,7 +207,7 @@ class GetCoinsEnterAmount extends Component {
           purpose={KEYPAD_PURPOSES.BUY_COINS}
           autofocus
         />
-        <GetCoinsConfirmModal />
+        <GetCoinsConfirmModal/>
       </RegularLayout>
     );
   }

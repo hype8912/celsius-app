@@ -17,9 +17,9 @@ class GetCoinsInfoModal extends React.Component {
         name={MODALS.GET_COINS_INFO_MODAL}
         heading={"Buy Crypto with Credit Card"}
         paragraphs={[
-          "You can directly purchase any cryptocurrency with credit card on Celsius. We offer the best route to buy crypto using credit card.",
+          "You can directly purchase cryptocurrency with credit card on Celsius. We offer the best route to buy crypto using credit card.",
         ]}
-        yesCopy={"Get Coins"}
+        yesCopy={"Buy Coins"}
         onYes={this.goNext}
         picture={require("../../../../assets/images/icons/get-coin-modal.png")}
         pictureDimensions={{ height: 40, width: 40 }}

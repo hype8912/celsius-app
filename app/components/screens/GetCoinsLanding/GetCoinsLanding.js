@@ -25,7 +25,7 @@ class GetCoinsLanding extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Get Coins",
+    title: "Buy Coins",
     right: "profile",
   });
 
@@ -66,9 +66,9 @@ class GetCoinsLanding extends Component {
           disabled
         />
 
-        <SimplexPaymentsHistory />
+        <SimplexPaymentsHistory/>
 
-        <GetCoinsInfoModal actions={actions} />
+        <GetCoinsInfoModal actions={actions}/>
       </RegularLayout>
     );
   }

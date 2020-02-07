@@ -152,7 +152,8 @@ class WalletLanding extends Component {
     }, 300000);
   };
 
-  handleBackButton = () => {};
+  handleBackButton = () => {
+  };
 
   toggleView = viewType => {
     this.setState({ activeView: viewType });
@@ -184,32 +185,29 @@ class WalletLanding extends Component {
     const style = WalletLandingStyle();
 
     if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
-      return <LoadingScreen />;
+      return <LoadingScreen/>;
     }
 
     return (
       <RegularLayout refreshing={refreshing} pullToRefresh={this.refresh}>
-        <BannerCrossroad />
+        <BannerCrossroad/>
         <View>
-          <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
+          <MissingInfoCard user={user} navigateTo={actions.navigateTo}/>
           <WalletDetailsCard
             walletSummary={walletSummary}
             navigateTo={actions.navigateTo}
             openModal={actions.openModal}
           />
-          <CelButton
-            onPress={() => actions.navigateTo("GetCoinsLanding")}
-            style={{ alignSelf: "flex-start" }}
-            margin="10 0 2 0"
-            size="small"
-            iconRight="IconArrowRight"
-          >
-            Buy Coins
-          </CelButton>
           <View style={style.depositWrapper}>
-            <CelText style={style.depositedCoins} weight="500">
-              Deposited coins
-            </CelText>
+            <CelButton
+              onPress={() => actions.navigateTo("GetCoinsLanding")}
+              style={{ alignSelf: "flex-start" }}
+              margin="10 0 2 0"
+              size="small"
+              iconRight="IconArrowRight"
+            >
+              Buy Coins
+            </CelButton>
             <View style={style.buttonWrapper}>
               <TouchableOpacity
                 onPress={() => this.toggleView(WALLET_LANDING_VIEW_TYPES.GRID)}
@@ -249,14 +247,14 @@ class WalletLanding extends Component {
             depositCompliance={depositCompliance}
           />
           <ExpandableItem heading={"COMING SOON"} margin={"10 0 10 0"}>
-            <ComingSoonCoins activeView={activeView} />
+            <ComingSoonCoins activeView={activeView}/>
           </ExpandableItem>
         </View>
-        <CelPayReceivedModal transfer={branchTransfer} />
-        <ReferralSendModal />
-        <RejectionReasonsModal rejectionReasons={rejectionReasons} />
-        <BecomeCelMemberModal />
-        <LoanAlertsModalWrapper />
+        <CelPayReceivedModal transfer={branchTransfer}/>
+        <ReferralSendModal/>
+        <RejectionReasonsModal rejectionReasons={rejectionReasons}/>
+        <BecomeCelMemberModal/>
+        <LoanAlertsModalWrapper/>
       </RegularLayout>
     );
   }
