@@ -97,7 +97,7 @@ class MultiInfoCardButton extends Component {
                   }
                   style={{ alignItems: "flex-start", opacity: 1, zIndex: 100 }}
                 >
-                  <CelText type="H5" color="white">
+                  <CelText type="H6" color="white">
                     {label}
                   </CelText>
                 </Badge>

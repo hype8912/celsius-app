@@ -15,6 +15,7 @@ import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConfirmModal";
+import { heightPercentageToDP } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -93,7 +94,7 @@ class GetCoinsEnterAmount extends Component {
     formatter.removeDecimalZeros(formatter.floor10(amountUsd, -2) || "");
 
   handleAmountChange = (newValue) => {
-    const { formData, currencyRatesShort, actions, walletSummary } = this.props;
+    const { formData, currencyRatesShort, actions } = this.props;
     const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
 
     const splitedValue = newValue.toString().split(".");
@@ -180,11 +181,15 @@ class GetCoinsEnterAmount extends Component {
             />
           </View>
         </View>
-        <CelText align={"center"} color={STYLES.COLORS.MEDIUM_GRAY}>
+        <CelText
+          align={"center"}
+          color={STYLES.COLORS.MEDIUM_GRAY}
+          margin={"25 0 15 0"}
+        >
           1 {formData.coin} ≈ {coinPrice}$
         </CelText>
         <CelButton
-          margin="20 0 0 0"
+          margin="10 0 0 0"
           disabled={!(formData.amountUsd && Number(formData.amountUsd) > 0)}
           onPress={this.handleNextStep}
           iconRight={
