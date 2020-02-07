@@ -167,10 +167,10 @@ function initInterceptors() {
       const err = error.response
         ? error.response.data
         : {
-            type: "Unknown Server Error",
-            msg: defaultMsg,
-            raw_error: error,
-          };
+          type: "Unknown Server Error",
+          msg: defaultMsg,
+          raw_error: error,
+        };
 
       if (!err.msg) err.msg = defaultMsg;
 
@@ -198,6 +198,7 @@ function initInterceptors() {
         if (!showVerifyScreen) {
           store.dispatch(
             actions.navigateTo("VerifyProfile", {
+              hideBack: true,
               show: error.response.data.show,
               onSuccess: () => {
                 store.dispatch(
