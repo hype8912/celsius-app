@@ -60,7 +60,7 @@ function simplexCreatePaymentRequest(args) {
       dispatch(startApiCall(API.CREATE_PAYMENT_REQUEST));
       const paymentRequest = await simplexService.createPaymentRequest(args, {
         pin,
-        code,
+        twoFactorCode: code,
       });
 
       dispatch({
