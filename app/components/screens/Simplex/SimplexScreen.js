@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
+import Constants from '../../../../constants'
 
 // fix https://github.com/facebook/react-native/issues/10865
 const patchPostMessageJsCode = `(${String(function() {
@@ -56,6 +57,7 @@ class SimplexScreen extends Component {
   }
 
   generateWebViewContent = data => {
+    const { SIMPLEX_URL } = Constants
     const originalForm = `<!DOCTYPE html>
        <html>
         <head>
@@ -63,7 +65,7 @@ class SimplexScreen extends Component {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
        <body>
-          <form id="payment_form" action="https://sandbox.test-simplexcc.com/payments/new" method="post">
+          <form id="payment_form" action="${SIMPLEX_URL}" method="post">
           <input type="hidden" name="version" value="${data.version}">
           <input type="hidden" name="partner" value="${data.partner}">
           <input type="hidden" name="payment_flow_type" value="wallet">
