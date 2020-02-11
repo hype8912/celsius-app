@@ -105,20 +105,12 @@ class SimplexPaymentsHistory extends Component {
 
     return (
       <View>
-        <View>
-          <View>
-            <CelText weight="medium" type="H6" margin="20 0 0 0">
-              Payment requests
-            </CelText>
-          </View>
-        </View>
-
         {!payments.length && (
           <View>
             <EmptyState
-              heading="No payment requests"
+              heading="Transaction History"
               paragraphs={[
-                "It looks like you don't have any payment requests at the moment.",
+                "You haven’t purchased any coins yet! Any crypto purchases made through the Celsius app will appear here.",
               ]}
             />
           </View>
