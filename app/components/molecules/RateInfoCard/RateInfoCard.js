@@ -34,7 +34,7 @@ class RateInfoCard extends Component {
   }
 
   render() {
-    const {coin, actions, tierButton, style, celInterestButton, interestCompliance} = this.props;
+    const {coin, navigateTo, tierButton, style, celInterestButton, interestCompliance} = this.props;
 
     // const styles = RateInfoCardStyle()
     const interestRate = interestUtil.getUserInterestForCoin(!coin ? "BTC": coin.short);
@@ -56,7 +56,7 @@ class RateInfoCard extends Component {
             }
           {tierButton &&
           <CelButton
-            onPress={() => actions.navigateTo("MyCel")}
+            onPress={() => navigateTo("MyCel")}
             basic
             margin={"10 0 10 0"}
           >
@@ -65,7 +65,7 @@ class RateInfoCard extends Component {
           }
           {celInterestButton &&
           <CelButton
-            onPress={() => actions.navigateTo("WalletSettings")}
+            onPress={() => navigateTo("WalletSettings")}
             basic
             margin={"10 0 10 0"}
           >

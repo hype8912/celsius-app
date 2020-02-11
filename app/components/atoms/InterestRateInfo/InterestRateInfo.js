@@ -32,7 +32,6 @@ class InterestRateInfo extends Component {
       return null;
     }
     const coin = walletSummary.coins.find(c => c.short === currency);
-    const interestRate = interestUtil.getUserInterestForCoin(coin.short);
 
     const styles = InterestRateInfoStyle();
 
