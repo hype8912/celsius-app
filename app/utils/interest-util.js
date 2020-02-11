@@ -24,6 +24,9 @@ function getUserInterestForCoin(coinShort) {
   let interestRateDisplay;
   let inCEL = false;
   let eligible = false;
+  let coinThreshold;
+  let specialRate;
+  let specialRateDisplay;
   if (
     interestRates &&
     interestRates[coinShort] &&
@@ -43,10 +46,19 @@ function getUserInterestForCoin(coinShort) {
       : interestRates[coinShort].compound_cel_rate;
   }
 
+  if (interestRates && interestRates[coinShort] && interestRates[coinShort].rate_on_first_n_coins && interestRates[coinShort].threshold_on_first_n_coins) {
+    coinThreshold = Number(interestRates[coinShort].threshold_on_first_n_coins);
+    specialRate = Number(interestRates[coinShort].rate_on_first_n_coins);
+    specialRateDisplay = formatter.percentageDisplay(interestRates[coinShort].rate_on_first_n_coins)
+  }
+
   return {
     coin: coinShort,
     rate: interestRate,
     display: interestRateDisplay,
+    coinThreshold,
+    specialRate,
+    specialRateDisplay,
     inCEL,
     eligible,
   };

@@ -32,6 +32,9 @@ const base = {
   qrCode: {
     alignItems: "center",
   },
+  rateInfoCard: {
+    marginHorizontal: 20
+  }
 };
 
 const themed = {

@@ -11,10 +11,14 @@ import STYLES from "../../../constants/STYLES";
 import Card from "../Card/Card";
 import CoinIcon from "../CoinIcon/CoinIcon";
 import cryptoUtil from "../../../utils/crypto-util";
+import interestUtil from "../../../utils/interest-util";
+import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 
 @connect(
   state => ({
     walletCurrencies: state.currencies.rates,
+    walletSummary: state.wallet.summary,
+    interestCompliance: state.compliance.interest,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -22,11 +26,13 @@ class InterestRateInfo extends Component {
   capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
   render() {
-    const { currency, rate, walletCurrencies, compact, actions } = this.props;
+    const { currency, rate, walletCurrencies, compact, actions, walletSummary, interestCompliance } = this.props;
 
     if (!currency || !walletCurrencies) {
       return null;
     }
+    const coin = walletSummary.coins.find(c => c.short === currency);
+    const interestRate = interestUtil.getUserInterestForCoin(coin.short);
 
     const styles = InterestRateInfoStyle();
 
@@ -131,6 +137,14 @@ class InterestRateInfo extends Component {
             )}
           </View>
         </View>
+
+        <RateInfoCard
+          coin={coin}
+          navigateTo={actions.navigateTo}
+          celInterestButton
+          interestCompliance={interestCompliance}
+        />
+
       </Card>
     );
   }

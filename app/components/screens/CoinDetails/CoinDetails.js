@@ -20,6 +20,7 @@ import Icon from "../../atoms/Icon/Icon";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import InterestCard from "../../molecules/InterestCard/InterestCard";
 import interestUtil from "../../../utils/interest-util";
+import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 
 const { COLORS } = STYLES;
 
@@ -33,6 +34,7 @@ const { COLORS } = STYLES;
     buyCoinsSettings: state.generalData.buyCoinsSettings,
     coinAmount: state.graph.coinLastValue,
     appSettings: state.user.appSettings,
+    interestCompliance: state.compliance.interest,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -129,6 +131,7 @@ class CoinDetails extends Component {
       currencies,
       appSettings,
       buyCoinsSettings,
+      interestCompliance
     } = this.props;
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
@@ -147,6 +150,8 @@ class CoinDetails extends Component {
 
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
+
+
 
     return (
       <RegularLayout padding={"20 0 100 0"}>
@@ -323,13 +328,19 @@ class CoinDetails extends Component {
               </View>
             </View>
             {celpayCompliance && (
-              <InterestCard
-                coin={coinDetails.short}
-                interestRate={interestRate}
-                interestInCoins={interestInCoins}
-                setUserAppSettings={actions.setUserAppSettings}
-              />
-            )}
+                <InterestCard
+                  coin={coinDetails.short}
+                  interestRate={interestRate}
+                  interestInCoins={interestInCoins}
+                  setUserAppSettings={actions.setUserAppSettings}
+                />
+                )}
+            <RateInfoCard
+              coin={coinDetails}
+              navigateTo={actions.navigateTo}
+              tierButton
+              interestCompliance={interestCompliance}
+            />
           </Card>
         </View>
 

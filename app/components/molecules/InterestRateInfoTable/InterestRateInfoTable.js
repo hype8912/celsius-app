@@ -11,6 +11,7 @@ import InterestRateInfo from "../../atoms/InterestRateInfo/InterestRateInfo";
   state => ({
     interestRates: state.generalData.interestRates,
     loyaltyInfo: state.user.loyaltyInfo,
+    walletSummary: state.wallet.summary,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -21,7 +22,7 @@ class InterestRateInfoTable extends Component {
   }
 
   renderInterestTable() {
-    const { interestRates, loyaltyInfo } = this.props;
+    const { interestRates, loyaltyInfo, actions } = this.props;
     const interestArray = [];
     const ratesPriority = ["CEL", "ETH", "BTC", "USD"];
 
@@ -29,6 +30,7 @@ class InterestRateInfoTable extends Component {
       const obj = {};
       obj.currency = currency;
       obj.rate = interestRates[currency];
+
 
       interestArray.push(obj);
     });
@@ -54,6 +56,7 @@ class InterestRateInfoTable extends Component {
     return sortedRates.map(interest => (
       <View key={interest.currency}>
         <InterestRateInfo
+          actions={actions}
           compact
           currency={interest.currency}
           rate={interest.rate}

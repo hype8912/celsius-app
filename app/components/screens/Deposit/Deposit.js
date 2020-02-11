@@ -29,6 +29,7 @@ import DepositInfoModal from "../../modals/DepositInfoModal/DepositInfoModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import formatter from "../../../utils/formatter";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
+import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 
 @connect(
   state => ({
@@ -42,6 +43,7 @@ import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/Destin
     walletSummary: state.wallet.summary,
     currencyRatesShort: state.currencies.currencyRatesShort,
     currencies: state.currencies.rates,
+    interestCompliance: state.compliance.interest,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -313,6 +315,7 @@ class Deposit extends Component {
       depositCompliance,
       navigation,
       kycStatus,
+      walletSummary
     } = this.props;
     const {
       address,
@@ -337,6 +340,7 @@ class Deposit extends Component {
       case THEMES.DARK:
         infoColor = STYLES.COLORS.WHITE;
     }
+      const coinInfo = walletSummary.coins.find(c => c.short === formData.selectedCoin);
 
     if (!hasPassedKYC()) {
       if (kycStatus === KYC_STATUSES.pending) {
@@ -480,7 +484,7 @@ class Deposit extends Component {
 
             {cryptoUtil.hasLinkToBuy(formData.selectedCoin) && (
               <CelText
-                margin={"20 0 20 0"}
+                margin={"20 0 10 0"}
                 align={"center"}
                 color={STYLES.COLORS.CELSIUS_BLUE}
                 type={"H4"}
@@ -516,6 +520,14 @@ class Deposit extends Component {
           </View>
         ) : null}
 
+
+        <RateInfoCard
+          style={styles.rateInfoCard}
+          coin={coinInfo}
+          navigateTo={actions.navigateTo}
+          celInterestButton
+        />
+
         {isFetchingAddress && this.renderLoader()}
 
         {formData.selectedCoin === "CEL" ? (
@@ -530,7 +542,7 @@ class Deposit extends Component {
           </View>
         ) : null}
         <DestinationInfoTagModal closeModal={actions.closeModal} />
-        <MemoIdModal coin={formData.selectedCoin} />
+        <MemoIdModal coin={coinInfo} />
         <DepositInfoModal type={coin} />
       </RegularLayout>
     );
