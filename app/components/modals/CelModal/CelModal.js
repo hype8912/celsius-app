@@ -18,6 +18,7 @@ import { MODALS, THEMES } from "../../../constants/UI";
 import CelModalStyle from "./CelModal.styles";
 import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(
   state => ({
@@ -31,6 +32,10 @@ class CelModal extends Component {
     name: PropTypes.oneOf(Object.keys(MODALS)).isRequired,
     hasCloseButton: PropTypes.bool,
     picture: PropTypes.oneOfType([
+      PropTypes.instanceOf(Object),
+      PropTypes.number,
+    ]),
+    darkPicture: PropTypes.oneOfType([
       PropTypes.instanceOf(Object),
       PropTypes.number,
     ]),
@@ -99,13 +104,22 @@ class CelModal extends Component {
   };
 
   renderPicture = () => {
-    const { picture, pictureDimensions } = this.props;
+    const {
+      picture,
+      darkPicture,
+      pictureDimensions
+    } = this.props;
     const style = CelModalStyle();
     const pictureStyle = [style.pictureStyle, pictureDimensions];
 
     return (
       <View style={style.pictureWrapper}>
-        <Image source={picture} style={pictureStyle} resizeMode="contain" />
+        <ThemedImage
+          lightSource={picture}
+          style={pictureStyle}
+          resizeMode="contain"
+          darkSource={darkPicture}
+        />
       </View>
     );
   };
@@ -163,13 +177,13 @@ class CelModal extends Component {
             </View>
             {children}
           </View>
-        { Platform.OS === 'ios' && <BlurView
+          {Platform.OS === 'ios' && <BlurView
             blurType={tintColor.color}
             blurAmount={tintColor.blur}
             style={[
               StyleSheet.absoluteFill
             ]}
-          /> }
+          />}
           <TouchableOpacity
             style={style.outsideCloseModal}
             onPress={() => {

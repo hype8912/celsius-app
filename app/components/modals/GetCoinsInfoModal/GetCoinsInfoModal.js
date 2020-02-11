@@ -22,6 +22,7 @@ class GetCoinsInfoModal extends React.Component {
         yesCopy={"Buy Coins"}
         onYes={this.goNext}
         picture={require("../../../../assets/images/icons/get-coin-modal.png")}
+        darkPicture={require("../../../../assets/images/icons/get-coin-modal-dark.png")}
         pictureDimensions={{ height: 40, width: 40 }}
       />
     );

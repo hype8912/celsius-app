@@ -11,12 +11,13 @@ const CelPayInfoModal = props => {
   return (
     <InfoModal
       picture={require("../../../../assets/images/icon-send.png")}
-      pictureDimensions={{ width: 30, height: 30 }}
+      darkPicture={require("../../../../assets/images/icon-send-dark.png")}
+      pictureDimensions={{ width: 35, height: 35 }}
       style={style.container}
       name={MODALS.CELPAY_INFO_MODAL}
       heading={`Use CelPay to send crypto to your contacts`}
       paragraphs={[
-        `No addresses needed - send up to ${ formatter.usd(maxTransferAmount) } worth of crypto quickly and easily one-touch sharing options.`,
+        `No addresses needed - send up to ${formatter.usd(maxTransferAmount)} worth of crypto quickly and easily one-touch sharing options.`,
       ]}
       yesCopy={"Start CelPay"}
       onYes={close}

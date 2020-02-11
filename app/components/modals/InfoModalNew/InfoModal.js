@@ -11,6 +11,7 @@ const InfoModal = props => {
   const {
     name,
     picture,
+    darkPicture,
     pictureDimensions,
     heading,
     paragraphs,
@@ -29,6 +30,7 @@ const InfoModal = props => {
     <CelModal
       name={name}
       picture={picture}
+      darkPicture={darkPicture}
       pictureDimensions={pictureDimensions}
     >
       <View style={style.modalWrapper}>
@@ -38,17 +40,17 @@ const InfoModal = props => {
           </CelText>
 
           {paragraphs &&
-            paragraphs.map(paragraph => (
-              <CelText
-                margin={"0 25 25 25"}
-                align="center"
-                type="H4"
-                weight={"300"}
-                key={paragraph}
-              >
-                {paragraph}
-              </CelText>
-            ))}
+          paragraphs.map(paragraph => (
+            <CelText
+              margin={"0 25 25 25"}
+              align="center"
+              type="H4"
+              weight={"300"}
+              key={paragraph}
+            >
+              {paragraph}
+            </CelText>
+          ))}
         </View>
 
         <View style={style.buttonWrapper}>

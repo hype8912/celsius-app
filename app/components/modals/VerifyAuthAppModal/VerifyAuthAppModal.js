@@ -8,6 +8,7 @@ const VerifyAuthAppModal = props => {
     <InfoModal
       name={MODALS.VERIFY_AUTHAPP_MODAL}
       picture={require("../../../../assets/images/email-sent.png")}
+      darkPicture={require("../../../../assets/images/email-sent-dark.png")}
       pictureDimensions={{ width: 40, height: 40 }}
       heading={"Check your Email"}
       paragraphs={[

@@ -6,12 +6,13 @@ import { bindActionCreators } from "redux";
 
 import DepositInfoModalStyle from "./DepositInfoModal.styles";
 import MultistepModal from "../MultistepModal/MultistepModal.js";
-import { MODALS } from "../../../constants/UI";
+import { MODALS, THEMES } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import * as appActions from "../../../redux/actions";
 import InfoModal from "../InfoModalNew/InfoModal";
 import multiStepUtil from "../../../utils/multistep-modal-util";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
+import { getTheme } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -31,6 +32,8 @@ class DepositInfoModal extends Component {
   handleMultistepContent = type => {
     const { currencies, actions } = this.props;
 
+    const theme = getTheme()
+
     const coinName = currencies.find(coin => coin.short === type);
     let steps;
 
@@ -38,7 +41,10 @@ class DepositInfoModal extends Component {
       case "":
         steps = [
           {
-            image: require("../../../../assets/images/deposit-icn.png"),
+            image: theme === THEMES.LIGHT ?
+              require(`../../../../assets/images/deposit-icn.png`) :
+              require(`../../../../assets/images/deposit-icn-dark.png`),
+            darkImage: require("../../../../assets/images/deposit-icn.png"),
             title: "Only deposit same coin type as selected",
             description:
               "Depositing a different coin than selected will result in permanent loss of funds.",
@@ -46,7 +52,9 @@ class DepositInfoModal extends Component {
             onPress: () => multiStepUtil.goToNextStep(),
           },
           {
-            image: require("../../../../assets/images/deposit-icn.png"),
+            image: theme === THEMES.LIGHT ?
+              require(`../../../../assets/images/deposit-icn.png`) :
+              require(`../../../../assets/images/deposit-icn-dark.png`),
             title: "Review your transaction details carefully",
             description:
               "Depositing coins without all required data, such as Destination Tag (XRP) or MemoID (XLM), or incorrect data will result in permanent loss.",
@@ -224,6 +232,7 @@ class DepositInfoModal extends Component {
       <InfoModal
         name={MODALS.DEPOSIT_INFO_MODAL}
         picture={infoContent.image}
+        darkPicture={infoContent.darkImage}
         pictureDimensions={{ height: 35, width: 35 }}
         heading={infoContent.title}
         paragraphs={[infoContent.description]}
