@@ -70,17 +70,49 @@ class WithdrawAddressOverview extends Component {
           const imageUrl = currenciesRates.filter(
             image => image.short === key
           )[0].image_url;
+
+          let hours;
+          let minutes;
+
+        if (
+          withdrawalAddresses[key] &&
+          withdrawalAddresses[key].will_unlock_in
+        ) {
+          hours = withdrawalAddresses[key].will_unlock_in.split(":")[0];
+          minutes = withdrawalAddresses[key].will_unlock_in.split(":")[1];
+        }
+
           return withdrawalAddresses[key] ? (
-            <WithdrawalAddressCard
-              imageUrl={imageUrl}
-              key={key}
-              coinShort={key}
-              withdrawalAddress={withdrawalAddresses[key]}
-              onPress={() => this.handlePress(key)}
-              onPressAddressLabel={() =>
-                this.handleLabelPress(key, withdrawalAddresses[key].label)
+            <View>
+              <WithdrawalAddressCard
+                imageUrl={imageUrl}
+                key={key}
+                coinShort={key}
+                withdrawalAddress={withdrawalAddresses[key]}
+                onPress={() => this.handlePress(key)}
+                onPressAddressLabel={() =>
+                  this.handleLabelPress(key, withdrawalAddresses[key].label)
+                }
+              />
+              { withdrawalAddresses[key].locked && hours && minutes &&
+              <Card margin="0 0 10 0">
+                <CelText align="center" type="H6">
+                  Due to our security protocols, your address will be active
+                  in
+                </CelText>
+
+                <CelText
+                  margin="10 0 0 0"
+                  align="center"
+                  type="H3"
+                  weight={"bold"}
+                >
+                  {`${hours}h ${minutes}m.`}
+                </CelText>
+              </Card>
               }
-            />
+            </View>
+
           ) : null;
         })
       : null;
