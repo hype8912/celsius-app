@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import TransactionRow from "../../atoms/TransactionRow/TransactionRow";
-import CelText from "../../atoms/CelText/CelText";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import LoadingState from "../../atoms/LoadingState/LoadingState";

@@ -1,7 +1,7 @@
 import React from "react";
 
 import RateInfoCard from "../RateInfoCard/RateInfoCard";
-import StoryWrapper from "../StoryWrapper/StoryWrapper";
+import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
 const RateInfoCardStories = () => (
   <StoryWrapper title="RateInfoCard">

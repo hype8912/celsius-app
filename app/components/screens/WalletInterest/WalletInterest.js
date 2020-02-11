@@ -17,7 +17,6 @@ import LoadingScreen from "../../screens/LoadingScreen/LoadingScreen";
 import Separator from "../../atoms/Separator/Separator";
 import InterestCalculatorScreen from "../InterestCalculatorScreen/InterestCalculatorScreen";
 import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util";
-import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 
 @connect(
@@ -71,8 +70,6 @@ class WalletInterest extends Component {
     } = this.props;
     const { loading } = this.state;
     const style = WalletInterestStyle();
-
-    const coin = walletSummary.coins.find(c => c.short === "BTC");
 
     if (loading || !appSettings || !loyaltyInfo) return <LoadingScreen />;
     if (!interestCompliance) {
@@ -150,8 +147,7 @@ class WalletInterest extends Component {
         />
 
         <View style={style.container}>
-
-          <PerCoinCelInterestCard/>
+          <PerCoinCelInterestCard />
 
           <TransactionsHistory
             hasFilter={false}

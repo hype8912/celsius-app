@@ -11,7 +11,6 @@ import STYLES from "../../../constants/STYLES";
 import Card from "../Card/Card";
 import CoinIcon from "../CoinIcon/CoinIcon";
 import cryptoUtil from "../../../utils/crypto-util";
-import interestUtil from "../../../utils/interest-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 
 @connect(
@@ -26,7 +25,15 @@ class InterestRateInfo extends Component {
   capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
   render() {
-    const { currency, rate, walletCurrencies, compact, actions, walletSummary, interestCompliance } = this.props;
+    const {
+      currency,
+      rate,
+      walletCurrencies,
+      compact,
+      actions,
+      walletSummary,
+      interestCompliance,
+    } = this.props;
 
     if (!currency || !walletCurrencies) {
       return null;
@@ -143,7 +150,6 @@ class InterestRateInfo extends Component {
           celInterestButton
           interestCompliance={interestCompliance}
         />
-
       </Card>
     );
   }

@@ -4,9 +4,8 @@ import {
   Modal,
   StyleSheet,
   TouchableOpacity,
-  Image,
   Keyboard,
-  Platform
+  Platform,
 } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -92,23 +91,19 @@ class CelModal extends Component {
       case THEMES.CELSIUS:
         return {
           color: STYLES.COLORS.DARK_MODAL_OUTSIDE_BACKGROUND_COLOR,
-          blur: 15
+          blur: 15,
         };
       case THEMES.LIGHT:
       default:
         return {
           color: STYLES.COLORS.LIGHT_MODAL_OUTSIDE_BACKGROUND_COLOR,
-          blur: 12
+          blur: 12,
         };
     }
   };
 
   renderPicture = () => {
-    const {
-      picture,
-      darkPicture,
-      pictureDimensions
-    } = this.props;
+    const { picture, darkPicture, pictureDimensions } = this.props;
     const style = CelModalStyle();
     const pictureStyle = [style.pictureStyle, pictureDimensions];
 
@@ -177,13 +172,13 @@ class CelModal extends Component {
             </View>
             {children}
           </View>
-          {Platform.OS === 'ios' && <BlurView
-            blurType={tintColor.color}
-            blurAmount={tintColor.blur}
-            style={[
-              StyleSheet.absoluteFill
-            ]}
-          />}
+          {Platform.OS === "ios" && (
+            <BlurView
+              blurType={tintColor.color}
+              blurAmount={tintColor.blur}
+              style={[StyleSheet.absoluteFill]}
+            />
+          )}
           <TouchableOpacity
             style={style.outsideCloseModal}
             onPress={() => {

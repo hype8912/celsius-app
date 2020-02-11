@@ -6,7 +6,12 @@ import simplexService from "../../services/simplex-service";
 import { navigateTo } from "../nav/navActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
-export { simplexGetQuote, simplexCreatePaymentRequest, getAllSimplexPayments };
+export {
+  simplexGetQuote,
+  simplexCreatePaymentRequest,
+  getAllSimplexPayments,
+  getSimplexQuoteForCoin,
+};
 
 /**
  * Gets info for Simplex request
@@ -48,10 +53,39 @@ function simplexGetQuote() {
 }
 
 /**
+ * Gets info Simplex quote for coin
+ *
+ * @param {String} coin - ETH|BTC
+ */
+function getSimplexQuoteForCoin(coin) {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_QUOTE_FOR_COIN));
+
+      const quote = await simplexService.getQuote(coin, "USD", "USD", 1000);
+
+      const fiatCurrency = quote.data.fiat_money.currency.toLowerCase();
+      const cryptocurrency = quote.data.digital_money.currency.toLowerCase();
+      const coinRate =
+        quote.data.fiat_money.base_amount / quote.data.digital_money.amount;
+
+      dispatch({
+        type: ACTIONS.GET_QUOTE_FOR_COIN_SUCCESS,
+        fiatCurrency,
+        cryptocurrency,
+        coinRate,
+      });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_QUOTE_FOR_COIN, err));
+    }
+  };
+}
+
+/**
  * Creates Simplex request
  * @param {object} args
  */
-
 function simplexCreatePaymentRequest(args) {
   return async (dispatch, getState) => {
     try {
@@ -85,13 +119,6 @@ function simplexCreatePaymentRequest(args) {
 
 /**
  * Gets all simplex payments
- * @param {string} quoteId
- * @param {string} coin
- * @param {string} fiatCurrency
- * @param {string} fiatTotalAmount
- * @param {string} fiatBaseAmount
- * @param {string} requestedCurrency
- * @param {string} amount
  */
 function getAllSimplexPayments() {
   return async dispatch => {

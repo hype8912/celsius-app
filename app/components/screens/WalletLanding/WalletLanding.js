@@ -6,7 +6,6 @@ import { withNavigationFocus } from "react-navigation";
 
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import CelText from "../../atoms/CelText/CelText";
 import WalletDetailsCard from "../../organisms/WalletDetailsCard/WalletDetailsCard";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
@@ -152,8 +151,7 @@ class WalletLanding extends Component {
     }, 300000);
   };
 
-  handleBackButton = () => {
-  };
+  handleBackButton = () => {};
 
   toggleView = viewType => {
     this.setState({ activeView: viewType });
@@ -185,14 +183,14 @@ class WalletLanding extends Component {
     const style = WalletLandingStyle();
 
     if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
-      return <LoadingScreen/>;
+      return <LoadingScreen />;
     }
 
     return (
       <RegularLayout refreshing={refreshing} pullToRefresh={this.refresh}>
-        <BannerCrossroad/>
+        <BannerCrossroad />
         <View>
-          <MissingInfoCard user={user} navigateTo={actions.navigateTo}/>
+          <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
           <WalletDetailsCard
             walletSummary={walletSummary}
             navigateTo={actions.navigateTo}
@@ -247,14 +245,14 @@ class WalletLanding extends Component {
             depositCompliance={depositCompliance}
           />
           <ExpandableItem heading={"COMING SOON"} margin={"10 0 10 0"}>
-            <ComingSoonCoins activeView={activeView}/>
+            <ComingSoonCoins activeView={activeView} />
           </ExpandableItem>
         </View>
-        <CelPayReceivedModal transfer={branchTransfer}/>
-        <ReferralSendModal/>
-        <RejectionReasonsModal rejectionReasons={rejectionReasons}/>
-        <BecomeCelMemberModal/>
-        <LoanAlertsModalWrapper/>
+        <CelPayReceivedModal transfer={branchTransfer} />
+        <ReferralSendModal />
+        <RejectionReasonsModal rejectionReasons={rejectionReasons} />
+        <BecomeCelMemberModal />
+        <LoanAlertsModalWrapper />
       </RegularLayout>
     );
   }
