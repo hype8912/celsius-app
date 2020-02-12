@@ -315,7 +315,8 @@ class Deposit extends Component {
       depositCompliance,
       navigation,
       kycStatus,
-      walletSummary
+      interestCompliance,
+      walletSummary,
     } = this.props;
     const {
       address,
@@ -340,7 +341,9 @@ class Deposit extends Component {
       case THEMES.DARK:
         infoColor = STYLES.COLORS.WHITE;
     }
-      const coinInfo = walletSummary.coins.find(c => c.short === formData.selectedCoin);
+    const coinInfo = walletSummary.coins.find(
+      c => c.short === formData.selectedCoin
+    );
 
     if (!hasPassedKYC()) {
       if (kycStatus === KYC_STATUSES.pending) {
@@ -520,12 +523,12 @@ class Deposit extends Component {
           </View>
         ) : null}
 
-
         <RateInfoCard
           style={styles.rateInfoCard}
           coin={coinInfo}
           navigateTo={actions.navigateTo}
           celInterestButton
+          interestCompliance={interestCompliance}
         />
 
         {isFetchingAddress && this.renderLoader()}

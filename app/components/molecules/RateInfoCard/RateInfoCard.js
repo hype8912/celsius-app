@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
 
@@ -10,7 +10,6 @@ import interestUtil from "../../../utils/interest-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 
 class RateInfoCard extends Component {
-
   static propTypes = {
     tierButton: PropTypes.bool,
     style: PropTypes.oneOfType([
@@ -18,12 +17,12 @@ class RateInfoCard extends Component {
       PropTypes.instanceOf(Object),
     ]),
     celInterestButton: PropTypes.bool,
-    interestCompliance: PropTypes.instanceOf(Object)
+    interestCompliance: PropTypes.instanceOf(Object),
   };
   static defaultProps = {
     showButton: false,
-    style: {}
-  }
+    style: {},
+  };
 
   constructor(props) {
     super(props);
@@ -34,27 +33,53 @@ class RateInfoCard extends Component {
   }
 
   render() {
-    const {coin, navigateTo, tierButton, style, celInterestButton, interestCompliance} = this.props;
+    const {
+      coin,
+      navigateTo,
+      tierButton,
+      style,
+      celInterestButton,
+      interestCompliance,
+    } = this.props;
 
     // const styles = RateInfoCardStyle()
-    const interestRate = interestUtil.getUserInterestForCoin(!coin ? "BTC": coin.short);
+    const interestRate = interestUtil.getUserInterestForCoin(
+      !coin ? "BTC" : coin.short
+    );
     if (!interestRate.specialRate && !interestRate.coinThreshold) return null;
-    if (!interestCompliance.allowed) return null;
+    if (!interestCompliance || !interestCompliance.allowed) return null;
 
     return (
-        <View style={style}>
-            {!interestRate.inCEL ?
-            <Card color={STYLES.COLORS.CELSIUS_BLUE}>
-              <CelText color={"white"}>
-                Upgrade your interest settings to earn in CEL and you could get up to {interestRate.specialRateDisplay} APY on your first <CelText color={"white"} weight={"bold"}>{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>! BTC balances greater than {`${interestRate.coinThreshold} ${interestRate.coin}`} will continue to earn at {`${interestRate.display}`} APY.
-              </CelText>
-            </Card>
-            :
+      <View style={style}>
+        {!interestRate.inCEL ? (
           <Card color={STYLES.COLORS.CELSIUS_BLUE}>
-            <CelText color={"white"}>Keep HODLing and you could earn up to {interestRate.specialRateDisplay} APY on your first <CelText color={"white"} weight={"bold"}>{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>! BTC balances greater than {`${interestRate.coinThreshold}`} will continue to earn at {`${interestRate.display}`} APY. </CelText>
+            <CelText color={"white"}>
+              Upgrade your interest settings to earn in CEL and you could get up
+              to {interestRate.specialRateDisplay} APY on your first{" "}
+              <CelText
+                color={"white"}
+                weight={"bold"}
+              >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
+              ! BTC balances greater than{" "}
+              {`${interestRate.coinThreshold} ${interestRate.coin}`} will
+              continue to earn at {`${interestRate.display}`} APY.
+            </CelText>
           </Card>
-            }
-          {tierButton &&
+        ) : (
+          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+            <CelText color={"white"}>
+              Keep HODLing and you could earn up to{" "}
+              {interestRate.specialRateDisplay} APY on your first{" "}
+              <CelText
+                color={"white"}
+                weight={"bold"}
+              >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
+              ! BTC balances greater than {`${interestRate.coinThreshold}`} will
+              continue to earn at {`${interestRate.display}`} APY.{" "}
+            </CelText>
+          </Card>
+        )}
+        {tierButton && (
           <CelButton
             onPress={() => navigateTo("MyCel")}
             basic
@@ -62,8 +87,8 @@ class RateInfoCard extends Component {
           >
             Check tier level
           </CelButton>
-          }
-          {celInterestButton &&
+        )}
+        {celInterestButton && (
           <CelButton
             onPress={() => navigateTo("WalletSettings")}
             basic
@@ -71,10 +96,10 @@ class RateInfoCard extends Component {
           >
             Earn interest in Cel
           </CelButton>
-          }
-        </View>
+        )}
+      </View>
     );
   }
 }
 
-export default RateInfoCard
+export default RateInfoCard;
