@@ -26,19 +26,10 @@ class GetCoinsConfirmModal extends Component {
   static defaultProps = {};
 
   onButtonPress = () => {
-    const { actions, formData, simplexData } = this.props;
-
-    const args = {
-      quote_id: simplexData.quote_id,
-      coin: formData.coin,
-      amount: formData.amountCrypto,
-      fiat_amount: simplexData.fiat_money.total_amount,
-      fiat_currency: simplexData.fiat_money.currency,
-      fiat_base_amount: simplexData.fiat_money.base_amount,
-    };
+    const { actions } = this.props;
 
     actions.navigateTo("VerifyProfile", {
-      onSuccess: () => actions.simplexCreatePaymentRequest(args),
+      onSuccess: () => actions.simplexCreatePaymentRequest(),
     });
     actions.closeModal();
   };
