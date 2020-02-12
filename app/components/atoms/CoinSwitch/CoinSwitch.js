@@ -9,6 +9,7 @@ import Icon from "../Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import { getScaledFont, getTheme } from "../../../utils/styles-util";
 import { THEMES } from "../../../constants/UI";
+import Spinner from "../Spinner/Spinner";
 
 const CoinSwitch = props => {
   const {
@@ -19,6 +20,7 @@ const CoinSwitch = props => {
     coin,
     amountColor,
     doubleTilde,
+    lowerSpinner,
     theme: inheritTheme,
   } = props;
 
@@ -48,7 +50,7 @@ const CoinSwitch = props => {
           style={{ marginBottom: 28 }}
         />
       ) : (
-        <View style={{ width: 40 }}/>
+        <View style={{ width: 40 }} />
       )}
       {props.onAmountPress ? (
         <View>
@@ -75,16 +77,21 @@ const CoinSwitch = props => {
             style={{
               height: getScaledFont(STYLES.FONTSIZE.H2),
               justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <CelText
-              align="center"
-              type="H2"
-              color={STYLES.COLORS.MEDIUM_GRAY}
-              size={STYLES.FONTSIZE.H2 - lowerValue.length / 2}
-            >
-              {doubleTilde && "≈"} {lowerValue}
-            </CelText>
+            {lowerSpinner ? (
+              <Spinner size={30} />
+            ) : (
+              <CelText
+                align="center"
+                type="H2"
+                color={STYLES.COLORS.MEDIUM_GRAY}
+                size={STYLES.FONTSIZE.H2 - lowerValue.length / 2}
+              >
+                {doubleTilde && "≈"} {lowerValue}
+              </CelText>
+            )}
           </View>
         </View>
       ) : (
@@ -149,6 +156,7 @@ CoinSwitch.propTypes = {
   coin: PropTypes.string,
   amountColor: PropTypes.string,
   theme: PropTypes.string,
+  lowerSpinner: PropTypes.bool,
 };
 
 export default CoinSwitch;
