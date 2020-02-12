@@ -315,7 +315,8 @@ class Deposit extends Component {
       depositCompliance,
       navigation,
       kycStatus,
-      walletSummary
+      walletSummary,
+      interestCompliance
     } = this.props;
     const {
       address,
@@ -526,6 +527,7 @@ class Deposit extends Component {
           coin={coinInfo}
           navigateTo={actions.navigateTo}
           celInterestButton
+          interestCompliance={interestCompliance}
         />
 
         {isFetchingAddress && this.renderLoader()}
