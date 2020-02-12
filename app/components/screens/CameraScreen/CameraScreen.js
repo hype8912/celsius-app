@@ -311,6 +311,7 @@ class CameraScreen extends Component {
         }}
         style={style.camera}
         type={RNCamera.Constants.Type[cameraType]}
+        captureAudio={false}
       >
         <Mask />
         <SafeAreaView style={style.bottomView}>
