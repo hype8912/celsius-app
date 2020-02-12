@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View } from "react-native";
 
-import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
+import { LOAN_PAYMENT_REASONS, MODALS, THEMES } from "../../../constants/UI";
 import InfoModal from "../InfoModalNew/InfoModal";
 import * as appActions from "../../../redux/actions";
 import MultistepModal from "../MultistepModal/MultistepModal";
@@ -12,6 +12,7 @@ import LoanApplicationSuccessModalStyle from "./LoanApplicationSuccessModal.styl
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
 import multiStepUtil from "../../../utils/multistep-modal-util";
+import { getTheme } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -40,6 +41,8 @@ class LoanApplicationSuccessModal extends Component {
     const { actions } = this.props;
     const style = LoanApplicationSuccessModalStyle();
 
+    const theme = getTheme()
+
     // NOTE: (srdjan) commented after client asked to kick automatic approve loan feature
 
     // if (
@@ -54,7 +57,9 @@ class LoanApplicationSuccessModal extends Component {
           top={30}
           imagesArray={[
             require("../../../../assets/images/checkmark.png"),
-            require("../../../../assets/images/coin-stack-icon.png"),
+            theme === THEMES.LIGHT ?
+              require("../../../../assets/images/coin-stack-icon.png") :
+              require("../../../../assets/images/coin-stack-icon-dark.png"),
           ]}
           imageHeight={25}
           imageWidth={25}

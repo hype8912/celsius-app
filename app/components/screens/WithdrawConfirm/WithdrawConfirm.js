@@ -171,6 +171,7 @@ class WithdrawConfirm extends Component {
                 style={[styles.lineHeight, { flexShrink: 1 }]}
                 type="H6"
                 weight="bold"
+                margin={"0 5 0 5"}
               >
                 {address}
               </CelText>

@@ -17,12 +17,14 @@ import { isUSResident } from "../../../utils/user-util";
 import PerCoinCelInterestCardStyle from "./PerCoinCelInterestCard.styles";
 import ScrollMore from "../../atoms/ScrollMore/ScrollMore";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import RateInfoCard from "../RateInfoCard/RateInfoCard";
 
 @connect(
   state => ({
     appSettings: state.user.appSettings,
     formData: state.forms.formData,
     currencies: state.currencies.rates,
+    interestCompliance: state.compliance.interest,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -191,7 +193,7 @@ class PerCoinCelInterestCard extends Component {
     if (isUSResident()) return null;
     const style = PerCoinCelInterestCardStyle();
 
-    const { formData, actions } = this.props;
+    const { formData, actions, interestCompliance } = this.props;
     const { coinList, isExpanded, coinNames, isLoading } = this.state;
 
     if (!formData.coinsInCel) return null;
@@ -221,7 +223,13 @@ class PerCoinCelInterestCard extends Component {
           }
         />
 
-        <Separator margin="0 0 15 0" />
+        <RateInfoCard
+          navigateTo={actions.navigateTo}
+          tierButton
+          interestCompliance={interestCompliance}
+        />
+
+        <Separator margin="15 0 15 0" />
 
         <TouchableOpacity
           onPress={() => this.setState({ isExpanded: !isExpanded })}

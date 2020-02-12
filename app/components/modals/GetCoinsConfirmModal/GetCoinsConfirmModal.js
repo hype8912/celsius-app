@@ -26,19 +26,10 @@ class GetCoinsConfirmModal extends Component {
   static defaultProps = {};
 
   onButtonPress = () => {
-    const { actions, formData, simplexData } = this.props;
-
-    const args = {
-      quote_id: simplexData.quote_id,
-      coin: formData.coin,
-      amount: formData.amountCrypto,
-      fiat_amount: simplexData.fiat_money.total_amount,
-      fiat_currency: simplexData.fiat_money.currency,
-      fiat_base_amount: simplexData.fiat_money.base_amount,
-    };
+    const { actions } = this.props;
 
     actions.navigateTo("VerifyProfile", {
-      onSuccess: () => actions.simplexCreatePaymentRequest(args),
+      onSuccess: () => actions.simplexCreatePaymentRequest(),
     });
     actions.closeModal();
   };
@@ -54,10 +45,6 @@ class GetCoinsConfirmModal extends Component {
     const totalAmount = simplexData.fiat_money.total_amount;
     const fee =
       simplexData.fiat_money.total_amount - simplexData.fiat_money.base_amount;
-    const feeInPct =
-      (simplexData.fiat_money.total_amount -
-        simplexData.fiat_money.base_amount) /
-      simplexData.fiat_money.total_amount;
 
     return (
       <CelModal style={style.container} name={MODALS.GET_COINS_CONFIRM_MODAL}>
@@ -97,7 +84,7 @@ class GetCoinsConfirmModal extends Component {
             </CelText>
           </View>
           <View style={style.transferData}>
-            <Separator/>
+            <Separator />
             <View style={style.transferDataItem}>
               <CelText type={"H6"} align={"left"}>
                 Payment Method:
@@ -106,7 +93,7 @@ class GetCoinsConfirmModal extends Component {
                 {formData.simplexData.paymentMethod}
               </CelText>
             </View>
-            <Separator/>
+            <Separator />
             <View style={style.transferDataItem}>
               <CelText type={"H6"} align={"left"}>
                 Delivery:
@@ -115,7 +102,7 @@ class GetCoinsConfirmModal extends Component {
                 0-1 day
               </CelText>
             </View>
-            <Separator/>
+            <Separator />
             <View style={style.transferDataItem}>
               <CelText type={"H6"} align={"left"}>
                 Price:
@@ -124,16 +111,21 @@ class GetCoinsConfirmModal extends Component {
                 {formatter.usd(baseAmount)}
               </CelText>
             </View>
-            <Separator/>
+            <Separator />
             <View style={style.transferDataItem}>
-              <CelText type={"H6"} align={"left"}>
-                Fee ({formatter.percentage(feeInPct)}%):
-              </CelText>
+              <View>
+                <CelText type={"H6"} align={"left"}>
+                  Fee:
+                </CelText>
+                <CelText type={"H7"} align={"left"} italic margin="5 0 0 0">
+                  3.5% or $10.00 minimum
+                </CelText>
+              </View>
               <CelText type={"H6"} align={"right"}>
                 {formatter.usd(fee)}
               </CelText>
             </View>
-            <Separator/>
+            <Separator />
             <View style={style.transferDataItem}>
               <CelText type={"H6"} align={"left"}>
                 Transfer Amount:

@@ -46,7 +46,7 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    const { actions, appInitialized, navigation } = this.props;
+    const { actions, appInitialized } = this.props;
     if (!appInitialized) await actions.initCelsiusApp();
   }
 
@@ -88,7 +88,7 @@ class Home extends Component {
     return (
       <ScrollView contentContainerStyle={[{ flexGrow: 1 }, paddings]}>
         <SafeAreaView style={{ flex: 1, justifyContent: "space-between" }}>
-          <StatusBar barStyle="dark-content"/>
+          <StatusBar barStyle="dark-content" />
           <View style={style.contentWrapper}>
             <Image
               source={require("../../../../assets/images/splashScreen-celsius-new.png")}
@@ -112,7 +112,7 @@ class Home extends Component {
             >
               {randomMsg.text}
             </CelText>
-            <Loader progress={this.state.progress}/>
+            <Loader progress={this.state.progress} />
           </View>
           <View style={style.partnerLogos}>
             <Image

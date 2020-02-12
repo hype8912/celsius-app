@@ -15,7 +15,6 @@ import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConfirmModal";
-import { heightPercentageToDP } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -26,6 +25,7 @@ import { heightPercentageToDP } from "../../../utils/styles-util";
     buyCoinsSettings: state.generalData.buyCoinsSettings,
     depositCompliance: state.compliance.deposit,
     currencies: state.currencies.rates,
+    simplexQuotes: state.simplex.quotes,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -71,17 +71,29 @@ class GetCoinsEnterAmount extends Component {
       amountUsd: "",
       amountCrypto: "",
     });
+
+    actions.getSimplexQuoteForCoin(value);
   };
 
   handleNextStep = () => {
     const { buyCoinsSettings, formData, actions } = this.props;
 
     if (Number(formData.amountUsd) < buyCoinsSettings.min_payment_amount) {
-      return actions.showMessage("warning", `Minimum amount you can buy is ${formatter.usd(buyCoinsSettings.min_payment_amount)}`);
+      return actions.showMessage(
+        "warning",
+        `Please enter amount above ${formatter.usd(
+          buyCoinsSettings.min_payment_amount
+        )} to continue.`
+      );
     }
 
     if (Number(formData.amountUsd) > buyCoinsSettings.max_payment_amount) {
-      return actions.showMessage("warning", `Maximum amount you can buy is ${formatter.usd(buyCoinsSettings.max_payment_amount)}`);
+      return actions.showMessage(
+        "warning",
+        `Please enter amount below ${formatter.usd(
+          buyCoinsSettings.max_payment_amount
+        )} to continue.`
+      );
     }
 
     actions.simplexGetQuote();
@@ -98,9 +110,12 @@ class GetCoinsEnterAmount extends Component {
   getUsdValue = amountUsd =>
     formatter.removeDecimalZeros(formatter.floor10(amountUsd, -2) || "");
 
-  handleAmountChange = (newValue) => {
-    const { formData, currencyRatesShort, actions } = this.props;
-    const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
+  handleAmountChange = newValue => {
+    const { formData, currencyRatesShort, actions, simplexQuotes } = this.props;
+    const coin = formData.coin.toLowerCase();
+    const coinRate = simplexQuotes[coin]
+      ? simplexQuotes[coin].usd
+      : currencyRatesShort[coin];
 
     const splitedValue = newValue.toString().split(".");
 
@@ -149,13 +164,13 @@ class GetCoinsEnterAmount extends Component {
   };
 
   render() {
-    const { actions, formData, keypadOpen } = this.props;
+    const { actions, formData, keypadOpen, simplexQuotes } = this.props;
+
     const { availableCoins } = this.state;
     const style = GetCoinsEnterAmountStyle();
 
-    const coinPrice =
-      this.coinPrice(formData.coin) &&
-      this.coinPrice(formData.coin).market_quotes_usd.price;
+    const coin = formData.coin ? formData.coin.toLowerCase() : "btc";
+
     return (
       <RegularLayout fabType={"hide"} padding={"0 0 0 0"}>
         <View style={style.fiatSection}>
@@ -186,13 +201,15 @@ class GetCoinsEnterAmount extends Component {
             />
           </View>
         </View>
-        <CelText
-          align={"center"}
-          color={STYLES.COLORS.MEDIUM_GRAY}
-          margin={"25 0 15 0"}
-        >
-          1 {formData.coin} ≈ {coinPrice}$
-        </CelText>
+        {simplexQuotes[coin] && (
+          <CelText
+            align={"center"}
+            color={STYLES.COLORS.MEDIUM_GRAY}
+            margin={"25 0 15 0"}
+          >
+            1 {formData.coin} ≈ {formatter.usd(simplexQuotes[coin].usd)}
+          </CelText>
+        )}
         <CelButton
           margin="10 0 0 0"
           disabled={!(formData.amountUsd && Number(formData.amountUsd) > 0)}
@@ -217,7 +234,7 @@ class GetCoinsEnterAmount extends Component {
           purpose={KEYPAD_PURPOSES.BUY_COINS}
           autofocus
         />
-        <GetCoinsConfirmModal/>
+        <GetCoinsConfirmModal />
       </RegularLayout>
     );
   }

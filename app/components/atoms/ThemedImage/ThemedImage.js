@@ -24,7 +24,11 @@ function getThemeImage(props) {
 }
 
 const ThemedImage = props => (
-  <Image style={props.style} source={getThemeImage(props)} />
+  <Image
+    style={props.style}
+    source={getThemeImage(props)}
+    resizeMode={props.resizeMode}
+  />
 );
 
 ThemedImage.propTypes = {

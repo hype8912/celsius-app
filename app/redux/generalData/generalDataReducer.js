@@ -48,6 +48,8 @@ export default function generalDataReducer(state = initialState(), action) {
       Object.keys(action.interestRates).forEach(coinShort => {
         interestRates[coinShort] = interestRates[coinShort] || {};
         interestRates[coinShort].rate = action.interestRates[coinShort].rate;
+        interestRates[coinShort].rate_on_first_n_coins = action.interestRates[coinShort].rate_on_first_n_coins;
+        interestRates[coinShort].threshold_on_first_n_coins = action.interestRates[coinShort].threshold_on_first_n_coins;
       });
       return {
         ...state,

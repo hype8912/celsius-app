@@ -16,6 +16,7 @@ import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import CelsiusMembershipTable from "../../organisms/CelsiusMembershipTable/CelsiusMembershipTable";
 
 @connect(
   state => ({
@@ -42,125 +43,6 @@ class LoyaltyProgram extends Component {
     actions.getLoyaltyInfo();
     actions.getUserAppSettings();
   }
-
-  // TODO: refactor with a map or something, move to organism
-  renderLoyaltyTable = () => {
-    const { celUtilityTiers } = this.props;
-    const style = LoyaltyProgramStyle();
-    return (
-      <View style={style.tableWrapper}>
-        <View style={style.tierWrapper}>
-          <View style={[style.tierSilver, style.tierCommon]}>
-            <CelText type="H6" color="white" weight="600">
-              {" "}
-              SILVER{" "}
-            </CelText>
-          </View>
-          <View style={[style.tierGold, style.tierCommon]}>
-            <CelText type="H6" color="white" weight="600">
-              {" "}
-              GOLD{" "}
-            </CelText>
-          </View>
-          <View style={[style.tierPlatinum, style.tierCommon]}>
-            <CelText type="H6" color="white" weight="600">
-              {" "}
-              PLATINUM{" "}
-            </CelText>
-          </View>
-        </View>
-
-        <View style={style.minPercentage}>
-          <View style={style.tierData}>
-            <CelText type="H7" weight="500">
-              {`< ${formatter.percentage(
-                celUtilityTiers.SILVER.maximum_cel_percentage
-              )}%`}
-            </CelText>
-          </View>
-          <Separator vertical height={"60%"} margin="7 0 0 5" />
-          <View style={style.tierData}>
-            <CelText type="H7" weight="500">
-              {`< ${formatter.percentage(
-                celUtilityTiers.GOLD.maximum_cel_percentage
-              )}%`}
-            </CelText>
-          </View>
-          <Separator vertical height={"60%"} margin="7 0 0 2" />
-          <View style={style.tierData}>
-            <CelText type="H7" weight="500">
-              {`> ${formatter.percentage(
-                celUtilityTiers.PLATINUM.minimum_cel_percentage
-              )}%`}
-            </CelText>
-          </View>
-        </View>
-
-        <View style={style.separator}>
-          <CelText type="H7" weight="500">
-            Bonus interest:
-          </CelText>
-        </View>
-
-        <View style={style.bonus}>
-          <View style={style.tierData}>
-            <CelText type="H7" weight="500">
-              {`${formatter.percentage(
-                celUtilityTiers.SILVER.interest_bonus
-              )}%`}
-            </CelText>
-          </View>
-          <Separator vertical height={"60%"} margin="7 0 0 0" />
-          <View style={style.tierData}>
-            <CelText type="H7" weight="500">
-              {`${formatter.percentage(celUtilityTiers.GOLD.interest_bonus)}%`}
-            </CelText>
-          </View>
-          <Separator vertical height={"60%"} margin="7 0 0 7" />
-          <View style={style.tierData}>
-            <CelText type="H7" weight="500">
-              {`${formatter.percentage(
-                celUtilityTiers.PLATINUM.interest_bonus
-              )}%`}
-            </CelText>
-          </View>
-        </View>
-
-        <View style={style.separator}>
-          <CelText type="H7" weight="500">
-            {" "}
-            Loan interest discount:{" "}
-          </CelText>
-        </View>
-
-        <View style={style.loan}>
-          <View style={style.tierData}>
-            <CelText type="H7" weight="500">
-              {`${formatter.percentage(
-                celUtilityTiers.SILVER.loan_interest_bonus
-              )}%`}
-            </CelText>
-          </View>
-          <Separator vertical height={"60%"} margin="7 0 0 0" />
-          <View style={style.tierData}>
-            <CelText type="H7" weight="500">
-              {`${formatter.percentage(
-                celUtilityTiers.GOLD.loan_interest_bonus
-              )}%`}
-            </CelText>
-          </View>
-          <Separator vertical height={"60%"} margin="7 0 0 7" />
-          <View style={style.tierDataLast}>
-            <CelText type="H7" weight="500">
-              {`${formatter.percentage(
-                celUtilityTiers.PLATINUM.loan_interest_bonus
-              )}%`}
-            </CelText>
-          </View>
-        </View>
-      </View>
-    );
-  };
 
   // TODO: move to organism
   renderLoyaltyHeader = () => {
@@ -340,7 +222,7 @@ class LoyaltyProgram extends Component {
                 coins in your wallet.
               </CelText>
 
-              {this.renderLoyaltyTable()}
+              <CelsiusMembershipTable/>
 
               <CelText
                 align="center"

@@ -6,7 +6,12 @@ import simplexService from "../../services/simplex-service";
 import { navigateTo } from "../nav/navActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
-export { simplexGetQuote, simplexCreatePaymentRequest, getAllSimplexPayments };
+export {
+  simplexGetQuote,
+  simplexCreatePaymentRequest,
+  getAllSimplexPayments,
+  getSimplexQuoteForCoin,
+};
 
 /**
  * Gets info for Simplex request
@@ -48,20 +53,70 @@ function simplexGetQuote() {
 }
 
 /**
- * Creates Simplex request
- * @param {object} args
+ * Gets info Simplex quote for coin
+ *
+ * @param {String} coin - ETH|BTC
  */
+function getSimplexQuoteForCoin(coin) {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_QUOTE_FOR_COIN));
 
-function simplexCreatePaymentRequest(args) {
+      const amountToCheck = 1000;
+      const quote = await simplexService.getQuote(
+        coin,
+        "USD",
+        "USD",
+        amountToCheck
+      );
+
+      const fiatCurrency = quote.data.fiat_money.currency.toLowerCase();
+      const cryptocurrency = quote.data.digital_money.currency.toLowerCase();
+      const coinRate =
+        quote.data.fiat_money.base_amount / quote.data.digital_money.amount;
+
+      dispatch({
+        type: ACTIONS.GET_QUOTE_FOR_COIN_SUCCESS,
+        fiatCurrency,
+        cryptocurrency,
+        coinRate,
+      });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_QUOTE_FOR_COIN, err));
+    }
+  };
+}
+
+/**
+ * Creates Simplex payment request
+ */
+function simplexCreatePaymentRequest() {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
+      const { simplexData } = getState().simplex;
+
       const { pin, code } = formData;
+
       dispatch(startApiCall(API.CREATE_PAYMENT_REQUEST));
-      const paymentRequest = await simplexService.createPaymentRequest(args, {
-        pin,
-        twoFactorCode: code,
-      });
+
+      const payment = {
+        quote_id: simplexData.quote_id,
+        coin: simplexData.digital_money.amount,
+        amount: formData.amountCrypto,
+        fiat_amount: simplexData.fiat_money.total_amount,
+        fiat_currency: simplexData.fiat_money.currency,
+        fiat_base_amount: simplexData.fiat_money.base_amount,
+      };
+
+      const paymentRequest = await simplexService.createPaymentRequest(
+        payment,
+        {
+          pin,
+          twoFactorCode: code,
+        }
+      );
 
       dispatch({
         type: ACTIONS.CREATE_PAYMENT_REQUEST_SUCCESS,
@@ -73,8 +128,8 @@ function simplexCreatePaymentRequest(args) {
         "CARD",
         formData.coin,
         "USD",
-        formData.amountCrypto,
-        formData.amountUsd
+        simplexData.digital_money.amount,
+        simplexData.fiat_money.total_amount
       );
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -85,13 +140,6 @@ function simplexCreatePaymentRequest(args) {
 
 /**
  * Gets all simplex payments
- * @param {string} quoteId
- * @param {string} coin
- * @param {string} fiatCurrency
- * @param {string} fiatTotalAmount
- * @param {string} fiatBaseAmount
- * @param {string} requestedCurrency
- * @param {string} amount
  */
 function getAllSimplexPayments() {
   return async dispatch => {

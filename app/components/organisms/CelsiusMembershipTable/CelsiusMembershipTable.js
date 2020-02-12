@@ -23,6 +23,8 @@ class CelsiusMembershipTable extends Component {
   static propTypes = {};
   static defaultProps = {};
 
+  // TODO: refactor with a map or something, move to organism
+
   render() {
     const { celUtilityTiers } = this.props;
     const style = CelsiusMembershipTableStyle(THEMES.LIGHT);

@@ -4,11 +4,12 @@ import { View } from "react-native";
 
 import WithdrawalInfoStyle from "./WithdrawalInfoModal.styles";
 import MultistepModal from "../MultistepModal/MultistepModal";
-import { MODALS } from "../../../constants/UI";
+import { MODALS, THEMES } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import multistepModalUtil from "../../../utils/multistep-modal-util";
 import InfoModal from "../InfoModalNew/InfoModal";
+import { getTheme } from "../../../utils/styles-util";
 
 class WithdrawalInfoModal extends Component {
   static propTypes = {
@@ -141,16 +142,26 @@ class WithdrawalInfoModal extends Component {
         steps = modalContent.slice(1, 3);
     }
 
+    let picture
+    const theme = getTheme()
+    if (theme === THEMES.LIGHT) {
+      picture = require(`../../../../assets/images/modal-withdraw.png`)
+    } else {
+      picture = require(`../../../../assets/images/modal-withdraw-dark.png`)
+    }
+
+
     const imagesArray =
       (["DASH", "DAI"].includes(type))
         ? [
-            require("../../../../assets/images/alert-icon.png"),
-            require("../../../../assets/images/modal-withdraw.png"),
-          ]
+          require("../../../../assets/images/alert-icon.png"),
+          picture,
+        ]
         : [
-            require("../../../../assets/images/modal-withdraw.png"),
-            require("../../../../assets/images/modal-withdraw.png"),
-          ];
+          picture,
+          picture,
+        ];
+
     if (["DASH", "DAI", "CEL"].includes(type) || !type) {
       // NOTE (djenader): !type is mandatory
       return (
@@ -170,6 +181,7 @@ class WithdrawalInfoModal extends Component {
       <InfoModal
         name={MODALS.WITHDRAW_INFO_MODAL}
         picture={require("../../../../assets/images/modal-withdraw.png")}
+        darkPicture={require("../../../../assets/images/modal-withdraw-dark.png")}
         heading={modalContent[1].title}
         paragraphs={[modalContent[1].body]}
         pictureDimensions={{ height: 31, width: 31 }}

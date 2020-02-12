@@ -89,6 +89,9 @@ const base = {
     color: "#fff",
     fontFamily: "Barlow-Regular",
   },
+  rateInfoCard: {
+    marginTop: 20
+  }
 };
 
 const themed = {

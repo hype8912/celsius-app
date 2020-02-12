@@ -109,8 +109,8 @@ function registerUser() {
         email: formData.email,
         password: formData.password,
         referral_link_id: referralLinkId || undefined,
+        reCaptchaKey: formData.reCaptchaKey
       };
-
       dispatch(startApiCall(API.REGISTER_USER));
       const res = await usersService.register(user);
 

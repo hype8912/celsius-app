@@ -17,6 +17,7 @@ import LoadingScreen from "../../screens/LoadingScreen/LoadingScreen";
 import Separator from "../../atoms/Separator/Separator";
 import InterestCalculatorScreen from "../InterestCalculatorScreen/InterestCalculatorScreen";
 import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util";
+import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 
 @connect(
   state => ({
@@ -146,6 +147,8 @@ class WalletInterest extends Component {
         />
 
         <View style={style.container}>
+          <PerCoinCelInterestCard />
+
           <TransactionsHistory
             hasFilter={false}
             additionalFilter={{ type: ["interest"], limit: 5 }}
