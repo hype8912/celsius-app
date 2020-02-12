@@ -169,6 +169,7 @@ class CameraScreen extends Component {
       });
       actions.takeCameraPhoto({ uri: result.path });
     } catch (err) {
+      if (err.message === 'User cancelled image selection') return
       loggerUtil.err(err);
     }
   };
