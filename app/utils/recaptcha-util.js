@@ -42,6 +42,7 @@ class GoogleReCaptcha extends Component {
   }
 
   generateTheWebViewContent = key => {
+    const { type, buttonDisabled } = this.props
     const originalForm = `<!DOCTYPE html>
        <html>
         <head>
@@ -67,13 +68,32 @@ class GoogleReCaptcha extends Component {
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
         <style>
-          .btn {
-            background-color: #3F51AB;
-            width:110px;
-            height: 50px;
-            color: #ffffff; padding: 8px 32px; margin-top: 8px;
-            border: none; border-radius: 25px; font-size: medium;
-          }
+            .btn_login {
+              background-color: #3F51AB;
+              width:110px;
+              height: 50px;
+              color: #ffffff; padding: 8px 32px; margin-top: 8px;
+              border: none; border-radius: 25px; font-size: medium;
+            }
+            .btn_register {
+              background-color: #3F51AB;
+              width:230px;
+              height: 50px;
+              color: #ffffff; padding: 8px 32px; margin-top: 8px;
+              border: none; border-radius: 25px; font-size: medium;
+            }
+
+             .btn_register_disabled {
+              background-color:transparent;
+              width:230px;
+              height: 50px;
+              color: #4156A6; padding: 8px 32px; margin-top: 8px;
+              border: solid;
+              border-width: 2px;
+              border-radius: 25px; font-size: medium;
+              opacity: 0.5;
+            }
+
             .grecaptcha-badge {
               top: 80px !important;
               margin-right: 9.2%;
@@ -93,15 +113,38 @@ class GoogleReCaptcha extends Component {
               >
             </div>
             <div style="text-align: center">
-                <button class='btn' id='submit'>Log in</button>
+                <button
+                  class='${ this.buttonStyle() }'
+                  id='submit'
+                >
+                   ${ type !== 'register' ? 'Log in' : 'Create account' }
+                </button>
             </div>
-          <script>onload();</script>
+          <script>
+            document.getElementById('submit').disabled = ${buttonDisabled};
+            onload();
+          </script>
         </body>
       </html>
      `;
 
     return originalForm;
   };
+
+  buttonStyle = () => {
+    const { type, buttonDisabled } = this.props
+    let btnStyle
+
+    if (type ==='register'){
+      btnStyle = 'btn_register'
+      if (buttonDisabled){
+         btnStyle = 'btn_register_disabled'
+      }
+    } else {
+      btnStyle = 'btn_login'
+    }
+    return btnStyle
+  }
 
   onMsg = event => {
     const { formData, reCaptchaPassed } = this.props;

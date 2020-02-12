@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-// import { View } from "react-native";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
-import CelButton from "../../atoms/CelButton/CelButton";
 import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
@@ -18,6 +16,8 @@ import { KEYBOARD_TYPE } from "../../../constants/UI";
 import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
 import RegisterPromoCodeCard from "../../molecules/RegisterPromoCodeCard/RegisterPromoCodeCard";
 import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
+import Constants from "../../../../constants";
+import GoogleReCaptcha from "../../../utils/recaptcha-util";
 
 @connect(
   state => ({
@@ -46,7 +46,9 @@ class RegisterInitial extends Component {
     const { promoCode } = this.props;
 
     if (promoCode) {
-      this.setState({ isExpanded: true });
+      this.setState({
+        isExpanded: true,
+      });
     }
   }
 
@@ -94,6 +96,28 @@ class RegisterInitial extends Component {
     if (isFormValid) {
       actions.createAccount();
     }
+  };
+
+  reCaptchaPassed = event => {
+    const { actions } = this.props;
+    actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
+    this.submitForm()
+  };
+
+  renderCaptcha = () => {
+    const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
+    const { formData }  =this.props
+    return (
+      <GoogleReCaptcha
+        siteKey={RECAPTCHA_KEY}
+        url={RECAPTCHA_URL}
+        languageCode="en"
+        onMessage={this.onMessage}
+        reCaptchaPassed={this.reCaptchaPassed}
+        type={'register'}
+        buttonDisabled={!formData.termsOfUse}
+      />
+    );
   };
 
   render() {
@@ -207,15 +231,8 @@ class RegisterInitial extends Component {
           openModal={actions.openModal}
         />
 
-        <CelButton
-          margin="30 0 10 0"
-          onPress={this.submitForm}
-          iconRight="IconArrowRight"
-          loading={registerLoading}
-          disabled={!formData.termsOfUse}
-        >
-          Create account
-        </CelButton>
+
+        { this.renderCaptcha() }
 
         <RegisterPromoCodeModal type={"register"} />
       </AuthLayout>
