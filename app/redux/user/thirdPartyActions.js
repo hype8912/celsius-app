@@ -423,10 +423,13 @@ function registerSocialSuccess(network, token, user) {
 
     await dispatch(initAppData(token));
     const { profile } = getState().user;
-    if (!profile.has_pin) {
+
+    if (!profile.pin) {
       dispatch(navigateTo("RegisterSetPin"));
     } else {
-      dispatch(navigateTo("WalletFab"));
+      dispatch(navigateTo("VerifyProfile"), {
+        onSuccess: () => navigateTo("WalletLanding")
+      });
     }
 
     dispatch({ type: ACTIONS.SOCIAL_REGISTER_SUCCESS });

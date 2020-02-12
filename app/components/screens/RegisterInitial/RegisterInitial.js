@@ -21,6 +21,7 @@ import GoogleReCaptcha from "../../../utils/recaptcha-util";
 
 @connect(
   state => ({
+    user: state.user.profile,
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
     callsInProgress: state.api.callsInProgress,
@@ -31,7 +32,7 @@ import GoogleReCaptcha from "../../../utils/recaptcha-util";
 class RegisterInitial extends Component {
   static navigationOptions = () => ({
     right: "login",
-    customCenterComponent: <ProgressBar steps={3} currentStep={1} />,
+    customCenterComponent: <ProgressBar steps={3} currentStep={1}/>,
   });
 
   constructor() {
@@ -91,6 +92,7 @@ class RegisterInitial extends Component {
 
   submitForm = () => {
     const { actions } = this.props;
+
     const isFormValid = this.isFormValid();
 
     if (isFormValid) {
@@ -150,9 +152,9 @@ class RegisterInitial extends Component {
         <CelText margin="0 0 30 0" align="center" type="H1">
           Join Celsius
         </CelText>
-        <SocialLogin type="register" actions={actions} />
+        <SocialLogin type="register" actions={actions}/>
 
-        <Separator allCaps text="Create your account" margin="20 0 20 0" />
+        <Separator allCaps text="Create your account" margin="20 0 20 0"/>
 
         <CelInput
           disabled={registerLoading}
@@ -234,7 +236,7 @@ class RegisterInitial extends Component {
 
         { this.renderCaptcha() }
 
-        <RegisterPromoCodeModal type={"register"} />
+        <RegisterPromoCodeModal type={"register"}/>
       </AuthLayout>
     );
   }
