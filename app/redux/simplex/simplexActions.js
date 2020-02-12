@@ -62,7 +62,7 @@ function getSimplexQuoteForCoin(coin) {
     try {
       dispatch(startApiCall(API.GET_QUOTE_FOR_COIN));
 
-      const amountToCheck = 1000;
+      const amountToCheck = 10000;
       const quote = await simplexService.getQuote(
         coin,
         "USD",
@@ -103,8 +103,8 @@ function simplexCreatePaymentRequest() {
 
       const payment = {
         quote_id: simplexData.quote_id,
-        coin: simplexData.digital_money.amount,
-        amount: formData.amountCrypto,
+        coin: simplexData.digital_money.currency,
+        amount: simplexData.digital_money.amount,
         fiat_amount: simplexData.fiat_money.total_amount,
         fiat_currency: simplexData.fiat_money.currency,
         fiat_base_amount: simplexData.fiat_money.base_amount,
