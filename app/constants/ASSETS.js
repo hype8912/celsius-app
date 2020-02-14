@@ -196,6 +196,10 @@ const CACHE_IMAGES = [
   require("../../assets/images/icons/bank-wire-light.png"),
   require("../../assets/images/icons/credit-card-dark.png"),
   require("../../assets/images/icons/credit-card-light.png"),
+  require("../../assets/images/coins/binance.png"),
+  require("../../assets/images/coins/binanceusd.png"),
+  require("../../assets/images/coins/tethergold.png"),
+  require("../../assets/images/coins/iota.png"),
 ];
 
 export default {
