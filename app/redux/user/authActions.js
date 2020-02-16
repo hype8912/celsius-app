@@ -82,10 +82,12 @@ function loginUser() {
         user,
       });
 
-      if (!user.has_pin) {
+      if (!user.pin) {
         dispatch(navigateTo("RegisterSetPin"));
       } else {
-        dispatch(navigateTo("WalletFab"));
+        dispatch(navigateTo("VerifyScreen"), {
+          onSuccess: () => navigateTo("WalletLanding")
+        });
       }
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -340,6 +342,7 @@ function createAccount() {
     }
 
     const user = getState().user.profile;
+
     if (user.id) {
       appsFlyerUtil.registrationCompleted(user);
       mixpanelAnalytics.registrationCompleted(user);

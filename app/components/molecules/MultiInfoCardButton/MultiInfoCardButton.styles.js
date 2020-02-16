@@ -2,7 +2,6 @@
 import {
   getThemedStyle,
   heightPercentageToDP,
-  widthPercentageToDP,
 } from "../../../utils/styles-util";
 
 const base = {
@@ -17,8 +16,9 @@ const base = {
     flex: 0.25,
   },
   image: {
-    width: widthPercentageToDP("12%"),
-    resizeMode: "contain",
+    width: heightPercentageToDP("6%"),
+    height: heightPercentageToDP("6%"),
+    resizeMode: "contain"
   },
   explanationWrapper: {
     flex: 0.75,

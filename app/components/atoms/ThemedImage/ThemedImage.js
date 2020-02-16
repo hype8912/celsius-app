@@ -27,7 +27,7 @@ const ThemedImage = props => (
   <Image
     style={props.style}
     source={getThemeImage(props)}
-    resizeMode={props.resizeMode}
+    resizeMode={props.resizeMode || "contain"}
   />
 );
 

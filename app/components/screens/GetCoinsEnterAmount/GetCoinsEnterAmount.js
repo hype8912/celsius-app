@@ -15,6 +15,8 @@ import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConfirmModal";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
 
 @connect(
   state => ({
@@ -26,6 +28,8 @@ import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConf
     depositCompliance: state.compliance.deposit,
     currencies: state.currencies.rates,
     simplexQuotes: state.simplex.quotes,
+    simplexData: state.simplex.simplexData,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -96,7 +100,6 @@ class GetCoinsEnterAmount extends Component {
       );
     }
 
-    actions.simplexGetQuote();
     actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL);
   };
 
@@ -158,18 +161,49 @@ class GetCoinsEnterAmount extends Component {
     }
 
     actions.updateFormFields({
-      amountCrypto: amountCrypto.toString(),
       amountUsd,
+      amountCrypto: amountCrypto.toString(),
     });
+
+    actions.simplexGetQuote();
   };
 
   render() {
-    const { actions, formData, keypadOpen, simplexQuotes } = this.props;
-
+    const {
+      actions,
+      formData,
+      keypadOpen,
+      simplexQuotes,
+      simplexData,
+      callInProgress,
+    } = this.props;
     const { availableCoins } = this.state;
+
     const style = GetCoinsEnterAmountStyle();
 
     const coin = formData.coin ? formData.coin.toLowerCase() : "btc";
+
+    const isFetchingQuotes = apiUtil.areCallsInProgress(
+      [API.GET_QUOTE],
+      callInProgress
+    );
+
+    let amountUsd = formData.amountUsd;
+    let amountCrypto = formData.amountCrypto;
+
+    if (
+      simplexData &&
+      simplexData.fiat_money &&
+      // check if values exist, otherwise 0
+      (formData.amountUsd || formData.amountCrypto)
+    ) {
+      amountUsd = formData.isUsd
+        ? amountUsd
+        : simplexData.fiat_money.total_amount;
+      amountCrypto = !formData.isUsd
+        ? amountCrypto
+        : Math.max(simplexData.digital_money.amount, 0);
+    }
 
     return (
       <RegularLayout fabType={"hide"} padding={"0 0 0 0"}>
@@ -188,11 +222,12 @@ class GetCoinsEnterAmount extends Component {
             <CoinSwitch
               updateFormField={actions.updateFormField}
               onAmountPress={actions.toggleKeypad}
-              amountUsd={formData.amountUsd}
-              amountCrypto={formData.amountCrypto}
+              amountUsd={amountUsd}
+              amountCrypto={amountCrypto}
               isUsd={formData.isUsd}
               coin={formData.coin}
               doubleTilde
+              lowerSpinner={isFetchingQuotes}
               amountColor={
                 keypadOpen
                   ? STYLES.COLORS.CELSIUS_BLUE
@@ -201,7 +236,7 @@ class GetCoinsEnterAmount extends Component {
             />
           </View>
         </View>
-        {simplexQuotes[coin] && (
+        {false && (
           <CelText
             align={"center"}
             color={STYLES.COLORS.MEDIUM_GRAY}
