@@ -70,7 +70,7 @@ function errorValidation(error) {
   ];
 
   for (let i = 0; i < stringIgnore.length; i++) {
-    if (error.includes(stringIgnore[i])) {
+    if (error && error.includes(stringIgnore[i])) {
       return false;
     }
   }
