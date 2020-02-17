@@ -19,7 +19,10 @@ function connectPhoneContacts(contacts, opts) {
 
     try {
       const res = await contactsService.connectPhoneContacts(contacts, opts);
-      dispatch({ type: ACTIONS.CONNECT_PHONE_CONTACTS_SUCCESS, contacts: res.data.contacts });
+      dispatch({
+        type: ACTIONS.CONNECT_PHONE_CONTACTS_SUCCESS,
+        contacts: res.data.contacts,
+      });
     } catch (err) {
       logger.err(err);
     }
@@ -49,6 +52,6 @@ function getConnectedContactsSuccess(contacts) {
   return {
     type: ACTIONS.GET_CONNECTED_CONTACTS_SUCCESS,
     callName: API.GET_CONNECT_CONTACTS,
-    contacts,
+    contacts: contacts.length ? contacts : [],
   };
 }
