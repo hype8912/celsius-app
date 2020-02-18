@@ -144,11 +144,11 @@ function percentage(number) {
  *
  * @param {number|string} - number to format
  * @param {boolean} - Hide percentage symbol
-//  * @returns {number}
+ //  * @returns {number}
  */
-function percentageDisplay(number, noSymbol = false) {
+function percentageDisplay(number, noSymbol = false, fractionDigits = 2) {
   const percentageNum = Math.round(number * 10000) / 100;
-  return `${percentageNum.toFixed(2)}${noSymbol ? "" : "%"}`;
+  return `${percentageNum.toFixed(fractionDigits)}${noSymbol ? "" : "%"}`;
 }
 
 /**

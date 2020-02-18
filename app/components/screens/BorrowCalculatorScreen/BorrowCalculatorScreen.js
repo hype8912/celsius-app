@@ -47,6 +47,7 @@ class BorrowCalculatorScreen extends Component {
   static propTypes = {
     purpose: PropTypes.string,
   };
+
   constructor(props) {
     super(props);
 
@@ -161,8 +162,8 @@ class BorrowCalculatorScreen extends Component {
           bottomHeading: "Borrow dollars for Crypto",
           bottomParagraph: loanParams
             ? `Verify your identity to start using your coins as collateral and get a dollar loan starting at just ${formatter.percentageDisplay(
-                loanParams.bestLtv
-              )} APR`
+              loanParams.bestLtv
+            )} APR`
             : null,
           buttonCopy: "Verify identity",
           onPress: () => actions.navigateTo("KYCProfileDetails"),
@@ -174,9 +175,9 @@ class BorrowCalculatorScreen extends Component {
           subtitle: "",
           bottomHeading: loanParams
             ? `To apply for a loan, you need to deposit an additional ${formatter.crypto(
-                loanParams.missingCollateral,
-                loanParams.largestShortCrypto
-              )}`
+              loanParams.missingCollateral,
+              loanParams.largestShortCrypto
+            )}`
             : null,
           bottomParagraph:
             "Deposit more coins to start your first loan application",
@@ -273,9 +274,15 @@ class BorrowCalculatorScreen extends Component {
         >
           {purposeProps.subtitle}
         </CelText>
-        <Separator />
-        <BorrowCalculator loanParams={loanParams} purpose={purpose} />
-        <Separator />
+        <Separator/>
+        <CelText
+          type="H4"
+          align={"left"}
+          margin={"15 0 20 0"}
+        >
+          Enter loan amount
+        </CelText>
+        <BorrowCalculator loanParams={loanParams} purpose={purpose}/>
         <View>
           {!!purposeProps.bottomHeading && (
             <CelText

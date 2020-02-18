@@ -17,6 +17,7 @@ import Icon from "../../atoms/Icon/Icon";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { THEMES } from "../../../constants/UI";
 import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
+import { getTheme } from "../../../utils/styles-util";
 
 let timeout;
 
@@ -64,7 +65,7 @@ class BorrowCalculator extends Component {
       { value: 6, label: <CelText>6M</CelText> },
       { value: 12, label: <CelText>1Y</CelText> },
       { value: 24, label: <CelText>2Y</CelText> },
-      { value: 48, label: <CelText>4Y</CelText> },
+      { value: 36, label: <CelText>3Y</CelText> },
     ];
 
     props.actions.initForm({
@@ -112,6 +113,7 @@ class BorrowCalculator extends Component {
 
   updateSliderItems = () => {
     const { formData, themeModal } = this.props;
+
     this.sliderItems = [
       {
         value: 6,
@@ -156,16 +158,16 @@ class BorrowCalculator extends Component {
         ),
       },
       {
-        value: 48,
+        value: 36,
         label: (
           <CelText
             theme={themeModal}
-            weight={formData.termOfLoan === 48 ? "bold" : "300"}
+            weight={formData.termOfLoan === 36 ? "bold" : "300"}
             color={
-              formData.termOfLoan === 48 ? STYLES.COLORS.CELSIUS_BLUE : null
+              formData.termOfLoan === 36 ? STYLES.COLORS.CELSIUS_BLUE : null
             }
           >
-            4Y
+            3Y
           </CelText>
         ),
       },
@@ -187,6 +189,126 @@ class BorrowCalculator extends Component {
     actions.updateFormField(field, value);
   };
 
+  renderInterestRatesCard = () => {
+    const style = BorrowCalculatorStyle();
+    const {
+      loyaltyInfo,
+      loanParams,
+      formData
+    } = this.props
+
+    const theme = getTheme()
+
+    let numberOfDigits;
+    let monthlyInCEL;
+    let totalInCEL;
+
+    if (loanParams.monthlyInterest && loanParams.totalInterest) {
+      numberOfDigits = Math.max(
+        loanParams.monthlyInterest.length,
+        loanParams.totalInterest.length
+      );
+
+      monthlyInCEL =
+        ((parseFloat(loanParams.monthlyInterest.split("$")[1]) -
+          parseFloat(loanParams.monthlyInterest.split("$")[1]) *
+          loyaltyInfo.tier.loanInterestBonus));
+
+      totalInCEL =
+        ((parseFloat(loanParams.totalInterest.split("$")[1]) -
+          parseFloat(loanParams.totalInterest.split("$")[1]) *
+          loyaltyInfo.tier.loanInterestBonus));
+    }
+
+    const loyaltyApr = formData.ltv.interest - formData.ltv.interest * loyaltyInfo.tier.loanInterestBonus
+
+    const INTEREST_DATA = [
+      {
+        apr: formatter.percentageDisplay(formData.ltv.interest),
+        monthly: loanParams.monthlyInterest,
+        total: loanParams.totalInterest,
+        type: "USD",
+        color: theme === THEMES.DARK ? STYLES.COLORS.SEMI_GRAY : STYLES.COLORS.LIGHT_GRAY
+      },
+      {
+        apr: formatter.percentageDisplay(loyaltyApr),
+        monthly: formatter.usd(monthlyInCEL),
+        total: formatter.usd(totalInCEL),
+        type: "CEL",
+        color: STYLES.COLORS.CELSIUS_BLUE
+      }
+    ]
+
+    const textType = numberOfDigits > 8 ? "H7" : "H6";
+
+    return (
+
+      INTEREST_DATA.map(num => (
+        <View style={[style.interestCardWrapper, { backgroundColor: num.color }]}>
+          <View style={style.interestCardTitle}>
+            <CelText
+              type={"H6"}
+              align={"center"}
+            >
+              Pay interest with {num.type}
+            </CelText>
+          </View>
+          <View style={style.interestCardItems}>
+            <View style={style.interestCardItem}>
+              <CelText
+                type={textType}
+                weight={"bold"}
+                align={"center"}
+              >
+
+                {num.apr}
+              </CelText>
+              <CelText
+                type={"H6"}
+                align={"center"}
+                color={STYLES.COLORS.MEDIUM_GRAY}
+              >
+                APR
+              </CelText>
+            </View>
+            <View style={style.interestCardItem}>
+              <CelText
+                type={textType}
+                weight={"bold"}
+                align={"center"}
+              >
+                {num.monthly}
+              </CelText>
+              <CelText
+                type={"H6"}
+                align={"center"}
+                color={STYLES.COLORS.MEDIUM_GRAY}
+              >
+                Per Month
+              </CelText>
+            </View>
+            <View style={style.interestCardItem}>
+              <CelText
+                type={textType}
+                weight={"bold"}
+                align={"center"}
+              >
+                {num.total}
+              </CelText>
+              <CelText
+                type={"H6"}
+                align={"center"}
+                color={STYLES.COLORS.MEDIUM_GRAY}
+              >
+                Total
+              </CelText>
+            </View>
+          </View>
+        </View>))
+
+    )
+  }
+
   render() {
     const { coinSelectItems } = this.state;
     const {
@@ -196,39 +318,16 @@ class BorrowCalculator extends Component {
       theme,
       themeModal,
       minimumLoanAmount,
-      loyaltyInfo,
-      currencies,
       loanParams,
     } = this.props;
 
     const style = BorrowCalculatorStyle(themeModal || theme);
     if (!formData.ltv) return null;
-    let numberOfDigits;
-    let monthly;
-    let total;
-    if (loanParams.monthlyInterest && loanParams.totalInterest) {
-      numberOfDigits = Math.max(
-        loanParams.monthlyInterest.length,
-        loanParams.totalInterest.length
-      );
-      const celPrice = currencies.find(c => c.short === "CEL").market_quotes_usd
-        .price;
-      monthly =
-        (Number(loanParams.monthlyInterest.split("$")[1]) -
-          Number(loanParams.monthlyInterest.split("$")[1]) *
-            loyaltyInfo.tier.loanInterestBonus) /
-        celPrice;
-      total =
-        (Number(loanParams.totalInterest.split("$")[1]) -
-          Number(loanParams.totalInterest.split("$")[1]) *
-            loyaltyInfo.tier.loanInterestBonus) /
-        celPrice;
-    }
 
-    const textType = numberOfDigits > 8 ? "H3" : "H2";
     const themeColors = this.getThemeColors();
 
     const sortedLtv = ltv.sort((a, b) => a.interest < b.interest);
+
     return (
       <View style={style.container}>
         <CelInput
@@ -243,183 +342,19 @@ class BorrowCalculator extends Component {
           onChange={this.changeAmount}
           theme={themeModal}
         />
-        <Card theme={themeModal}>
-          <CelText
-            align={"center"}
-            type={"H4"}
-            margin={"4 0 5 0"}
-            weight={"300"}
-            theme={themeModal}
-          >
-            Choose your annual interest rate.
-          </CelText>
-          <View style={style.ltvWrapper}>
-            {sortedLtv &&
-              sortedLtv.map(c => (
-                <Card
-                  size={"thirdExtra"}
-                  margin="20 5 20 5"
-                  noBorder
-                  theme={themeModal}
-                  key={c.interest}
-                  styles={
-                    formData.ltv.interest === c.interest
-                      ? style.selectedCardStyle
-                      : style.cardStyle
-                  }
-                  onPress={() => {
-                    actions.updateFormField("ltv", c);
-                  }}
-                >
-                  <CelText
-                    align={"center"}
-                    weight="bold"
-                    type={"H6"}
-                    style={
-                      formData.ltv.interest === c.interest
-                        ? style.selectedTextStyle
-                        : style.percentageTextStyle
-                    }
-                  >
-                    {formatter.percentageDisplay(c.interest)}
-                  </CelText>
-                </Card>
-              ))}
-          </View>
-          <Separator />
-          <CelText
-            type={"H4"}
-            margin={"20 10 20 10"}
-            weight={"300"}
-            theme={themeModal}
-          >
-            For how long would you like to borrow?
-          </CelText>
-          <HorizontalSlider
-            items={this.sliderItems}
-            field="termOfLoan"
-            value={formData.termOfLoan}
-            updateFormField={actions.updateFormField}
-          />
-          <View style={style.annualPercentage}>
-            <Card
-              size={"halfExtra"}
-              margin="20 10 20 5"
-              padding="20 5 20 5"
-              color={themeColors.loanCard}
-              style={style.interestCard}
-              theme={themeModal}
-            >
-              <CelText
-                align={"center"}
-                weight="600"
-                style={
-                  !themeModal
-                    ? style.interestCardText
-                    : { color: STYLES.COLORS.DARK_GRAY }
-                }
-                type={textType}
-              >
-                {loanParams.monthlyInterest}
-              </CelText>
-              <CelText
-                align={"center"}
-                weight="300"
-                color={STYLES.COLORS.MEDIUM_GRAY}
-                type={"H6"}
-              >
-                Interest per month
-              </CelText>
-            </Card>
-            <Card
-              size={"halfExtra"}
-              margin="20 5 20 5"
-              padding="20 5 20 5"
-              color={themeColors.loanCard}
-            >
-              <CelText
-                align={"center"}
-                weight="600"
-                style={
-                  !themeModal
-                    ? style.interestCardText
-                    : { color: STYLES.COLORS.DARK_GRAY }
-                }
-                type={textType}
-              >
-                {loanParams.totalInterest}
-              </CelText>
-              <CelText
-                align={"center"}
-                weight="300"
-                color={STYLES.COLORS.MEDIUM_GRAY}
-                type={"H6"}
-              >
-                Total interest
-              </CelText>
-            </Card>
-          </View>
-          <Card color={"#4156A6"}>
-            <CelText type={"H6"} align={"center"} color={STYLES.COLORS.WHITE}>
-              Reduce your interest rate by
-            </CelText>
-            <CelText
-              weight={"600"}
-              type={"H3"}
-              align={"center"}
-              color={STYLES.COLORS.WHITE}
-            >{`${formatter.percentage(
-              loyaltyInfo.tier.loanInterestBonus
-            )}%`}</CelText>
-            <CelText type={"H6"} align={"center"} color={STYLES.COLORS.WHITE}>
-              by paying out in CEL
-            </CelText>
-            <Separator
-              margin={"10 0 10 0"}
-              color={StyleSheet.flatten(style.separator).color}
-            />
-            <CelText type={"H6"} align={"center"} color={STYLES.COLORS.WHITE}>
-              Monthly Interest
-            </CelText>
-            <CelText
-              weight={"600"}
-              type={"H3"}
-              align={"center"}
-              color={STYLES.COLORS.WHITE}
-            >
-              {`${formatter.round(monthly) || 0} CEL`}
-            </CelText>
-            <Separator
-              margin={"10 0 10 0"}
-              color={StyleSheet.flatten(style.separator).color}
-            />
-            <CelText type={"H6"} align={"center"} color={STYLES.COLORS.WHITE}>
-              Total Interest
-            </CelText>
-            <CelText
-              weight={"600"}
-              type={"H3"}
-              align={"center"}
-              color={STYLES.COLORS.WHITE}
-            >
-              {`${formatter.round(total) || 0} CEL`}
-            </CelText>
-          </Card>
-        </Card>
-        <CelText
-          align={"center"}
-          type={"H4"}
-          margin={"4 0 20 0"}
-          weight={"300"}
-          theme={themeModal}
-        >
-          Choose a coin to use as collateral
-        </CelText>
+        <Separator margin={"0 0 10 0"}/>
         <View>
+          <CelText
+            type="H4"
+            align={"center"}
+            margin={"15 0 20 0"}
+          >
+            Choose a coin to use as collateral
+          </CelText>
           <Icon
             name={`Icon${formData.coin}`}
-            width="40"
-            height="40"
+            width="64"
+            height="64"
             fill={themeColors.iconColor}
           />
           <View style={style.selectWrapper}>
@@ -449,7 +384,7 @@ class BorrowCalculator extends Component {
             }
             type={"H2"}
           >
-            {formatter.crypto(loanParams.collateralNeeded, formData.coin)}
+            {loanParams.collateralNeeded ? formatter.crypto(loanParams.collateralNeeded, formData.coin) : ""}
           </CelText>
           <CelText
             align={"center"}
@@ -469,6 +404,78 @@ class BorrowCalculator extends Component {
         >
           The amount of collateral needed is based on your annual interest rate.
         </CelText>
+        <Card theme={themeModal}>
+          <CelText
+            align={"center"}
+            type={"H4"}
+            margin={"4 0 5 0"}
+            weight={"300"}
+            theme={themeModal}
+          >
+            Choose your collateral type.
+          </CelText>
+          <View style={style.ltvWrapper}>
+            {sortedLtv &&
+            sortedLtv.map(c => (
+              <Card
+                size={"thirdExtra"}
+                margin="20 5 20 5"
+                noBorder
+                theme={themeModal}
+                key={c.interest}
+                styles={
+                  formData.ltv.interest === c.interest
+                    ? style.selectedCardStyle
+                    : style.cardStyle
+                }
+                onPress={() => {
+                  actions.updateFormField("ltv", c);
+                }}
+              >
+                <CelText
+                  align={"center"}
+                  weight="bold"
+                  type={"H6"}
+                  style={
+                    formData.ltv.interest === c.interest
+                      ? style.selectedTextStyle
+                      : style.percentageTextStyle
+                  }
+                >
+                  {formatter.percentageDisplay(c.percent, false, 0)}
+                </CelText>
+              </Card>
+            ))}
+          </View>
+          <Separator/>
+          <CelText
+            type={"H4"}
+            margin={"20 10 20 10"}
+            weight={"300"}
+            theme={themeModal}
+          >
+            For how long would you borrow?
+          </CelText>
+          <HorizontalSlider
+            items={this.sliderItems}
+            field="termOfLoan"
+            value={formData.termOfLoan}
+            updateFormField={actions.updateFormField}
+          />
+
+          <Separator margin={"20 0 0 0"}/>
+
+          <CelText
+            type="H4"
+            align={"left"}
+            margin={"15 0 20 0"}
+          >
+            Interest rates
+          </CelText>
+
+          {this.renderInterestRatesCard()}
+
+        </Card>
       </View>
     );
   }

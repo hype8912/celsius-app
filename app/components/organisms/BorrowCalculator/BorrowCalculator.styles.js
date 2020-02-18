@@ -32,6 +32,21 @@ const base = {
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  interestCardWrapper: {
+    backgroundColor: STYLES.COLORS.SEMI_GRAY,
+    borderRadius: 8,
+    padding: 5,
+    marginVertical: 5,
+  },
+  interestCardTitle: {
+    marginVertical: 5,
+  },
+  interestCardItems: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginVertical: 5,
+  },
+  interestCardItem: {}
 };
 
 const themed = {
