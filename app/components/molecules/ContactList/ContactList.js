@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { FlatList, SafeAreaView } from "react-native";
 
-import ContactListStyle from "./ContactList.styles";
 import ContactRow from "../../atoms/ContactRow/ContactRow";
 
 class ContactList extends Component {
@@ -28,13 +27,11 @@ class ContactList extends Component {
 
   render() {
     const { onContactPress } = this.props;
-    const style = ContactListStyle();
     const sortedContacts = this.sortedContacts();
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <FlatList
           scrollEnabled={false}
-          style={style.container}
           data={sortedContacts}
           initialNumToRender={10}
           renderItem={contact => (
