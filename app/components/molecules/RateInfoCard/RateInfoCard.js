@@ -8,6 +8,7 @@ import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 import interestUtil from "../../../utils/interest-util";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { isUSResident } from "../../../utils/user-util";
 
 class RateInfoCard extends Component {
   static propTypes = {
@@ -47,7 +48,7 @@ class RateInfoCard extends Component {
       !coin ? "BTC" : coin.short
     );
     if (!interestRate.specialRate && !interestRate.coinThreshold) return null;
-    if (!interestCompliance || !interestCompliance.allowed) return null;
+    if ((!interestCompliance && !interestCompliance.allowed) || isUSResident()) return null;
 
     return (
       <View style={style}>
