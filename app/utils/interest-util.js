@@ -3,6 +3,8 @@ import store from "../redux/store";
 
 const interestUtil = {
   getUserInterestForCoin,
+  calculateAPY,
+  calculateBonusRate,
 };
 
 /**
@@ -46,10 +48,17 @@ function getUserInterestForCoin(coinShort) {
       : interestRates[coinShort].compound_cel_rate;
   }
 
-  if (interestRates && interestRates[coinShort] && interestRates[coinShort].rate_on_first_n_coins && interestRates[coinShort].threshold_on_first_n_coins) {
+  if (
+    interestRates &&
+    interestRates[coinShort] &&
+    interestRates[coinShort].rate_on_first_n_coins &&
+    interestRates[coinShort].threshold_on_first_n_coins
+  ) {
     coinThreshold = Number(interestRates[coinShort].threshold_on_first_n_coins);
     specialRate = Number(interestRates[coinShort].rate_on_first_n_coins);
-    specialRateDisplay = formatter.percentageDisplay(interestRates[coinShort].rate_on_first_n_coins)
+    specialRateDisplay = formatter.percentageDisplay(
+      interestRates[coinShort].rate_on_first_n_coins
+    );
   }
 
   return {
@@ -62,6 +71,25 @@ function getUserInterestForCoin(coinShort) {
     inCEL,
     eligible,
   };
+}
+
+/**
+ * Calculates APY from APR value
+ *
+ * param {number} apr - value set in BO or with tier bonus
+ */
+function calculateAPY(apr) {
+  return Math.pow(1 + apr / 52, 52) - 1;
+}
+
+/**
+ * Calculates bonus apr rate
+ *
+ * param {number|string} apr - value set in BO
+ * param {number|string} bonusRate - bonus rate for a specific tier level
+ */
+function calculateBonusRate(apr, bonusRate) {
+  return (1 + Number(bonusRate)) * Number(apr);
 }
 
 export default interestUtil;
