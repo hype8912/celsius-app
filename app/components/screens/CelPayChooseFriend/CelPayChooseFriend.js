@@ -17,7 +17,6 @@ import logger from "../../../utils/logger-util";
 import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
-import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
@@ -26,7 +25,7 @@ import { CEL_PAY_TYPES } from "../../../constants/UI";
 const loadingText =
   "Your contacts are being imported. This make take a couple of minutes, so we'll let you know once the import is complete. \n" +
   "\n" +
-  "Only contacts with Celsius accounts will appear in this list. You can CelPay any of your friends at any time by sharing a unique CelPay link."
+  "Only contacts with Celsius accounts will appear in this list. You can CelPay any of your friends at any time by sharing a unique CelPay link.";
 
 @connect(
   state => ({
@@ -38,7 +37,7 @@ const loadingText =
 )
 class CelPayChooseFriend extends Component {
   static navigationOptions = () => ({
-    title: "Choose a Celsian to CelPay",
+    title: "Choose a Celsian",
     right: "search",
   });
 
@@ -114,13 +113,15 @@ class CelPayChooseFriend extends Component {
 
         // Connect batches of contacts
         for (let i = 0; i < contactBatches.length; i++) {
-          await actions.connectPhoneContacts(contactBatches[i], { clearExistingContacts: i === 0 });
+          await actions.connectPhoneContacts(contactBatches[i], {
+            clearExistingContacts: i === 0,
+          });
           loadedContacts += contactBatches[i].length;
           this.setState({ loadedContacts });
         }
 
         this.setState({ loadingContacts: false, hasImportedContacts: true });
-        const { contacts } = this.props
+        const { contacts } = this.props;
         mixpanelAnalytics.importedContacts(contacts.length);
       } else {
         await requestForPermission(ALL_PERMISSIONS.CONTACTS);
@@ -136,7 +137,7 @@ class CelPayChooseFriend extends Component {
     actions.updateFormField("friend", undefined);
     actions.navigateTo("CelPayEnterAmount");
 
-    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK)
+    mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK);
   };
 
   handleContactPress = async contact => {
@@ -163,17 +164,16 @@ class CelPayChooseFriend extends Component {
     return (
       <RegularLayout>
         <View style={{ paddingTop: 60 }}>
-          <CircleButton
-            icon="Contacts"
-            iconSize={28}
-          />
+          <CircleButton icon="Contacts" iconSize={28} />
 
           <CelText weight="bold" type="H2" align="center" margin="20 0 0 0">
             CelPay your way!
           </CelText>
 
           <CelText align="center" margin="20 0 0 0">
-            Import your contacts to transfer crypto quickly and easily between friends. Only friends with the Celsius app will appear in your contacts list.
+            Import your contacts to transfer crypto quickly and easily between
+            friends. Only friends with the Celsius app will appear in your
+            contacts list.
           </CelText>
 
           <CelButton margin="20 0 20 0" onPress={this.importContacts}>
@@ -195,17 +195,15 @@ class CelPayChooseFriend extends Component {
       : "None of your friends";
     return (
       <View style={{ paddingTop: 60 }}>
-        <CircleButton
-          icon="Contacts"
-          iconSize={28}
-        />
+        <CircleButton icon="Contacts" iconSize={28} />
 
         <CelText weight="bold" type="H2" align="center" margin="25 0 0 0">
           No friends
         </CelText>
 
         <CelText align="center" margin="4 0 30 0">
-          { text } has installed Celsius App. You can still CelPay them with a link.
+          {text} has installed Celsius App. You can still CelPay them with a
+          link.
         </CelText>
 
         <CelButton onPress={this.sendLink}>Send as link</CelButton>
@@ -216,31 +214,25 @@ class CelPayChooseFriend extends Component {
   renderLoadingContacts = () => {
     return (
       <RegularLayout>
-        { this.renderProgressBar() }
+        {this.renderProgressBar()}
 
         <View style={{ alignItems: "center", paddingTop: 60 }}>
           <Spinner size={50} />
         </View>
 
         <CelText align="center" margin="20 0 16 0">
-          { loadingText }
+          {loadingText}
         </CelText>
 
-        <CelButton
-          onPress={this.sendLink}
-          basic
-        >
+        <CelButton onPress={this.sendLink} basic>
           Send as Link >
         </CelButton>
       </RegularLayout>
-    )
-  }
+    );
+  };
 
   renderProgressBar = () => {
-    const {
-      totalContacts,
-      loadedContacts,
-    } = this.state;
+    const { totalContacts, loadedContacts } = this.state;
 
     return (
       <View
@@ -259,23 +251,39 @@ class CelPayChooseFriend extends Component {
           {loadedContacts} of {totalContacts} contacts loaded
         </CelText>
       </View>
+    );
+  };
 
-    )
-  }
+  renderInitialLoader = () => {
+    return (
+      <RegularLayout>
+        <View style={{ alignItems: "center", paddingTop: 160 }}>
+          <Spinner size={50} />
+        </View>
+
+        <CelText align="center" margin="50 0 100 0">
+          Please wait...
+        </CelText>
+
+        <CelButton onPress={this.sendLink} basic>
+          Send as Link >
+        </CelButton>
+      </RegularLayout>
+    );
+  };
 
   render() {
-    const {
-      loadingContacts,
-      hasImportedContacts,
-    } = this.state;
+    const { loadingContacts, hasImportedContacts } = this.state;
+
     const { callsInProgress } = this.props;
 
     const hasFriends = this.hasFriends();
     if (
       apiUtil.areCallsInProgress([API.GET_CONNECT_CONTACTS], callsInProgress) &&
-      !loadingContacts
+      !loadingContacts &&
+      !hasFriends
     ) {
-      return <LoadingScreen />;
+      return this.renderInitialLoader();
     }
 
     if (!hasFriends && !loadingContacts && !hasImportedContacts) {
@@ -290,14 +298,13 @@ class CelPayChooseFriend extends Component {
     return (
       <RegularLayout>
         <View style={{ flex: 1, width: "100%" }}>
-          {loadingContacts
-            ? this.renderProgressBar()
-            : (
-              <CelButton margin="15 0 15 0" onPress={this.importContacts} basic>
-                Refresh contacts
-              </CelButton>
-            )
-          }
+          {loadingContacts ? (
+            this.renderProgressBar()
+          ) : (
+            <CelButton margin="15 0 15 0" onPress={this.importContacts} basic>
+              Refresh contacts
+            </CelButton>
+          )}
 
           {filteredContacts.length ? (
             <ContactList
