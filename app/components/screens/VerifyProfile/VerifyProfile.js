@@ -64,7 +64,6 @@ class VerifyProfile extends Component {
     actions.getPreviousPinScreen(activeScreen);
 
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
-    this.openKeypad();
   };
 
   componentWillUpdate(nextProps) {
