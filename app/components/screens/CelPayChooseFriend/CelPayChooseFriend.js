@@ -262,7 +262,7 @@ class CelPayChooseFriend extends Component {
         </View>
 
         <CelText align="center" margin="50 0 100 0">
-          Please wait...
+          Please wait. This may take a moment.
         </CelText>
 
         <CelButton onPress={this.sendLink} basic>
