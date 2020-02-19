@@ -16,8 +16,8 @@ import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { THEMES } from "../../../constants/UI";
-import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
 import { getTheme } from "../../../utils/styles-util";
+import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 
 let timeout;
 
@@ -120,10 +120,7 @@ class BorrowCalculator extends Component {
         label: (
           <CelText
             theme={themeModal}
-            weight={formData.termOfLoan === 6 ? "bold" : "300"}
-            color={
-              formData.termOfLoan === 6 ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
+            weight={"300"}
           >
             6M
           </CelText>
@@ -134,10 +131,7 @@ class BorrowCalculator extends Component {
         label: (
           <CelText
             theme={themeModal}
-            weight={formData.termOfLoan === 12 ? "bold" : "300"}
-            color={
-              formData.termOfLoan === 12 ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
+            weight={"300"}
           >
             1Y
           </CelText>
@@ -148,10 +142,7 @@ class BorrowCalculator extends Component {
         label: (
           <CelText
             theme={themeModal}
-            weight={formData.termOfLoan === 24 ? "bold" : "300"}
-            color={
-              formData.termOfLoan === 24 ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
+            weight={"300"}
           >
             2Y
           </CelText>
@@ -162,10 +153,7 @@ class BorrowCalculator extends Component {
         label: (
           <CelText
             theme={themeModal}
-            weight={formData.termOfLoan === 36 ? "bold" : "300"}
-            color={
-              formData.termOfLoan === 36 ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
+            weight={"300"}
           >
             3Y
           </CelText>
@@ -249,6 +237,8 @@ class BorrowCalculator extends Component {
             <CelText
               type={"H6"}
               align={"center"}
+              color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
+
             >
               Pay interest with {num.type}
             </CelText>
@@ -259,6 +249,8 @@ class BorrowCalculator extends Component {
                 type={textType}
                 weight={"bold"}
                 align={"center"}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
+
               >
 
                 {num.apr}
@@ -266,7 +258,7 @@ class BorrowCalculator extends Component {
               <CelText
                 type={"H6"}
                 align={"center"}
-                color={STYLES.COLORS.MEDIUM_GRAY}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 APR
               </CelText>
@@ -276,13 +268,14 @@ class BorrowCalculator extends Component {
                 type={textType}
                 weight={"bold"}
                 align={"center"}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 {num.monthly}
               </CelText>
               <CelText
                 type={"H6"}
                 align={"center"}
-                color={STYLES.COLORS.MEDIUM_GRAY}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 Per Month
               </CelText>
@@ -292,13 +285,14 @@ class BorrowCalculator extends Component {
                 type={textType}
                 weight={"bold"}
                 align={"center"}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 {num.total}
               </CelText>
               <CelText
                 type={"H6"}
                 align={"center"}
-                color={STYLES.COLORS.MEDIUM_GRAY}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 Total
               </CelText>
@@ -321,10 +315,12 @@ class BorrowCalculator extends Component {
       loanParams,
     } = this.props;
 
+
     const style = BorrowCalculatorStyle(themeModal || theme);
     if (!formData.ltv) return null;
 
     const themeColors = this.getThemeColors();
+    const coin = formData.coin || ""
 
     const sortedLtv = ltv.sort((a, b) => a.interest < b.interest);
 
@@ -358,12 +354,19 @@ class BorrowCalculator extends Component {
             fill={themeColors.iconColor}
           />
           <View style={style.selectWrapper}>
-            <SimpleSelect
-              items={coinSelectItems}
-              field="coin"
-              displayValue={formData.coin}
-              value={formData.coin}
+
+            <CoinPicker
+              type={"basic"}
               updateFormField={actions.updateFormField}
+              onChange={(field, value) =>
+                actions.updateFormFields({
+                  [field]: value,
+                })
+              }
+              availableCoins={coinSelectItems}
+              navigateTo={actions.navigateTo}
+              coin={coin}
+              field="coin"
               placeholder="Choose a coin"
             />
           </View>
@@ -384,7 +387,7 @@ class BorrowCalculator extends Component {
             }
             type={"H2"}
           >
-            {loanParams.collateralNeeded ? formatter.crypto(loanParams.collateralNeeded, formData.coin) : ""}
+            {loanParams.collateralNeeded ? formatter.crypto(loanParams.collateralNeeded, formData.coin) : "0"}
           </CelText>
           <CelText
             align={"center"}

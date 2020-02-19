@@ -48,6 +48,12 @@ class BorrowCalculatorScreen extends Component {
     purpose: PropTypes.string,
   };
 
+  static navigationOptions = () => ({
+    title: "Borrow",
+    right: "profile",
+    left: "back",
+  });
+
   constructor(props) {
     super(props);
 
@@ -150,8 +156,8 @@ class BorrowCalculatorScreen extends Component {
       subtitle: "Calculate your loan interest.",
       bottomHeading: "Borrow dollars for your crypto",
       bottomParagraph: "Calculate your loan interest before you deposit coins",
-      buttonCopy: "Deposit",
-      onPress: () => actions.navigateTo("Deposit", { coin: "CEL" }),
+      buttonCopy: "Get Loan",
+      onPress: () => actions.navigateTo("BorrowChooseLoan"),
     };
 
     switch (purpose) {
@@ -195,6 +201,10 @@ class BorrowCalculatorScreen extends Component {
           bottomHeading: "Borrow dollars for your crypto",
           bottomParagraph:
             "Calculate your loan interest before you deposit coins",
+          onPress: () =>
+            actions.navigateTo("Deposit", {
+              coin: "CEL"
+            }),
           buttonCopy: "Deposit CEL",
         };
 
@@ -276,13 +286,10 @@ class BorrowCalculatorScreen extends Component {
         </CelText>
         <Separator/>
         <CelText
-          type="H4"
-          align={"left"}
-          margin={"15 0 20 0"}
-        >
-          Enter loan amount
-        </CelText>
+          margin={"20 0 10 0"}
+        >Enter loan amount</CelText>
         <BorrowCalculator loanParams={loanParams} purpose={purpose}/>
+        <Separator margin={"10 0 0 0"}/>
         <View>
           {!!purposeProps.bottomHeading && (
             <CelText
