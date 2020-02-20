@@ -18,6 +18,8 @@ import * as appActions from "../../../redux/actions";
   state => ({
     celUtilityTiers: state.generalData.celUtilityTiers,
     interestCompliance: state.compliance.interest,
+    interestRates: state.generalData.interestRates,
+    loyaltyInfo: state.user.loyaltyInfo,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -45,6 +47,7 @@ class RateInfoCard extends Component {
       celInterestButton,
       interestCompliance,
       celUtilityTiers,
+      loyaltyInfo,
     } = this.props;
 
     // const styles = RateInfoCardStyle()
@@ -57,8 +60,15 @@ class RateInfoCard extends Component {
 
     const apyRate = interestUtil.calculateAPY(
       interestUtil.calculateBonusRate(
+        interestRate.baseRate,
+        celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
+      )
+    );
+
+    const specialApyRate = interestUtil.calculateAPY(
+      interestUtil.calculateBonusRate(
         interestRate.specialRate,
-        celUtilityTiers.PLATINUM.interest_bonus
+        celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
       )
     );
 
@@ -68,27 +78,27 @@ class RateInfoCard extends Component {
           <Card color={STYLES.COLORS.CELSIUS_BLUE}>
             <CelText color={"white"}>
               Upgrade your interest settings to earn in CEL and you could get up
-              to {formatter.percentageDisplay(apyRate)} APY on your first{" "}
+              to {formatter.percentageDisplay(specialApyRate)} APY on your first{" "}
               <CelText
                 color={"white"}
                 weight={"bold"}
               >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
               ! BTC balances greater than{" "}
               {`${interestRate.coinThreshold} ${interestRate.coin}`} will
-              continue to earn at {`${interestRate.display}`} APY.
+              continue to earn at {formatter.percentageDisplay(apyRate)} APY.
             </CelText>
           </Card>
         ) : (
           <Card color={STYLES.COLORS.CELSIUS_BLUE}>
             <CelText color={"white"}>
               Keep HODLing and you could earn up to{" "}
-              {formatter.percentageDisplay(apyRate)} APY on your first{" "}
+              {formatter.percentageDisplay(specialApyRate)} APY on your first{" "}
               <CelText
                 color={"white"}
                 weight={"bold"}
               >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
               ! BTC balances greater than {`${interestRate.coinThreshold}`} will
-              continue to earn at {`${interestRate.display}`} APY.{" "}
+              continue to earn at {formatter.percentageDisplay(apyRate)} APY.{" "}
             </CelText>
           </Card>
         )}
