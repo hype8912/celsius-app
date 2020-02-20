@@ -69,6 +69,8 @@ class ConfirmCamera extends Component {
       callsInProgress
     );
 
+    const maskType = mask || "utility";
+
     return (
       <RegularLayout fabType="hide">
         <View
@@ -104,13 +106,13 @@ class ConfirmCamera extends Component {
             {photo && !loading ? (
               <View
                 style={{
-                  width: STYLES.CAMERA_MASK_SIZES[mask].width,
-                  height: STYLES.CAMERA_MASK_SIZES[mask].height,
+                  width: STYLES.CAMERA_MASK_SIZES[maskType].width,
+                  height: STYLES.CAMERA_MASK_SIZES[maskType].height,
                   borderWidth: 5,
                   borderColor: STYLES.COLORS.WHITE,
                   borderRadius:
-                    mask === "circle"
-                      ? STYLES.CAMERA_MASK_SIZES[mask].width / 2
+                    maskType === "circle"
+                      ? STYLES.CAMERA_MASK_SIZES[maskType].width / 2
                       : 0,
                   alignItems: "center",
                   justifyContent: "center",
@@ -120,12 +122,12 @@ class ConfirmCamera extends Component {
                   resizeMode="contain"
                   source={photo}
                   style={{
-                    width: STYLES.CAMERA_MASK_SIZES[mask].width - 5,
-                    height: STYLES.CAMERA_MASK_SIZES[mask].height - 5,
+                    width: STYLES.CAMERA_MASK_SIZES[maskType].width - 5,
+                    height: STYLES.CAMERA_MASK_SIZES[maskType].height - 5,
                     overflow: "hidden",
                     borderRadius:
-                      mask === "circle"
-                        ? STYLES.CAMERA_MASK_SIZES[mask].width / 2
+                      maskType === "circle"
+                        ? STYLES.CAMERA_MASK_SIZES[maskType].width / 2
                         : 0,
                   }}
                 />
@@ -133,13 +135,13 @@ class ConfirmCamera extends Component {
             ) : (
               <View
                 style={{
-                  width: STYLES.CAMERA_MASK_SIZES[mask].width,
-                  height: STYLES.CAMERA_MASK_SIZES[mask].height,
+                  width: STYLES.CAMERA_MASK_SIZES[maskType].width,
+                  height: STYLES.CAMERA_MASK_SIZES[maskType].height,
                   borderWidth: 5,
                   borderColor: STYLES.COLORS.WHITE,
                   borderRadius:
-                    mask === "circle"
-                      ? STYLES.CAMERA_MASK_SIZES[mask].width / 2
+                    maskType === "circle"
+                      ? STYLES.CAMERA_MASK_SIZES[maskType].width / 2
                       : 0,
                   alignItems: "center",
                   justifyContent: "center",
@@ -153,7 +155,7 @@ class ConfirmCamera extends Component {
           <View style={{ flex: 1 }}>
             <View
               style={{
-                width: STYLES.CAMERA_MASK_SIZES[mask].width,
+                width: STYLES.CAMERA_MASK_SIZES[maskType].width,
                 alignSelf: "center",
                 marginTop: 20,
               }}
