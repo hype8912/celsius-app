@@ -171,6 +171,7 @@ function getProps(purpose, componentProps) {
           "You can directly purchase cryptocurrency with credit card on Celsius. We offer the best route to buy crypto using credit card.",
           "All you have to do is become a Celsius member by verifying your profile.",
         ],
+        button: "Verify profile",
         onPress: () => actions.navigateTo("KYCProfileDetails"),
       };
 
