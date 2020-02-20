@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../redux/actions";
 
+// TODO move to components
 // fix https://github.com/facebook/react-native/issues/10865
 const patchPostMessageJsCode = `(${String(function() {
   const originalPostMessage = window.ReactNativeWebView.postMessage;
@@ -42,7 +43,7 @@ class GoogleReCaptcha extends Component {
   }
 
   generateTheWebViewContent = key => {
-    const { type, buttonDisabled } = this.props
+    const { type, buttonDisabled } = this.props;
     const originalForm = `<!DOCTYPE html>
        <html>
         <head>
@@ -114,10 +115,10 @@ class GoogleReCaptcha extends Component {
             </div>
             <div style="text-align: center">
                 <button
-                  class='${ this.buttonStyle() }'
+                  class='${this.buttonStyle()}'
                   id='submit'
                 >
-                   ${ type !== 'register' ? 'Log in' : 'Create account' }
+                   ${type !== "register" ? "Log in" : "Create account"}
                 </button>
             </div>
           <script>
@@ -132,19 +133,19 @@ class GoogleReCaptcha extends Component {
   };
 
   buttonStyle = () => {
-    const { type, buttonDisabled } = this.props
-    let btnStyle
+    const { type, buttonDisabled } = this.props;
+    let btnStyle;
 
-    if (type ==='register'){
-      btnStyle = 'btn_register'
-      if (buttonDisabled){
-         btnStyle = 'btn_register_disabled'
+    if (type === "register") {
+      btnStyle = "btn_register";
+      if (buttonDisabled) {
+        btnStyle = "btn_register_disabled";
       }
     } else {
-      btnStyle = 'btn_login'
+      btnStyle = "btn_login";
     }
-    return btnStyle
-  }
+    return btnStyle;
+  };
 
   onMsg = event => {
     const { formData, reCaptchaPassed } = this.props;

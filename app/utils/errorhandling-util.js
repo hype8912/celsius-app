@@ -1,3 +1,4 @@
+// TODO check what does this do?
 import loggerUtil from "./logger-util";
 
 // TODO add JSDoc

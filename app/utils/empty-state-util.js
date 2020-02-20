@@ -1,6 +1,7 @@
 import { EMPTY_STATES } from "../constants/UI";
 import { KYC_STATUSES } from "../constants/DATA";
 
+// TODO refactor with new empty states
 export default {
   getProps, // TODO add JSDoc
 };

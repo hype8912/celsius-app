@@ -10,6 +10,7 @@ import { showMessage } from "../redux/ui/uiActions";
 
 const { ENV } = Constants;
 
+// TODO remove, switch to reactotron.log
 export default {
   logme, // TODO check better way to log stuff from app
   log,

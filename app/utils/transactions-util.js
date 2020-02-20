@@ -4,6 +4,8 @@ import { TRANSACTION_TYPES } from "../constants/DATA";
 import STYLES from "../constants/STYLES";
 import formatter from "./formatter";
 
+// TODO refactor with new TransactionDetails screens
+// TODO maybe separate into transaction filter, and transaction model
 const transactionsUtil = {
   mapTransaction,
   filterTransactions,
@@ -19,7 +21,7 @@ function mapTransaction(transaction) {
   let newTransaction = { ...transaction };
 
   newTransaction.type = getTransactionType(newTransaction);
-  newTransaction = maskCelPayUser(newTransaction);
+  newTransaction = maskCelPayUser(newTransaction); // TODO refactor
   newTransaction.uiProps = getTransactionProps(newTransaction);
   newTransaction.uiSections = getTransactionSections(newTransaction);
 
@@ -612,7 +614,6 @@ function getTransactionProps(transaction) {
         iconName: "TransactionCanceled",
         statusText: "CelPay Canceled",
       };
-
 
     case TRANSACTION_TYPES.COLLATERAL_PENDING:
       return {

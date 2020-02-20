@@ -1,8 +1,8 @@
 export default {
-  splitAddressTag,
-  joinAddressTag,
-  hasTag,
-  hasCoinTag,
+  splitAddressTag, // TODO add coin to params, use that
+  joinAddressTag, //
+  hasTag, // TODO use contains instead of indexOf
+  hasCoinTag, //
 };
 
 /**

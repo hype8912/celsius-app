@@ -1,6 +1,7 @@
 import store from "../redux/store";
 import { KYC_STATUSES } from "../constants/DATA";
 
+// TODO use these more in the app
 export {
   isUserLoggedIn,
   isCompanyMember,
@@ -10,10 +11,10 @@ export {
   hasPassedKYC,
   isKYCRejectedForever,
   // TODO(ns) KYC: isRejecEted, isPending
-  isMalisaPusonja,
+  isMalisaPusonja, // TODO remove
   hasSSN,
   hasAddress,
-  getUserKYCStatus,
+  getUserKYCStatus, // TODO use more
 };
 
 /**

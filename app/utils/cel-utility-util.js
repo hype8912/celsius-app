@@ -2,13 +2,13 @@ import store from "../redux/store";
 import * as actions from "../redux/actions";
 
 export default {
-  isLosingMembership,
-  isLosingTier,
+  isLosingMembership, // TODO check if it still works?
+  isLosingTier, // TODO check if it still works?
   refetchMembershipIfChanged, // TODO maybe move to an action?
 };
 
 /**
- * get if the user will lose cel membership
+ * Check if the user will lose Celsius membership
  *
  * @param {String} coin - eg. BTC|ETH|CEL
  * @param {number} newBalance
@@ -22,7 +22,7 @@ function isLosingMembership(coin, newBalance) {
 }
 
 /**
- * get if the user will lose cel his current tier
+ * Check if the user will lose his current loyalty tier level
  *
  * @param {String} coin
  * @param {String} newBalance - new coin balance after transaction

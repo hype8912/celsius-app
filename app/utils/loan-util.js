@@ -4,6 +4,7 @@ import logger from "./logger-util";
 import formatter from "./formatter";
 import store from "../redux/store";
 
+// TODO try to refactor, this will kill us all
 const loanUtil = {
   mapLoan,
   emitLoanParams,

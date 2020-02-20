@@ -1,6 +1,7 @@
 import { AsyncStorage } from "react-native";
 import loggerUtil from "./logger-util";
 
+// TODO rename from expo-storage. check if we need it at all
 export { setSecureStoreKey, getSecureStoreKey, deleteSecureStoreKey };
 
 /**

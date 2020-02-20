@@ -4,6 +4,7 @@
 
 // import usersService from '../services/users-service.js';
 
+// TODO remove with new push notifications setup
 export default {
   registerForPushNotificationsAsync,
 };

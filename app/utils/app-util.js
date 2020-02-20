@@ -1,6 +1,4 @@
 // TODO(sb): RN update dependencies fixes
-// import * as Font from "expo-font";
-// import { Asset } from "expo-asset";
 import React from "react";
 import { Image, Platform } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
@@ -30,14 +28,14 @@ const {
 } = Constants;
 
 export default {
-  initializeThirdPartyServices,
+  initializeThirdPartyServices, // TODO check to push any other third party services initializations here, move appsflyer out
   logoutOnEnvChange,
   initInternetConnectivityListener,
-  pollBackendStatus,
+  pollBackendStatus, // TODO remove KYC status
   cacheImages,
-  // cacheFonts,
-  recursiveMap,
-  getRevisionId,
+  // cacheFonts, // TODO remove
+  recursiveMap, // TODO what does this do? Do we need it? Themes/Styles, move to styles-util?
+  getRevisionId, // TODO rename?
 };
 
 /**

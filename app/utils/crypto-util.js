@@ -48,14 +48,7 @@ function hasLinkToBuy(currency) {
 }
 
 function buyInApp(currency) {
-  return [
-    "BTC",
-    "BCH",
-    "ETH",
-    "LTC",
-    "XRP",
-    "XLM"
-  ].includes(currency)
+  return ["BTC", "BCH", "ETH", "LTC", "XRP", "XLM"].includes(currency);
 }
 
 function provideLink(currency) {
@@ -191,11 +184,12 @@ function isGreaterThan(str1, str2) {
   return num1.gt(num2);
 }
 
+// TODO move to top
 export default {
   isERC20, // TODO move to BE or something
   isGreaterThan, // TODO maybe move to formatter? add JSDoc
   hasLinkToBuy,
-  provideLink,
-  provideText,
-  buyInApp
+  provideLink, // TODO refactor
+  provideText, // TODO refactor
+  buyInApp, // TODO check if we get this from BE
 };

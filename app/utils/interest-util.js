@@ -2,10 +2,10 @@ import formatter from "./formatter";
 import store from "../redux/store";
 
 const interestUtil = {
-  getUserInterestForCoin,
-  calculateAPY,
+  getUserInterestForCoin, // TODO refactor and make usable
+  calculateAPY, // TODO add link to spreadsheet calculator
   calculateBonusRate,
-  getBaseCelRate,
+  getBaseCelRate, // TODO check if we need this
 };
 
 /**

@@ -38,10 +38,13 @@ function initInterceptors() {
   axios.interceptors.request.use(
     async req => {
       const newRequest = { ...req };
+
+      // TODO move to addAppsflyerUID
       newRequest.headers = {
         "X-Advertising-AFID": store.getState().app.appsFlyerUID,
       };
 
+      // TODO move to addAdvertisingId
       if (Platform.OS === "ios") {
         newRequest.headers = {
           ...newRequest.headers,
@@ -54,11 +57,13 @@ function initInterceptors() {
         };
       }
 
+      // TODO move to addDeviceAndOSInfo
       if (!deviceModel || !osVersion) {
         deviceModel = DeviceInfo.getModel();
         osVersion = DeviceInfo.getSystemVersion();
       }
 
+      // TODO move to addCodePushInfo
       if (!revisionId) {
         CodePush.getUpdateMetadata().then(metadata => {
           revisionId = metadata
@@ -67,6 +72,7 @@ function initInterceptors() {
         });
       }
 
+      // TODO move to addGeolocation
       const geolocation = store.getState().app.geolocation;
 
       if (geolocation) {
@@ -77,6 +83,7 @@ function initInterceptors() {
         };
       }
 
+      // TODO move to prepSpecialEndpoints or something
       if (!req.url.includes("branch.io")) {
         newRequest.headers = {
           ...newRequest.headers,
@@ -108,7 +115,9 @@ function initInterceptors() {
         };
       }
 
+      // TODO move to addAuthToken
       // get token from secure store
+
       try {
         const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
         if (token !== storageToken) token = storageToken;
@@ -123,6 +132,7 @@ function initInterceptors() {
         logger.err(err);
       }
 
+      // TODO move to addClientVersion
       if (ENV === "PRODUCTION" || ENV === "PREPROD") {
         newRequest.headers["X-Client-Version"] = CLIENT_VERSION;
       } else {
@@ -163,14 +173,15 @@ function initInterceptors() {
       return Promise.reject(err);
     },
     async error => {
+      // TODO move to setErrorMessage
       const defaultMsg = "Oops, it looks like something went wrong.";
       const err = error.response
         ? error.response.data
         : {
-          type: "Unknown Server Error",
-          msg: defaultMsg,
-          raw_error: error,
-        };
+            type: "Unknown Server Error",
+            msg: defaultMsg,
+            raw_error: error,
+          };
 
       if (!err.msg) err.msg = defaultMsg;
 
@@ -180,11 +191,13 @@ function initInterceptors() {
         method: error.config.method,
       });
 
+      // TODO move to handle401
       if (err.status === 401 && err.slug === "SESSION_EXPIRED") {
         store.dispatch(actions.expireSession());
         await store.dispatch(await actions.logoutUser());
       }
 
+      // TODO move to handle403
       if (err.status === 403 && err.slug === "USER_SUSPENDED") {
         const { profile } = store.getState().user;
         if (profile && profile.id) {
@@ -193,6 +206,7 @@ function initInterceptors() {
         await store.dispatch(await actions.showMessage("error", err.msg));
       }
 
+      // TODO move to handle426
       if (error && error.response && error.response.status === 426) {
         const { showVerifyScreen } = store.getState().app;
         if (!showVerifyScreen) {
@@ -216,6 +230,7 @@ function initInterceptors() {
         return Promise.resolve();
       }
 
+      // TODO move to handle429
       if (error && error.response && error.response.status === 429) {
         store.dispatch(actions.navigateTo("LockedAccount"));
       }

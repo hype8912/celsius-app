@@ -46,16 +46,12 @@ async function sendEvent(event, data = {}) {
 }
 
 function setUserData(newUserData) {
-  userData = { ...newUserData }
+  userData = { ...newUserData };
 }
 
 function getUserData() {
   return userData;
 }
 
-
-export {
-  sendEvent,
-  getUserData,
-  setUserData,
-}
+// TODO move to top
+export { sendEvent, getUserData, setUserData };
