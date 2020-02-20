@@ -48,9 +48,12 @@ export default function generalDataReducer(state = initialState(), action) {
       Object.keys(action.interestRates).forEach(coinShort => {
         interestRates[coinShort] = interestRates[coinShort] || {};
         interestRates[coinShort].rate = action.interestRates[coinShort].rate;
-        interestRates[coinShort].rate_on_first_n_coins = action.interestRates[coinShort].rate_on_first_n_coins;
-        interestRates[coinShort].threshold_on_first_n_coins = action.interestRates[coinShort].threshold_on_first_n_coins;
+        interestRates[coinShort].rate_on_first_n_coins =
+          action.interestRates[coinShort].rate_on_first_n_coins;
+        interestRates[coinShort].threshold_on_first_n_coins =
+          action.interestRates[coinShort].threshold_on_first_n_coins;
       });
+
       return {
         ...state,
         interestRates,
@@ -59,28 +62,13 @@ export default function generalDataReducer(state = initialState(), action) {
         withdrawalSettings: action.withdrawalSettings,
         celPaySettings: action.celPaySettings,
         automaticLoanLimit: action.automaticLoanLimit,
-        buyCoinsSettings: action.buyCoinsSettings
+        buyCoinsSettings: action.buyCoinsSettings,
       };
 
     case ACTIONS.GET_LOYALTY_INFO_SUCCESS:
-      interestRates = { ...state.interestRates };
-
-      // NOTE(fj) BE returns cel_rate as "0" every time
-      Object.keys(state.interestRates).forEach(coinShort => {
-        interestRates[coinShort].cel_rate = (
-          (1 + Number(action.loyaltyInfo.earn_interest_bonus)) *
-          state.interestRates[coinShort].rate
-        ).toString();
-
-        interestRates[coinShort].compound_rate =
-          Math.pow(1 + state.interestRates[coinShort].rate / 52, 52) - 1;
-        interestRates[coinShort].compound_cel_rate =
-          Math.pow(1 + state.interestRates[coinShort].cel_rate / 52, 52) - 1;
-      });
-
       return {
         ...state,
-        interestRates,
+        interestRates: action.interestRates,
       };
 
     default:

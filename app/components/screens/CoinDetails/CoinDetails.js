@@ -144,7 +144,7 @@ class CoinDetails extends Component {
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short);
-    const isCoinEligibleForBuying = buyCoinsSettings.supported_coins.includes(
+    const isCoinEligibleForBuying = buyCoinsSettings && buyCoinsSettings.supported_coins.includes(
       currency.short
     );
 

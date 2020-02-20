@@ -1,14 +1,28 @@
 import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 // import RateInfoCardStyle from "./RateInfoCard.styles";
 import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 import interestUtil from "../../../utils/interest-util";
+import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { isUSResident } from "../../../utils/user-util";
+import * as appActions from "../../../redux/actions";
 
+@connect(
+  state => ({
+    celUtilityTiers: state.generalData.celUtilityTiers,
+    interestCompliance: state.compliance.interest,
+    interestRates: state.generalData.interestRates,
+    loyaltyInfo: state.user.loyaltyInfo,
+  }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
+)
 class RateInfoCard extends Component {
   static propTypes = {
     tierButton: PropTypes.bool,
@@ -24,14 +38,6 @@ class RateInfoCard extends Component {
     style: {},
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // initial state
-    };
-  }
-
   render() {
     const {
       coin,
@@ -40,6 +46,8 @@ class RateInfoCard extends Component {
       style,
       celInterestButton,
       interestCompliance,
+      celUtilityTiers,
+      loyaltyInfo,
     } = this.props;
 
     // const styles = RateInfoCardStyle()
@@ -47,7 +55,22 @@ class RateInfoCard extends Component {
       !coin ? "BTC" : coin.short
     );
     if (!interestRate.specialRate && !interestRate.coinThreshold) return null;
-    if (!interestCompliance || !interestCompliance.allowed) return null;
+    if ((!interestCompliance && !interestCompliance.allowed) || isUSResident())
+      return null;
+
+    const apyRate = interestUtil.calculateAPY(
+      interestUtil.calculateBonusRate(
+        interestRate.baseRate,
+        celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
+      )
+    );
+
+    const specialApyRate = interestUtil.calculateAPY(
+      interestUtil.calculateBonusRate(
+        interestRate.specialRate,
+        celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
+      )
+    );
 
     return (
       <View style={style}>
@@ -55,27 +78,27 @@ class RateInfoCard extends Component {
           <Card color={STYLES.COLORS.CELSIUS_BLUE}>
             <CelText color={"white"}>
               Upgrade your interest settings to earn in CEL and you could get up
-              to {interestRate.specialRateDisplay} APY on your first{" "}
+              to {formatter.percentageDisplay(specialApyRate)} APY on your first{" "}
               <CelText
                 color={"white"}
                 weight={"bold"}
               >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
               ! BTC balances greater than{" "}
               {`${interestRate.coinThreshold} ${interestRate.coin}`} will
-              continue to earn at {`${interestRate.display}`} APY.
+              continue to earn at {formatter.percentageDisplay(apyRate)} APY.
             </CelText>
           </Card>
         ) : (
           <Card color={STYLES.COLORS.CELSIUS_BLUE}>
             <CelText color={"white"}>
               Keep HODLing and you could earn up to{" "}
-              {interestRate.specialRateDisplay} APY on your first{" "}
+              {formatter.percentageDisplay(specialApyRate)} APY on your first{" "}
               <CelText
                 color={"white"}
                 weight={"bold"}
               >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
               ! BTC balances greater than {`${interestRate.coinThreshold}`} will
-              continue to earn at {`${interestRate.display}`} APY.{" "}
+              continue to earn at {formatter.percentageDisplay(apyRate)} APY.{" "}
             </CelText>
           </Card>
         )}
