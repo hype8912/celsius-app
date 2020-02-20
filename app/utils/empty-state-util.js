@@ -163,6 +163,28 @@ function getProps(purpose, componentProps) {
         paragraphs: ["No transactions in your wallet"],
       };
 
+    case EMPTY_STATES.NON_VERIFIED_GET_COINS:
+      return {
+        ...props,
+        heading: "Buy Crypto with Credit Card",
+        paragraphs: [
+          "You can directly purchase cryptocurrency with credit card on Celsius. We offer the best route to buy crypto using credit card.",
+          "All you have to do is become a Celsius member by verifying your profile.",
+        ],
+        onPress: () => actions.navigateTo("KYCProfileDetails"),
+      };
+
+    case EMPTY_STATES.VERIFICATION_IN_PROCESS_GET_COINS:
+      return {
+        ...props,
+        heading: "Buy Crypto with Credit Card",
+        paragraphs: [
+          "You can directly purchase cryptocurrency with credit card on Celsius. This option will be available upon identity verification.",
+        ],
+        button: "Back to wallet",
+        onPress: () => actions.navigateTo("WalletLanding"),
+      };
+
     // TODO: remove, used only on Support screen
     case EMPTY_STATES.USER_CLEARED:
       return {

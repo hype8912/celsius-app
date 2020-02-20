@@ -7,14 +7,20 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
-import { MODALS } from "../../../constants/UI";
+import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import GetCoinsInfoModal from "../../modals/GetCoinsInfoModal/GetCoinsInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import SimplexPaymentsHistory from "../../molecules/SimplexPaymentsHistory/SimplexPaymentsHistory";
+import { KYC_STATUSES } from "../../../constants/DATA";
+import { hasPassedKYC } from "../../../utils/user-util";
+import StaticScreen from "../StaticScreen/StaticScreen";
 
 @connect(
   state => ({
     navHistory: state.nav.history,
+    kycStatus: state.user.profile.kyc
+      ? state.user.profile.kyc.status
+      : KYC_STATUSES.collecting,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -40,7 +46,26 @@ class GetCoinsLanding extends Component {
   }
 
   render() {
-    const { actions } = this.props;
+    const { actions, kycStatus } = this.props;
+
+    if (!hasPassedKYC()) {
+      if (kycStatus !== KYC_STATUSES.pending) {
+        return (
+          <StaticScreen
+            emptyState={{ purpose: EMPTY_STATES.NON_VERIFIED_GET_COINS }}
+          />
+        );
+      }
+      if (kycStatus === KYC_STATUSES.pending) {
+        return (
+          <StaticScreen
+            emptyState={{
+              purpose: EMPTY_STATES.VERIFICATION_IN_PROCESS_GET_COINS,
+            }}
+          />
+        );
+      }
+    }
 
     return (
       <RegularLayout>
@@ -66,9 +91,9 @@ class GetCoinsLanding extends Component {
           disabled
         />
 
-        <SimplexPaymentsHistory/>
+        <SimplexPaymentsHistory />
 
-        <GetCoinsInfoModal actions={actions}/>
+        <GetCoinsInfoModal actions={actions} />
       </RegularLayout>
     );
   }
