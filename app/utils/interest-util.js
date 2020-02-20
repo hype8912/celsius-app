@@ -5,6 +5,7 @@ const interestUtil = {
   getUserInterestForCoin,
   calculateAPY,
   calculateBonusRate,
+  getBaseCelRate,
 };
 
 /**
@@ -62,6 +63,8 @@ function getUserInterestForCoin(coinShort) {
   }
 
   return {
+    ...interestRates[coinShort],
+    baseRate: interestRates[coinShort].rate,
     coin: coinShort,
     rate: interestRate,
     display: interestRateDisplay,
@@ -90,6 +93,31 @@ function calculateAPY(apr) {
  */
 function calculateBonusRate(apr, bonusRate) {
   return (1 + Number(bonusRate)) * Number(apr);
+}
+
+/**
+ * Gets base rate for calculating interest in cel
+ * over 1BTC has different rate than under 1BTC
+ *
+ * param {string} coin - BTC
+ * param {string} base rate for calculating rate in CEL
+ */
+function getBaseCelRate(coin) {
+  const interestRates = store.getState().generalData.interestRates;
+  const walletSummary = store.getState().wallet.summary;
+
+  let baseRate = interestRates[coin].rate;
+
+  if (interestRates[coin].threshold_on_first_n_coins && walletSummary) {
+    const coinBalance = walletSummary.coins.find(c => c.short === coin).amount;
+    const shouldUseSpecialRate =
+      coinBalance < interestRates[coin].threshold_on_first_n_coins;
+    baseRate = shouldUseSpecialRate
+      ? interestRates[coin].rate_on_first_n_coins
+      : baseRate;
+  }
+
+  return baseRate;
 }
 
 export default interestUtil;
