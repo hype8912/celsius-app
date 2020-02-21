@@ -4,7 +4,6 @@ import { View, TouchableOpacity } from "react-native";
 
 import PredefinedAmountsStyle from "./PredefinedAmounts.styles";
 import CelText from "../../atoms/CelText/CelText";
-import formatter from "../../../utils/formatter";
 
 class PredefinedAmounts extends Component {
   static propTypes = {
@@ -41,9 +40,7 @@ class PredefinedAmounts extends Component {
             <CelText
               style={activePeriod === label ? style.selectedAmountText : null}
             >
-              {label === "ALL"
-                ? "ALL"
-                : `$${formatter.round(label, { precision: 0 })}`}
+              {label === "ALL" ? "ALL" : label}
             </CelText>
           </TouchableOpacity>
         ))}

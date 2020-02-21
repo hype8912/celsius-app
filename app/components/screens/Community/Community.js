@@ -65,7 +65,7 @@ class Community extends Component {
               type={"H1"}
               color={STYLES.COLORS.WHITE}
             >
-              {formatter.round(usersNum, { noPrecision: true })}
+              {usersNum}
             </CelText>
             <CelText
               weight={"300"}
@@ -241,9 +241,7 @@ class Community extends Component {
         </Card>
 
         <CelText weight={"600"} align={"center"} type={"H2"} style={style.text}>
-          {formatter.round(communityStats.total_depositors_num, {
-            noPrecision: true,
-          })}
+          {communityStats.total_depositors_num}
         </CelText>
         <CelText
           weight={"300"}

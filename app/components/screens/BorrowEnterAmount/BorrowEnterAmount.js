@@ -187,9 +187,12 @@ class BorrowEnterAmount extends Component {
     const coin = formData.coin || "";
 
     const predifinedAmount = [
-      { label: `${minimumLoanAmount} min`, value: "min" },
       {
-        label: `${formatter.floor10(formData.maxAmount, 0)} max`,
+        label: `${formatter.usd(minimumLoanAmount, { precision: 0 })} min`,
+        value: "min",
+      },
+      {
+        label: `${formatter.usd(formData.maxAmount, { precision: 0 })} max`,
         value: "max",
       },
     ];

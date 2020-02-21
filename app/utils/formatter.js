@@ -4,7 +4,7 @@ export default {
   usd,
   crypto,
 
-  round, // TODO check to replace with crypto and remove, used in 6 places
+  // round, // TODO check to replace with crypto and remove, used in 6 places
   floor10, // TODO check what this does and remove, user in 8 places
 
   getEllipsisAmount, // TODO used in 5 places
@@ -54,20 +54,20 @@ function crypto(amount, cryptocurrency, options = {}) {
   });
 }
 
-/**
- * Formats number to 1.12
- * @todo: do we need this?
- *
- * @param {number|string} amount
- * @param {Object} options - check options here https://www.npmjs.com/package/currency-formatter#advanced-usage
- * @returns {string}
- */
-function round(amount, options = {}) {
-  return currency.format(amount, {
-    precision: options.noPrecision ? 0 : options.precision || 2,
-    thousand: ",",
-  });
-}
+// /**
+//  * Formats number to 1.12
+//  * @todo: do we need this?
+//  *
+//  * @param {number|string} amount
+//  * @param {Object} options - check options here https://www.npmjs.com/package/currency-formatter#advanced-usage
+//  * @returns {string}
+//  */
+// function round(amount, options = {}) {
+//   return currency.format(amount, {
+//     precision: options.noPrecision ? 0 : options.precision || 2,
+//     thousand: ",",
+//   });
+// }
 
 /**
  * Get allowed decimals for currency
@@ -151,7 +151,8 @@ function percentage(number) {
  //  * @returns {number}
  */
 function percentageDisplay(number, noSymbol = false, fractionDigits = 2) {
-  const percentageNum = Math.round(number * 10000) / 100;
+  const exp = number > 1 ? 1 : 100;
+  const percentageNum = Math.round(number * 100 * exp) / 100;
   return `${percentageNum.toFixed(fractionDigits)}${noSymbol ? "" : "%"}`;
 }
 

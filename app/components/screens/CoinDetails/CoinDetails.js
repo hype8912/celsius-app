@@ -131,7 +131,7 @@ class CoinDetails extends Component {
       currencies,
       appSettings,
       buyCoinsSettings,
-      interestCompliance
+      interestCompliance,
     } = this.props;
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
@@ -144,14 +144,12 @@ class CoinDetails extends Component {
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short);
-    const isCoinEligibleForBuying = buyCoinsSettings && buyCoinsSettings.supported_coins.includes(
-      currency.short
-    );
+    const isCoinEligibleForBuying =
+      buyCoinsSettings &&
+      buyCoinsSettings.supported_coins.includes(currency.short);
 
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
-
-
 
     return (
       <RegularLayout padding={"20 0 100 0"}>
@@ -328,13 +326,13 @@ class CoinDetails extends Component {
               </View>
             </View>
             {celpayCompliance && (
-                <InterestCard
-                  coin={coinDetails.short}
-                  interestRate={interestRate}
-                  interestInCoins={interestInCoins}
-                  setUserAppSettings={actions.setUserAppSettings}
-                />
-                )}
+              <InterestCard
+                coin={coinDetails.short}
+                interestRate={interestRate}
+                interestInCoins={interestInCoins}
+                setUserAppSettings={actions.setUserAppSettings}
+              />
+            )}
             <RateInfoCard
               coin={coinDetails}
               navigateTo={actions.navigateTo}
@@ -371,16 +369,18 @@ class CoinDetails extends Component {
                 >
                   <Icon
                     name={
-                      coinPrice.percent_change_24h < 0 ? `ArrowDown` : `ArrowUp`
+                      coinPrice.percent_change_24h > 0 ? `UpArrow` : `DownArrow`
                     }
-                    height={"10"}
-                    width={"10"}
+                    height={"20"}
+                    width={"20"}
+                    fill={
+                      coinPrice.percent_change_24h > 0
+                        ? COLORS.GREEN
+                        : COLORS.RED
+                    }
                   />
                   <CelText type={"H2"} weight={"600"} align={"center"}>
-                    {formatter.round(coinPrice.percent_change_24h, {
-                      precision: 2,
-                    })}
-                    %
+                    {formatter.percentageDisplay(coinPrice.percent_change_24h)}
                   </CelText>
                 </View>
                 <CelText
