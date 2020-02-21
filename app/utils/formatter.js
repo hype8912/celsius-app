@@ -3,18 +3,22 @@ import currency from "currency-formatter";
 export default {
   usd,
   crypto,
-  round, // TODO check to replace with crypto and remove
-  floor10,
-  getEllipsisAmount,
-  deepmerge, // TODO since this is only for styles, mybe move to styles util?
-  getNumberOfDecimals, // TODO check and remove
-  hasEnoughDecimals, // TODO check and remove
-  getAllowedDecimals,
-  setCurrencyDecimals,
-  removeDecimalZeros,
-  capitalize,
+
+  round, // TODO check to replace with crypto and remove, used in 6 places
+  floor10, // TODO check what this does and remove, user in 8 places
+
+  getEllipsisAmount, // TODO used in 5 places
+
+  deepmerge, // TODO since this is only for styles, mybe move to styles util? Replace with lodash merge?
+
+  getAllowedDecimals, // TODO used only here?
+  setCurrencyDecimals, // TODO add coin, used in 8 places
+  removeDecimalZeros, // TODO should be just Number().toString(), used in 9 places
+
   percentage, // TODO check if we need both or a flag will do
   percentageDisplay, // TODO check if we need both or a flag will do
+
+  capitalize,
   hideTextExceptFirstNLetters,
   maskEmail,
 };
@@ -153,8 +157,8 @@ function percentageDisplay(number, noSymbol = false, fractionDigits = 2) {
 
 /**
  * Decimal adjustment of a number.
+ * Eg. value = 123.4567, exp -2 => 123.45
  *
- * @param {String}  type  The type of adjustment.
  * @param {Number}  value The number.
  * @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
  * @returns {Number} The adjusted value.
