@@ -127,7 +127,7 @@ function cancelTransferSuccess(transfer) {
 }
 
 /**
- * Triggered when transfer branch link is registered
+ * Triggered when transfer branch` link is registered
  * @param {Object} deepLink - received deep link from branch
  */
 function registerTransferLink(deepLink) {

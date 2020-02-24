@@ -14,7 +14,7 @@ import { MODALS } from "../../../constants/UI";
 
 @connect(
   state => ({
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -98,7 +98,7 @@ class MyCelOverivewTab extends Component {
             </CelText>
           </TouchableOpacity>
         </View>
-        <CalculateLoyaltyLevelModal closeModal={actions.closeModal} />
+        <CalculateLoyaltyLevelModal closeModal={actions.closeModal}/>
       </View>
     );
   }

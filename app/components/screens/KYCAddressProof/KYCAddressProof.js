@@ -33,9 +33,9 @@ class KYCAddressProof extends Component {
   static navigationOptions = () => ({
     customCenterComponent: <ProgressBar steps={7} currentStep={5} />,
     headerSameColor: true,
-      customBack: () => {
-        store.dispatch(navigateTo("KYCVerifyIdentity"));
-      },
+    customBack: () => {
+      store.dispatch(navigateTo("KYCVerifyIdentity"));
+    },
     gesturesEnabled: false,
   });
 

@@ -11,8 +11,10 @@ import * as appActions from "../../../redux/actions";
 import QRScannerStyle from "./QRScanner.styles";
 import CelText from "../../atoms/CelText/CelText";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
-import { ALL_PERMISSIONS, requestForPermission } from "../../../utils/device-permissions";
-
+import {
+  ALL_PERMISSIONS,
+  requestForPermission,
+} from "../../../utils/device-permissions";
 
 @connect(
   () => ({}),
@@ -43,7 +45,7 @@ class QRScannerScreen extends Component {
 
   async componentDidMount() {
     const { actions } = this.props;
-    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA)
+    const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
     actions.setFabType("hide");
 
     await this.setState({
@@ -76,14 +78,14 @@ class QRScannerScreen extends Component {
     const style = QRScannerStyle();
 
     return (
-        <RNCamera
-          ref={ref => {
-            this.camera = ref;
-          }}
-          onBarCodeRead={this.state.handleBarCodeRead}
-          type={RNCamera.Constants.Type.back}
-          captureAudio={false}
-        >
+      <RNCamera
+        ref={ref => {
+          this.camera = ref;
+        }}
+        onBarCodeRead={this.state.handleBarCodeRead}
+        type={RNCamera.Constants.Type.back}
+        captureAudio={false}
+      >
         <View style={style.barcodeWrapper}>
           <View style={[style.mask, style.maskOverlayColor]} />
           <View style={style.imageWrapper}>
@@ -114,7 +116,7 @@ class QRScannerScreen extends Component {
           </View>
         </View>
         {/* </BarCodeScanner> */}
-        </RNCamera>
+      </RNCamera>
     );
   };
 

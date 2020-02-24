@@ -1,4 +1,4 @@
-import branchService from "../../services/branch-service";
+import campaignsService from "../../services/campaigns-service";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import { BRANCH_LINKS } from "../../constants/DATA";
@@ -23,7 +23,7 @@ function getBranchIndividualLink() {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.GET_INDIVIDUAL_LINK));
-      const branchLinkRes = await branchService.getIndividualLink();
+      const branchLinkRes = await campaignsService.getIndividualLink();
 
       dispatch({
         type: ACTIONS.GET_INDIVIDUAL_LINK_SUCCESS,
@@ -76,7 +76,7 @@ function registerReferralLink(deepLink) {
 
       dispatch(startApiCall(API.GET_LINK_BY_URL));
 
-      const linkRes = await branchService.getByUrl(deepLink["~referring_link"]);
+      const linkRes = await campaignsService.getByUrl(deepLink["~referring_link"]);
       const linkResData = linkRes.data;
 
       if (!linkResData.valid) {
@@ -115,7 +115,7 @@ function submitProfileCode(onSuccess) {
       dispatch(startApiCall(API.CHECK_PROFILE_PROMO_CODE));
       const { formData } = getState().forms;
 
-      const res = await branchService.submitProfileCode(formData.promoCode);
+      const res = await campaignsService.submitProfileCode(formData.promoCode);
       dispatch(submitProfileCodeSuccess(res.data.branch_link));
       if (onSuccess) onSuccess();
     } catch (err) {
@@ -145,7 +145,7 @@ function registrationPromoCode(onSuccess) {
       if (formData.promoCode && formData.promoCode !== "") {
         dispatch(startApiCall(API.SUBMIT_PROMO_CODE));
 
-        const linkRes = await branchService.submitRegistrationCode(
+        const linkRes = await campaignsService.submitRegistrationCode(
           formData.promoCode
         );
         const linkResData = linkRes.data;

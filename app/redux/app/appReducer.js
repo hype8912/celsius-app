@@ -13,7 +13,6 @@ function initialState() {
     appState: "active",
     internetConnected: true,
     assetsLoaded: false,
-    showVerifyScreen: false, // TODO move to security
     advertisingId: null,
     appsFlyerUID: null,
     lastTenActions: [],
@@ -34,16 +33,17 @@ export default function appReducer(state = initialState(), action) {
         appInitializing: true,
       };
 
-    case ACTIONS.REGISTER_USER_SUCCESS:
-    case ACTIONS.LOGIN_USER_SUCCESS:
-    case ACTIONS.REGISTER_USER_FACEBOOK_SUCCESS:
-    case ACTIONS.REGISTER_USER_GOOGLE_SUCCESS:
-    case ACTIONS.REGISTER_USER_TWITTER_SUCCESS:
-    case ACTIONS.LOGIN_USER_GOOGLE_SUCCESS:
-    case ACTIONS.LOGIN_USER_FACEBOOK_SUCCESS:
-    case ACTIONS.LOGIN_USER_TWITTER_SUCCESS:
-    case ACTIONS.CHECK_TWO_FACTOR_SUCCESS:
-    case ACTIONS.CHECK_PIN_SUCCESS:
+    // TODO: double check if duplicated can be removed here
+    // case ACTIONS.REGISTER_USER_SUCCESS:
+    // case ACTIONS.LOGIN_USER_SUCCESS:
+    // case ACTIONS.REGISTER_USER_FACEBOOK_SUCCESS:
+    // case ACTIONS.REGISTER_USER_GOOGLE_SUCCESS:
+    // case ACTIONS.REGISTER_USER_TWITTER_SUCCESS:
+    // case ACTIONS.LOGIN_USER_GOOGLE_SUCCESS:
+    // case ACTIONS.LOGIN_USER_FACEBOOK_SUCCESS:
+    // case ACTIONS.LOGIN_USER_TWITTER_SUCCESS:
+    // case ACTIONS.CHECK_TWO_FACTOR_SUCCESS:
+    // case ACTIONS.CHECK_PIN_SUCCESS:
     case ACTIONS.APP_INIT_DONE:
       return {
         ...newState,
@@ -73,11 +73,6 @@ export default function appReducer(state = initialState(), action) {
       return {
         ...newState,
         internetConnected: action.internetConnected,
-      };
-    case ACTIONS.SHOW_VERIFY_SCREEN:
-      return {
-        ...newState,
-        showVerifyScreen: action.showVerifyScreen,
       };
     case ACTIONS.SET_GEOLOCATION:
       return {

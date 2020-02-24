@@ -10,7 +10,7 @@ import InterestRateInfo from "../../atoms/InterestRateInfo/InterestRateInfo";
 @connect(
   state => ({
     interestRates: state.generalData.interestRates,
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
     walletSummary: state.wallet.summary,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })

@@ -21,7 +21,7 @@ import CelsiusMembershipTable from "../../organisms/CelsiusMembershipTable/Celsi
 @connect(
   state => ({
     currencies: state.currencies.rates,
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
     appSettings: state.user.appSettings,
     walletSummary: state.wallet.summary,
     email: state.user.profile.email,
@@ -94,7 +94,7 @@ class LoyaltyProgram extends Component {
     const { loyaltyInfo, appSettings, actions } = this.props;
     const style = LoyaltyProgramStyle();
 
-    if (!loyaltyInfo || !appSettings) return <LoadingScreen />;
+    if (!loyaltyInfo || !appSettings) return <LoadingScreen/>;
     const hasTier = loyaltyInfo.tier.title !== "NONE";
 
     // Todo(ns) make text below(and calculation) PieProgressBar visible and useful
@@ -170,7 +170,7 @@ class LoyaltyProgram extends Component {
                       interest in CEL
                     </CelText>
                   </View>
-                  <Separator vertical />
+                  <Separator vertical/>
                   <View>
                     <CelText
                       margin={"0 0 10 0"}

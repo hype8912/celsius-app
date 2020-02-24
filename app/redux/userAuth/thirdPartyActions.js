@@ -12,11 +12,12 @@ import { navigateTo } from "../nav/navActions";
 import { showMessage } from "../ui/uiActions";
 import { updateFormFields } from "../forms/formsActions";
 import { setSecureStoreKey } from "../../utils/expo-storage";
-import usersService from "../../services/users-service";
+import userProfileService from "../../services/user-profile-service";
 import { initAppData } from "../app/appActions";
 import { claimAllBranchTransfers } from "../transfers/transfersActions";
 import branchUtil from "../../utils/branch-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import userAuthService from "../../services/user-auth-service";
 
 const { SECURITY_STORAGE_AUTH_KEY, FACEBOOK_URL } = Constants;
 
@@ -91,7 +92,7 @@ function registerUserTwitter() {
       };
 
       dispatch(startApiCall(API.REGISTER_USER_TWITTER));
-      const res = await usersService.registerTwitter(twitterUser);
+      const res = await userAuthService.registerTwitter(twitterUser);
 
       const { id_token: idToken, user } = res.data;
       dispatch(registerSocialSuccess("twitter", idToken, user));
@@ -124,7 +125,7 @@ function loginTwitter(twitterUser) {
         secret_token: twitterUser.twitter_oauth_secret,
       };
 
-      const res = await usersService.twitterLogin(user);
+      const res = await userAuthService.twitterLogin(user);
 
       await dispatch(loginSocialSuccess("twitter", res.data.id_token));
     } catch (err) {
@@ -226,7 +227,7 @@ function registerUserFacebook() {
       };
 
       dispatch(startApiCall(API.REGISTER_USER_FACEBOOK));
-      const res = await usersService.registerFacebook(facebookUser);
+      const res = await userAuthService.registerFacebook(facebookUser);
 
       const { id_token: idToken, user } = res.data;
       dispatch(registerSocialSuccess("facebook", idToken, user));
@@ -259,7 +260,7 @@ function loginFacebook(facebookUser) {
         access_token: facebookUser.accessToken,
       };
 
-      const res = await usersService.facebookLogin(user);
+      const res = await userAuthService.facebookLogin(user);
 
       await dispatch(loginSocialSuccess("facebook", res.data.id_token));
     } catch (err) {
@@ -327,7 +328,7 @@ function registerUserGoogle() {
       };
 
       dispatch(startApiCall(API.REGISTER_USER_GOOGLE));
-      const res = await usersService.registerGoogle(googleUser);
+      const res = await userAuthService.registerGoogle(googleUser);
 
       const { id_token: idToken, user } = res.data;
 
@@ -362,7 +363,7 @@ function loginGoogle(googleUser) {
         access_token: googleUser.accessToken,
       };
 
-      const res = await usersService.googleLogin(user);
+      const res = await userAuthService.googleLogin(user);
 
       await dispatch(loginSocialSuccess("google", res.data.id_token));
     } catch (err) {
@@ -382,7 +383,7 @@ function loginSocialSuccess(network, token) {
   return async (dispatch, getState) => {
     await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, token);
 
-    const userRes = await usersService.getPersonalInfo();
+    const userRes = await userProfileService.getPersonalInfo();
     const user = userRes.data;
 
     const { showVerifyScreen } = getState().app;

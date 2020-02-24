@@ -20,7 +20,7 @@ import store from "../../../redux/store";
   state => ({
     formData: state.forms.formData,
     is2FAEnabled: state.user.profile.two_factor_enabled,
-    previousScreen: state.user.screen,
+    previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
     theme: state.user.appSettings.theme,
   }),
@@ -36,7 +36,7 @@ class VerifyProfile extends Component {
       headerSameColor: true,
       hideBack: !!(params && (params.show || params.hideBack)) || false,
       right: navigation.getParam("showLogOutBtn", false) && "logout",
-      gesturesEnabled: false
+      gesturesEnabled: false,
     };
   };
 

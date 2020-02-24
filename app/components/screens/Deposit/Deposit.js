@@ -316,7 +316,7 @@ class Deposit extends Component {
       navigation,
       kycStatus,
       walletSummary,
-      interestCompliance
+      interestCompliance,
     } = this.props;
     const {
       address,

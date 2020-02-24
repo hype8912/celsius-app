@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
-import Constants from '../../../../constants'
+import Constants from "../../../../constants";
 
 // fix https://github.com/facebook/react-native/issues/10865
 const patchPostMessageJsCode = `(${String(function() {
@@ -57,7 +57,7 @@ class SimplexScreen extends Component {
   }
 
   generateWebViewContent = data => {
-    const { SIMPLEX_URL } = Constants
+    const { SIMPLEX_URL } = Constants;
     const originalForm = `<!DOCTYPE html>
        <html>
         <head>

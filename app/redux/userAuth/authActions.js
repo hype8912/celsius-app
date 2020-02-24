@@ -5,7 +5,7 @@ import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { startApiCall, apiError } from "../api/apiActions";
 import { navigateTo, resetToScreen } from "../nav/navActions";
-import { showMessage, toggleKeypad } from "../ui/uiActions";
+import { showMessage } from "../ui/uiActions";
 import { initAppData, showVerifyScreen } from "../app/appActions";
 import {
   registerUserFacebook,
@@ -17,21 +17,17 @@ import {
   deleteSecureStoreKey,
   setSecureStoreKey,
 } from "../../utils/expo-storage";
-import usersService from "../../services/users-service";
+import userProfileService from "../../services/user-profile-service";
+import userAuthService from "../../services/user-auth-service";
 import apiUtil from "../../utils/api-util";
 import logger from "../../utils/logger-util";
-import { setFormErrors, updateFormField } from "../forms/formsActions";
-import meService from "../../services/me-service";
+import { setFormErrors } from "../forms/formsActions";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import branchUtil from "../../utils/branch-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
-// TODO move to security
-// TODO move to security
-// TODO move to security
-// TODO move to security
 export {
   createAccount,
   registerUser,
@@ -39,10 +35,6 @@ export {
   logoutUser,
   expireSession,
   sendResetLink,
-  setPin,
-  changePin,
-  resetPassword,
-  logoutFromAllDevices,
 };
 
 /**
@@ -54,10 +46,10 @@ function loginUser() {
       const { formData } = getState().forms;
 
       dispatch(startApiCall(API.LOGIN_USER));
-      const res = await usersService.login({
+      const res = await userAuthService.login({
         email: formData.email,
         password: formData.password,
-        reCaptchaKey: formData.reCaptchaKey
+        reCaptchaKey: formData.reCaptchaKey,
       });
 
       // add token to expo storage
@@ -66,7 +58,7 @@ function loginUser() {
         res.data.auth0.id_token
       );
 
-      const userRes = await usersService.getPersonalInfo();
+      const userRes = await userProfileService.getPersonalInfo();
       const user = userRes.data;
 
       const { showVerifyScreen: showVerifyScreenValue } = getState().app;
@@ -86,7 +78,7 @@ function loginUser() {
         dispatch(navigateTo("RegisterSetPin"));
       } else {
         dispatch(navigateTo("VerifyScreen"), {
-          onSuccess: () => navigateTo("WalletLanding")
+          onSuccess: () => navigateTo("WalletLanding"),
         });
       }
     } catch (err) {
@@ -111,10 +103,10 @@ function registerUser() {
         email: formData.email,
         password: formData.password,
         referral_link_id: referralLinkId || undefined,
-        reCaptchaKey: formData.reCaptchaKey
+        reCaptchaKey: formData.reCaptchaKey,
       };
       dispatch(startApiCall(API.REGISTER_USER));
-      const res = await usersService.register(user);
+      const res = await userAuthService.register(user);
 
       // add token to expo storage
       await setSecureStoreKey(
@@ -128,6 +120,7 @@ function registerUser() {
       dispatch({
         type: ACTIONS.REGISTER_USER_SUCCESS,
         user: res.data.user,
+        tokens: res.data.auth0,
       });
       dispatch(navigateTo("RegisterSetPin"));
     } catch (err) {
@@ -149,54 +142,15 @@ function sendResetLink() {
     try {
       const { formData } = getState().forms;
       dispatch(startApiCall(API.SEND_RESET_LINK));
-      await usersService.sendResetLink(formData.email);
+      await userAuthService.sendResetLink(formData.email);
       dispatch(showMessage("info", "Email sent!"));
       dispatch(navigateTo("Login"));
       dispatch({ type: ACTIONS.SEND_RESET_LINK_SUCCESS });
-      mixpanelAnalytics.forgottenPassword()
+      mixpanelAnalytics.forgottenPassword();
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.SEND_RESET_LINK, err));
     }
-  };
-}
-
-/**
- * Resets password for user
- * @param {string} currentPassword
- * @param {string} newPassword
- */
-function resetPassword(currentPassword, newPassword) {
-  return async dispatch => {
-    dispatch(startApiCall(API.RESET_PASSWORD));
-    try {
-      const { data } = await usersService.resetPassword(
-        currentPassword,
-        newPassword
-      );
-      const {
-        auth0: { id_token: newAuthToken },
-      } = data;
-
-      await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, newAuthToken);
-
-      dispatch(showMessage("success", "Password successfully changed."));
-      dispatch(resetPasswordSuccess());
-      mixpanelAnalytics.changePassword();
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.RESET_PASSWORD, err));
-    }
-  };
-}
-
-/**
- * @TODO write JSDoc
- */
-function resetPasswordSuccess() {
-  return {
-    type: ACTIONS.RESET_PASSWORD_SUCCESS,
-    callName: API.RESET_PASSWORD,
   };
 }
 
@@ -223,28 +177,6 @@ function logoutUser() {
 }
 
 /**
- * Logs the user out from all devices
- */
-function logoutFromAllDevices() {
-  return async dispatch => {
-    try {
-      dispatch(startApiCall(API.LOGOUT_FROM_ALL_DEVICES));
-      await usersService.invalidateSession();
-      await mixpanelAnalytics.loggedOutOfAllSessions()
-      dispatch({
-        type: ACTIONS.LOGOUT_FROM_ALL_DEVICES_SUCCESS,
-      });
-      dispatch(
-        showMessage("success", "Successfully logged out from all devices.")
-      );
-      await dispatch(logoutUser());
-    } catch (err) {
-      logger.err(err);
-    }
-  };
-}
-
-/**
  * Expires the session for the user
  */
 function expireSession() {
@@ -255,65 +187,6 @@ function expireSession() {
       });
     } catch (err) {
       logger.err(err);
-    }
-  };
-}
-
-/**
- * Sets the PIN number during registration
- */
-function setPin() {
-  return async (dispatch, getState) => {
-    try {
-      const { formData } = getState().forms;
-      dispatch(startApiCall(API.SET_PIN));
-      await meService.setPin({
-        pin: formData.pin,
-        pin_confirm: formData.pinConfirm,
-      });
-      dispatch({ type: ACTIONS.SET_PIN_SUCCESS });
-      dispatch({ type: ACTIONS.CLEAR_FORM });
-      mixpanelAnalytics.setPin();
-      return true;
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.SET_PIN, err));
-      dispatch({ type: ACTIONS.CLEAR_FORM });
-      return false;
-    }
-  };
-}
-
-/**
- * Changes PIN for user
- */
-function changePin() {
-  return async (dispatch, getState) => {
-    try {
-      const { formData } = getState().forms;
-
-      const pinData = {
-        pin: formData.pin,
-        new_pin: formData.newPin,
-        new_pin_confirm: formData.newPinConfirm,
-      };
-
-      dispatch(toggleKeypad());
-      dispatch(startApiCall(API.CHANGE_PIN));
-      await meService.changePin(pinData);
-
-      dispatch({ type: ACTIONS.CHANGE_PIN_SUCCESS });
-      dispatch({ type: ACTIONS.CLEAR_FORM });
-      dispatch(showMessage("success", "Successfully changed PIN number"));
-      dispatch(navigateTo("SecuritySettings"));
-      mixpanelAnalytics.changePin();
-      return true;
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.CHANGE_PIN, err));
-      dispatch(updateFormField("newPinConfirm", ""));
-      dispatch(updateFormField("newPin", ""));
-      return false;
     }
   };
 }

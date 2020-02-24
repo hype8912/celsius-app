@@ -3,8 +3,7 @@ import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage } from "../ui/uiActions";
 import { clearForm } from "../forms/formsActions";
-import transactions from "../../services/transactions-service";
-import walletService from "../../services/wallet-service";
+import transactionsService from "../../services/transactions-service";
 import { navigateTo } from "../nav/navActions";
 import celUtilityUtil from "../../utils/cel-utility-util";
 import { getWalletSummary } from "../wallet/walletActions";
@@ -29,7 +28,7 @@ function sendCsvEmail() {
     try {
       const user = getState().user.profile;
       dispatch(startApiCall(API.GET_CSV_EMAIL));
-      await transactions.sendCsvEmail();
+      await transactionsService.sendCsvEmail();
       dispatch(
         showMessage(
           "info",
@@ -55,7 +54,7 @@ function getAllTransactions(query = {}) {
     try {
       const { type, coin, period } = query;
       dispatch(startApiCall(API.GET_ALL_TRANSACTIONS));
-      const response = await transactions.getAll({ type, coin, period });
+      const response = await transactionsService.getAll({ type, coin, period });
 
       dispatch({
         type: ACTIONS.GET_ALL_TRANSACTIONS_SUCCESS,
@@ -81,7 +80,7 @@ function getTransactionDetails(id = "") {
       if (Object.keys(TRANSACTION_TYPES).includes(id))
         return dispatch(getTransactionDetailsSuccess(mockTransactions[id]));
 
-      const res = await transactions.getTransaction(id);
+      const res = await transactionsService.getTransaction(id);
       dispatch(getTransactionDetailsSuccess(res.data.transaction));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -98,7 +97,7 @@ function cancelWithdrawal(withdrawalId) {
     dispatch(startApiCall(API.CANCEL_WITHDRAWAL_TRANSACTION));
 
     try {
-      const response = await transactions.cancelWithdrawalService(withdrawalId);
+      const response = await transactionsService.cancelWithdrawalService(withdrawalId);
       dispatch({
         type: ACTIONS.CANCEL_WITHDRAWAL_TRANSACTION_SUCCESS,
         callName: API.CANCEL_WITHDRAWAL_TRANSACTION,
@@ -135,7 +134,7 @@ function withdrawCrypto() {
       const { coin, amountCrypto, pin, code } = formData;
       dispatch(startApiCall(API.WITHDRAW_CRYPTO));
 
-      const res = await walletService.withdrawCrypto(coin, amountCrypto, {
+      const res = await transactionsService.withdrawCrypto(coin, amountCrypto, {
         pin,
         twoFactorCode: code,
       });

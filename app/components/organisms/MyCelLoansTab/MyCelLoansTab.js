@@ -10,7 +10,7 @@ import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(
   state => ({
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )

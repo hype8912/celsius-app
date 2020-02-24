@@ -26,7 +26,7 @@ import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCo
     currencyRatesShort: state.currencies.currencyRatesShort,
     currencyGraphs: state.currencies.graphs,
     user: state.user.profile,
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
     appSettings: state.user.appSettings,
     interestCompliance: state.compliance.interest,
     email: state.user.profile.email,

@@ -1,11 +1,10 @@
 import API from "../../constants/API";
 import { startApiCall, apiError } from "../api/apiActions";
-import usersService from "../../services/users-service";
 import { showMessage } from "../ui/uiActions";
 import ACTIONS from "../../constants/ACTIONS";
+import userDataService from "../../services/user-data-service";
 import interestUtil from "../../utils/interest-util";
 
-// TODO move to user/data actions/reducer
 export { getLoyaltyInfo };
 
 /**
@@ -16,7 +15,7 @@ function getLoyaltyInfo() {
     try {
       const interestRates = getState().generalData.interestRates;
       dispatch(startApiCall(API.GET_LOYALTY_INFO));
-      const res = await usersService.getLoyaltyInfo();
+      const res = await userDataService.getLoyaltyInfo();
       const loyaltyInfo = res.data;
 
       // NOTE(fj) BE returns cel_rate as "0" every time

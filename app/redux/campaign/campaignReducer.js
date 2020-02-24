@@ -9,7 +9,7 @@ const initialState = {
   transferHash: null,
 };
 
-export default function branchReducer(state = initialState, action) {
+export default function campaignReducer(state = initialState, action) {
   switch (action.type) {
     case ACTIONS.BRANCH_LINK_REGISTERED:
       return {

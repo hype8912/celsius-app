@@ -32,8 +32,8 @@ import GoogleReCaptcha from "../../../utils/recaptcha-util";
 class RegisterInitial extends Component {
   static navigationOptions = () => ({
     right: "login",
-    customCenterComponent: <ProgressBar steps={3} currentStep={1}/>,
-    headerSameColor: true
+    customCenterComponent: <ProgressBar steps={3} currentStep={1} />,
+    headerSameColor: true,
   });
 
   constructor() {
@@ -104,12 +104,12 @@ class RegisterInitial extends Component {
   reCaptchaPassed = event => {
     const { actions } = this.props;
     actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
-    this.submitForm()
+    this.submitForm();
   };
 
   renderCaptcha = () => {
     const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
-    const { formData }  =this.props
+    const { formData } = this.props;
     return (
       <GoogleReCaptcha
         siteKey={RECAPTCHA_KEY}
@@ -117,7 +117,7 @@ class RegisterInitial extends Component {
         languageCode="en"
         onMessage={this.onMessage}
         reCaptchaPassed={this.reCaptchaPassed}
-        type={'register'}
+        type={"register"}
         buttonDisabled={!formData.termsOfUse}
       />
     );
@@ -153,9 +153,9 @@ class RegisterInitial extends Component {
         <CelText margin="0 0 30 0" align="center" type="H1">
           Join Celsius
         </CelText>
-        <SocialLogin type="register" actions={actions}/>
+        <SocialLogin type="register" actions={actions} />
 
-        <Separator allCaps text="Create your account" margin="20 0 20 0"/>
+        <Separator allCaps text="Create your account" margin="20 0 20 0" />
 
         <CelInput
           disabled={registerLoading}
@@ -234,10 +234,9 @@ class RegisterInitial extends Component {
           openModal={actions.openModal}
         />
 
+        {this.renderCaptcha()}
 
-        { this.renderCaptcha() }
-
-        <RegisterPromoCodeModal type={"register"}/>
+        <RegisterPromoCodeModal type={"register"} />
       </AuthLayout>
     );
   }

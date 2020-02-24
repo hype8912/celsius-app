@@ -51,8 +51,7 @@ function navigateTo(routeName, params) {
  */
 function navigateBack(backScreenName) {
   return () => {
-
-      if (backScreenName === "VerifyProfile") {
+    if (backScreenName === "VerifyProfile") {
       // If back button leads to VerifyProfile, skip it and go back one more screen
       userBehavior.navigated("Back");
       _navigator.dispatch(StackActions.pop({ n: 2 }));
@@ -78,7 +77,9 @@ function resetToScreen(screenName, params) {
       StackActions.reset({
         index: 0,
         key: null,
-        actions: [NavigationActions.navigate({ routeName: screenName, params })],
+        actions: [
+          NavigationActions.navigate({ routeName: screenName, params }),
+        ],
       })
     );
   };

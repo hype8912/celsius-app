@@ -1,8 +1,7 @@
 import axios from "axios";
 import apiUrl from "./api-url";
 
-// TODO rename to campaigns-service
-const branchService = {
+const campaignsService = {
   getIndividualLink,
   getByUrl,
   submitProfileCode,
@@ -11,6 +10,7 @@ const branchService = {
 
 /**
  * Gets or creates individual referral link for user
+ *
  * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#7f82a302-881e-4a64-8d1d-bbcb0354beda
  *
  * @returns {Promise}
@@ -21,6 +21,10 @@ function getIndividualLink() {
 
 /**
  * Get an analytics event on Branch by URL
+ *
+ * @see https://documenter.getpostman.com/view/4207695/celsius/RW1aHzQg?version=latest#20cb5db0-21fe-4628-ac33-0fc155430036
+ * @param {string} url
+ *
  * @returns {Promise}
  */
 function getByUrl(url) {
@@ -28,8 +32,11 @@ function getByUrl(url) {
 }
 
 /**
+ * Submit campaign promo code in users profile
  *
- * @param promoCode
+ * @see https://documenter.getpostman.com/view/4207695/celsius/RW1aHzQg?version=latest#7f82a302-881e-4a64-8d1d-bbcb0354beda
+ * @param {string} promoCode
+ *
  * @returns {Promise}
  */
 function submitProfileCode(promoCode) {
@@ -37,8 +44,8 @@ function submitProfileCode(promoCode) {
 }
 
 /**
- *
- * @param promoCode
+ * Submit promo code during registration
+ * @param {string} promoCode
  * @returns {Promise}
  */
 function submitRegistrationCode(promoCode) {
@@ -47,4 +54,4 @@ function submitRegistrationCode(promoCode) {
   });
 }
 
-export default branchService;
+export default campaignsService;

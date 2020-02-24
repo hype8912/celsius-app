@@ -100,7 +100,6 @@ import QRScanner from "../components/screens/QRScanner/QRScanner";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 
 export const screens = {
-
   /**
    * Out of limit
    */
@@ -136,10 +135,9 @@ export const screens = {
 
   VerifyProfile,
 
-
-   /**
-  * Wallet
-  */
+  /**
+   * Wallet
+   */
 
   WalletLanding,
   TransactionsOnHold,
@@ -165,7 +163,7 @@ export const screens = {
 
   /**
    * Borrow
-    */
+   */
 
   InterestCalculatorScreen,
   InterestRates,
@@ -271,7 +269,7 @@ const navigatorProps = {
   transitionConfig,
   defaultNavigationOptions: {
     header: props => <CelHeading {...props} />,
-  }
+  },
 };
 
 const AppNavigator = createStackNavigator(screens, navigatorProps);

@@ -14,6 +14,7 @@ export {
   hasSSN,
   hasAddress,
   getUserKYCStatus,
+  mapProfile,
 };
 
 /**
@@ -121,4 +122,23 @@ function hasAddress() {
   const { profile } = store.getState().user;
 
   return profile.street && profile.city && profile.country;
+}
+
+/**
+ * Change profile image URLs to https://
+ * @params {Object} userProfile
+ *
+ * @returns {Object}
+ */
+function mapProfile(userProfile) {
+  const profile = { ...userProfile };
+
+  if (profile.profile_picture && profile.profile_picture.includes("http:/")) {
+    profile.profile_picture = profile.profile_picture.replace(
+      "http:",
+      "https:"
+    );
+  }
+
+  return profile;
 }

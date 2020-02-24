@@ -41,7 +41,7 @@ class LoanApplicationSuccessModal extends Component {
     const { actions } = this.props;
     const style = LoanApplicationSuccessModalStyle();
 
-    const theme = getTheme()
+    const theme = getTheme();
 
     // NOTE: (srdjan) commented after client asked to kick automatic approve loan feature
 
@@ -57,9 +57,9 @@ class LoanApplicationSuccessModal extends Component {
           top={30}
           imagesArray={[
             require("../../../../assets/images/checkmark.png"),
-            theme === THEMES.LIGHT ?
-              require("../../../../assets/images/coin-stack-icon.png") :
-              require("../../../../assets/images/coin-stack-icon-dark.png"),
+            theme === THEMES.LIGHT
+              ? require("../../../../assets/images/coin-stack-icon.png")
+              : require("../../../../assets/images/coin-stack-icon-dark.png"),
           ]}
           imageHeight={25}
           imageWidth={25}

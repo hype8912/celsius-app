@@ -79,7 +79,7 @@ class ReferralSendModal extends Component {
               {slug}
             </CelText>
           </View>
-          <Separator margin={"20 0 0 0"} />
+          <Separator margin={"20 0 0 0"}/>
           <View style={style.copyShareButtonsWrapper}>
             <CopyButton
               copyText={slug}

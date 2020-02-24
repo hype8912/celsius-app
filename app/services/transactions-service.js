@@ -6,6 +6,7 @@ const transactionsService = {
   getTransaction,
   cancelWithdrawalService,
   sendCsvEmail,
+  withdrawCrypto,
 };
 
 /**
@@ -46,6 +47,24 @@ function getTransaction(transactionId) {
  */
 function cancelWithdrawalService(withdrawalId) {
   return axios.post(`${apiUrl}/wallet/withdrawal/cancel/${withdrawalId}`);
+}
+
+/**
+ * Withdraws crypto for user
+ * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#2a5b14c9-f0a9-41b6-9c2f-a7195ec7022a
+ *
+ * @param {string} coin - eg. eth|ETH
+ * @param {string} amount
+ * @param {Object} verification
+ * @param {string} verification.pin - eg '1234'
+ * @param {string} verification.twoFactorCode - eg '123456'
+ * @return {Promise}
+ */
+function withdrawCrypto(coin, amount, verification) {
+  return axios.post(`${apiUrl}/wallet/${coin.toLowerCase()}/withdraw`, {
+    amount,
+    ...verification,
+  });
 }
 
 export default transactionsService;

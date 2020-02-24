@@ -266,7 +266,7 @@ function initAppData(initToken = null) {
     if (token) await dispatch(actions.getProfileInfo());
 
     // get expired session
-    const { expiredSession } = getState().user;
+    const { expiredSession } = getState().auth;
 
     if (token && !expiredSession) {
       mixpanelAnalytics.sessionStarted("Init app");

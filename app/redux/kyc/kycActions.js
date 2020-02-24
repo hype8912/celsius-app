@@ -3,8 +3,7 @@ import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import * as NavActions from "../nav/navActions";
 import { closeModal, showMessage } from "../ui/uiActions";
-import usersService from "../../services/users-service";
-import meService from "../../services/me-service";
+import userProfileService from "../../services/user-profile-service";
 import apiUtil from "../../utils/api-util";
 import { setFormErrors } from "../forms/formsActions";
 import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../../constants/DATA";
@@ -12,10 +11,8 @@ import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
-import kycService from "../../services/kyc-service";
+import userKYCService from "../../services/user-kyc-service";
 
-// TODO move to user/profile actions
-// TODO move to user/profile actions
 export {
   getKYCStatus,
   updateProfileInfo,
@@ -29,6 +26,8 @@ export {
   setUtilityBill,
   startKYC,
   getPrimeTrustToULink,
+  profileTaxpayerInfo,
+  getKYCDocTypes,
   // pollKYCStatus,
 };
 
@@ -41,7 +40,7 @@ function updateProfileInfo(profileInfo) {
     dispatch(startApiCall(API.UPDATE_USER_PERSONAL_INFO));
 
     try {
-      const updatedProfileData = await usersService.updateProfileInfo(
+      const updatedProfileData = await userProfileService.updateProfileInfo(
         profileInfo
       );
       dispatch(updateProfileInfoSuccess(updatedProfileData.data));
@@ -74,7 +73,7 @@ function updateProfileAddressInfo(profileAddressInfo) {
     const { formData } = getState().forms;
 
     try {
-      const updatedProfileData = await usersService.updateProfileAddressInfo(
+      const updatedProfileData = await userKYCService.updateProfileAddressInfo(
         profileAddressInfo
       );
       dispatch(updateProfileAddressInfoSuccess(updatedProfileData.data));
@@ -122,14 +121,14 @@ function updateProfileAddressInfo(profileAddressInfo) {
 
 /**
  * Updates user Taxpayer info
- * @param {Object} profileTaxpayerInfo
+ * @param {Object} profileTaxpayerInfoParam
  */
-function updateTaxpayerInfo(profileTaxpayerInfo) {
+function updateTaxpayerInfo(profileTaxpayerInfoParam) {
   return async dispatch => {
     dispatch(startApiCall(API.UPDATE_USER_TAXPAYER_INFO));
     try {
-      const updatedProfileData = await usersService.updateProfileTaxpayerInfo(
-        profileTaxpayerInfo
+      const updatedProfileData = await userKYCService.updateProfileTaxpayerInfo(
+        profileTaxpayerInfoParam
       );
       await dispatch(updateProfileTaxpayerInfoSuccess(updatedProfileData.data));
       mixpanelAnalytics.kycTaxPayerInfo();
@@ -191,7 +190,7 @@ function getKYCDocuments(documents) {
   return async dispatch => {
     dispatch(startApiCall(API.GET_KYC_DOCUMENTS));
     try {
-      const res = await meService.getKYCDocuments(documents);
+      const res = await userKYCService.getKYCDocuments(documents);
       dispatch(getKYCDocumentsSuccess(res.data));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -228,7 +227,7 @@ function sendVerificationSMS(phone) {
   return async dispatch => {
     dispatch(startApiCall(API.SEND_VERIFICATION_SMS));
     try {
-      await meService.sendVerificationSMS(phone);
+      await userProfileService.sendVerificationSMS(phone);
       dispatch(sendVerificationSMSSuccess());
       dispatch(
         showMessage(
@@ -261,7 +260,7 @@ function verifySMS(verificationCode) {
   return async dispatch => {
     dispatch(startApiCall(API.VERIFY_SMS));
     try {
-      await meService.verifySMS(verificationCode);
+      await userProfileService.verifySMS(verificationCode);
       dispatch(verifySMSSuccess());
       return {
         success: true,
@@ -287,6 +286,7 @@ export function verifySMSSuccess() {
  * @TODO add JSDoc
  */
 let timeout;
+
 function createKYCDocs() {
   return async (dispatch, getState) => {
     dispatch(startApiCall(API.CREATE_KYC_DOCUMENTS));
@@ -302,7 +302,7 @@ function createKYCDocs() {
       }, 5000);
 
       const docType = formData.documentType || kycDocuments.type;
-      const res = await meService.createKYCDocuments({
+      const res = await userKYCService.createKYCDocuments({
         front: formData.front,
         back: docType !== "passport" ? formData.back : undefined,
         type: docType || kycDocuments,
@@ -340,7 +340,7 @@ function startKYC() {
     dispatch(startApiCall(API.START_KYC));
 
     try {
-      await meService.startKYC();
+      await userKYCService.startKYC();
 
       dispatch(showMessage("success", "KYC data successfully submitted!"));
       dispatch(NavActions.navigateTo("WalletLanding"));
@@ -383,7 +383,7 @@ function getKYCStatus() {
 
     dispatch(startApiCall(API.GET_KYC_STATUS));
     try {
-      const res = await meService.getKYCStatus();
+      const res = await userKYCService.getKYCStatus();
       const newStatus = res.data.status;
 
       dispatch(getKYCStatusSuccess(res.data));
@@ -424,7 +424,7 @@ function getUtilityBill() {
   return async dispatch => {
     dispatch(startApiCall(API.GET_UTILITY_BILL));
     try {
-      const res = await kycService.getUtilityBill();
+      const res = await userKYCService.getUtilityBill();
       dispatch(getUtilityBillSuccess(res.data));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -456,7 +456,7 @@ function setUtilityBill(utilityBillPhoto) {
         clearTimeout(timeout);
       }, 5000);
 
-      await kycService.setUtilityBill(utilityBillPhoto);
+      await userKYCService.setUtilityBill(utilityBillPhoto);
 
       dispatch(setUtilityBillSuccess());
       dispatch(NavActions.navigateTo("KYCTaxpayer"));
@@ -489,7 +489,7 @@ function getPrimeTrustToULink() {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.GET_PRIMETRUST_TOU_LINK));
-      const res = await kycService.getPrimeTrustToULink();
+      const res = await userKYCService.getPrimeTrustToULink();
       dispatch(getPrimeTrustToULinkSuccess(res.data));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -498,9 +498,72 @@ function getPrimeTrustToULink() {
   };
 }
 
+/**
+ * TODO add JSdoc
+ */
 function getPrimeTrustToULinkSuccess(data) {
   return {
     type: ACTIONS.GET_PRIMETRUST_TOU_LINK_SUCCESS,
     link: data.link,
   };
 }
+
+
+/**
+ * Get profile taxpayer info
+ */
+function profileTaxpayerInfo() {
+  return async dispatch => {
+    dispatch(startApiCall(API.GET_USER_TAXPAYER_INFO));
+
+    try {
+      const taxPayerInfo = await userKYCService.getProfileTaxpayerInfo();
+      dispatch(profileTaxpayerInfoSuccess(taxPayerInfo.data.taxpayer_info));
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_USER_TAXPAYER_INFO, err));
+    }
+  };
+}
+
+/**
+ * TODO add JSDoc
+ */
+function profileTaxpayerInfoSuccess(taxPayerInfo) {
+  return {
+    type: ACTIONS.GET_USER_TAXPAYER_INFO_SUCCESS,
+    callName: API.GET_USER_TAXPAYER_INFO,
+    taxPayerInfo,
+  };
+}
+
+/**
+ * Gets all doc types for KYC
+ */
+function getKYCDocTypes() {
+  return async dispatch => {
+    dispatch(startApiCall(API.GET_KYC_DOC_TYPES));
+
+    try {
+      const res = await userKYCService.getKYCDocTypes();
+      const kycDocTypes = res.data;
+      dispatch(getKYCDocTypesSuccess(kycDocTypes));
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_KYC_DOC_TYPES, err));
+    }
+  };
+}
+
+/**
+ * TODO add JSDoc
+ */
+function getKYCDocTypesSuccess(kycDocTypes) {
+  return {
+    type: ACTIONS.GET_KYC_DOC_TYPES_SUCCESS,
+    callName: API.GET_KYC_DOC_TYPES,
+    kycDocTypes,
+  };
+}
+
+

@@ -171,7 +171,7 @@ class CameraScreen extends Component {
       });
       actions.takeCameraPhoto({ uri: result.path });
     } catch (err) {
-      if (err.message === 'User cancelled image selection') return
+      if (err.message === "User cancelled image selection") return;
       loggerUtil.err(err);
     }
   };
@@ -209,7 +209,8 @@ class CameraScreen extends Component {
             (cropWidth * STYLES.CAMERA_MASK_SIZES[maskType].width) / size.width;
         } else {
           cropWidth =
-            (STYLES.CAMERA_MASK_SIZES[maskType].width / size.width) * photo.width;
+            (STYLES.CAMERA_MASK_SIZES[maskType].width / size.width) *
+            photo.width;
         }
 
         const cropHeight =

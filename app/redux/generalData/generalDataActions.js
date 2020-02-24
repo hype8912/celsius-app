@@ -1,6 +1,5 @@
 import { showMessage } from "../ui/uiActions";
 import generalDataService from "../../services/general-data-service";
-import kycService from "../../services/kyc-service";
 import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
 import ACTIONS from "../../constants/ACTIONS";
@@ -11,7 +10,6 @@ export {
   getBackendStatus,
   getInitialCelsiusData,
   getLoanTermsOfUse,
-  getKYCDocTypes,
 };
 
 /**
@@ -40,35 +38,6 @@ function getInitialCelsiusData() {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_INITIAL_CELSIUS_DATA, err));
     }
-  };
-}
-
-/**
- * Gets all doc types for KYC
- */
-function getKYCDocTypes() {
-  return async dispatch => {
-    dispatch(startApiCall(API.GET_KYC_DOC_TYPES));
-
-    try {
-      const res = await kycService.getKYCDocTypes();
-      const kycDocTypes = res.data;
-      dispatch(getKYCDocTypesSuccess(kycDocTypes));
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_KYC_DOC_TYPES, err));
-    }
-  };
-}
-
-/**
- * TODO add JSDoc
- */
-function getKYCDocTypesSuccess(kycDocTypes) {
-  return {
-    type: ACTIONS.GET_KYC_DOC_TYPES_SUCCESS,
-    callName: API.GET_KYC_DOC_TYPES,
-    kycDocTypes,
   };
 }
 

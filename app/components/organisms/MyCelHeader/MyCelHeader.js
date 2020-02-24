@@ -14,7 +14,7 @@ import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
     walletSummary: state.wallet.summary,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })

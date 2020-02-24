@@ -28,7 +28,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 class KYCProfileDetails extends Component {
   static navigationOptions = () => ({
     title: "Profile Details",
-    customCenterComponent: <ProgressBar steps={7} currentStep={1} />,
+    customCenterComponent: <ProgressBar steps={7} currentStep={1}/>,
     headerSameColor: true,
   });
 
@@ -147,7 +147,8 @@ class KYCProfileDetails extends Component {
     const { formData, formErrors, actions } = this.props;
     const { isLoading, updatingProfileInProgress } = this.state;
     // const style = KYCProfileDetailsStyle();
-    if (isLoading) return <LoadingScreen />;
+    if (isLoading) return <LoadingScreen/>;
+
 
     return (
       <RegularLayout>

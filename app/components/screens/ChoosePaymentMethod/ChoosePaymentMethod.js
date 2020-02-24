@@ -16,7 +16,7 @@ import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCa
   state => ({
     formData: state.forms.formData,
     loanSettings: state.loans.loanSettings,
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -119,7 +119,7 @@ class ChoosePaymentMethod extends Component {
 
   render() {
     const { actions, loanSettings } = this.props;
-    if (!loanSettings) return <LoadingScreen />;
+    if (!loanSettings) return <LoadingScreen/>;
 
     const style = ChoosePaymentMethodStyle();
 
@@ -129,7 +129,7 @@ class ChoosePaymentMethod extends Component {
       <View style={style.container}>
         <RegularLayout>
           {cardProps.map(i => (
-            <MultiInfoCardButton {...i} key={i.cardTitle} />
+            <MultiInfoCardButton {...i} key={i.cardTitle}/>
           ))}
         </RegularLayout>
         <PrepayDollarInterestModal

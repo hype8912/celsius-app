@@ -40,7 +40,7 @@ if (Object.keys(ALL_CONFIGS).indexOf(CONFIG) !== -1) {
 }
 
 // eslint-disable-next-line no-console
-console.log(`Please specify correct CONFIG variable, one of ${ Object.keys(ALL_CONFIGS).join(', ') }`);
+console.log(`Please specify correct CONFIG variable, one of ${Object.keys(ALL_CONFIGS).join(', ')}`);
 return false;
 
 function getDestination(fileKey) {

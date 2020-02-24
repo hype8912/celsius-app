@@ -131,7 +131,7 @@ class CoinDetails extends Component {
       currencies,
       appSettings,
       buyCoinsSettings,
-      interestCompliance
+      interestCompliance,
     } = this.props;
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
@@ -144,14 +144,12 @@ class CoinDetails extends Component {
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short);
-    const isCoinEligibleForBuying = buyCoinsSettings && buyCoinsSettings.supported_coins.includes(
-      currency.short
-    );
+    const isCoinEligibleForBuying =
+      buyCoinsSettings &&
+      buyCoinsSettings.supported_coins.includes(currency.short);
 
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
-
-
 
     return (
       <RegularLayout padding={"20 0 100 0"}>
@@ -328,13 +326,13 @@ class CoinDetails extends Component {
               </View>
             </View>
             {celpayCompliance && (
-                <InterestCard
-                  coin={coinDetails.short}
-                  interestRate={interestRate}
-                  interestInCoins={interestInCoins}
-                  setUserAppSettings={actions.setUserAppSettings}
-                />
-                )}
+              <InterestCard
+                coin={coinDetails.short}
+                interestRate={interestRate}
+                interestInCoins={interestInCoins}
+                setUserAppSettings={actions.setUserAppSettings}
+              />
+            )}
             <RateInfoCard
               coin={coinDetails}
               navigateTo={actions.navigateTo}

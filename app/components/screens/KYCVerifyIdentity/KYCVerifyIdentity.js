@@ -22,7 +22,7 @@ import API from "../../../constants/API";
     formData: state.forms.formData,
     kycDocuments: state.user.kycDocuments,
     callsInProgress: state.api.callsInProgress,
-    kycDocTypes: state.generalData.kycDocTypes,
+    kycDocTypes: state.kyc.kycDocTypes,
     user: state.user.profile,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -34,9 +34,9 @@ class KYCVerifyIdentity extends Component {
   static navigationOptions = () => ({
     customCenterComponent: <ProgressBar steps={7} currentStep={3} />,
     headerSameColor: true,
-      customBack: () => {
-        store.dispatch(navigateTo("KYCAddressInfo"));
-      },
+    customBack: () => {
+      store.dispatch(navigateTo("KYCAddressInfo"));
+    },
     gesturesEnabled: false,
   });
 

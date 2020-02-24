@@ -60,7 +60,7 @@ const cardWidth = widthPercentageToDP("70%");
         : KYC_STATUSES.collecting,
       eligibleCoins,
       maxAmount,
-      loyaltyInfo: state.user.loyaltyInfo,
+      loyaltyInfo: state.loyalty.loyaltyInfo,
       activeLoan: state.loans.activeLoan,
     };
   },
@@ -162,7 +162,7 @@ class BorrowLanding extends Component {
                 <CelText align="center">Apply for a loan</CelText>
               </View>
             </TouchableOpacity>
-            <Separator vertical height={"35%"} top={42} />
+            <Separator vertical height={"35%"} top={42}/>
             <TouchableOpacity
               style={style.buttonIconText}
               onPress={() => {
@@ -217,7 +217,7 @@ class BorrowLanding extends Component {
               >
                 {item}
               </CelText>
-              {filter === item && <View style={style.activeFilterLine} />}
+              {filter === item && <View style={style.activeFilterLine}/>}
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -236,35 +236,35 @@ class BorrowLanding extends Component {
               snapToAlignment={"right"}
             >
               {filteredLoans &&
-                filteredLoans.map((loan, index) => {
-                  const opacity = xOffset.interpolate({
-                    inputRange: [
-                      (index - 1) * cardWidth,
-                      index * cardWidth,
-                      (index + 1) * cardWidth,
-                    ],
-                    outputRange: [0.3, 1, 0.15],
-                    extrapolate: "clamp",
-                  });
+              filteredLoans.map((loan, index) => {
+                const opacity = xOffset.interpolate({
+                  inputRange: [
+                    (index - 1) * cardWidth,
+                    index * cardWidth,
+                    (index + 1) * cardWidth,
+                  ],
+                  outputRange: [0.3, 1, 0.15],
+                  extrapolate: "clamp",
+                });
 
-                  return (
-                    <Animated.View
-                      key={loan.id}
-                      style={[this.transitionAnimation(index), { opacity }]}
-                    >
-                      <LoanOverviewCard
-                        loan={loan}
-                        index={index}
-                        length={allLoans.length - 1}
-                        navigateTo={actions.navigateTo}
-                        actions={actions}
-                        celDiscount={loyaltyInfo.tier.loanInterestBonus}
-                      />
-                    </Animated.View>
-                  );
-                })}
+                return (
+                  <Animated.View
+                    key={loan.id}
+                    style={[this.transitionAnimation(index), { opacity }]}
+                  >
+                    <LoanOverviewCard
+                      loan={loan}
+                      index={index}
+                      length={allLoans.length - 1}
+                      navigateTo={actions.navigateTo}
+                      actions={actions}
+                      celDiscount={loyaltyInfo.tier.loanInterestBonus}
+                    />
+                  </Animated.View>
+                );
+              })}
             </Animated.ScrollView>
-            <CancelLoanModal actions={actions} />
+            <CancelLoanModal actions={actions}/>
             <InterestDueModal
               closeModal={actions.closeModal}
               activeLoan={activeLoan}
@@ -279,14 +279,14 @@ class BorrowLanding extends Component {
           </View>
         )}
 
-        <LoanAlertsModalWrapper />
+        <LoanAlertsModalWrapper/>
       </RegularLayout>
     );
   }
 
   renderNoLoans = () => (
     <RegularLayout>
-      <EmptyState purpose={EMPTY_STATES.NO_LOANS} />
+      <EmptyState purpose={EMPTY_STATES.NO_LOANS}/>
     </RegularLayout>
   );
 
@@ -298,14 +298,14 @@ class BorrowLanding extends Component {
 
     if (kycStatus && !hasPassedKYC())
       return (
-        <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_VERIFIED_BORROW} />
+        <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_VERIFIED_BORROW}/>
       );
     if (!user.celsius_member)
       return (
-        <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_MEMBER_BORROW} />
+        <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_MEMBER_BORROW}/>
       );
     if (!loanCompliance.allowed)
-      return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
+      return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE}/>;
 
     if (!hasLoans) return this.renderNoLoans();
 

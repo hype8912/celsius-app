@@ -5,39 +5,26 @@ import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
-import { showMessage, toggleKeypad, openModal } from "../ui/uiActions";
-import usersService from "../../services/users-service";
+import { showMessage, openModal } from "../ui/uiActions";
+import userProfileService from "../../services/user-profile-service";
 import { deleteSecureStoreKey } from "../../utils/expo-storage";
-import TwoFactorService from "../../services/two-factor-service";
 import logger from "../../utils/logger-util";
-import meService from "../../services/me-service";
 import { setFormErrors, updateFormField } from "../forms/formsActions";
 import { navigateTo } from "../nav/navActions";
 import { MODALS } from "../../constants/UI";
 import apiUtil from "../../utils/api-util";
 import { getWalletSummary } from "../wallet/walletActions";
+import userDataService from "../../services/user-data-service";
+import { getUserPersonalInfoSuccess } from "./userProfileActions";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
-// TODO rename
 export {
-  // User & Profile Actions
-  getProfileInfo,
-  updateProfilePicture,
   getCelsiusMemberStatus,
   getUserAppSettings,
   setUserAppSettings,
-  // TODO move to KYC actions
   getLinkedBankAccount,
   linkBankAccount,
-  profileTaxpayerInfo,
-  // Security Actions
-  getTwoFactorSecret,
-  enableTwoFactor,
-  disableTwoFactor,
-  checkPIN,
-  checkTwoFactor,
-  getPreviousPinScreen,
 };
 
 /**
@@ -48,7 +35,7 @@ function getProfileInfo() {
     dispatch(startApiCall(API.GET_USER_PERSONAL_INFO));
 
     try {
-      const personalInfoRes = await usersService.getPersonalInfo();
+      const personalInfoRes = await userProfileService.getPersonalInfo();
       const personalInfo = personalInfoRes.data.profile || personalInfoRes.data;
       dispatch(getUserPersonalInfoSuccess(personalInfo));
     } catch (err) {
@@ -62,179 +49,6 @@ function getProfileInfo() {
 }
 
 /**
- * Get profile taxpayer info
- */
-function profileTaxpayerInfo() {
-  return async dispatch => {
-    dispatch(startApiCall(API.GET_USER_TAXPAYER_INFO));
-
-    try {
-      const taxPayerInfo = await usersService.getProfileTaxpayerInfo();
-      dispatch(profileTaxpayerInfoSuccess(taxPayerInfo.data.taxpayer_info));
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_USER_TAXPAYER_INFO, err));
-    }
-  };
-}
-
-/**
- * TODO add JSDoc
- */
-function profileTaxpayerInfoSuccess(taxPayerInfo) {
-  return {
-    type: ACTIONS.GET_USER_TAXPAYER_INFO_SUCCESS,
-    callName: API.GET_USER_TAXPAYER_INFO,
-    taxPayerInfo,
-  };
-}
-
-/**
- * TODO add JSDoc
- */
-export function getUserPersonalInfoSuccess(personalInfo) {
-  return {
-    type: ACTIONS.GET_USER_PERSONAL_INFO_SUCCESS,
-    callName: API.GET_USER_PERSONAL_INFO,
-    personalInfo,
-  };
-}
-
-/**
- * Updates users profile picture
- * @param {Object} image - image taken from camera
- */
-function updateProfilePicture(image) {
-  return async dispatch => {
-    try {
-      dispatch(startApiCall(API.UPLOAD_PLOFILE_IMAGE));
-      const res = await usersService.setProfileImage(image);
-      dispatch(updateProfilePictureSuccess(res.data.img_url));
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.UPLOAD_PLOFILE_IMAGE, err));
-    }
-  };
-}
-
-/**
- * TODO add JSDoc
- */
-function updateProfilePictureSuccess(image) {
-  return {
-    type: ACTIONS.UPLOAD_PLOFILE_IMAGE_SUCCESS,
-    callName: API.UPLOAD_PLOFILE_IMAGE,
-    image,
-  };
-}
-
-/**
- * gets two factor secret for user
- * @param {string} pin
- */
-function getTwoFactorSecret(pin) {
-  return async dispatch => {
-    try {
-      const secret = await TwoFactorService.beginTwoFactorActivation(pin);
-
-      return secret;
-    } catch (error) {
-      dispatch(showMessage("error", error.msg));
-      return false;
-    }
-  };
-}
-
-/**
- * Enables two factor authentication for user
- * @param {string} code - eg. 111111
- */
-function enableTwoFactor(code) {
-  return async dispatch => {
-    try {
-      const success = await TwoFactorService.enableTwoFactor(code);
-      return success;
-    } catch (error) {
-      dispatch(showMessage("error", error.msg));
-    }
-  };
-}
-
-/**
- * Disables two factor for user, pin is fallback
- */
-function disableTwoFactor() {
-  return async (dispatch, getState) => {
-    try {
-      const { code } = getState().forms.formData;
-      dispatch(startApiCall(API.DISABLE_TWO_FACTOR));
-      await TwoFactorService.disableTwoFactor(code);
-      dispatch({ type: ACTIONS.DISABLE_TWO_FACTOR_SUCCESS });
-      dispatch(navigateTo("SecuritySettings"));
-      dispatch(
-        showMessage(
-          "success",
-          "In order to completely remove Two-Factor Verification check your email."
-        )
-      );
-    } catch (error) {
-      dispatch(apiError(API.DISABLE_TWO_FACTOR));
-      dispatch(showMessage("error", error.msg));
-    }
-  };
-}
-
-/**
- * Checks user pin code
- * @param {Function} onSuccess - what to do if pin is correct
- * @param {Function} onError - what to do if pin is wrong
- */
-function checkPIN(onSuccess, onError) {
-  return async (dispatch, getState) => {
-    try {
-      const { pin } = getState().forms.formData;
-
-      dispatch(startApiCall(API.CHECK_PIN));
-
-      await meService.checkPin(pin);
-
-      dispatch({ type: ACTIONS.CHECK_PIN_SUCCESS });
-      if (onSuccess) onSuccess();
-    } catch (err) {
-      if (onError) onError();
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.CHECK_PIN, err));
-      dispatch(updateFormField("pin", ""));
-      dispatch(toggleKeypad());
-    }
-  };
-}
-
-/**
- * TODO add JSDoc
- */
-function checkTwoFactor(onSuccess, onError) {
-  return async (dispatch, getState) => {
-    try {
-      const { code } = getState().forms.formData;
-
-      dispatch(startApiCall(API.CHECK_TWO_FACTOR));
-
-      await meService.checkTwoFactor(code);
-
-      dispatch({ type: ACTIONS.CHECK_TWO_FACTOR_SUCCESS });
-      if (onSuccess) onSuccess();
-    } catch (err) {
-      if (onError) onError();
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.CHECK_TWO_FACTOR, err));
-      dispatch(updateFormField("code", ""));
-      dispatch(toggleKeypad());
-    }
-  };
-}
-
-/**
  * Get linked bank account info
  */
 function getLinkedBankAccount() {
@@ -242,7 +56,7 @@ function getLinkedBankAccount() {
     dispatch(startApiCall(API.GET_LINKED_BANK_ACCOUNT));
 
     try {
-      const res = await usersService.getLinkedBankAccount();
+      const res = await userDataService.getLinkedBankAccount();
       dispatch({
         type: ACTIONS.GET_LINKED_BANK_ACCOUNT_SUCCESS,
         bankAccountInfo: res.data,
@@ -269,7 +83,7 @@ function linkBankAccount(bankAccountInfo) {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.LINK_BANK_ACCOUNT));
-      const bankRes = await usersService.linkBankAccount(bankAccountInfo);
+      const bankRes = await userDataService.linkBankAccount(bankAccountInfo);
       dispatch({ type: ACTIONS.LINK_BANK_ACCOUNT_SUCCESS });
       dispatch(updateFormField("bankInfo", bankRes.data));
       dispatch(navigateTo("ConfirmYourLoan"));
@@ -285,36 +99,13 @@ function linkBankAccount(bankAccountInfo) {
 }
 
 /**
- * TODO add JSDoc
- */
-function getPreviousPinScreen(activeScreen) {
-  return async dispatch => {
-    dispatch(startApiCall(API.GET_PREVIOUS_SCREEN));
-    let screen;
-    try {
-      if (activeScreen !== "VerifyProfile") {
-        screen = activeScreen;
-        dispatch({
-          type: ACTIONS.GET_PREVIOUS_SCREEN_SUCCESS,
-          callName: API.GET_PREVIOUS_SCREEN,
-          screen,
-        });
-      }
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_PREVIOUS_SCREEN, err));
-    }
-  };
-}
-
-/**
  * If user has never been a member, he receives 1CEL and becomes a member
  */
 function getCelsiusMemberStatus() {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.GET_MEMBER_STATUS));
-      const celMemberStatus = await usersService.getCelsiusMemberStatus();
+      const celMemberStatus = await userDataService.getCelsiusMemberStatus();
       if (celMemberStatus.data.is_new_member) {
         dispatch(openModal(MODALS.BECAME_CEL_MEMBER_MODAL));
       }
@@ -338,7 +129,7 @@ function getUserAppSettings() {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.GET_APP_SETTINGS));
-      const userAppData = await usersService.getUserAppSettings();
+      const userAppData = await userDataService.getUserAppSettings();
       dispatch({
         type: ACTIONS.GET_APP_SETTINGS_SUCCESS,
         userAppData: userAppData.data,
@@ -369,7 +160,7 @@ function setUserAppSettings(data) {
         );
       }
 
-      const userAppData = await usersService.setUserAppSettings(newData);
+      const userAppData = await userDataService.setUserAppSettings(newData);
       const newSettings = userAppData.data;
 
       dispatch({

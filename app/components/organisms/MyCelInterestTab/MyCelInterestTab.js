@@ -11,7 +11,7 @@ import PerCoinCellInterestCard from "../../molecules/PerCoinCelInterestCard/PerC
 
 @connect(
   state => ({
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -66,7 +66,7 @@ class MyCelInterestTab extends Component {
             </CelText>
           </View>
         </View>
-        <PerCoinCellInterestCard />
+        <PerCoinCellInterestCard/>
       </View>
     );
   }

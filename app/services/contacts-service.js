@@ -15,12 +15,15 @@ const contactsService = {
  * @param {Boolean} opts.clearExistingContacts - should clear all users contacts
  */
 function connectPhoneContacts(contacts, opts) {
-  return axios.post(`${apiUrl}/users/friends/contacts`, { contacts, clearExistingContacts: opts.clearExistingContacts });
+  return axios.post(`${apiUrl}/users/friends/contacts`, {
+    contacts,
+    clearExistingContacts: opts.clearExistingContacts
+  });
 }
 
 /**
  * Gets all contacts for user
- * @note not in Postman
+ * @see https://documenter.getpostman.com/view/4207695/celsius/RW1aHzQg?version=latest#a7f504cb-ba52-439c-add8-2881b96127ee
  *
  * @return {Promise}
  */

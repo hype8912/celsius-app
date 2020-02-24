@@ -152,13 +152,13 @@ class FabMenu extends Component {
       case THEMES.CELSIUS:
         return {
           color: STYLES.COLORS.DARK_FAB_OUTSIDE_BACKGROUND_COLOR,
-          blur: 15
+          blur: 15,
         };
       case THEMES.LIGHT:
       default:
         return {
           color: "light",
-          blur: 12
+          blur: 12,
         };
     }
   };
@@ -279,13 +279,13 @@ class FabMenu extends Component {
     if (Platform.OS !== "android") {
       return (
         <>
-          { Platform.OS === 'ios' && <BlurView
-            blurType={tintColor.color}
-            blurAmount={tintColor.blur}
-            style={[
-              StyleSheet.absoluteFill
-            ]}
-          />}
+          {Platform.OS === "ios" && (
+            <BlurView
+              blurType={tintColor.color}
+              blurAmount={tintColor.blur}
+              style={[StyleSheet.absoluteFill]}
+            />
+          )}
           <Card
             styles={style.helpCard}
             size={"half"}

@@ -5,6 +5,7 @@ import ACTIONS from "../../constants/ACTIONS";
  */
 const initialState = {
   activeScreen: "",
+  previousScreen: undefined, // NOTE: used in VerifyProfile.js
   history: [],
 };
 
@@ -18,6 +19,13 @@ export default function navReducer(state = initialState, action) {
         history: [screenName, ...state.history],
       };
     }
+
+    case ACTIONS.GET_PREVIOUS_SCREEN_SUCCESS:
+      return {
+        ...state,
+        previousScreen: action.screen,
+      };
+
     default:
       return { ...state };
   }

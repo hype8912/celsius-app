@@ -108,6 +108,7 @@ function initInterceptors() {
         };
       }
 
+
       // get token from secure store
       try {
         const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);

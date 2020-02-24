@@ -51,13 +51,16 @@ class GetCoinsEnterAmount extends Component {
       actions,
     } = this.props;
 
-    const availableCoins = buyCoinsSettings && depositCompliance ? currencies
-      .filter(c => depositCompliance.coins.includes(c.short))
-      .filter(c => buyCoinsSettings.supported_coins.includes(c.short))
-      .map(c => ({
-        label: `${formatter.capitalize(c.name)} (${c.short})`,
-        value: c.short,
-      })) : [];
+    const availableCoins =
+      buyCoinsSettings && depositCompliance
+        ? currencies
+            .filter(c => depositCompliance.coins.includes(c.short))
+            .filter(c => buyCoinsSettings.supported_coins.includes(c.short))
+            .map(c => ({
+              label: `${formatter.capitalize(c.name)} (${c.short})`,
+              value: c.short,
+            }))
+        : [];
 
     actions.updateFormFields({
       amountUsd: "",

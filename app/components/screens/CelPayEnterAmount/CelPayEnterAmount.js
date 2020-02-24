@@ -32,7 +32,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
     currencies: state.currencies.rates,
     formData: state.forms.formData,
     withdrawalAddresses: state.wallet.withdrawalAddresses,
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
     keypadOpen: state.ui.isKeypadOpen,
     celPaySettings: state.generalData.celPaySettings,
   }),

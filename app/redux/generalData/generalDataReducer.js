@@ -11,8 +11,6 @@ function initialState() {
     celUtilityTiers: undefined,
     withdrawalSettings: undefined,
     buyCoinsSettings: undefined,
-
-    kycDocTypes: undefined, // TODO move to kycReducer
     backendStatus: undefined, // TODO move to appReducer ?
     loanTermsOfUse: undefined,
     pdf: undefined,
@@ -23,11 +21,6 @@ export default function generalDataReducer(state = initialState(), action) {
   let interestRates;
 
   switch (action.type) {
-    case ACTIONS.GET_KYC_DOC_TYPES_SUCCESS:
-      return {
-        ...state,
-        kycDocTypes: action.kycDocTypes,
-      };
 
     case ACTIONS.GET_LOAN_TERMS_OF_USE_SUCCESS:
       return {

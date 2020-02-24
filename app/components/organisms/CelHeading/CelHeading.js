@@ -86,7 +86,9 @@ class CelHeading extends Component {
             basic
             iconRightColor={STYLES.COLORS.GRAY}
             onPress={() =>
-              customBack ? customBack() : actions.updateFormField("activeSearch", true)
+              customBack
+                ? customBack()
+                : actions.updateFormField("activeSearch", true)
             }
             iconRight={customBack ? "IconChevronLeft" : "Search"}
           />

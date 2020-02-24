@@ -24,7 +24,7 @@ import GoogleReCaptcha from "../../../utils/recaptcha-util";
 class Login extends Component {
   static navigationOptions = () => ({
     right: "signup",
-    headerSameColor: true
+    headerSameColor: true,
   });
 
   // loginUser = () => {

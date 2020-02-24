@@ -28,10 +28,21 @@ function getCelsiusInitialData() {
   return axios.get(`${apiUrl}/initial_data`);
 }
 
+/**
+ * Gets markdown loan terms of use
+ * @see https://documenter.getpostman.com/view/4207695/S11RLvpb?version=latest#fcdf7994-2d4a-45c7-88aa-4530a13d4b48
+ *
+ * @returns {Promise}
+ */
 function getLoanTermsOfUse() {
   return axios.get(`${apiUrl}/web/document/loan-terms-and-conditions/md`);
 }
 
+/**
+ * Gets pdf loan terms of use
+ *
+ * @returns {Promise}
+ */
 function getPDFLoanTermsOfUse() {
   return `${apiUrl}/web/document/loan-terms-and-conditions/pdf`;
 }

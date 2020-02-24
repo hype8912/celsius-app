@@ -5,7 +5,7 @@ import ui from "./ui/uiReducer";
 import user from "./user/userReducer";
 import generalData from "./generalData/generalDataReducer";
 import wallet from "./wallet/walletReducer";
-import branch from "./branch/branchReducer";
+import branch from "./campaign/campaignReducer";
 import transfers from "./transfers/transfersReducer";
 import loans from "./loans/loansReducer";
 import apiKeys from "./apiKeys/apiKeysReducer";
@@ -22,6 +22,9 @@ import compliance from "./compliance/complianceReducer";
 import kyc from "./kyc/kycReducer";
 import contacts from "./contacts/contactsReducer";
 import simplex from "./simplex/simplexReducer";
+import loyalty from "./loyalty/loyaltyReducer"
+import security from "./userSecurity/userSecurityReducer"
+import auth from "./userAuth/userAuthReducer"
 // NOTE(fj): plop reduxGen importing new Reducer here
 
 const appReducers = combineReducers({
@@ -46,6 +49,9 @@ const appReducers = combineReducers({
   kyc,
   contacts,
   simplex,
+  loyalty,
+  security,
+  auth,
   // NOTE(fj): plop reduxGen inserting new Reducer here
 });
 
