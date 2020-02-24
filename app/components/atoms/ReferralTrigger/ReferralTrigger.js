@@ -23,14 +23,9 @@ class ReferralTrigger extends Component {
     const { actions } = this.props;
 
     const content =
-      "Earn even more when others sign up for Celsius with your referral code!\n" +
       "\n" +
-      "How it works:\n" +
-      "1. New user signs up with your referral code\n" +
-      "2. New user deposits $200 or more in crypto\n" +
-      "3. You and the new user each earn $10 in BTC!\n" +
-      "\n" +
-      "*BTC unlocked 72 hours after initial deposit";
+      "Earn even more when others sign up for Celsius with your referral code!" +
+      "\n";
 
     return (
       <Banner
