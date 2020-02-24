@@ -156,7 +156,7 @@ class WithdrawConfirm extends Component {
                 })}
               </CelText>
             </View>
-            <Separator/>
+            <Separator />
             <View style={styles.address}>
               <CelText type="H6">New wallet balance:</CelText>
               <CelText style={styles.lineHeight} type="H6" weight="bold">
@@ -164,7 +164,7 @@ class WithdrawConfirm extends Component {
                 {formatter.usd(newBalanceUsd)}
               </CelText>
             </View>
-            <Separator/>
+            <Separator />
             <View style={styles.address}>
               <CelText type="H6">Withdrawal address:</CelText>
               <CelText
@@ -177,7 +177,7 @@ class WithdrawConfirm extends Component {
               </CelText>
             </View>
           </View>
-          <InfoBoxCmp/>
+          <InfoBoxCmp />
           <CelButton
             margin="10 0 0 0"
             loading={isLoading}
@@ -189,7 +189,7 @@ class WithdrawConfirm extends Component {
             {disclaimerText}
           </CelText>
           {isLoanBannerVisible() && (
-            <LoanBannerCard type={"half"} actions={actions}/>
+            <LoanBannerCard type={"half"} actions={actions} />
           )}
         </Card>
       </RegularLayout>

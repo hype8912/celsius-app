@@ -429,7 +429,7 @@ function registerSocialSuccess(network, token, user) {
       dispatch(navigateTo("RegisterSetPin"));
     } else {
       dispatch(navigateTo("VerifyProfile"), {
-        onSuccess: () => navigateTo("WalletLanding")
+        onSuccess: () => navigateTo("WalletLanding"),
       });
     }
 

@@ -22,8 +22,8 @@ export * from "./community/communityActions";
 export * from "./compliance/complianceActions";
 export * from "./contacts/contactsActions";
 export * from "./simplex/simplexActions";
-export * from "./user/userDataActions"
-export * from "./userSecurity/userSecurityActions"
-export * from "./user/userProfileActions"
+export * from "./user/userDataActions";
+export * from "./userSecurity/userSecurityActions";
+export * from "./user/userProfileActions";
 
 // NOTE(fj): plop reduxGen importing new Actions here

@@ -508,7 +508,6 @@ function getPrimeTrustToULinkSuccess(data) {
   };
 }
 
-
 /**
  * Get profile taxpayer info
  */
@@ -565,5 +564,3 @@ function getKYCDocTypesSuccess(kycDocTypes) {
     kycDocTypes,
   };
 }
-
-

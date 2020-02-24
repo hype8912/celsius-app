@@ -18,7 +18,7 @@ const base = {
   image: {
     width: heightPercentageToDP("6%"),
     height: heightPercentageToDP("6%"),
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
   explanationWrapper: {
     flex: 0.75,

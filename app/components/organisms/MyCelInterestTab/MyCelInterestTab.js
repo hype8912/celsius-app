@@ -66,7 +66,7 @@ class MyCelInterestTab extends Component {
             </CelText>
           </View>
         </View>
-        <PerCoinCellInterestCard/>
+        <PerCoinCellInterestCard />
       </View>
     );
   }

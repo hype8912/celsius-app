@@ -58,7 +58,6 @@ function getPrimeTrustToULink() {
   return axios.get(`${apiUrl}/kyc/primetrust/custodial_agreement_preview`);
 }
 
-
 /**
  * Updates address info for user
  * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#55dd21a1-2e99-4c6d-865c-a605eaef5b57

@@ -20,7 +20,6 @@ const initialState = {
 export default (state = initialState, action) => {
   let profile;
   switch (action.type) {
-
     case ACTIONS.LOGIN_USER_SUCCESS:
     case ACTIONS.REGISTER_USER_SUCCESS:
     case ACTIONS.REGISTER_USER_FACEBOOK_SUCCESS:
@@ -113,7 +112,6 @@ export default (state = initialState, action) => {
           has_pin: true,
         },
       };
-
 
     case ACTIONS.TWITTER_GET_ACCESS_TOKEN:
       return {

@@ -279,7 +279,7 @@ const SIMPLEX_PAYMENT_STATUSES = {
   APPROVED: "approved",
   CANCELLED: "declined",
   REFUNDED: "refunded",
-}
+};
 
 export {
   BLOCKEXPLORERS,

@@ -94,7 +94,7 @@ class LoyaltyProgram extends Component {
     const { loyaltyInfo, appSettings, actions } = this.props;
     const style = LoyaltyProgramStyle();
 
-    if (!loyaltyInfo || !appSettings) return <LoadingScreen/>;
+    if (!loyaltyInfo || !appSettings) return <LoadingScreen />;
     const hasTier = loyaltyInfo.tier.title !== "NONE";
 
     // Todo(ns) make text below(and calculation) PieProgressBar visible and useful
@@ -170,7 +170,7 @@ class LoyaltyProgram extends Component {
                       interest in CEL
                     </CelText>
                   </View>
-                  <Separator vertical/>
+                  <Separator vertical />
                   <View>
                     <CelText
                       margin={"0 0 10 0"}
@@ -222,7 +222,7 @@ class LoyaltyProgram extends Component {
                 coins in your wallet.
               </CelText>
 
-              <CelsiusMembershipTable/>
+              <CelsiusMembershipTable />
 
               <CelText
                 align="center"

@@ -50,7 +50,7 @@ import { isLoanBannerVisible } from "../../../utils/ui-util";
     communityStats: state.community.stats,
     isBannerVisible: state.ui.isBannerVisible,
     maximumDiscount:
-    state.generalData.celUtilityTiers.PLATINUM.loan_interest_bonus,
+      state.generalData.celUtilityTiers.PLATINUM.loan_interest_bonus,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -77,7 +77,7 @@ class WithdrawEnterAmount extends Component {
       (coinSelectItems &&
         coinSelectItems.length > 0 &&
         coinSelectItems[0].value) ||
-      ""
+        ""
     );
 
     const coinSelectItems = currencies
@@ -273,7 +273,7 @@ class WithdrawEnterAmount extends Component {
       );
     }
     if (!withdrawCompliance.allowed) {
-      return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }}/>;
+      return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }} />;
     }
     if (!cryptoUtil.isGreaterThan(walletSummary.total_amount_usd, 0)) {
       return (
@@ -288,7 +288,7 @@ class WithdrawEnterAmount extends Component {
       c => c.short === coin.toUpperCase()
     ) || { amount: "", amount_usd: "" };
 
-    if (!withdrawalAddresses) return <LoadingScreen/>;
+    if (!withdrawalAddresses) return <LoadingScreen />;
 
     const isAddressLocked =
       withdrawalAddresses[formData.coin] &&
@@ -436,7 +436,7 @@ class WithdrawEnterAmount extends Component {
         <LoseMembershipModal
           navigateToNextStep={() => this.navigateToNextStep(true)}
         />
-        {(loyaltyInfo && loyaltyInfo.tier_level !== 0) && (
+        {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
           <LoseTierModal
             navigateToNextStep={() => this.navigateToNextStep(true)}
             tierTitle={loyaltyInfo.tier.title}

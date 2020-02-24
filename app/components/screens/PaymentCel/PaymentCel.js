@@ -121,7 +121,7 @@ class PaymentCel extends Component {
           <CelText type={"H1"} weight={"700"} align={"center"}>
             {celDiscount} less
           </CelText>
-          <Separator margin={"10 0 12 0"}/>
+          <Separator margin={"10 0 12 0"} />
           <CelText>
             Decrease your monthly interest payment from{" "}
             <CelText weight={"500"}>

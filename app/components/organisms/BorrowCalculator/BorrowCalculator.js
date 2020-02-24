@@ -184,12 +184,12 @@ class BorrowCalculator extends Component {
       monthlyInCEL =
         parseFloat(loanParams.monthlyInterest.split("$")[1]) -
         parseFloat(loanParams.monthlyInterest.split("$")[1]) *
-        loyaltyInfo.tier.loanInterestBonus;
+          loyaltyInfo.tier.loanInterestBonus;
 
       totalInCEL =
         parseFloat(loanParams.totalInterest.split("$")[1]) -
         parseFloat(loanParams.totalInterest.split("$")[1]) *
-        loyaltyInfo.tier.loanInterestBonus;
+          loyaltyInfo.tier.loanInterestBonus;
     }
 
     const loyaltyApr =
@@ -320,7 +320,7 @@ class BorrowCalculator extends Component {
           onChange={this.changeAmount}
           theme={themeModal}
         />
-        <Separator margin={"0 0 10 0"}/>
+        <Separator margin={"0 0 10 0"} />
         <View>
           <CelText type="H4" align={"center"} margin={"15 0 20 0"}>
             Choose a coin to use as collateral
@@ -398,38 +398,38 @@ class BorrowCalculator extends Component {
           </CelText>
           <View style={style.ltvWrapper}>
             {sortedLtv &&
-            sortedLtv.map(c => (
-              <Card
-                size={"thirdExtra"}
-                margin="20 5 20 5"
-                noBorder
-                theme={themeModal}
-                key={c.interest}
-                styles={
-                  formData.ltv.interest === c.interest
-                    ? style.selectedCardStyle
-                    : style.cardStyle
-                }
-                onPress={() => {
-                  actions.updateFormField("ltv", c);
-                }}
-              >
-                <CelText
-                  align={"center"}
-                  weight="bold"
-                  type={"H6"}
-                  style={
+              sortedLtv.map(c => (
+                <Card
+                  size={"thirdExtra"}
+                  margin="20 5 20 5"
+                  noBorder
+                  theme={themeModal}
+                  key={c.interest}
+                  styles={
                     formData.ltv.interest === c.interest
-                      ? style.selectedTextStyle
-                      : style.percentageTextStyle
+                      ? style.selectedCardStyle
+                      : style.cardStyle
                   }
+                  onPress={() => {
+                    actions.updateFormField("ltv", c);
+                  }}
                 >
-                  {formatter.percentageDisplay(c.percent, false, 0)}
-                </CelText>
-              </Card>
-            ))}
+                  <CelText
+                    align={"center"}
+                    weight="bold"
+                    type={"H6"}
+                    style={
+                      formData.ltv.interest === c.interest
+                        ? style.selectedTextStyle
+                        : style.percentageTextStyle
+                    }
+                  >
+                    {formatter.percentageDisplay(c.percent, false, 0)}
+                  </CelText>
+                </Card>
+              ))}
           </View>
-          <Separator/>
+          <Separator />
           <CelText
             type={"H4"}
             margin={"20 10 20 10"}
@@ -445,7 +445,7 @@ class BorrowCalculator extends Component {
             updateFormField={actions.updateFormField}
           />
 
-          <Separator margin={"20 0 0 0"}/>
+          <Separator margin={"20 0 0 0"} />
 
           <CelText type="H4" align={"left"} margin={"15 0 20 0"}>
             Interest rates

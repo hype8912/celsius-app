@@ -53,6 +53,9 @@ target 'celsius' do
 
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
 
+  pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
+
+  pod 'Mixpanel', '3.5.1'
 
   permissions_path = '../node_modules/react-native-permissions/ios'
 

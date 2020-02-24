@@ -6,11 +6,7 @@ import ACTIONS from "../../constants/ACTIONS";
 import { navigateTo } from "../nav/navActions";
 
 // TODO Move to KYC actions
-export {
-  getBackendStatus,
-  getInitialCelsiusData,
-  getLoanTermsOfUse,
-};
+export { getBackendStatus, getInitialCelsiusData, getLoanTermsOfUse };
 
 /**
  * Gets all general app data (interest rates, borrow ltvs, ...)

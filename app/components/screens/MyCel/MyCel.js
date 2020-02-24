@@ -41,18 +41,18 @@ class MyCel extends Component {
     } = this.props;
     // const style = MyCelStyle();
 
-    if (!loyaltyInfo || !appSettings) return <LoadingScreen/>;
+    if (!loyaltyInfo || !appSettings) return <LoadingScreen />;
 
     const tabs = [
-      { label: "OVERVIEW", component: <MyCelOverivewTab/> },
-      { label: "INTEREST", component: <MyCelInterestTab/> },
-      { label: "LOANS", component: <MyCelLoansTab/> },
+      { label: "OVERVIEW", component: <MyCelOverivewTab /> },
+      { label: "INTEREST", component: <MyCelInterestTab /> },
+      { label: "LOANS", component: <MyCelLoansTab /> },
     ];
 
     return (
       <RegularLayout padding={"0 0 100 0"}>
-        <MyCellHeader/>
-        <CelTabs tabs={tabs}/>
+        <MyCellHeader />
+        <CelTabs tabs={tabs} />
       </RegularLayout>
     );
   }

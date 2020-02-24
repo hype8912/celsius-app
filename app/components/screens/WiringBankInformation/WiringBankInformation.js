@@ -71,7 +71,7 @@ class WiringBankInformation extends Component {
     return (
       <RegularLayout>
         <CelText align={"center"}>{copy}</CelText>
-        <Separator margin={"20 0 20 0"} text="Wiring Information"/>
+        <Separator margin={"20 0 20 0"} text="Wiring Information" />
         <View style={{ marginBottom: 30 }}>
           <CelText weight={"bold"}>Beneficiary Account:</CelText>
           <CelText>1503222589</CelText>
@@ -86,7 +86,7 @@ class WiringBankInformation extends Component {
             35 GREAT ST HELENS, LONDON, UNITED KINGDOM, EC3A 6AP
           </CelText>
         </View>
-        <Separator margin={"0 0 20 0"} text="Beneficiary bank details"/>
+        <Separator margin={"0 0 20 0"} text="Beneficiary bank details" />
         <View style={{ marginBottom: 30 }}>
           <CelText weight={"bold"}>Beneficiary Bank:</CelText>
           <CelText>Signature Bank</CelText>

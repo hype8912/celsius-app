@@ -107,7 +107,7 @@ function cancelTransfer(transferHash) {
       dispatch(showMessage("error", "CelPay Canceled"));
       dispatch(getAllTransactions());
       dispatch(navigateTo("WalletLanding"));
-      mixpanelAnalytics.canceledCelPay()
+      mixpanelAnalytics.canceledCelPay();
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CANCEL_TRANSFER, err));

@@ -17,7 +17,7 @@ const contactsService = {
 function connectPhoneContacts(contacts, opts) {
   return axios.post(`${apiUrl}/users/friends/contacts`, {
     contacts,
-    clearExistingContacts: opts.clearExistingContacts
+    clearExistingContacts: opts.clearExistingContacts,
   });
 }
 

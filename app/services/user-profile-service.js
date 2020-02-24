@@ -10,7 +10,6 @@ const userProfileService = {
   addExpoPushToken, // TODO: remove this
 };
 
-
 /**
  * Get profile info for logged in user
  * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#52468b39-6440-417c-9e53-35471dbdd0e0
@@ -59,7 +58,6 @@ function setProfileImage(image) {
   );
 }
 
-
 /**
  * Send SMS for phone verification to user
  * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#76d35f2e-d523-4f2a-858e-ca33cc173f55
@@ -97,6 +95,5 @@ async function addExpoPushToken(token) {
     expo_push_token: token,
   });
 }
-
 
 export default userProfileService;

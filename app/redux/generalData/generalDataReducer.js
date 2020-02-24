@@ -21,7 +21,6 @@ export default function generalDataReducer(state = initialState(), action) {
   let interestRates;
 
   switch (action.type) {
-
     case ACTIONS.GET_LOAN_TERMS_OF_USE_SUCCESS:
       return {
         ...state,

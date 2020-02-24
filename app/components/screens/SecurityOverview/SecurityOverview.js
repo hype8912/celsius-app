@@ -234,10 +234,10 @@ class SecurityOverview extends Component {
     const style = SecurityOverviewStyle();
 
     return securityOverview &&
-    securityOverview.user_actions_log &&
-    securityOverview.user_actions_log.length > 0 ? (
+      securityOverview.user_actions_log &&
+      securityOverview.user_actions_log.length > 0 ? (
       <>
-        <Separator margin="0 0 10 0" text="User actions log"/>
+        <Separator margin="0 0 10 0" text="User actions log" />
         {securityOverview.user_actions_log.map(item => {
           const actions = this.getIcon(item);
 
@@ -262,9 +262,9 @@ class SecurityOverview extends Component {
               </View>
               <View style={{ marginBottom: 0 }}>
                 {securityOverview.user_actions_log[
-                securityOverview.user_actions_log.length - 1
-                  ] !== item ? (
-                  <Separator/>
+                  securityOverview.user_actions_log.length - 1
+                ] !== item ? (
+                  <Separator />
                 ) : null}
               </View>
             </View>
@@ -295,10 +295,10 @@ class SecurityOverview extends Component {
     const style = SecurityOverviewStyle();
 
     return securityOverview &&
-    securityOverview.account_activity_log &&
-    securityOverview.account_activity_log.length > 0 ? (
+      securityOverview.account_activity_log &&
+      securityOverview.account_activity_log.length > 0 ? (
       <>
-        <Separator margin="10 0 20 0" text="Account activity LOG"/>
+        <Separator margin="10 0 20 0" text="Account activity LOG" />
         {securityOverview.account_activity_log.map(item => (
           <View key={item.date} style={style.accountActionsLogWrapper}>
             <View style={style.accountActionsLog1}>
@@ -329,9 +329,9 @@ class SecurityOverview extends Component {
               </View>
             </View>
             {securityOverview.account_activity_log[
-            securityOverview.account_activity_log.length - 1
-              ] !== item ? (
-              <Separator margin="15 0 10 0"/>
+              securityOverview.account_activity_log.length - 1
+            ] !== item ? (
+              <Separator margin="15 0 10 0" />
             ) : null}
           </View>
         ))}
@@ -344,14 +344,14 @@ class SecurityOverview extends Component {
     const { securityOverview } = this.props;
     const style = SecurityOverviewStyle();
     return securityOverview &&
-    securityOverview.devices_logged_in &&
-    securityOverview.devices_logged_in.length > 0 ? (
+      securityOverview.devices_logged_in &&
+      securityOverview.devices_logged_in.length > 0 ? (
       <>
-        <Separator margin="10 0 20 0" text="DEVICES Loged in"/>
+        <Separator margin="10 0 20 0" text="DEVICES Loged in" />
         {securityOverview.devices_logged_in.map(item => (
           <View key={item.date} style={style.renderDeviceWrapper}>
             <View style={style.renderDevice}>
-              <Icon name="Mobile" viewBox="0 0 29 29" fill="#737A82"/>
+              <Icon name="Mobile" viewBox="0 0 29 29" fill="#737A82" />
               <View style={{ flex: 1, flexDirection: "column" }}>
                 <CelText type="H5" weight="600">
                   {item.model}{" "}
@@ -370,9 +370,9 @@ class SecurityOverview extends Component {
               </View>
             </View>
             {securityOverview.devices_logged_in[
-            securityOverview.devices_logged_in.length - 1
-              ] !== item ? (
-              <Separator margin="15 0 10 0"/>
+              securityOverview.devices_logged_in.length - 1
+            ] !== item ? (
+              <Separator margin="15 0 10 0" />
             ) : null}
           </View>
         ))}
@@ -384,7 +384,7 @@ class SecurityOverview extends Component {
     const { actions, securityOverview } = this.props;
     const style = SecurityOverviewStyle();
 
-    if (!securityOverview) return <Loader/>;
+    if (!securityOverview) return <Loader />;
 
     const UserActionsLog = this.renderUserActionsLog;
     const AccountActionsLog = this.renderAccountActionsLog;
@@ -398,7 +398,7 @@ class SecurityOverview extends Component {
             Check the security of your account and check the suggestions on how
             to make it even more secure.
           </CelText>
-          <Separator text="Two-factor verification"/>
+          <Separator text="Two-factor verification" />
           <Card
             margin="40 0 40 0"
             padding={"2 2 2 2"}
@@ -427,7 +427,7 @@ class SecurityOverview extends Component {
             the risk of unwanted access to your account, even if your login
             information is compromised.{" "}
           </CelText>
-          <Separator text="Email confirmation"/>
+          <Separator text="Email confirmation" />
 
           <Card
             margin="40 0 40 0"
@@ -461,13 +461,13 @@ class SecurityOverview extends Component {
             email you are adding to your security level.
           </CelText>
 
-          <UserActionsLog/>
+          <UserActionsLog />
 
-          <AccountActionsLog/>
+          <AccountActionsLog />
 
-          <DeviceLogedIn/>
+          <DeviceLogedIn />
 
-          <Separator margin="20 0 20 0"/>
+          <Separator margin="20 0 20 0" />
 
           <View>
             <CelText align="center">

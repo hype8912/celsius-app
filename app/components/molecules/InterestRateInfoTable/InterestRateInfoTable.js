@@ -31,7 +31,6 @@ class InterestRateInfoTable extends Component {
       obj.currency = currency;
       obj.rate = interestRates[currency];
 
-
       interestArray.push(obj);
     });
 

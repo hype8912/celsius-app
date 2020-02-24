@@ -16,8 +16,8 @@ import {
 } from "../../utils/expo-storage";
 import { BRANCH_LINKS, TRANSFER_STATUSES } from "../../constants/DATA";
 import ACTIONS from "../../constants/ACTIONS";
-import { registerForPushNotificationsAsync } from "../../utils/push-notifications-util";
 import appUtil from "../../utils/app-util";
+import { initMixpanel } from "../../utils/mixpanel-util";
 import branchUtil from "../../utils/branch-util";
 import { disableAccessibilityFontScaling } from "../../utils/styles-util";
 import ASSETS from "../../constants/ASSETS";
@@ -79,11 +79,10 @@ function initCelsiusApp() {
 
       await appUtil.initInternetConnectivityListener();
       await appUtil.pollBackendStatus();
-
+      await initMixpanel();
       await dispatch(initAppData());
 
       await dispatch(branchUtil.initBranch());
-
       dispatch({ type: ACTIONS.APP_INIT_DONE });
       clearTimeout(timeout);
     } catch (e) {
@@ -270,7 +269,6 @@ function initAppData(initToken = null) {
 
     if (token && !expiredSession) {
       mixpanelAnalytics.sessionStarted("Init app");
-      registerForPushNotificationsAsync();
       dispatch(actions.claimAllBranchTransfers());
 
       // get all KYC document types and claimed transfers for non-verified users

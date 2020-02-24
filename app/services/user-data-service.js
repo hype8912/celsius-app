@@ -1,5 +1,5 @@
-import axios from 'axios';
-import apiUrl from './api-url';
+import axios from "axios";
+import apiUrl from "./api-url";
 
 const userDataService = {
   getLinkedBankAccount,

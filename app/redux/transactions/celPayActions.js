@@ -65,7 +65,7 @@ function celPayFriend() {
 
       await celUtilityUtil.refetchMembershipIfChanged(transfer.coin);
 
-      mixpanelAnalytics.initiatedCelPay(CEL_PAY_TYPES.FRIEND)
+      mixpanelAnalytics.initiatedCelPay(CEL_PAY_TYPES.FRIEND);
     } catch (err) {
       dispatch(apiError(API.CREATE_TRANSFER, err));
       dispatch(showMessage("error", err.msg));
@@ -79,12 +79,7 @@ function celPayFriend() {
 function celPayShareLink() {
   return async (dispatch, getState) => {
     try {
-      const {
-        amountCrypto,
-        coin,
-        code,
-        pin,
-      } = getState().forms.formData;
+      const { amountCrypto, coin, code, pin } = getState().forms.formData;
 
       const transfer = {
         amount: amountCrypto,
@@ -102,7 +97,12 @@ function celPayShareLink() {
         transfer: transferData,
       });
 
-      dispatch(showMessage("success", "An email verification has been sent. Check your inbox."));
+      dispatch(
+        showMessage(
+          "success",
+          "An email verification has been sent. Check your inbox."
+        )
+      );
       dispatch(clearForm());
       dispatch(
         navigateTo("TransactionDetails", {
@@ -114,7 +114,7 @@ function celPayShareLink() {
 
       await celUtilityUtil.refetchMembershipIfChanged(transfer.coin);
 
-      mixpanelAnalytics.initiatedCelPay(CEL_PAY_TYPES.LINK)
+      mixpanelAnalytics.initiatedCelPay(CEL_PAY_TYPES.LINK);
     } catch (err) {
       dispatch(apiError(API.CREATE_TRANSFER, err));
       dispatch(showMessage("error", err.msg));

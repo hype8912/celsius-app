@@ -168,8 +168,8 @@ class BorrowCalculatorScreen extends Component {
           bottomHeading: "Borrow dollars for Crypto",
           bottomParagraph: loanParams
             ? `Verify your identity to start using your coins as collateral and get a dollar loan starting at just ${formatter.percentageDisplay(
-              loanParams.bestLtv
-            )} APR`
+                loanParams.bestLtv
+              )} APR`
             : null,
           buttonCopy: "Verify identity",
           onPress: () => actions.navigateTo("KYCProfileDetails"),
@@ -181,9 +181,9 @@ class BorrowCalculatorScreen extends Component {
           subtitle: "",
           bottomHeading: loanParams
             ? `To apply for a loan, you need to deposit an additional ${formatter.crypto(
-              loanParams.missingCollateral,
-              loanParams.largestShortCrypto
-            )}`
+                loanParams.missingCollateral,
+                loanParams.largestShortCrypto
+              )}`
             : null,
           bottomParagraph:
             "Deposit more coins to start your first loan application",
@@ -203,7 +203,7 @@ class BorrowCalculatorScreen extends Component {
             "Calculate your loan interest before you deposit coins",
           onPress: () =>
             actions.navigateTo("Deposit", {
-              coin: "CEL"
+              coin: "CEL",
             }),
           buttonCopy: "Deposit CEL",
         };
@@ -284,12 +284,10 @@ class BorrowCalculatorScreen extends Component {
         >
           {purposeProps.subtitle}
         </CelText>
-        <Separator/>
-        <CelText
-          margin={"20 0 10 0"}
-        >Enter loan amount</CelText>
-        <BorrowCalculator loanParams={loanParams} purpose={purpose}/>
-        <Separator margin={"10 0 0 0"}/>
+        <Separator />
+        <CelText margin={"20 0 10 0"}>Enter loan amount</CelText>
+        <BorrowCalculator loanParams={loanParams} purpose={purpose} />
+        <Separator margin={"10 0 0 0"} />
         <View>
           {!!purposeProps.bottomHeading && (
             <CelText

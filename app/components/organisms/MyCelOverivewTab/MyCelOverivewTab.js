@@ -98,7 +98,7 @@ class MyCelOverivewTab extends Component {
             </CelText>
           </TouchableOpacity>
         </View>
-        <CalculateLoyaltyLevelModal closeModal={actions.closeModal}/>
+        <CalculateLoyaltyLevelModal closeModal={actions.closeModal} />
       </View>
     );
   }

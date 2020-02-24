@@ -24,7 +24,7 @@ export {
   changePin,
   resetPassword,
   logoutFromAllDevices,
-  getSecurityOverview
+  getSecurityOverview,
 };
 
 /**

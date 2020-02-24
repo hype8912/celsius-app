@@ -1,45 +1,33 @@
-// TODO(sb): RN update dependencies fixes
-// import { Notifications } from 'expo';
-// import * as Permissions from "expo-permissions";
+import { Platform } from "react-native";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import messaging from "@react-native-firebase/messaging";
 
-// import userProfileService from '../services/user-profile-service.js';
+import { setSecureStoreKey } from "./expo-storage";
 
-export default {
-    registerForPushNotificationsAsync,
-};
+export { getNotificationToken };
 
 /**
- * Registers the user for push notifications service
+ * Get device notification token from notification provider
  */
-const pushNotificationsRegistered = false;
+async function getNotificationToken() {
+  let token;
+  if (Platform.OS === "android") {
+    token = await messaging().getToken();
+    setSecureStoreKey("notificationToken", token);
+  } else {
+    await getIOSPushNotificationToken();
+  }
+}
 
-export async function registerForPushNotificationsAsync() {
-    if (pushNotificationsRegistered) {
-        return;
-    }
+/**
+ * On iOS platform, ask for notification permissions, get notification token and store it to storage
+ */
+async function getIOSPushNotificationToken() {
+  const perm = await PushNotificationIOS.requestPermissions();
 
-    // const { status: existingStatus } = await Permissions.getAsync(
-    //   Permissions.NOTIFICATIONS
-    // );
-    // let finalStatus = existingStatus;
-
-    // // only ask if permissions have not already been determined, because
-    // // iOS won't necessarily prompt the user a second time.
-    // if (existingStatus !== "granted") {
-    //   // Android remote notification permissions are granted during the app
-    //   // install, so this will only ask on iOS
-    //   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    //   finalStatus = status;
-    // }
-
-    // // Stop here if the user did not grant permissions
-    // if (finalStatus !== "granted") {
-    //   return;
-    // }
-
-    // // // Get the token that uniquely identifies this device
-    // // const token = await Notifications.getExpoPushTokenAsync();
-
-    // // await userProfileService.addExpoPushToken(token);
-    // pushNotificationsRegistered = true;
+  if (perm && perm.alert === 1) {
+    PushNotificationIOS.addEventListener("register", token => {
+      setSecureStoreKey("notificationToken", token);
+    });
+  }
 }

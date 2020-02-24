@@ -108,7 +108,6 @@ function initInterceptors() {
         };
       }
 
-
       // get token from secure store
       try {
         const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
@@ -168,10 +167,10 @@ function initInterceptors() {
       const err = error.response
         ? error.response.data
         : {
-          type: "Unknown Server Error",
-          msg: defaultMsg,
-          raw_error: error,
-        };
+            type: "Unknown Server Error",
+            msg: defaultMsg,
+            raw_error: error,
+          };
 
       if (!err.msg) err.msg = defaultMsg;
 

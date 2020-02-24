@@ -6,7 +6,7 @@ import ACTIONS from "../../constants/ACTIONS";
 const initialState = {
   tokens: undefined,
   expiredSession: false,
-}
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -28,4 +28,3 @@ export default (state = initialState, action) => {
       return state;
   }
 };
-

@@ -97,7 +97,9 @@ function cancelWithdrawal(withdrawalId) {
     dispatch(startApiCall(API.CANCEL_WITHDRAWAL_TRANSACTION));
 
     try {
-      const response = await transactionsService.cancelWithdrawalService(withdrawalId);
+      const response = await transactionsService.cancelWithdrawalService(
+        withdrawalId
+      );
       dispatch({
         type: ACTIONS.CANCEL_WITHDRAWAL_TRANSACTION_SUCCESS,
         callName: API.CANCEL_WITHDRAWAL_TRANSACTION,

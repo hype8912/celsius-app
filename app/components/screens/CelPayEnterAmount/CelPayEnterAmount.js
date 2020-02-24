@@ -56,7 +56,7 @@ class CelPayEnterAmount extends Component {
       celpayCompliance,
       formData,
       walletSummary,
-      actions
+      actions,
     } = this.props;
 
     const coinSelectItems = currencies
@@ -74,7 +74,7 @@ class CelPayEnterAmount extends Component {
     actions.updateFormFields({
       amountUsd: "",
       amountCrypto: "",
-    })
+    });
 
     this.state = {
       coinSelectItems,
@@ -87,7 +87,7 @@ class CelPayEnterAmount extends Component {
         (coinSelectItems &&
           coinSelectItems.length > 0 &&
           coinSelectItems[0].value) ||
-        ""
+          ""
       );
     }
   }
@@ -133,8 +133,8 @@ class CelPayEnterAmount extends Component {
         : undefined;
     const screenTitle = names
       ? `Send to ${names[0] ? names[0] : ""} ${
-        !!names[1] && !!names[1][0] ? names[1][0] : ""
-      }`
+          !!names[1] && !!names[1][0] ? names[1][0] : ""
+        }`
       : "CelPay";
 
     navigation.setParams({
@@ -156,7 +156,13 @@ class CelPayEnterAmount extends Component {
     formatter.removeDecimalZeros(formatter.floor10(amountUsd, -2) || "");
 
   handleAmountChange = (newValue, predefined = { label: "" }) => {
-    const { formData, currencyRatesShort, actions, walletSummary, celPaySettings } = this.props;
+    const {
+      formData,
+      currencyRatesShort,
+      actions,
+      walletSummary,
+      celPaySettings,
+    } = this.props;
     const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
 
     const splitedValue = newValue.toString().split(".");
@@ -220,8 +226,19 @@ class CelPayEnterAmount extends Component {
       return actions.showMessage("warning", "Insufficient funds!");
     }
 
-    if (!isMalisaPusonja() && cryptoUtil.isGreaterThan(amountUsd, celPaySettings.maximum_transfer_amount)) {
-      return actions.showMessage("warning", `You have surpassed the daily limit. Please enter an amount below ${formatter.usd(celPaySettings.maximum_transfer_amount)} to continue.`);
+    if (
+      !isMalisaPusonja() &&
+      cryptoUtil.isGreaterThan(
+        amountUsd,
+        celPaySettings.maximum_transfer_amount
+      )
+    ) {
+      return actions.showMessage(
+        "warning",
+        `You have surpassed the daily limit. Please enter an amount below ${formatter.usd(
+          celPaySettings.maximum_transfer_amount
+        )} to continue.`
+      );
     }
 
     this.setState({ activePeriod: predefined });
@@ -274,13 +291,17 @@ class CelPayEnterAmount extends Component {
       actions.navigateTo("VerifyProfile", {
         onSuccess: () => {
           actions.navigateBack();
-          actions.openModal(MODALS.CONFIRM_CELPAY_MODAL)
+          actions.openModal(MODALS.CONFIRM_CELPAY_MODAL);
         },
       });
       actions.closeModal();
     }
 
-    mixpanelAnalytics.enteredAmount(formData.coin, Number(formData.amountUsd), Number(formData.amountCrypto));
+    mixpanelAnalytics.enteredAmount(
+      formData.coin,
+      Number(formData.amountUsd),
+      Number(formData.amountCrypto)
+    );
   };
 
   render() {
@@ -365,14 +386,14 @@ class CelPayEnterAmount extends Component {
           autofocus={false}
         />
 
-        <LoseMembershipModal navigateToNextStep={this.navigateToNextStep}/>
-        {(loyaltyInfo && loyaltyInfo.tier_level !== 0) && (
+        <LoseMembershipModal navigateToNextStep={this.navigateToNextStep} />
+        {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
           <LoseTierModal
             navigateToNextStep={this.navigateToNextStep}
             tierTitle={loyaltyInfo.tier.title}
           />
         )}
-        <ConfirmCelPayModal/>
+        <ConfirmCelPayModal />
       </RegularLayout>
     );
   }

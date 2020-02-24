@@ -1,5 +1,5 @@
-import axios from 'axios';
-import apiUrl from './api-url';
+import axios from "axios";
+import apiUrl from "./api-url";
 
 const userSecurityService = {
   invalidateSession,
@@ -77,7 +77,6 @@ function disableTwoFactor(twoFactorCode) {
   return response.data;
 }
 
-
 /**
  * Sets PIN number for user
  * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#2da2217f-17a0-4d2f-bcb7-6fc31dba6a68
@@ -90,7 +89,6 @@ function disableTwoFactor(twoFactorCode) {
 function setPin(data) {
   return axios.post(`${apiUrl}/me/pin/set`, data);
 }
-
 
 /**
  * Checks pin for user
@@ -129,6 +127,5 @@ function checkTwoFactor(code) {
     twoFactorCode: code,
   });
 }
-
 
 export default userSecurityService;

@@ -25,6 +25,10 @@ import { setFormErrors } from "../forms/formsActions";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import branchUtil from "../../utils/branch-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import {
+  identifyUserMixpanel,
+  logoutUserMixpanel,
+} from "../../utils/mixpanel-util";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -60,6 +64,7 @@ function loginUser() {
 
       const userRes = await userProfileService.getPersonalInfo();
       const user = userRes.data;
+      identifyUserMixpanel(user.id);
 
       const { showVerifyScreen: showVerifyScreenValue } = getState().app;
       if (!showVerifyScreenValue) {
@@ -167,8 +172,9 @@ function logoutUser() {
         type: ACTIONS.LOGOUT_USER,
       });
       await dispatch(resetToScreen("Welcome"));
+      logoutUserMixpanel();
+      await dispatch(navigateTo("Welcome"));
       dispatch(showVerifyScreen(false));
-
       mixpanelAnalytics.sessionEnded("Logout user");
     } catch (err) {
       logger.err(err);
@@ -215,10 +221,10 @@ function createAccount() {
     }
 
     const user = getState().user.profile;
-
     if (user.id) {
       appsFlyerUtil.registrationCompleted(user);
       mixpanelAnalytics.registrationCompleted(user);
+      identifyUserMixpanel(user.id);
     }
   };
 }

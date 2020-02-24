@@ -4,14 +4,12 @@ import ACTIONS from "../../constants/ACTIONS";
  * TODO make it a function add JSDoc & desc for return
  */
 const initialState = {
-
   securityOverview: {},
   showVerifyScreen: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
     case ACTIONS.GET_USER_SECURITY_OVERVIEW_SUCCESS:
       return {
         ...state,

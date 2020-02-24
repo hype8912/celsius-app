@@ -76,7 +76,9 @@ function registerReferralLink(deepLink) {
 
       dispatch(startApiCall(API.GET_LINK_BY_URL));
 
-      const linkRes = await campaignsService.getByUrl(deepLink["~referring_link"]);
+      const linkRes = await campaignsService.getByUrl(
+        deepLink["~referring_link"]
+      );
       const linkResData = linkRes.data;
 
       if (!linkResData.valid) {
