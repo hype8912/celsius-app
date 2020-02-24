@@ -54,7 +54,7 @@ const CoinSwitch = props => {
       )}
       {props.onAmountPress ? (
         <View>
-          <TouchableOpacity onPress={props.onAmountPress}>
+          <TouchableOpacity disabled={!coin} onPress={props.onAmountPress}>
             <View
               style={{
                 height: getScaledFont(STYLES.FONTSIZE.H1),

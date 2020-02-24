@@ -29,7 +29,7 @@ function getQuote(coin, fiatCurrency, requestedCurrency, amount) {
     coin,
     fiat_currency: fiatCurrency,
     requested_currency: requestedCurrency,
-    amount,
+    amount: !amount ? "0" : amount,
   });
 }
 

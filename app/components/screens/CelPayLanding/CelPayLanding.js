@@ -14,6 +14,8 @@ import cryptoUtil from "../../../utils/crypto-util";
 import CelPayInfoModal from "../../modals/CelPayInfoModal/CelPayInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
+let counter = 0;
+
 @connect(
   state => ({
     user: state.user.profile,
@@ -38,8 +40,10 @@ class CelPayLanding extends Component {
 
   componentDidMount() {
     const { navHistory, actions } = this.props;
-
-    actions.openModal(MODALS.CELPAY_INFO_MODAL);
+    if (!counter) {
+      actions.openModal(MODALS.CELPAY_INFO_MODAL);
+    }
+    counter += 1;
     mixpanelAnalytics.navigatedToCelPay(navHistory[0]);
   }
 

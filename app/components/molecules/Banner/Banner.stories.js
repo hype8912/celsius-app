@@ -54,11 +54,7 @@ storiesOf("Banner/Trigger", module)
         buttonText={"Share referral code"}
         title={"Refer & Earn!"}
         content={
-          "How it works:\n" +
-          "1. New user signs up with your referral code\n" +
-          "2. New user deposits $200 or more in crypto\n" +
-          "3. You and the new user each earn $10 in BTC!\n" +
-          "\n"
+          "Earn even more when others sign up for Celsius with your referral code!"
         }
       />
     </View>
