@@ -47,7 +47,7 @@ class KYCCheckUtilityBill extends Component {
         </CelText>
 
         <CelText type="H4" weight="300" margin="10 0 20 0" align="center">
-          Check if your photos are visible and all the important details are
+          Check if your photos are visible and all the important details of utility bill are
           easy to read.
         </CelText>
 

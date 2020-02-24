@@ -250,7 +250,7 @@ class FabMenu extends Component {
         key={item.label}
         theme={theme}
         onPress={() => {
-          actions.resetToFlow(item.screen);
+          actions.resetToScreen(item.screen);
           actions.closeFabMenu();
         }}
         type="menu"

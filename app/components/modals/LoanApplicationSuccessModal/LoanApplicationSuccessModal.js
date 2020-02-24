@@ -30,7 +30,7 @@ class LoanApplicationSuccessModal extends Component {
   handlePrepayModal = () => {
     const { actions, loanId } = this.props;
 
-    actions.resetToFlow("ChoosePaymentMethod", {
+    actions.resetToScreen("ChoosePaymentMethod", {
       id: loanId,
       reason: LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT,
     });

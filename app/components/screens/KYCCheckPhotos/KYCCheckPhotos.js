@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Image, View } from "react-native";
+import store from "../../../redux/store";
 
 import * as appActions from "../../../redux/actions";
+import { navigateTo } from "../../../redux/nav/navActions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
@@ -28,6 +30,10 @@ class KYCCheckPhotos extends Component {
   static navigationOptions = () => ({
     customCenterComponent: <ProgressBar steps={7} currentStep={4} />,
     headerSameColor: true,
+      customBack: () => {
+        store.dispatch(navigateTo("KYCAddressInfo"));
+      },
+    gesturesEnabled: false,
   });
 
   // TODO move to util

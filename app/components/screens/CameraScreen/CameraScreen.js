@@ -52,6 +52,7 @@ class CameraScreen extends Component {
       headerSameColor: false,
       transparent: true,
       hideBack,
+      gesturesEnabled: false,
     };
   };
 

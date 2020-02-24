@@ -57,6 +57,7 @@ class WalletLanding extends Component {
       title: params && params.title ? params.title : "Welcome",
       right: "profile",
       hideBack: true,
+      gesturesEnabled: false,
     };
   };
 

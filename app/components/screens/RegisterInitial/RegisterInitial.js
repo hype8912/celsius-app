@@ -33,6 +33,7 @@ class RegisterInitial extends Component {
   static navigationOptions = () => ({
     right: "login",
     customCenterComponent: <ProgressBar steps={3} currentStep={1}/>,
+    headerSameColor: true
   });
 
   constructor() {

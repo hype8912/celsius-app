@@ -35,6 +35,10 @@ class Home extends Component {
     return null;
   }
 
+  static navigationOptions = () => ({
+    header: null,
+  });
+
   constructor(props) {
     super(props);
 

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import store from "../../../redux/store";
 
 import * as appActions from "../../../redux/actions";
 // import KYCAddressProofStyle from "./KYCAddressProof.styles";
@@ -16,6 +17,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import KYCCheckUtilityBill from "../KYCCheckUtilityBill/KYCCheckUtilityBill";
+import { navigateTo } from "../../../redux/nav/navActions";
 
 @connect(
   state => ({
@@ -31,6 +33,10 @@ class KYCAddressProof extends Component {
   static navigationOptions = () => ({
     customCenterComponent: <ProgressBar steps={7} currentStep={5} />,
     headerSameColor: true,
+      customBack: () => {
+        store.dispatch(navigateTo("KYCVerifyIdentity"));
+      },
+    gesturesEnabled: false,
   });
 
   componentDidMount() {

@@ -30,6 +30,7 @@ class QRScannerScreen extends Component {
 
   static navigationOptions = () => ({
     title: "QR code scan",
+    gesturesEnabled: false,
   });
 
   constructor(props) {
@@ -75,13 +76,13 @@ class QRScannerScreen extends Component {
     const style = QRScannerStyle();
 
     return (
-      <View style={style.container}>
         <RNCamera
           ref={ref => {
             this.camera = ref;
           }}
           onBarCodeRead={this.state.handleBarCodeRead}
           type={RNCamera.Constants.Type.back}
+          captureAudio={false}
         >
         <View style={style.barcodeWrapper}>
           <View style={[style.mask, style.maskOverlayColor]} />
@@ -114,7 +115,6 @@ class QRScannerScreen extends Component {
         </View>
         {/* </BarCodeScanner> */}
         </RNCamera>
-      </View>
     );
   };
 

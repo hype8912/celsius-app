@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import store from "../../../redux/store";
 
 import * as appActions from "../../../redux/actions";
+import { navigateTo } from "../../../redux/nav/navActions";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -32,6 +34,10 @@ class KYCVerifyIdentity extends Component {
   static navigationOptions = () => ({
     customCenterComponent: <ProgressBar steps={7} currentStep={3} />,
     headerSameColor: true,
+      customBack: () => {
+        store.dispatch(navigateTo("KYCAddressInfo"));
+      },
+    gesturesEnabled: false,
   });
 
   componentDidMount() {

@@ -70,24 +70,25 @@ class CelHeading extends Component {
   }
 
   getLeftContent = sceneProps => {
-    const { hideBack, right } = sceneProps;
+    const { hideBack, right, customBack } = sceneProps;
     const { actions, scenes, formData } = this.props;
+
     const backScreenName = scenes[this.props.index - 1]
       ? scenes[this.props.index - 1].route.routeName
       : "";
     const style = CelHeadingStyle();
 
     // if search is active and right part of header is type of search
-    if (right === "search" && formData.activeSearch)
+    if ((right === "search" && formData.activeSearch) || customBack)
       return (
         <View style={style.leftContentButton}>
           <CelButton
             basic
             iconRightColor={STYLES.COLORS.GRAY}
-            onPress={() => {
-              actions.updateFormField("activeSearch", true);
-            }}
-            iconRight="Search"
+            onPress={() =>
+              customBack ? customBack() : actions.updateFormField("activeSearch", true)
+            }
+            iconRight={customBack ? "IconChevronLeft" : "Search"}
           />
         </View>
       );

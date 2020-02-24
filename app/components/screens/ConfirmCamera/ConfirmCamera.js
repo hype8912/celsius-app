@@ -3,6 +3,7 @@ import { View, SafeAreaView, Image } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import store from "../../../redux/store";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
@@ -12,6 +13,7 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import { navigateTo } from "../../../redux/nav/navActions";
 
 @connect(
   state => ({
@@ -27,6 +29,10 @@ import API from "../../../constants/API";
 class ConfirmCamera extends Component {
   static navigationOptions = () => ({
     transparent: true,
+    customBack: () => {
+      store.dispatch(navigateTo("KYCVerifyIdentity"));
+    },
+    gesturesEnabled: false,
   });
 
   constructor(props) {

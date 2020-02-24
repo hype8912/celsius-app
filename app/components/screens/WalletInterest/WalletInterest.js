@@ -119,7 +119,7 @@ class WalletInterest extends Component {
               <Separator margin="10 0 0 0" />
               <TouchableOpacity
                 onPress={() => {
-                  actions.navigateTo("InterestCalculator");
+                  actions.navigateTo("InterestCalculatorScreen");
                 }}
                 style={{ marginTop: 10 }}
               >

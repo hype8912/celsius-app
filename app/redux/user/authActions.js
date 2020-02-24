@@ -4,7 +4,7 @@ import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { startApiCall, apiError } from "../api/apiActions";
-import { navigateTo } from "../nav/navActions";
+import { navigateTo, resetToScreen } from "../nav/navActions";
 import { showMessage, toggleKeypad } from "../ui/uiActions";
 import { initAppData, showVerifyScreen } from "../app/appActions";
 import {
@@ -212,7 +212,7 @@ function logoutUser() {
       dispatch({
         type: ACTIONS.LOGOUT_USER,
       });
-      await dispatch(navigateTo("Welcome"));
+      await dispatch(resetToScreen("Welcome"));
       dispatch(showVerifyScreen(false));
 
       mixpanelAnalytics.sessionEnded("Logout user");

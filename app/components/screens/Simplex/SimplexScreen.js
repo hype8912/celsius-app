@@ -95,7 +95,7 @@ class SimplexScreen extends Component {
     const { actions, formData } = this.props;
     if (event && event.nativeEvent && event.nativeEvent.data === "success") {
       // user passed successfully
-      actions.resetToFlow("WalletLanding");
+      actions.resetToScreen("WalletLanding");
       mixpanelAnalytics.finishedSimplexFlow(
         "CARD",
         formData.coin,

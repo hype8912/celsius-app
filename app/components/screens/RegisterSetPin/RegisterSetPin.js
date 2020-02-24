@@ -27,6 +27,7 @@ class RegisterSetPin extends Component {
   static navigationOptions = () => ({
     hideBack: true,
     customCenterComponent: <ProgressBar steps={3} currentStep={2} />,
+    headerSameColor: true
   });
 
   constructor(props) {

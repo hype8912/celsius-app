@@ -9,7 +9,7 @@ export {
   navigateBack,
   setTopLevelNavigator,
   setActiveScreen,
-  resetToFlow,
+  resetToScreen,
 };
 
 /**
@@ -42,7 +42,6 @@ function navigateTo(routeName, params) {
         params,
       })
     );
-
     userBehavior.navigated(routeName);
   };
 }
@@ -51,25 +50,9 @@ function navigateTo(routeName, params) {
  * Navigates back
  */
 function navigateBack(backScreenName) {
-  return (dispatch, getState) => {
-    const { activeScreen } = getState().nav;
+  return () => {
 
-    // If back button leads to Camera screens during KYC process, it should be skipped
-    if (
-      activeScreen === "KYCCheckPhotos" &&
-      backScreenName === "ConfirmCamera"
-    ) {
-      _navigator.dispatch(
-        NavigationActions.navigate({ routeName: "KYCAddressInfo" })
-      );
-    } else if (
-      ["KTCTaxpayer"].indexOf(activeScreen) &&
-      backScreenName === "ConfirmCamera"
-    ) {
-      _navigator.dispatch(
-        NavigationActions.navigate({ routeName: "KYCAddressProof" })
-      );
-    } else if (backScreenName === "VerifyProfile") {
+      if (backScreenName === "VerifyProfile") {
       // If back button leads to VerifyProfile, skip it and go back one more screen
       userBehavior.navigated("Back");
       _navigator.dispatch(StackActions.pop({ n: 2 }));
@@ -81,13 +64,21 @@ function navigateBack(backScreenName) {
   };
 }
 
-function resetToFlow(flow, params) {
+/**
+ * Resets stack, index = 0
+ *
+ * @param flow
+ * @param params
+ * @returns {Function}
+ */
+
+function resetToScreen(screenName, params) {
   return () => {
     _navigator.dispatch(
       StackActions.reset({
         index: 0,
         key: null,
-        actions: [NavigationActions.navigate({ routeName: flow, params })],
+        actions: [NavigationActions.navigate({ routeName: screenName, params })],
       })
     );
   };

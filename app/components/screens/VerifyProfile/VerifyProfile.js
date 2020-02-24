@@ -36,6 +36,7 @@ class VerifyProfile extends Component {
       headerSameColor: true,
       hideBack: !!(params && (params.show || params.hideBack)) || false,
       right: navigation.getParam("showLogOutBtn", false) && "logout",
+      gesturesEnabled: false
     };
   };
 
@@ -98,7 +99,7 @@ class VerifyProfile extends Component {
     if (activeScreen) {
       if (activeScreen === "VerifyProfile") {
         this.setState({ loading: false });
-        actions.navigateTo(previousScreen);
+        actions.resetToScreen(previousScreen);
         return;
       }
 
