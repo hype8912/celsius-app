@@ -64,6 +64,7 @@ function getUserInterestForCoin(coinShort) {
 
   return {
     ...interestRates[coinShort],
+    // Quickfix for ORBS and DAI crashes
     baseRate: interestRates[coinShort] ? interestRates[coinShort].rate : 0,
     coin: coinShort,
     rate: interestRate,
