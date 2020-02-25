@@ -64,7 +64,7 @@ function getUserInterestForCoin(coinShort) {
 
   return {
     ...interestRates[coinShort],
-    baseRate: interestRates[coinShort].rate,
+    baseRate: interestRates[coinShort] ? interestRates[coinShort].rate : 0,
     coin: coinShort,
     rate: interestRate,
     display: interestRateDisplay,
