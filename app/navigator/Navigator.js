@@ -96,7 +96,7 @@ import WithdrawEnterAmount from "../components/screens/WithdrawEnterAmount/Withd
 import WithdrawConfirmAddress from "../components/screens/WithdrawConfirmAddress/WithdrawConfirmAddress";
 import WithdrawCreateAddress from "../components/screens/WithdrawCreateAddress/WithdrawCreateAddress";
 import QRScanner from "../components/screens/QRScanner/QRScanner";
-import HodlDeactivate from "../components/screens/HodlDeactivate/HodlDeactivate";
+import HODLViewCode from "../components/screens/HODLViewCode/HODLViewCode";
 
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 
@@ -243,7 +243,7 @@ export const screens = {
   ChangePin,
   TwoFactorSettings,
   TwoFaAuthAppConfirmationCode,
-  HodlDeactivate,
+  HODLViewCode,
 
   /**
    * Camera

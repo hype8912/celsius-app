@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-// import HodlDeactivateStyle from "./HodlDeactivate.styles";
+// import HODLViewCode from "./HODLViewCode.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
@@ -23,7 +23,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-class HodlDeactivate extends Component {
+class HODLViewCode extends Component {
   static propTypes = {};
   static defaultProps = {};
 
@@ -88,4 +88,4 @@ class HodlDeactivate extends Component {
   }
 }
 
-export default HodlDeactivate;
+export default HODLViewCode;
