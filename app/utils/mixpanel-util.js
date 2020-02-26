@@ -5,7 +5,6 @@ import store from "../redux/store";
 import appUtil from "./app-util";
 import loggerUtil from "./logger-util";
 import Constants from "../../constants";
-import mixpanelService from "../services/mixpanel-service";
 import { getSecureStoreKey, deleteSecureStoreKey } from "./expo-storage";
 
 let userData = {};
@@ -16,6 +15,36 @@ let revisionId = "";
 let version = "";
 
 const appInfo = { os: Platform.OS };
+
+/**
+ * Initialize Mixpanel
+ */
+async function initMixpanel() {
+  const { MIXPANEL_TOKEN } = Constants;
+  try {
+    await Mixpanel.sharedInstanceWithToken(MIXPANEL_TOKEN);
+  } catch (err) {
+    loggerUtil.log(err);
+  }
+}
+
+/**
+ * Init user data to Mixpanel
+ */
+async function engage(distinctId, payload = {}) {
+  const { MIXPANEL_TOKEN } = Constants;
+
+  Mixpanel.createAlias(distinctId);
+
+  const data = { $set: { ...payload } };
+  data.$distinct_id = distinctId;
+  data.$token = MIXPANEL_TOKEN;
+  Mixpanel.set(data);
+
+  Mixpanel.identify(distinctId);
+  await addPushDeviceToken();
+}
+
 /**
  * Send event attribution
  *
@@ -23,6 +52,7 @@ const appInfo = { os: Platform.OS };
  * @param {Object} data - payload
  */
 async function sendEvent(event, data = {}) {
+  const { MIXPANEL_TOKEN } = Constants;
   if (!advertisingId) {
     advertisingId = store.getState().app.advertisingId;
     appInfo.advertisingId = advertisingId;
@@ -42,11 +72,23 @@ async function sendEvent(event, data = {}) {
   if (!userData.id) {
     setUserData(store.getState().user.profile);
   }
-  mixpanelService.track(event, {
+  await track(event, {
     distinct_id: userData.id,
+    mixpanel_token: MIXPANEL_TOKEN,
     ...appInfo,
     ...data,
   });
+}
+
+/**
+ * Set event tracking
+ */
+function track(event, payload = {}) {
+  const data = {
+    event,
+    ...payload,
+  };
+  Mixpanel.trackWithProperties(event, data);
 }
 
 function setUserData(newUserData) {
@@ -57,18 +99,11 @@ function getUserData() {
   return userData;
 }
 
-async function initMixpanel() {
-  const { MIXPANEL_TOKEN } = Constants;
-  try {
-    await Mixpanel.sharedInstanceWithToken(MIXPANEL_TOKEN);
-  } catch (err) {
-    loggerUtil.log(err);
-  }
-}
-
-async function identifyUserMixpanel(userId) {
+/**
+ * Assign device push notification token to Mixpanel user
+ */
+async function addPushDeviceToken() {
   const token = await getSecureStoreKey("notificationToken");
-  Mixpanel.identify(userId);
   if (Platform.OS === "android") {
     Mixpanel.setPushRegistrationId(token);
   } else {
@@ -76,6 +111,9 @@ async function identifyUserMixpanel(userId) {
   }
 }
 
+/**
+ * Remove device push notification token from Mixpanel user
+ */
 async function logoutUserMixpanel() {
   const token = await getSecureStoreKey("notificationToken");
   await deleteSecureStoreKey(token);
@@ -88,7 +126,7 @@ async function logoutUserMixpanel() {
 
 export {
   initMixpanel,
-  identifyUserMixpanel,
+  engage,
   logoutUserMixpanel,
   sendEvent,
   getUserData,

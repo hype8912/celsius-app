@@ -22,7 +22,6 @@ import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModa
 import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { identifyUserMixpanel } from "../../../utils/mixpanel-util";
 
 @connect(
   state => {
@@ -86,7 +85,6 @@ class WalletLanding extends Component {
       appSettings,
       currenciesRates,
       currenciesGraphs,
-      user,
     } = this.props;
     actions.checkForLoanAlerts();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -108,8 +106,6 @@ class WalletLanding extends Component {
       actions.getCelsiusMemberStatus();
       this.shouldInitializeMembership = false;
     }
-    // TODO probably remove this line
-    identifyUserMixpanel(user.id);
 
     this.setWalletFetchingInterval();
   };
