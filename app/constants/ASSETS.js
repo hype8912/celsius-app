@@ -45,6 +45,9 @@ const FONTS = [
   {
     "Barlow-BlackItalic": require("../../assets/fonts/Barlow/Barlow-BlackItalic.ttf"),
   },
+  {
+    "RobotoMono-Regular": require("../../assets/fonts/Roboto-Mono/RobotoMono-Regular.ttf"),
+  },
 ];
 
 const WEIGHT = {

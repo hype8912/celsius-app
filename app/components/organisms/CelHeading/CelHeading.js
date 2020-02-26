@@ -17,6 +17,7 @@ import { THEMES } from "../../../constants/UI";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
+import HodlBanner from "../../molecules/HodlBanner/HodlBanner";
 
 @connect(
   state => ({
@@ -257,36 +258,40 @@ class CelHeading extends Component {
       ? [style.left, { flexDirection: "row", flex: 2 }]
       : style.left;
     return (
-      <View style={[style.content, paddings]}>
-        <View style={leftStyle}>
-          {this.getLeftContent(scene.options)}
-          {formData.activeSearch && scene.state.routeName !== "VerifyProfile" && (
-            <View
-              style={[
-                {
-                  width: "90%",
-                  justifyContent: "center",
-                  paddingTop: 20,
-                  alignSelf: "center",
-                  marginLeft: 12,
-                },
-              ]}
-            >
-              <CelInput
-                debounce
-                autoFocus={formData.activeSearch}
-                basic
-                margin="0 0 0 0"
-                field="search"
-                placeholder="Search..."
-                type="text"
-                value={this.props.formData.search}
-              />
-            </View>
-          )}
+      <View style={[style.container, paddings]}>
+        <HodlBanner status={false} />
+        <View style={[style.content]}>
+          <View style={leftStyle}>
+            {this.getLeftContent(scene.options)}
+            {formData.activeSearch &&
+              scene.state.routeName !== "VerifyProfile" && (
+                <View
+                  style={[
+                    {
+                      width: "90%",
+                      justifyContent: "center",
+                      paddingTop: 20,
+                      alignSelf: "center",
+                      marginLeft: 12,
+                    },
+                  ]}
+                >
+                  <CelInput
+                    debounce
+                    autoFocus={formData.activeSearch}
+                    basic
+                    margin="0 0 0 0"
+                    field="search"
+                    placeholder="Search..."
+                    type="text"
+                    value={this.props.formData.search}
+                  />
+                </View>
+              )}
+          </View>
+          {!formData.activeSearch && this.getCenterContent(scene.options)}
+          <View style={style.right}>{this.getRightContent(scene.options)}</View>
         </View>
-        {!formData.activeSearch && this.getCenterContent(scene.options)}
-        <View style={style.right}>{this.getRightContent(scene.options)}</View>
       </View>
     );
   };
