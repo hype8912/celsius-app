@@ -52,7 +52,7 @@ class HodlLanding extends Component {
               "Just keep in mind, we will give you a code to deactivate HODL mode and you will need to remember it.\n" +
               "\n"}
           </CelText>
-          <CelButton onPress={() => actions.navigateTo("HodlDisabledActions")}>
+          <CelButton onPress={() => actions.navigateTo("HODLInfoCheckboxes")}>
             Continue
           </CelButton>
         </View>
