@@ -15,6 +15,7 @@ const usersService = {
   twitterLogin,
   resetPassword,
   sendResetLink,
+  refreshAuthToken,
 
   // TODO move to user-security-service
   invalidateSession,
@@ -381,6 +382,14 @@ function setUserAppSettings(data) {
  */
 function getUserSecurityOverview() {
   return axios.get(`${apiUrl}/user/security_overview`);
+}
+
+/**
+ * Refreshes auth token for user
+ * @returns {Promise}
+ */
+function refreshAuthToken() {
+  return axios.post(`${apiUrl}/users/refresh_token`);
 }
 
 export default usersService;

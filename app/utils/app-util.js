@@ -7,6 +7,8 @@ import NetInfo from "@react-native-community/netinfo";
 import twitter from "react-native-simple-twitter";
 import appsFlyer from "react-native-appsflyer";
 import CodePush from "react-native-code-push";
+import jwtDecode from "jwt-decode";
+import moment from "moment";
 
 import Constants from "../../constants";
 import {
@@ -90,18 +92,49 @@ function initInternetConnectivityListener() {
 
 /**
  * Polls status of the backend app from /status every 30s
+ * @todo rename to poll data or something
  */
 const POLL_INTERVAL = 30 * 1000;
+let iteration = 0;
 let backendPollInterval;
 async function pollBackendStatus() {
   if (backendPollInterval) clearInterval(backendPollInterval);
+
   await store.dispatch(actions.getBackendStatus());
   await store.dispatch(actions.getKYCStatus());
+  await checkAndRefreshAuthToken();
 
   backendPollInterval = setInterval(async () => {
     await store.dispatch(actions.getBackendStatus());
     await store.dispatch(actions.getKYCStatus());
+    await checkAndRefreshAuthToken();
+
+    iteration++;
   }, POLL_INTERVAL);
+}
+
+/**
+ * Check if auth token is about too expire and refresh it from BE
+ * Check every 15min, or every 30 poll iterations
+ */
+async function checkAndRefreshAuthToken() {
+  if (iteration % 30 !== 0) return;
+
+  const EXPIRES_IN_MINS = 30;
+  const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+  if (!storageToken) return;
+
+  const decodedToken = jwtDecode(storageToken);
+  const expirationDate = decodedToken.exp
+    ? new Date(decodedToken.exp * 1000)
+    : new Date();
+  const isAboutToExpire = moment()
+    .add(EXPIRES_IN_MINS, "min")
+    .isAfter(moment(expirationDate));
+
+  if (isAboutToExpire) {
+    await store.dispatch(actions.refreshAuthToken());
+  }
 }
 
 /**
