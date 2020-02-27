@@ -110,6 +110,14 @@ class SecuritySettings extends Component {
           </IconButton>
         )}
 
+        <IconButton
+          onPress={() => actions.navigateTo("HodlLanding")}
+          // right={<Switcher />} hideIconRight
+          margin="0 0 20 0"
+        >
+          HODL mode
+        </IconButton>
+
         {!user.registered_with_social && (
           <IconButton
             margin="0 0 30 0"
