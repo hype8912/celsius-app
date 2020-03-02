@@ -3,6 +3,7 @@ import moment from "moment";
 import { sendEvent, setUserData, getUserData } from "../mixpanel-util";
 import store from "../../redux/store";
 import mixpanelService from "../../services/mixpanel-service";
+import appsFlyerUtil from "../appsflyer-util";
 
 const generalAnalytics = {
   buttonPressed,
@@ -14,7 +15,7 @@ const generalAnalytics = {
   appsflyerEvent,
   // TODO add appsflyer
   // TODO add app crushed
-}
+};
 
 let sessionTime = new moment();
 
@@ -42,10 +43,10 @@ function buttonPressed(button) {
 async function sessionStarted(trigger) {
   sessionTime = new moment();
 
-  let userData = getUserData()
+  let userData = getUserData();
   if (!userData.id) {
     setUserData(store.getState().user.profile);
-    userData = getUserData()
+    userData = getUserData();
   }
 
   await sendEvent("$create_alias", { alias: userData.id });
@@ -68,13 +69,14 @@ async function sessionStarted(trigger) {
     "Has SSN": !!userData.ssn,
   });
   sendEvent("Session started", { trigger });
+  appsFlyerUtil.setCustomerUserId(userData.id);
 }
 
 /**
  * Fires an event when a user ends the session - logout|app state to background
  */
 function sessionEnded(trigger) {
-  setUserData({})
+  setUserData({});
 
   const x = new moment();
   const sessionDuration = moment
@@ -105,5 +107,4 @@ async function appsflyerEvent(eventProps) {
   await sendEvent("Appsflyer event", eventProps);
 }
 
-
-export default generalAnalytics
+export default generalAnalytics;

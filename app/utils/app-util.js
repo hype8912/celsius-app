@@ -2,14 +2,14 @@
 // import * as Font from "expo-font";
 // import { Asset } from "expo-asset";
 import React from "react";
-import { Image, Platform } from "react-native";
+import { Image } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import twitter from "react-native-simple-twitter";
-import appsFlyer from "react-native-appsflyer";
 import CodePush from "react-native-code-push";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
 
+import appsFlyerUtil from "./appsflyer-util";
 import Constants from "../../constants";
 import {
   deleteSecureStoreKey,
@@ -20,15 +20,11 @@ import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import apiUtil from "./api-util";
-import loggerUtil from "./logger-util";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
   TWITTER_CUSTOMER_KEY,
   TWITTER_SECRET_KEY,
-  APPSFLYER_KEY_ANDROID,
-  APPSFLYER_KEY_IOS,
-  APPSFLYER_IOS_APP_ID,
 } = Constants;
 
 export default {
@@ -51,23 +47,7 @@ async function initializeThirdPartyServices() {
 
   apiUtil.initInterceptors();
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
-  const appsFlyerOptions = {
-    devKey:
-      Platform.OS === "android" ? APPSFLYER_KEY_ANDROID : APPSFLYER_KEY_IOS,
-  };
-
-  if (Platform.OS === "ios") {
-    appsFlyerOptions.appId = APPSFLYER_IOS_APP_ID;
-  }
-  await appsFlyer.initSdk(
-    appsFlyerOptions,
-    result => {
-      loggerUtil.log(result);
-    },
-    error => {
-      loggerUtil.err(error);
-    }
-  );
+  await appsFlyerUtil.initSDK();
 }
 
 /**

@@ -1,11 +1,11 @@
 import { Platform } from "react-native";
 import appsFlyer from "react-native-appsflyer";
+import Constants from "../../constants";
 
 import store from "../redux/store";
 import appUtil from "./app-util";
 import mixpanelAnalytics from "./mixpanel-analytics";
 import loggerUtil from "./logger-util";
-import constants from "../../constants";
 
 let advertisingId;
 
@@ -13,13 +13,60 @@ let revisionId = "";
 let version = "";
 
 const appInfo = { os: Platform.OS };
-const { ENV } = constants;
+const {
+  APPSFLYER_KEY_ANDROID,
+  APPSFLYER_KEY_IOS,
+  APPSFLYER_IOS_APP_ID,
+  ENV,
+} = Constants;
 
 const appsFlyerUtil = {
+  initSDK,
+  setCustomerUserId,
   registrationCompleted,
   kycStarted,
   loanApplied,
 };
+
+/**
+ * Initializes Appsflyer SDK only in Production
+ * Staging is not setup
+ */
+async function initSDK() {
+  if (ENV === "PRODUCTION") {
+    const appsFlyerOptions = {
+      devKey:
+        Platform.OS === "android" ? APPSFLYER_KEY_ANDROID : APPSFLYER_KEY_IOS,
+    };
+
+    if (Platform.OS === "ios") {
+      appsFlyerOptions.appId = APPSFLYER_IOS_APP_ID;
+    }
+
+    await appsFlyer.initSdk(
+      appsFlyerOptions,
+      result => {
+        loggerUtil.log(result);
+      },
+      error => {
+        loggerUtil.err(error);
+      }
+    );
+  }
+}
+
+/**
+ * Sets CUID for user
+ * Staging is not setup
+ * https://support.appsflyer.com/hc/en-us/articles/217108646-React-Native-plugin#additional-apis-11-user-identifiers
+ *
+ * @param {string} userId
+ */
+async function setCustomerUserId(userId) {
+  if (ENV === "PRODUCTION") {
+    appsFlyer.setCustomerUserId(userId, () => {});
+  }
+}
 
 /**
  * Send event attribution to appsflyer and forwared the event with response to mixpanel
@@ -49,7 +96,7 @@ async function appsFlyerEvent(event, payload) {
       ...appInfo,
       ...payload,
     });
-    mixpanelAnalytics.appsflyerEvent( {
+    mixpanelAnalytics.appsflyerEvent({
       event,
       payload,
       response,
