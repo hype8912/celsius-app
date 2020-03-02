@@ -13,7 +13,7 @@ class CoinPicker extends Component {
     coin: PropTypes.string,
     defaultSelected: PropTypes.string,
     availableCoins: PropTypes.instanceOf(Array).isRequired,
-    navigateTo: PropTypes.func,
+    navigateTo: PropTypes.func.isRequired,
     type: PropTypes.oneOf(["basic", "withIcon"]),
     onChange: PropTypes.func,
   };
@@ -27,6 +27,7 @@ class CoinPicker extends Component {
     super(props);
 
     const { type, coin, availableCoins } = props;
+
 
     let coinListFormatted = [];
     if (type === "withIcon") {
@@ -66,7 +67,7 @@ class CoinPicker extends Component {
     const icon = coin ? `Icon${coin}` : "StackedCoins";
     const label = coin
       ? coinListFormatted.find(c => c.value === coin) &&
-        coinListFormatted.find(c => c.value === coin).label
+      coinListFormatted.find(c => c.value === coin).label
       : "Choose a coin";
 
     switch (type) {
@@ -158,7 +159,7 @@ class CoinPicker extends Component {
 
   render() {
     const CoinPickerByType = this.renderByType;
-    return <CoinPickerByType />;
+    return <CoinPickerByType/>;
   }
 }
 

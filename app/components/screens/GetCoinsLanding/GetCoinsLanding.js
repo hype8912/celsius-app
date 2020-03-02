@@ -48,6 +48,7 @@ class GetCoinsLanding extends Component {
   render() {
     const { actions, kycStatus } = this.props;
 
+
     if (!hasPassedKYC()) {
       if (kycStatus !== KYC_STATUSES.pending) {
         return (
@@ -91,9 +92,9 @@ class GetCoinsLanding extends Component {
           disabled
         />
 
-        <SimplexPaymentsHistory />
+        <SimplexPaymentsHistory/>
 
-        <GetCoinsInfoModal actions={actions} />
+        <GetCoinsInfoModal actions={actions}/>
       </RegularLayout>
     );
   }

@@ -121,19 +121,19 @@ class SelectCoin extends Component {
         >
           <View style={itemStyle}>
             <View style={style.left}>
-              <Image source={image} style={{ width: 30, height: 30 }} />
+              <Image source={image} style={{ width: 30, height: 30 }}/>
               <CelText style={{ paddingLeft: 10 }}>
                 {item.name[0].toUpperCase() + item.name.slice(1)} ({item.short})
               </CelText>
             </View>
             {isActive && (
               <View style={style.right}>
-                <Icon width="26" height="26" name="GreenCheck" />
+                <Icon width="26" height="26" name="GreenCheck"/>
               </View>
             )}
           </View>
         </TouchableOpacity>
-        <Separator />
+        <Separator/>
       </React.Fragment>
     );
   };

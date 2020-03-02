@@ -281,6 +281,85 @@ const SIMPLEX_PAYMENT_STATUSES = {
   REFUNDED: "refunded",
 }
 
+const SIMPLEX_FIAT_CURRENCIES = [
+  {
+    label: "US Dollar (USD)",
+    value: "USD",
+  },
+  {
+    label: "Euro (EUR)",
+    value: "EUR",
+  },
+  {
+    label: "Japanese Yen (YEN)",
+    value: "JPY",
+  },
+  {
+    label: "Canadian Dollar (CAD)",
+    value: "CAD",
+  },
+  {
+    label: "British Pound (GBP)",
+    value: "GBP",
+  },
+  {
+    label: "Russian Ruble (RUB)",
+    value: "RUB",
+  },
+  {
+    label: "Australian Dollar (AUD)",
+    value: "AUD",
+  },
+  {
+    label: "South Korean Won (KRW)",
+    value: "KRW",
+  },
+  {
+    label: "Swiss Franc (CHF)",
+    value: "CHF",
+  },
+  {
+    label: "Czech Koruna (CZK)",
+    value: "CZK",
+  },
+  {
+    label: "Danish Krone (DKK)",
+    value: "DKK",
+  },
+  {
+    label: "Norwegian Krone (NOK)",
+    value: "NOK",
+  },
+  {
+    label: "New Zealand Dollar (NZD)",
+    value: "NZD",
+  },
+  {
+    label: "Polish Zloty (PLN)",
+    value: "PLN",
+  },
+  {
+    label: "Turkish Lira (TRY)",
+    value: "TRY",
+  },
+  {
+    label: "Swedish Krona (SEK)",
+    value: "SEK",
+  },
+  {
+    label: "South African Rand (ZAR)",
+    value: "ZAR",
+  },
+  {
+    label: "Hungarian Forint (HUF)",
+    value: "HUF",
+  },
+  {
+    label: "Israeli Sheqel (ILSå)",
+    value: "ILS",
+  },
+]
+
 export {
   BLOCKEXPLORERS,
   KYC_STATUSES,
@@ -298,4 +377,5 @@ export {
   LOAN_INTEREST_COINS,
   TOTAL_ASSETS_AMOUNT,
   SIMPLEX_PAYMENT_STATUSES,
+  SIMPLEX_FIAT_CURRENCIES,
 };
