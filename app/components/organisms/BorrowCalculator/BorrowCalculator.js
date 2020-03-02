@@ -120,10 +120,6 @@ class BorrowCalculator extends Component {
         label: (
           <CelText
             theme={themeModal}
-            weight={formData.termOfLoan === 6 ? "bold" : "300"}
-            color={
-              formData.termOfLoan === 6 ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
           >
             6M
           </CelText>
@@ -134,10 +130,6 @@ class BorrowCalculator extends Component {
         label: (
           <CelText
             theme={themeModal}
-            weight={formData.termOfLoan === 12 ? "bold" : "300"}
-            color={
-              formData.termOfLoan === 12 ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
           >
             1Y
           </CelText>
@@ -148,10 +140,6 @@ class BorrowCalculator extends Component {
         label: (
           <CelText
             theme={themeModal}
-            weight={formData.termOfLoan === 24 ? "bold" : "300"}
-            color={
-              formData.termOfLoan === 24 ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
           >
             2Y
           </CelText>
@@ -162,10 +150,6 @@ class BorrowCalculator extends Component {
         label: (
           <CelText
             theme={themeModal}
-            weight={formData.termOfLoan === 36 ? "bold" : "300"}
-            color={
-              formData.termOfLoan === 36 ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
           >
             3Y
           </CelText>
@@ -249,6 +233,7 @@ class BorrowCalculator extends Component {
             <CelText
               type={"H6"}
               align={"center"}
+              color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
             >
               Pay interest with {num.type}
             </CelText>
@@ -259,6 +244,7 @@ class BorrowCalculator extends Component {
                 type={textType}
                 weight={"bold"}
                 align={"center"}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
 
                 {num.apr}
@@ -266,7 +252,7 @@ class BorrowCalculator extends Component {
               <CelText
                 type={"H6"}
                 align={"center"}
-                color={STYLES.COLORS.MEDIUM_GRAY}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 APR
               </CelText>
@@ -276,13 +262,14 @@ class BorrowCalculator extends Component {
                 type={textType}
                 weight={"bold"}
                 align={"center"}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 {num.monthly}
               </CelText>
               <CelText
                 type={"H6"}
                 align={"center"}
-                color={STYLES.COLORS.MEDIUM_GRAY}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 Per Month
               </CelText>
@@ -292,13 +279,14 @@ class BorrowCalculator extends Component {
                 type={textType}
                 weight={"bold"}
                 align={"center"}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 {num.total}
               </CelText>
               <CelText
                 type={"H6"}
                 align={"center"}
-                color={STYLES.COLORS.MEDIUM_GRAY}
+                color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
               >
                 Total
               </CelText>
