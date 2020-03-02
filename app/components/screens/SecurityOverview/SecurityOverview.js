@@ -10,6 +10,7 @@ import Separator from "../../atoms/Separator/Separator";
 import Loader from "../../atoms/Loader/Loader";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ToggleInfoCard from "../../molecules/ToggleInfoCard/ToggleInfoCard";
+import SecurityScoreGauge from "../../atoms/SecurityScoreGauge/SecurityScoreGauge";
 
 @connect(
   state => ({
@@ -44,6 +45,7 @@ class SecurityOverview extends Component {
     return (
       <RegularLayout>
         <View style={{ flex: 1 }}>
+          <SecurityScoreGauge level={"4"} />
           <Separator text="2FA VERIFICATION i" />
           <ToggleInfoCard
             mode={"toggle"}
