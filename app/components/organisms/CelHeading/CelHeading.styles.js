@@ -12,6 +12,9 @@ import STYLES from "../../../constants/STYLES";
 const headerHeight = 60;
 
 const base = {
+  container: {
+    alignItems: "center",
+  },
   content: {
     width: "100%",
     justifyContent: "center",
@@ -39,7 +42,7 @@ const base = {
   },
   lefContentButton: {
     marginTop: 15,
-    height: 30
+    height: 30,
   },
   right: {
     alignItems: "flex-end",

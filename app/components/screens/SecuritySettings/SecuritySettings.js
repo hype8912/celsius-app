@@ -46,6 +46,7 @@ class SecuritySettings extends Component {
 
     this.state = {
       is2FAEnabled: false,
+      isInHodlMode: false,
     };
   }
 
@@ -59,14 +60,17 @@ class SecuritySettings extends Component {
     await actions.logoutFromAllDevices();
   };
 
-  rightSwitch = () => {
+  rightSwitch2FA = () => {
     const { is2FAEnabled } = this.state;
     return (
-      <CelSwitch onValueChange={this.handleSwitchChange} value={is2FAEnabled} />
+      <CelSwitch
+        onValueChange={this.handleSwitchChange2FA}
+        value={is2FAEnabled}
+      />
     );
   };
 
-  handleSwitchChange = () => {
+  handleSwitchChange2FA = () => {
     const { is2FAEnabled } = this.state;
     const { actions } = this.props;
 
@@ -87,13 +91,29 @@ class SecuritySettings extends Component {
     }
   };
 
+  rightSwitchHodl = () => {
+    const { isInHodlMode } = this.state;
+    return (
+      <CelSwitch
+        onValueChange={this.handleSwitchChangeHodl}
+        value={isInHodlMode}
+      />
+    );
+  };
+
+  handleSwitchChangeHodl = () => {
+    const { actions } = this.props;
+    actions.navigateTo("HodlLanding");
+  };
+
   render() {
     const { actions, is2FAEnabled, user, kycStatus } = this.props;
-    const Switcher = this.rightSwitch;
+    const Switcher2FA = this.rightSwitch2FA;
+    const SwitcherHodl = this.rightSwitchHodl;
 
     return (
       <RegularLayout>
-        <IconButton margin={"20 0 20 0"} right={<Switcher />} hideIconRight>
+        <IconButton margin={"20 0 20 0"} right={<Switcher2FA />} hideIconRight>
           Two-Factor Authentication
         </IconButton>
 
@@ -110,11 +130,7 @@ class SecuritySettings extends Component {
           </IconButton>
         )}
 
-        <IconButton
-          onPress={() => actions.navigateTo("HodlLanding")}
-          // right={<Switcher />} hideIconRight
-          margin="0 0 20 0"
-        >
+        <IconButton right={<SwitcherHodl />} hideIconRight margin="0 0 20 0">
           HODL mode
         </IconButton>
 

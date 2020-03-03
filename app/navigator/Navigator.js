@@ -99,8 +99,10 @@ import QRScanner from "../components/screens/QRScanner/QRScanner";
 import HODLInfoCheckboxes from "../components/screens/HODLInfoCheckboxes/HODLInfoCheckboxes";
 import HodlLanding from "../components/screens/HodlLanding/HodlLanding";
 import HODLViewCode from "../components/screens/HODLViewCode/HODLViewCode";
+import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/HodlDeactivationCode";
 
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
+import HodlDeactivateInfoCheckboxes from "../components/screens/HodlDeactivateInfoCheckboxes/HodlDeactivateInfoCheckboxes";
 
 export const screens = {
   /**
@@ -248,6 +250,8 @@ export const screens = {
   HODLViewCode,
   HodlLanding,
   HODLInfoCheckboxes,
+  HodlDeactivationCode,
+  HodlDeactivateInfoCheckboxes,
 
   /**
    * Camera

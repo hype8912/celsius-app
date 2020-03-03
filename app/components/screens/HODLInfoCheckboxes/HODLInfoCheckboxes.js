@@ -103,7 +103,10 @@ class HODLInfoCheckboxes extends Component {
             disabled={!canContinue}
             onPress={() =>
               actions.navigateTo("VerifyProfile", {
-                onSuccess: () => actions.beginHodlMode(),
+                onSuccess: () => {
+                  actions.navigateTo("HODLViewCode");
+                  actions.beginHodlMode();
+                },
               })
             }
           >
