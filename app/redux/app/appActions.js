@@ -1,4 +1,7 @@
+// TODO(sb): RN update dependencies fixes
+// import * as Location from "expo-location";
 import { Platform } from "react-native";
+// import RNAdvertisingId from "react-native-advertising";
 import { IDFA } from "react-native-idfa";
 import appsFlyer from "react-native-appsflyer";
 import Geolocation from "@react-native-community/geolocation";
@@ -11,7 +14,7 @@ import {
   getSecureStoreKey,
   deleteSecureStoreKey,
 } from "../../utils/expo-storage";
-import { TRANSFER_STATUSES } from "../../constants/DATA";
+import { BRANCH_LINKS, TRANSFER_STATUSES } from "../../constants/DATA";
 import ACTIONS from "../../constants/ACTIONS";
 import { registerForPushNotificationsAsync } from "../../utils/push-notifications-util";
 import appUtil from "../../utils/app-util";
@@ -129,6 +132,17 @@ const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData(
   }
 );
 
+const onAppOpenAttributionCanceller = appsFlyer.onAppOpenAttribution(res => {
+  const { data } = res;
+  switch (data.type) {
+    case BRANCH_LINKS.NAVIGATE_TO:
+      store.dispatch(actions.navigateTo(data.screen));
+      break;
+    default:
+      break;
+  }
+});
+
 /**
  * Handles state change of the app
  * @param {string} nextAppState - one of active|inactive|background
@@ -149,11 +163,16 @@ function handleAppStateChange(nextAppState) {
       }
     }
 
+    // if (nextAppState.match(/inactive|background/) && profile && profile.has_pin && appState === "active") {
     if (nextAppState.match(/inactive|background/) && appState === "active") {
       // ONLY FOR DEBUG PURPOSE
       if (onInstallConversionDataCanceller) {
         onInstallConversionDataCanceller();
         loggerUtil.log("unregister onInstallConversionDataCanceller");
+      }
+      if (onAppOpenAttributionCanceller) {
+        onAppOpenAttributionCanceller();
+        loggerUtil.log("unregister onAppOpenAttributionCanceller");
       }
     }
 
