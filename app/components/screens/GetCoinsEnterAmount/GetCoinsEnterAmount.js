@@ -17,7 +17,6 @@ import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConf
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { SIMPLEX_FIAT_CURRENCIES } from "../../../constants/DATA";
-import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
 import Spinner from "../../atoms/Spinner/Spinner";
 
 @connect(
@@ -203,14 +202,15 @@ class GetCoinsEnterAmount extends Component {
             >
               PAY WITH
             </CelText>
-            <SimpleSelect
-              style={{ color: STYLES.COLORS.WHITE_OPACITY5 }}
-              items={SIMPLEX_FIAT_CURRENCIES}
-              field="fiatCoin"
-              displayValue={formData.fiatCoin || "USD"}
+            <CoinPicker
+              type={"basic"}
+              updateFormField={actions.updateFormField}
               onChange={this.handleFiatCoinSelect}
-              placeholder={"Choose a coin"}
-              fillColor={STYLES.COLORS.WHITE_OPACITY5}
+              coin={formData.fiatCoin}
+              field="fiatCoin"
+              defaultSelected={formData.fiatCoin || "USD"}
+              availableCoins={SIMPLEX_FIAT_CURRENCIES}
+              navigateTo={actions.navigateTo}
             />
           </View>
           {isFetchingQuotes && !formData.isFiat ? (
