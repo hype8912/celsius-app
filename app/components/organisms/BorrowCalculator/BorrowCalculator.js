@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -112,7 +112,7 @@ class BorrowCalculator extends Component {
   };
 
   updateSliderItems = () => {
-    const { formData, themeModal } = this.props;
+    const { themeModal } = this.props;
 
     this.sliderItems = [
       {
@@ -314,7 +314,7 @@ class BorrowCalculator extends Component {
 
     const themeColors = this.getThemeColors();
 
-    const sortedLtv = ltv.sort((a, b) => a.interest < b.interest);
+    const sortedLtv = ltv.sort((a, b) => a.interest > b.interest);
 
     return (
       <View style={style.container}>
