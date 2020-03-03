@@ -1,0 +1,38 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { View } from 'react-native';
+
+import {{pascalCase name}}Style from "./{{pascalCase name}}.styles";
+
+class {{pascalCase name}} extends Component {
+
+  static propTypes = {
+    // text: PropTypes.string
+  };
+  static defaultProps = {
+  }
+  
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      // initial state
+    };
+
+    // binders
+  }
+
+  // lifecycle methods
+  // event hanlders
+  // rendering methods
+  render() {
+    const style = {{pascalCase name}}Style()
+    return (
+      <View style={style.container}>
+        <{{pascalCase name}} />
+      </View>
+    );
+  }
+}
+
+export default {{pascalCase name}}

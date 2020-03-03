@@ -1,0 +1,5 @@
+const {{camelCase name}} = {
+    // util methods
+}
+
+export default {{camelCase name}};

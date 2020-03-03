@@ -1,0 +1,12 @@
+import ACTIONS from '../../constants/ACTIONS';
+
+export {
+//  testAction
+}
+
+// function testAction(payload) {
+//     return {
+//         type: ACTIONS.TEST_ACTION,
+//         payload,
+//     };
+// }

@@ -1,129 +1,99 @@
-import React, {Component} from 'react';
-import {Asset, AppLoading, Font, Permissions} from 'expo';
-import {Provider} from 'react-redux';
-import {Image} from 'react-native';
-import wc from 'which-country';
-import twitter from 'react-native-simple-twitter';
-import Sentry from 'sentry-expo';
-import {TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY, SENTRY, SECURITY_STORAGE_AUTH_KEY} from 'react-native-dotenv'
+// TODO(fj): init segment in app actions (removed from App.v2.js)
+// TODO(fj): move handle app state change to app action (removed logic from App.v2.js)
+// TODO(fj): move app loading assets to app action (removed logic from App.v2.js)
+// TODO(fj): merge App and MainLayout?
 
-import configureStore from './config/configureStore';
-import apiUtil from './utils/api-util';
-import * as actions from './redux/actions';
-import MainLayout from './layout/MainLayout';
-import {CACHE_IMAGES, FONTS} from "./config/constants/style";
-import {getSecureStoreKey, deleteSecureStoreKey, setSecureStoreKey} from "./utils/expo-storage";
-import baseUrl from "./services/api-url";
+// TODO(fj): create offline and no internet screens or a static screen with type?
 
-Sentry.config(SENTRY).install();
+import React, { Component } from "react";
+import { AppLoading } from "expo";
+import { Provider } from "react-redux";
+import { AppState, BackHandler } from "react-native";
 
-const store = configureStore();
+import store from "./redux/store";
+import * as actions from "./redux/actions";
+import appUtil from "./utils/app-util";
+import AppNavigation from "./navigator/Navigator";
+import FabMenu from "./components/organisms/FabMenu/FabMenu";
+import Message from "./components/molecules/Message/Message";
+import captureException from "./utils/errorhandling-util";
+import ErrorBoundary from "./ErrorBoundary";
 
-// Initialize axios interceptors
-apiUtil.initInterceptors();
+appUtil.initializeThirdPartyServices();
 
-// For images that saved to the local filesytem,
-// use Expo.Asset.fromModule(image).downloadAsync()
-// to download and cache the image.
-// There is also a loadAsync() helper method to cache a batch of assets.
-// For web images, use Image.prefetch(image).
-// Continue referencing the image normally,
-// e.g. with <Image source={require('path/to/image.png')} />
-function cacheImages(images) {
-  return images.map(image => {
-    if (typeof image === 'string') {
-      return Image.prefetch(image);
-    }
-
-    return Asset.fromModule(image).downloadAsync();
-  });
+function getActiveRouteName(navigationState) {
+  if (!navigationState) {
+    return null;
+  }
+  const route = navigationState.routes[navigationState.index];
+  // dive into nested navigators
+  if (route.routes) {
+    return getActiveRouteName(route);
+  }
+  return route.routeName;
 }
-
-// Fonts are preloaded using Expo.Font.loadAsync(font).
-// The font argument in this case is an object such as the following:
-// {agile-medium: require('../assets/fonts/Agile-Medium.otf')}.
-function cacheFonts(fonts) {
-  return fonts.map(font => Font.loadAsync(font));
-}
-
 
 export default class App extends Component {
-  // Init Application
-  static async initApp() {
-    await App.loadAssetsAsync();
-
-    if (!SECURITY_STORAGE_AUTH_KEY) {
-      console.error('NO SECURITY_STORAGE_AUTH_KEY')
-    }
-
-    // logout user if backend environment has changed
-    const previousBaseUrl = await getSecureStoreKey('BASE_URL');
-    if (previousBaseUrl !== baseUrl) {
-      await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-      await setSecureStoreKey('BASE_URL', baseUrl);
-    }
-
-    // get user token
-    const token = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-    // get user from db
-    if (token) await store.dispatch(actions.getLoggedInBorrower());
-
-    // init twitter login service
-    twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
-
-    const { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status === 'granted') {
-      navigator.geolocation.getCurrentPosition(
-        pos => pos ? store.dispatch(actions.setUserLocation(wc([pos.coords.longitude, pos.coords.latitude]))) : null
-      );
-    }
-  }
-
-  // Assets are cached differently depending on where
-  // they’re stored and how they’re used.
-  static async loadAssetsAsync() {
-    const imageAssets = cacheImages(CACHE_IMAGES);
-
-    const fontAssets = cacheFonts(FONTS);
-
-    await Promise.all([...imageAssets, ...fontAssets]);
-  }
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       isReady: false,
     };
   }
 
-  render() {
-    if (!this.state.isReady) {
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+      store.dispatch(actions.navigateBack())
+      return true
+    });
+    AppState.addEventListener("change", (nextState) => store.dispatch(actions.handleAppStateChange(nextState)));
+  }
 
-      // A React component that tells Expo to keep the app loading screen open
-      // if it is the first and only component rendered in your app. When it
-      // is removed, the loading screen will disappear
-      // and your app will be visible.
-      //
-      // This is incredibly useful to let you download and cache fonts,
-      // logo and icon images and other assets that you want to be sure the
-      // user has on their device for an optimal experience
-      // before rendering they start using the app.
-      return (
-        <AppLoading
-          startAsync={App.initApp}
-          onFinish={() => this.setState({isReady: true})}
-          /* eslint-disable no-console */
-          onError={console.warn}
-          /* eslint-disable no-console */
-        />
-      );
-    }
+  componentWillUnmount() {
+    this.backHandler.remove();
+    AppState.removeEventListener("change",  (nextState) => store.dispatch(actions.handleAppStateChange(nextState)));
+  }
+
+  initApp = async () => await store.dispatch(await actions.loadCelsiusAssets());
+
+  render() {
+    const { isReady } = this.state;
 
     return (
-      <Provider store={store}>
-        <MainLayout/>
-      </Provider>
+      <ErrorBoundary>
+        {!isReady ? (
+          <AppLoading
+            startAsync={this.initApp}
+            onFinish={() => this.setState({ isReady: true })}
+            onError={error => captureException(error)}
+          />
+        ) : (
+          <CelsiusApplication/>
+        )}
+      </ErrorBoundary>
     );
   }
 }
+
+const CelsiusApplication = () => (
+  <Provider store={store}>
+    <React.Fragment>
+      <AppNavigation
+        onNavigationStateChange={(prevState, currentState) => {
+          const currentScreen = getActiveRouteName(currentState);
+          const prevScreen = getActiveRouteName(prevState);
+
+          if (prevScreen !== currentScreen) {
+            store.dispatch(actions.setActiveScreen(currentScreen));
+          }
+        }}
+        ref={navigatorRef => actions.setTopLevelNavigator(navigatorRef)}
+      />
+      <Message/>
+      <FabMenu/>
+    </React.Fragment>
+  </Provider>
+);
+
+

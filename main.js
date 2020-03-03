@@ -1,5 +1,9 @@
-import Expo from 'expo';
-
+import React, { Component } from 'react';
+import * as Expo from 'expo';
 import App from './app/App';
 
-Expo.registerRootComponent(App);
+export default class AppWrapper extends Component {
+  render = () => <App />
+}
+
+Expo.registerRootComponent(AppWrapper);

@@ -1,15 +1,16 @@
 {
   "expo": {
-    "name": "Celsius",
+    "name": "Celsius Network",
     "description": "P2P Decentralized Lending & Borrowing for Cryptocurrency",
     "slug": "celsius",
+    "scheme": "cel",
     "privacy": "public",
-    "sdkVersion": "25.0.0",
+    "sdkVersion": "32.0.0",
     "platforms": [
       "ios",
       "android"
     ],
-    "version": "1.1.1",
+    "version": "",
     "orientation": "portrait",
     "icon": "./assets/images/icons/icon@2x.png",
     "splash": {
@@ -17,36 +18,75 @@
       "backgroundColor": "#4156A6",
       "resizeMode": "cover"
     },
+    "notification": {
+      "icon": "./assets/images/icons/icon-notification.png"
+    },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "network.celsius.borrower",
+      "bundleIdentifier": "",
+      "buildNumber": "",
+      "icon": "./assets/images/icons/app_icon@2x.png",
+      "infoPlist": {
+        "NSLocationAlwaysUsageDescription": "We'd like to use your location data in order to determine what country you're from - is that ok?",
+        "NSCameraUsageDescription": "We'd like to use your camera in order to proceed with taking a picture - is that ok?",
+        "NSLocationWhenInUseUsageDescription": "We'd like to use your location data in order to determine what country you're from - is that ok?"
+      },
       "config": {
         "googleSignIn": {
-          "reservedClientId": "your reverse google client id"
+          "reservedClientId": ""
+        },
+        "branch": {
+          "apiKey": ""
         }
       }
     },
     "android": {
-      "package": "network.celsius.borrower",
+      "package": "",
+      "versionCode": "",
       "config": {
-        "googleSignIn": {
-          "apiKey": "your api key",
-          "certificateHash": "your hash"
+        "branch": {
+          "apiKey": ""
         }
       },
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
-    },
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "your organization short name",
-            "project": "your project short name",
-            "authToken": "your sentry auth token"
-          }
-        }
+      "icon": "./assets/images/icons/app_icon@2x.png",
+      "adaptiveIcon" : {
+        "foregroundImage": "./assets/images/icons/app_icon@3x.png",
+        "backgroundColor": "#4156A6"
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
       ]
+    },
+    "hooks": {},
+    "extra": {
+      "ENV": "",
+      "CLIENT_VERSION": "",
+      "SECURITY_STORAGE_AUTH_KEY": "",
+      "API_URL": "",
+      "PUBLIC_KEY": "",
+
+      "GOOGLE_WEB_CLIENT_ID": "",
+      "GOOGLE_ANDROID_CLIENT_ID": "",
+      "GOOGLE_IOS_CLIENT_ID": "",
+      "GOOGLE_URL": "",
+      "GOOGLE_CLIENT_ID": "",
+
+      "FACEBOOK_APP_ID": "",
+      "FACEBOOK_URL": "",
+
+      "TWITTER_CUSTOMER_KEY": "",
+      "TWITTER_SECRET_KEY": "",
+
+      "MIXPANEL_TOKEN": "",
+      "BRANCH_KEY": "",
+      "SEGMENT_ANDROID_KEY": "",
+      "SEGMENT_IOS_KEY": "",
+
+      "MIN_LOAN_AMOUNT": ""
     }
   }
 }

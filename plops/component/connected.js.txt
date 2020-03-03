@@ -1,0 +1,40 @@
+import React, { Component } from 'react';
+import { View } from 'react-native';
+// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+
+import * as appActions from "../../../redux/actions";
+import {{pascalCase name}}Style from "./{{pascalCase name}}.styles";
+import CelText from '../../atoms/CelText/CelText';
+
+@connect(
+  state => ({
+
+  }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) }),
+)
+class {{pascalCase name}} extends Component {
+
+  static propTypes = {
+    // text: PropTypes.string
+  };
+  static defaultProps = {
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    const style = {{pascalCase name}}Style();
+    return (
+      <View style={style.container}>
+        <CelText>Hello {{pascalCase name}}</CelText>
+      </View>
+    );
+  }
+}
+
+export default {{pascalCase name}}

@@ -3,5 +3,10 @@
     "equimper",
     "prettier/react",
     "prettier"
-  ]
+  ],
+  "rules": {
+    "default-case": 1,
+    "no-console": 2,
+    "react/no-array-index-key": 1
+  }
 }

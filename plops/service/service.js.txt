@@ -1,0 +1,33 @@
+import axios from 'axios';
+import apiUrl from './api-url';
+
+const {{camelCase name}}Service = {
+  // getAll,
+  // get,
+  // create,
+  // update,
+  // remove,
+};
+
+// function getAll() {
+//   return axios.get(`${apiUrl}/{{snakeCase name}}`);
+// }
+
+// function get(id) {
+//   return axios.get(`${apiUrl}/{{snakeCase name}}/${id}`);
+// }
+
+// function create(item) {
+//   return axios.post(`${apiUrl}/{{snakeCase name}}`, item);
+// }
+
+// function update(item) {
+//   return axios.put(`${apiUrl}/{{snakeCase name}}/${item.id}`, item);
+// }
+
+// function remove(id) {
+//   return axios.delete(`${apiUrl}/{{snakeCase name}}/${id}`);
+// }
+
+
+export default {{camelCase name}}Service;
