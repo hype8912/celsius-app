@@ -1,24 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { Image, View } from "react-native";
 
 import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
-import * as appActions from "../../../redux/actions";
 // import { getTheme } from "../../../utils/styles-util";
-import SingleScoreGaugeStyle from "./SecurityScoreGauge.styles";
+import SecurityScoreGaugeStyle from "./SecurityScoreGauge.styles";
 import CelButton from "../CelButton/CelButton";
 // import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
-@connect(
-  state => ({
-    interestRates: state.generalData.interestRates,
-  }),
-  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
-)
-class SwitchScoreGauge extends Component {
+class SecurityScoreGauge extends Component {
   static propTypes = {
     subtitle: PropTypes.string,
     onPress: PropTypes.func,
@@ -60,7 +51,7 @@ class SwitchScoreGauge extends Component {
   // TODO Change "3/7" in CelText with prop from backend or Redux
   render() {
     // const theme = getTheme();
-    const style = SingleScoreGaugeStyle();
+    const style = SecurityScoreGaugeStyle();
     const gaugeProps = this.getGaugeProps();
 
     if (!gaugeProps) return null;
@@ -97,4 +88,4 @@ class SwitchScoreGauge extends Component {
   }
 }
 
-export default SwitchScoreGauge;
+export default SecurityScoreGauge;

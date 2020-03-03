@@ -33,6 +33,6 @@ const themed = {
   celsius: {},
 };
 
-const SingleScoreGaugeStyle = () => getThemedStyle(base, themed);
+const SecurityScoreGaugeStyle = () => getThemedStyle(base, themed);
 
-export default SingleScoreGaugeStyle;
+export default SecurityScoreGaugeStyle;
