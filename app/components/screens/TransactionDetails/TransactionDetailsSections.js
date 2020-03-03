@@ -24,7 +24,7 @@ export const InfoSection = ({ transaction, transactionProps }) => (
       }}
     >
       <Icon
-        width="12"
+        width={transaction.amount_usd ? "12" : "24"}
         fill={transactionProps.color}
         name={transactionProps.iconName}
         style={{ marginRight: 5 }}
@@ -43,7 +43,12 @@ export const InfoSection = ({ transaction, transactionProps }) => (
       color={STYLES.COLORS.MEDIUM_GRAY}
       type="H3"
       align="center"
-    >{`${formatter.usd(transaction.amount_usd)} USD`}</CelText>
+    >
+      {transaction.amount_usd ?
+        formatter.usd(transaction.amount_usd) :
+        `${formatter.fiat(transaction.fiat_amount, transaction.fiat_currency)}`
+      }
+    </CelText>
   </View>
 );
 
@@ -59,47 +64,47 @@ export const BasicSection = ({ label, value, noSeparator = false }) => (
       <CelText type="H6">{label}:</CelText>
       <CelText type="H6">{value}</CelText>
     </View>
-    {!noSeparator && <Separator />}
+    {!noSeparator && <Separator/>}
   </View>
 );
 
 export const BasicCardSection = ({ label, value, coin, monthly, total }) => {
   const coinSize = coin === 'USDT ERC20' ? "H6" : "H4";
   return (
-  <View style={{ width: "100%", paddingHorizontal: 20 }}>
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingVertical: 20,
-      }}
-    >
-      <CelText type="H6">{label}:</CelText>
-      <CelText type="H6">{`${formatter.percentage(value)} %`}</CelText>
-    </View>
-    <Card>
-      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <View>
-          <CelText type={"H6"}>Monthly Interest</CelText>
-          <CelText type={coinSize} weight={"600"}>
-            {" "}
-            {formatter.crypto(monthly, coin.toUpperCase(), { precision: 2 })}
-          </CelText>
-        </View>
-        <Separator vertical/>
-        <View>
-          <CelText type={"H6"}>Total Interest</CelText>
-          <CelText
-            color={STYLES.COLORS.CELSIUS_BLUE}
-            type={coinSize}
-            weight={"600"}
-          >
-            {formatter.crypto(total, coin.toUpperCase(), { precision: 2 })}
-          </CelText>
-        </View>
+    <View style={{ width: "100%", paddingHorizontal: 20 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          paddingVertical: 20,
+        }}
+      >
+        <CelText type="H6">{label}:</CelText>
+        <CelText type="H6">{`${formatter.percentage(value)} %`}</CelText>
       </View>
-    </Card>
-  </View>
+      <Card>
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <View>
+            <CelText type={"H6"}>Monthly Interest</CelText>
+            <CelText type={coinSize} weight={"600"}>
+              {" "}
+              {formatter.crypto(monthly, coin.toUpperCase(), { precision: 2 })}
+            </CelText>
+          </View>
+          <Separator vertical/>
+          <View>
+            <CelText type={"H6"}>Total Interest</CelText>
+            <CelText
+              color={STYLES.COLORS.CELSIUS_BLUE}
+              type={coinSize}
+              weight={"600"}
+            >
+              {formatter.crypto(total, coin.toUpperCase(), { precision: 2 })}
+            </CelText>
+          </View>
+        </View>
+      </Card>
+    </View>
   )
 };
 
@@ -117,13 +122,13 @@ export const CollateralSection = ({ coinAmount, coin }) => (
 );
 
 export const CardSection = ({
-  coinAmount,
-  coin,
-  cardText,
-  amount,
-  title,
-  noSeparator = false,
-}) => (
+                              coinAmount,
+                              coin,
+                              cardText,
+                              amount,
+                              title,
+                              noSeparator = false,
+                            }) => (
   <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
       <CelText type="H6" margin="0 0 10 0">
@@ -141,7 +146,7 @@ export const CardSection = ({
         <CelText type={"H6"}>{cardText}</CelText>
       </Card>
     )}
-    {!noSeparator && <Separator />}
+    {!noSeparator && <Separator/>}
   </View>
 );
 
@@ -159,7 +164,7 @@ export const StatusSection = ({ transactionProps, noSeparator = false }) => (
         {transactionProps.statusText}
       </CelText>
     </View>
-    {!noSeparator && <Separator />}
+    {!noSeparator && <Separator/>}
   </View>
 );
 
@@ -803,7 +808,8 @@ export const InterestSection = ({ interestEarned }) => (
 
 export const LoanInfoSection = ({ navigateTo }) => (
   <Card>
-    <ContactSupport copy="Your loan application was rejected, please apply for a new loan or contact our support at app@celsius.network for more details." />
+    <ContactSupport
+      copy="Your loan application was rejected, please apply for a new loan or contact our support at app@celsius.network for more details."/>
 
     <CelButton margin="16 0 10 0" onPress={() => navigateTo("Borrow")}>
       Apply for another loan
@@ -845,7 +851,7 @@ export const MarginCall = ({ transaction }) => (
         notification asking for additional collateral.
       </CelText>
     </Card>
-    <Separator margin="20 0 20 0" />
+    <Separator margin="20 0 20 0"/>
   </View>
 );
 

@@ -16,7 +16,8 @@ class TransactionRow extends Component {
     index: PropTypes.number.isRequired,
   };
   static defaultProps = {
-    onPress: () => {},
+    onPress: () => {
+    },
   };
 
   constructor(props) {
@@ -42,11 +43,14 @@ class TransactionRow extends Component {
       <View>
         <TouchableOpacity style={style.container} onPress={onPress}>
           <View style={style.leftSide}>
-            <Icon name={iconName} height="16" width="16" fill={color} />
+            <Icon name={iconName} height="16" width="16" fill={color}/>
             <View style={style.amounts}>
               <View>
                 <CelText weight="600" type="H3">
-                  {formatter.usd(transaction.amount_usd)}
+                  {transaction.amount_usd ?
+                    formatter.usd(transaction.amount_usd) :
+                    formatter.fiat(transaction.fiat_amount, transaction.fiat_currency)
+                  }
                 </CelText>
               </View>
               <View>
@@ -74,7 +78,7 @@ class TransactionRow extends Component {
             </View>
           </View>
         </TouchableOpacity>
-        {count - 1 !== index && <Separator />}
+        {count - 1 !== index && <Separator/>}
       </View>
     );
   }

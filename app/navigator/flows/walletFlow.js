@@ -22,6 +22,7 @@ import { profileFlow } from "./profileFlow";
 import { depositFlow } from "./depositFlow";
 import { borrowFlow } from "./borrowFlow";
 import InterestRates from "../../components/screens/InterestRates/InterestRates";
+import GetCoinsTransactionDetails from "../../components/screens/GetCoinsTransactionDetails/GetCoinsTransactionDetails";
 
 export const walletFlow = {
   screens: {
@@ -34,6 +35,7 @@ export const walletFlow = {
     Community,
     GetCoinsLanding,
     GetCoinsEnterAmount,
+    GetCoinsTransactionDetails,
     MyCel,
     Simplex,
     InterestCalculator: InterestCalculatorScreen,

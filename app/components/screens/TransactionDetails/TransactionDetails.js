@@ -116,8 +116,8 @@ class TransactionDetails extends Component {
 
     await Share.share({
       message: `Join Celsius Network using my referral code ${user.individual_referral_link &&
-        user.individual_referral_link.split("/")[
-          user.individual_referral_link.split("/").length - 1
+      user.individual_referral_link.split("/")[
+      user.individual_referral_link.split("/").length - 1
         ]} when signing up and earn $10 in BTC with your first deposit of $200 or more! #UnbankYourself \n \n${
         user.individual_referral_link
       }`,
@@ -325,7 +325,7 @@ class TransactionDetails extends Component {
         );
       case "loan:rejected":
         return (
-          <LoanInfoSection key={sectionType} navigateTo={actions.navigateTo} />
+          <LoanInfoSection key={sectionType} navigateTo={actions.navigateTo}/>
         );
       // TODO(sb): Value need to be changed
       case "loan:date":
@@ -402,7 +402,7 @@ class TransactionDetails extends Component {
           />
         );
       case "type":
-        return <BasicSection key={sectionType} label="Type" value="CelPay" />;
+        return <BasicSection key={sectionType} label="Type" value="CelPay"/>;
       case "transactionId":
         return (
           <TransactionSection
@@ -485,11 +485,11 @@ class TransactionDetails extends Component {
           />
         );
       case "disclaimer":
-        return <Disclaimer key={sectionType} transaction={transaction} />;
+        return <Disclaimer key={sectionType} transaction={transaction}/>;
       case "margin":
-        return <MarginCall key={sectionType} transaction={transaction} />;
+        return <MarginCall key={sectionType} transaction={transaction}/>;
       case "liquidation":
-        return <Liquidation key={sectionType} transaction={transaction} />;
+        return <Liquidation key={sectionType} transaction={transaction}/>;
       case "collateral:date:unlocked":
         return (
           <BasicSection
@@ -509,7 +509,7 @@ class TransactionDetails extends Component {
           />
         );
       case "collateral:unlock:reason":
-        return <UnlockReason key={sectionType} transaction={transaction} />;
+        return <UnlockReason key={sectionType} transaction={transaction}/>;
       case "collateral:date:liquidated":
         return (
           <BasicSection
@@ -537,7 +537,7 @@ class TransactionDetails extends Component {
           />
         );
       case "margin:call:card":
-        return <MarginCallCard key={sectionType} />;
+        return <MarginCallCard key={sectionType}/>;
       case "change:payment:card":
         return (
           transaction.coin !== "cel" && (
@@ -553,7 +553,7 @@ class TransactionDetails extends Component {
           )
         );
       case "info:box":
-        return <SsnInfo key={sectionType} navigateTo={actions.navigateTo} />;
+        return <SsnInfo key={sectionType} navigateTo={actions.navigateTo}/>;
       case "card:share:link":
         return <SendCelPayLinkCard transaction={transaction} key={sectionType}/>;
       default:
@@ -576,7 +576,7 @@ class TransactionDetails extends Component {
     )
       return (
         <RegularLayout padding="0 0 0 0">
-          <LoadingState />
+          <LoadingState/>
         </RegularLayout>
       );
 
@@ -584,7 +584,7 @@ class TransactionDetails extends Component {
     return (
       <RegularLayout padding="0 0 120 0">
         {sections.map(this.renderSection)}
-        <PrepaymentSuccessfulModal />
+        <PrepaymentSuccessfulModal/>
       </RegularLayout>
     );
   }

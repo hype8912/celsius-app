@@ -78,7 +78,8 @@ class SimplexPaymentsHistory extends Component {
       ...p,
       id: p.id,
       amount: p.amount,
-      amount_usd: p.fiat_amount,
+      fiat_amount: p.fiat_amount,
+      fiat_currency: p.fiat_currency,
       coin: p.coin,
       time: moment(p.created_at).isSame(moment(), "day")
         ? moment(p.created_at).format("HH:mm")
@@ -87,19 +88,18 @@ class SimplexPaymentsHistory extends Component {
       type: this.getType(p),
       uiProps: this.getUIProps(p),
     }));
-
     return paymentsDisplay;
   }
 
   render() {
-    const { callsInProgress } = this.props;
+    const { callsInProgress, actions } = this.props;
     const payments = this.prepPayments();
 
     if (
       !payments.length &&
       apiUtil.areCallsInProgress([API.GET_PAYMENT_REQUESTS], callsInProgress)
     ) {
-      return <LoadingState />;
+      return <LoadingState/>;
     }
 
     return (
@@ -123,6 +123,9 @@ class SimplexPaymentsHistory extends Component {
                 transaction={item}
                 index={index}
                 count={payments.length}
+                onPress={
+                  () => actions.navigateTo("GetCoinsTransactionDetails", { id: item.id })
+                }
               />
             )}
             keyExtractor={item => item.id}
