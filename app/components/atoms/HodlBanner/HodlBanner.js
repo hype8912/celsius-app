@@ -12,19 +12,6 @@ class HodlBanner extends Component {
   };
   static defaultProps = {};
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // initial state
-    };
-
-    // binders
-  }
-
-  // lifecycle methods
-  // event handlers
-  // rendering methods
   render() {
     const style = HodlBannerStyle();
     const { status } = this.props;

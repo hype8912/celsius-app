@@ -17,7 +17,7 @@ import { THEMES } from "../../../constants/UI";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
-import HodlBanner from "../../molecules/HodlBanner/HodlBanner";
+import HodlBanner from "../../atoms/HodlBanner/HodlBanner";
 
 @connect(
   state => ({
@@ -257,9 +257,10 @@ class CelHeading extends Component {
     const leftStyle = formData.activeSearch
       ? [style.left, { flexDirection: "row", flex: 2 }]
       : style.left;
+    const inHodlMode = false;
     return (
       <View style={[style.container, paddings]}>
-        <HodlBanner status={false} />
+        {inHodlMode ? <HodlBanner status={false} /> : null}
         <View style={[style.content]}>
           <View style={leftStyle}>
             {this.getLeftContent(scene.options)}
