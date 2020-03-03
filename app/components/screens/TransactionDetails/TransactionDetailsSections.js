@@ -46,8 +46,8 @@ export const InfoSection = ({ transaction, transactionProps }) => (
     >
       {transaction.amount_usd ?
         formatter.usd(transaction.amount_usd) :
-        `${formatter.usd(transaction.fiat_amount, { symbol: "" })}`
-      } {transaction.fiat_amount && transaction.fiat_currency}
+        `${formatter.fiat(transaction.fiat_amount, transaction.fiat_currency)}`
+      }
     </CelText>
   </View>
 );

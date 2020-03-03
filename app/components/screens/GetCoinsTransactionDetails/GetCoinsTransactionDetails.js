@@ -11,6 +11,7 @@ import RegularLayout from '../../layouts/RegularLayout/RegularLayout';
 import { BasicSection, InfoSection } from "../TransactionDetails/TransactionDetailsSections";
 import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
+import { SIMPLEX_PAYMENT_STATUSES, TRANSACTION_TYPES } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -31,6 +32,12 @@ class GetCoinsTransactionDetails extends Component {
 
     const transaction = payments
       .find(t => t.id === id)
+    const orderIdSplitted = transaction.order_id.split("-")
+    const orderIdPt1 = `${orderIdSplitted[0]} - ${orderIdSplitted[1]} - ${orderIdSplitted[2]}`
+    const orderIdPt2 = `${orderIdSplitted[3]} - ${orderIdSplitted[4]}`
+
+    console.log(orderIdPt1);
+
     const sortedTransaction = {
       ...transaction,
       transactionDetails: [
@@ -47,8 +54,9 @@ class GetCoinsTransactionDetails extends Component {
           value: "Credit Card"
         },
         {
-          label: "Payment ID",
-          value: transaction.id
+          label: "Order ID",
+          value: `${orderIdPt1}
+${orderIdPt2}`
         },
         {
           label: "Currency",
@@ -72,23 +80,41 @@ class GetCoinsTransactionDetails extends Component {
     return sortedTransaction
   }
 
-  getStatusType = status => {
-    switch (status) {
-      case "approved":
+  getStatusType = transactionParams => {
+
+    switch (this.getType(transactionParams)) {
+      case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
         return {
           color: STYLES.COLORS.GREEN,
-          text: "Confirmed"
+          iconName: "TransactionCC",
+          statusText: "Confirmed"
         }
-      case "declined":
+      case TRANSACTION_TYPES.CANCELED:
         return {
           color: STYLES.COLORS.RED,
-          text: "Canceled"
+          iconName: "TransactionCC",
+          statusText: "Canceled"
         }
       default:
         return {
           color: STYLES.COLORS.ORANGE,
-          text: "Pending"
+          iconName: "TransactionCC",
+          statusText: "Pending"
         }
+    }
+  }
+
+  getType(transactionParams) {
+    switch (transactionParams) {
+      case SIMPLEX_PAYMENT_STATUSES.PENDING:
+        return TRANSACTION_TYPES.DEPOSIT_PENDING;
+
+      case SIMPLEX_PAYMENT_STATUSES.APPROVED:
+        return TRANSACTION_TYPES.DEPOSIT_CONFIRMED;
+
+      case SIMPLEX_PAYMENT_STATUSES.REFUNDED:
+      case SIMPLEX_PAYMENT_STATUSES.CANCELLED:
+        return TRANSACTION_TYPES.CANCELED;
     }
   }
 
@@ -104,9 +130,7 @@ class GetCoinsTransactionDetails extends Component {
 
 
     const transactionInfoProps = {
-      iconName: "TransactionCC",
-      color: this.getStatusType(transactionParams.status).color,
-      statusText: formatter.capitalize(this.getStatusType(transactionParams.status).text),
+      ...this.getStatusType(transactionParams.status),
     }
 
     return (
