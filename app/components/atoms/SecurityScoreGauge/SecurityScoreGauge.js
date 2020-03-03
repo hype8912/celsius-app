@@ -17,31 +17,41 @@ class SecurityScoreGauge extends Component {
   };
   static defaultProps = {};
 
+  getImage = description => {
+    const images = {
+      weak: require("../../../../assets/images/security-overview/01_gauge-weak.png"),
+      fair: require("../../../../assets/images/security-overview/02_gauge-fair.png"),
+      good: require("../../../../assets/images/security-overview/03_gauge-good.png"),
+      strong: require("../../../../assets/images/security-overview/04_gauge-strong.png"),
+    };
+    return images[`${description}`];
+  };
+
   getGaugeProps = () => {
     const { level } = this.props;
     switch (level) {
       case "1":
         return {
           text: "WEAK",
-          imageUrl: require("../../../../assets/images/security-overview/01_gauge-weak.png"),
+          imageUrl: this.getImage("weak"),
           backgroundColor: STYLES.COLORS.RED,
         };
       case "2":
         return {
           text: "FAIR",
-          imageUrl: require("../../../../assets/images/security-overview/02_gauge-fair.png"),
+          imageUrl: this.getImage("fair"),
           backgroundColor: STYLES.COLORS.ORANGE_DARK,
         };
       case "3":
         return {
           text: "GOOD",
-          imageUrl: require("../../../../assets/images/security-overview/03_gauge-good.png"),
+          imageUrl: this.getImage("good"),
           backgroundColor: STYLES.COLORS.ORANGE,
         };
       case "4":
         return {
           text: "STRONG",
-          imageUrl: require("../../../../assets/images/security-overview/04_gauge-strong.png"),
+          imageUrl: this.getImage("strong"),
           backgroundColor: STYLES.COLORS.GREEN,
         };
       default:
