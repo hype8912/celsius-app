@@ -8,7 +8,7 @@ import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 import * as appActions from "../../../redux/actions";
-// import { getTheme } from "../../../utils/styles-util";
+import { getTheme } from "../../../utils/styles-util";
 import ToggleInfoCardStyle from "./ToggleInfoCard.styles";
 import Icon from "../../atoms/Icon/Icon";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
@@ -40,19 +40,27 @@ class ToggleInfoCard extends Component {
     };
   }
 
+  componentDidMount() {
+    const { status } = this.props;
+    if (status === "enabled") {
+      this.setState({ activeType: "enabled" });
+    }
+  }
+
   getCardProps = active => {
     const { activeType } = this.state;
     const status = active || activeType;
+    const theme = getTheme();
     switch (status) {
       case "info":
         return {
           name: "Shield",
           colors: {
-            background: STYLES.COLORS.WHITE,
             circleColor: STYLES.COLORS.CELSIUS_BLUE_OPACITY1,
             fill: STYLES.COLORS.CELSIUS_BLUE,
             textTitle: STYLES.COLORS.CELSIUS_BLUE,
-            textSubtitle: STYLES.COLORS.DARK_GRAY,
+            textSubtitle:
+              theme === "light" ? STYLES.COLORS.DARK_GRAY : STYLES.COLORS.WHITE,
           },
           titleText: "Check Withdrawal Addresses",
           titleTextSize: "H7",
@@ -62,7 +70,6 @@ class ToggleInfoCard extends Component {
         return {
           name: "Checked",
           colors: {
-            background: STYLES.COLORS.GREEN,
             circleColor: STYLES.COLORS.WHITE_OPACITY2,
             fill: STYLES.COLORS.WHITE,
             textTitle: STYLES.COLORS.WHITE,
@@ -76,11 +83,11 @@ class ToggleInfoCard extends Component {
         return {
           name: "Shield",
           colors: {
-            background: STYLES.COLORS.WHITE,
             circleColor: STYLES.COLORS.RED_OPACITY2,
             fill: STYLES.COLORS.RED,
             textTitle: STYLES.COLORS.RED,
-            textSubtitle: STYLES.COLORS.DARK_GRAY,
+            textSubtitle:
+              theme === "light" ? STYLES.COLORS.DARK_GRAY : STYLES.COLORS.WHITE,
           },
           titleText: "DISABLED",
           titleTextSize: "H2",
@@ -150,11 +157,13 @@ class ToggleInfoCard extends Component {
   };
 
   render() {
-    // const theme = getTheme();
     const style = ToggleInfoCardStyle();
 
     const { mode, status, subtitle, onPress } = this.props;
+    const { activeType } = this.state;
     const cardParams = this.getCardProps(status);
+    const backgroundColorStyle =
+      activeType === "enabled" ? { backgroundColor: STYLES.COLORS.GREEN } : {};
 
     if (!cardParams) return null;
 
@@ -162,7 +171,7 @@ class ToggleInfoCard extends Component {
       <Card
         margin="20 0 20 0"
         padding={"2 2 2 2"}
-        styles={[style.card, { backgroundColor: cardParams.colors.background }]}
+        styles={[style.card, backgroundColorStyle]}
       >
         {this.renderToggleOrIcon(mode, cardParams)}
 

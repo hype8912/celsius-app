@@ -11,6 +11,7 @@ import Loader from "../../atoms/Loader/Loader";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ToggleInfoCard from "../../molecules/ToggleInfoCard/ToggleInfoCard";
 import SecurityScoreGauge from "../../atoms/SecurityScoreGauge/SecurityScoreGauge";
+import SecurityStrengthMeter from "../../atoms/SecurityStrengthMeter/SecurityStrengthMeter";
 
 @connect(
   state => ({
@@ -64,11 +65,13 @@ class SecurityOverview extends Component {
           <ToggleInfoCard mode={"toggle"} subtitle={"HODL mode is"} />
 
           <Separator text="PASSWORD" />
+          <SecurityStrengthMeter level={"3"} />
           <CelButton margin="10 0 10 0" onPress={() => {}}>
             Enhance Password
           </CelButton>
 
           <Separator text="PIN" />
+          <SecurityStrengthMeter level={"4"} />
           <CelButton margin="10 0 10 0" onPress={() => {}}>
             Enhance PIN
           </CelButton>
