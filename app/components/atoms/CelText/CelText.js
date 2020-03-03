@@ -11,7 +11,7 @@ import { THEMES } from "../../../constants/UI";
 class CelText extends Component {
   static propTypes = {
     type: PropTypes.oneOf(["H0", "H1", "H2", "H3", "H4", "H5", "H6", "H7"]),
-    font: PropTypes.oneOf(["Barlow"]),
+    font: PropTypes.oneOf(["Barlow", "RobotoMono"]),
     weight: PropTypes.oneOf([
       "100",
       "200",
@@ -70,7 +70,10 @@ class CelText extends Component {
     const fontWeight = weight || this.getFontWeightForType(type);
     let fontFamily = `${font}${ASSETS.WEIGHT[fontWeight.toString()]}`;
     if (italic) {
-      fontFamily = fontFamily !== 'Barlow-Regular' ? `${fontFamily}Italic` : `Barlow-Italic`
+      fontFamily =
+        fontFamily !== "Barlow-Regular"
+          ? `${fontFamily}Italic`
+          : `Barlow-Italic`;
     }
     return fontFamily;
   };
@@ -115,6 +118,7 @@ class CelText extends Component {
   render() {
     const { children, style, allCaps, onPress } = this.props;
     const fontStyle = this.getFontStyle();
+
     return (
       <Text style={[fontStyle, style]} onPress={onPress}>
         {allCaps ? children.toUpperCase() : children}

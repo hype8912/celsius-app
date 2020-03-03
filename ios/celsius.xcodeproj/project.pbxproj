@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* celsiusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* celsiusTests.m */; };
 		00FA003B8D42412C99110209 /* BarlowCondensed-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1355C982ED044B98ABD775B1 /* BarlowCondensed-Italic.otf */; };
@@ -94,6 +93,7 @@
 		F0D65E390CC74DD4A6936C2C /* Barlow-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 276A294C6A4A401A91AD1FB4 /* Barlow-Italic.ttf */; };
 		F94092EFA7914928BD80037F /* barlowsemicondensed-thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 51AD0C43160B4E1C9A582F52 /* barlowsemicondensed-thin.otf */; };
 		FA03D02376E749C5A8529DD8 /* BarlowCondensed-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45DBFFABEAEF4BDDA88B381C /* BarlowCondensed-Thin.otf */; };
+		9583D816B92C4929AE141EA0 /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72508B90A8AC46099569CACA /* RobotoMono-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +216,7 @@
 		FADB363041EB26CBFEADCFCC /* Pods-celsiusTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-celsiusTests.debug.xcconfig"; path = "Target Support Files/Pods-celsiusTests/Pods-celsiusTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FCC954AA1082BE58DE6ECA02 /* Pods-celsius-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-celsius-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-celsius-tvOS/Pods-celsius-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		FDEBBAEE44EA4067BDAEF33E /* BarlowSemiCondensed-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BarlowSemiCondensed-Medium.otf"; path = "../assets/fonts/Barlow/BarlowSemiCondensed-Medium.otf"; sourceTree = "<group>"; };
+		72508B90A8AC46099569CACA /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; name = "RobotoMono-Regular.ttf"; path = "../assets/fonts/Roboto-Mono/RobotoMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -408,6 +409,7 @@
 				51AD0C43160B4E1C9A582F52 /* barlowsemicondensed-thin.otf */,
 				46E2FE825A1548ABB3FBAF4A /* barlowsemicondensed-thinitalic.otf */,
 				276A294C6A4A401A91AD1FB4 /* Barlow-Italic.ttf */,
+				72508B90A8AC46099569CACA /* RobotoMono-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -658,6 +660,7 @@
 				F94092EFA7914928BD80037F /* barlowsemicondensed-thin.otf in Resources */,
 				32973A53DE7E47E5A85CED91 /* barlowsemicondensed-thinitalic.otf in Resources */,
 				F0D65E390CC74DD4A6936C2C /* Barlow-Italic.ttf in Resources */,
+				9583D816B92C4929AE141EA0 /* RobotoMono-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
