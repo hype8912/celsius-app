@@ -20,6 +20,7 @@ import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import apiUtil from "./api-util";
+import { initMixpanel } from "./mixpanel-util";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -48,6 +49,7 @@ async function initializeThirdPartyServices() {
   apiUtil.initInterceptors();
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
   await appsFlyerUtil.initSDK();
+  await initMixpanel();
 }
 
 /**

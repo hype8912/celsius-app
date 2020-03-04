@@ -17,7 +17,6 @@ import {
 import { BRANCH_LINKS, TRANSFER_STATUSES } from "../../constants/DATA";
 import ACTIONS from "../../constants/ACTIONS";
 import appUtil from "../../utils/app-util";
-import { initMixpanel } from "../../utils/mixpanel-util";
 import branchUtil from "../../utils/branch-util";
 import { disableAccessibilityFontScaling } from "../../utils/styles-util";
 import ASSETS from "../../constants/ASSETS";
@@ -79,7 +78,6 @@ function initCelsiusApp() {
 
       await appUtil.initInternetConnectivityListener();
       await appUtil.pollBackendStatus();
-      await initMixpanel();
       await dispatch(initAppData());
 
       await dispatch(branchUtil.initBranch());
