@@ -20,7 +20,9 @@
     "prettier:format": "prettier --trailing-comma --write \"app/**/*.js\"",
     "prettier:hook": "pretty-quick --staged",
     "pre:commit": "yarn prettier:hook && yarn lint",
-    "storybook": "(adb reverse tcp:7007 tcp:7007 || true) && start-storybook"
+    "storybook": "(adb reverse tcp:7007 tcp:7007 || true) && start-storybook",
+    "codepush:beta:android": "appcenter codepush release-react -a celsius-network/celsius-1 -d Staging",
+    "codepush:beta:ios": "appcenter codepush release-react -a celsius-network/celsius -d Staging"
   },
   "husky": {
     "hooks": {
