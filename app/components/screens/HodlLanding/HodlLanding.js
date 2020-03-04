@@ -29,7 +29,7 @@ class HodlLanding extends Component {
     // const style = HodlLandingStyle();
     const { actions } = this.props;
 
-    const isInHodlMode = false;
+    const isInHodlMode = true;
 
     const padding = isInHodlMode ? "0 0 0 0" : "20 20 100 20";
 

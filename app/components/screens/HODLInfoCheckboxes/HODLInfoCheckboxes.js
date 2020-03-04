@@ -77,6 +77,7 @@ class HODLInfoCheckboxes extends Component {
           </CelText>
           {checkboxCopy.map((text, i) => (
             <Card
+              key={text.field}
               color={
                 theme === THEMES.LIGHT
                   ? STYLES.COLORS.WHITE
@@ -94,6 +95,7 @@ class HODLInfoCheckboxes extends Component {
                 uncheckedCheckBoxColor={STYLES.COLORS.GRAY}
                 checkedCheckBoxColor={STYLES.COLORS.GREEN}
                 rightText={text.explanation}
+                updateFormField={actions.updateFormField}
               />
             </Card>
           ))}
