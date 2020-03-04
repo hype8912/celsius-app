@@ -1,108 +1,114 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import { View } from 'react-native';
 // import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import moment from "moment";
 
-
 import * as appActions from "../../../redux/actions";
-import RegularLayout from '../../layouts/RegularLayout/RegularLayout';
-import { BasicSection, InfoSection } from "../TransactionDetails/TransactionDetailsSections";
+import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
+import {
+  BasicSection,
+  InfoSection,
+} from "../TransactionDetails/TransactionDetailsSections";
 import STYLES from "../../../constants/STYLES";
+import {
+  SIMPLEX_PAYMENT_STATUSES,
+  TRANSACTION_TYPES,
+} from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
-import { SIMPLEX_PAYMENT_STATUSES, TRANSACTION_TYPES } from "../../../constants/DATA";
 
 @connect(
   state => ({
-    payments: state.simplex.payments
+    payments: state.simplex.payments,
   }),
-  dispatch => ({ actions: bindActionCreators(appActions, dispatch) }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class GetCoinsTransactionDetails extends Component {
-
   static navigationOptions = () => ({
     title: "Buying Coins",
-    right: "profile"
+    right: "profile",
   });
 
   getTransactionsParams = () => {
-    const { payments, navigation } = this.props
-    const id = navigation.getParam("id")
+    const { payments, navigation } = this.props;
+    const id = navigation.getParam("id");
 
-    const transaction = payments
-      .find(t => t.id === id)
-    const orderIdSplitted = transaction.order_id.split("-")
-    const orderIdPt1 = `${orderIdSplitted[0]} - ${orderIdSplitted[1]} - ${orderIdSplitted[2]}`
-    const orderIdPt2 = `${orderIdSplitted[3]} - ${orderIdSplitted[4]}`
-
-    console.log(orderIdPt1);
+    const transaction = payments.find(t => t.id === id);
+    const orderIdSplitted = transaction.order_id.split("-");
+    const orderIdPt1 = `${orderIdSplitted[0]} - ${orderIdSplitted[1]} - ${orderIdSplitted[2]}`;
+    const orderIdPt2 = `${orderIdSplitted[3]} - ${orderIdSplitted[4]}`;
 
     const sortedTransaction = {
       ...transaction,
       transactionDetails: [
         {
           label: "Date",
-          value: moment(transaction.created_at).format("DD MMM YYYY")
+          value: moment(transaction.created_at).format("DD MMM YYYY"),
         },
         {
           label: "Time",
-          value: moment(transaction.created_at).format("HH:mm")
+          value: moment(transaction.created_at).format("HH:mm"),
         },
         {
           label: "Payment Method", // TODO: change hardcoded when BE is ready
-          value: "Credit Card"
+          value: "Credit Card",
         },
         {
           label: "Order ID",
           value: `${orderIdPt1}
-${orderIdPt2}`
+${orderIdPt2}`,
         },
         {
           label: "Currency",
-          value: transaction.fiat_currency
+          value: transaction.fiat_currency,
         },
         {
           label: "Price",
-          value: `${transaction.fiat_amount - transaction.fee} ${transaction.fiat_currency}`
+          value: formatter.fiat(
+            transaction.fiat_amount - transaction.fee,
+            transaction.fiat_currency
+          ),
         },
         {
           label: "Fee",
-          value: `${transaction.fee} ${transaction.fiat_currency}`
+          value: formatter.fiat(transaction.fee, transaction.fiat_currency),
         },
         {
           label: "Transfer Amount",
-          value: `${transaction.fiat_amount} ${transaction.fiat_currency}`
+          value: formatter.fiat(
+            transaction.fiat_amount,
+            transaction.fiat_currency
+          ),
         },
-      ]
-    }
+      ],
+    };
 
-    return sortedTransaction
-  }
+    return sortedTransaction;
+  };
 
   getStatusType = transactionParams => {
-
     switch (this.getType(transactionParams)) {
       case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
         return {
           color: STYLES.COLORS.GREEN,
           iconName: "TransactionCC",
-          statusText: "Confirmed"
-        }
+          statusText: "Confirmed",
+        };
       case TRANSACTION_TYPES.CANCELED:
         return {
           color: STYLES.COLORS.RED,
           iconName: "TransactionCC",
-          statusText: "Canceled"
-        }
+          statusText: "Canceled",
+        };
       default:
         return {
           color: STYLES.COLORS.ORANGE,
           iconName: "TransactionCC",
-          statusText: "Pending"
-        }
+          statusText: "Pending",
+        };
     }
-  }
+  };
 
   getType(transactionParams) {
     switch (transactionParams) {
@@ -119,19 +125,18 @@ ${orderIdPt2}`
   }
 
   render() {
-    const transactionParams = this.getTransactionsParams()
+    const transactionParams = this.getTransactionsParams();
 
     const transaction = {
       amount: transactionParams.amount,
       fiat_amount: transactionParams.fiat_amount,
       fiat_currency: transactionParams.fiat_currency,
       coin: transactionParams.coin,
-    }
-
+    };
 
     const transactionInfoProps = {
       ...this.getStatusType(transactionParams.status),
-    }
+    };
 
     return (
       <RegularLayout padding="0 0 120 0">
@@ -143,15 +148,11 @@ ${orderIdPt2}`
         />
 
         {transactionParams.transactionDetails.map(i => (
-          <BasicSection
-            label={i.label}
-            value={i.value}
-          />
+          <BasicSection label={i.label} value={i.value} />
         ))}
-
       </RegularLayout>
     );
   }
 }
 
-export default GetCoinsTransactionDetails
+export default GetCoinsTransactionDetails;
