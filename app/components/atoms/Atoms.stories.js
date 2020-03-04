@@ -30,6 +30,8 @@ import MissingInfoCardStories from "./MissingInfoCard/MissingInfoCard.stories";
 import OfflineModeStories from "./OfflineMode/OfflineMode.stories";
 import PaymentListItemStories from "./PaymentListItem/PaymentListItem.stories";
 import ProgressBarStories from "./ProgressBar/ProgressBar.stories";
+import SecurityStrengthMeter from "./SecurityStrengthMeter/SecurityStrengthMeter.stories";
+import SecurityScoreGauge from "./SecurityScoreGauge/SecurityScoreGauge.stories";
 import HodlBannerStories from "./HodlBanner/HodlBanner.stories";
 // NOTE(fj): plop componentGen importing new stories here
 
@@ -66,5 +68,7 @@ storiesOf("Atoms", module)
   .add("OfflineMode", OfflineModeStories)
   .add("PaymentListItem", PaymentListItemStories)
   .add("ProgressBar", ProgressBarStories)
+  .add("SecurityStrengthMeter", SecurityStrengthMeter)
+  .add("SecurityScoreGauge", SecurityScoreGauge)
   .add("HodlBanner", HodlBannerStories);
 // NOTE(fj): plop componentGen adding new stories here
