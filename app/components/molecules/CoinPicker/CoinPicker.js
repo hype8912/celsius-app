@@ -13,7 +13,7 @@ class CoinPicker extends Component {
     coin: PropTypes.string,
     defaultSelected: PropTypes.string,
     availableCoins: PropTypes.instanceOf(Array).isRequired,
-    navigateTo: PropTypes.func,
+    navigateTo: PropTypes.func.isRequired,
     type: PropTypes.oneOf(["basic", "withIcon"]),
     onChange: PropTypes.func,
   };

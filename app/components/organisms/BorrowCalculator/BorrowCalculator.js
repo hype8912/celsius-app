@@ -16,8 +16,8 @@ import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { THEMES } from "../../../constants/UI";
+import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
 import { getTheme } from "../../../utils/styles-util";
-import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 
 let timeout;
 
@@ -117,35 +117,19 @@ class BorrowCalculator extends Component {
     this.sliderItems = [
       {
         value: 6,
-        label: (
-          <CelText theme={themeModal} weight={"300"}>
-            6M
-          </CelText>
-        ),
+        label: <CelText theme={themeModal}>6M</CelText>,
       },
       {
         value: 12,
-        label: (
-          <CelText theme={themeModal} weight={"300"}>
-            1Y
-          </CelText>
-        ),
+        label: <CelText theme={themeModal}>1Y</CelText>,
       },
       {
         value: 24,
-        label: (
-          <CelText theme={themeModal} weight={"300"}>
-            2Y
-          </CelText>
-        ),
+        label: <CelText theme={themeModal}>2Y</CelText>,
       },
       {
         value: 36,
-        label: (
-          <CelText theme={themeModal} weight={"300"}>
-            3Y
-          </CelText>
-        ),
+        label: <CelText theme={themeModal}>3Y</CelText>,
       },
     ];
   };
@@ -302,9 +286,8 @@ class BorrowCalculator extends Component {
     if (!formData.ltv) return null;
 
     const themeColors = this.getThemeColors();
-    const coin = formData.coin || "";
 
-    const sortedLtv = ltv.sort((a, b) => a.interest < b.interest);
+    const sortedLtv = ltv.sort((a, b) => a.interest > b.interest);
 
     return (
       <View style={style.container}>
@@ -332,18 +315,12 @@ class BorrowCalculator extends Component {
             fill={themeColors.iconColor}
           />
           <View style={style.selectWrapper}>
-            <CoinPicker
-              type={"basic"}
-              updateFormField={actions.updateFormField}
-              onChange={(field, value) =>
-                actions.updateFormFields({
-                  [field]: value,
-                })
-              }
-              availableCoins={coinSelectItems}
-              navigateTo={actions.navigateTo}
-              coin={coin}
+            <SimpleSelect
+              items={coinSelectItems}
               field="coin"
+              displayValue={formData.coin}
+              value={formData.coin}
+              updateFormField={actions.updateFormField}
               placeholder="Choose a coin"
             />
           </View>
@@ -366,7 +343,7 @@ class BorrowCalculator extends Component {
           >
             {loanParams.collateralNeeded
               ? formatter.crypto(loanParams.collateralNeeded, formData.coin)
-              : "0"}
+              : ""}
           </CelText>
           <CelText
             align={"center"}
@@ -376,6 +353,8 @@ class BorrowCalculator extends Component {
           >
             Collateral needed
           </CelText>
+
+          {this.renderInterestRatesCard()}
         </Card>
         <CelText
           align={"center"}

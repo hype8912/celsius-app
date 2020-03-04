@@ -34,6 +34,7 @@ import CoinDetails from "../components/screens/CoinDetails/CoinDetails";
 import AllTransactions from "../components/screens/AllTransactions/AllTransactions";
 import GetCoinsLanding from "../components/screens/GetCoinsLanding/GetCoinsLanding";
 import GetCoinsEnterAmount from "../components/screens/GetCoinsEnterAmount/GetCoinsEnterAmount";
+import GetCoinsTransactionDetails from "../components/screens/GetCoinsTransactionDetails/GetCoinsTransactionDetails";
 import MyCel from "../components/screens/MyCel/MyCel";
 import Simplex from "../components/screens/Simplex/SimplexScreen";
 import InterestCalculatorScreen from "../components/screens/InterestCalculatorScreen/InterestCalculatorScreen";
@@ -164,6 +165,7 @@ export const screens = {
 
   GetCoinsLanding,
   GetCoinsEnterAmount,
+  GetCoinsTransactionDetails,
   Simplex,
 
   /**

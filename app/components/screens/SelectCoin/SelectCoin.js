@@ -40,17 +40,12 @@ class SelectCoin extends Component {
         "coinListFormatted"
       );
 
-      const allCoins = nextProps.currencies.filter(item =>
-        coinListFormatted.some(coin => item.short === coin.value)
-      );
-
-      if (coinListFormatted.includes("USD")) {
-        allCoins.unshift({
-          name: "US Dollar",
-          short: "USD",
-          image: require("../../../../assets/images/coins/dollar-icon.png"),
-        });
-      }
+      const allCoins = coinListFormatted.map(coin => {
+        return {
+          ...coin,
+          image: getImageForCrypto(coin, nextProps.currencies),
+        };
+      });
 
       const text =
         (nextProps.formData &&
@@ -60,8 +55,8 @@ class SelectCoin extends Component {
 
       newState.filteredCoins = allCoins.filter(
         coin =>
-          coin.name.toLowerCase().includes(text) ||
-          coin.short.toLowerCase().includes(text)
+          coin.label.toLowerCase().includes(text) ||
+          coin.value.toLowerCase().includes(text)
       );
 
       newState.search = nextProps.formData.search;
@@ -73,9 +68,13 @@ class SelectCoin extends Component {
   constructor(props) {
     super(props);
     const coinListFormatted = props.navigation.getParam("coinListFormatted");
-    const allCoins = props.currencies.filter(item =>
-      coinListFormatted.some(coin => item.short === coin.value)
-    );
+
+    const allCoins = coinListFormatted.map(coin => {
+      return {
+        ...coin,
+        image: getImageForCrypto(coin, props.currencies),
+      };
+    });
 
     this.state = {
       filteredCoins: allCoins,
@@ -100,31 +99,31 @@ class SelectCoin extends Component {
     const selectedCoin = formData.selectedCoin;
     const coin = formData.coin;
     const isActive = selectedCoin
-      ? selectedCoin === item.short
-      : coin === item.short;
+      ? selectedCoin === item.value
+      : coin === item.value;
     const style = SelectCoinStyle();
     const itemStyle = this.getSelectStyle(style, isActive);
     const field = navigation.getParam("field");
     const onChange = navigation.getParam("onChange");
-    const image = item.image_url ? { uri: item.image_url } : item.image;
 
     return (
       <React.Fragment>
         <TouchableOpacity
           onPress={() => {
             if (onChange) {
-              onChange(field, item.short);
+              onChange(field, item.value);
             }
-            actions.updateFormField(field, item.short);
+            actions.updateFormField(field, item.value);
             actions.navigateBack();
           }}
         >
           <View style={itemStyle}>
             <View style={style.left}>
-              <Image source={image} style={{ width: 30, height: 30 }} />
-              <CelText style={{ paddingLeft: 10 }}>
-                {item.name[0].toUpperCase() + item.name.slice(1)} ({item.short})
-              </CelText>
+              <Image
+                source={{ uri: item.image }}
+                style={{ width: 30, height: 30 }}
+              />
+              <CelText style={{ paddingLeft: 10 }}>{item.label}</CelText>
             </View>
             {isActive && (
               <View style={style.right}>
@@ -148,7 +147,7 @@ class SelectCoin extends Component {
             <FlatList
               data={filteredCoins}
               renderItem={this.renderItem}
-              keyExtractor={index => index.name}
+              keyExtractor={index => index.label}
             />
           ) : (
             <View>
@@ -159,6 +158,11 @@ class SelectCoin extends Component {
       </RegularLayout>
     );
   }
+}
+
+function getImageForCrypto(coin, currencies) {
+  const cryptoCoin = currencies.find(c => c.short === coin.value);
+  return cryptoCoin && cryptoCoin.image_url;
 }
 
 export default SelectCoin;

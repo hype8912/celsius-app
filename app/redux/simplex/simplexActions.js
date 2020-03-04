@@ -20,31 +20,36 @@ function simplexGetQuote() {
   return async (dispatch, getState) => {
     const { formData } = getState().forms;
     try {
-      dispatch(startApiCall(API.GET_QUOTE));
-
-      const requestedCurrency = formData.isUsd ? "USD" : formData.coin;
-      const amount = formData.isUsd
-        ? formData.amountUsd
+      const requestedCurrency = formData.isFiat
+        ? formData.fiatCoin
+        : formData.cryptoCoin;
+      const amount = formData.isFiat
+        ? formData.amountFiat
         : formData.amountCrypto;
 
-      const quote = await simplexService.getQuote(
-        formData.coin,
-        "USD",
-        requestedCurrency,
-        amount
-      );
-      dispatch({
-        type: ACTIONS.GET_QUOTE_SUCCESS,
-        quote: quote.data,
-      });
+      if (Number(amount)) {
+        dispatch(startApiCall(API.GET_QUOTE));
 
-      mixpanelAnalytics.enteredBuyCoinsAmount(
-        "CARD",
-        formData.coin,
-        "USD",
-        formData.amountCrypto,
-        formData.amountUsd
-      );
+        const quote = await simplexService.getQuote(
+          formData.cryptoCoin,
+          formData.fiatCoin,
+          requestedCurrency,
+          amount
+        );
+
+        dispatch({
+          type: ACTIONS.GET_QUOTE_SUCCESS,
+          quote: quote.data,
+        });
+
+        // mixpanelAnalytics.enteredBuyCoinsAmount(
+        //   "CARD",
+        //   formData.coin,
+        //   "USD",
+        //   formData.amountCrypto,
+        //   formData.amountFiat
+        // );
+      }
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_QUOTE, err));
@@ -56,6 +61,8 @@ function simplexGetQuote() {
  * Gets info Simplex quote for coin
  *
  * @param {String} coin - ETH|BTC
+ * @param {String} fiat - USD|EUR
+ * @param {String} amountToCheck - USD|EUR
  */
 function getSimplexQuoteForCoin(coin) {
   return async dispatch => {
@@ -127,7 +134,7 @@ function simplexCreatePaymentRequest() {
       mixpanelAnalytics.initiatedBuyCoinsRequest(
         "CARD",
         formData.coin,
-        "USD",
+        formData.fiat,
         simplexData.digital_money.amount,
         simplexData.fiat_money.total_amount
       );

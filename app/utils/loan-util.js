@@ -1,6 +1,5 @@
 import { LOAN_PAYMENT_TYPES, LOAN_STATUS, LOAN_TYPES } from "../constants/DATA";
 import STYLES from "../constants/STYLES";
-import logger from "./logger-util";
 import formatter from "./formatter";
 import store from "../redux/store";
 
@@ -38,8 +37,6 @@ function mapLoan(loan) {
     newLoan.margin_call = getMarginCallParams(loan);
     newLoan.margin_call_activated = !!newLoan.margin_call;
   }
-
-  logger.log({ newLoan });
 
   return newLoan;
 }

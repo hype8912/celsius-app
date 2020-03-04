@@ -36,6 +36,7 @@ export {
   logoutUser,
   expireSession,
   sendResetLink,
+  refreshAuthToken,
 };
 
 /**
@@ -220,6 +221,29 @@ function createAccount() {
     if (user.id) {
       appsFlyerUtil.registrationCompleted(user);
       mixpanelAnalytics.registrationCompleted(user);
+    }
+  };
+}
+
+/**
+ * Refreshes auth token when it is about to expire
+ */
+function refreshAuthToken() {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.REFRESH_AUTH_TOKEN));
+      const res = await userAuthService.refreshAuthToken();
+      await setSecureStoreKey(
+        SECURITY_STORAGE_AUTH_KEY,
+        res.data[SECURITY_STORAGE_AUTH_KEY]
+      );
+
+      dispatch({
+        type: ACTIONS.REFRESH_AUTH_TOKEN_SUCCESS,
+      });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.REFRESH_AUTH_TOKEN, err));
     }
   };
 }

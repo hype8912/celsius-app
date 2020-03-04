@@ -115,13 +115,28 @@ class CelText extends Component {
     ];
   };
 
+  // Greatest Bolognese Ever! CN-4818
+  parseText() {
+    const { children } = this.props;
+
+    if (typeof children === "string") {
+      let text = children;
+      text = text.replace("MCDAI", "PLACEHOLDER");
+      text = text.replace("DAI", "SAI");
+      text = text.replace("PLACEHOLDER", "DAI");
+      return text;
+    }
+
+    return children;
+  }
+
   render() {
-    const { children, style, allCaps, onPress } = this.props;
+    const { style, allCaps, onPress } = this.props;
     const fontStyle = this.getFontStyle();
 
     return (
       <Text style={[fontStyle, style]} onPress={onPress}>
-        {allCaps ? children.toUpperCase() : children}
+        {allCaps ? this.parseText().toUpperCase() : this.parseText()}
       </Text>
     );
   }

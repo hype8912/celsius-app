@@ -2,6 +2,7 @@ import moment from "moment";
 
 import { sendEvent, setUserData, getUserData, engage } from "../mixpanel-util";
 import store from "../../redux/store";
+import appsFlyerUtil from "../appsflyer-util";
 
 const generalAnalytics = {
   buttonPressed,
@@ -11,8 +12,6 @@ const generalAnalytics = {
   apiError,
   appCrushed,
   appsflyerEvent,
-  // TODO add appsflyer
-  // TODO add app crushed
 };
 
 let sessionTime = new moment();
@@ -67,6 +66,7 @@ async function sessionStarted(trigger) {
     "Has SSN": !!userData.ssn,
   });
   sendEvent("Session started", { trigger });
+  appsFlyerUtil.setCustomerUserId(userData.id);
 }
 
 /**
