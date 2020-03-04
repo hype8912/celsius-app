@@ -278,7 +278,6 @@ function initAppData(initToken = null) {
       const { bannerProps } = getState().ui;
       if (profile) {
         await dispatch(actions.getUserAppSettings());
-        await dispatch(actions.getLoyaltyInfo());
         await dispatch(actions.getComplianceInfo());
         await dispatch(
           actions.setBannerProps({ sessionCount: bannerProps.sessionCount + 1 })
@@ -292,6 +291,7 @@ function initAppData(initToken = null) {
         // get wallet details for verified users
         if (profile.kyc && hasPassedKYC()) {
           await dispatch(actions.getWalletSummary());
+          await dispatch(actions.getLoyaltyInfo());
           if (allowed) await dispatch(actions.getAllLoans());
         }
       }
