@@ -108,7 +108,7 @@ class GetCoinsConfirmModal extends Component {
                 Price:
               </CelText>
               <CelText type={"H6"} align={"right"}>
-                {formatter.usd(baseAmount, { symbol: formData.fiatCoin })}
+                {formatter.fiat(baseAmount, formData.fiatCoin)}
               </CelText>
             </View>
             <Separator />
@@ -122,7 +122,7 @@ class GetCoinsConfirmModal extends Component {
                 </CelText>
               </View>
               <CelText type={"H6"} align={"right"}>
-                {formatter.usd(fee, { symbol: formData.fiatCoin })}
+                {formatter.fiat(fee, formData.fiatCoin)}
               </CelText>
             </View>
             <Separator />
@@ -131,7 +131,7 @@ class GetCoinsConfirmModal extends Component {
                 Transfer Amount:
               </CelText>
               <CelText type={"H6"} align={"right"}>
-                {formatter.usd(totalAmount, { symbol: formData.fiatCoin })}
+                {formatter.fiat(totalAmount, formData.fiatCoin)}
               </CelText>
             </View>
           </View>
