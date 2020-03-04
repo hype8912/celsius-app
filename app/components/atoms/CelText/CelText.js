@@ -121,9 +121,11 @@ class CelText extends Component {
 
     if (typeof children === "string") {
       let text = children;
-      text = text.replace("MCDAI", "PLACEHOLDER");
+      text = text.replace("MCDAI", "PLACEHOLDER1");
+      text = text.replace("ollateral DAI", "PLACEHOLDER2");
       text = text.replace("DAI", "SAI");
-      text = text.replace("PLACEHOLDER", "DAI");
+      text = text.replace("PLACEHOLDER1", "DAI");
+      text = text.replace("PLACEHOLDER2", "ollateral DAI");
       return text;
     }
 
