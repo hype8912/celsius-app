@@ -9,7 +9,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
+import { KEYPAD_PURPOSES, MODALS, THEMES } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
@@ -18,6 +18,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { SIMPLEX_FIAT_CURRENCIES } from "../../../constants/DATA";
 import Spinner from "../../atoms/Spinner/Spinner";
+import { getTheme } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -184,6 +185,8 @@ class GetCoinsEnterAmount extends Component {
     const { actions, formData, callInProgress } = this.props;
     const { availableCryptoCoins } = this.state;
 
+    const theme = getTheme();
+
     const style = GetCoinsEnterAmountStyle();
 
     const isFetchingQuotes = apiUtil.areCallsInProgress(
@@ -196,7 +199,11 @@ class GetCoinsEnterAmount extends Component {
         <View style={style.fiatSection}>
           <View style={style.amounts}>
             <CelText
-              color={STYLES.COLORS.WHITE_OPACITY5}
+              color={
+                theme === THEMES.DARK
+                  ? STYLES.COLORS.WHITE_OPACITY5
+                  : STYLES.COLORS.MEDIUM_GRAY
+              }
               align={"center"}
               margin={"0 0 10 0"}
             >
@@ -225,7 +232,14 @@ class GetCoinsEnterAmount extends Component {
                 actions.toggleKeypad(true);
               }}
             >
-              <CelText color={STYLES.COLORS.WHITE_OPACITY5} type={"H2"}>
+              <CelText
+                color={
+                  theme === THEMES.DARK
+                    ? STYLES.COLORS.WHITE_OPACITY5
+                    : STYLES.COLORS.MEDIUM_GRAY
+                }
+                type={"H2"}
+              >
                 {formatter.usd(formData.amountFiat, { symbol: "" })}{" "}
                 {formData.fiatCoin}
               </CelText>

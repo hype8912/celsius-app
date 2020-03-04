@@ -16,6 +16,7 @@ import {
   SIMPLEX_PAYMENT_STATUSES,
   TRANSACTION_TYPES,
 } from "../../../constants/DATA";
+import formatter from "../../../utils/formatter";
 
 @connect(
   state => ({
@@ -64,17 +65,21 @@ ${orderIdPt2}`,
         },
         {
           label: "Price",
-          value: `${transaction.fiat_amount - transaction.fee} ${
+          value: formatter.fiat(
+            transaction.fiat_amount - transaction.fee,
             transaction.fiat_currency
-          }`,
+          ),
         },
         {
           label: "Fee",
-          value: `${transaction.fee} ${transaction.fiat_currency}`,
+          value: formatter.fiat(transaction.fee, transaction.fiat_currency),
         },
         {
           label: "Transfer Amount",
-          value: `${transaction.fiat_amount} ${transaction.fiat_currency}`,
+          value: formatter.fiat(
+            transaction.fiat_amount,
+            transaction.fiat_currency
+          ),
         },
       ],
     };

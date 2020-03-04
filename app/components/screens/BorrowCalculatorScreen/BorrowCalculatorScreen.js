@@ -47,6 +47,11 @@ class BorrowCalculatorScreen extends Component {
   static propTypes = {
     purpose: PropTypes.string,
   };
+  static navigationOptions = () => ({
+    title: "Borrow",
+    right: "profile",
+    left: "back",
+  });
 
   static navigationOptions = () => ({
     title: "Borrow",

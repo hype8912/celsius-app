@@ -42,13 +42,13 @@ function simplexGetQuote() {
           quote: quote.data,
         });
 
-        // mixpanelAnalytics.enteredBuyCoinsAmount(
-        //   "CARD",
-        //   formData.coin,
-        //   "USD",
-        //   formData.amountCrypto,
-        //   formData.amountFiat
-        // );
+        mixpanelAnalytics.enteredBuyCoinsAmount(
+          "CARD",
+          formData.cryptoCoin,
+          formData.fiatCoin,
+          formData.amountFiat,
+          formData.amountCrypto
+        );
       }
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -133,10 +133,10 @@ function simplexCreatePaymentRequest() {
 
       mixpanelAnalytics.initiatedBuyCoinsRequest(
         "CARD",
-        formData.coin,
-        formData.fiat,
-        simplexData.digital_money.amount,
-        simplexData.fiat_money.total_amount
+        formData.cryptoCoin,
+        formData.fiatCoin,
+        simplexData.fiat_money.total_amount,
+        simplexData.digital_money.amount
       );
     } catch (err) {
       dispatch(showMessage("error", err.msg));
