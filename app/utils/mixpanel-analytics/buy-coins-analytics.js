@@ -30,23 +30,23 @@ function choseBuyCoinsType(type) {
  * Fires when user presses Buy button on BuyCoinsEnterAmount
  *
  * @param {string} buyCoinsType - CARD|WIRE
- * @param {string} coin - BTC|ETH
+ * @param {string} cryptoCoin - BTC|ETH
  * @param {string} fiatCoin - USD
- * @param {number} amountUsd
+ * @param {number} amountFiat
  * @param {number} amountCrypto
  */
 function enteredBuyCoinsAmount(
   buyCoinsType,
-  coin,
+  cryptoCoin,
   fiatCoin,
-  amountUsd,
+  amountFiat,
   amountCrypto
 ) {
   sendEvent("Entered Buy Coins Coin & Amount", {
     buyCoinsType,
-    coin,
+    cryptoCoin,
     fiatCoin,
-    amountUsd,
+    amountFiat,
     amountCrypto,
   });
 }
@@ -55,23 +55,23 @@ function enteredBuyCoinsAmount(
  * Fires when user confirms a Buy Coins request
  *
  * @param {string} buyCoinsType - CARD|WIRE
- * @param {string} coin - BTC|ETH
+ * @param {string} cryptoCoin - BTC|ETH
  * @param {string} fiatCoin - USD
- * @param {number} amountUsd
+ * @param {number} amountFiat
  * @param {number} amountCrypto
  */
 function initiatedBuyCoinsRequest(
   buyCoinsType,
-  coin,
+  cryptoCoin,
   fiatCoin,
-  amountUsd,
+  amountFiat,
   amountCrypto
 ) {
   sendEvent("Confirmed Buy Coins Request", {
     buyCoinsType,
-    coin,
+    cryptoCoin,
     fiatCoin,
-    amountUsd,
+    amountFiat,
     amountCrypto,
   });
 }
@@ -80,25 +80,25 @@ function initiatedBuyCoinsRequest(
  * Fires when user finishes Simplex flow in the app
  *
  * @param {string} buyCoinsType - CARD|WIRE
- * @param {string} coin - BTC|ETH
+ * @param {string} cryptoCoin - BTC|ETH
  * @param {string} fiatCoin - USD
- * @param {number} amountUsd
+ * @param {number} amountFiat
  * @param {number} amountCrypto
  * @param {string} status - success|fail
  */
 function finishedSimplexFlow(
   buyCoinsType,
-  coin,
+  cryptoCoin,
   fiatCoin,
-  amountUsd,
+  amountFiat,
   amountCrypto,
   status
 ) {
   sendEvent("Finished Buy Coins Simplex Flow", {
     buyCoinsType,
-    coin,
+    cryptoCoin,
     fiatCoin,
-    amountUsd,
+    amountFiat,
     amountCrypto,
     status,
   });
