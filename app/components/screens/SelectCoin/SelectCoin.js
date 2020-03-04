@@ -113,7 +113,10 @@ class SelectCoin extends Component {
             if (onChange) {
               onChange(field, item.value);
             }
-            actions.updateFormField(field, item.value);
+            actions.updateFormFields({
+              [field]: item.value,
+              search: "",
+            });
             actions.navigateBack();
           }}
         >
