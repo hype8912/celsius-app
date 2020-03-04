@@ -110,7 +110,7 @@ class ReferralSendModal extends Component {
         <CelText type="H6" align={"left"} style={style.explanation}>
           *$10 in BTC is distributed when a new user makes a first deposit of
           $200 or more using your referral code at the time of signup. BTC
-          unlocked 72 hours after initial deposit.
+          reward will be unlocked 30 days after the initial deposit.
         </CelText>
       </CelModal>
     );
