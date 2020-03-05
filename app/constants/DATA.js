@@ -279,7 +279,7 @@ const SIMPLEX_PAYMENT_STATUSES = {
   APPROVED: "approved",
   CANCELLED: "declined",
   REFUNDED: "refunded",
-}
+};
 
 const SIMPLEX_FIAT_CURRENCIES = [
   {
@@ -355,10 +355,10 @@ const SIMPLEX_FIAT_CURRENCIES = [
     value: "HUF",
   },
   {
-    label: "Israeli Sheqel (ILSå)",
+    label: "Israeli Sheqel (ILS)",
     value: "ILS",
   },
-]
+];
 
 export {
   BLOCKEXPLORERS,
