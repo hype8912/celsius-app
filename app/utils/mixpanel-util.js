@@ -116,7 +116,7 @@ async function addPushDeviceToken() {
  */
 async function logoutUserMixpanel() {
   const token = await getSecureStoreKey("notificationToken");
-  await deleteSecureStoreKey(token);
+  await deleteSecureStoreKey("notificationToken");
   if (Platform.OS === "android") {
     Mixpanel.clearPushRegistrationId(token);
   } else {
