@@ -77,7 +77,32 @@ class GetCoinsEnterAmount extends Component {
   }
 
   handleNextStep = () => {
-    const { actions } = this.props;
+    const { actions, formData, buyCoinsSettings } = this.props;
+
+    if (
+      Number(formData.amountFiat) <
+      buyCoinsSettings.limit_per_fiat_currency[formData.fiatCoin].min
+    ) {
+      return actions.showMessage(
+        "warning",
+        `Please enter amount above ${formatter.fiat(
+          buyCoinsSettings.limit_per_fiat_currency[formData.fiatCoin].min,
+          formData.fiatCoin
+        )} to continue.`
+      );
+    }
+    if (
+      Number(formData.amountFiat) >
+      buyCoinsSettings.limit_per_fiat_currency[formData.fiatCoin].max
+    ) {
+      return actions.showMessage(
+        "warning",
+        `Please enter amount below ${formatter.fiat(
+          buyCoinsSettings.limit_per_fiat_currency[formData.fiatCoin].max,
+          formData.fiatCoin
+        )} to continue.`
+      );
+    }
     actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL);
   };
 
@@ -278,7 +303,7 @@ class GetCoinsEnterAmount extends Component {
                 actions.toggleKeypad(true);
               }}
             >
-              <CelText color={STYLES.COLORS.MEDIUM_GRAY} type={"H2"}>
+              <CelText color={STYLES.COLORS.WHITE} type={"H2"}>
                 {" "}
                 {formatter.crypto(formData.amountCrypto, formData.cryptoCoin)}
               </CelText>
