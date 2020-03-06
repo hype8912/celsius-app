@@ -5,7 +5,11 @@ import store from "../redux/store";
 import appUtil from "./app-util";
 import loggerUtil from "./logger-util";
 import Constants from "../../constants";
-import { getSecureStoreKey, deleteSecureStoreKey } from "./expo-storage";
+import { getSecureStoreKey } from "./expo-storage";
+import {
+  deletePushNotificationToken,
+  getNotificationToken,
+} from "./push-notifications-util";
 
 let userData = {};
 
@@ -42,6 +46,9 @@ async function engage(distinctId, payload = {}) {
   Mixpanel.set(data);
 
   Mixpanel.identify(distinctId);
+  // Get notification token from Google or Apple
+  await getNotificationToken();
+  // Add that token to Mixpanel
   await addPushDeviceToken();
 }
 
@@ -112,11 +119,11 @@ async function addPushDeviceToken() {
 }
 
 /**
- * Remove device push notification token from Mixpanel user
+ * Remove device push notification token from Mixpanel-user and delete it from user
  */
 async function logoutUserMixpanel() {
   const token = await getSecureStoreKey("notificationToken");
-  await deleteSecureStoreKey("notificationToken");
+  await deletePushNotificationToken();
   if (Platform.OS === "android") {
     Mixpanel.clearPushRegistrationId(token);
   } else {

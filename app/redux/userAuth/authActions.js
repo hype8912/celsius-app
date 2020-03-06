@@ -53,7 +53,6 @@ function loginUser() {
         password: formData.password,
         reCaptchaKey: formData.reCaptchaKey,
       });
-
       // add token to expo storage
       await setSecureStoreKey(
         SECURITY_STORAGE_AUTH_KEY,
@@ -80,7 +79,9 @@ function loginUser() {
         dispatch(navigateTo("RegisterSetPin"));
       } else {
         dispatch(navigateTo("VerifyScreen"), {
-          onSuccess: () => navigateTo("WalletLanding"),
+          onSuccess: () => {
+            navigateTo("WalletLanding");
+          },
         });
       }
     } catch (err) {
@@ -162,6 +163,7 @@ function sendResetLink() {
 function logoutUser() {
   return async dispatch => {
     try {
+      await logoutUserMixpanel();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
       await deleteSecureStoreKey("HIDE_MODAL_INTEREST_IN_CEL");
       if (Constants.appOwnership === "standalone") Branch.logout();
@@ -169,7 +171,6 @@ function logoutUser() {
         type: ACTIONS.LOGOUT_USER,
       });
       await dispatch(resetToScreen("Welcome"));
-      logoutUserMixpanel();
       await dispatch(navigateTo("Welcome"));
       dispatch(showVerifyScreen(false));
       mixpanelAnalytics.sessionEnded("Logout user");

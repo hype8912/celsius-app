@@ -2,9 +2,10 @@ import { Platform } from "react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import messaging from "@react-native-firebase/messaging";
 
-import { setSecureStoreKey } from "./expo-storage";
+import notificationService from "../services/notifications-service";
+import { deleteSecureStoreKey, setSecureStoreKey } from "./expo-storage";
 
-export { getNotificationToken };
+export { getNotificationToken, deletePushNotificationToken };
 
 /**
  * Get device notification token from notification provider
@@ -13,6 +14,7 @@ async function getNotificationToken() {
   let token;
   if (Platform.OS === "android") {
     token = await messaging().getToken();
+    await notificationService.setNotificationToken(token);
     setSecureStoreKey("notificationToken", token);
   } else {
     await getIOSPushNotificationToken();
@@ -27,7 +29,18 @@ async function getIOSPushNotificationToken() {
 
   if (perm && perm.alert === 1) {
     PushNotificationIOS.addEventListener("register", token => {
+      notificationService.setNotificationToken(token);
       setSecureStoreKey("notificationToken", token);
     });
   }
+}
+
+/**
+ * Delete device push notification token from device storage and from user.
+ * @param token
+ * @returns {Promise}
+ */
+async function deletePushNotificationToken() {
+  deleteSecureStoreKey("notificationToken");
+  await notificationService.deleteNotificationToken();
 }
