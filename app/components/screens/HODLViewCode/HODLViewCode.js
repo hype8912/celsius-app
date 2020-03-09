@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-// import HODLViewCode from "./HODLViewCode.styles";
+import HODLViewCodeStyles from "./HODLViewCode.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
@@ -15,11 +15,16 @@ import STYLES from "../../../constants/STYLES";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import Card from "../../atoms/Card/Card";
 import CelButton from "../../atoms/CelButton/CelButton";
+import Spinner from "../../atoms/Spinner/Spinner";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
 
 @connect(
   state => ({
     theme: state.user.appSettings.theme,
     formData: state.forms.formData,
+    hodlCode: state.hodl.hodlCode,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -33,8 +38,14 @@ class HODLViewCode extends Component {
   });
 
   render() {
-    // const style = HodlDeactivateStyle();
-    const { formData, theme, actions } = this.props;
+    const style = HODLViewCodeStyles();
+    const { formData, theme, actions, hodlCode, callsInProgress } = this.props;
+
+    const loading = apiUtil.areCallsInProgress(
+      API.ACTIVATE_HODL_MODE,
+      callsInProgress
+    );
+
     return (
       <RegularLayout padding={"0 0 0 0"}>
         <HeadingProgressBar steps={3} currentStep={3} />
@@ -57,6 +68,22 @@ class HODLViewCode extends Component {
             code below. So, it's very important to remember this code. the
             deactivation process takes 24 hours.
           </CelText>
+
+          {!hodlCode ? (
+            <View style={style.spinner}>
+              <Spinner />
+            </View>
+          ) : (
+            <CelText
+              align={"center"}
+              type={"H1"}
+              weight={"300"}
+              margin={"20 0 20 0"}
+            >
+              {hodlCode}
+            </CelText>
+          )}
+
           <Card
             color={
               theme === THEMES.LIGHT
@@ -78,7 +105,8 @@ class HODLViewCode extends Component {
 
           <CelButton
             disabled={!formData.agreeHodlMode}
-            // onPress={() => console.log("send verification mode")}
+            onPress={() => actions.activateHodlMode()}
+            loading={loading}
           >
             Send email verification
           </CelButton>

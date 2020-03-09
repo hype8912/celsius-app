@@ -100,9 +100,9 @@ import HODLInfoCheckboxes from "../components/screens/HODLInfoCheckboxes/HODLInf
 import HodlLanding from "../components/screens/HodlLanding/HodlLanding";
 import HODLViewCode from "../components/screens/HODLViewCode/HODLViewCode";
 import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/HodlDeactivationCode";
-
-import CelHeading from "../components/organisms/CelHeading/CelHeading";
+import CheckYourEmail from "../components/screens/CheckYourEmail/CheckYourEmail";
 import HodlDeactivateInfoCheckboxes from "../components/screens/HodlDeactivateInfoCheckboxes/HodlDeactivateInfoCheckboxes";
+import CelHeading from "../components/organisms/CelHeading/CelHeading";
 
 export const screens = {
   /**
@@ -252,6 +252,7 @@ export const screens = {
   HODLInfoCheckboxes,
   HodlDeactivationCode,
   HodlDeactivateInfoCheckboxes,
+  CheckYourEmail,
 
   /**
    * Camera

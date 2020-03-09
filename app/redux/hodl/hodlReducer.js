@@ -1,11 +1,16 @@
-// import ACTIONS from "../../constants/ACTIONS";
+import ACTIONS from "../../constants/ACTIONS";
 
-const initialState = {};
+const initialState = {
+  hodlCode: undefined,
+};
 
 export default function hodlReducer(state = initialState, action) {
   switch (action.type) {
-    // case ACTIONS.TEST_ACTION:
-    //     return { ...state };
+    case ACTIONS.BEGIN_HODL_MODE:
+      return {
+        ...state,
+        hodlCode: action.hodlCode,
+      };
 
     default:
       return { ...state };

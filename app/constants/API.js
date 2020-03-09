@@ -128,6 +128,7 @@ export default {
 
   // hodl mode calls
   BEGIN_HODL_MODE: "BEGIN_HODL_MODE",
+  ACTIVATE_HODL_MODE: "ACTIVATE_HODL_MODE",
 
   // apy key calls
   CREATE_API_KEY: "CREATE_API_KEY",
