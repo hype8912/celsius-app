@@ -355,7 +355,7 @@ const SIMPLEX_FIAT_CURRENCIES = [
     value: "HUF",
   },
   {
-    label: "Israeli Sheqel (ILSå)",
+    label: "Israeli Sheqel (ILS)",
     value: "ILS",
   },
 ];
