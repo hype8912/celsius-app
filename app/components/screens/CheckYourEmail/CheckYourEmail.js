@@ -21,6 +21,7 @@ class CheckYourEmail extends Component {
   static navigationOptions = () => ({
     title: "HODL mode",
     right: "profile",
+    hideBack: true,
   });
 
   render() {

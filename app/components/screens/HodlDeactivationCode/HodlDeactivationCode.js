@@ -33,9 +33,8 @@ class HodlDeactivationCode extends Component {
   render() {
     const style = HodlDeactivationCodeStyle();
     const { formData, actions } = this.props;
-
-    const isEligible = formData.hodlCode && formData.hodlCode.length === 6;
-
+    // code will be 8 digits
+    const isEligible = formData.hodlCode && formData.hodlCode.length === 8;
     return (
       <RegularLayout>
         <CelText
@@ -53,8 +52,8 @@ class HodlDeactivationCode extends Component {
 
         <Card styles={style.inputCel} margin={"20 0 20 0"}>
           <CelInput
-            type="number"
             placeholder={"  X X X X X X X X  "}
+            type="text"
             returnKeyType={"done"}
             style={{ textAlign: "center", fontSize: 30 }}
             maxLenght={8}
@@ -63,7 +62,12 @@ class HodlDeactivationCode extends Component {
           />
         </Card>
 
-        <CelButton disabled={!isEligible}>Send email verification</CelButton>
+        <CelButton
+          disabled={!isEligible}
+          onPress={() => actions.deactivateHodlMode()}
+        >
+          Send email verification
+        </CelButton>
 
         <CelText margin={"20 0 0 0"} type={"H4"} align={"center"}>
           Forgot your code?
