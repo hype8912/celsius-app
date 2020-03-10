@@ -7,6 +7,8 @@ import CelInputText from "./CelInputText";
 import { THEMES } from "../../../constants/UI";
 import CelText from "../CelText/CelText";
 
+// import calculatePasswordScore from "../../../utils/password-util";
+
 class CelInputPassword extends Component {
   static propTypes = {
     type: PropTypes.oneOf([
