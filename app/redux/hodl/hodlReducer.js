@@ -2,6 +2,7 @@ import ACTIONS from "../../constants/ACTIONS";
 
 const initialState = {
   hodlCode: undefined,
+  hodlStatus: {},
 };
 
 export default function hodlReducer(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function hodlReducer(state = initialState, action) {
       return {
         ...state,
         hodlCode: action.hodlCode,
+      };
+    case ACTIONS.POLL_HODL_STATUS_SUCCESS:
+      return {
+        ...state,
+        hodlStatus: action.hodlStatus,
       };
 
     default:

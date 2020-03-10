@@ -129,6 +129,7 @@ export default {
   // hodl mode calls
   BEGIN_HODL_MODE: "BEGIN_HODL_MODE",
   ACTIVATE_HODL_MODE: "ACTIVATE_HODL_MODE",
+  POLL_HODL_STATUS: "POLL_HODL_STATUS",
 
   // apy key calls
   CREATE_API_KEY: "CREATE_API_KEY",

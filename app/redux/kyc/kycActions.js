@@ -14,7 +14,6 @@ import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import userKYCService from "../../services/user-kyc-service";
 
 export {
-  getKYCStatus,
   updateProfileInfo,
   updateProfileAddressInfo,
   updateTaxpayerInfo,
@@ -28,7 +27,7 @@ export {
   getPrimeTrustToULink,
   profileTaxpayerInfo,
   getKYCDocTypes,
-  // pollKYCStatus,
+  pollKYCStatus,
 };
 
 /**
@@ -371,7 +370,7 @@ function startKYCSuccess() {
 /**
  * Gets KYC status for user
  */
-function getKYCStatus() {
+function pollKYCStatus() {
   return async (dispatch, getState) => {
     const status = getUserKYCStatus();
     const isLoggedIn = isUserLoggedIn();
@@ -383,10 +382,10 @@ function getKYCStatus() {
 
     dispatch(startApiCall(API.GET_KYC_STATUS));
     try {
-      const res = await userKYCService.getKYCStatus();
-      const newStatus = res.data.status;
+      const res = await userKYCService.pollKYCStatus();
+      const newStatus = res.data.kycStatus.status;
 
-      dispatch(getKYCStatusSuccess(res.data));
+      dispatch(pollKYCStatusSuccess(res.data.kycStatus));
 
       if (newStatus === KYC_STATUSES.permanently_rejected) {
         dispatch(closeModal());
@@ -413,10 +412,10 @@ function getKYCStatus() {
 /**
  * @TODO add JSDoc
  */
-function getKYCStatusSuccess(status) {
+function pollKYCStatusSuccess(kyc) {
   return {
     type: ACTIONS.GET_KYC_STATUS_SUCCESS,
-    kyc: status,
+    kyc,
   };
 }
 

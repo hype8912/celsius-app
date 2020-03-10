@@ -70,8 +70,8 @@ function deactivateHodlMode() {
         pin: formData.pin,
         twoFactorCode: formData.code,
       };
-      const result = await hodlService.deactivateHodlMode(verification);
-      dispatch(navigateTo("HODLViewCode", result));
+      await hodlService.deactivateHodlMode(verification);
+      dispatch(navigateTo("CheckYourEmail"));
     } catch (err) {
       // console.log("err", err)
       dispatch(showMessage("error", err.msg));

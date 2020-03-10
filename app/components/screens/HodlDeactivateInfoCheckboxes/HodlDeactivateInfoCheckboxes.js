@@ -26,7 +26,7 @@ class HodlDeactivateInfoCheckboxes extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "HodlDeactivateInfoCheckboxes Screen",
+    title: "HODL mode",
     right: "profile",
   });
 

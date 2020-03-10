@@ -5,6 +5,7 @@ const hodlService = {
   beginHodlMode,
   activateHodlMode,
   deactivateHodlMode,
+  pollHodlStatus,
 };
 
 function beginHodlMode(verificationCode) {
@@ -17,6 +18,10 @@ function activateHodlMode(verificationCode) {
 
 function deactivateHodlMode(verificationCode) {
   return axios.post(`${apiUrl}/users/hodl_mode/deactivate`, verificationCode);
+}
+
+function pollHodlStatus() {
+  return axios.get(`${apiUrl}/me/poll`);
 }
 
 export default hodlService;
