@@ -55,7 +55,7 @@ target 'celsius' do
 
   pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
 
-  pod 'Mixpanel', '3.5.1'
+  pod 'Mixpanel'
 
   permissions_path = '../node_modules/react-native-permissions/ios'
 
