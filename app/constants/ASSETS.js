@@ -204,6 +204,8 @@ const CACHE_IMAGES = [
   require("../../assets/images/coins/tethergold.png"),
   require("../../assets/images/coins/iota.png"),
   require("../../assets/images/checkEmail.png"),
+  require("../../assets/images/error.png"),
+  require("../../assets/images/hodlModeStatus.png"),
 ];
 
 export default {

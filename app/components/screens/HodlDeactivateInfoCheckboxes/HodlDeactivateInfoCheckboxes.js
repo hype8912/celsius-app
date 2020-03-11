@@ -26,7 +26,7 @@ class HodlDeactivateInfoCheckboxes extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "HODL mode",
+    title: "HODL Mode",
     right: "profile",
   });
 
@@ -42,7 +42,7 @@ class HodlDeactivateInfoCheckboxes extends Component {
       {
         field: "noHodl2",
         explanation:
-          "You will have to wait 24 hours for HODL mode deactivation",
+          "You will have to wait 24 hours for HODL Mode deactivation",
       },
     ];
 
@@ -56,10 +56,10 @@ class HodlDeactivateInfoCheckboxes extends Component {
           type={"H2"}
           weight={"bold"}
         >
-          Disabled actions in HODL mode
+          Disabled actions in HODL Mode
         </CelText>
         <CelText type={"H4"} align={"left"}>
-          HODL mode disables actions on your profile that are at risk of being
+          HODL Mode disables actions on your profile that are at risk of being
           misused. But don’t worry, some actions like depositing or buying
           cryptocurrency will remain enabled.
         </CelText>

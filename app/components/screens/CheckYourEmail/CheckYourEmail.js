@@ -19,9 +19,10 @@ class CheckYourEmail extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "HODL mode",
+    title: "HODL Mode",
     right: "profile",
     hideBack: true,
+    gestureEnabled: false,
   });
 
   render() {
@@ -46,8 +47,8 @@ class CheckYourEmail extends Component {
             Check your Email!
           </CelText>
           <CelText align={"center"} type={"H4"} margin={"20 0 0 0"}>
-            To complete HODL mode activation please follow the email
-            instructions.
+            To complete HODL Mode activation, please follow the instructions
+            sent to you via email.
           </CelText>
           <CelButton
             margin={"40 0 0 0"}

@@ -13,11 +13,14 @@ import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { KEYPAD_PURPOSES } from "../../../constants/UI";
 import STYLES from "../../../constants/STYLES";
 import Card from "../../atoms/Card/Card";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
 
 @connect(
   state => ({
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -26,15 +29,20 @@ class HodlDeactivationCode extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "HODL mode",
+    title: "HODL Mode",
     right: "profile",
   });
 
   render() {
     const style = HodlDeactivationCodeStyle();
-    const { formData, actions } = this.props;
+    const { formData, actions, callsInProgress } = this.props;
     // code will be 8 digits
     const isEligible = formData.hodlCode && formData.hodlCode.length === 8;
+
+    const loading = apiUtil.areCallsInProgress(
+      API.DEACTIVATE_HODL_MODE,
+      callsInProgress
+    );
     return (
       <RegularLayout>
         <CelText
@@ -65,6 +73,7 @@ class HodlDeactivationCode extends Component {
         <CelButton
           disabled={!isEligible}
           onPress={() => actions.deactivateHodlMode()}
+          loading={loading}
         >
           Send email verification
         </CelButton>

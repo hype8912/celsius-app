@@ -33,7 +33,7 @@ class HODLViewCode extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "HODL mode",
+    title: "HODL Mode",
     right: "profile",
   });
 
@@ -61,12 +61,12 @@ class HODLViewCode extends Component {
             type={"H2"}
             weight={"bold"}
           >
-            How to deactivate HODL mode
+            How to deactivate HODL Mode
           </CelText>
           <CelText type={"H4"} align={"left"}>
-            When you want to deactivate HODL mode, you will need to type the
-            code below. So, it's very important to remember this code. the
-            deactivation process takes 24 hours.
+            {"When you're ready to deactivate HODL Mode, you will need to enter the unique security code below. \n" +
+              "\n" +
+              "You will NOT be able to access this code once you enable HODL Mode, so you must securely store this code now and remember it in order to deactivate HODL Mode in the future."}
           </CelText>
 
           {!hodlCode ? (

@@ -22,10 +22,35 @@ function getProps(purpose, componentProps) {
   }
 
   switch (purpose) {
+    case EMPTY_STATES.HODL_MODE_WARNING:
+      return {
+        ...props,
+        image: require("../../assets/images/error.png"),
+        heading: "Withdrawing crypto is unavailable in HODL Mode",
+        paragraphs: [
+          "Your wallet is currently in HODL Mode, which means outbound transactions are currently unavailable. To make a withdrawal, please deactivate HODL Mode.",
+        ],
+        onPress: () => actions.navigateTo("SecuritySettings"),
+        button: "Deactivate HODL Mode",
+        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryButton: "Go back to wallet",
+      };
+    case EMPTY_STATES.HODL_MODE_ACTIVE:
+      return {
+        ...props,
+        image: require("../../assets/images/hodlModeStatus.png"),
+        heading: "HODL Mode is active!",
+        paragraphs: [
+          "Your wallet is currently in HODL Mode, which means outbound transactions are currently unavailable. To make a withdrawal, please deactivate HODL Mode.",
+        ],
+        onPress: () => actions.navigateTo("SecuritySettings"),
+        button: "Deactivate HODL Mode",
+        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryButton: "Go back to wallet",
+      };
     case EMPTY_STATES.NO_LOANS:
       return {
         ...props,
-        image: require("../../assets/images/monkey-on-a-laptop-illustration.png"),
         heading: "Borrow Cash Instantly",
         paragraphs: [
           "Get a USD or stablecoin loan at the best interest rates on the block!",
@@ -40,7 +65,6 @@ function getProps(purpose, componentProps) {
     case EMPTY_STATES.NON_VERIFIED_WITHDRAW:
       return {
         ...props,
-        image: require("../../assets/images/diane-sad3x.png"),
         heading: "Withdraw",
         paragraphs: [
           "Withdraw pain (and fee!) free with Celsius Network. Complete your KYC verification to take full advantage.",
@@ -59,7 +83,6 @@ function getProps(purpose, componentProps) {
     case EMPTY_STATES.MAINTENANCE:
       return {
         ...props,
-        image: require("../../assets/images/maintenance/hippo-maintenance.png"),
         heading: "Be back soon!",
         paragraphs: [
           "Celsius is currently down for maintenance. We expect to be back in a couple of hours. Thanks for your patience.",
@@ -79,7 +102,6 @@ function getProps(purpose, componentProps) {
     case EMPTY_STATES.VERIFICATION_IN_PROCESS_CELPAY:
       return {
         ...props,
-        image: require("../../assets/images/diane-sad3x.png"),
         paragraphs: ["CelPay will be available upon identity verification."],
         button: "Back to wallet",
         onPress: () => actions.navigateTo("WalletLanding"),
@@ -117,7 +139,6 @@ function getProps(purpose, componentProps) {
     case EMPTY_STATES.NO_WITHDRAWAL_ADDRESSES:
       return {
         ...props,
-        image: require("../../assets/images/diane-sad3x.png"),
         heading: "You have no withdrawal addresses set yet!",
         paragraphs: [],
         button: "Back to settings",
@@ -127,7 +148,6 @@ function getProps(purpose, componentProps) {
     case EMPTY_STATES.COMPLIANCE:
       return {
         ...props,
-        image: require("../../assets/images/diane-sad3x.png"),
         heading: "Sorry!",
         paragraphs: [
           "We apologize for any inconvenience, but due to local laws and regulations, we are unable to work with users from your region.",
@@ -137,7 +157,6 @@ function getProps(purpose, componentProps) {
     case EMPTY_STATES.INSUFFICIENT_FUNDS:
       return {
         ...props,
-        image: require("../../assets/images/diane-sad3x.png"),
         heading: "Insufficient funds!",
         paragraphs: [
           "Please deposit more funds in order to gain eligibility to use this feature.",
@@ -147,7 +166,6 @@ function getProps(purpose, componentProps) {
     case EMPTY_STATES.NO_CONTACTS:
       return {
         ...props,
-        image: require("../../assets/images/diane-sad3x.png"),
         heading: "No friends",
         paragraphs: [
           "None of your friends has installed Celsius app. You can still CelPay them with a link",
@@ -190,7 +208,6 @@ function getProps(purpose, componentProps) {
     case EMPTY_STATES.USER_CLEARED:
       return {
         ...props,
-        image: require("../../assets/images/bear-happyKYC3x.png"),
         heading: "Great job!",
         paragraphs: ["Ready to start exploring Celsius"],
         button: "Go Home",
@@ -200,7 +217,6 @@ function getProps(purpose, componentProps) {
     default:
       return {
         ...props,
-        image: require("../../assets/images/diane-sad3x.png"),
         heading: "Sorry",
         paragraphs: ["No data"],
       };

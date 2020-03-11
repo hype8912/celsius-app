@@ -69,7 +69,7 @@ function activateHodlMode() {
 
 function deactivateHodlMode() {
   return async (dispatch, getState) => {
-    dispatch(startApiCall(API.BEGIN_HODL_MODE));
+    dispatch(startApiCall(API.DEACTIVATE_HODL_MODE));
 
     const { formData } = getState().forms;
 
@@ -85,7 +85,7 @@ function deactivateHodlMode() {
       dispatch(navigateTo("CheckYourEmail"));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.BEGIN_HODL_MODE, err));
+      dispatch(apiError(API.DEACTIVATE_HODL_MODE, err));
     }
   };
 }
