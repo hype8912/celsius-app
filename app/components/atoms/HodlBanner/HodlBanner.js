@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { TouchableOpacity } from "react-native";
 import * as moment from "moment";
 
 import HodlBannerStyle from "./HodlBanner.styles";
@@ -10,26 +10,31 @@ class HodlBanner extends Component {
   static propTypes = {
     // text: PropTypes.string,
     status: PropTypes.string,
+    navigateTo: PropTypes.func,
+    activeScreen: PropTypes.string,
   };
   static defaultProps = {};
 
   render() {
     const style = HodlBannerStyle();
-    const { status } = this.props;
-    // change unactive to inactive
-    if (status.state === "Deactivated" || status.state === "Unactive")
-      return null;
+    const { status, navigateTo, activeScreen } = this.props;
+    if (!status.isActive) return null;
 
     const now = moment.utc();
     const deactivatedAt = moment.utc(status.deactivated_at);
     const diff = deactivatedAt.diff(now);
     const hours = Math.abs(moment.duration(diff).hours());
     const minutes = Math.abs(moment.duration(diff).minutes());
-    // remove seconds and inform nir
-    const seconds = Math.abs(moment.duration(diff).seconds());
+
+    const isDisabled =
+      status.state !== "Activated" || activeScreen === "VerifyProfile";
 
     return (
-      <View style={style.container}>
+      <TouchableOpacity
+        style={style.container}
+        disabled={isDisabled}
+        onPress={() => navigateTo("HodlEmptyScreen")}
+      >
         {status.state === "Activated" ? (
           <CelText
             font={"RobotoMono"}
@@ -46,10 +51,10 @@ class HodlBanner extends Component {
             type={"H6"}
             color={"white"}
           >
-            {`EXITING HODL MODE: ${hours}:${minutes}:${seconds}`}
+            {`EXITING HODL MODE: ${hours}H ${minutes}M`}
           </CelText>
         )}
-      </View>
+      </TouchableOpacity>
     );
   }
 }
