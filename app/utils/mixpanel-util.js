@@ -6,10 +6,7 @@ import appUtil from "./app-util";
 import loggerUtil from "./logger-util";
 import Constants from "../../constants";
 import { getSecureStoreKey } from "./expo-storage";
-import {
-  deletePushNotificationToken,
-  getNotificationToken,
-} from "./push-notifications-util";
+import { deletePushNotificationToken } from "./push-notifications-util";
 
 let userData = {};
 
@@ -40,15 +37,12 @@ async function engage(distinctId, payload = {}) {
 
   Mixpanel.createAlias(distinctId);
 
-  const data = { $set: { ...payload } };
-  data.$distinct_id = distinctId;
-  data.$token = MIXPANEL_TOKEN;
-  Mixpanel.set(data);
+  const data = payload;
+  data.distinct_id = distinctId;
+  data.token = MIXPANEL_TOKEN;
 
+  Mixpanel.set(data);
   Mixpanel.identify(distinctId);
-  // Get notification token from Google or Apple
-  await getNotificationToken();
-  // Add that token to Mixpanel
   await addPushDeviceToken();
 }
 
@@ -111,6 +105,7 @@ function getUserData() {
  */
 async function addPushDeviceToken() {
   const token = await getSecureStoreKey("notificationToken");
+
   if (Platform.OS === "android") {
     Mixpanel.setPushRegistrationId(token);
   } else {
@@ -133,6 +128,7 @@ async function logoutUserMixpanel() {
 
 export {
   initMixpanel,
+  addPushDeviceToken,
   engage,
   logoutUserMixpanel,
   sendEvent,

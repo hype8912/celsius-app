@@ -45,9 +45,8 @@ async function sessionStarted(trigger) {
     setUserData(store.getState().user.profile);
     userData = getUserData();
   }
-
   await sendEvent("$create_alias", { alias: userData.id });
-  engage(userData.id, {
+  await engage(userData.id, {
     $email: userData.email,
     $first_name: userData.first_name,
     $last_name: userData.last_name,
@@ -65,7 +64,7 @@ async function sessionStarted(trigger) {
     "Is celsius member": userData.celsius_member,
     "Has SSN": !!userData.ssn,
   });
-  sendEvent("Session started", { trigger });
+  await sendEvent("Session started", { trigger });
   appsFlyerUtil.setCustomerUserId(userData.id);
 }
 

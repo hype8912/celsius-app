@@ -3,7 +3,7 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import messaging from "@react-native-firebase/messaging";
 
 import notificationService from "../services/notifications-service";
-import { deleteSecureStoreKey, setSecureStoreKey } from "./expo-storage";
+import { setSecureStoreKey } from "./expo-storage";
 
 export { getNotificationToken, deletePushNotificationToken };
 
@@ -41,6 +41,5 @@ async function getIOSPushNotificationToken() {
  * @returns {Promise}
  */
 async function deletePushNotificationToken() {
-  deleteSecureStoreKey("notificationToken");
   await notificationService.deleteNotificationToken();
 }
