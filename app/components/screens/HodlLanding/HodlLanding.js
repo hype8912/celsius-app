@@ -13,7 +13,9 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { getPadding } from "../../../utils/styles-util";
 
 @connect(
-  () => ({}),
+  state => ({
+    hodlStatus: state.hodl.hodlStatus,
+  }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class HodlLanding extends Component {
@@ -21,21 +23,24 @@ class HodlLanding extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "HODL mode",
+    title: "HODL Mode",
     right: "profile",
   });
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.hodlStatus.isActive !== this.props.hodlStatus.isActive)
+      return true;
+  }
+
   render() {
     // const style = HodlLandingStyle();
-    const { actions } = this.props;
-
-    const isInHodlMode = true;
-
-    const padding = isInHodlMode ? "0 0 0 0" : "20 20 100 20";
+    const { actions, hodlStatus } = this.props;
+    const notInHodlMode = !hodlStatus.isActive;
+    const padding = notInHodlMode ? "0 0 0 0" : "20 20 100 20";
 
     return (
       <RegularLayout padding={padding}>
-        {isInHodlMode ? (
+        {notInHodlMode ? (
           <View>
             <HeadingProgressBar steps={3} currentStep={1} />
             <View
@@ -50,12 +55,12 @@ class HodlLanding extends Component {
                 type={"H2"}
                 weight={"bold"}
               >
-                What is HODL mode?
+                What is HODL Mode?
               </CelText>
               <CelText type={"H4"} align={"left"}>
-                {"HODL mode is a feature that gives you the ability to disable certain actions on your profile. This feature enhances your profile security and is very convenient if you prefer to HODL your cryptocurrencies. \n" +
+                {"HODL Mode is a feature that gives you the ability to disable certain actions on your profile. This feature enhances your profile security and is very convenient if you prefer to HODL your cryptocurrencies. \n" +
                   "\n" +
-                  "Just keep in mind, we will give you a code to deactivate HODL mode and you will need to remember it.\n" +
+                  "Just keep in mind, we will give you a code to deactivate HODL Mode and you will need to remember it.\n" +
                   "\n"}
               </CelText>
               <CelButton
@@ -73,20 +78,22 @@ class HodlLanding extends Component {
               type={"H2"}
               weight={"bold"}
             >
-              Deactivation of HODL mode
+              Deactivation of HODL Mode
             </CelText>
             <CelText type={"H4"} align={"left"}>
-              Text about what will happen if the user deactivates HODL mode.
-              Text about what will happen if the user deactivates HODL mode.
-              Text about what will happen if the user deactivates HODL mode.
-              Text about what will happen if the user deactivates HODL mode.
-              Text about what will happen if the user deactivates HODL mode.
+              {" Once you confirm to deactivate HODL Mode, please note: \n" +
+                "- HODL Mode will be deactivated after 24 hours \n" +
+                "- You will not be able to add new withdrawal addresses or change a whitelisted address until HODL mode is deactivated"}
             </CelText>
             <CelButton
-              onPress={() => actions.navigateTo("HodlDeactivateInfoCheckboxes")}
+              onPress={() =>
+                actions.navigateTo("VerifyProfile", {
+                  onSuccess: () => actions.navigateTo("HodlDeactivationCode"),
+                })
+              }
               margin={"20 0 0 0"}
             >
-              Deactivate HODL mode
+              Deactivate HODL Mode
             </CelButton>
           </View>
         )}

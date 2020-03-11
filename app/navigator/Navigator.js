@@ -101,7 +101,7 @@ import HodlLanding from "../components/screens/HodlLanding/HodlLanding";
 import HODLViewCode from "../components/screens/HODLViewCode/HODLViewCode";
 import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/HodlDeactivationCode";
 import CheckYourEmail from "../components/screens/CheckYourEmail/CheckYourEmail";
-import HodlDeactivateInfoCheckboxes from "../components/screens/HodlDeactivateInfoCheckboxes/HodlDeactivateInfoCheckboxes";
+import HodlEmptyScreen from "../components/screens/HodlEmptyScreen/HodlEmptyScreen";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 
 export const screens = {
@@ -251,7 +251,7 @@ export const screens = {
   HodlLanding,
   HODLInfoCheckboxes,
   HodlDeactivationCode,
-  HodlDeactivateInfoCheckboxes,
+  HodlEmptyScreen,
   CheckYourEmail,
 
   /**

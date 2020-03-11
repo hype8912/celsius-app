@@ -19,6 +19,7 @@ import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
     user: state.user.profile,
     kycStatus: state.user.profile.kyc,
     formData: state.forms.formData,
+    hodlStatus: state.hodl.hodlStatus,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -36,6 +37,11 @@ class SecuritySettings extends Component {
     if (nextProps.is2FAEnabled !== prevState.is2FAEnabled) {
       return {
         is2FAEnabled: nextProps.is2FAEnabled,
+      };
+    }
+    if (nextProps.hodlStatus.isActive !== prevState.isInHodlMode) {
+      return {
+        isInHodlMode: nextProps.hodlStatus.isActive,
       };
     }
     return null;
@@ -131,7 +137,7 @@ class SecuritySettings extends Component {
         )}
 
         <IconButton right={<SwitcherHodl />} hideIconRight margin="0 0 20 0">
-          HODL mode
+          HODL Mode
         </IconButton>
 
         {!user.registered_with_social && (

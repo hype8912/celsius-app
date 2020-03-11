@@ -42,7 +42,7 @@ class HODLViewCode extends Component {
     const { formData, theme, actions, hodlCode, callsInProgress } = this.props;
 
     const loading = apiUtil.areCallsInProgress(
-      API.ACTIVATE_HODL_MODE,
+      [API.ACTIVATE_HODL_MODE],
       callsInProgress
     );
 

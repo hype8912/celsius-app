@@ -40,7 +40,7 @@ class HodlDeactivationCode extends Component {
     const isEligible = formData.hodlCode && formData.hodlCode.length === 8;
 
     const loading = apiUtil.areCallsInProgress(
-      API.DEACTIVATE_HODL_MODE,
+      [API.DEACTIVATE_HODL_MODE],
       callsInProgress
     );
     return (
