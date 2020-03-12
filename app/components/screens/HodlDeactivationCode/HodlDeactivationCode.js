@@ -31,6 +31,7 @@ class HodlDeactivationCode extends Component {
   static navigationOptions = () => ({
     title: "HODL Mode",
     right: "profile",
+    gesturesEnabled: false,
   });
 
   render() {
