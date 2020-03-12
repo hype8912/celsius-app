@@ -71,7 +71,7 @@ class GetCoinsConfirmModal extends Component {
             type={"H1"}
             margin={"0 0 10 0"}
           >
-            {formatter.crypto(cryptoAmount, formData.coin)}
+            {formatter.crypto(cryptoAmount, formData.cryptoCoin)}
           </CelText>
           <View style={style.infoBlock}>
             <CelText
@@ -108,7 +108,7 @@ class GetCoinsConfirmModal extends Component {
                 Price:
               </CelText>
               <CelText type={"H6"} align={"right"}>
-                {formatter.usd(baseAmount)}
+                {formatter.fiat(baseAmount, formData.fiatCoin)}
               </CelText>
             </View>
             <Separator />
@@ -122,7 +122,7 @@ class GetCoinsConfirmModal extends Component {
                 </CelText>
               </View>
               <CelText type={"H6"} align={"right"}>
-                {formatter.usd(fee)}
+                {formatter.fiat(fee, formData.fiatCoin)}
               </CelText>
             </View>
             <Separator />
@@ -131,7 +131,7 @@ class GetCoinsConfirmModal extends Component {
                 Transfer Amount:
               </CelText>
               <CelText type={"H6"} align={"right"}>
-                {formatter.usd(totalAmount)}
+                {formatter.fiat(totalAmount, formData.fiatCoin)}
               </CelText>
             </View>
           </View>

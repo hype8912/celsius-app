@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -9,14 +9,16 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
-import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
+import { KEYPAD_PURPOSES, MODALS, THEMES } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConfirmModal";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import { SIMPLEX_FIAT_CURRENCIES } from "../../../constants/DATA";
+import Spinner from "../../atoms/Spinner/Spinner";
+import { getTheme } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -27,7 +29,6 @@ import API from "../../../constants/API";
     buyCoinsSettings: state.generalData.buyCoinsSettings,
     depositCompliance: state.compliance.deposit,
     currencies: state.currencies.rates,
-    simplexQuotes: state.simplex.quotes,
     simplexData: state.simplex.simplexData,
     callsInProgress: state.api.callsInProgress,
   }),
@@ -51,7 +52,7 @@ class GetCoinsEnterAmount extends Component {
       actions,
     } = this.props;
 
-    const availableCoins =
+    const availableCryptoCoins =
       buyCoinsSettings && depositCompliance
         ? currencies
             .filter(c => depositCompliance.coins.includes(c.short))
@@ -63,91 +64,76 @@ class GetCoinsEnterAmount extends Component {
         : [];
 
     actions.updateFormFields({
-      amountUsd: "",
+      amountFiat: "",
       amountCrypto: "",
+      isFiat: false,
+      fiatCoin: "USD",
+      cryptoCoin: "ETH",
     });
+
     this.state = {
-      availableCoins,
+      availableCryptoCoins,
     };
   }
 
-  handleCoinSelect = (field, value) => {
-    const { actions } = this.props;
-    actions.updateFormFields({
-      [field]: value,
-      amountUsd: "",
-      amountCrypto: "",
-    });
-
-    actions.getSimplexQuoteForCoin(value);
-  };
-
   handleNextStep = () => {
-    const { buyCoinsSettings, formData, actions } = this.props;
+    const { actions, formData, buyCoinsSettings } = this.props;
 
-    if (Number(formData.amountUsd) < buyCoinsSettings.min_payment_amount) {
+    if (
+      Number(formData.amountFiat) <
+      buyCoinsSettings.limit_per_fiat_currency[formData.fiatCoin].min
+    ) {
       return actions.showMessage(
         "warning",
-        `Please enter amount above ${formatter.usd(
-          buyCoinsSettings.min_payment_amount
+        `Please enter amount above ${formatter.fiat(
+          buyCoinsSettings.limit_per_fiat_currency[formData.fiatCoin].min,
+          formData.fiatCoin
         )} to continue.`
       );
     }
-
-    if (Number(formData.amountUsd) > buyCoinsSettings.max_payment_amount) {
+    if (
+      Number(formData.amountFiat) >
+      buyCoinsSettings.limit_per_fiat_currency[formData.fiatCoin].max
+    ) {
       return actions.showMessage(
         "warning",
-        `Please enter amount below ${formatter.usd(
-          buyCoinsSettings.max_payment_amount
+        `Please enter amount below ${formatter.fiat(
+          buyCoinsSettings.limit_per_fiat_currency[formData.fiatCoin].max,
+          formData.fiatCoin
         )} to continue.`
       );
     }
-
     actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL);
   };
 
-  coinPrice = coin => {
-    const { currencies } = this.props;
+  setCryptoAmount = simplexCryptoAmount =>
+    Math.max(simplexCryptoAmount, 0).toString();
 
-    const selectedCoin = currencies && currencies.find(c => c.short === coin);
-    return selectedCoin;
-  };
-
-  getUsdValue = amountUsd =>
-    formatter.removeDecimalZeros(formatter.floor10(amountUsd, -2) || "");
-
-  handleAmountChange = newValue => {
-    const { formData, currencyRatesShort, actions, simplexQuotes } = this.props;
-    const coin = formData.coin.toLowerCase();
-    const coinRate = simplexQuotes[coin]
-      ? simplexQuotes[coin].usd
-      : currencyRatesShort[coin];
-
+  handleAmountChange = async newValue => {
+    const { formData, actions } = this.props;
     const splitedValue = newValue.toString().split(".");
 
     if (splitedValue && splitedValue.length > 2) return;
 
-    let amountUsd;
-    let amountCrypto;
+    let amountFiat = "";
+    let amountCrypto = "";
 
-    if (formData.isUsd) {
-      // if no predefined label is forwarded and the value is in usd
-      amountUsd = formatter.setCurrencyDecimals(newValue, "USD");
-      amountCrypto = amountUsd / coinRate;
-
-      // if no predefined label is forwarded and the value is no in usd (crypto)
+    if (formData.isFiat) {
+      // All fiats have decimals like USD
+      amountFiat = formatter.setCurrencyDecimals(newValue, "USD");
     } else {
       amountCrypto = formatter.setCurrencyDecimals(newValue);
-      amountUsd = amountCrypto * coinRate;
-      amountUsd = this.getUsdValue(amountUsd);
-      if (amountUsd === "0") amountUsd = "";
     }
 
     // Change value '.' to '0.'
-    if (amountUsd[0] === ".") amountUsd = `0${amountUsd}`;
+    if (amountFiat[0] === ".") amountFiat = `0${amountFiat}`;
     // if the crypto amount is eg. 01 the value will be 1, 00 -> 0
-    if (amountUsd.length > 1 && amountUsd[0] === "0" && amountUsd[1] !== ".") {
-      amountUsd = amountUsd[1];
+    if (
+      amountFiat.length > 1 &&
+      amountFiat[0] === "0" &&
+      amountFiat[1] !== "."
+    ) {
+      amountFiat = amountFiat[1];
     }
 
     // if crypto amount is undefined, set it to empty string
@@ -164,107 +150,183 @@ class GetCoinsEnterAmount extends Component {
     }
 
     actions.updateFormFields({
-      amountUsd,
+      amountFiat,
       amountCrypto: amountCrypto.toString(),
     });
 
-    actions.simplexGetQuote();
+    await actions.simplexGetQuote();
+    const { simplexData } = this.props;
+
+    if (formData.isFiat) {
+      actions.updateFormField(
+        "amountCrypto",
+        this.setCryptoAmount(simplexData.digital_money.amount)
+      );
+    } else {
+      actions.updateFormField(
+        "amountFiat",
+        simplexData.fiat_money.total_amount.toString()
+      );
+    }
+  };
+
+  handleFiatCoinSelect = async (field, value) => {
+    const { actions, formData } = this.props;
+    actions.updateFormFields({
+      fiatCoin: value,
+      amountFiat: "",
+      amountCrypto: formData.amountCrypto || "",
+      isFiat: !formData.amountCrypto,
+    });
+    if (formData.amountCrypto) {
+      await actions.simplexGetQuote();
+      const { simplexData } = this.props;
+      actions.updateFormField(
+        "amountFiat",
+        simplexData.fiat_money.total_amount.toString()
+      );
+    }
+  };
+
+  handleCryptoCoinSelect = async (field, value) => {
+    const { actions, formData } = this.props;
+    actions.updateFormFields({
+      cryptoCoin: value,
+      amountCrypto: "",
+      amountFiat: formData.amountFiat || "",
+      isFiat: !!formData.amountFiat,
+    });
+    if (formData.amountFiat) {
+      await actions.simplexGetQuote();
+      const { simplexData } = this.props;
+      actions.updateFormField(
+        "amountCrypto",
+        this.setCryptoAmount(simplexData.digital_money.amount)
+      );
+    }
   };
 
   render() {
-    const {
-      actions,
-      formData,
-      keypadOpen,
-      simplexQuotes,
-      simplexData,
-      callInProgress,
-    } = this.props;
-    const { availableCoins } = this.state;
+    const { actions, formData, callInProgress } = this.props;
+    const { availableCryptoCoins } = this.state;
+
+    const theme = getTheme();
 
     const style = GetCoinsEnterAmountStyle();
-
-    const coin = formData.coin ? formData.coin.toLowerCase() : "btc";
 
     const isFetchingQuotes = apiUtil.areCallsInProgress(
       [API.GET_QUOTE],
       callInProgress
     );
 
-    let amountUsd = formData.amountUsd;
-    let amountCrypto = formData.amountCrypto;
-
-    if (
-      simplexData &&
-      simplexData.fiat_money &&
-      // check if values exist, otherwise 0
-      (formData.amountUsd || formData.amountCrypto)
-    ) {
-      amountUsd = formData.isUsd
-        ? amountUsd
-        : simplexData.fiat_money.total_amount;
-      amountCrypto = !formData.isUsd
-        ? amountCrypto
-        : Math.max(simplexData.digital_money.amount, 0);
-    }
-
     return (
       <RegularLayout fabType={"hide"} padding={"0 0 0 0"}>
         <View style={style.fiatSection}>
           <View style={style.amounts}>
+            <CelText
+              color={
+                theme === THEMES.DARK
+                  ? STYLES.COLORS.WHITE_OPACITY5
+                  : STYLES.COLORS.MEDIUM_GRAY
+              }
+              align={"center"}
+              margin={"0 0 10 0"}
+            >
+              PAY WITH
+            </CelText>
             <CoinPicker
               type={"basic"}
               updateFormField={actions.updateFormField}
-              onChange={this.handleCoinSelect}
-              coin={formData.coin}
-              field="coin"
-              defaultSelected={formData.coin || "BTC"}
-              availableCoins={availableCoins}
+              onChange={this.handleFiatCoinSelect}
+              coin={formData.fiatCoin}
+              field="fiatCoin"
+              defaultSelected={formData.fiatCoin || "USD"}
+              availableCoins={SIMPLEX_FIAT_CURRENCIES}
               navigateTo={actions.navigateTo}
             />
-            <CoinSwitch
+          </View>
+          {isFetchingQuotes && !formData.isFiat ? (
+            <View style={{ marginVertical: 15 }}>
+              <Spinner size={30} />
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={{ marginVertical: 10 }}
+              onPress={() => {
+                actions.updateFormField("isFiat", true);
+                actions.toggleKeypad(true);
+              }}
+            >
+              <CelText
+                color={
+                  theme === THEMES.DARK
+                    ? STYLES.COLORS.WHITE_OPACITY5
+                    : STYLES.COLORS.MEDIUM_GRAY
+                }
+                type={"H2"}
+              >
+                {formatter.usd(formData.amountFiat, { symbol: "" })}{" "}
+                {formData.fiatCoin}
+              </CelText>
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={style.cryptoSection}>
+          <View style={style.amounts}>
+            <CelText
+              color={STYLES.COLORS.MEDIUM_GRAY}
+              align={"center"}
+              margin={"0 0 10 0"}
+            >
+              RECEIVE
+            </CelText>
+            <CoinPicker
+              type={"basic"}
               updateFormField={actions.updateFormField}
-              onAmountPress={actions.toggleKeypad}
-              amountUsd={amountUsd}
-              amountCrypto={amountCrypto}
-              isUsd={formData.isUsd}
-              coin={formData.coin}
-              doubleTilde
-              lowerSpinner={isFetchingQuotes}
-              amountColor={
-                keypadOpen
-                  ? STYLES.COLORS.CELSIUS_BLUE
-                  : STYLES.COLORS.DARK_GRAY
-              }
+              onChange={this.handleCryptoCoinSelect}
+              coin={formData.cryptoCoin}
+              field="cryptoCoin"
+              defaultSelected={formData.cryptoCoin || "ETH"}
+              availableCoins={availableCryptoCoins}
+              navigateTo={actions.navigateTo}
             />
           </View>
+          {isFetchingQuotes && formData.isFiat ? (
+            <View style={{ marginVertical: 15 }}>
+              <Spinner size={30} />
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={{ marginVertical: 10 }}
+              onPress={() => {
+                actions.updateFormField("isFiat", false);
+                actions.toggleKeypad(true);
+              }}
+            >
+              <CelText color={STYLES.COLORS.WHITE} type={"H2"}>
+                {" "}
+                {formatter.crypto(formData.amountCrypto, formData.cryptoCoin)}
+              </CelText>
+            </TouchableOpacity>
+          )}
         </View>
-        {false && (
-          <CelText
-            align={"center"}
-            color={STYLES.COLORS.MEDIUM_GRAY}
-            margin={"25 0 15 0"}
-          >
-            1 {formData.coin} ≈ {formatter.usd(simplexQuotes[coin].usd)}
-          </CelText>
-        )}
         <CelButton
-          margin="10 0 0 0"
-          disabled={!(formData.amountUsd && Number(formData.amountUsd) > 0)}
+          margin="30 0 0 0"
+          disabled={!(formData.amountFiat && Number(formData.amountFiat) > 0)}
           onPress={this.handleNextStep}
           iconRight={
-            formData.amountUsd && Number(formData.amountUsd) > 0
+            formData.amountFiat && Number(formData.amountFiat) > 0
               ? "IconArrowRight"
               : ""
           }
         >
-          {formData.amountUsd && Number(formData.amountUsd) > 0
+          {formData.amountFiat && Number(formData.amountFiat) > 0
             ? "Buy Coins"
             : "Enter amount above"}
         </CelButton>
         <CelNumpad
-          field={formData.isUsd ? "amountUsd" : "amountCrypto"}
-          value={formData.isUsd ? formData.amountUsd : formData.amountCrypto}
+          field={formData.isFiat ? "amountFiat" : "amountCrypto"}
+          value={formData.isFiat ? formData.amountFiat : formData.amountCrypto}
           toggleKeypad={actions.toggleKeypad}
           updateFormField={actions.updateFormField}
           setKeypadInput={actions.setKeypadInput}

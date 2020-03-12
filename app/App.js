@@ -34,8 +34,7 @@ function getActiveRouteName(navigationState) {
   return route.routeName;
 }
 
-@codePush
-export default class App extends Component {
+class App extends Component {
   async componentDidMount() {
     appUtil.initializeThirdPartyServices();
 
@@ -92,3 +91,7 @@ const CelsiusApplication = () => (
     </React.Fragment>
   </Provider>
 );
+
+const codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
+
+export default codePush(codePushOptions)(App);

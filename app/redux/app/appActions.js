@@ -17,7 +17,6 @@ import {
 import { BRANCH_LINKS, TRANSFER_STATUSES } from "../../constants/DATA";
 import ACTIONS from "../../constants/ACTIONS";
 import appUtil from "../../utils/app-util";
-import { initMixpanel } from "../../utils/mixpanel-util";
 import branchUtil from "../../utils/branch-util";
 import { disableAccessibilityFontScaling } from "../../utils/styles-util";
 import ASSETS from "../../constants/ASSETS";
@@ -79,7 +78,6 @@ function initCelsiusApp() {
 
       await appUtil.initInternetConnectivityListener();
       await appUtil.pollBackendStatus();
-      await initMixpanel();
       await dispatch(initAppData());
 
       await dispatch(branchUtil.initBranch());
@@ -276,7 +274,6 @@ function initAppData(initToken = null) {
       const { bannerProps } = getState().ui;
       if (profile) {
         await dispatch(actions.getUserAppSettings());
-        await dispatch(actions.getLoyaltyInfo());
         await dispatch(actions.getComplianceInfo());
         await dispatch(
           actions.setBannerProps({ sessionCount: bannerProps.sessionCount + 1 })
@@ -290,6 +287,7 @@ function initAppData(initToken = null) {
         // get wallet details for verified users
         if (profile.kyc && hasPassedKYC()) {
           await dispatch(actions.getWalletSummary());
+          await dispatch(actions.getLoyaltyInfo());
           if (allowed) await dispatch(actions.getAllLoans());
         }
       }

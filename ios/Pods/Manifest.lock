@@ -431,7 +431,7 @@ PODS:
     - React-cxxreact (= 0.61.4)
     - React-jsi (= 0.61.4)
     - ReactCommon/jscallinvoker (= 0.61.4)
-  - RNCPushNotificationIOS (1.0.6):
+  - RNCPushNotificationIOS (1.0.7):
     - React
   - RNDeviceInfo (5.3.0):
     - React
@@ -474,7 +474,7 @@ DEPENDENCIES:
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - Mixpanel (= 3.5.1)
+  - Mixpanel
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera.podspec`)
   - Permission-Contacts (from `../node_modules/react-native-permissions/ios/Contacts.podspec`)
   - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse.podspec`)
@@ -774,7 +774,7 @@ SPEC CHECKSUMS:
   React-RCTText: 21934e0a51d522abcd0a275407e80af45d6fd9ec
   React-RCTVibration: 0f76400ee3cec6edb9c125da49fed279340d145a
   ReactCommon: a6a294e7028ed67b926d29551aa9394fd989c24c
-  RNCPushNotificationIOS: 05262c52fcfb861a2b79aa8e51cad66263c9ea52
+  RNCPushNotificationIOS: eea954fa69537d4a8db898fe1b1a06e2b7e15841
   RNDeviceInfo: f245326b5b61b80db7e9cbc9de6c75688572a4e0
   RNFBApp: 7d4006751de8bb5cafa2e8d2e7d94ee250df81db
   RNFBMessaging: 51cc7f6beaf4c4feac6f18ea941bba5854e3d9c6
@@ -789,6 +789,6 @@ SPEC CHECKSUMS:
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f
 
-PODFILE CHECKSUM: ed3833948a0bf1e2d8d24a597af2eb468b19eeb0
+PODFILE CHECKSUM: a981a1ef5beaa61a94a8f3f0dfec42f28bcb4895
 
 COCOAPODS: 1.8.4

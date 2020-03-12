@@ -47,6 +47,11 @@ class BorrowCalculatorScreen extends Component {
   static propTypes = {
     purpose: PropTypes.string,
   };
+  static navigationOptions = () => ({
+    title: "Borrow",
+    right: "profile",
+    left: "back",
+  });
 
   static navigationOptions = () => ({
     title: "Borrow",
@@ -285,9 +290,10 @@ class BorrowCalculatorScreen extends Component {
           {purposeProps.subtitle}
         </CelText>
         <Separator />
-        <CelText margin={"20 0 10 0"}>Enter loan amount</CelText>
+        <CelText type="H4" align={"left"} margin={"15 0 20 0"}>
+          Enter loan amount
+        </CelText>
         <BorrowCalculator loanParams={loanParams} purpose={purpose} />
-        <Separator margin={"10 0 0 0"} />
         <View>
           {!!purposeProps.bottomHeading && (
             <CelText

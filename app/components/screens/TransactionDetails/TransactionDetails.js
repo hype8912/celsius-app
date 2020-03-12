@@ -574,7 +574,8 @@ class TransactionDetails extends Component {
     if (
       !transaction ||
       (loadingTransactionDetails &&
-        transactionId && transaction.id !== transactionId)
+        transactionId &&
+        transaction.id !== transactionId)
     )
       return (
         <RegularLayout padding="0 0 0 0">

@@ -54,6 +54,7 @@ class Home extends Component {
     const { actions, appInitialized } = this.props;
     if (!appInitialized) {
       await actions.initCelsiusApp();
+      // Get notification token from Google or Apple
       await getNotificationToken();
     }
   }

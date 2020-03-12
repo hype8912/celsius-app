@@ -46,7 +46,12 @@ class TransactionRow extends Component {
             <View style={style.amounts}>
               <View>
                 <CelText weight="600" type="H3">
-                  {formatter.usd(transaction.amount_usd)}
+                  {transaction.amount_usd
+                    ? formatter.usd(transaction.amount_usd)
+                    : formatter.fiat(
+                        transaction.fiat_amount,
+                        transaction.fiat_currency
+                      )}
                 </CelText>
               </View>
               <View>

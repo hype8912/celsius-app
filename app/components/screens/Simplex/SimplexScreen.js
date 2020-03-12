@@ -98,9 +98,9 @@ class SimplexScreen extends Component {
       actions.resetToScreen("WalletLanding");
       mixpanelAnalytics.finishedSimplexFlow(
         "CARD",
-        formData.coin,
-        "USD",
-        formData.amountUsd,
+        formData.cryptoCoin,
+        formData.fiatCoin,
+        formData.amountFiat,
         formData.amountCrypto,
         "success"
       );
@@ -112,11 +112,11 @@ class SimplexScreen extends Component {
       );
       mixpanelAnalytics.finishedSimplexFlow(
         "CARD",
-        formData.coin,
-        "USD",
-        formData.amountUsd,
+        formData.cryptoCoin,
+        formData.fiatCoin,
+        formData.amountFiat,
         formData.amountCrypto,
-        "fail"
+        "success"
       );
     }
   };

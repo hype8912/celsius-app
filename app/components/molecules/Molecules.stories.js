@@ -6,6 +6,7 @@ import CenterView from "../../../storybook/stories/CenterView";
 import BannerStories from "./Banner/Banner.stories";
 import RegisterToUCardStories from "./RegisterToUCard/RegisterToUCard.stories";
 import RegisterPromoCodeCardStories from "./RegisterPromoCodeCard/RegisterPromoCodeCard.stories";
+import ToggleInfoCardStories from "./ToggleInfoCard/ToggleInfoCard.stories";
 
 storiesOf("Molecules", module)
   .addDecorator(getStory => (
@@ -15,4 +16,5 @@ storiesOf("Molecules", module)
   ))
   .add("Banner", BannerStories)
   .add("RegisterToUCard", RegisterToUCardStories)
-  .add("RegisterPromoCodeCard", RegisterPromoCodeCardStories);
+  .add("RegisterPromoCodeCard", RegisterPromoCodeCardStories)
+  .add("ToggleInfoCard", ToggleInfoCardStories);

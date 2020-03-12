@@ -24,7 +24,7 @@ export const InfoSection = ({ transaction, transactionProps }) => (
       }}
     >
       <Icon
-        width="12"
+        width={transaction.amount_usd ? "12" : "24"}
         fill={transactionProps.color}
         name={transactionProps.iconName}
         style={{ marginRight: 5 }}
@@ -39,11 +39,14 @@ export const InfoSection = ({ transaction, transactionProps }) => (
         precision: 5,
       })}
     </CelText>
-    <CelText
-      color={STYLES.COLORS.MEDIUM_GRAY}
-      type="H3"
-      align="center"
-    >{`${formatter.usd(transaction.amount_usd)} USD`}</CelText>
+    <CelText color={STYLES.COLORS.MEDIUM_GRAY} type="H3" align="center">
+      {transaction.amount_usd
+        ? formatter.usd(transaction.amount_usd)
+        : `${formatter.fiat(
+            transaction.fiat_amount,
+            transaction.fiat_currency
+          )}`}
+    </CelText>
   </View>
 );
 
@@ -64,43 +67,43 @@ export const BasicSection = ({ label, value, noSeparator = false }) => (
 );
 
 export const BasicCardSection = ({ label, value, coin, monthly, total }) => {
-  const coinSize = coin === 'USDT ERC20' ? "H6" : "H4";
+  const coinSize = coin === "USDT ERC20" ? "H6" : "H4";
   return (
-  <View style={{ width: "100%", paddingHorizontal: 20 }}>
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingVertical: 20,
-      }}
-    >
-      <CelText type="H6">{label}:</CelText>
-      <CelText type="H6">{`${formatter.percentage(value)} %`}</CelText>
-    </View>
-    <Card>
-      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <View>
-          <CelText type={"H6"}>Monthly Interest</CelText>
-          <CelText type={coinSize} weight={"600"}>
-            {" "}
-            {formatter.crypto(monthly, coin.toUpperCase(), { precision: 2 })}
-          </CelText>
-        </View>
-        <Separator vertical/>
-        <View>
-          <CelText type={"H6"}>Total Interest</CelText>
-          <CelText
-            color={STYLES.COLORS.CELSIUS_BLUE}
-            type={coinSize}
-            weight={"600"}
-          >
-            {formatter.crypto(total, coin.toUpperCase(), { precision: 2 })}
-          </CelText>
-        </View>
+    <View style={{ width: "100%", paddingHorizontal: 20 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          paddingVertical: 20,
+        }}
+      >
+        <CelText type="H6">{label}:</CelText>
+        <CelText type="H6">{`${formatter.percentage(value)} %`}</CelText>
       </View>
-    </Card>
-  </View>
-  )
+      <Card>
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <View>
+            <CelText type={"H6"}>Monthly Interest</CelText>
+            <CelText type={coinSize} weight={"600"}>
+              {" "}
+              {formatter.crypto(monthly, coin.toUpperCase(), { precision: 2 })}
+            </CelText>
+          </View>
+          <Separator vertical />
+          <View>
+            <CelText type={"H6"}>Total Interest</CelText>
+            <CelText
+              color={STYLES.COLORS.CELSIUS_BLUE}
+              type={coinSize}
+              weight={"600"}
+            >
+              {formatter.crypto(total, coin.toUpperCase(), { precision: 2 })}
+            </CelText>
+          </View>
+        </View>
+      </Card>
+    </View>
+  );
 };
 
 export const CollateralSection = ({ coinAmount, coin }) => (
@@ -778,8 +781,10 @@ export const NoteSection = ({ text }) =>
   text ? (
     <View style={{ width: "100%", paddingHorizontal: 20, paddingVertical: 20 }}>
       <CelText type="H6">Note:</CelText>
-      <CelText type="H6" italic margin="5 0 0 0">{text}</CelText>
-      <Separator margin={"20 0 0 0"}/>
+      <CelText type="H6" italic margin="5 0 0 0">
+        {text}
+      </CelText>
+      <Separator margin={"20 0 0 0"} />
     </View>
   ) : null;
 

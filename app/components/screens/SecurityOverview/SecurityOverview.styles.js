@@ -1,4 +1,5 @@
 // import STYLES from '../../../constants/STYLES';
+import { Platform } from "react-native";
 import {
   getThemedStyle,
   heightPercentageToDP,
@@ -10,17 +11,30 @@ const base = {
   },
   circle: {
     position: "absolute",
-    width: heightPercentageToDP("18%"),
-    height: heightPercentageToDP("18%"),
-    borderRadius: heightPercentageToDP("9%"),
+    width:
+      Platform.OS === "ios"
+        ? heightPercentageToDP("12%")
+        : heightPercentageToDP("20%"),
+    height:
+      Platform.OS === "ios"
+        ? heightPercentageToDP("12%")
+        : heightPercentageToDP("20%"),
+    borderRadius:
+      Platform.OS === "ios"
+        ? heightPercentageToDP("6%")
+        : heightPercentageToDP("10%"),
     justifyContent: "center",
     alignItems: "stretch",
     left: -25,
-    bottom: -25,
+    bottom: Platform.OS === "ios" ? -12 : -25,
   },
   card: {
     overflow: "hidden",
     flexDirection: "row",
+    height:
+      Platform.OS === "ios"
+        ? heightPercentageToDP("10%")
+        : heightPercentageToDP("12%"),
   },
   text: {
     flex: 1,
@@ -94,6 +108,10 @@ const base = {
     // flexDirection: 'column',
     // justifyContent: 'space-between',
     alignItems: "flex-end",
+  },
+  infoSubtitleWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 };
 

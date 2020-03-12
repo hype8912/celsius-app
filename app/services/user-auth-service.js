@@ -12,6 +12,7 @@ const userAuthService = {
   googleLogin,
   facebookLogin,
   twitterLogin,
+  refreshAuthToken,
 };
 
 /**
@@ -177,6 +178,14 @@ function facebookLogin(facebookUser) {
  */
 function twitterLogin(twitterUser) {
   return axios.post(`${apiUrl}/users/twitter/login`, twitterUser);
+}
+
+/**
+ * Refreshes auth token for user
+ * @returns {Promise}
+ */
+function refreshAuthToken() {
+  return axios.post(`${apiUrl}/users/refresh_token`);
 }
 
 export default userAuthService;

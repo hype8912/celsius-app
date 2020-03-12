@@ -17,6 +17,7 @@ export default {
   percentageDisplay, // TODO check if we need both or a flag will do
   hideTextExceptFirstNLetters,
   maskEmail,
+  fiat,
 };
 
 /**
@@ -28,6 +29,18 @@ export default {
  */
 function usd(amount, options = {}) {
   return currency.format(floor10(amount), { code: "USD", ...options });
+}
+
+/**
+ * Formats number to e.g. 10,000.00 EUR
+ *
+ * @param {number|string} amount
+ * @param {string} string
+ * @param {Object} options - check options here https://www.npmjs.com/package/currency-formatter#advanced-usage
+ * @returns {string}
+ */
+function fiat(amount, fiatCode, options = {}) {
+  return currency.format(floor10(amount), { code: fiatCode, ...options });
 }
 
 /**
