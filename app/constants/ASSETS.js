@@ -95,7 +95,7 @@ const CACHE_IMAGES = [
   require("../../assets/images/loyaltyIcons/star-icon3x.png"),
   require("../../assets/images/loyaltyIcons/reward-icon3x.png"),
   require("../../assets/images/PartnerLogos/DP.png"),
-  require("../../assets/images/PartnerLogos/BitGo.png"),
+  require("../../assets/images/PartnerLogos/litecoin-foundation.png"),
   require("../../assets/images/PartnerLogos/prime-trust-llc-vector-logo.png"),
   require("../../assets/images/community/dogIllustration.png"),
   require("../../assets/images/community/dogIllustration-dark.png"),

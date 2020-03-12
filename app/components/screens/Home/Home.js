@@ -66,7 +66,8 @@ class Home extends Component {
 
         if (user.kyc) {
           if (isKYCRejectedForever()) {
-            return prevProps.actions.navigateTo("VerifyProfile", {
+            return
+            prevProps.actions.navigateTo("VerifyProfile", {
               activeScreen: "KYCFinalRejection",
             });
           }
@@ -84,11 +85,10 @@ class Home extends Component {
     const { randomMsg } = this.state;
     const paddings = getPadding("0 20 0 20");
     const style = HomeStyle();
-
     return (
       <ScrollView contentContainerStyle={[{ flexGrow: 1 }, paddings]}>
         <SafeAreaView style={{ flex: 1, justifyContent: "space-between" }}>
-          <StatusBar barStyle="dark-content" />
+          <StatusBar barStyle="dark-content"/>
           <View style={style.contentWrapper}>
             <Image
               source={require("../../../../assets/images/splashScreen-celsius-new.png")}
@@ -112,16 +112,16 @@ class Home extends Component {
             >
               {randomMsg.text}
             </CelText>
-            <Loader progress={this.state.progress} />
+            <Loader progress={this.state.progress}/>
           </View>
           <View style={style.partnerLogos}>
             <Image
-              source={require("../../../../assets/images/PartnerLogos/BitGo.png")}
-              style={style.logoLeft}
-            />
-            <Image
               source={require("../../../../assets/images/PartnerLogos/DP.png")}
               style={style.logoMiddle}
+            />
+            <Image
+              source={require("../../../../assets/images/PartnerLogos/litecoin-foundation.png")}
+              style={style.logoLeft}
             />
             <Image
               source={require("../../../../assets/images/PartnerLogos/prime-trust-llc-vector-logo.png")}

@@ -24,20 +24,20 @@ const base = {
   },
   logoLeft: {
     resizeMode: "contain",
-    width: widthPercentageToDP("18%"),
+    width: widthPercentageToDP("22%"),
     marginLeft: 35,
     marginRight: 5,
   },
   logoMiddle: {
     resizeMode: "contain",
-    width: widthPercentageToDP("18%"),
+    width: widthPercentageToDP("22"),
     marginLeft: 5,
-    marginRight: 5,
+    marginRight: 10,
   },
   logoRight: {
     resizeMode: "contain",
     width: widthPercentageToDP("22%"),
-    marginLeft: 5,
+    marginLeft: 40,
     marginRight: 35,
   },
 };

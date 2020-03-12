@@ -137,11 +137,6 @@ const WELCOME_MESSAGES = [
     title: "Join the CEL-ebration!",
     text: `Get the most out of your Celsius app by earning in CEL! Earning interest in the CEL token gets you up to 30% more interest.`,
   },
-  {
-    title: "Security is our Top Priority",
-    text:
-      "Celsius uses BitGo as its custodian to provide top security to all of our customers. Make your app as secure as possible by reviewing your security settings in your profile.",
-  },
 ];
 
 const LOAN_BANNER_MESSAGES = [
