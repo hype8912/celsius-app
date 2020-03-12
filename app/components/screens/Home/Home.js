@@ -66,8 +66,7 @@ class Home extends Component {
 
         if (user.kyc) {
           if (isKYCRejectedForever()) {
-            return
-            prevProps.actions.navigateTo("VerifyProfile", {
+            return prevProps.actions.navigateTo("VerifyProfile", {
               activeScreen: "KYCFinalRejection",
             });
           }
