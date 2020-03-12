@@ -19,7 +19,7 @@ import * as appActions from "../../../redux/actions";
     celUtilityTiers: state.generalData.celUtilityTiers,
     interestCompliance: state.compliance.interest,
     interestRates: state.generalData.interestRates,
-    loyaltyInfo: state.user.loyaltyInfo,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )

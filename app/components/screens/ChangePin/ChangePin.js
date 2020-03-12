@@ -25,6 +25,7 @@ class ChangePin extends Component {
 
   static navigationOptions = () => ({
     headerSameColor: true,
+    gesturesEnabled: false,
   });
 
   constructor(props) {

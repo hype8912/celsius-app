@@ -30,6 +30,7 @@ class Welcome extends Component {
     headerSameColor: false,
     transparent: true,
     hideBack: true,
+    gesturesEnabled: false,
   });
 
   state = {
