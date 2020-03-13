@@ -42,7 +42,7 @@ class GoogleReCaptcha extends Component {
   }
 
   generateTheWebViewContent = key => {
-    const { type, buttonDisabled } = this.props
+    const { type, buttonDisabled } = this.props;
     const originalForm = `<!DOCTYPE html>
        <html>
         <head>
@@ -52,6 +52,7 @@ class GoogleReCaptcha extends Component {
           function onSubmit(token) {
             // after receiving token send it to message
             window.ReactNativeWebView.postMessage(token);
+            grecaptcha.reset();
           }
 
           function validate(event) {
@@ -98,7 +99,7 @@ class GoogleReCaptcha extends Component {
               top: 80px !important;
               margin-right: 9.2%;
               transform: scale(0.5);
-            /*visibility: hidden;*/
+              visibility: hidden;
             }
           </style>
 
@@ -114,10 +115,10 @@ class GoogleReCaptcha extends Component {
             </div>
             <div style="text-align: center">
                 <button
-                  class='${ this.buttonStyle() }'
+                  class='${this.buttonStyle()}'
                   id='submit'
                 >
-                   ${ type !== 'register' ? 'Log in' : 'Create account' }
+                   ${type !== "register" ? "Log in" : "Create account"}
                 </button>
             </div>
           <script>
@@ -132,19 +133,19 @@ class GoogleReCaptcha extends Component {
   };
 
   buttonStyle = () => {
-    const { type, buttonDisabled } = this.props
-    let btnStyle
+    const { type, buttonDisabled } = this.props;
+    let btnStyle;
 
-    if (type ==='register'){
-      btnStyle = 'btn_register'
-      if (buttonDisabled){
-         btnStyle = 'btn_register_disabled'
+    if (type === "register") {
+      btnStyle = "btn_register";
+      if (buttonDisabled) {
+        btnStyle = "btn_register_disabled";
       }
     } else {
-      btnStyle = 'btn_login'
+      btnStyle = "btn_login";
     }
-    return btnStyle
-  }
+    return btnStyle;
+  };
 
   onMsg = event => {
     const { formData, reCaptchaPassed } = this.props;
