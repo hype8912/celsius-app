@@ -30,7 +30,9 @@ function getProps(purpose, componentProps) {
         paragraphs: [
           "Your wallet is currently in HODL Mode, which means outbound transactions are currently unavailable. To make a withdrawal, please deactivate HODL Mode.",
         ],
-        onPress: () => actions.navigateTo("SecuritySettings"),
+        onPress: () => {
+          actions.navigateTo("HodlLanding");
+        },
         button: "Deactivate HODL Mode",
         secondaryOnPress: () => actions.navigateTo("WalletLanding"),
         secondaryButton: "Go back to wallet",
@@ -43,10 +45,25 @@ function getProps(purpose, componentProps) {
         paragraphs: [
           "Your wallet is currently in HODL Mode, which means outbound transactions are currently unavailable. To make a withdrawal, please deactivate HODL Mode.",
         ],
-        onPress: () => actions.navigateTo("SecuritySettings"),
+        onPress: () => {
+          actions.navigateTo("HodlLanding");
+          actions.setHodlProps(false);
+        },
         button: "Deactivate HODL Mode",
         secondaryOnPress: () => actions.navigateTo("WalletLanding"),
         secondaryButton: "Go back to wallet",
+      };
+    case EMPTY_STATES.CHECK_YOUR_EMAIL:
+      return {
+        ...props,
+        image: require("../../assets/images/checkEmail.png"),
+        heading: "Check your Email!",
+        paragraphs: [
+          "To complete HODL Mode activation, please follow the instructions\n" +
+            "sent to you via email.",
+        ],
+        onPress: () => actions.navigateTo("WalletLanding"),
+        button: "Go to wallet",
       };
     case EMPTY_STATES.NO_LOANS:
       return {

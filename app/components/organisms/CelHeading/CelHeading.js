@@ -264,7 +264,7 @@ class CelHeading extends Component {
       <View style={[style.container, paddings]}>
         <HodlBanner
           status={hodlStatus}
-          navigateTo={actions.navigateTo}
+          actions={actions}
           activeScreen={activeScreen}
         />
         <View style={[style.content]}>

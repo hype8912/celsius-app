@@ -54,8 +54,6 @@ function activateHodlMode() {
         twoFactorCode: formData.code,
       };
       await hodlService.activateHodlMode(verification);
-
-      dispatch(navigateTo("CheckYourEmail"));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.ACTIVATE_HODL_MODE, err));
@@ -80,9 +78,7 @@ function deactivateHodlMode() {
         twoFactorCode: formData.code,
         code: formData.hodlCode,
       };
-
       await hodlService.deactivateHodlMode(verification);
-      dispatch(navigateTo("CheckYourEmail"));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.DEACTIVATE_HODL_MODE, err));

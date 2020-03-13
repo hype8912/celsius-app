@@ -83,6 +83,7 @@ const EMPTY_STATES = {
 
   HODL_MODE_WARNING: "HODL_MODE_WARNING",
   HODL_MODE_ACTIVE: "HODL_MODE_ACTIVE",
+  CHECK_YOUR_EMAIL: "CHECK_YOUR_EMAIL",
 };
 
 const KEYPAD_PURPOSES = {
@@ -194,6 +195,13 @@ const LOAN_FILTER_ITEMS = [
   "CANCELED",
 ];
 
+const HODL_STATUS = {
+  ACTIVATED: "Activated",
+  DEACTIVATED: "Deactivated",
+  PENDING_DEACTIVATION: "Pending Deactivate",
+  INACTIVE: "Inactive",
+};
+
 const TRANSACTION_FILTER_DATE = [
   {
     title: "Anytime",
@@ -290,4 +298,5 @@ export {
   TRANSACTION_FILTER_TYPE,
   LOAN_BANNER_MESSAGES,
   CEL_PAY_TYPES,
+  HODL_STATUS,
 };

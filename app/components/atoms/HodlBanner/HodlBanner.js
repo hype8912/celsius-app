@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { TouchableOpacity } from "react-native";
 import * as moment from "moment";
 
+import { HODL_STATUS } from "../../../constants/UI";
 import HodlBannerStyle from "./HodlBanner.styles";
 import CelText from "../../atoms/CelText/CelText";
 
@@ -17,25 +18,32 @@ class HodlBanner extends Component {
 
   render() {
     const style = HodlBannerStyle();
-    const { status, navigateTo, activeScreen } = this.props;
+    const { status, actions, activeScreen } = this.props;
     if (!status.isActive) return null;
 
     const now = moment.utc();
     const deactivatedAt = moment.utc(status.deactivated_at);
     const diff = deactivatedAt.diff(now);
-    const hours = Math.abs(moment.duration(diff).hours());
-    const minutes = Math.abs(moment.duration(diff).minutes());
+    let hours = Math.abs(moment.duration(diff).hours());
+    let minutes = Math.abs(moment.duration(diff).minutes());
+
+    if (Number(minutes) < 10) minutes = `0${minutes}`;
+    if (Number(hours) < 10) hours = `0${hours}`;
 
     const isDisabled =
-      status.state !== "Activated" || activeScreen === "VerifyProfile";
+      status.state !== HODL_STATUS.ACTIVATED ||
+      activeScreen === "VerifyProfile";
 
     return (
       <TouchableOpacity
         style={style.container}
         disabled={isDisabled}
-        onPress={() => navigateTo("HodlEmptyScreen")}
+        onPress={() => {
+          actions.setHodlProps(true);
+          actions.navigateTo("HodlLanding");
+        }}
       >
-        {status.state === "Activated" ? (
+        {status.state === HODL_STATUS.ACTIVATED ? (
           <CelText
             font={"RobotoMono"}
             weight="regular"

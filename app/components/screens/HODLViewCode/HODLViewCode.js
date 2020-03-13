@@ -10,7 +10,7 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import { getPadding } from "../../../utils/styles-util";
-import { THEMES } from "../../../constants/UI";
+import { EMPTY_STATES, THEMES } from "../../../constants/UI";
 import STYLES from "../../../constants/STYLES";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import Card from "../../atoms/Card/Card";
@@ -18,6 +18,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import Spinner from "../../atoms/Spinner/Spinner";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import StaticScreen from "../StaticScreen/StaticScreen";
 
 @connect(
   state => ({
@@ -32,15 +33,42 @@ class HODLViewCode extends Component {
   static propTypes = {};
   static defaultProps = {};
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      emptyState: false,
+    };
+  }
+
   static navigationOptions = () => ({
     title: "HODL Mode",
     right: "profile",
     gesturesEnabled: false,
   });
 
+  componentWillUnmount() {
+    const { actions } = this.props;
+    actions.clearForm();
+  }
+
+  checkEmail = async () => {
+    const { actions } = this.props;
+    await actions.activateHodlMode();
+    this.setState({
+      emptyState: true,
+    });
+  };
+
   render() {
     const style = HODLViewCodeStyles();
+    const { emptyState } = this.state;
     const { formData, theme, actions, hodlCode, callsInProgress } = this.props;
+
+    if (emptyState)
+      return (
+        <StaticScreen emptyState={{ purpose: EMPTY_STATES.CHECK_YOUR_EMAIL }} />
+      );
 
     const loading = apiUtil.areCallsInProgress(
       [API.ACTIVATE_HODL_MODE],
@@ -106,7 +134,7 @@ class HODLViewCode extends Component {
 
           <CelButton
             disabled={!formData.agreeHodlMode}
-            onPress={() => actions.activateHodlMode()}
+            onPress={() => this.checkEmail()}
             loading={loading}
           >
             Send email verification

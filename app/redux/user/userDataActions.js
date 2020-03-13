@@ -25,6 +25,7 @@ export {
   setUserAppSettings,
   getLinkedBankAccount,
   linkBankAccount,
+  setHodlProps,
 };
 
 /**
@@ -294,5 +295,15 @@ function setUserAppSettings(data) {
       dispatch(apiError(API.SET_APP_SETTINGS, e));
       dispatch(showMessage("error", e.msg));
     }
+  };
+}
+
+/**
+ *
+ */
+function setHodlProps(activeHodlMode) {
+  return {
+    type: ACTIONS.SET_HODL_PROPS,
+    activeHodlMode,
   };
 }

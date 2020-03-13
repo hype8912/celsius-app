@@ -8,7 +8,7 @@ import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { MODALS } from "../../../constants/UI";
+import { HODL_STATUS, MODALS } from "../../../constants/UI";
 import RemoveAuthAppModal from "../../modals/RemoveAuthAppModal/RemoveAuthAppModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
@@ -99,10 +99,12 @@ class SecuritySettings extends Component {
 
   rightSwitchHodl = () => {
     const { isInHodlMode } = this.state;
+    const { hodlStatus } = this.props;
     return (
       <CelSwitch
         onValueChange={this.handleSwitchChangeHodl}
         value={isInHodlMode}
+        disabled={hodlStatus.state === HODL_STATUS.PENDING_DEACTIVATION}
       />
     );
   };

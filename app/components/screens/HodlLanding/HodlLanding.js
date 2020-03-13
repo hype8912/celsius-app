@@ -11,10 +11,13 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { getPadding } from "../../../utils/styles-util";
+import StaticScreen from "../StaticScreen/StaticScreen";
+import { EMPTY_STATES } from "../../../constants/UI";
 
 @connect(
   state => ({
     hodlStatus: state.hodl.hodlStatus,
+    activeHodlMode: state.user.appSettings.activeHodlMode,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -22,21 +25,37 @@ class HodlLanding extends Component {
   static propTypes = {};
   static defaultProps = {};
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeMode: false,
+    };
+  }
   static navigationOptions = () => ({
     title: "HODL Mode",
     right: "profile",
   });
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.hodlStatus.isActive !== this.props.hodlStatus.isActive)
-      return true;
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.activeHodlMode !== prevState.activeMode) {
+      return {
+        activeMode: nextProps.activeHodlMode,
+      };
+    }
   }
 
   render() {
     // const style = HodlLandingStyle();
     const { actions, hodlStatus } = this.props;
+    const { activeMode } = this.state;
     const notInHodlMode = !hodlStatus.isActive;
     const padding = notInHodlMode ? "0 0 0 0" : "20 20 100 20";
+
+    if (activeMode)
+      return (
+        <StaticScreen emptyState={{ purpose: EMPTY_STATES.HODL_MODE_ACTIVE }} />
+      );
 
     return (
       <RegularLayout padding={padding}>
