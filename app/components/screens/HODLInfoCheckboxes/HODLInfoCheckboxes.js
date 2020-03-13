@@ -43,17 +43,22 @@ class HODLInfoCheckboxes extends Component {
       },
       {
         field: "hodl2",
-        explanation:
-          "You will not have the ability to send your funds via CelPay",
+        explanation: "You will not be able to send funds via CelPay",
       },
       {
         field: "hodl3",
+        explanation:
+          "You will not be able to change whitelisted withdrawal addresses",
+      },
+      {
+        field: "hodl4",
         explanation:
           "There will be a 24-hour wait period before reinstating the above functionalities upon deactivation of HODL Mode",
       },
     ];
 
-    const canContinue = formData.hodl1 && formData.hodl2 && formData.hodl3;
+    const canContinue =
+      formData.hodl1 && formData.hodl2 && formData.hodl3 && formData.hodl4;
     return (
       <RegularLayout padding="0 0 0 0">
         <HeadingProgressBar steps={3} currentStep={2} />

@@ -77,12 +77,12 @@ class HodlLanding extends Component {
                 What is HODL Mode?
               </CelText>
               <CelText type={"H4"} align={"left"}>
-                {"HODL Mode is a feature that gives you the ability to disable certain actions on your profile. This feature enhances your profile security and is very convenient if you prefer to HODL your cryptocurrencies. \n" +
-                  "\n" +
-                  "Just keep in mind, we will give you a code to deactivate HODL Mode and you will need to remember it.\n" +
-                  "\n"}
+                {
+                  "HODL Mode is a security feature that gives you the ability to temporarily disable outgoing transactions from your Celsius account. You control when HODL Mode is activated, and it is an ideal feature for those that do not plan on withdrawing or transferring funds from their wallet for an extended period of time."
+                }
               </CelText>
               <CelButton
+                margin={"20 0 0 0"}
                 onPress={() => actions.navigateTo("HODLInfoCheckboxes")}
               >
                 Continue

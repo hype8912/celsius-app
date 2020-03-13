@@ -84,8 +84,8 @@ class HodlDeactivationCode extends Component {
           Deactivation code
         </CelText>
         <CelText type={"H4"} align={"left"}>
-          Please type below deactivation code to successfully deactivate HODL
-          mode.
+          Please enter your unique security code below to successfully
+          deactivate HODL Mode.
         </CelText>
 
         <Card styles={style.inputCel} margin={"20 0 20 0"}>
