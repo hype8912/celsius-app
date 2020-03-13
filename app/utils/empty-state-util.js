@@ -43,7 +43,7 @@ function getProps(purpose, componentProps) {
         image: require("../../assets/images/hodlModeStatus.png"),
         heading: "HODL Mode is active!",
         paragraphs: [
-          "Your wallet is currently in HODL Mode, which means outbound transactions are currently unavailable. To make a withdrawal, please deactivate HODL Mode.",
+          "Your account is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. Use the button below to start the deactivation process and exit HODL Mode.",
         ],
         onPress: () => {
           actions.navigateTo("HodlLanding");
