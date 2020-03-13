@@ -333,7 +333,7 @@ class Profile extends Component {
               textSize="H6"
               basic
               onPress={() => {
-                actions.navigateTo("TermsOfUse");
+                Linking.openURL("https://celsius.network/terms-of-use/");
               }}
               textColor={STYLES.COLORS.CELSIUS_BLUE}
             >
