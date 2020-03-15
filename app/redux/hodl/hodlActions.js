@@ -54,6 +54,10 @@ function activateHodlMode() {
         twoFactorCode: formData.code,
       };
       await hodlService.activateHodlMode(verification);
+
+      return {
+        success: true,
+      };
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.ACTIVATE_HODL_MODE, err));
@@ -79,6 +83,10 @@ function deactivateHodlMode() {
         code: formData.hodlCode,
       };
       await hodlService.deactivateHodlMode(verification);
+
+      return {
+        success: true,
+      };
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.DEACTIVATE_HODL_MODE, err));

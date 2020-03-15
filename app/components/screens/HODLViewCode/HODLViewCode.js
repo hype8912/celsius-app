@@ -54,10 +54,12 @@ class HODLViewCode extends Component {
 
   checkEmail = async () => {
     const { actions } = this.props;
-    await actions.activateHodlMode();
-    this.setState({
-      emptyState: true,
-    });
+    const response = await actions.activateHodlMode();
+    if (response.success) {
+      this.setState({
+        emptyState: true,
+      });
+    }
   };
 
   render() {
