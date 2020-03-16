@@ -102,7 +102,7 @@ async function pollBackendStatus() {
 async function checkAndRefreshAuthToken() {
   if (iteration % 30 !== 0) return;
 
-  const EXPIRES_IN_MINS = 30;
+  const EXPIRES_IN_HOURS = 24;
   const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
   if (!storageToken) return;
 
@@ -111,7 +111,7 @@ async function checkAndRefreshAuthToken() {
     ? new Date(decodedToken.exp * 1000)
     : new Date();
   const isAboutToExpire = moment()
-    .add(EXPIRES_IN_MINS, "min")
+    .add(EXPIRES_IN_HOURS, "hours")
     .isAfter(moment(expirationDate));
 
   if (isAboutToExpire) {
