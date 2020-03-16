@@ -53,11 +53,13 @@ function activateHodlMode() {
         pin: formData.pin,
         twoFactorCode: formData.code,
       };
-      await hodlService.activateHodlMode(verification);
+      const response = await hodlService.activateHodlMode(verification);
 
-      return {
-        success: true,
-      };
+      if (response.data.ok) {
+        return {
+          success: true,
+        };
+      }
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.ACTIVATE_HODL_MODE, err));
@@ -76,17 +78,19 @@ function deactivateHodlMode() {
     const { formData } = getState().forms;
 
     try {
-      // const hodlCode = formData.hodlCode;
       const verification = {
         pin: formData.pin,
         twoFactorCode: formData.code,
         code: formData.hodlCode,
       };
-      await hodlService.deactivateHodlMode(verification);
 
-      return {
-        success: true,
-      };
+      const response = await hodlService.deactivateHodlMode(verification);
+
+      if (response.data.ok) {
+        return {
+          success: true,
+        };
+      }
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.DEACTIVATE_HODL_MODE, err));

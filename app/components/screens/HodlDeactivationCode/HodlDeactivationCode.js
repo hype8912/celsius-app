@@ -51,7 +51,7 @@ class HodlDeactivationCode extends Component {
   checkEmail = async () => {
     const { actions } = this.props;
     const response = await actions.deactivateHodlMode();
-    if (response.success) {
+    if (response && response.success) {
       this.setState({
         emptyState: true,
       });
