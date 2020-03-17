@@ -221,6 +221,8 @@ class RegisterInitial extends Component {
             refs={input => {
               this.pass = input;
             }}
+            showPasswordTooltip
+            tooTipPositionTop
           />
         )}
 

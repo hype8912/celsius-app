@@ -66,6 +66,8 @@ class CelInput extends Component {
     border: PropTypes.bool,
     rightText: PropTypes.string,
     theme: PropTypes.oneOf(Object.values(THEMES)),
+    showPasswordTooltip: PropTypes.bool,
+    tooTipPositionTop: PropTypes.bool, // default undefined - position top
   };
 
   static defaultProps = {
@@ -127,14 +129,25 @@ class CelInput extends Component {
   };
 
   renderInputByType = () => {
-    const { type, value, helperButton, rightText } = this.props;
+    const {
+      type,
+      value,
+      helperButton,
+      rightText,
+      showPasswordTooltip,
+      tooTipPositionTop,
+    } = this.props;
     const inputStyle = this.getInputStyle();
 
     switch (type) {
       case "password":
         return (
           <View style={inputStyle}>
-            <CelInputPassword {...this.props} />
+            <CelInputPassword
+              {...this.props}
+              showPasswordTooltip={showPasswordTooltip}
+              tooTipPositionTop={tooTipPositionTop}
+            />
           </View>
         );
       case "phone":

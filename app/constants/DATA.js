@@ -360,6 +360,16 @@ const SIMPLEX_FIAT_CURRENCIES = [
   },
 ];
 
+const SECURITY_STRENGTH_ITEMS = [
+  { copy: "The minimum password length is 8." },
+  { copy: "You must use at least 1 uppercase letter(s)." },
+  { copy: "You must use at least 1 number(s)." },
+  { copy: "You must use at least 1 symbol(s)." },
+  { copy: "Can’t contain your name or parts of the your’s full name." },
+];
+
+const SECURITY_STRENGTH_LEVEL = ["Week", "Fair", "Good", "Strong"];
+
 export {
   BLOCKEXPLORERS,
   KYC_STATUSES,
@@ -378,4 +388,6 @@ export {
   TOTAL_ASSETS_AMOUNT,
   SIMPLEX_PAYMENT_STATUSES,
   SIMPLEX_FIAT_CURRENCIES,
+  SECURITY_STRENGTH_ITEMS,
+  SECURITY_STRENGTH_LEVEL,
 };
