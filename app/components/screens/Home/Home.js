@@ -93,7 +93,6 @@ class Home extends Component {
     const { randomMsg } = this.state;
     const paddings = getPadding("0 20 0 20");
     const style = HomeStyle();
-
     return (
       <ScrollView contentContainerStyle={[{ flexGrow: 1 }, paddings]}>
         <SafeAreaView style={{ flex: 1, justifyContent: "space-between" }}>
@@ -125,12 +124,12 @@ class Home extends Component {
           </View>
           <View style={style.partnerLogos}>
             <Image
-              source={require("../../../../assets/images/PartnerLogos/BitGo.png")}
-              style={style.logoLeft}
-            />
-            <Image
               source={require("../../../../assets/images/PartnerLogos/DP.png")}
               style={style.logoMiddle}
+            />
+            <Image
+              source={require("../../../../assets/images/PartnerLogos/litecoin-foundation.png")}
+              style={style.logoLeft}
             />
             <Image
               source={require("../../../../assets/images/PartnerLogos/prime-trust-llc-vector-logo.png")}

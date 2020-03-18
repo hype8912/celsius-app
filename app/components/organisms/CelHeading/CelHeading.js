@@ -255,7 +255,7 @@ class CelHeading extends Component {
     const { formData, hodlStatus, actions, activeScreen } = this.props;
     const scene = this.props.scene.descriptor;
     const style = CelHeadingStyle();
-    const paddings = getPadding("15 15 15 15");
+    const paddings = getPadding("0 15 0 15");
     const leftStyle = formData.activeSearch
       ? [style.left, { flexDirection: "row", flex: 2 }]
       : style.left;

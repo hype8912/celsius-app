@@ -34,6 +34,7 @@ class Login extends Component {
 
   reCaptchaPassed = event => {
     const { actions } = this.props;
+    if (event.nativeEvent.data === "increaseReCap") return;
     actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
     actions.loginUser();
   };

@@ -12,14 +12,10 @@ import store from "../redux/store";
  *
  * @param {string} password
  * @param {UserData} userData
- * @return {number}
+ * @return {Object}
  */
 
 const calculatePasswordScore = () => {
-  // if (checkNames(password, userData)) {
-  //   return -1
-  // }
-
   const { formData } = store.getState().forms;
 
   const names = [formData.firstName, formData.lastName];
@@ -34,11 +30,19 @@ const calculatePasswordScore = () => {
     symbolsMinLength: 1,
     exclude: {
       value: names,
-      message: "No names, please",
+      message: "Can’t contain your name or parts of the your’s full name.",
     },
   });
-  const result = pm.getResult(formData.password);
-  return result.score;
+  const result = pm.getResult(formData.password || formData.newPassword);
+
+  if (!result.errors) {
+    return {
+      ...result,
+      errors: [],
+    };
+  }
+
+  return result;
 };
 
 export default calculatePasswordScore;

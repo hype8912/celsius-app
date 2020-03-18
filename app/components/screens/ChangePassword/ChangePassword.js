@@ -64,8 +64,14 @@ class ChangePassword extends Component {
           refs={input => {
             this.pass = input;
           }}
+          showPasswordTooltip
+          tooTipPositionTop={false}
         />
-        <CelButton onPress={this.changePassword} loading={changingPassword}>
+        <CelButton
+          onPress={this.changePassword}
+          loading={changingPassword}
+          margin={"140 0 0 0"}
+        >
           Change password
         </CelButton>
       </RegularLayout>

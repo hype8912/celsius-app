@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import PropTypes from "prop-types";
 
 import STYLES from "../../../constants/STYLES";
 import CelInputText from "./CelInputText";
 import { THEMES } from "../../../constants/UI";
 import CelText from "../CelText/CelText";
+import PassMeterTooltip from "../PassMeterTooltip/PassMeterTooltip";
 
 // import calculatePasswordScore from "../../../utils/password-util";
 
@@ -73,18 +74,68 @@ class CelInputPassword extends Component {
   }
 
   render() {
-    const { theme, value, disabled } = this.props;
+    const {
+      theme,
+      value,
+      disabled,
+      showPasswordTooltip,
+      tooTipPositionTop,
+    } = this.props;
     const { visible } = this.state;
     const fillColor =
       theme !== THEMES.DARK ? STYLES.COLORS.GRAY : STYLES.COLORS.WHITE;
     const iconName = visible ? "HIDE" : "SHOW";
+
     return (
       <React.Fragment>
-        <CelInputText
-          {...this.props}
-          secureTextEntry={!visible}
-          style={{ paddingRight: 15 }}
-        />
+        <View>
+          <View
+            style={{
+              position: "absolute",
+              top: tooTipPositionTop ? -145 : 55,
+              left: 0,
+            }}
+          >
+            {!!value && showPasswordTooltip && (
+              <>
+                <View
+                  style={
+                    // TODO: move to style after create CelInputPassword component
+                    {
+                      position: "absolute",
+                      width: 0,
+                      height: 0,
+                      marginLeft: 145,
+                      top: !tooTipPositionTop ? -10 : "auto",
+                      bottom: tooTipPositionTop ? -10 : "auto",
+                      borderLeftWidth: 10,
+                      borderRightWidth: 10,
+                      borderBottomWidth: 10,
+                      borderStyle: "solid",
+                      backgroundColor: "transparent",
+                      borderLeftColor: "transparent",
+                      borderRightColor: "transparent",
+                      borderBottomColor: STYLES.COLORS.DARK_GRAY,
+                      transform: [
+                        {
+                          rotate: tooTipPositionTop ? "180deg" : "0deg",
+                        },
+                      ],
+                    }
+                  }
+                />
+                <PassMeterTooltip />
+              </>
+            )}
+          </View>
+          <CelInputText
+            {...this.props}
+            secureTextEntry={!visible}
+            style={{
+              paddingRight: 15,
+            }}
+          />
+        </View>
         {!!value && !disabled && (
           <TouchableOpacity
             style={{
