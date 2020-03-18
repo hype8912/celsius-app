@@ -73,7 +73,7 @@ class HODLViewCode extends Component {
       );
 
     const loading = apiUtil.areCallsInProgress(
-      [API.ACTIVATE_HODL_MODE],
+      [API.GET_HODL_CODE],
       callsInProgress
     );
 

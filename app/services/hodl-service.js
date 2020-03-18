@@ -2,10 +2,9 @@ import axios from "axios";
 import apiUrl from "./api-url";
 
 const hodlService = {
-  beginHodlMode,
+  getHodlCode,
   activateHodlMode,
   deactivateHodlMode,
-  pollHodlStatus,
 };
 
 /**
@@ -13,7 +12,7 @@ const hodlService = {
  * @param verificationCode
  * @returns {Promise}
  */
-function beginHodlMode(verificationCode) {
+function getHodlCode(verificationCode) {
   return axios.post(`${apiUrl}/users/hodl_mode/begin`, verificationCode);
 }
 
@@ -33,15 +32,6 @@ function activateHodlMode(verificationCode) {
  */
 function deactivateHodlMode(verificationCode) {
   return axios.post(`${apiUrl}/users/hodl_mode/deactivate`, verificationCode);
-}
-
-/**
- * 30 second interval fetching of hodl status
- * @returns {Promise}
- */
-
-function pollHodlStatus() {
-  return axios.get(`${apiUrl}/me/poll`);
 }
 
 export default hodlService;

@@ -113,7 +113,7 @@ class HODLInfoCheckboxes extends Component {
               actions.navigateTo("VerifyProfile", {
                 onSuccess: () => {
                   actions.navigateTo("HODLViewCode");
-                  actions.beginHodlMode();
+                  actions.getHodlCode();
                 },
               })
             }

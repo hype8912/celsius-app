@@ -7,7 +7,7 @@ const initialState = {
 
 export default function hodlReducer(state = initialState, action) {
   switch (action.type) {
-    case ACTIONS.BEGIN_HODL_MODE:
+    case ACTIONS.GET_HODL_CODE_SUCCESS:
       return {
         ...state,
         hodlCode: action.hodlCode,

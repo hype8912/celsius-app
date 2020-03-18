@@ -6,15 +6,15 @@ import { navigateTo } from "../nav/navActions";
 import { showMessage } from "../ui/uiActions";
 import ACTIONS from "../../constants/ACTIONS";
 
-export { beginHodlMode, activateHodlMode, deactivateHodlMode, pollHodlStatus };
+export { getHodlCode, activateHodlMode, deactivateHodlMode };
 
 /**
  * act of intention to star hodl mode
  */
 
-function beginHodlMode() {
+function getHodlCode() {
   return async (dispatch, getState) => {
-    dispatch(startApiCall(API.BEGIN_HODL_MODE));
+    dispatch(startApiCall(API.GET_HODL_CODE));
 
     const { formData } = getState().forms;
 
@@ -23,17 +23,17 @@ function beginHodlMode() {
         pin: formData.pin,
         twoFactorCode: formData.code,
       };
-      const result = await hodlService.beginHodlMode(verification);
+      const result = await hodlService.getHodlCode(verification);
 
       dispatch(navigateTo("HODLViewCode"));
 
       dispatch({
-        type: ACTIONS.BEGIN_HODL_MODE,
+        type: ACTIONS.GET_HODL_CODE_SUCCESS,
         hodlCode: result.data,
       });
     } catch (err) {
       dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.BEGIN_HODL_MODE, err));
+      dispatch(apiError(API.GET_HODL_CODE, err));
     }
   };
 }
@@ -54,7 +54,7 @@ function activateHodlMode() {
         twoFactorCode: formData.code,
       };
       const response = await hodlService.activateHodlMode(verification);
-
+      dispatch({ type: ACTIONS.ACTIVATE_HODL_MODE_SUCCESS });
       if (response.data.ok) {
         return {
           success: true,
@@ -85,7 +85,7 @@ function deactivateHodlMode() {
       };
 
       const response = await hodlService.deactivateHodlMode(verification);
-
+      dispatch({ type: ACTIONS.DEACTIVATE_HODL_MODE_SUCCESS });
       if (response.data.ok) {
         return {
           success: true,
@@ -94,29 +94,6 @@ function deactivateHodlMode() {
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.DEACTIVATE_HODL_MODE, err));
-    }
-  };
-}
-
-/**
- * polling of hodlStatus
- */
-
-function pollHodlStatus() {
-  return async dispatch => {
-    dispatch(startApiCall(API.POLL_HODL_STATUS));
-
-    try {
-      const res = await hodlService.pollHodlStatus();
-      const hodlStatus = res.data.hodlModeStatus;
-
-      dispatch({
-        type: ACTIONS.POLL_HODL_STATUS_SUCCESS,
-        hodlStatus,
-      });
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.POLL_HODL_STATUS, err));
     }
   };
 }
