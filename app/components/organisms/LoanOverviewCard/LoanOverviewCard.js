@@ -120,7 +120,7 @@ class LoanOverviewCard extends Component {
                 color={loan.uiProps.color}
                 margin={"0 5 0 0"}
               >
-                {loan.uiProps.displayText}
+                {loan.uiProps.displayText} #{loan.id}
               </CelText>
             </View>
 
