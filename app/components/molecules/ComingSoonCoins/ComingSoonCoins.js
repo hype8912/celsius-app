@@ -29,12 +29,12 @@ const COMING_SOON_COINS = [
     image_url: require("../../../../assets/images/coins/paxGoldFullColor3x.png"),
     learn_more_link: "https://www.paxos.com/paxgold/",
   },
-  {
-    name: "Saga",
-    short: "SGA",
-    image_url: require("../../../../assets/images/coins/saga.png"),
-    learn_more_link: "https://www.saga.org/",
-  },
+  // {
+  //   name: "Saga",
+  //   short: "SGA",
+  //   image_url: require("../../../../assets/images/coins/saga.png"),
+  //   learn_more_link: "https://www.saga.org/",
+  // },
   {
     name: "Binance USD",
     short: "BUSD",

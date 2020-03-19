@@ -156,7 +156,7 @@ class LoyaltyProgram extends Component {
                       type={"H2"}
                       weight={"700"}
                     >
-                      {`${loyaltyInfo.tier.loanInterestBonus * 100}%`}
+                      {`${loyaltyInfo.tier.interestBonus * 100}%`}
                     </CelText>
                     <CelText align={"center"} type={"H5"} weight={"300"}>
                       Bonus for earning
@@ -178,7 +178,7 @@ class LoyaltyProgram extends Component {
                       type={"H2"}
                       weight={"700"}
                     >
-                      {`${loyaltyInfo.tier.interestBonus * 100}%`}
+                      {`${loyaltyInfo.tier.loanInterestBonus * 100}%`}
                     </CelText>
                     <CelText align={"center"} type={"H5"} weight={"300"}>
                       Discount for paying
