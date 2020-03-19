@@ -7,23 +7,11 @@ import { Share } from "react-native";
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import {
-  BasicSection,
-  StatusSection,
-  InfoSection,
-  AddressSection,
   NoteSection,
   InterestSection,
   LoanInfoSection,
   HodlInfoSection,
   CollateralSection,
-  TransactionSection,
-  SentTo,
-  SentFrom,
-  ReferrerHODL,
-  Referrer,
-  Referred,
-  ReferrerPending,
-  ReferredPending,
   Disclaimer,
   MarginCall,
   Liquidation,
@@ -43,6 +31,12 @@ import { hasPassedKYC } from "../../../utils/user-util";
 import CollateralLoanCard from "../../molecules/CollateralLoanCard/CollateralLoanCard";
 import PrepaymentSuccessfulModal from "../../modals/PrepaymentSuccessfulModal/PrepaymentSuccessfulModal";
 import SendCelPayLinkCard from "../../molecules/SendCelPayLinkCard/SendCelPayLinkCard";
+import InfoSection from "../../atoms/TransactionSections/InfoSection/InfoSection";
+import BasicSection from "../../atoms/TransactionSections/BasicSection/BasicSection";
+import AddressSection from "../../atoms/TransactionSections/AddressSection/AddressSection";
+import TransactionSection from "../../atoms/TransactionSections/TransactionSection/TransactionSection";
+import SentSection from "../../molecules/SentSection/SentSection";
+import ReferralSection from "../../molecules/ReferralSection/ReferralSection";
 
 @connect(
   state => ({
@@ -184,17 +178,21 @@ class TransactionDetails extends Component {
         );
       case "status":
         return (
-          <StatusSection
+          <BasicSection
             key={sectionType}
-            transactionProps={transactionProps}
+            color={transactionProps.color}
+            value={transactionProps.statusText}
+            label={"Status"}
           />
         );
       case "status:noSeparator":
         return (
-          <StatusSection
+          <BasicSection
             key={sectionType}
-            transactionProps={transactionProps}
+            color={transactionProps.color}
+            value={transactionProps.statusText}
             noSeparator
+            label={"Status"}
           />
         );
       case "address:from":
@@ -414,35 +412,25 @@ class TransactionDetails extends Component {
         );
       case "sentTo":
         return (
-          <SentTo
+          <SentSection
             key={sectionType}
             transaction={transaction}
-            text="Sent to:"
-            actions={actions}
+            text="Sent to"
           />
         );
       case "sentFrom":
         return (
-          <SentFrom
+          <SentSection
             key={sectionType}
             transaction={transaction}
-            text="From:"
-            actions={actions}
+            text="From"
           />
         );
       case "referrerHODL":
-        return (
-          <ReferrerHODL
-            key={sectionType}
-            lockedValue={moment(transaction.time).format("D MMM YYYY")}
-            transaction={transaction}
-            text="Referral Details:"
-            actions={actions}
-          />
-        );
+        return <ReferralSection key={sectionType} transaction={transaction} />;
       case "referrer":
         return (
-          <Referrer
+          <ReferralSection
             key={sectionType}
             transaction={transaction}
             text="Referral Details:"
@@ -451,7 +439,7 @@ class TransactionDetails extends Component {
         );
       case "referred":
         return (
-          <Referred
+          <ReferralSection
             key={sectionType}
             transaction={transaction}
             text="Referral Details:"
@@ -460,7 +448,7 @@ class TransactionDetails extends Component {
         );
       case "referrer:pending":
         return (
-          <ReferrerPending
+          <ReferralSection
             key={sectionType}
             transaction={transaction}
             text="Referral Details:"
@@ -468,14 +456,7 @@ class TransactionDetails extends Component {
           />
         );
       case "referred:pending":
-        return (
-          <ReferredPending
-            key={sectionType}
-            transaction={transaction}
-            text="Referral Details:"
-            actions={actions}
-          />
-        );
+        return <ReferralSection key={sectionType} transaction={transaction} />;
       case "collateral:loan:card":
         return (
           <CollateralLoanCard

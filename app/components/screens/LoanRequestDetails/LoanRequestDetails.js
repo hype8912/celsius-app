@@ -11,16 +11,14 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 
 import Icon from "../../atoms/Icon/Icon";
-import {
-  BasicCardSection,
-  BasicSection,
-  CardSection,
-} from "../TransactionDetails/TransactionDetailsSections";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { LOAN_STATUS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
 import LoanApplicationSuccessModal from "../../modals/LoanApplicationSuccessModal/LoanApplicationSuccessModal";
+import BasicSection from "../../atoms/TransactionSections/BasicSection/BasicSection";
+import BasicCardSection from "../../atoms/TransactionSections/BasicCardSection/BasicCardSection";
+import CardSection from "../../atoms/TransactionSections/CardSection/CardSection";
 
 @connect(
   state => ({
