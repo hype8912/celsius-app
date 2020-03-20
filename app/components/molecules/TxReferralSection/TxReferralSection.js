@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { Image, View } from "react-native";
 import moment from "moment";
 
-import ReferralSectionStyle from "./ReferralSection.styles";
+import ReferralSectionStyle from "./TxReferralSection.styles";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 
-class ReferralSection extends Component {
+class TxReferralSection extends Component {
   static propTypes = {
     transaction: PropTypes.instanceOf(Object),
   };
@@ -89,4 +89,4 @@ class ReferralSection extends Component {
   }
 }
 
-export default ReferralSection;
+export default TxReferralSection;

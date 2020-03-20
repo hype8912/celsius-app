@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { View } from "react-native";
 
-import InfoSectionStyle from "./InfoSection.styles";
-import Icon from "../../Icon/Icon";
-import CelText from "../../CelText/CelText";
-import formatter from "../../../../utils/formatter";
-import STYLES from "../../../../constants/STYLES";
+import InfoSectionStyle from "./TxInfoSection.styles";
+import Icon from "../Icon/Icon";
+import CelText from "../CelText/CelText";
+import formatter from "../../../utils/formatter";
+import STYLES from "../../../constants/STYLES";
 
-const InfoSection = ({ transaction, transactionProps }) => {
+const TxInfoSection = ({ transaction, transactionProps }) => {
   const style = InfoSectionStyle();
   return (
     <View style={style.container}>
@@ -41,9 +41,9 @@ const InfoSection = ({ transaction, transactionProps }) => {
   );
 };
 
-InfoSection.propTypes = {
+TxInfoSection.propTypes = {
   transaction: PropTypes.instanceOf(Object),
   transactionProps: PropTypes.instanceOf(Object),
 };
 
-export default InfoSection;
+export default TxInfoSection;

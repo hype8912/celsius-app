@@ -1,14 +1,14 @@
 import React from "react";
 
-import SentSection from "./SentSection";
+import TxSentSection from "./TxSentSection";
 import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
-const SentSectionStories = () => (
+const TxSentSectionStories = () => (
   <StoryWrapper title="SentSection">
     <StoryWrapper title="Default state">
-      <SentSection />
+      <TxSentSection />
     </StoryWrapper>
   </StoryWrapper>
 );
 
-export default SentSectionStories;
+export default TxSentSectionStories;

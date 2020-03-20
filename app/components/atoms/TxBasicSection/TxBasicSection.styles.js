@@ -1,14 +1,13 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from "../../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
   container: { width: "100%", paddingHorizontal: 20 },
-  percentage: {
+  content: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 20,
   },
-  amount: { flexDirection: "row", justifyContent: "space-around" },
 };
 
 const themed = {
@@ -19,6 +18,6 @@ const themed = {
   celsius: {},
 };
 
-const BasicCardSectionStyle = () => getThemedStyle(base, themed);
+const BasicSectionStyle = () => getThemedStyle(base, themed);
 
-export default BasicCardSectionStyle;
+export default BasicSectionStyle;

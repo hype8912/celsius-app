@@ -31,12 +31,12 @@ import { hasPassedKYC } from "../../../utils/user-util";
 import CollateralLoanCard from "../../molecules/CollateralLoanCard/CollateralLoanCard";
 import PrepaymentSuccessfulModal from "../../modals/PrepaymentSuccessfulModal/PrepaymentSuccessfulModal";
 import SendCelPayLinkCard from "../../molecules/SendCelPayLinkCard/SendCelPayLinkCard";
-import InfoSection from "../../atoms/TransactionSections/InfoSection/InfoSection";
-import BasicSection from "../../atoms/TransactionSections/BasicSection/BasicSection";
-import AddressSection from "../../atoms/TransactionSections/AddressSection/AddressSection";
-import TransactionSection from "../../atoms/TransactionSections/TransactionSection/TransactionSection";
-import SentSection from "../../molecules/SentSection/SentSection";
-import ReferralSection from "../../molecules/ReferralSection/ReferralSection";
+import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
+import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
+import TxAddressSection from "../../atoms/TxAddressSection/TxAddressSection";
+import TxTransactionSection from "../../atoms/TxTransactionSection/TxTransactionSection";
+import TxSentSection from "../../molecules/TxSentSection/TxSentSection";
+import TxReferralSection from "../../molecules/TxReferralSection/TxReferralSection";
 
 @connect(
   state => ({
@@ -135,7 +135,7 @@ class TransactionDetails extends Component {
     switch (sectionType) {
       case "info":
         return (
-          <InfoSection
+          <TxInfoSection
             margin="40 0 20 0"
             key={sectionType}
             transaction={transaction}
@@ -144,7 +144,7 @@ class TransactionDetails extends Component {
         );
       case "date":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Date"
             value={moment(transaction.time).format("D MMM YYYY")}
@@ -152,7 +152,7 @@ class TransactionDetails extends Component {
         );
       case "date:deposited":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Date deposited"
             value={moment(transaction.time).format("D MMM YYYY")}
@@ -160,7 +160,7 @@ class TransactionDetails extends Component {
         );
       case "time":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Time"
             value={moment.utc(transaction.time).format("h:mm A (z)")}
@@ -168,7 +168,7 @@ class TransactionDetails extends Component {
         );
       case "ref:pending":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label=""
             value={
@@ -178,7 +178,7 @@ class TransactionDetails extends Component {
         );
       case "status":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             color={transactionProps.color}
             value={transactionProps.statusText}
@@ -187,7 +187,7 @@ class TransactionDetails extends Component {
         );
       case "status:noSeparator":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             color={transactionProps.color}
             value={transactionProps.statusText}
@@ -197,7 +197,7 @@ class TransactionDetails extends Component {
         );
       case "address:from":
         return (
-          <AddressSection
+          <TxAddressSection
             key={sectionType}
             transaction={transaction}
             address={transaction.from_address}
@@ -206,7 +206,7 @@ class TransactionDetails extends Component {
         );
       case "address:to":
         return (
-          <AddressSection
+          <TxAddressSection
             key={sectionType}
             transaction={transaction}
             address={transaction.to_address}
@@ -328,7 +328,7 @@ class TransactionDetails extends Component {
       // TODO(sb): Value need to be changed
       case "loan:date":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Loan Initiation Date"
             value={transaction.loan_data.initiation_date}
@@ -336,7 +336,7 @@ class TransactionDetails extends Component {
         );
       case "loan:amount":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Loan Amount"
             value={formatter.usd(transaction.loan_data.loan_amount)}
@@ -354,7 +354,7 @@ class TransactionDetails extends Component {
         );
       case "loan:deadline":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Repayment Deadline"
             value={moment(transaction.loan_data.repayment_deadline).format(
@@ -364,7 +364,7 @@ class TransactionDetails extends Component {
         );
       case "loan:annualInterestRate":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Annual Interest Rate"
             value={`${transaction.loan_data.annual_interest_rate}%`}
@@ -372,7 +372,7 @@ class TransactionDetails extends Component {
         );
       case "loan:monthlyInterest":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Monthly Interest"
             value={formatter.usd(
@@ -382,7 +382,7 @@ class TransactionDetails extends Component {
         );
       case "loan:totalInterest":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Total Interest Payment"
             value={formatter.usd(transaction.loan_data.total_interest_payment)}
@@ -400,10 +400,10 @@ class TransactionDetails extends Component {
           />
         );
       case "type":
-        return <BasicSection key={sectionType} label="Type" value="CelPay" />;
+        return <TxBasicSection key={sectionType} label="Type" value="CelPay" />;
       case "transactionId":
         return (
-          <TransactionSection
+          <TxTransactionSection
             key={sectionType}
             transaction={transaction}
             text="Transaction ID:"
@@ -412,7 +412,7 @@ class TransactionDetails extends Component {
         );
       case "sentTo":
         return (
-          <SentSection
+          <TxSentSection
             key={sectionType}
             transaction={transaction}
             text="Sent to"
@@ -420,17 +420,19 @@ class TransactionDetails extends Component {
         );
       case "sentFrom":
         return (
-          <SentSection
+          <TxSentSection
             key={sectionType}
             transaction={transaction}
             text="From"
           />
         );
       case "referrerHODL":
-        return <ReferralSection key={sectionType} transaction={transaction} />;
+        return (
+          <TxReferralSection key={sectionType} transaction={transaction} />
+        );
       case "referrer":
         return (
-          <ReferralSection
+          <TxReferralSection
             key={sectionType}
             transaction={transaction}
             text="Referral Details:"
@@ -439,7 +441,7 @@ class TransactionDetails extends Component {
         );
       case "referred":
         return (
-          <ReferralSection
+          <TxReferralSection
             key={sectionType}
             transaction={transaction}
             text="Referral Details:"
@@ -448,7 +450,7 @@ class TransactionDetails extends Component {
         );
       case "referrer:pending":
         return (
-          <ReferralSection
+          <TxReferralSection
             key={sectionType}
             transaction={transaction}
             text="Referral Details:"
@@ -456,7 +458,9 @@ class TransactionDetails extends Component {
           />
         );
       case "referred:pending":
-        return <ReferralSection key={sectionType} transaction={transaction} />;
+        return (
+          <TxReferralSection key={sectionType} transaction={transaction} />
+        );
       case "collateral:loan:card":
         return (
           <CollateralLoanCard
@@ -473,7 +477,7 @@ class TransactionDetails extends Component {
         return <Liquidation key={sectionType} transaction={transaction} />;
       case "collateral:date:unlocked":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Date"
             value={moment(transaction.loan_data.unlocked_at).format(
@@ -483,7 +487,7 @@ class TransactionDetails extends Component {
         );
       case "collateral:time:unlocked":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Time"
             value={moment(transaction.loan_data.unlocked_at).format("h:mm A")}
@@ -493,7 +497,7 @@ class TransactionDetails extends Component {
         return <UnlockReason key={sectionType} transaction={transaction} />;
       case "collateral:date:liquidated":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Date"
             value={moment(transaction.loan_data.liquidated_at).format(
@@ -503,7 +507,7 @@ class TransactionDetails extends Component {
         );
       case "collateral:time:liquidated":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label="Time"
             value={moment(transaction.loan_data.liquidated_at).format("h:mm A")}

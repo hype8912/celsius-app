@@ -1,5 +1,5 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from "../../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
   container: { paddingHorizontal: 20 },
@@ -8,7 +8,7 @@ const base = {
     flexDirection: "row",
     marginBottom: 10,
   },
-  text: { paddingBottom: 10 },
+  button: { flexDirection: "row", alignItems: "flex-start" },
 };
 
 const themed = {
@@ -19,6 +19,6 @@ const themed = {
   celsius: {},
 };
 
-const TransactionSectionStyle = () => getThemedStyle(base, themed);
+const AddressSectionStyle = () => getThemedStyle(base, themed);
 
-export default TransactionSectionStyle;
+export default AddressSectionStyle;

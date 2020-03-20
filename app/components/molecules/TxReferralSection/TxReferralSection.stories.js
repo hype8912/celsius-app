@@ -1,14 +1,14 @@
 import React from "react";
 
-import ReferralSection from "./ReferralSection";
+import TxReferralSection from "./TxReferralSection";
 import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
-const ReferralSectionStories = () => (
+const TxReferralSectionStories = () => (
   <StoryWrapper title="ReferralSection">
     <StoryWrapper title="Default state">
-      <ReferralSection />
+      <TxReferralSection />
     </StoryWrapper>
   </StoryWrapper>
 );
 
-export default ReferralSectionStories;
+export default TxReferralSectionStories;

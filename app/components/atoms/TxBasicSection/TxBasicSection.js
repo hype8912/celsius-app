@@ -2,11 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { View } from "react-native";
 
-import BasicSectionStyle from "./BasicSection.styles";
-import CelText from "../../CelText/CelText";
-import Separator from "../../Separator/Separator";
+import BasicSectionStyle from "./TxBasicSection.styles";
+import CelText from "../CelText/CelText";
+import Separator from "../Separator/Separator";
 
-const BasicSection = ({ label, value, noSeparator = false, color = null }) => {
+const TxBasicSection = ({
+  label,
+  value,
+  noSeparator = false,
+  color = null,
+}) => {
   const style = BasicSectionStyle();
   return (
     <View style={style.container}>
@@ -21,13 +26,13 @@ const BasicSection = ({ label, value, noSeparator = false, color = null }) => {
   );
 };
 
-BasicSection.propTypes = {
+TxBasicSection.propTypes = {
   label: PropTypes.string,
   noSeparator: PropTypes.bool,
   value: PropTypes.string,
   color: PropTypes.string,
 };
 
-export default BasicSection;
+export default TxBasicSection;
 
 // cekiraj za boju

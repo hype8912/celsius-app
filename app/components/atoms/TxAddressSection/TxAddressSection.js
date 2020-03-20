@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Linking, TouchableOpacity, View } from "react-native";
 
-import AddressSectionStyle from "./AddressSection.styles";
-import Card from "../../Card/Card";
-import CelText from "../../CelText/CelText";
-import STYLES from "../../../../constants/STYLES";
-import Icon from "../../Icon/Icon";
-import { getBlockExplorerLink } from "../../../../utils/crypto-util";
+import AddressSectionStyle from "./TxAddressSection.styles";
+import Card from "../Card/Card";
+import CelText from "../CelText/CelText";
+import STYLES from "../../../constants/STYLES";
+import Icon from "../Icon/Icon";
+import { getBlockExplorerLink } from "../../../utils/crypto-util";
 
-const AddressSection = ({ transaction, text, address }) => {
+const TxAddressSection = ({ transaction, text, address }) => {
   const style = AddressSectionStyle();
   const link = getBlockExplorerLink(transaction);
 
@@ -60,10 +60,10 @@ const AddressSection = ({ transaction, text, address }) => {
   ) : null;
 };
 
-AddressSection.propTypes = {
+TxAddressSection.propTypes = {
   transaction: PropTypes.instanceOf(Object),
   address: PropTypes.string,
   text: PropTypes.string,
 };
 
-export default AddressSection;
+export default TxAddressSection;

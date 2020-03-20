@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Image, View } from "react-native";
 
-import SentSectionStyle from "./SentSection.styles";
+import SentSectionStyle from "./TxSentSection.styles";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 
-class SentSection extends Component {
+class TxSentSection extends Component {
   static propTypes = {
     text: PropTypes.oneOf(["From", "Sent to"]).isRequired,
     transaction: PropTypes.instanceOf(Object),
@@ -84,4 +84,4 @@ class SentSection extends Component {
   }
 }
 
-export default SentSection;
+export default TxSentSection;

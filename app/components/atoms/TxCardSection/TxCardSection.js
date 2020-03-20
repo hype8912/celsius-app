@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { View } from "react-native";
 
-import CardSectionStyle from "./CardSection.styles";
-import CelText from "../../CelText/CelText";
-import formatter from "../../../../utils/formatter";
-import Card from "../../Card/Card";
-import Separator from "../../Separator/Separator";
+import CardSectionStyle from "./TxCardSection.styles";
+import CelText from "../CelText/CelText";
+import formatter from "../../../utils/formatter";
+import Card from "../Card/Card";
+import Separator from "../Separator/Separator";
 
-const CardSection = ({
+const TxCardSection = ({
   coinAmount,
   coin,
   cardText,
@@ -40,7 +40,7 @@ const CardSection = ({
   );
 };
 
-CardSection.propTypes = {
+TxCardSection.propTypes = {
   coinAmount: PropTypes.string,
   coin: PropTypes.string,
   cardText: PropTypes.string,
@@ -49,4 +49,4 @@ CardSection.propTypes = {
   noSeparator: PropTypes.bool,
 };
 
-export default CardSection;
+export default TxCardSection;

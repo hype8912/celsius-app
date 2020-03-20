@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { View } from "react-native";
 
-import TransactionSectionStyle from "./TransactionSection.styles";
-import Card from "../../Card/Card";
-import CelText from "../../CelText/CelText";
-import STYLES from "../../../../constants/STYLES";
-import CopyButton from "../../CopyButton/CopyButton";
+import TransactionSectionStyle from "./TxTransactionSection.styles";
+import Card from "../Card/Card";
+import CelText from "../CelText/CelText";
+import STYLES from "../../../constants/STYLES";
+import CopyButton from "../CopyButton/CopyButton";
 
-const TransactionSection = ({ transaction, text, actions }) => {
+const TxTransactionSection = ({ transaction, text, actions }) => {
   const style = TransactionSectionStyle();
   return transaction && transaction.transaction_id ? (
     <View style={style.container}>
@@ -35,10 +35,10 @@ const TransactionSection = ({ transaction, text, actions }) => {
   ) : null;
 };
 
-TransactionSection.propTypes = {
+TxTransactionSection.propTypes = {
   transaction: PropTypes.instanceOf(Object),
   text: PropTypes.string,
   actions: PropTypes.instanceOf(Object),
 };
 
-export default TransactionSection;
+export default TxTransactionSection;

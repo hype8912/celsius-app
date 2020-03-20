@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { View } from "react-native";
 
-import BasicCardSectionStyle from "./BasicCardSection.styles";
-import CelText from "../../CelText/CelText";
-import formatter from "../../../../utils/formatter";
-import Card from "../../Card/Card";
-import Separator from "../../Separator/Separator";
-import STYLES from "../../../../constants/STYLES";
+import BasicCardSectionStyle from "./TxBasicCardSection.styles";
+import CelText from "../CelText/CelText";
+import formatter from "../../../utils/formatter";
+import Card from "../Card/Card";
+import Separator from "../Separator/Separator";
+import STYLES from "../../../constants/STYLES";
 
-const BasicCardSection = ({ label, value, coin, monthly, total }) => {
+const TxBasicCardSection = ({ label, value, coin, monthly, total }) => {
   const style = BasicCardSectionStyle();
   const coinSize = coin === "USDT ERC20" ? "H6" : "H4";
   return (
@@ -44,7 +44,7 @@ const BasicCardSection = ({ label, value, coin, monthly, total }) => {
   );
 };
 
-BasicCardSection.propTypes = {
+TxBasicCardSection.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
   coin: PropTypes.string,
@@ -52,4 +52,4 @@ BasicCardSection.propTypes = {
   total: PropTypes.string,
 };
 
-export default BasicCardSection;
+export default TxBasicCardSection;
