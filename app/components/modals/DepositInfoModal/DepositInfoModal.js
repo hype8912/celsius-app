@@ -32,7 +32,7 @@ class DepositInfoModal extends Component {
   handleMultistepContent = type => {
     const { currencies, actions } = this.props;
 
-    const theme = getTheme()
+    const theme = getTheme();
 
     const coinName = currencies.find(coin => coin.short === type);
     let steps;
@@ -41,9 +41,10 @@ class DepositInfoModal extends Component {
       case "":
         steps = [
           {
-            image: theme === THEMES.LIGHT ?
-              require(`../../../../assets/images/deposit-icn.png`) :
-              require(`../../../../assets/images/deposit-icn-dark.png`),
+            image:
+              theme === THEMES.LIGHT
+                ? require(`../../../../assets/images/deposit-icn.png`)
+                : require(`../../../../assets/images/deposit-icn-dark.png`),
             darkImage: require("../../../../assets/images/deposit-icn.png"),
             title: "Only deposit same coin type as selected",
             description:
@@ -52,9 +53,10 @@ class DepositInfoModal extends Component {
             onPress: () => multiStepUtil.goToNextStep(),
           },
           {
-            image: theme === THEMES.LIGHT ?
-              require(`../../../../assets/images/deposit-icn.png`) :
-              require(`../../../../assets/images/deposit-icn-dark.png`),
+            image:
+              theme === THEMES.LIGHT
+                ? require(`../../../../assets/images/deposit-icn.png`)
+                : require(`../../../../assets/images/deposit-icn-dark.png`),
             title: "Review your transaction details carefully",
             description:
               "Depositing coins without all required data, such as Destination Tag (XRP) or MemoID (XLM), or incorrect data will result in permanent loss.",
@@ -130,7 +132,6 @@ class DepositInfoModal extends Component {
     const { currencies } = this.props;
 
     const coinName = currencies.find(coin => coin.short === type);
-
     if (type === "USDT ERC20") {
       return {
         image: { uri: coinName.image_url },
@@ -232,7 +233,7 @@ class DepositInfoModal extends Component {
       <InfoModal
         name={MODALS.DEPOSIT_INFO_MODAL}
         picture={infoContent.image}
-        darkPicture={infoContent.darkImage}
+        darkPicture={infoContent.image} // TODO it must be changed to darkImage (gray icons)!
         pictureDimensions={{ height: 35, width: 35 }}
         heading={infoContent.title}
         paragraphs={[infoContent.description]}
