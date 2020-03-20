@@ -36,14 +36,14 @@ async function initMixpanel() {
 async function engage(distinctId, payload = {}) {
   const { MIXPANEL_TOKEN } = Constants;
 
-  Mixpanel.createAlias(distinctId);
+  // Mixpanel.createAlias(distinctId);
+  Mixpanel.identify(distinctId);
 
   const data = payload;
   data.distinct_id = distinctId;
   data.token = MIXPANEL_TOKEN;
 
   Mixpanel.set(data);
-  Mixpanel.identify(distinctId);
   await addPushDeviceToken();
 }
 

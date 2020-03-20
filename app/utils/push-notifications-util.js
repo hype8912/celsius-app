@@ -42,9 +42,8 @@ function remotePushController() {
               const notif = notification.notification;
               notifObj.title = notif.title;
               notifObj.message = notif.body ? notif.body : notif.title; // (required)
+              PushNotification.localNotification(notifObj);
             }
-
-            PushNotification.localNotification(notifObj);
           }
         } else {
           // fires when user taps on notification
