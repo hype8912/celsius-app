@@ -7,6 +7,7 @@ import loggerUtil from "./logger-util";
 import Constants from "../../constants";
 import { getSecureStoreKey } from "./expo-storage";
 import { deletePushNotificationToken } from "./push-notifications-util";
+import { NOTIFICATION_TOKEN } from "../constants/DATA";
 
 let userData = {};
 
@@ -104,7 +105,7 @@ function getUserData() {
  * Assign device push notification token to Mixpanel user
  */
 async function addPushDeviceToken() {
-  const token = await getSecureStoreKey("notificationToken");
+  const token = await getSecureStoreKey(NOTIFICATION_TOKEN);
 
   if (Platform.OS === "android") {
     Mixpanel.setPushRegistrationId(token);
@@ -117,7 +118,7 @@ async function addPushDeviceToken() {
  * Remove device push notification token from Mixpanel-user and delete it from user
  */
 async function logoutUserMixpanel() {
-  const token = await getSecureStoreKey("notificationToken");
+  const token = await getSecureStoreKey(NOTIFICATION_TOKEN);
   await deletePushNotificationToken();
   if (Platform.OS === "android") {
     Mixpanel.clearPushRegistrationId(token);
