@@ -7,16 +7,14 @@ import moment from "moment";
 
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import {
-  BasicSection,
-  InfoSection,
-} from "../TransactionDetails/TransactionDetailsSections";
 import STYLES from "../../../constants/STYLES";
 import {
   SIMPLEX_PAYMENT_STATUSES,
   TRANSACTION_TYPES,
 } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
+import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
+import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 
 @connect(
   state => ({
@@ -140,7 +138,7 @@ ${orderIdPt2}`,
 
     return (
       <RegularLayout padding="0 0 120 0">
-        <InfoSection
+        <TxInfoSection
           margin="40 0 20 0"
           key={"button:back"}
           transaction={transaction}
@@ -148,7 +146,7 @@ ${orderIdPt2}`,
         />
 
         {transactionParams.transactionDetails.map(i => (
-          <BasicSection label={i.label} value={i.value} />
+          <TxBasicSection label={i.label} value={i.value} />
         ))}
       </RegularLayout>
     );
