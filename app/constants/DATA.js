@@ -361,14 +361,24 @@ const SIMPLEX_FIAT_CURRENCIES = [
 ];
 
 const SECURITY_STRENGTH_ITEMS = [
-  { copy: "The minimum password length is 8." },
-  { copy: "You must use at least 1 uppercase letter(s)." },
-  { copy: "You must use at least 1 number(s)." },
-  { copy: "You must use at least 1 symbol(s)." },
-  { copy: "Can’t contain your name or parts of the your’s full name." },
+  { copy: "Minimum 8 Characters." },
+  { copy: "Capital letter - at least one." },
+  { copy: "Numbers – at least one." },
+  { copy: "Special characters – at least one." },
+  {
+    copy:
+      "Can’t contain your name or parts of the your’s full name, username and spaces.",
+  },
 ];
 
-const SECURITY_STRENGTH_LEVEL = ["Week", "Fair", "Good", "Strong"];
+const SECURITY_STRENGTH_LEVEL = {
+  WEAK: "Weak",
+  FAIR: "Fair",
+  GOOD: "Good",
+  STRONG: "Strong",
+};
+
+const NOTIFICATION_TOKEN = "notificationToken";
 
 export {
   BLOCKEXPLORERS,
@@ -390,4 +400,5 @@ export {
   SIMPLEX_FIAT_CURRENCIES,
   SECURITY_STRENGTH_ITEMS,
   SECURITY_STRENGTH_LEVEL,
+  NOTIFICATION_TOKEN,
 };

@@ -1,5 +1,9 @@
 import { PasswordMeter } from "password-meter";
 import store from "../redux/store";
+import {
+  SECURITY_STRENGTH_ITEMS,
+  SECURITY_STRENGTH_LEVEL,
+} from "../constants/DATA";
 
 /**
  * @typedef {Object} UserData - user's first name, last name and optional middle name.
@@ -18,31 +22,56 @@ import store from "../redux/store";
 const calculatePasswordScore = () => {
   const { formData } = store.getState().forms;
 
-  const names = [formData.firstName, formData.lastName];
+  const excludes = [formData.firstName, formData.lastName, formData.email, " "];
   if (formData.middleName) {
-    names.push(formData.middleName);
+    excludes.push(formData.middleName);
   }
   const pm = new PasswordMeter({
-    minLength: 8,
-    uppercaseLettersMinLength: 1,
+    minLength: {
+      value: 8,
+      message: SECURITY_STRENGTH_ITEMS[0].copy,
+    },
+    uppercaseLettersMinLength: {
+      value: 1,
+      message: SECURITY_STRENGTH_ITEMS[1].copy,
+    },
     lowercaseLettersMinLength: 2,
-    numbersMinLength: 1,
-    symbolsMinLength: 1,
+    numbersMinLength: {
+      value: 1,
+      message: SECURITY_STRENGTH_ITEMS[2].copy,
+    },
+    symbolsMinLength: {
+      value: 1,
+      message: SECURITY_STRENGTH_ITEMS[3].copy,
+    },
     exclude: {
-      value: names,
-      message: "Can’t contain your name or parts of the your’s full name.",
+      value: excludes,
+      message: SECURITY_STRENGTH_ITEMS[4].copy,
     },
   });
   const result = pm.getResult(formData.password || formData.newPassword);
-
-  if (!result.errors) {
-    return {
-      ...result,
-      errors: [],
-    };
+  let customStatus;
+  switch (true) {
+    case result.score < 80:
+      customStatus = SECURITY_STRENGTH_LEVEL.WEAK;
+      break;
+    case result.score < 140:
+      customStatus = SECURITY_STRENGTH_LEVEL.FAIR;
+      break;
+    case result.score < 200:
+      customStatus = SECURITY_STRENGTH_LEVEL.GOOD;
+      break;
+    default:
+      customStatus = SECURITY_STRENGTH_LEVEL.STRONG;
   }
 
-  return result;
+  if (!result.errors) {
+    result.errors = [];
+  }
+  return {
+    result,
+    customStatus,
+  };
 };
 
 export default calculatePasswordScore;

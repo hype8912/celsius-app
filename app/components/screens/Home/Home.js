@@ -11,7 +11,6 @@ import { THEMES, WELCOME_MESSAGES } from "../../../constants/UI";
 import { isKYCRejectedForever } from "../../../utils/user-util";
 import { STORYBOOK } from "../../../../dev-settings";
 import HomeStyle from "./Home.styles";
-import { getNotificationToken } from "../../../utils/push-notifications-util";
 
 const apiCalls = [];
 
@@ -54,8 +53,6 @@ class Home extends Component {
     const { actions, appInitialized } = this.props;
     if (!appInitialized) {
       await actions.initCelsiusApp();
-      // Get notification token from Google or Apple
-      await getNotificationToken();
     }
   }
 
