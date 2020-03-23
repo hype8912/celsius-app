@@ -16,7 +16,7 @@ const TxInfoSection = ({ transaction, transactionProps }) => {
           style={[style.circle, { backgroundColor: transactionProps.color }]}
         >
           <CelText type={"H7"} color={STYLES.COLORS.WHITE}>
-            {transactionProps.iconName}
+            {transactionProps.shortName}
           </CelText>
         </View>
         <CelText color={transactionProps.color}>

@@ -237,49 +237,49 @@ function getTransactionProps(transaction) {
       return {
         title: () => "Margin Call Collateral",
         color: STYLES.COLORS.CELSIUS_BLUE,
-        iconName: "TransactionSent",
+        shortName: "TransactionSent",
         statusText: "Margin Call Collateral",
       };
     case TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED:
       return {
         title: () => "Loan Received",
         color: STYLES.COLORS.GREEN,
-        iconName: "LP",
+        shortName: "LP",
         statusText: "Loan Received",
       };
     case TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT:
       return {
         title: () => "Principal Payment",
         color: STYLES.COLORS.GREEN,
-        iconName: "LP",
+        shortName: "LP",
         statusText: "Loan Principal Payment",
       };
     case TRANSACTION_TYPES.LOAN_INTEREST:
       return {
         title: () => "Loan Interest Payment",
         color: STYLES.COLORS.CELSIUS_BLUE,
-        iconName: "LI",
+        shortName: "LI",
         statusText: "Loan Interest Payment",
       };
     case TRANSACTION_TYPES.DEPOSIT_PENDING:
       return {
         title: coin => `${coin} Deposit`,
         color: STYLES.COLORS.ORANGE,
-        iconName: "D",
+        shortName: "D",
         statusText: "Pending",
       };
     case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
       return {
         title: coin => `${coin} Deposit`,
         color: STYLES.COLORS.GREEN,
-        iconName: "D",
+        shortName: "D",
         statusText: "Confirmed",
       };
     case TRANSACTION_TYPES.WITHDRAWAL_PENDING:
       return {
         title: coin => `${coin} Withdrawal`,
         color: STYLES.COLORS.ORANGE,
-        iconName: "W",
+        shortName: "W",
         statusText: "Pending",
       };
     case TRANSACTION_TYPES.WITHDRAWAL_CANCELED:
@@ -287,28 +287,28 @@ function getTransactionProps(transaction) {
         // Withdrawn canceled
         title: coin => `${coin} Withdrawal`,
         color: STYLES.COLORS.RED,
-        iconName: "W",
+        shortName: "W",
         statusText: "Canceled",
       };
     case TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED:
       return {
         title: coin => `${coin} Withdrawal`,
         color: STYLES.COLORS.GREEN,
-        iconName: "W",
+        shortName: "W",
         statusText: "Confirmed",
       };
     case TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION:
       return {
         title: coin => `${coin} Withdrawal`,
         color: STYLES.COLORS.ORANGE,
-        iconName: "W",
+        shortName: "W",
         statusText: "Pending verification",
       };
     case TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW:
       return {
         title: coin => `${coin} Withdrawal`,
         color: STYLES.COLORS.ORANGE,
-        iconName: "W",
+        shortName: "W",
         statusText: "Pending review",
       };
 
@@ -316,21 +316,21 @@ function getTransactionProps(transaction) {
       return {
         title: coin => `${coin} Interest`,
         color: STYLES.COLORS.GREEN,
-        iconName: "I",
+        shortName: "I",
         statusText: `Confirmed`,
       };
     case TRANSACTION_TYPES.PENDING_INTEREST:
       return {
         title: coin => `${coin} Interest`,
         color: STYLES.COLORS.ORANGE,
-        iconName: "I",
+        shortName: "I",
         statusText: "Pending",
       };
     case TRANSACTION_TYPES.BONUS_TOKEN:
       return {
         title: () => `Bonus CEL`,
         color: STYLES.COLORS.CELSIUS_BLUE,
-        iconName: "BT",
+        shortName: "BT",
         statusText: "Bonus",
       };
 
@@ -339,7 +339,7 @@ function getTransactionProps(transaction) {
       return {
         title: () => "CelPay Pending",
         color: STYLES.COLORS.ORANGE,
-        iconName: "CP",
+        shortName: "CP",
         statusText: "Pending",
       };
     case TRANSACTION_TYPES.CELPAY_CLAIMED:
@@ -347,21 +347,21 @@ function getTransactionProps(transaction) {
       return {
         title: coin => `${coin} Sent`,
         color: STYLES.COLORS.GREEN,
-        iconName: "CP",
+        shortName: "CP",
         statusText: "Confirmed",
       };
     case TRANSACTION_TYPES.CELPAY_RECEIVED:
       return {
         title: () => `CelPay Received`,
         color: STYLES.COLORS.GREEN,
-        iconName: "CP",
+        shortName: "CP",
         statusText: "Confirmed",
       };
     case TRANSACTION_TYPES.CELPAY_RETURNED:
       return {
         title: () => `Canceled Transaction`,
         color: STYLES.COLORS.RED,
-        iconName: "CP",
+        shortName: "CP",
         statusText: "Canceled",
       };
 
@@ -369,7 +369,7 @@ function getTransactionProps(transaction) {
       return {
         title: coin => `Received ${coin}`,
         color: STYLES.COLORS.ORANGE,
-        iconName: "CP",
+        shortName: "CP",
         statusText: "Pending",
       };
 
@@ -377,7 +377,7 @@ function getTransactionProps(transaction) {
       return {
         title: () => "CelPay Canceled",
         color: STYLES.COLORS.RED,
-        iconName: "CP",
+        shortName: "CP",
         statusText: "Canceled",
       };
 
@@ -385,77 +385,77 @@ function getTransactionProps(transaction) {
       return {
         title: () => `Pending Collateral`,
         color: STYLES.COLORS.ORANGE,
-        iconName: "LC",
+        shortName: "LC",
         statusText: "Pending Collateral",
       };
     case TRANSACTION_TYPES.COLLATERAL_LOCKED:
       return {
         title: () => `Locked Collateral`,
         color: STYLES.COLORS.CELSIUS_BLUE,
-        iconName: "LC",
+        shortName: "LC",
         statusText: "Locked Collateral",
       };
     case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
       return {
         title: () => `Unlocked Collateral`,
         color: STYLES.COLORS.CELSIUS_BLUE,
-        iconName: "LC",
+        shortName: "LC",
         statusText: "Unlocked Collateral",
       };
     case TRANSACTION_TYPES.COLLATERAL_LIQUIDATED:
       return {
         title: () => `Liquidated Collateral`,
         color: STYLES.COLORS.RED,
-        iconName: "LC",
+        shortName: "LC",
         statusText: "Liquidated Collateral",
       };
     case TRANSACTION_TYPES.PROMO_CODE_BONUS:
       return {
         title: () => "Promo Code Bonus",
         color: STYLES.COLORS.GREEN,
-        iconName: "P",
+        shortName: "P",
         statusText: "Promo Code Bonus",
       };
     case TRANSACTION_TYPES.REFERRED_HODL:
       return {
         title: () => `HODL Award`,
         color: STYLES.COLORS.CELSIUS_BLUE,
-        iconName: "R",
+        shortName: "R",
         statusText: "Locked reward",
       };
     case TRANSACTION_TYPES.REFERRED:
       return {
         title: () => `Referral Award`,
         color: STYLES.COLORS.GREEN,
-        iconName: "R",
+        shortName: "R",
         statusText: "Referral reward",
       };
     case TRANSACTION_TYPES.REFERRED_PENDING:
       return {
         title: () => `Referral Award`,
         color: STYLES.COLORS.ORANGE,
-        iconName: "R",
+        shortName: "R",
         statusText: "Pending",
       };
     case TRANSACTION_TYPES.REFERRER_HODL:
       return {
         title: () => `Referral Award`,
         color: STYLES.COLORS.CELSIUS_BLUE,
-        iconName: "R",
+        shortName: "R",
         statusText: "Locked",
       };
     case TRANSACTION_TYPES.REFERRER:
       return {
         title: () => `Referral Award`,
         color: STYLES.COLORS.GREEN,
-        iconName: "R",
+        shortName: "R",
         statusText: "Confirmed",
       };
     case TRANSACTION_TYPES.REFERRER_PENDING:
       return {
         title: () => `Referral Award`,
         color: STYLES.COLORS.ORANGE,
-        iconName: "R",
+        shortName: "R",
         statusText: "Pending",
       };
 
@@ -463,7 +463,7 @@ function getTransactionProps(transaction) {
       return {
         title: () => `Canceled Transaction`,
         color: STYLES.COLORS.RED,
-        iconName: "",
+        shortName: "",
         statusText: "Canceled",
       };
 
@@ -471,14 +471,14 @@ function getTransactionProps(transaction) {
       return {
         title: coin => `Received ${coin}`,
         color: STYLES.COLORS.GREEN,
-        iconName: "",
+        shortName: "",
         statusText: "Received",
       };
     case TRANSACTION_TYPES.OUT:
       return {
         title: coin => `Sent ${coin}`,
         color: STYLES.COLORS.RED,
-        iconName: "",
+        shortName: "",
         statusText: "Sent",
       };
     default:

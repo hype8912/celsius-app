@@ -14,6 +14,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
+import { TRANSACTION_TYPES } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -81,9 +82,9 @@ class TransactionsIntersection extends Component {
         return; // TransactionInterestDetails
       case transaction.type.includes("BONUS"):
         return; // TransactionInterestDetails
-      case "canceled":
-      case "in":
-      case "out":
+      case TRANSACTION_TYPES.CANCELED:
+      case TRANSACTION_TYPES.IN:
+      case TRANSACTION_TYPES.OUT:
         return; // TransactionGeneralDetails
     }
   }
