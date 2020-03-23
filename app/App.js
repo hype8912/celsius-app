@@ -21,6 +21,7 @@ import FabMenu from "./components/organisms/FabMenu/FabMenu";
 import Message from "./components/molecules/Message/Message";
 // import captureException from './utils/errorhandling-util'
 import ErrorBoundary from "./ErrorBoundary";
+import { remotePushController } from "./utils/push-notifications-util";
 
 function getActiveRouteName(navigationState) {
   if (!navigationState) {
@@ -89,6 +90,7 @@ const CelsiusApplication = () => (
       <Message />
       <FabMenu />
     </React.Fragment>
+    {remotePushController()}
   </Provider>
 );
 

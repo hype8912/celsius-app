@@ -1,6 +1,6 @@
 {
   "name": "react-native-mixpanel",
-  "version": "1.1.14",
+  "version": "1.2.0",
   "summary": "A React Native wrapper for Mixpanel tracking",
   "license": "MIT",
   "requires_arc": true,
@@ -15,7 +15,7 @@
     "tvos": "10.0"
   },
   "dependencies": {
-    "Mixpanel": ["~> 3.5.0"],
+    "Mixpanel": ["~> 3.6.0"],
     "React": []
   }
 }

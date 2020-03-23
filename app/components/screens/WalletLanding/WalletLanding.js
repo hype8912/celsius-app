@@ -22,6 +22,7 @@ import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModa
 import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
 
 @connect(
   state => {
@@ -95,6 +96,7 @@ class WalletLanding extends Component {
         nextScreen: "WalletLanding",
       });
     }
+    await assignPushNotificationToken();
 
     await actions.getWalletSummary();
     if (!currenciesRates) actions.getCurrencyRates();
