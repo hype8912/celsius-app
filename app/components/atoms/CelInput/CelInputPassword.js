@@ -1,15 +1,23 @@
 import React, { Component } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, Platform } from "react-native";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 import STYLES from "../../../constants/STYLES";
 import CelInputText from "./CelInputText";
 import { THEMES } from "../../../constants/UI";
 import CelText from "../CelText/CelText";
 import PassMeterTooltip from "../PassMeterTooltip/PassMeterTooltip";
+import PassStrengthMeter from "../PassStrengthMeter/PassStrengthMeter";
+import * as appActions from "../../../redux/actions";
 
-// import calculatePasswordScore from "../../../utils/password-util";
-
+@connect(
+  state => ({
+    forms: state.forms,
+  }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
+)
 class CelInputPassword extends Component {
   static propTypes = {
     type: PropTypes.oneOf([
@@ -80,23 +88,25 @@ class CelInputPassword extends Component {
       disabled,
       showPasswordTooltip,
       tooTipPositionTop,
+      forms,
+      field,
     } = this.props;
     const { visible } = this.state;
     const fillColor =
       theme !== THEMES.DARK ? STYLES.COLORS.GRAY : STYLES.COLORS.WHITE;
     const iconName = visible ? "HIDE" : "SHOW";
-
+    const activeField = forms.activeField;
     return (
       <React.Fragment>
         <View>
           <View
             style={{
               position: "absolute",
-              top: tooTipPositionTop ? -145 : 55,
+              top: tooTipPositionTop ? -145 : 90,
               left: 0,
             }}
           >
-            {!!value && showPasswordTooltip && (
+            {!!value && showPasswordTooltip && activeField === field && (
               <>
                 <View
                   style={
@@ -128,13 +138,27 @@ class CelInputPassword extends Component {
               </>
             )}
           </View>
-          <CelInputText
-            {...this.props}
-            secureTextEntry={!visible}
-            style={{
-              paddingRight: 15,
-            }}
-          />
+
+          <View>
+            <CelInputText
+              {...this.props}
+              secureTextEntry={!visible}
+              style={{
+                paddingRight: 15,
+              }}
+            />
+            {!!value && activeField === field && (
+              <PassStrengthMeter
+                customStyle={{
+                  flex: 1,
+                  width: "110%",
+                  marginHorizontal: "-5%",
+                  position: "absolute",
+                  bottom: Platform.OS === "android" ? -20 : -28,
+                }}
+              />
+            )}
+          </View>
         </View>
         {!!value && !disabled && (
           <TouchableOpacity
