@@ -147,7 +147,7 @@ class CelInputPassword extends Component {
                 paddingRight: 15,
               }}
             />
-            {!!value && activeField === field && (
+            {!!value && showPasswordTooltip && activeField === field && (
               <PassStrengthMeter
                 customStyle={{
                   flex: 1,
