@@ -101,6 +101,7 @@ import HODLInfoCheckboxes from "../components/screens/HODLInfoCheckboxes/HODLInf
 import HodlLanding from "../components/screens/HodlLanding/HodlLanding";
 import HODLViewCode from "../components/screens/HODLViewCode/HODLViewCode";
 import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/HodlDeactivationCode";
+import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 
 export const screens = {
@@ -150,6 +151,7 @@ export const screens = {
   BalanceHistory,
   CoinDetails,
   AllTransactions,
+  TransactionsIntersection,
 
   /**
    * Community

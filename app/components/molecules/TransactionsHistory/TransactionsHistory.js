@@ -234,7 +234,9 @@ class TransactionsHistory extends Component {
                   index={index}
                   count={transactionsDisplay.length}
                   onPress={() =>
-                    actions.navigateTo("TransactionDetails", { id: item.id })
+                    actions.navigateTo("TransactionsIntersection", {
+                      id: item.id,
+                    })
                   }
                 />
               )}
