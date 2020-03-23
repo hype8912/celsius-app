@@ -104,6 +104,7 @@ class VerifyProfile extends Component {
       }
 
       actions.navigateTo(activeScreen);
+      this.setState({ loading: false });
       return;
     }
 

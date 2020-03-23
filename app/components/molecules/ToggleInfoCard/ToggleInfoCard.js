@@ -60,11 +60,9 @@ class ToggleInfoCard extends Component {
     };
   };
 
-  // TODO pass API call
   toggleSwitch = () => {
-    this.setState({
-      enabled: !this.state.enabled,
-    });
+    const { onPress } = this.props;
+    onPress();
   };
 
   renderToggleOrIcon = cardParams => {

@@ -41,10 +41,8 @@ class TwoFactorSettings extends Component {
   }
 
   async componentDidMount() {
-    const { navigation } = this.props;
-
-    const secret = navigation.getParam("secret");
-
+    const { actions, formData } = this.props;
+    const secret = await actions.getTwoFactorSecret(formData.pin);
     if (secret) {
       this.setState({
         secret,

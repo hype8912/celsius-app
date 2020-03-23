@@ -11,17 +11,21 @@ import Separator from "../../atoms/Separator/Separator";
 import Loader from "../../atoms/Loader/Loader";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ToggleInfoCard from "../../molecules/ToggleInfoCard/ToggleInfoCard";
-import SecurityScoreGauge from "../../atoms/SecurityScoreGauge/SecurityScoreGauge";
-import SecurityStrengthMeter from "../../atoms/SecurityStrengthMeter/SecurityStrengthMeter";
+// import SecurityScoreGauge from "../../atoms/SecurityScoreGauge/SecurityScoreGauge";
+// import SecurityStrengthMeter from "../../atoms/SecurityStrengthMeter/SecurityStrengthMeter";
 import CelText from "../../atoms/CelText/CelText";
 import SecurityOverviewStyle from "./SecurityOverview.styles";
 import Card from "../../atoms/Card/Card";
 import { getTheme } from "../../../utils/styles-util";
 import Icon from "../../atoms/Icon/Icon";
+import { HODL_STATUS } from "../../../constants/UI";
+// import IconButton from "../../organisms/IconButton/IconButton";
 
 @connect(
   state => ({
     securityOverview: state.security.securityOverview,
+    is2FAEnabled: state.user.profile.two_factor_enabled,
+    hodlStatus: state.hodl.hodlStatus,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -38,11 +42,20 @@ class SecurityOverview extends Component {
     right: "profile",
   });
 
-  // TODO Check this part of code.
+  // TODO When wire with backend is complete, check this part of code.
   // componentDidMount() {
   //   const { actions } = this.props;
   //   actions.getSecurityOverview();
   // }
+
+  onPress2fa = () => {
+    const { actions, is2FAEnabled } = this.props;
+    if (!is2FAEnabled) {
+      actions.navigateTo("VerifyProfile", {
+        onSuccess: () => actions.navigateTo("TwoFactorSettings"),
+      });
+    }
+  };
 
   renderInfoCard = () => {
     const style = SecurityOverviewStyle();
@@ -110,40 +123,60 @@ class SecurityOverview extends Component {
   };
 
   render() {
-    const { securityOverview } = this.props;
+    const { securityOverview, is2FAEnabled, hodlStatus, actions } = this.props;
 
     if (!securityOverview) return <Loader />;
-    // TODO Add on press functions on WHITELISTED WITHDRAWAL ADDRESSES card and buttons
+
     return (
       <RegularLayout>
         <View style={{ flex: 1 }}>
-          <SecurityScoreGauge level={"4"} />
+          {/* <SecurityScoreGauge level={"4"} />*/}
           <Separator text="2FA VERIFICATION" />
-          <ToggleInfoCard subtitle={"Your 2FA verification is"} />
+          <ToggleInfoCard
+            subtitle={"Your 2FA verification is"}
+            onPress={this.onPress2fa}
+            enabled={is2FAEnabled}
+          />
 
-          <Separator text="WHITELISTED WITHDRAWAL ADDRESSES" />
-          {this.renderInfoCard()}
+          {/* <Separator text="WHITELISTED WITHDRAWAL ADDRESSES" />*/}
+          {/* {this.renderInfoCard()}*/}
 
           <Separator text="HODL MODE" />
-          <ToggleInfoCard subtitle={"HODL mode is"} />
+          <ToggleInfoCard
+            subtitle={"HODL mode is"}
+            onPress={() => actions.navigateTo("HodlLanding")}
+            enabled={
+              hodlStatus.state && hodlStatus.state !== HODL_STATUS.DEACTIVATED
+            }
+          />
 
           <Separator text="PASSWORD" />
-          <SecurityStrengthMeter level={"3"} />
-          <CelButton margin="10 0 10 0" onPress={() => {}}>
+          {/* <SecurityStrengthMeter level={"3"} />*/}
+          <CelButton
+            margin="10 0 10 0"
+            onPress={() => actions.navigateTo("ChangePassword")}
+          >
             Enhance Password
           </CelButton>
 
           <Separator text="PIN" />
-          <SecurityStrengthMeter level={"4"} />
-          <CelButton margin="10 0 10 0" onPress={() => {}}>
+          {/* <SecurityStrengthMeter level={"4"} />*/}
+          <CelButton
+            margin="10 0 10 0"
+            onPress={() =>
+              actions.navigateTo("VerifyProfile", {
+                onSuccess: () => actions.navigateTo("ChangePin"),
+              })
+            }
+          >
             Enhance PIN
           </CelButton>
 
-          <Separator text="3D PROTECTION" />
-          <ToggleInfoCard enabled subtitle={"Your 3D Protection is"} />
+          {/* <Separator text="3D PROTECTION" /> */}
+          {/* <ToggleInfoCard enabled subtitle={"Your 3D Protection is"} /> */}
 
-          <Separator text="AUTO LOGOUT" />
-          <ToggleInfoCard enabled subtitle={"Your Auto Logout is"} />
+          {/* <Separator text="AUTO LOGOUT" /> */}
+          {/* <ToggleInfoCard enabled subtitle={"Your Auto Logout is"} /> */}
         </View>
       </RegularLayout>
     );
