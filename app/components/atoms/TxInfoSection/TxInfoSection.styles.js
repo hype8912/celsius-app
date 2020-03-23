@@ -1,5 +1,8 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from "../../../utils/styles-util";
+import {
+  getThemedStyle,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 
 const base = {
   container: { marginBottom: 10 },
@@ -8,6 +11,14 @@ const base = {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  circle: {
+    width: widthPercentageToDP("7%"),
+    height: widthPercentageToDP("7%"),
+    borderRadius: widthPercentageToDP("7%") / 2,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
   },
 };
 

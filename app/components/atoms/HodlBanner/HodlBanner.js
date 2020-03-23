@@ -10,7 +10,7 @@ import CelText from "../../atoms/CelText/CelText";
 class HodlBanner extends Component {
   static propTypes = {
     // text: PropTypes.string,
-    status: PropTypes.string,
+    status: PropTypes.instanceOf(Object),
     navigateTo: PropTypes.func,
     activeScreen: PropTypes.string,
   };

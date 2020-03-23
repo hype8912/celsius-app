@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 
 import InfoSectionStyle from "./TxInfoSection.styles";
-import Icon from "../Icon/Icon";
 import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import STYLES from "../../../constants/STYLES";
@@ -13,12 +12,13 @@ const TxInfoSection = ({ transaction, transactionProps }) => {
   return (
     <View style={style.container}>
       <View style={style.statusText}>
-        <Icon
-          width={transaction.amount_usd ? "12" : "24"}
-          fill={transactionProps.color}
-          name={transactionProps.iconName}
-          style={{ marginRight: 5 }}
-        />
+        <View
+          style={[style.circle, { backgroundColor: transactionProps.color }]}
+        >
+          <CelText type={"H7"} color={STYLES.COLORS.WHITE}>
+            {transactionProps.iconName}
+          </CelText>
+        </View>
         <CelText color={transactionProps.color}>
           {transactionProps.statusText}
         </CelText>

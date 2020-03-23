@@ -7,13 +7,18 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 // import TransactionsIntersectionStyle from "./TransactionsIntersection.styles";
-// import CelText from '../../atoms/CelText/CelText';
-// import RegularLayout from '../../layouts/RegularLayout/RegularLayout';
-import { TRANSACTION_TYPES } from "../../../constants/DATA";
+import TransactionDetailsDeposits from "../TransactionDetailsDeposits/TransactionDetailsDeposits";
+import TransactionWithdrawDetails from "../TransactionWithdrawDetails/TransactionWithdrawDetails";
+import TransactionDetailsCelPay from "../TransactionDetailsCelPay/TransactionDetailsCelPay";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
+import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
+import LoadingState from "../../atoms/LoadingState/LoadingState";
 
 @connect(
   state => ({
     transaction: state.transactions.transactionDetails,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -22,58 +27,64 @@ class TransactionsIntersection extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "TransactionsIntersection Screen",
+    title: "Transaction Details",
     right: "profile",
   });
 
+  componentDidMount = () => {
+    const { actions, navigation } = this.props;
+    const id = navigation.getParam("id");
+    actions.getTransactionDetails(id);
+
+    // ToDO: leave for the swiping?
+    // this.interval = setInterval(() => {
+    //   actions.getTransactionDetails(id);
+    // }, 15000);
+  };
+
   render() {
     // const style = TransactionsIntersectionStyle();
-    const { transaction } = this.props;
+    const { transaction, callsInProgress, navigation } = this.props;
+    const transactionId = navigation.getParam("id");
+    // const transactionType = navigation.getParam("type");
+    const loadingTransactionDetails = apiUtil.areCallsInProgress(
+      [API.GET_TRANSACTION_DETAILS],
+      callsInProgress
+    );
+
+    if (
+      !transaction ||
+      (loadingTransactionDetails &&
+        transactionId &&
+        transaction.id !== transactionId)
+    )
+      return (
+        <RegularLayout padding="0 0 0 0">
+          <LoadingState />
+        </RegularLayout>
+      );
 
     switch (transaction.type) {
-      case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
-      case TRANSACTION_TYPES.DEPOSIT_PENDING:
-        return; // TransactionDetailsDeposits
-      case TRANSACTION_TYPES.LOAN_INTEREST:
-      case TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT:
-      case TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED:
-      case TRANSACTION_TYPES.MARGIN_CALL:
-      case TRANSACTION_TYPES.COLLATERAL_LIQUIDATED:
-      case TRANSACTION_TYPES.COLLATERAL_LOCKED:
-      case TRANSACTION_TYPES.COLLATERAL_PENDING:
-      case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
+      case transaction.type.includes("DEPOSIT"):
+        return <TransactionDetailsDeposits transaction={transaction} />;
+      case transaction.type.includes("LOAN") ||
+        transaction.type.includes("MARGIN") ||
+        transaction.type.includes("COLLATERAL"):
         return; // TransactionLoanDetails
-      case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
-      case TRANSACTION_TYPES.CELPAY_PENDING:
-      case TRANSACTION_TYPES.CELPAY_CANCELED:
-      case TRANSACTION_TYPES.CELPAY_CLAIMED:
-      case TRANSACTION_TYPES.CELPAY_EXPIRED:
-      case TRANSACTION_TYPES.CELPAY_ONHOLD:
-      case TRANSACTION_TYPES.CELPAY_RECEIVED:
-      case TRANSACTION_TYPES.CELPAY_RETURNED:
-      case TRANSACTION_TYPES.CELPAY_SENT:
-        return; // TransactionCelpayDetails
-      case TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED:
-      case TRANSACTION_TYPES.WITHDRAWAL_PENDING:
-      case TRANSACTION_TYPES.WITHDRAWAL_CANCELED:
-      case TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION:
-      case TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW:
-        return; // TransactionWithdrawDetails
-      case TRANSACTION_TYPES.INTEREST:
-      case TRANSACTION_TYPES.PENDING_INTEREST:
+      case transaction.type.includes("CELPAY"):
+        return <TransactionDetailsCelPay transaction={transaction} />;
+      case transaction.type.includes("WITHDRAWAL"):
+        return <TransactionWithdrawDetails transaction={transaction} />;
+      case transaction.type.includes("INTEREST"):
+        return; // TransactionInterestDetails
+      case transaction.type.includes("REFERR"):
+        return; // TransactionInterestDetails
+      case transaction.type.includes("BONUS"):
         return; // TransactionInterestDetails
       case "canceled":
       case "in":
       case "out":
         return; // TransactionGeneralDetails
-      // PROMO_CODE_BONUS
-      // REFERRED_HODL
-      // REFERRED
-      // REFERRED_PENDING
-      // REFERRER_HODL
-      // REFERRER
-      // REFERRER_PENDING
-      // BONUS_TOKEN
     }
   }
 }

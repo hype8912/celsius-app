@@ -185,7 +185,7 @@ function isGreaterThan(str1, str2) {
   return num1.gt(num2);
 }
 
-function getBlockExplorerLink(transaction) {
+export function getBlockExplorerLink(transaction) {
   const tId = transaction.transaction_id;
   switch (transaction.coin) {
     // BTC
@@ -270,5 +270,4 @@ export default {
   provideLink,
   provideText,
   buyInApp,
-  getBlockExplorerLink,
 };
