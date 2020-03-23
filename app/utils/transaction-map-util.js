@@ -136,30 +136,19 @@ function getTransactionType(transaction) {
   if (transaction.nature === "pending_interest")
     return TRANSACTION_TYPES.PENDING_INTEREST;
 
-  if (transaction.nature === "referred_award" && transaction.state === "locked")
-    return TRANSACTION_TYPES.REFERRED_HODL;
-  if (
-    transaction.nature === "referred_award" &&
-    transaction.state === "confirmed"
-  )
-    return TRANSACTION_TYPES.REFERRED;
-  if (
-    transaction.nature === "referred_award" &&
-    transaction.state === "unconfirmed"
-  )
-    return TRANSACTION_TYPES.REFERRED_PENDING;
-  if (transaction.nature === "referrer_award" && transaction.state === "locked")
-    return TRANSACTION_TYPES.REFERRER_HODL;
-  if (
-    transaction.nature === "referrer_award" &&
-    transaction.state === "confirmed"
-  )
-    return TRANSACTION_TYPES.REFERRER;
-  if (
-    transaction.nature === "referrer_award" &&
-    transaction.state === "unconfirmed"
-  )
-    return TRANSACTION_TYPES.REFERRER_PENDING;
+  if (transaction.nature === "referred_award") {
+    if (transaction.state === "locked") return TRANSACTION_TYPES.REFERRED_HODL;
+    if (transaction.state === "confirmed") return TRANSACTION_TYPES.REFERRED;
+    if (transaction.state === "unconfirmed")
+      return TRANSACTION_TYPES.REFERRED_PENDING;
+  }
+
+  if (transaction.nature === "referrer_award") {
+    if (transaction.state === "locked") return TRANSACTION_TYPES.REFERRER_HODL;
+    if (transaction.state === "confirmed") return TRANSACTION_TYPES.REFERRER;
+    if (transaction.state === "unconfirmed")
+      return TRANSACTION_TYPES.REFERRER_PENDING;
+  }
 
   if (transaction.nature === "loan_principal_payment") {
     if (transaction.type === "outgoing")
@@ -170,24 +159,26 @@ function getTransactionType(transaction) {
   if (transaction.nature === "loan_interest_payment")
     return TRANSACTION_TYPES.LOAN_INTEREST;
   if (transaction.nature === "loan_prepayment")
+    // TODO: remove?
     return TRANSACTION_TYPES.LOAN_INTEREST;
 
-  if (
-    transaction.nature === "inbound_transfer" &&
-    transaction.transfer_data.claimed_at &&
-    !transaction.transfer_data.cleared_at &&
-    !transaction.transfer_data.expired_at
-  )
-    return TRANSACTION_TYPES.CELPAY_ONHOLD;
-  if (
-    transaction.nature === "inbound_transfer" &&
-    transaction.transfer_data.claimed_at &&
-    !transaction.transfer_data.cleared_at &&
-    transaction.transfer_data.expired_at
-  )
-    return TRANSACTION_TYPES.CELPAY_RETURNED;
-  if (transaction.nature === "inbound_transfer" && transaction.transfer_data)
-    return TRANSACTION_TYPES.CELPAY_RECEIVED;
+  // Incoming CelPay
+  if (transaction.nature === "inbound_transfer") {
+    if (
+      !transaction.transfer_data.cleared_at &&
+      !transaction.transfer_data.expired_at
+    )
+      return TRANSACTION_TYPES.CELPAY_ONHOLD;
+    if (
+      transaction.transfer_data.claimed_at &&
+      !transaction.transfer_data.cleared_at &&
+      transaction.transfer_data.expired_at
+    )
+      return TRANSACTION_TYPES.CELPAY_RETURNED; // TODO: inbound celpay cant return? It expires before kyc complete?
+    if (transaction.transfer_data) return TRANSACTION_TYPES.CELPAY_RECEIVED;
+  }
+
+  // Outgoing CelPay
   if (transaction.nature === "outbound_transfer" && transaction.transfer_data) {
     if (
       !transaction.transfer_data.claimed_at &&
