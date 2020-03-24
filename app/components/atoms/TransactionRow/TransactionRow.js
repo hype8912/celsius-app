@@ -35,7 +35,7 @@ class TransactionRow extends Component {
     const { transaction, onPress, count, index } = this.props;
     if (!transaction) return null;
 
-    const { color, iconName, statusText } = transaction.uiProps;
+    const { color, shortName, statusText } = transaction.uiProps;
 
     const style = TransactionRowStyle();
     return (
@@ -44,7 +44,7 @@ class TransactionRow extends Component {
           <View style={style.leftSide}>
             <View style={[style.circle, { backgroundColor: color }]}>
               <CelText type={"H7"} color={STYLES.COLORS.WHITE}>
-                {iconName}
+                {shortName}
               </CelText>
             </View>
             <View style={style.amounts}>

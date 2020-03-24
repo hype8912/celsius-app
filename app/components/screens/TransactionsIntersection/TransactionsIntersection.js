@@ -66,26 +66,59 @@ class TransactionsIntersection extends Component {
       );
 
     switch (transaction.type) {
-      case transaction.type.includes("DEPOSIT"):
+      case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
+      case TRANSACTION_TYPES.DEPOSIT_PENDING:
         return <TransactionDetailsDeposits transaction={transaction} />;
-      case transaction.type.includes("LOAN") ||
-        transaction.type.includes("MARGIN") ||
-        transaction.type.includes("COLLATERAL"):
-        return; // TransactionLoanDetails
-      case transaction.type.includes("CELPAY"):
+      case TRANSACTION_TYPES.LOAN_INTEREST:
+      case TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT:
+      case TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED:
+      case TRANSACTION_TYPES.MARGIN_CALL:
+      case TRANSACTION_TYPES.COLLATERAL_LIQUIDATED:
+      case TRANSACTION_TYPES.COLLATERAL_LOCKED:
+      case TRANSACTION_TYPES.COLLATERAL_PENDING:
+      case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
+        return;
+      case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
+      case TRANSACTION_TYPES.CELPAY_PENDING:
+      case TRANSACTION_TYPES.CELPAY_CANCELED:
+      case TRANSACTION_TYPES.CELPAY_CLAIMED:
+      case TRANSACTION_TYPES.CELPAY_EXPIRED:
+      case TRANSACTION_TYPES.CELPAY_ONHOLD:
+      case TRANSACTION_TYPES.CELPAY_RECEIVED:
+      case TRANSACTION_TYPES.CELPAY_RETURNED:
+      case TRANSACTION_TYPES.CELPAY_SENT:
         return <TransactionDetailsCelPay transaction={transaction} />;
-      case transaction.type.includes("WITHDRAWAL"):
+      case TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED:
+      case TRANSACTION_TYPES.WITHDRAWAL_PENDING:
+      case TRANSACTION_TYPES.WITHDRAWAL_CANCELED:
+      case TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION:
+      case TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW:
         return <TransactionWithdrawDetails transaction={transaction} />;
-      case transaction.type.includes("INTEREST"):
-        return; // TransactionInterestDetails
-      case transaction.type.includes("REFERR"):
-        return; // TransactionInterestDetails
-      case transaction.type.includes("BONUS"):
-        return; // TransactionInterestDetails
+      case TRANSACTION_TYPES.INTEREST:
+        return <TransactionInterestDetails transaction={transaction} />;
+      case TRANSACTION_TYPES.PENDING_INTEREST:
+        return;
+      case TRANSACTION_TYPES.PROMO_CODE_BONUS:
+        return;
+      case TRANSACTION_TYPES.REFERRED_HODL:
+      case TRANSACTION_TYPES.REFERRED:
+      case TRANSACTION_TYPES.REFERRED_PENDING:
+      case TRANSACTION_TYPES.REFERRER_HODL:
+      case TRANSACTION_TYPES.REFERRER:
+      case TRANSACTION_TYPES.REFERRER_PENDING:
+        return;
+      case TRANSACTION_TYPES.BONUS_TOKEN:
+        return;
       case TRANSACTION_TYPES.CANCELED:
       case TRANSACTION_TYPES.IN:
       case TRANSACTION_TYPES.OUT:
         return; // TransactionGeneralDetails
+
+      //
+      //
+      //   return; // TransactionInterestDetails
+      // case transaction.type.includes("BONUS"):
+      //   return; // TransactionInterestDetails
     }
   }
 }
