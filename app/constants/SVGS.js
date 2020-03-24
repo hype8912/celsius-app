@@ -3,6 +3,7 @@ import CommonSvgs from "./Svgs/CommonSvgs";
 import CoinSvgs from "./Svgs/CoinSvgs";
 import TransactionTypeSvgs from "./Svgs/TransactionTypeSvgs";
 import CommunitySvgs from "./Svgs/CommunitySvgs";
+import FiatSvgs from "./Svgs/FiatSvgs";
 
 export default {
   ...CoinSvgs,
@@ -10,4 +11,5 @@ export default {
   ...CommonSvgs,
   ...TransactionTypeSvgs,
   ...CommunitySvgs,
+  ...FiatSvgs,
 };

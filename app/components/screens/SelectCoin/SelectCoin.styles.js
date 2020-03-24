@@ -28,6 +28,9 @@ const base = {
     alignItems: "flex-end",
     justifyContent: "flex-end",
   },
+  iconCircle:{
+    borderRadius: 15,
+  }
 };
 
 const themed = {
