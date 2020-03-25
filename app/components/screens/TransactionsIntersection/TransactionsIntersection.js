@@ -7,20 +7,24 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 // import TransactionsIntersectionStyle from "./TransactionsIntersection.styles";
-import TransactionDetailsDeposits from "../TransactionDetailsDeposits/TransactionDetailsDeposits";
-import TransactionDetailsWithdraw from "../TransactionDetailsWithdraw/TransactionDetailsWithdraw";
-import TransactionDetailsCelPay from "../TransactionDetailsCelPay/TransactionDetailsCelPay";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
+import TransactionDetailsInterest from "../TransactionDetailsInterest/TransactionDetailsInterest";
+import TransactionDetailsRewards from "../TransactionDetailsRewards/TransactionDetailsRewards";
+import TransactionDetailsLoans from "../TransactionDetailsLoans/TransactionDetailsLoans";
 import TransactionDetailsGeneral from "../TransactionDetailsGeneral/TransactionDetailsGeneral";
+import TransactionDetailsDeposits from "../TransactionDetailsDeposits/TransactionDetailsDeposits";
+import TransactionDetailsWithdraw from "../TransactionDetailsWithdraw/TransactionDetailsWithdraw";
+import TransactionDetailsCelPay from "../TransactionDetailsCelPay/TransactionDetailsCelPay";
 
 @connect(
   state => ({
     transaction: state.transactions.transactionDetails,
     callsInProgress: state.api.callsInProgress,
+    totalInterestEarned: state.wallet.summary.total_interest_earned,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -46,7 +50,13 @@ class TransactionsIntersection extends Component {
 
   render() {
     // const style = TransactionsIntersectionStyle();
-    const { transaction, callsInProgress, navigation } = this.props;
+    const {
+      transaction,
+      callsInProgress,
+      navigation,
+      totalInterestEarned,
+      actions,
+    } = this.props;
     const transactionId = navigation.getParam("id");
     // const transactionType = navigation.getParam("type");
     const loadingTransactionDetails = apiUtil.areCallsInProgress(
@@ -78,7 +88,12 @@ class TransactionsIntersection extends Component {
       case TRANSACTION_TYPES.COLLATERAL_LOCKED:
       case TRANSACTION_TYPES.COLLATERAL_PENDING:
       case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
-        return;
+        return (
+          <TransactionDetailsLoans
+            transaction={transaction}
+            actions={actions}
+          />
+        );
       case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
       case TRANSACTION_TYPES.CELPAY_PENDING:
       case TRANSACTION_TYPES.CELPAY_CANCELED:
@@ -96,20 +111,28 @@ class TransactionsIntersection extends Component {
       case TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW:
         return <TransactionDetailsWithdraw transaction={transaction} />;
       case TRANSACTION_TYPES.INTEREST:
-        return; // <TransactionInterestDetails transaction={transaction} />;
       case TRANSACTION_TYPES.PENDING_INTEREST:
-        return;
-      case TRANSACTION_TYPES.PROMO_CODE_BONUS:
-        return;
+        return (
+          <TransactionDetailsInterest
+            actions={actions}
+            transaction={transaction}
+            totalInterest={totalInterestEarned}
+          />
+        );
       case TRANSACTION_TYPES.REFERRED_HODL:
       case TRANSACTION_TYPES.REFERRED:
       case TRANSACTION_TYPES.REFERRED_PENDING:
       case TRANSACTION_TYPES.REFERRER_HODL:
       case TRANSACTION_TYPES.REFERRER:
       case TRANSACTION_TYPES.REFERRER_PENDING:
-        return;
       case TRANSACTION_TYPES.BONUS_TOKEN:
-        return;
+      case TRANSACTION_TYPES.PROMO_CODE_BONUS:
+        return (
+          <TransactionDetailsRewards
+            transaction={transaction}
+            actions={actions}
+          />
+        );
       case TRANSACTION_TYPES.CANCELED:
       case TRANSACTION_TYPES.IN:
       case TRANSACTION_TYPES.OUT:

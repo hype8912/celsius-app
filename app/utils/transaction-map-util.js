@@ -228,29 +228,29 @@ function getTransactionProps(transaction) {
       return {
         title: () => "Margin Call Collateral",
         color: STYLES.COLORS.CELSIUS_BLUE,
-        shortName: "TransactionSent",
-        statusText: "Margin Call Collateral",
+        shortName: "MC",
+        statusText: "Margin Call",
       };
     case TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED:
       return {
         title: () => "Loan Received",
         color: STYLES.COLORS.GREEN,
         shortName: "LP",
-        statusText: "Loan Received",
+        statusText: "Credited",
       };
     case TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT:
       return {
         title: () => "Principal Payment",
-        color: STYLES.COLORS.GREEN,
+        color: STYLES.COLORS.RED,
         shortName: "LP",
-        statusText: "Loan Principal Payment",
+        statusText: "Debited",
       };
     case TRANSACTION_TYPES.LOAN_INTEREST:
       return {
         title: () => "Loan Interest Payment",
-        color: STYLES.COLORS.CELSIUS_BLUE,
+        color: STYLES.COLORS.GREEN,
         shortName: "LI",
-        statusText: "Loan Interest Payment",
+        statusText: "Credited",
       };
     case TRANSACTION_TYPES.DEPOSIT_PENDING:
       return {
@@ -390,14 +390,14 @@ function getTransactionProps(transaction) {
         title: () => `Locked Collateral`,
         color: STYLES.COLORS.CELSIUS_BLUE,
         shortName: "LC",
-        statusText: "Locked Collateral",
+        statusText: "Locked",
       };
     case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
       return {
         title: () => `Unlocked Collateral`,
         color: STYLES.COLORS.CELSIUS_BLUE,
         shortName: "LC",
-        statusText: "Unlocked Collateral",
+        statusText: "Unlocked",
       };
     case TRANSACTION_TYPES.COLLATERAL_LIQUIDATED:
       return {
@@ -418,14 +418,14 @@ function getTransactionProps(transaction) {
         title: () => `HODL Award`,
         color: STYLES.COLORS.CELSIUS_BLUE,
         shortName: "R",
-        statusText: "Locked reward",
+        statusText: "Locked",
       };
     case TRANSACTION_TYPES.REFERRED:
       return {
         title: () => `Referral Award`,
         color: STYLES.COLORS.GREEN,
         shortName: "R",
-        statusText: "Referral reward",
+        statusText: "Confirm",
       };
     case TRANSACTION_TYPES.REFERRED_PENDING:
       return {
