@@ -225,6 +225,17 @@ class TransactionDetails extends Component {
             Go back to wallet
           </CelButton>
         ) : null;
+      case "button:back":
+        return kycPassed ? (
+          <CelButton
+            margin="12 0 10 0"
+            key={sectionType}
+            onPress={() => actions.navigateTo("WalletLanding")}
+            basic
+          >
+            Go back to wallet
+          </CelButton>
+        ) : null;
       case "button:deposit":
         return (
           <CelButton

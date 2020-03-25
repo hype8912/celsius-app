@@ -613,7 +613,6 @@ function getTransactionProps(transaction) {
         statusText: "CelPay Canceled",
       };
 
-
     case TRANSACTION_TYPES.COLLATERAL_PENDING:
       return {
         title: () => `Pending Collateral`,
@@ -835,7 +834,7 @@ function getTransactionSections(transaction) {
         "status",
         "note",
         "card:share:link",
-        "button:back",
+        "button:back:main",
         "button:cancel:celpay",
       ];
     case TRANSACTION_TYPES.CELPAY_CANCELED:
