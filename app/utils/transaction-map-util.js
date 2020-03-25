@@ -292,14 +292,14 @@ function getTransactionProps(transaction) {
         title: coin => `${coin} Withdrawal`,
         color: STYLES.COLORS.ORANGE,
         shortName: "W",
-        statusText: "Pending verification",
+        statusText: "Pending",
       };
     case TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW:
       return {
         title: coin => `${coin} Withdrawal`,
         color: STYLES.COLORS.ORANGE,
         shortName: "W",
-        statusText: "Pending review",
+        statusText: "Pending",
       };
 
     case TRANSACTION_TYPES.INTEREST:
@@ -337,13 +337,6 @@ function getTransactionProps(transaction) {
         color: STYLES.COLORS.ORANGE,
         shortName: "CP",
         statusText: "Pending",
-      };
-    case TRANSACTION_TYPES.CELPAY_EXPIRED:
-      return {
-        title: coin => `${coin} Sent`,
-        color: STYLES.COLORS.RED,
-        shortName: "CP",
-        statusText: "Canceled",
       };
     case TRANSACTION_TYPES.CELPAY_CLAIMED:
       return {

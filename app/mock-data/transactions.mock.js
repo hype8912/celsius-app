@@ -268,13 +268,32 @@ const marginCall = {
     monthly_interest_payment: "4.11",
     total_interest_payment: "24.68219178082191716",
     loan_asset_short: "USD",
+    margin: "500",
   },
   referral_data: {},
   verified: null,
 };
 
 // PENDING_INTEREST: "PENDING_INTEREST",
-const interestPending = null;
+const interestPending = {
+  id: TRANSACTION_TYPES.PENDING_INTEREST,
+  transaction_id: null,
+  amount: "39.1017",
+  amount_usd: "40.4663650464573559175575352822676",
+  coin: "cel",
+  interest_coin: "btc",
+  time: "2019-08-15T11:00:24.635Z",
+  is_confirmed: true,
+  from_address: null,
+  to_address: null,
+  state: "confirmed",
+  nature: "pending_interest",
+  type: "incoming",
+  transfer_data: {},
+  loan_data: {},
+  referral_data: {},
+  verified: null,
+};
 // INTEREST: "INTEREST",
 const interest = {
   id: TRANSACTION_TYPES.INTEREST,
@@ -511,15 +530,176 @@ const celpaySent = {
   verified: null,
 };
 // CELPAY_RECEIVED: "CELPAY_RECEIVED",
-const celpayReceived = null;
+const celpayReceived = {
+  id: TRANSACTION_TYPES.CELPAY_RECEIVED,
+  transaction_id: null,
+  amount: "-2.00194151",
+  amount_usd: "-300.999953745262001",
+  coin: "eth",
+  interest_coin: null,
+  time: "2019-06-01T09:50:03.283Z",
+  is_confirmed: true,
+  from_address: null,
+  to_address: null,
+  state: "confirmed",
+  nature: "outbound_transfer",
+  type: "outgoing",
+  transfer_data: {
+    hash:
+      "0a806cffe93f0cb3957b1ec0561d4d93434a799edf142bfe6ab0220014775ac3c40925b40688e4c778b06e632d80f9165e3ffc655c04e8fc4e9a43dc4a80c6a6",
+    message: null,
+    sender_id: "91c46b8b-9e35-40a0-a7c8-a9afcea7b982",
+    claimer_id: "12ef8002-457f-405d-9c28-47d2c327a81a",
+    is_confirmed: true,
+  },
+};
 // CELPAY_RETURNED: "CELPAY_RETURNED",
-const celpayReturned = null;
-// CELPAY_EXPIRED: "CELPAY_EXPIRED",
-const celpayExpired = null;
+const celpayReturned = {
+  id: TRANSACTION_TYPES.CELPAY_RETURNED,
+  transaction_id: null,
+  amount: "-2.00194151",
+  amount_usd: "-300.999953745262001",
+  coin: "eth",
+  interest_coin: null,
+  time: "2019-06-01T09:50:03.283Z",
+  is_confirmed: true,
+  from_address: null,
+  to_address: null,
+  state: "confirmed",
+  nature: "outbound_transfer",
+  type: "outgoing",
+  transfer_data: {
+    hash:
+      "0a806cffe93f0cb3957b1ec0561d4d93434a799edf142bfe6ab0220014775ac3c40925b40688e4c778b06e632d80f9165e3ffc655c04e8fc4e9a43dc4a80c6a6",
+    message: null,
+    sender_id: "91c46b8b-9e35-40a0-a7c8-a9afcea7b982",
+    claimer_id: "12ef8002-457f-405d-9c28-47d2c327a81a",
+    is_confirmed: true,
+    sender: {
+      first_name: "Zika",
+      last_name: "Mustikla",
+      email: "testcelsiusapp@gmail.com",
+      profile_picture: null,
+      profile: {
+        cellphone: "+381604460460",
+      },
+    },
+    claimer: {
+      first_name: "Test ",
+      last_name: "consider ",
+      email: "testcelsiusapp1@gmail.com",
+      profile_picture: null,
+      profile: {
+        cellphone: null,
+      },
+    },
+    claimed_at: "2019-09-09T18:54:08.253Z",
+    cleared_at: null,
+    expired_at: "2019-10-09T18:53:14.072Z",
+    created_at: "2019-09-09T18:53:14.072Z",
+  },
+  loan_data: {},
+  referral_data: {},
+  verified: null,
+};
 // CELPAY_ONHOLD: "CELPAY_ONHOLD",
-const celpayOnhold = null;
+const celpayOnhold = {
+  id: TRANSACTION_TYPES.CELPAY_ONHOLD,
+  transaction_id: null,
+  amount: "-200000.00194151",
+  amount_usd: "-30000.999953745262001",
+  coin: "xrp",
+  interest_coin: null,
+  time: "2019-06-01T09:50:03.283Z",
+  is_confirmed: true,
+  from_address: null,
+  to_address: null,
+  state: "canceled",
+  nature: "outbound_transfer",
+  type: "outgoing",
+  transfer_data: {
+    hash:
+      "0a806cffe93f0cb3957b1ec0561d4d93434a799edf142bfe6ab0220014775ac3c40925b40688e4c778b06e632d80f9165e3ffc655c04e8fc4e9a43dc4a80c6a6",
+    message: null,
+    sender_id: "91c46b8b-9e35-40a0-a7c8-a9afcea7b982",
+    claimer_id: "12ef8002-457f-405d-9c28-47d2c327a81a",
+    is_confirmed: true,
+    sender: {
+      first_name: "Pera",
+      last_name: "MuciNacionalneManjine",
+      email: "testcelsiusapp@gmail.com",
+      profile_picture: null,
+      profile: {
+        cellphone: "+381604460460",
+      },
+    },
+    claimer: {
+      first_name: "Test ",
+      last_name: "consider ",
+      email: "testcelsiusapp1@gmail.com",
+      profile_picture: null,
+      profile: {
+        cellphone: null,
+      },
+    },
+    claimed_at: "2019-09-09T18:54:08.253Z",
+    cleared_at: null,
+    expired_at: null,
+    created_at: "2019-09-09T18:53:14.072Z",
+  },
+  loan_data: {},
+  referral_data: {},
+  verified: null,
+};
 // CELPAY_CANCELED: "CELPAY_CANCELED",
-const celpayCanceled = null;
+const celpayCanceled = {
+  id: TRANSACTION_TYPES.CELPAY_CANCELED,
+  transaction_id: null,
+  amount: "-200000.00194151",
+  amount_usd: "-30000.999953745262001",
+  coin: "xrp",
+  interest_coin: null,
+  time: "2019-06-01T09:50:03.283Z",
+  is_confirmed: true,
+  from_address: null,
+  to_address: null,
+  state: "canceled",
+  nature: "outbound_transfer",
+  type: "outgoing",
+  transfer_data: {
+    hash:
+      "0a806cffe93f0cb3957b1ec0561d4d93434a799edf142bfe6ab0220014775ac3c40925b40688e4c778b06e632d80f9165e3ffc655c04e8fc4e9a43dc4a80c6a6",
+    message: null,
+    sender_id: "91c46b8b-9e35-40a0-a7c8-a9afcea7b982",
+    claimer_id: "12ef8002-457f-405d-9c28-47d2c327a81a",
+    is_confirmed: true,
+    sender: {
+      first_name: "Pera",
+      last_name: "MuciNacionalneManjine",
+      email: "testcelsiusapp@gmail.com",
+      profile_picture: null,
+      profile: {
+        cellphone: "+381604460460",
+      },
+    },
+    claimer: {
+      first_name: "Test ",
+      last_name: "consider ",
+      email: "testcelsiusapp1@gmail.com",
+      profile_picture: null,
+      profile: {
+        cellphone: null,
+      },
+    },
+    claimed_at: "2019-09-09T18:54:08.253Z",
+    cleared_at: "2019-09-09T18:54:17.027Z",
+    expired_at: null,
+    created_at: "2019-09-09T18:53:14.072Z",
+  },
+  loan_data: {},
+  referral_data: {},
+  verified: null,
+};
 
 // COLLATERAL_PENDING: "COLLATERAL_PENDING",
 const collateralPending = {
@@ -586,12 +766,93 @@ const collateralLocked = {
   verified: null,
 };
 // COLLATERAL_UNLOCKED: "COLLATERAL_UNLOCKED",
-const collateralUnlocked = null;
+const collateralUnlocked = {
+  id: TRANSACTION_TYPES.COLLATERAL_UNLOCKED,
+  transaction_id: null,
+  amount: "-1114.840361698694310012",
+  amount_usd: "-10165.35096003999999999996698976484",
+  coin: "eth",
+  interest_coin: null,
+  time: "2019-04-01T10:46:06.838Z",
+  is_confirmed: false,
+  from_address: null,
+  to_address: null,
+  state: "locked",
+  nature: "collateral",
+  type: "outgoing",
+  transfer_data: {},
+  loan_data: {
+    loan_number: 1002,
+    initiation_date: "February 1, 2020",
+    initiation_time: "00:00",
+    loan_amount: "1000",
+    loan_collateral_crypto: "14.840361698694310012",
+    loan_collateral_usd: "4165.35",
+    repayment_deadline: "February 19, 2021",
+    annual_interest_rate: "4.95",
+    monthly_interest_payment: "4.31",
+    total_interest_payment: "51.687552821917806862",
+    loan_asset_short: "USDT",
+    amount_collateral_crypto: "200",
+  },
+  referral_data: {},
+  verified: null,
+};
 // COLLATERAL_LIQUIDATED: "COLLATERAL_LIQUIDATED",
-const collateralLiquidated = null;
+const collateralLiquidated = {
+  id: TRANSACTION_TYPES.COLLATERAL_LIQUIDATED,
+  transaction_id: null,
+  amount: "-25.840361698694310012",
+  amount_usd: "-3143.35096003999999999996698976484",
+  coin: "eth",
+  interest_coin: null,
+  time: "2019-04-01T10:46:06.838Z",
+  is_confirmed: false,
+  from_address: null,
+  to_address: null,
+  state: "locked",
+  nature: "collateral",
+  type: "outgoing",
+  transfer_data: {},
+  loan_data: {
+    loan_number: 1010,
+    initiation_date: "March 20, 2020",
+    initiation_time: "00:00",
+    loan_amount: "1000",
+    loan_collateral_crypto: "14.840361698694310012",
+    loan_collateral_usd: "4165.35",
+    repayment_deadline: "February 19, 2021",
+    annual_interest_rate: "4.95",
+    monthly_interest_payment: "4.31",
+    total_interest_payment: "51.687552821917806862",
+    loan_asset_short: "ETH",
+    liquidation: "200",
+    margin: "150",
+  },
+  referral_data: {},
+  verified: null,
+};
 
 // PROMO_CODE_BONUS: "PROMO_CODE_BONUS",
-const promoCodeBonus = null;
+const promoCodeBonus = {
+  id: TRANSACTION_TYPES.PROMO_CODE_BONUS,
+  transaction_id: null,
+  amount: "200000.00190406",
+  amount_usd: 10,
+  coin: "cel",
+  interest_coin: null,
+  time: "2019-07-01T13:42:50.515Z",
+  is_confirmed: false,
+  from_address: null,
+  to_address: null,
+  state: "locked",
+  nature: "referred_award",
+  type: "incoming",
+  transfer_data: {},
+  loan_data: {},
+  referral_data: {},
+  verified: null,
+};
 // REFERRED_HODL: "REFERRED_HODL",
 const referredHodl = {
   id: TRANSACTION_TYPES.REFERRED_HODL,
@@ -751,11 +1012,50 @@ const referrerPending = {
 };
 
 // CANCELED: "CANCELED",
-const canceled = null;
+const canceled = {
+  transaction_id: TRANSACTION_TYPES.CANCELED,
+  amount: "1.00174971",
+  amount_usd: "10.00",
+  coin: "btc",
+  interest_coin: null,
+  time: "2020-01-01T13:42:50.515Z",
+  is_confirmed: false,
+  from_address: null,
+  to_address: null,
+  state: "unconfirmed",
+  nature: "outbound_transfer",
+  type: "incoming",
+};
 // IN: "IN",
-const inTx = null;
+const inTx = {
+  transaction_id: TRANSACTION_TYPES.IN,
+  amount: "100000.00174971",
+  amount_usd: "10.00",
+  coin: "xrp",
+  interest_coin: null,
+  time: "2020-02-02T13:42:50.515Z",
+  is_confirmed: false,
+  from_address: null,
+  to_address: null,
+  state: "unconfirmed",
+  nature: "outbound_transfer",
+  type: "incoming",
+};
 // OUT: "OUT",
-const outTx = null;
+const outTx = {
+  transaction_id: TRANSACTION_TYPES.OUT,
+  amount: "20.00174971",
+  amount_usd: "10.00",
+  coin: "eth",
+  interest_coin: null,
+  time: "2020-01-02T13:42:50.515Z",
+  is_confirmed: false,
+  from_address: null,
+  to_address: null,
+  state: "unconfirmed",
+  nature: "outbound_transfer",
+  type: "outgoing",
+};
 
 export default {
   [TRANSACTION_TYPES.DEPOSIT_PENDING]: depositPending,
@@ -769,29 +1069,28 @@ export default {
 
   [TRANSACTION_TYPES.COLLATERAL_PENDING]: collateralPending,
   [TRANSACTION_TYPES.COLLATERAL_LOCKED]: collateralLocked,
-  [TRANSACTION_TYPES.COLLATERAL_UNLOCKED]: collateralUnlocked, // TODO
-  [TRANSACTION_TYPES.COLLATERAL_LIQUIDATED]: collateralLiquidated, // TODO
+  [TRANSACTION_TYPES.COLLATERAL_UNLOCKED]: collateralUnlocked,
+  [TRANSACTION_TYPES.COLLATERAL_LIQUIDATED]: collateralLiquidated,
   [TRANSACTION_TYPES.MARGIN_CALL]: marginCall,
   [TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT]: loanPrincipalPayment,
   [TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED]: loanPrincipalReceived,
   [TRANSACTION_TYPES.LOAN_INTEREST]: loanInterest,
 
-  [TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION]: celpayPendingVerification, // TODO
+  [TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION]: celpayPendingVerification,
   [TRANSACTION_TYPES.CELPAY_PENDING]: celpayPending,
-  [TRANSACTION_TYPES.CELPAY_CLAIMED]: celpayClaimed, // TODO
+  [TRANSACTION_TYPES.CELPAY_CLAIMED]: celpayClaimed,
   [TRANSACTION_TYPES.CELPAY_SENT]: celpaySent,
   [TRANSACTION_TYPES.CELPAY_RECEIVED]: celpayReceived,
   [TRANSACTION_TYPES.CELPAY_RETURNED]: celpayReturned,
-  [TRANSACTION_TYPES.CELPAY_EXPIRED]: celpayExpired, // TODO
-  [TRANSACTION_TYPES.CELPAY_ONHOLD]: celpayOnhold, // TODO
+  [TRANSACTION_TYPES.CELPAY_ONHOLD]: celpayOnhold,
   [TRANSACTION_TYPES.CELPAY_CANCELED]: celpayCanceled,
 
   [TRANSACTION_TYPES.INTEREST]: interest,
-  [TRANSACTION_TYPES.PENDING_INTEREST]: interestPending, // TODO
+  [TRANSACTION_TYPES.PENDING_INTEREST]: interestPending,
 
   [TRANSACTION_TYPES.BONUS_TOKEN]: bonusToken,
 
-  [TRANSACTION_TYPES.PROMO_CODE_BONUS]: promoCodeBonus, // TODO
+  [TRANSACTION_TYPES.PROMO_CODE_BONUS]: promoCodeBonus,
   [TRANSACTION_TYPES.REFERRED_HODL]: referredHodl,
   [TRANSACTION_TYPES.REFERRED]: referred,
   [TRANSACTION_TYPES.REFERRED_PENDING]: referredPending,
