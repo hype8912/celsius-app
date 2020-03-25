@@ -325,8 +325,14 @@ function getTransactionProps(transaction) {
         statusText: "Bonus",
       };
 
-    case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
     case TRANSACTION_TYPES.CELPAY_PENDING:
+      return {
+        title: () => "CelPay Pending",
+        color: STYLES.COLORS.GREEN,
+        shortName: "CP",
+        statusText: "Confirmed",
+      };
+    case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
       return {
         title: () => "CelPay Pending",
         color: STYLES.COLORS.ORANGE,

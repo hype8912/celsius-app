@@ -8,13 +8,14 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 // import TransactionsIntersectionStyle from "./TransactionsIntersection.styles";
 import TransactionDetailsDeposits from "../TransactionDetailsDeposits/TransactionDetailsDeposits";
-import TransactionWithdrawDetails from "../TransactionWithdrawDetails/TransactionWithdrawDetails";
+import TransactionDetailsWithdraw from "../TransactionDetailsWithdraw/TransactionDetailsWithdraw";
 import TransactionDetailsCelPay from "../TransactionDetailsCelPay/TransactionDetailsCelPay";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
+import TransactionDetailsGeneral from "../TransactionDetailsGeneral/TransactionDetailsGeneral";
 
 @connect(
   state => ({
@@ -93,9 +94,9 @@ class TransactionsIntersection extends Component {
       case TRANSACTION_TYPES.WITHDRAWAL_CANCELED:
       case TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION:
       case TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW:
-        return <TransactionWithdrawDetails transaction={transaction} />;
+        return <TransactionDetailsWithdraw transaction={transaction} />;
       case TRANSACTION_TYPES.INTEREST:
-        return <TransactionInterestDetails transaction={transaction} />;
+        return; // <TransactionInterestDetails transaction={transaction} />;
       case TRANSACTION_TYPES.PENDING_INTEREST:
         return;
       case TRANSACTION_TYPES.PROMO_CODE_BONUS:
@@ -112,13 +113,7 @@ class TransactionsIntersection extends Component {
       case TRANSACTION_TYPES.CANCELED:
       case TRANSACTION_TYPES.IN:
       case TRANSACTION_TYPES.OUT:
-        return; // TransactionGeneralDetails
-
-      //
-      //
-      //   return; // TransactionInterestDetails
-      // case transaction.type.includes("BONUS"):
-      //   return; // TransactionInterestDetails
+        return <TransactionDetailsGeneral transaction={transaction} />;
     }
   }
 }
