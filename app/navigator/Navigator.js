@@ -18,7 +18,6 @@ import TermsOfUse from "../components/screens/TermsOfUse/TermsOfUse";
 import Welcome from "../components/screens/Welcome/Welcome";
 import VerifyProfile from "../components/screens/VerifyProfile/VerifyProfile";
 import TransactionsOnHold from "../components/screens/TransactionsOnHold/TransactionsOnHold";
-import TransactionDetails from "../components/screens/TransactionDetails/TransactionDetails";
 import KYCProfileDetails from "../components/screens/KYCProfileDetails/KYCProfileDetails";
 import KYCAddressInfo from "../components/screens/KYCAddressInfo/KYCAddressInfo";
 import KYCTaxpayer from "../components/screens/KYCTaxpayer/KYCTaxpayer";
@@ -146,7 +145,6 @@ export const screens = {
 
   WalletLanding,
   TransactionsOnHold,
-  TransactionDetails,
   WalletInterest,
   BalanceHistory,
   CoinDetails,

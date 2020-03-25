@@ -18,7 +18,6 @@ function mapTransaction(transaction) {
   newTransaction.type = getTransactionType(newTransaction);
   newTransaction = maskCelPayUser(newTransaction);
   newTransaction.uiProps = getTransactionProps(newTransaction);
-  newTransaction.uiSections = getTransactionSections(newTransaction);
 
   return newTransaction;
 }
@@ -227,7 +226,7 @@ function getTransactionProps(transaction) {
     case TRANSACTION_TYPES.MARGIN_CALL:
       return {
         title: () => "Margin Call Collateral",
-        color: STYLES.COLORS.CELSIUS_BLUE,
+        color: STYLES.COLORS.RED,
         shortName: "MC",
         statusText: "Margin Call",
       };
@@ -320,7 +319,7 @@ function getTransactionProps(transaction) {
     case TRANSACTION_TYPES.BONUS_TOKEN:
       return {
         title: () => `Bonus CEL`,
-        color: STYLES.COLORS.CELSIUS_BLUE,
+        color: STYLES.COLORS.GREEN,
         shortName: "BT",
         statusText: "Bonus",
       };
@@ -339,7 +338,20 @@ function getTransactionProps(transaction) {
         shortName: "CP",
         statusText: "Pending",
       };
+    case TRANSACTION_TYPES.CELPAY_EXPIRED:
+      return {
+        title: coin => `${coin} Sent`,
+        color: STYLES.COLORS.RED,
+        shortName: "CP",
+        statusText: "Canceled",
+      };
     case TRANSACTION_TYPES.CELPAY_CLAIMED:
+      return {
+        title: coin => `${coin} Sent`,
+        color: STYLES.COLORS.ORANGE,
+        shortName: "CP",
+        statusText: "Pending",
+      };
     case TRANSACTION_TYPES.CELPAY_SENT:
       return {
         title: coin => `${coin} Sent`,
@@ -383,7 +395,7 @@ function getTransactionProps(transaction) {
         title: () => `Pending Collateral`,
         color: STYLES.COLORS.ORANGE,
         shortName: "LC",
-        statusText: "Pending Collateral",
+        statusText: "Pending",
       };
     case TRANSACTION_TYPES.COLLATERAL_LOCKED:
       return {
@@ -404,7 +416,7 @@ function getTransactionProps(transaction) {
         title: () => `Liquidated Collateral`,
         color: STYLES.COLORS.RED,
         shortName: "LC",
-        statusText: "Liquidated Collateral",
+        statusText: "Liquidated",
       };
     case TRANSACTION_TYPES.PROMO_CODE_BONUS:
       return {
@@ -478,312 +490,6 @@ function getTransactionProps(transaction) {
         shortName: "",
         statusText: "Sent",
       };
-    default:
-      break;
-  }
-}
-
-/**
- * Gets sections for TransactionDetails screen
- *
- * @param {Object} transaction
- * @returns {Array}
- */
-function getTransactionSections(transaction) {
-  switch (transaction.type) {
-    case TRANSACTION_TYPES.PROMO_CODE_BONUS:
-      return ["info", "date", "time", "status:noSeparator", "button:back"];
-    case TRANSACTION_TYPES.PENDING_INTEREST:
-      return [
-        "info",
-        "date",
-        "time",
-        "status:noSeparator",
-        "info:box",
-        "button:deposit",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.DEPOSIT_PENDING:
-      return [
-        "info",
-        "address:from",
-        "date",
-        "time",
-        "status:noSeparator",
-        "transactionId",
-        "button:deposit",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
-      return [
-        "info",
-        "address:from",
-        "date",
-        "time",
-        "status:noSeparator",
-        "transactionId",
-        "button:deposit",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION:
-      return [
-        "info",
-        "address:to",
-        "date",
-        "time",
-        "status:noSeparator",
-        "button:back:main",
-        "button:cancel:withdrawal",
-      ];
-    case TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW:
-      return [
-        "info",
-        "address:to",
-        "date",
-        "time",
-        "status:noSeparator",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.WITHDRAWAL_PENDING:
-      return [
-        "info",
-        "address:to",
-        "date",
-        "time",
-        "status:noSeparator",
-        "transactionId",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.WITHDRAWAL_CANCELED:
-      return [
-        "info",
-        "date",
-        "time",
-        "status:noSeparator",
-        "transactionId",
-        "button:deposit",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED:
-      return [
-        "info",
-        "address:to",
-        "date",
-        "time",
-        "status:noSeparator",
-        "transactionId",
-        "button:deposit",
-        "button:back",
-      ];
-
-    case TRANSACTION_TYPES.INTEREST:
-      return [
-        "info",
-        "date",
-        "time",
-        "status:noSeparator",
-        "interest",
-        "button:deposit",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.BONUS_TOKEN:
-      return ["info", "date", "time", "status"];
-
-    case TRANSACTION_TYPES.CELPAY_PENDING:
-    case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
-      return [
-        "info",
-        "sentTo",
-        "date",
-        "time",
-        "status",
-        "note",
-        "card:share:link",
-        "button:back",
-        "button:cancel:celpay",
-      ];
-    case TRANSACTION_TYPES.CELPAY_CANCELED:
-      return [
-        "info",
-        "sentTo",
-        "date",
-        "time",
-        "status",
-        "note",
-        "button:celpay:another",
-      ];
-    case TRANSACTION_TYPES.CELPAY_CLAIMED:
-      return [
-        "info",
-        "sentTo",
-        "date",
-        "time",
-        "status",
-        "note",
-        "button:celpay:another",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.CELPAY_SENT:
-      return [
-        "info",
-        "sentTo",
-        "date",
-        "time",
-        "status",
-        "note",
-        "button:celpay:another",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.CELPAY_RECEIVED:
-      return [
-        "info",
-        "sentFrom",
-        "date",
-        "time",
-        "status",
-        "note",
-        "button:celpay:friend",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.CELPAY_RETURNED:
-      return [
-        "info",
-        "sentTo",
-        "date",
-        "time",
-        "status",
-        "note",
-        "button:celpay:another",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.CELPAY_EXPIRED:
-      return [
-        "info",
-        "date",
-        "time",
-        "status",
-        "note",
-        "button:celpay:another",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.CELPAY_ONHOLD:
-      return [
-        "info",
-        "date",
-        "time",
-        "status",
-        "note",
-        "button:celpay:friend",
-        "button:back",
-      ];
-
-    case TRANSACTION_TYPES.COLLATERAL_PENDING:
-      return ["info", "disclaimer", "collateral:loan:card", "button:back"];
-    case TRANSACTION_TYPES.COLLATERAL_LOCKED:
-      return ["info", "collateral:loan:card", "button:back"];
-    case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
-      return [
-        "info",
-        "collateral:loan:card",
-        "collateral:date:unlocked",
-        "collateral:time:unlocked",
-        "collateral:unlock:reason",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.COLLATERAL_LIQUIDATED:
-      return [
-        "info",
-        "collateral:loan:card",
-        "collateral:date:liquidated",
-        "collateral:time:liquidated",
-        "collateral:liquidation:reason",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.MARGIN_CALL:
-      return [
-        "info",
-        "collateral:loan:card",
-        "date",
-        "time",
-        "margin:call:card",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED:
-      return ["info", "collateral:loan:card", "date", "time", "button:back"];
-    case TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT:
-      return ["info", "collateral:loan:card", "date", "time", "button:back"];
-    case TRANSACTION_TYPES.LOAN_INTEREST:
-      return [
-        "info",
-        "collateral:loan:card",
-        "date",
-        "time",
-        "change:payment:card",
-        "button:back",
-      ];
-
-    case TRANSACTION_TYPES.REFERRED_HODL:
-      // return ["info", "hodl:info", "date:deposited", "time", "status:noSeparator"];
-      return ["info", "date:deposited", "time", "status:noSeparator"]; // "hodl:info" removed until the backend return us needed data
-    case TRANSACTION_TYPES.REFERRED:
-      return [
-        "info",
-        "referred",
-        "date",
-        "time",
-        "status:noSeparator",
-        "button:refer",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.REFERRED_PENDING:
-      return [
-        "info",
-        "referred:pending",
-        "date",
-        "time",
-        "status:noSeparator",
-        "button:refer",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.REFERRER_HODL:
-      return [
-        "info",
-        "referrerHODL",
-        "date",
-        "time",
-        "status:noSeparator",
-        "button:refer",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.REFERRER:
-      return [
-        "info",
-        "referrer",
-        "date",
-        "time",
-        "status:noSeparator",
-        "button:refer",
-        "button:back",
-      ];
-    case TRANSACTION_TYPES.REFERRER_PENDING:
-      return [
-        "info",
-        "referrer:pending",
-        "date",
-        "time",
-        "status:noSeparator",
-        "button:refer",
-        "button:back",
-      ];
-
-    case TRANSACTION_TYPES.CANCELED:
-      return ["info", "date", "time", "status"];
-
-    case TRANSACTION_TYPES.IN:
-      return ["info", "date", "time", "status"];
-    case TRANSACTION_TYPES.OUT:
-      return ["info", "date", "time", "status"];
-
     default:
       break;
   }

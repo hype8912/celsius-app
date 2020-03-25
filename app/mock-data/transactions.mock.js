@@ -686,7 +686,12 @@ const referrerHodl = {
   transfer_data: {},
   loan_data: {},
   referral_data: {
-    referred: null,
+    referred: {
+      first_name: "Jeboxxx",
+      last_name: "Svexxxx",
+      email: "mx@mxxxxxxxxxx.co",
+      profile_picture: null,
+    },
   },
   verified: null,
 };

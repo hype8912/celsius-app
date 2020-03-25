@@ -63,7 +63,7 @@ class TransactionDetailsLoans extends Component {
           ) : null}
 
           {transaction.type.includes("LOCKED") ? (
-            <View>
+            <View style={{ marginTop: 20 }}>
               <View style={{ paddingHorizontal: 20 }}>
                 <View
                   style={{
