@@ -10,7 +10,6 @@ import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
 import Separator from "../../atoms/Separator/Separator";
 import apiUtil from "../../../utils/api-util";
-import API from "../../../constants/API";
 // import STYLES from "../../../constants/STYLES";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
@@ -18,6 +17,7 @@ import RegisterPromoCodeCard from "../../molecules/RegisterPromoCodeCard/Registe
 import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
 import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
+import API from "../../../constants/API";
 
 @connect(
   state => ({
@@ -102,13 +102,22 @@ class RegisterInitial extends Component {
 
   reCaptchaPassed = event => {
     const { actions } = this.props;
+    if (event.nativeEvent.data === "increaseReCap") return;
     actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
     this.submitForm()
   };
 
   renderCaptcha = () => {
     const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
-    const { formData }  =this.props
+    const { formData, callsInProgress }  = this.props
+
+    const isLoading = apiUtil.areCallsInProgress([
+      API.REGISTER_USER,
+      API.REGISTER_USER_FACEBOOK,
+      API.REGISTER_USER_GOOGLE,
+      API.REGISTER_USER_TWITTER,
+    ], callsInProgress)
+
     return (
       <GoogleReCaptcha
         siteKey={RECAPTCHA_KEY}
@@ -117,7 +126,7 @@ class RegisterInitial extends Component {
         onMessage={this.onMessage}
         reCaptchaPassed={this.reCaptchaPassed}
         type={'register'}
-        buttonDisabled={!formData.termsOfUse}
+        buttonDisabled={isLoading || !formData.termsOfUse}
       />
     );
   };
