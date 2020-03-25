@@ -32,22 +32,16 @@ class Login extends Component {
   //   actions.loginUser()
   // };
 
-  reCaptchaPassed = event => {
-    const { actions } = this.props;
-    if (event.nativeEvent.data === "increaseReCap") return;
-    actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
-    actions.loginUser();
-  };
-
   renderCaptcha = () => {
     const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
+    const { actions } = this.props;
     return (
       <GoogleReCaptcha
         siteKey={RECAPTCHA_KEY}
         url={RECAPTCHA_URL}
         languageCode="en"
         onMessage={this.onMessage}
-        reCaptchaPassed={this.reCaptchaPassed}
+        reCaptchaPassed={actions.loginUser}
       />
     );
   };

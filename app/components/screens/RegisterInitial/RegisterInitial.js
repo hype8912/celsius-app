@@ -102,12 +102,6 @@ class RegisterInitial extends Component {
     }
   };
 
-  reCaptchaPassed = event => {
-    const { actions } = this.props;
-    actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
-    this.submitForm();
-  };
-
   disabledButton = () => {
     const { formData } = this.props;
     const fields = [
@@ -132,7 +126,7 @@ class RegisterInitial extends Component {
         url={RECAPTCHA_URL}
         languageCode="en"
         onMessage={this.onMessage}
-        reCaptchaPassed={this.reCaptchaPassed}
+        reCaptchaPassed={this.submitForm}
         type={"register"}
         buttonDisabled={this.disabledButton()}
       />
