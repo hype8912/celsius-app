@@ -10,7 +10,7 @@ import WalletDetailsCard from "../../organisms/WalletDetailsCard/WalletDetailsCa
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
 import CelPayReceivedModal from "../../modals/CelPayReceivedModal/CelPayReceivedModal";
-import { WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
+import { MODALS, WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import ComingSoonCoins from "../../molecules/ComingSoonCoins/ComingSoonCoins";
 import CoinCards from "../../organisms/CoinCards/CoinCards";
@@ -23,6 +23,7 @@ import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMem
 import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
+import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
 
 @connect(
   state => {
@@ -43,6 +44,8 @@ import { assignPushNotificationToken } from "../../../utils/push-notifications-u
       rejectionReasons: state.user.profile.kyc
         ? state.user.profile.kyc.rejectionReasons
         : [],
+      previouslyOpenedModals: state.ui.previouslyOpenedModals,
+      hodlStatus: state.hodl.hodlStatus,
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -86,8 +89,16 @@ class WalletLanding extends Component {
       appSettings,
       currenciesRates,
       currenciesGraphs,
+      previouslyOpenedModals,
+      hodlStatus,
     } = this.props;
+    if (
+      !previouslyOpenedModals.HODL_MODE_MODAL &&
+      hodlStatus.created_by === "backoffice"
+    )
+      actions.openModal(MODALS.HODL_MODE_MODAL);
     actions.checkForLoanAlerts();
+
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     if (appSettings && appSettings.accepted_terms_of_use === false) {
@@ -254,6 +265,7 @@ class WalletLanding extends Component {
         <ReferralSendModal />
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <BecomeCelMemberModal />
+        <HodlModeModal />
         <LoanAlertsModalWrapper />
       </RegularLayout>
     );

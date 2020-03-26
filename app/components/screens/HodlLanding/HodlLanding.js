@@ -54,7 +54,14 @@ class HodlLanding extends Component {
 
     if (activeMode)
       return (
-        <StaticScreen emptyState={{ purpose: EMPTY_STATES.HODL_MODE_ACTIVE }} />
+        <StaticScreen
+          emptyState={{
+            purpose:
+              hodlStatus.created_by === "backoffice"
+                ? EMPTY_STATES.HODL_MODE_BACKOFFICE
+                : EMPTY_STATES.HODL_MODE_ACTIVE,
+          }}
+        />
       );
 
     return (

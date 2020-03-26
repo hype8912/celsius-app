@@ -10,6 +10,7 @@ const initialState = {
   message: undefined,
   openedModal: undefined,
   activeTab: undefined,
+  previouslyOpenedModals: {},
 
   isKeypadOpen: false,
   isBannerVisible: true,
@@ -44,6 +45,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         openedModal: action.modal,
+        previouslyOpenedModals: {
+          ...state.previouslyOpenedModals,
+          [action.modal]: true,
+        },
       };
 
     case ACTIONS.CLOSE_MODAL:
