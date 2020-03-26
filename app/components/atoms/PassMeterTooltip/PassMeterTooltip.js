@@ -12,10 +12,12 @@ import calculatePasswordScore from "../../../utils/password-util";
 class PassMeterTooltip extends Component {
   static propTypes = {
     customStyle: PropTypes.instanceOf(Object),
+    password: PropTypes.string,
   };
 
   handleSecurityItems = () => {
-    const score = calculatePasswordScore().result.errors;
+    const { password } = this.props;
+    const score = calculatePasswordScore(password).result.errors;
     const items = SECURITY_STRENGTH_ITEMS.map(i => {
       let status;
       if (!score.includes(i.copy)) {

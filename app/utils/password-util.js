@@ -6,26 +6,21 @@ import {
 } from "../constants/DATA";
 
 /**
- * @typedef {Object} UserData - user's first name, last name and optional middle name.
- * @property {string} firstName - user's first name
- * @property {string|undefined} middleName - user's middle name
- * @property {string} lastName - user's last name
- */
-/**
- * Calculates password score based on cleartext and users first, middle and last name.
+ * Calculates password score based on cleartext and users first, last name and email.
  *
  * @param {string} password
- * @param {UserData} userData
  * @return {Object}
  */
-
-const calculatePasswordScore = () => {
+const calculatePasswordScore = password => {
   const { formData } = store.getState().forms;
+  const { profile } = store.getState().user;
 
-  const excludes = [formData.firstName, formData.lastName, formData.email, " "];
-  if (formData.middleName) {
-    excludes.push(formData.middleName);
-  }
+  const firstName = formData.firstName || profile.first_name;
+  const lastName = formData.lastName || profile.last_name;
+  const email = formData.email || profile.email;
+
+  const excludes = [firstName, lastName, email, " "];
+
   const pm = new PasswordMeter({
     minLength: {
       value: 8,
@@ -49,7 +44,7 @@ const calculatePasswordScore = () => {
       message: SECURITY_STRENGTH_ITEMS[4].copy,
     },
   });
-  const result = pm.getResult(formData.password || formData.newPassword);
+  const result = pm.getResult(password);
   let customStatus;
   switch (true) {
     case result.score < 80:

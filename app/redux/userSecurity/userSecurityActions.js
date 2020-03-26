@@ -212,6 +212,7 @@ function resetPassword(currentPassword, newPassword) {
       await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, newAuthToken);
 
       dispatch(showMessage("success", "Password successfully changed."));
+      dispatch(navigateTo("SecuritySettings"));
       dispatch(resetPasswordSuccess());
       mixpanelAnalytics.changePassword();
     } catch (err) {

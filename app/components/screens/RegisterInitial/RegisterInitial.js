@@ -109,7 +109,7 @@ class RegisterInitial extends Component {
       !!formData.lastName,
       !!formData.email,
       formData.termsOfUse,
-      calculatePasswordScore().result.score > 80,
+      calculatePasswordScore(formData.password).result.score > 80,
     ];
     if (fields.every(x => x)) {
       return false;

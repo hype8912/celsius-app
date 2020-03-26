@@ -71,8 +71,10 @@ class ChangePassword extends Component {
         <CelButton
           onPress={this.changePassword}
           loading={changingPassword}
-          margin={"10 0 0 0"}
-          disabled={calculatePasswordScore().result.score < 80}
+          margin={"170 0 0 0"}
+          disabled={
+            calculatePasswordScore(formData.newPassword).result.score < 80
+          }
         >
           Change password
         </CelButton>
