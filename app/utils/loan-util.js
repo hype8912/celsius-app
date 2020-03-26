@@ -45,7 +45,7 @@ function getLoanStatusDetails(loan) {
   const commonProps = {
     displayAmount:
       loan.type === LOAN_TYPES.USD_LOAN
-        ? formatter.usd(loan.loan_amount)
+        ? formatter.fiat(loan.loan_amount, "USD")
         : formatter.crypto(loan.loan_amount, loan.coin_loan_asset, {
             noPrecision: true,
           }),
@@ -260,13 +260,11 @@ function emitLoanParams(
     loanParams.monthlyInterestPct =
       loanParams.totalInterestPct / formData.termOfLoan;
 
-    loanParams.totalInterest = formatter.usd(
-      Number(loanParams.totalInterestPct * formData.amount)
+    loanParams.totalInterest = formatter.fiat(
+      Number(loanParams.totalInterestPct * formData.amount), "USD"
     );
-    loanParams.monthlyInterest = formatter.usd(
-      Number(
-        (loanParams.totalInterestPct * formData.amount) / formData.termOfLoan
-      )
+    loanParams.monthlyInterest = formatter.fiat(
+      Number((loanParams.totalInterestPct * formData.amount) / formData.termOfLoan), "USD"
     );
     loanParams.collateralNeeded =
       Number(formData.amount) /

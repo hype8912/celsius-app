@@ -183,8 +183,8 @@ class LoanRequestDetails extends Component {
               key={sectionType}
               title={`${activeLoan.coin} Margin Call At:`}
               amount={activeLoan.margin_call_price}
-              cardText={`If ${activeLoan.coin} drops below ${formatter.usd(
-                activeLoan.margin_call_price
+              cardText={`If ${activeLoan.coin} drops below ${formatter.fiat(
+                activeLoan.margin_call_price , "USD"
               )} you will get a notification asking for additional collateral.`}
             />
           )
@@ -196,8 +196,8 @@ class LoanRequestDetails extends Component {
               key={sectionType}
               title={"Liquidation At:"}
               amount={activeLoan.liquidation_call_price}
-              cardText={`If ${activeLoan.coin} drops below ${formatter.usd(
-                activeLoan.liquidation_call_price
+              cardText={`If ${activeLoan.coin} drops below ${formatter.fiat(
+                activeLoan.liquidation_call_price, "USD"
               )} we will sell some of your collateral to cover the margin.`}
             />
           )
@@ -229,8 +229,8 @@ class LoanRequestDetails extends Component {
 
     const loanCoinType =
       activeLoan.type === "USD_LOAN"
-        ? `${formatter.usd(formatter.floor10(activeLoan.loan_amount_usd, -2))}`
-        : `${activeLoan.loan_amount} ${activeLoan.coin_loan_asset}`;
+        ? formatter.fiat(activeLoan.loan_amount_usd, 'USD')
+        : formatter.crypto(activeLoan.loan_amount, activeLoan.coin_loan_asset, {noPrecision: true});
 
     const sections = activeLoan.uiSections;
 
