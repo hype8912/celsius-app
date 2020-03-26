@@ -23,6 +23,7 @@ const InfoModal = props => {
     noButtonStyle,
     onNo,
     noCopy,
+    coin
   } = props;
 
   const style = InfoModalStyle();
@@ -32,6 +33,7 @@ const InfoModal = props => {
       picture={picture}
       darkPicture={darkPicture}
       pictureDimensions={pictureDimensions}
+      coin={coin}
     >
       <View style={style.modalWrapper}>
         <View>
@@ -94,6 +96,7 @@ InfoModal.propTypes = {
   noButtonStyle: PropTypes.string,
   noCopy: PropTypes.string,
   onNo: PropTypes.func,
+  coin: PropTypes.string
 };
 
 export default InfoModal;

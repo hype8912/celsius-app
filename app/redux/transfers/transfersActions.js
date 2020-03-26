@@ -95,18 +95,18 @@ function claimTransferSuccess(transfer) {
 
 /**
  * Cancels a pending transfer
- * @param {string} transferHash
+ * @param {Object} transaction
  */
-function cancelTransfer(transferHash) {
+function cancelTransfer(transaction) {
   return async dispatch => {
     dispatch(startApiCall(API.cancel_TRANSFER));
 
     try {
-      const res = await transferService.cancel(transferHash);
+      const res = await transferService.cancel(transaction.transfer_data.hash);
       dispatch(cancelTransferSuccess(res.data));
       dispatch(showMessage("error", "CelPay Canceled"));
       dispatch(getAllTransactions());
-      dispatch(navigateTo("WalletLanding"));
+      dispatch(navigateTo("TransactionDetails", { id: transaction.id }));
       mixpanelAnalytics.canceledCelPay();
     } catch (err) {
       dispatch(showMessage("error", err.msg));

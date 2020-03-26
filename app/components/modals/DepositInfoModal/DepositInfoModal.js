@@ -139,6 +139,7 @@ class DepositInfoModal extends Component {
         description:
           "Sending other USDT coins to this address (the Omni Layer version) may result in the permanent loss of funds.",
         buttonText: "I Understand",
+        coinName
       };
     }
 
@@ -148,6 +149,7 @@ class DepositInfoModal extends Component {
       description:
         "Sending any other digital asset to this specific address, will result in permanent loss.",
       buttonText: "I Understand",
+      coinName
     };
   };
 
@@ -233,12 +235,13 @@ class DepositInfoModal extends Component {
       <InfoModal
         name={MODALS.DEPOSIT_INFO_MODAL}
         picture={infoContent.image}
-        darkPicture={infoContent.image} // TODO it must be changed to darkImage (gray icons)!
+        darkPicture={infoContent.darkImage}
         pictureDimensions={{ height: 35, width: 35 }}
         heading={infoContent.title}
         paragraphs={[infoContent.description]}
         yesCopy={"I Understand"}
         onYes={actions.closeModal}
+        coin={infoContent.coinName.short}
       />
     );
   }

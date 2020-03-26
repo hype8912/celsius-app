@@ -74,7 +74,7 @@ class TransactionDetails extends Component {
     this.interval = null;
 
     this.state = {
-      loading: true,
+      loading: false,
     };
   }
 
@@ -134,6 +134,7 @@ class TransactionDetails extends Component {
       loyaltyInfo,
       navigation,
     } = this.props;
+    const {loading} = this.state
     const transactionProps = transaction.uiProps;
     const kycPassed = user.kyc && hasPassedKYC();
     const transactionId = navigation.getParam("id");
@@ -273,10 +274,14 @@ class TransactionDetails extends Component {
             margin="12 0 10 0"
             textColor={STYLES.COLORS.RED}
             key={sectionType}
-            onPress={() =>
-              actions.cancelTransfer(transaction.transfer_data.hash)
-            }
+            onPress={() => {
+              actions.cancelTransfer(transaction)
+              this.setState({
+                loading: true
+              })
+            }}
             basic
+            loading={loading}
           >
             Cancel CelPay
           </CelButton>
