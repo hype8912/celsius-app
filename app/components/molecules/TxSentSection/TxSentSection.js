@@ -15,23 +15,13 @@ class TxSentSection extends Component {
   };
   static defaultProps = {};
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // initial state
-    };
-
-    // binders
-  }
-
   render() {
     const style = SentSectionStyle();
     const { transaction, text } = this.props;
 
     const data = transaction.transfer_data;
     const participant =
-      text === "From"
+      text === "Received from:"
         ? transaction.transfer_data.sender
         : transaction.transfer_data.claimer;
 
@@ -41,7 +31,7 @@ class TxSentSection extends Component {
           <View style={style.text}>
             <CelText
               style={{ color: STYLES.COLORS.MEDIUM_GRAY }}
-            >{`${text}:`}</CelText>
+            >{`${text}`}</CelText>
           </View>
           <View style={style.content}>
             {!data || !participant || !participant.profile_picture ? (

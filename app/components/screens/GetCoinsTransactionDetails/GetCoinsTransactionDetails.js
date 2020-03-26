@@ -90,19 +90,19 @@ ${orderIdPt2}`,
       case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
         return {
           color: STYLES.COLORS.GREEN,
-          iconName: "TransactionCC",
+          shortName: "CC",
           statusText: "Confirmed",
         };
       case TRANSACTION_TYPES.CANCELED:
         return {
           color: STYLES.COLORS.RED,
-          iconName: "TransactionCC",
+          shortName: "CC",
           statusText: "Canceled",
         };
       default:
         return {
           color: STYLES.COLORS.ORANGE,
-          iconName: "TransactionCC",
+          shortName: "CC",
           statusText: "Pending",
         };
     }
@@ -132,7 +132,7 @@ ${orderIdPt2}`,
       coin: transactionParams.coin,
     };
 
-    const transactionInfoProps = {
+    const transactionProps = {
       ...this.getStatusType(transactionParams.status),
     };
 
@@ -142,7 +142,7 @@ ${orderIdPt2}`,
           margin="40 0 20 0"
           key={"button:back"}
           transaction={transaction}
-          transactionProps={transactionInfoProps}
+          transactionProps={transactionProps}
         />
 
         {transactionParams.transactionDetails.map(i => (

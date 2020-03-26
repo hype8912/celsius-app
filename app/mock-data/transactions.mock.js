@@ -669,7 +669,7 @@ const celpayCanceled = {
   transfer_data: {
     hash:
       "0a806cffe93f0cb3957b1ec0561d4d93434a799edf142bfe6ab0220014775ac3c40925b40688e4c778b06e632d80f9165e3ffc655c04e8fc4e9a43dc4a80c6a6",
-    message: null,
+    message: "Pravoslavna Armija ce pobediti",
     sender_id: "91c46b8b-9e35-40a0-a7c8-a9afcea7b982",
     claimer_id: "12ef8002-457f-405d-9c28-47d2c327a81a",
     is_confirmed: true,
@@ -1013,7 +1013,7 @@ const referrerPending = {
 
 // CANCELED: "CANCELED",
 const canceled = {
-  transaction_id: TRANSACTION_TYPES.CANCELED,
+  id: TRANSACTION_TYPES.CANCELED,
   amount: "1.00174971",
   amount_usd: "10.00",
   coin: "btc",
@@ -1028,7 +1028,7 @@ const canceled = {
 };
 // IN: "IN",
 const inTx = {
-  transaction_id: TRANSACTION_TYPES.IN,
+  id: TRANSACTION_TYPES.IN,
   amount: "100000.00174971",
   amount_usd: "10.00",
   coin: "xrp",
@@ -1043,7 +1043,7 @@ const inTx = {
 };
 // OUT: "OUT",
 const outTx = {
-  transaction_id: TRANSACTION_TYPES.OUT,
+  id: TRANSACTION_TYPES.OUT,
   amount: "20.00174971",
   amount_usd: "10.00",
   coin: "eth",
@@ -1098,7 +1098,7 @@ export default {
   [TRANSACTION_TYPES.REFERRER]: referrer,
   [TRANSACTION_TYPES.REFERRER_PENDING]: referrerPending,
 
-  [TRANSACTION_TYPES.CANCELED]: canceled, // TODO
-  [TRANSACTION_TYPES.IN]: inTx, // TODO
-  [TRANSACTION_TYPES.OUT]: outTx, // TODO
+  [TRANSACTION_TYPES.CANCELED]: canceled,
+  [TRANSACTION_TYPES.IN]: inTx,
+  [TRANSACTION_TYPES.OUT]: outTx,
 };

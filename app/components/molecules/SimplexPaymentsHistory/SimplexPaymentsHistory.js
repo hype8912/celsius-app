@@ -39,19 +39,19 @@ class SimplexPaymentsHistory extends Component {
       case TRANSACTION_TYPES.DEPOSIT_PENDING:
         return {
           color: STYLES.COLORS.ORANGE,
-          iconName: "TransactionReceived",
+          shortName: "CC",
           statusText: "Pending",
         };
       case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
         return {
           color: STYLES.COLORS.GREEN,
-          iconName: "TransactionReceived",
+          shortName: "CC",
           statusText: "Confirmed",
         };
       case TRANSACTION_TYPES.CANCELED:
         return {
           color: STYLES.COLORS.RED,
-          iconName: "TransactionReceived",
+          shortName: "CC",
           statusText: "Canceled",
         };
     }

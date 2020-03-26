@@ -30,6 +30,7 @@ class TransactionDetailsCelPay extends Component {
     const text = [
       TRANSACTION_TYPES.CELPAY_ONHOLD,
       TRANSACTION_TYPES.CELPAY_RECEIVED,
+      TRANSACTION_TYPES.CELPAY_RETURNED,
     ].includes(type)
       ? "Received from:"
       : "Sent to:";
@@ -38,6 +39,7 @@ class TransactionDetailsCelPay extends Component {
       TRANSACTION_TYPES.CELPAY_SENT,
       TRANSACTION_TYPES.CELPAY_ONHOLD,
       TRANSACTION_TYPES.CELPAY_RECEIVED,
+      TRANSACTION_TYPES.CELPAY_CANCELED,
     ].includes(type);
     const shouldRenderCelPayButton = [
       TRANSACTION_TYPES.CELPAY_CANCELED,
@@ -58,6 +60,7 @@ class TransactionDetailsCelPay extends Component {
     const shouldRenderNote = [
       TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION,
       TRANSACTION_TYPES.CELPAY_CLAIMED,
+      TRANSACTION_TYPES.CELPAY_CANCELED,
     ].includes(type);
 
     return (

@@ -62,15 +62,10 @@ class TransactionDetailsInterest extends Component {
 
           {transaction.type === TRANSACTION_TYPES.PENDING_INTEREST ? (
             <Card>
-              <CelText align={"left"} type={"H4"}>
+              <CelText align={"left"} type={"H4"} weight={"600"}>
                 Want to earn better interest rates?
               </CelText>
-              <CelText
-                margin={"20 0 0 0"}
-                align={"left"}
-                type={"H4"}
-                weight={"600"}
-              >
+              <CelText margin={"20 0 0 0"} align={"left"} type={"H4"}>
                 Earn interest in CEL! Simply go to your settings and change the
                 way you receive interest.
               </CelText>
