@@ -28,6 +28,7 @@ function initBranch() {
         ) {
           // Fetch CodePush Update and Restart App
           // if no link provided and update is available
+
           codePush.sync({
             updateDialog: false,
             installMode: codePush.InstallMode.IMMEDIATE,
