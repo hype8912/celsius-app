@@ -147,17 +147,14 @@ class CelHeading extends Component {
         </CelButton>
       ),
       info: onInfo && (
-          <TouchableOpacity
-            basic
-            onPress={onInfo}
-          >
-            <Icon
-              name={'Info'}
-              height={30}
-              width={30}
-              fill={STYLES.COLORS.DARK_GRAY3}
-            />
-          </TouchableOpacity>
+        <TouchableOpacity basic onPress={onInfo}>
+          <Icon
+            name={"Info"}
+            height={30}
+            width={30}
+            fill={STYLES.COLORS.DARK_GRAY3}
+          />
+        </TouchableOpacity>
       ),
       search: (
         <CelButton

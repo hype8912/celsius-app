@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import { BLOCKEXPLORERS } from "../constants/DATA";
 
 /**
  * Checks if coin is ERC20
@@ -48,14 +49,7 @@ function hasLinkToBuy(currency) {
 }
 
 function buyInApp(currency) {
-  return [
-    "BTC",
-    "BCH",
-    "ETH",
-    "LTC",
-    "XRP",
-    "XLM"
-  ].includes(currency)
+  return ["BTC", "BCH", "ETH", "LTC", "XRP", "XLM"].includes(currency);
 }
 
 function provideLink(currency) {
@@ -191,11 +185,89 @@ function isGreaterThan(str1, str2) {
   return num1.gt(num2);
 }
 
+export function getBlockExplorerLink(transaction) {
+  const tId = transaction.transaction_id;
+  switch (transaction.coin) {
+    // BTC
+    case "btc":
+      return {
+        link: BLOCKEXPLORERS.btc && `${BLOCKEXPLORERS.btc}${tId}`,
+        text: "blockchain",
+      };
+    // BCH
+    case "bch":
+      return {
+        link: BLOCKEXPLORERS.bch && `${BLOCKEXPLORERS.bch}${tId}`,
+        text: "blockdozer",
+      };
+    // LTC
+    case "ltc":
+      return {
+        link: BLOCKEXPLORERS.ltc && `${BLOCKEXPLORERS.ltc}${tId}`,
+        text: "chainz",
+      };
+    // XRP
+    case "xrp":
+      return {
+        link: BLOCKEXPLORERS.xrp && `${BLOCKEXPLORERS.xrp}${tId}`,
+        text: "xrpcharts",
+      };
+    // XLM
+    case "xlm":
+      return {
+        link: BLOCKEXPLORERS.xlm && `${BLOCKEXPLORERS.xlm}${tId}`,
+        text: "stellarchain",
+      };
+    // EOS
+    case "eos":
+      return {
+        link: BLOCKEXPLORERS.eos && `${BLOCKEXPLORERS.eos}${tId}`,
+        text: "bloks.io",
+      };
+    // DASH
+    case "dash":
+      return {
+        link: BLOCKEXPLORERS.dash && `${BLOCKEXPLORERS.dash}${tId}`,
+        text: "chainz",
+      };
+    // ZEC
+    case "zec":
+      return {
+        link: BLOCKEXPLORERS.zec && `${BLOCKEXPLORERS.zec}${tId}`,
+        text: "chain.so",
+      };
+    // BTG
+    case "btg":
+      return {
+        link: BLOCKEXPLORERS.btg && `${BLOCKEXPLORERS.btg}${tId}`,
+        text: "btgexplorer",
+      };
+
+    // ETH & ERC20
+    case "eth":
+    case "dai":
+    case "pax":
+    case "zrx":
+    case "tusd":
+    case "gusd":
+    case "usdc":
+    case "cel":
+    case "omg":
+      return {
+        link: BLOCKEXPLORERS.eth && `${BLOCKEXPLORERS.eth}${tId}`,
+        text: "etherscan",
+      };
+
+    default:
+      return null;
+  }
+}
+
 export default {
   isERC20, // TODO move to BE or something
   isGreaterThan, // TODO maybe move to formatter? add JSDoc
   hasLinkToBuy,
   provideLink,
   provideText,
-  buyInApp
+  buyInApp,
 };

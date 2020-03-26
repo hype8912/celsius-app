@@ -41,7 +41,7 @@ class CelModal extends Component {
     ]),
     pictureDimensions: PropTypes.instanceOf(Object),
     onClose: PropTypes.func,
-    coin: PropTypes.string
+    coin: PropTypes.string,
   };
   static defaultProps = {
     hasCloseButton: true,
@@ -108,17 +108,15 @@ class CelModal extends Component {
     const { picture, darkPicture, pictureDimensions, coin } = this.props;
     const style = CelModalStyle();
     const pictureStyle = [style.pictureStyle, pictureDimensions];
-    const theme = getTheme()
+    const theme = getTheme();
 
-    if (!darkPicture && theme === THEMES.DARK) { // NOTE: For coins we use PNG in light theme and DVG in dark theme
+    if (!darkPicture && theme === THEMES.DARK) {
+      // NOTE: For coins we use PNG in light theme and DVG in dark theme
       return (
         <View style={style.pictureWrapper}>
-          <Icon
-            name={`Icon${coin && coin}`}
-            fill={STYLES.COLORS.WHITE}
-          />
+          <Icon name={`Icon${coin && coin}`} fill={STYLES.COLORS.WHITE} />
         </View>
-      )
+      );
     }
 
     return (

@@ -261,10 +261,14 @@ function emitLoanParams(
       loanParams.totalInterestPct / formData.termOfLoan;
 
     loanParams.totalInterest = formatter.fiat(
-      Number(loanParams.totalInterestPct * formData.amount), "USD"
+      Number(loanParams.totalInterestPct * formData.amount),
+      "USD"
     );
     loanParams.monthlyInterest = formatter.fiat(
-      Number((loanParams.totalInterestPct * formData.amount) / formData.termOfLoan), "USD"
+      Number(
+        (loanParams.totalInterestPct * formData.amount) / formData.termOfLoan
+      ),
+      "USD"
     );
     loanParams.collateralNeeded =
       Number(formData.amount) /

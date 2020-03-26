@@ -139,7 +139,7 @@ class DepositInfoModal extends Component {
         description:
           "Sending other USDT coins to this address (the Omni Layer version) may result in the permanent loss of funds.",
         buttonText: "I Understand",
-        coinName
+        coinName,
       };
     }
 
@@ -149,7 +149,7 @@ class DepositInfoModal extends Component {
       description:
         "Sending any other digital asset to this specific address, will result in permanent loss.",
       buttonText: "I Understand",
-      coinName
+      coinName,
     };
   };
 

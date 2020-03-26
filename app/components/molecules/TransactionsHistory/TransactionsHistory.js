@@ -15,7 +15,7 @@ import API from "../../../constants/API";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
 import EmptyState from "../../atoms/EmptyState/EmptyState";
 import * as appActions from "../../../redux/actions";
-import transactionsUtil from "../../../utils/transactions-util";
+import transactionsFilterUtil from "../../../utils/transactions-filter-util";
 import STYLES from "../../../constants/STYLES";
 import { MODALS, THEMES } from "../../../constants/UI";
 import TransactionFilterModal from "../../modals/TransactionFilterModal/TransactionFilterModal";
@@ -28,7 +28,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
     currencyRatesShort: state.currencies.currencyRatesShort,
     currencies: state.currencies.rates,
     formData: state.forms.formData,
-    callsInProgress: state.api.callsInProgress
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -37,11 +37,11 @@ class TransactionsHistory extends Component {
     margin: PropTypes.string,
     filterOptions: PropTypes.instanceOf(Array),
     additionalFilter: PropTypes.instanceOf(Object),
-    hasFilter: PropTypes.bool
+    hasFilter: PropTypes.bool,
   };
   static defaultProps = {
     margin: "20 0 0 0",
-    hasFilter: true
+    hasFilter: true,
   };
 
   constructor(props) {
@@ -56,8 +56,8 @@ class TransactionsHistory extends Component {
   }
 
   componentWillUnmount() {
-      const {actions} = this.props;
-      actions.clearForm()
+    const { actions } = this.props;
+    actions.clearForm();
   }
 
   prepTransactions() {
@@ -65,20 +65,20 @@ class TransactionsHistory extends Component {
       transactions,
       additionalFilter,
       currencyRatesShort,
-      formData
+      formData,
     } = this.props;
 
     const coin = formData.filterTransactionsCoins;
     const type = formData.filterTransactionsType;
     const period = formData.filterTransactionsDate;
 
-    const transactionsArray = transactionsUtil.filterTransactions(
+    const transactionsArray = transactionsFilterUtil.filterTransactions(
       transactions,
       {
         coin,
         type,
         period,
-        ...additionalFilter
+        ...additionalFilter,
       }
     );
 
@@ -97,7 +97,7 @@ class TransactionsHistory extends Component {
         : moment(t.time).format("DD MMM YYYY"),
       status: t.is_confirmed ? t.type : "pending",
       type: t.type,
-      transfer_data: t.transfer_data
+      transfer_data: t.transfer_data,
     }));
 
     return transactionsDisplay;
@@ -107,7 +107,7 @@ class TransactionsHistory extends Component {
     const { actions, additionalFilter } = this.props;
 
     if (additionalFilter) {
-      await actions.navigateTo("AllTransactions", { additionalFilter});
+      await actions.navigateTo("AllTransactions", { additionalFilter });
     } else {
       await actions.navigateTo("AllTransactions");
     }
@@ -137,7 +137,7 @@ class TransactionsHistory extends Component {
           onPress={() => this.sendCsvRequest()}
           disabled={disabled}
         >
-          <Icon name="Mail" fill={STYLES.COLORS.GRAY} width={30} height={30}/>
+          <Icon name="Mail" fill={STYLES.COLORS.GRAY} width={30} height={30} />
           <CelText align={"center"}>Send CSV to Email</CelText>
         </TouchableOpacity>
       </Card>
@@ -153,7 +153,7 @@ class TransactionsHistory extends Component {
           height: 50,
           width: 50,
           paddingTop: 20,
-          alignItems: "flex-end"
+          alignItems: "flex-end",
         }}
       >
         <Icon
@@ -173,7 +173,7 @@ class TransactionsHistory extends Component {
       callsInProgress,
       hasFilter,
       transactions,
-      additionalFilter
+      additionalFilter,
       // navigation
     } = this.props;
     const style = TransactionsHistoryStyle();
@@ -181,13 +181,18 @@ class TransactionsHistory extends Component {
     // const transactionType = navigation.getParam('transactionType') || null
     const transactionsDisplay = this.prepTransactions();
 
-    const emptyStateText = additionalFilter && additionalFilter.type && additionalFilter.type[0] === "celpay" ? "There are currently no CelPay transactions to display for this account" : "No transactions for given filters in your wallet";
+    const emptyStateText =
+      additionalFilter &&
+      additionalFilter.type &&
+      additionalFilter.type[0] === "celpay"
+        ? "There are currently no CelPay transactions to display for this account"
+        : "No transactions for given filters in your wallet";
 
     if (
       !transactionsDisplay.length &&
       apiUtil.areCallsInProgress([API.GET_ALL_TRANSACTIONS], callsInProgress)
     ) {
-      return <LoadingState/>;
+      return <LoadingState />;
     }
 
     if (transactions && transactions.length === 0) {
@@ -204,7 +209,7 @@ class TransactionsHistory extends Component {
         <View
           style={[
             style.filterContainer,
-            hasFilter ? { marginBottom: 10 } : margins
+            hasFilter ? { marginBottom: 10 } : margins,
           ]}
         >
           <View>
@@ -218,10 +223,7 @@ class TransactionsHistory extends Component {
         {this.renderEmailButton()}
 
         {!transactionsDisplay.length ? (
-          <EmptyState
-            heading="Sorry"
-            paragraphs={[emptyStateText]}
-          />
+          <EmptyState heading="Sorry" paragraphs={[emptyStateText]} />
         ) : (
           <View>
             <FlatList
@@ -232,20 +234,22 @@ class TransactionsHistory extends Component {
                   index={index}
                   count={transactionsDisplay.length}
                   onPress={() =>
-                    actions.navigateTo("TransactionDetails", { id: item.id })
+                    actions.navigateTo("TransactionsIntersection", {
+                      id: item.id,
+                    })
                   }
                 />
               )}
               keyExtractor={item => item.id}
             />
-            { (additionalFilter && additionalFilter.limit) &&
+            {additionalFilter && additionalFilter.limit && (
               <CelButton basic onPress={() => this.handleGetAllTransactions()}>
                 See all
               </CelButton>
-            }
+            )}
           </View>
         )}
-        <TransactionFilterModal/>
+        <TransactionFilterModal />
       </View>
     );
   }
