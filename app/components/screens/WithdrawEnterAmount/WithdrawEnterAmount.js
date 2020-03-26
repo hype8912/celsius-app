@@ -98,9 +98,9 @@ class WithdrawEnterAmount extends Component {
       activePeriod: { label: "", value: "" },
     };
 
-    if (coin || coinSelectItems.length > 0)
+    if (coin || coinSelectItems.length > 0) {
       props.actions.initForm({ coin: coin || coinSelectItems[0].value });
-    props.actions.openModal(MODALS.WITHDRAW_INFO_MODAL);
+    }
     props.actions.getAllCoinWithdrawalAddresses();
   }
 

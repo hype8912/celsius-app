@@ -18,6 +18,7 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 import HodlBanner from "../../atoms/HodlBanner/HodlBanner";
+import Icon from "../../atoms/Icon/Icon";
 
 @connect(
   state => ({
@@ -146,9 +147,17 @@ class CelHeading extends Component {
         </CelButton>
       ),
       info: onInfo && (
-        <CelButton basic onPress={onInfo}>
-          Info
-        </CelButton>
+          <TouchableOpacity
+            basic
+            onPress={onInfo}
+          >
+            <Icon
+              name={'Info'}
+              height={30}
+              width={30}
+              fill={STYLES.COLORS.DARK_GRAY3}
+            />
+          </TouchableOpacity>
       ),
       search: (
         <CelButton

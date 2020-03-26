@@ -13,8 +13,8 @@ import { CEL_PAY_TYPES, EMPTY_STATES, MODALS } from "../../../constants/UI";
 import cryptoUtil from "../../../utils/crypto-util";
 import CelPayInfoModal from "../../modals/CelPayInfoModal/CelPayInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-
-let counter = 0;
+import { openModal } from "../../../redux/ui/uiActions";
+import store from "../../../redux/store";
 
 @connect(
   state => ({
@@ -35,8 +35,11 @@ class CelPayLanding extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Choose how to CelPay",
-    right: "profile",
+    title: "CelPay",
+    right: "info",
+    onInfo: () => {
+      store.dispatch(openModal(MODALS.CELPAY_INFO_MODAL));
+    },
   });
 
   constructor(props) {
@@ -48,11 +51,7 @@ class CelPayLanding extends Component {
   }
 
   componentDidMount() {
-    const { navHistory, actions } = this.props;
-    if (!counter) {
-      actions.openModal(MODALS.CELPAY_INFO_MODAL);
-    }
-    counter += 1;
+    const { navHistory } = this.props;
     mixpanelAnalytics.navigatedToCelPay(navHistory[0]);
   }
 
