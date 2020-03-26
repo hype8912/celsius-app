@@ -94,6 +94,7 @@ class LoanOverviewCard extends Component {
     const style = LoanOverviewCardStyle();
     let previousPayments;
     let previous5Payments;
+
     if (loan.amortization_table) {
       previousPayments = loan.amortization_table.filter(p => p.isPaid);
       previous5Payments = previousPayments.slice(-5);
@@ -329,12 +330,7 @@ class LoanOverviewCard extends Component {
               loan.status
             ) && (
               <CelButton
-                onPress={() =>
-                  navigateTo("VerifyProfile", {
-                    onSuccess: () =>
-                      navigateTo("LoanSettings", { id: loan.id }),
-                  })
-                }
+                onPress={() => navigateTo("LoanSettings", { id: loan.id })}
                 basic
                 textSize={"H6"}
               >

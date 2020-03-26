@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import moment from "moment";
 
 import RegisterPromoCodeModalStyle from "./RegisterPromoCodeModal.styles";
 import CelModal from "../CelModal/CelModal.js";
@@ -254,7 +255,15 @@ class RegisterPromoCodeModal extends Component {
     code.minimumAmount = promoCode.minimum_deposit_for_reward;
 
     const congratsText = "You’ve successfully activated your promo code!";
-    const messageText = `You’ll receive $${code.amount} in ${code.coin} when you deposit $${code.minimumAmount} or more within the next ${code.maximumDays} days.`;
+    const messageText = `You’ll receive $${code.amount} in ${
+      code.coin
+    } when you deposit $${code.minimumAmount} or more within the next ${
+      code.maximumDays
+    } days. Your reward will be locked in your wallet for 30 days. If you withdraw $${
+      code.minimumAmount
+    } or more from your wallet before ${moment()
+      .add(30, "days")
+      .format("DD/MM/YY")}, your reward will be canceled.`;
 
     return (
       <View>

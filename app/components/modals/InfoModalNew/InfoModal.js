@@ -23,6 +23,7 @@ const InfoModal = props => {
     noButtonStyle,
     onNo,
     noCopy,
+    coin,
   } = props;
 
   const style = InfoModalStyle();
@@ -32,6 +33,7 @@ const InfoModal = props => {
       picture={picture}
       darkPicture={darkPicture}
       pictureDimensions={pictureDimensions}
+      coin={coin}
     >
       <View style={style.modalWrapper}>
         <View>
@@ -40,17 +42,17 @@ const InfoModal = props => {
           </CelText>
 
           {paragraphs &&
-          paragraphs.map(paragraph => (
-            <CelText
-              margin={"0 25 25 25"}
-              align="center"
-              type="H4"
-              weight={"300"}
-              key={paragraph}
-            >
-              {paragraph}
-            </CelText>
-          ))}
+            paragraphs.map(paragraph => (
+              <CelText
+                margin={"0 25 25 25"}
+                align="center"
+                type="H4"
+                weight={"300"}
+                key={paragraph}
+              >
+                {paragraph}
+              </CelText>
+            ))}
         </View>
 
         <View style={style.buttonWrapper}>
@@ -94,6 +96,7 @@ InfoModal.propTypes = {
   noButtonStyle: PropTypes.string,
   noCopy: PropTypes.string,
   onNo: PropTypes.func,
+  coin: PropTypes.string,
 };
 
 export default InfoModal;

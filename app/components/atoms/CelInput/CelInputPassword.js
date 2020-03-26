@@ -134,7 +134,7 @@ class CelInputPassword extends Component {
                     }
                   }
                 />
-                <PassMeterTooltip />
+                <PassMeterTooltip password={value} />
               </>
             )}
           </View>
@@ -149,6 +149,7 @@ class CelInputPassword extends Component {
             />
             {!!value && showPasswordTooltip && activeField === field && (
               <PassStrengthMeter
+                password={value}
                 customStyle={{
                   flex: 1,
                   width: "110%",

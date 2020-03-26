@@ -3,7 +3,6 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 
 import reducer from "./reducers";
-import Reactotron from "../utils/reactotron-util";
 
 /* eslint global-require: 0 */
 let composeEnhancers = compose;
@@ -23,10 +22,7 @@ if (__DEV__) {
 
 const middleware = [thunk, standaloneLogger];
 
-const enhancer = composeEnhancers(
-  applyMiddleware(...middleware),
-  Reactotron.createEnhancer()
-);
+const enhancer = composeEnhancers(applyMiddleware(...middleware));
 
 function configureStore(initialState) {
   const store = createStore(reducer, initialState, enhancer);

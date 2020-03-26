@@ -11,11 +11,13 @@ import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
 class PassStrengthMeter extends Component {
   static propTypes = {
     customStyle: PropTypes.instanceOf(Object),
+    password: PropTypes.string,
   };
   static defaultProps = {};
 
   handlePassStatus = () => {
-    const status = calculatePasswordScore().customStatus;
+    const { password } = this.props;
+    const status = calculatePasswordScore(password).customStatus;
     switch (status) {
       case SECURITY_STRENGTH_LEVEL.WEAK:
         return {
@@ -41,7 +43,8 @@ class PassStrengthMeter extends Component {
   };
 
   handleMeterLength = () => {
-    const result = calculatePasswordScore().result;
+    const { password } = this.props;
+    const result = calculatePasswordScore(password).result;
     if (result.status === "needs requirement(s)") {
       return "15%";
     }

@@ -79,20 +79,11 @@ class SecuritySettings extends Component {
   handleSwitchChange2FA = () => {
     const { is2FAEnabled } = this.state;
     const { actions } = this.props;
-
     if (is2FAEnabled) {
       actions.openModal(MODALS.REMOVE_AUTHAPP_MODAL);
     } else {
       actions.navigateTo("VerifyProfile", {
-        onSuccess: async () => {
-          const { formData } = this.props;
-          const secret = await actions.getTwoFactorSecret(formData.pin);
-          if (secret) {
-            actions.navigateTo("TwoFactorSettings", { secret });
-          } else {
-            actions.navigateBack();
-          }
-        },
+        onSuccess: () => actions.navigateTo("TwoFactorSettings"),
       });
     }
   };

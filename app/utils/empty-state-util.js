@@ -37,6 +37,17 @@ function getProps(purpose, componentProps) {
         secondaryOnPress: () => actions.navigateTo("WalletLanding"),
         secondaryButton: "Go back to wallet",
       };
+    case EMPTY_STATES.HODL_MODE_BACKOFFICE:
+      return {
+        ...props,
+        image: require("../../assets/images/hodlModeStatus.png"),
+        heading: "HODL Mode is active!",
+        paragraphs: [
+          "Your account was set to HODL Mode by our team. If you would like to deactivate HODL Mode please contact our support team.",
+        ],
+        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryButton: "Go back to wallet",
+      };
     case EMPTY_STATES.HODL_MODE_ACTIVE:
       return {
         ...props,

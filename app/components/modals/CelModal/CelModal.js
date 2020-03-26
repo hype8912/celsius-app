@@ -18,6 +18,7 @@ import CelModalStyle from "./CelModal.styles";
 import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { getTheme } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -40,6 +41,7 @@ class CelModal extends Component {
     ]),
     pictureDimensions: PropTypes.instanceOf(Object),
     onClose: PropTypes.func,
+    coin: PropTypes.string,
   };
   static defaultProps = {
     hasCloseButton: true,
@@ -103,9 +105,19 @@ class CelModal extends Component {
   };
 
   renderPicture = () => {
-    const { picture, darkPicture, pictureDimensions } = this.props;
+    const { picture, darkPicture, pictureDimensions, coin } = this.props;
     const style = CelModalStyle();
     const pictureStyle = [style.pictureStyle, pictureDimensions];
+    const theme = getTheme();
+
+    if (!darkPicture && theme === THEMES.DARK) {
+      // NOTE: For coins we use PNG in light theme and DVG in dark theme
+      return (
+        <View style={style.pictureWrapper}>
+          <Icon name={`Icon${coin && coin}`} fill={STYLES.COLORS.WHITE} />
+        </View>
+      );
+    }
 
     return (
       <View style={style.pictureWrapper}>

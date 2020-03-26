@@ -102,12 +102,6 @@ class RegisterInitial extends Component {
     }
   };
 
-  reCaptchaPassed = event => {
-    const { actions } = this.props;
-    actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
-    this.submitForm();
-  };
-
   disabledButton = () => {
     const { formData } = this.props;
     const fields = [
@@ -115,7 +109,7 @@ class RegisterInitial extends Component {
       !!formData.lastName,
       !!formData.email,
       formData.termsOfUse,
-      calculatePasswordScore().result.score > 80,
+      calculatePasswordScore(formData.password).result.score > 80,
     ];
     if (fields.every(x => x)) {
       return false;
@@ -132,7 +126,7 @@ class RegisterInitial extends Component {
         url={RECAPTCHA_URL}
         languageCode="en"
         onMessage={this.onMessage}
-        reCaptchaPassed={this.reCaptchaPassed}
+        reCaptchaPassed={this.submitForm}
         type={"register"}
         buttonDisabled={this.disabledButton()}
       />

@@ -67,19 +67,25 @@ class SelectCoin extends Component {
 
   constructor(props) {
     super(props);
-    const coinListFormatted = props.navigation.getParam("coinListFormatted");
+
+    this.state = {
+      filteredCoins: {},
+    };
+  }
+
+  componentDidMount() {
+    const { currencies, navigation } = this.props;
+    const coinListFormatted = navigation.getParam("coinListFormatted");
 
     const allCoins = coinListFormatted.map(coin => {
       return {
         ...coin,
-        image: getImageForCrypto(coin, props.currencies),
+        image: getImageForCrypto(coin, currencies),
       };
     });
-
-    this.state = {
+    this.setState({
       filteredCoins: allCoins,
-      search: "",
-    };
+    });
   }
 
   getSelectStyle = (style, isActive = false) => {
@@ -92,6 +98,53 @@ class SelectCoin extends Component {
       itemStyle.push({ backgroundColor: STYLES.COLORS.DARK_GRAY3 });
     }
     return itemStyle;
+  };
+
+  renderIcon = item => {
+    const theme = getTheme();
+    const style = SelectCoinStyle();
+
+    if (theme === THEMES.LIGHT && item.image) {
+      return (
+        <Image source={{ uri: item.image }} style={{ width: 30, height: 30 }} />
+      );
+    }
+
+    if (theme === THEMES.DARK && item.image) {
+      return (
+        <Icon
+          name={`Icon${item.value}`}
+          fill={STYLES.COLORS.WHITE}
+          height={30}
+          width={30}
+        />
+      );
+    }
+
+    return (
+      <View
+        style={[
+          {
+            backgroundColor:
+              theme === THEMES.LIGHT
+                ? STYLES.COLORS.MEDIUM_GRAY1
+                : STYLES.COLORS.DARK_HEADER,
+          },
+          style.iconCircle,
+        ]}
+      >
+        <Icon
+          name={`Icon${item.value}`}
+          fill={
+            theme === THEMES.LIGHT
+              ? STYLES.COLORS.DARK_GRAY
+              : STYLES.COLORS.WHITE
+          }
+          height={30}
+          width={30}
+        />
+      </View>
+    );
   };
 
   renderItem = ({ item }) => {
@@ -122,10 +175,7 @@ class SelectCoin extends Component {
         >
           <View style={itemStyle}>
             <View style={style.left}>
-              <Image
-                source={{ uri: item.image }}
-                style={{ width: 30, height: 30 }}
-              />
+              {this.renderIcon(item)}
               <CelText style={{ paddingLeft: 10 }}>{item.label}</CelText>
             </View>
             {isActive && (
