@@ -106,6 +106,8 @@
       <!-- Change the resource name to your App's accent color - or any other color you want -->
       <meta-data  android:name="com.dieam.reactnativepushnotification.notification_color"
                   android:resource="@android:color/white"/>
+      <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+                 android:resource="@drawable/notification_icon" />
 
       <!-- < Only if you're using GCM or localNotificationSchedule() > -->
       <receiver
@@ -138,13 +140,13 @@
       <!-- </ Only if you're using GCM or localNotificationSchedule() > -->
 
       <!-- < Else > -->
-      <service
-        android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
-        android:exported="false" >
-        <intent-filter>
-          <action android:name="com.google.firebase.MESSAGING_EVENT" />
-        </intent-filter>
-      </service>
+<!--      <service-->
+<!--        android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"-->
+<!--        android:exported="false" >-->
+<!--        <intent-filter>-->
+<!--          <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--        </intent-filter>-->
+<!--      </service>-->
       <!-- </Else> -->
 
     </application>
