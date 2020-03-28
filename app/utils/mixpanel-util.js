@@ -31,12 +31,18 @@ async function initMixpanel() {
 }
 
 /**
+ * Create user alias for Mixpanel only once
+ */
+function registerMixpanelUser(distinctId) {
+  Mixpanel.createAlias(distinctId);
+}
+
+/**
  * Init user data to Mixpanel
  */
 async function engage(distinctId, payload = {}) {
   const { MIXPANEL_TOKEN } = Constants;
 
-  // Mixpanel.createAlias(distinctId);
   Mixpanel.identify(distinctId);
 
   const data = payload;
@@ -129,6 +135,7 @@ async function logoutUserMixpanel() {
 
 export {
   initMixpanel,
+  registerMixpanelUser,
   addPushDeviceToken,
   engage,
   logoutUserMixpanel,

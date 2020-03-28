@@ -25,7 +25,10 @@ import { setFormErrors } from "../forms/formsActions";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import branchUtil from "../../utils/branch-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
-import { logoutUserMixpanel } from "../../utils/mixpanel-util";
+import {
+  logoutUserMixpanel,
+  registerMixpanelUser,
+} from "../../utils/mixpanel-util";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -221,6 +224,7 @@ function createAccount() {
     const user = getState().user.profile;
     if (user.id) {
       appsFlyerUtil.registrationCompleted(user);
+      registerMixpanelUser(user.id);
       mixpanelAnalytics.registrationCompleted(user);
     }
   };
