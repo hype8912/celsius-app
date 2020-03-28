@@ -1,5 +1,7 @@
 import { Platform } from "react-native";
 import { useEffect } from "react";
+import messaging from "@react-native-firebase/messaging";
+
 import PushNotification from "react-native-push-notification";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import notificationService from "../services/notifications-service";
@@ -13,18 +15,45 @@ export {
 };
 
 /**
+ * Get device notification token from notification provider
+ */
+async function getNotificationToken() {
+  let token;
+  if (Platform.OS === "android") {
+    token = await messaging().getToken();
+    // eslint-disable-next-line no-console
+    console.log("token je: ", token);
+    setSecureStoreKey(NOTIFICATION_TOKEN, token);
+  } else {
+    await getIOSPushNotificationToken();
+  }
+}
+
+/**
+ * On iOS platform, ask for notification permissions, get notification token and store it to storage
+ */
+async function getIOSPushNotificationToken() {
+  const perm = await PushNotificationIOS.requestPermissions();
+
+  if (perm && perm.alert === 1) {
+    PushNotificationIOS.addEventListener("register", token => {
+      setSecureStoreKey(NOTIFICATION_TOKEN, token);
+    });
+  }
+}
+
+/**
  * Listen for push notification and show them as local notification in the app
  * @returns {null}
  */
 function remotePushController() {
+  getNotificationToken();
   useEffect(() => {
     PushNotification.configure({
-      onRegister({ token }) {
-        setSecureStoreKey(NOTIFICATION_TOKEN, token);
-      },
       // Called when a remote or local notification is opened or received
       onNotification(notification) {
-        // console.log('NOTIF: ', notification)
+        // eslint-disable-next-line no-console
+        console.log("NOTIF: ", notification);
         const notifObj = {
           playSound: true, // (optional)
           soundName: "default", // (optional)
