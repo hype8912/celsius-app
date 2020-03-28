@@ -5,6 +5,8 @@ import { showMessage } from "../ui/uiActions";
 import simplexService from "../../services/simplex-service";
 import { navigateTo } from "../nav/navActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import { mocks } from "../../../dev-settings";
+import mockTransactions from "../../mock-data/payments.mock";
 
 export {
   simplexGetQuote,
@@ -153,7 +155,16 @@ function getAllSimplexPayments() {
     dispatch(startApiCall(API.GET_PAYMENT_REQUESTS));
 
     try {
-      const res = await simplexService.getAllPayments();
+      let res;
+      if (!mocks.USE_MOCK_TRANSACTIONS) {
+        res = await simplexService.getAllPayments();
+      } else {
+        res = {
+          data: Object.values(mockTransactions).filter(t =>
+            ["pending", "approved", "declined"].includes(t.id)
+          ),
+        };
+      }
 
       dispatch({
         type: ACTIONS.GET_PAYMENT_REQUESTS_SUCCESS,

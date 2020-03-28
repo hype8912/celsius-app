@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { View, TouchableOpacity } from "react-native";
 
 import TransactionRowStyle from "./TransactionRow.styles";
-import Icon from "../Icon/Icon";
 import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Separator from "../Separator/Separator";
+import STYLES from "../../../constants/STYLES";
 
 class TransactionRow extends Component {
   static propTypes = {
@@ -35,14 +35,18 @@ class TransactionRow extends Component {
     const { transaction, onPress, count, index } = this.props;
     if (!transaction) return null;
 
-    const { color, iconName, statusText } = transaction.uiProps;
+    const { color, shortName, statusText } = transaction.uiProps;
 
     const style = TransactionRowStyle();
     return (
       <View>
         <TouchableOpacity style={style.container} onPress={onPress}>
           <View style={style.leftSide}>
-            <Icon name={iconName} height="16" width="16" fill={color} />
+            <View style={[style.circle, { backgroundColor: color }]}>
+              <CelText type={"H7"} color={STYLES.COLORS.WHITE}>
+                {shortName}
+              </CelText>
+            </View>
             <View style={style.amounts}>
               <View>
                 <CelText weight="600" type="H3">

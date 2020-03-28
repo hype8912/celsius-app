@@ -15,6 +15,6 @@ const themed = {
   celsius: {},
 };
 
-const TransactionDetailsStyle = () => getThemedStyle(base, themed);
+const TransactionDetailsRewardsStyle = () => getThemedStyle(base, themed);
 
-export default TransactionDetailsStyle;
+export default TransactionDetailsRewardsStyle;

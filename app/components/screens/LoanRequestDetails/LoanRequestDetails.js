@@ -11,16 +11,14 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 
 import Icon from "../../atoms/Icon/Icon";
-import {
-  BasicCardSection,
-  BasicSection,
-  CardSection,
-} from "../TransactionDetails/TransactionDetailsSections";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { LOAN_STATUS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
 import LoanApplicationSuccessModal from "../../modals/LoanApplicationSuccessModal/LoanApplicationSuccessModal";
+import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
+import TxBasicCardSection from "../../atoms/TxBasicCardSection/TxBasicCardSection";
+import TxCardSection from "../../atoms/TxCardSection/TxCardSection";
 
 @connect(
   state => ({
@@ -79,7 +77,7 @@ class LoanRequestDetails extends Component {
     switch (sectionType) {
       case "completion:date":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label={"Loan Completion Date"}
             value={moment(activeLoan.maturity_date).format("D MMM YYYY")}
@@ -89,7 +87,7 @@ class LoanRequestDetails extends Component {
         return (
           !!activeLoan.rejected_at &&
           activeLoan.rejected_at > "2017-01-01T00:00:00.000Z" && (
-            <BasicSection
+            <TxBasicSection
               key={sectionType}
               label={"Loan Rejection Date"}
               value={moment(activeLoan.rejected_at).format("D MMM YYYY")}
@@ -98,7 +96,7 @@ class LoanRequestDetails extends Component {
         );
       case "cancellation:date":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label={"Loan Cancellation Date"}
             value={moment(activeLoan.canceled_at).format("D MMM YYYY")}
@@ -107,7 +105,7 @@ class LoanRequestDetails extends Component {
       case "refinanced:date":
         return (
           activeLoan.refinanced_at && (
-            <BasicSection
+            <TxBasicSection
               key={sectionType}
               label={"Loan Refinanced On"}
               value={moment(activeLoan.refinanced_at).format("D MMM YYYY")}
@@ -116,7 +114,7 @@ class LoanRequestDetails extends Component {
         );
       case "initiation:date":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label={"Loan Initiation Date"}
             value={moment(activeLoan.created_at).format("D MMM YYYY")}
@@ -124,7 +122,7 @@ class LoanRequestDetails extends Component {
         );
       case "unlocked:collateral":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label={"Unlocked Collateral"}
             value={formatter.crypto(
@@ -135,7 +133,7 @@ class LoanRequestDetails extends Component {
         );
       case "estimated:collateral":
         return (
-          <CardSection
+          <TxCardSection
             key={sectionType}
             title={activeLoan.uiProps.collateral}
             cardText={
@@ -148,7 +146,7 @@ class LoanRequestDetails extends Component {
         );
       case "collateral":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label={"Locked Collateral"}
             value={formatter.crypto(
@@ -159,7 +157,7 @@ class LoanRequestDetails extends Component {
         );
       case "term":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label={"Term Length"}
             value={`${activeLoan.term_of_loan} months`}
@@ -167,7 +165,7 @@ class LoanRequestDetails extends Component {
         );
       case "annualInterest":
         return (
-          <BasicCardSection
+          <TxBasicCardSection
             key={sectionType}
             label={"Annual Interest Rate"}
             coin={activeLoan.coin_loan_asset}
@@ -179,12 +177,13 @@ class LoanRequestDetails extends Component {
       case "marginCall":
         return (
           activeLoan.margin_call && (
-            <CardSection
+            <TxCardSection
               key={sectionType}
               title={`${activeLoan.coin} Margin Call At:`}
               amount={activeLoan.margin_call_price}
               cardText={`If ${activeLoan.coin} drops below ${formatter.fiat(
-                activeLoan.margin_call_price , "USD"
+                activeLoan.margin_call_price,
+                "USD"
               )} you will get a notification asking for additional collateral.`}
             />
           )
@@ -192,23 +191,24 @@ class LoanRequestDetails extends Component {
       case "liquidation":
         return (
           activeLoan.margin_call && (
-            <CardSection
+            <TxCardSection
               key={sectionType}
               title={"Liquidation At:"}
               amount={activeLoan.liquidation_call_price}
               cardText={`If ${activeLoan.coin} drops below ${formatter.fiat(
-                activeLoan.liquidation_call_price, "USD"
+                activeLoan.liquidation_call_price,
+                "USD"
               )} we will sell some of your collateral to cover the margin.`}
             />
           )
         );
       // case "firstInterest":
-      //   return  <BasicSection key={sectionType} label={"First Interest Payment Due"} value={moment(transaction.loan_data.first_interest).format("D MMM YYYY")}/>;
+      //   return  <TxBasicSection key={sectionType} label={"First Interest Payment Due"} value={moment(transaction.loan_data.first_interest).format("D MMM YYYY")}/>;
       // case "nextInterest":
-      //   return  <BasicSection key={sectionType} label={"Next Interest Payment Due"} value={moment(transaction.loan_data.next_interest).format("D MMM YYYY")}/>;
+      //   return  <TxBasicSection key={sectionType} label={"Next Interest Payment Due"} value={moment(transaction.loan_data.next_interest).format("D MMM YYYY")}/>;
       case "maturity":
         return (
-          <BasicSection
+          <TxBasicSection
             key={sectionType}
             label={"Maturity Date"}
             noSeparator
@@ -229,8 +229,10 @@ class LoanRequestDetails extends Component {
 
     const loanCoinType =
       activeLoan.type === "USD_LOAN"
-        ? formatter.fiat(activeLoan.loan_amount_usd, 'USD')
-        : formatter.crypto(activeLoan.loan_amount, activeLoan.coin_loan_asset, {noPrecision: true});
+        ? formatter.fiat(activeLoan.loan_amount_usd, "USD")
+        : formatter.crypto(activeLoan.loan_amount, activeLoan.coin_loan_asset, {
+            noPrecision: true,
+          });
 
     const sections = activeLoan.uiSections;
 

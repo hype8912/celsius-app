@@ -7,16 +7,14 @@ import moment from "moment";
 
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import {
-  BasicSection,
-  InfoSection,
-} from "../TransactionDetails/TransactionDetailsSections";
 import STYLES from "../../../constants/STYLES";
 import {
   SIMPLEX_PAYMENT_STATUSES,
   TRANSACTION_TYPES,
 } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
+import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
+import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 
 @connect(
   state => ({
@@ -92,19 +90,19 @@ ${orderIdPt2}`,
       case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
         return {
           color: STYLES.COLORS.GREEN,
-          iconName: "TransactionCC",
+          shortName: "CC",
           statusText: "Confirmed",
         };
       case TRANSACTION_TYPES.CANCELED:
         return {
           color: STYLES.COLORS.RED,
-          iconName: "TransactionCC",
+          shortName: "CC",
           statusText: "Canceled",
         };
       default:
         return {
           color: STYLES.COLORS.ORANGE,
-          iconName: "TransactionCC",
+          shortName: "CC",
           statusText: "Pending",
         };
     }
@@ -134,21 +132,21 @@ ${orderIdPt2}`,
       coin: transactionParams.coin,
     };
 
-    const transactionInfoProps = {
+    const transactionProps = {
       ...this.getStatusType(transactionParams.status),
     };
 
     return (
       <RegularLayout padding="0 0 120 0">
-        <InfoSection
+        <TxInfoSection
           margin="40 0 20 0"
           key={"button:back"}
           transaction={transaction}
-          transactionProps={transactionInfoProps}
+          transactionProps={transactionProps}
         />
 
         {transactionParams.transactionDetails.map(i => (
-          <BasicSection label={i.label} value={i.value} />
+          <TxBasicSection label={i.label} value={i.value} />
         ))}
       </RegularLayout>
     );

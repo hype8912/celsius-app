@@ -74,9 +74,8 @@ class SelectCoin extends Component {
   }
 
   componentDidMount() {
-    const { currencies, navigation } = this.props
+    const { currencies, navigation } = this.props;
     const coinListFormatted = navigation.getParam("coinListFormatted");
-
 
     const allCoins = coinListFormatted.map(coin => {
       return {
@@ -86,7 +85,7 @@ class SelectCoin extends Component {
     });
     this.setState({
       filteredCoins: allCoins,
-    })
+    });
   }
 
   getSelectStyle = (style, isActive = false) => {
@@ -101,45 +100,52 @@ class SelectCoin extends Component {
     return itemStyle;
   };
 
-  renderIcon = (item) => {
-    const theme = getTheme()
-    const style = SelectCoinStyle()
+  renderIcon = item => {
+    const theme = getTheme();
+    const style = SelectCoinStyle();
 
     if (theme === THEMES.LIGHT && item.image) {
       return (
-        <Image
-          source={{ uri: item.image }}
-          style={{ width: 30, height: 30 }}
-        />
-      )
+        <Image source={{ uri: item.image }} style={{ width: 30, height: 30 }} />
+      );
     }
 
     if (theme === THEMES.DARK && item.image) {
       return (
         <Icon
-        name={`Icon${item.value}`}
-        fill={STYLES.COLORS.WHITE}
-        height={30}
-        width={30}
-      />)
+          name={`Icon${item.value}`}
+          fill={STYLES.COLORS.WHITE}
+          height={30}
+          width={30}
+        />
+      );
     }
 
     return (
-      <View style={[{
-        backgroundColor: theme === THEMES.LIGHT ? STYLES.COLORS.MEDIUM_GRAY1 : STYLES.COLORS.DARK_HEADER
-      },
-        style.iconCircle
-      ]}
+      <View
+        style={[
+          {
+            backgroundColor:
+              theme === THEMES.LIGHT
+                ? STYLES.COLORS.MEDIUM_GRAY1
+                : STYLES.COLORS.DARK_HEADER,
+          },
+          style.iconCircle,
+        ]}
       >
-      <Icon
-        name={`Icon${item.value}`}
-        fill={theme === THEMES.LIGHT ? STYLES.COLORS.DARK_GRAY : STYLES.COLORS.WHITE}
-        height={30}
-        width={30}
-      />
+        <Icon
+          name={`Icon${item.value}`}
+          fill={
+            theme === THEMES.LIGHT
+              ? STYLES.COLORS.DARK_GRAY
+              : STYLES.COLORS.WHITE
+          }
+          height={30}
+          width={30}
+        />
       </View>
-    )
-  }
+    );
+  };
 
   renderItem = ({ item }) => {
     const { actions, formData, navigation } = this.props;
@@ -152,7 +158,6 @@ class SelectCoin extends Component {
     const itemStyle = this.getSelectStyle(style, isActive);
     const field = navigation.getParam("field");
     const onChange = navigation.getParam("onChange");
-
 
     return (
       <React.Fragment>
@@ -175,12 +180,12 @@ class SelectCoin extends Component {
             </View>
             {isActive && (
               <View style={style.right}>
-                <Icon width="26" height="26" name="GreenCheck"/>
+                <Icon width="26" height="26" name="GreenCheck" />
               </View>
             )}
           </View>
         </TouchableOpacity>
-        <Separator/>
+        <Separator />
       </React.Fragment>
     );
   };

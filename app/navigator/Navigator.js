@@ -18,7 +18,6 @@ import TermsOfUse from "../components/screens/TermsOfUse/TermsOfUse";
 import Welcome from "../components/screens/Welcome/Welcome";
 import VerifyProfile from "../components/screens/VerifyProfile/VerifyProfile";
 import TransactionsOnHold from "../components/screens/TransactionsOnHold/TransactionsOnHold";
-import TransactionDetails from "../components/screens/TransactionDetails/TransactionDetails";
 import KYCProfileDetails from "../components/screens/KYCProfileDetails/KYCProfileDetails";
 import KYCAddressInfo from "../components/screens/KYCAddressInfo/KYCAddressInfo";
 import KYCTaxpayer from "../components/screens/KYCTaxpayer/KYCTaxpayer";
@@ -101,6 +100,7 @@ import HODLInfoCheckboxes from "../components/screens/HODLInfoCheckboxes/HODLInf
 import HodlLanding from "../components/screens/HodlLanding/HodlLanding";
 import HODLViewCode from "../components/screens/HODLViewCode/HODLViewCode";
 import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/HodlDeactivationCode";
+import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 
 export const screens = {
@@ -145,11 +145,11 @@ export const screens = {
 
   WalletLanding,
   TransactionsOnHold,
-  TransactionDetails,
   WalletInterest,
   BalanceHistory,
   CoinDetails,
   AllTransactions,
+  TransactionsIntersection,
 
   /**
    * Community

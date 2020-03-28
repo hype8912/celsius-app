@@ -46,8 +46,8 @@ class CelPayLanding extends Component {
     super(props);
 
     this.state = {
-      refreshing: false
-    }
+      refreshing: false,
+    };
   }
 
   componentDidMount() {
@@ -56,15 +56,15 @@ class CelPayLanding extends Component {
   }
 
   refresh = async () => {
-    const {actions} = this.props
+    const { actions } = this.props;
     this.setState({
-      refreshing: true
-    })
-    await actions.getAllTransactions()
+      refreshing: true,
+    });
+    await actions.getAllTransactions();
     this.setState({
-      refreshing: false
-    })
-  }
+      refreshing: false,
+    });
+  };
 
   sendAsLink = () => {
     const { actions } = this.props;
@@ -92,7 +92,7 @@ class CelPayLanding extends Component {
       hodlStatus,
     } = this.props;
 
-    const {refreshing} = this.state
+    const { refreshing } = this.state;
 
     if (kycStatus !== KYC_STATUSES.pending && !hasPassedKYC())
       return (

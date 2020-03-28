@@ -330,9 +330,7 @@ class LoanOverviewCard extends Component {
               loan.status
             ) && (
               <CelButton
-                onPress={() =>
-                  navigateTo("LoanSettings",{ id: loan.id })
-                }
+                onPress={() => navigateTo("LoanSettings", { id: loan.id })}
                 basic
                 textSize={"H6"}
               >
