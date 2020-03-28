@@ -60,19 +60,17 @@ function remotePushController() {
         };
 
         if (Platform.OS === "android") {
-          if (!notification.userInteraction) {
-            // Notification from Mixpanel
-            if (notification.mp_message_id) {
-              notifObj.title = notification.mp_title;
-              notifObj.message = notification.mp_message; // (required)
-            }
-            // Notification from backend or Firebase
-            else {
-              const notif = notification.notification;
-              notifObj.title = notif.title;
-              notifObj.message = notif.body ? notif.body : notif.title; // (required)
-              PushNotification.localNotification(notifObj);
-            }
+          // From Mixpanel
+          if (notification.mp_message_id) {
+            notifObj.title = notification.mp_title;
+            notifObj.message = notification.mp_message; // (required)
+          }
+          // From Firebase
+          if (notification.notification) {
+            const notif = notification.notification;
+            notifObj.title = notif.title;
+            notifObj.message = notif.body ? notif.body : notif.title; // (required)
+            PushNotification.localNotification(notifObj);
           }
         } else {
           // fires when user taps on notification
@@ -87,7 +85,7 @@ function remotePushController() {
       // Android only: GCM or FCM Sender ID
       senderID: "765558032297",
       popInitialNotification: true,
-      requestPermissions: true,
+      requestPermissions: false, // - permisssion are requested in separate function
     });
   }, []);
 
