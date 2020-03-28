@@ -21,8 +21,6 @@ async function getNotificationToken() {
   let token;
   if (Platform.OS === "android") {
     token = await messaging().getToken();
-    // eslint-disable-next-line no-console
-    console.log("token je: ", token);
     setSecureStoreKey(NOTIFICATION_TOKEN, token);
   } else {
     await getIOSPushNotificationToken();
@@ -52,8 +50,7 @@ function remotePushController() {
     PushNotification.configure({
       // Called when a remote or local notification is opened or received
       onNotification(notification) {
-        // eslint-disable-next-line no-console
-        console.log("NOTIF: ", notification);
+        // console.log("NOTIF: ", notification);
         const notifObj = {
           playSound: true, // (optional)
           soundName: "default", // (optional)
