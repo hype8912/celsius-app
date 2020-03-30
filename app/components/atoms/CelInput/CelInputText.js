@@ -134,8 +134,10 @@ class CelInput extends Component {
   getPlaceholderTextColor = style =>
     StyleSheet.flatten(style.textPlaceholderColor).color; // get color from raw json depending on style theme
 
-  handleChangeText = text => {
+  handleChangeText = t => {
     const { field, onChange, actions } = this.props;
+    const text = field === "email" ? t.trim() : t;
+
     if (onChange) {
       onChange(field, text);
     } else {
