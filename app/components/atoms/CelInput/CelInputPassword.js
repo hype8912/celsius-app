@@ -87,9 +87,10 @@ class CelInputPassword extends Component {
       value,
       disabled,
       showPasswordTooltip,
-      tooTipPositionTop,
+      toolTipPositionTop,
       forms,
       field,
+      showPassMeter,
     } = this.props;
     const { visible } = this.state;
     const fillColor =
@@ -102,7 +103,7 @@ class CelInputPassword extends Component {
           <View
             style={{
               position: "absolute",
-              top: tooTipPositionTop ? -145 : 90,
+              top: toolTipPositionTop ? -145 : 90,
               left: 0,
             }}
           >
@@ -116,8 +117,8 @@ class CelInputPassword extends Component {
                       width: 0,
                       height: 0,
                       marginLeft: 145,
-                      top: !tooTipPositionTop ? -10 : "auto",
-                      bottom: tooTipPositionTop ? -10 : "auto",
+                      top: !toolTipPositionTop ? -10 : "auto",
+                      bottom: toolTipPositionTop ? -10 : "auto",
                       borderLeftWidth: 10,
                       borderRightWidth: 10,
                       borderBottomWidth: 10,
@@ -128,7 +129,7 @@ class CelInputPassword extends Component {
                       borderBottomColor: STYLES.COLORS.DARK_GRAY,
                       transform: [
                         {
-                          rotate: tooTipPositionTop ? "180deg" : "0deg",
+                          rotate: toolTipPositionTop ? "180deg" : "0deg",
                         },
                       ],
                     }
@@ -147,7 +148,7 @@ class CelInputPassword extends Component {
                 paddingRight: 15,
               }}
             />
-            {!!value && showPasswordTooltip && activeField === field && (
+            {!!value && showPassMeter &&  (
               <PassStrengthMeter
                 password={value}
                 customStyle={{
@@ -155,7 +156,7 @@ class CelInputPassword extends Component {
                   width: "110%",
                   marginHorizontal: "-5%",
                   position: "absolute",
-                  bottom: Platform.OS === "android" ? -20 : -28,
+                  bottom: Platform.OS === "android" ? -22 : -26,
                 }}
               />
             )}

@@ -232,7 +232,8 @@ class RegisterInitial extends Component {
               this.pass = input;
             }}
             showPasswordTooltip
-            tooTipPositionTop
+            toolTipPositionTop
+            showPassMeter
             margin={"0 0 30 0"}
           />
         )}
