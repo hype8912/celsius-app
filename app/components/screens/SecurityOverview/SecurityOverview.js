@@ -9,10 +9,9 @@ import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Separator from "../../atoms/Separator/Separator";
 import Loader from "../../atoms/Loader/Loader";
-import CelButton from "../../atoms/CelButton/CelButton";
 import ToggleInfoCard from "../../molecules/ToggleInfoCard/ToggleInfoCard";
-// import SecurityScoreGauge from "../../atoms/SecurityScoreGauge/SecurityScoreGauge";
-// import SecurityStrengthMeter from "../../atoms/SecurityStrengthMeter/SecurityStrengthMeter";
+import SecurityScoreGauge from "../../atoms/SecurityScoreGauge/SecurityScoreGauge";
+import SecurityStrengthMeter from "../../atoms/SecurityStrengthMeter/SecurityStrengthMeter";
 import CelText from "../../atoms/CelText/CelText";
 import SecurityOverviewStyle from "./SecurityOverview.styles";
 import Card from "../../atoms/Card/Card";
@@ -20,6 +19,21 @@ import { getTheme } from "../../../utils/styles-util";
 import Icon from "../../atoms/Icon/Icon";
 import { HODL_STATUS } from "../../../constants/UI";
 // import IconButton from "../../organisms/IconButton/IconButton";
+
+// TODO when backend call is completed remove this const
+const securityOverview = {
+  is_2fa_set: false,
+  hodl_mode_set: false,
+  hodl_status: "Deactivated",
+  password_strength: "fair",
+  pin_strength: "weak",
+  password_last_change: "3 days ago",
+  pin_last_change: "3 days ago",
+  withdrawal_addresses_whitelisted: true,
+  withdrawal_addresses_count: 2,
+  whitelisted_withdrawal_addresses_count: 2,
+  overall_score: "good",
+};
 
 @connect(
   state => ({
@@ -123,14 +137,15 @@ class SecurityOverview extends Component {
   };
 
   render() {
-    const { securityOverview, is2FAEnabled, hodlStatus, actions } = this.props;
+    // TODO add "securityOverview" to props instead of const
+    const { is2FAEnabled, actions } = this.props;
 
     if (!securityOverview) return <Loader />;
 
     return (
       <RegularLayout>
         <View style={{ flex: 1 }}>
-          {/* <SecurityScoreGauge level={"4"} />*/}
+          <SecurityScoreGauge level={securityOverview.overall_score} />
           <Separator text="2FA VERIFICATION" />
           <ToggleInfoCard
             subtitle={"Your 2FA verification is"}
@@ -145,32 +160,30 @@ class SecurityOverview extends Component {
           <ToggleInfoCard
             subtitle={"HODL mode is"}
             onPress={() => actions.navigateTo("HodlLanding")}
-            enabled={
-              hodlStatus.state && hodlStatus.state !== HODL_STATUS.DEACTIVATED
-            }
+            enabled={securityOverview.hodl_status !== HODL_STATUS.DEACTIVATED}
           />
 
           <Separator text="PASSWORD" />
-          {/* <SecurityStrengthMeter level={"3"} />*/}
-          <CelButton
-            margin="10 0 10 0"
-            onPress={() => actions.navigateTo("ChangePassword")}
-          >
-            Enhance Password
-          </CelButton>
+          <SecurityStrengthMeter
+            level={securityOverview.password_strength}
+            lastChangePeriod={securityOverview.password_last_change}
+            enhanceText={"Change Password"}
+            onPressEnhance={() => {
+              actions.navigateTo("ChangePassword");
+            }}
+          />
 
           <Separator text="PIN" />
-          {/* <SecurityStrengthMeter level={"4"} />*/}
-          <CelButton
-            margin="10 0 10 0"
-            onPress={() =>
+          <SecurityStrengthMeter
+            level={securityOverview.pin_strength}
+            lastChangePeriod={securityOverview.pin_last_change}
+            enhanceText={"Change PIN"}
+            onPressEnhance={() => {
               actions.navigateTo("VerifyProfile", {
                 onSuccess: () => actions.navigateTo("ChangePin"),
-              })
-            }
-          >
-            Enhance PIN
-          </CelButton>
+              });
+            }}
+          />
 
           {/* <Separator text="3D PROTECTION" /> */}
           {/* <ToggleInfoCard enabled subtitle={"Your 3D Protection is"} /> */}
