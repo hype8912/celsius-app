@@ -306,14 +306,11 @@ function setUserAppSettings(data) {
  */
 
 function getUserStatus() {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     const status = getUserKYCStatus();
     const isLoggedIn = isUserLoggedIn();
-    const appInitialized = getState().app.appInitialized;
-    const activeScreen = getState().nav.activeScreen;
 
-    if (!isLoggedIn || !appInitialized || activeScreen === "VerifyProfile")
-      return;
+    if (!isLoggedIn) return;
 
     dispatch(startApiCall(API.POLL_USER_DATA));
 

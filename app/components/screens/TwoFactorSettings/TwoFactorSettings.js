@@ -42,10 +42,10 @@ class TwoFactorSettings extends Component {
 
   async componentDidMount() {
     const { actions, formData } = this.props;
-    const secret = await actions.getTwoFactorSecret(formData.pin);
-    if (secret) {
+    const data = await actions.getTwoFactorSecret(formData.pin);
+    if (data.ok) {
       this.setState({
-        secret,
+        secret: data.secret,
         secretLoaded: true,
       });
     }

@@ -32,8 +32,20 @@ function getProps(purpose, componentProps) {
         ],
         onPress: () => {
           actions.navigateTo("HodlLanding");
+          actions.setHodlProps(false);
         },
         button: "Deactivate HODL Mode",
+        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryButton: "Go back to wallet",
+      };
+    case EMPTY_STATES.HODL_MODE_PENDING_DEACTIVATION:
+      return {
+        ...props,
+        image: require("../../assets/images/hodlModeStatus.png"),
+        heading: "HODL Mode is active!",
+        paragraphs: [
+          `Your account is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. These will be available once HODL Mode deactivation wait period is over.`,
+        ],
         secondaryOnPress: () => actions.navigateTo("WalletLanding"),
         secondaryButton: "Go back to wallet",
       };
@@ -43,10 +55,10 @@ function getProps(purpose, componentProps) {
         image: require("../../assets/images/hodlModeStatus.png"),
         heading: "HODL Mode is active!",
         paragraphs: [
-          "Your account was set to HODL Mode by our team. If you would like to deactivate HODL Mode please contact our support team.",
+          `Your account was set to HODL Mode by our team, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. IF you would like to deactivate HODL Mode please contact our support team.`,
         ],
-        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
-        secondaryButton: "Go back to wallet",
+        secondaryOnPress: () => actions.navigateTo("Support"),
+        secondaryButton: "Contact Support",
       };
     case EMPTY_STATES.HODL_MODE_ACTIVE:
       return {

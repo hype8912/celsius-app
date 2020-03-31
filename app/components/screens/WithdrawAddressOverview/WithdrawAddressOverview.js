@@ -23,6 +23,7 @@ import StaticScreen from "../StaticScreen/StaticScreen";
     currencies: state.currencies.rates,
     callsInProgress: state.api.callsInProgress,
     currenciesRates: state.currencies.rates,
+    hodlStatus: state.hodl.hodlStatus,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -31,7 +32,7 @@ class WithdrawAddressOverview extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Withdrawal addresses ",
+    title: "Withdrawal Addresses ",
     right: "profile",
   });
 
@@ -64,7 +65,7 @@ class WithdrawAddressOverview extends Component {
   };
 
   renderSelectedCoin = () => {
-    const { withdrawalAddresses, currenciesRates } = this.props;
+    const { withdrawalAddresses, currenciesRates, hodlStatus } = this.props;
     return withdrawalAddresses
       ? Object.keys(withdrawalAddresses).map(key => {
           const imageUrl = currenciesRates.filter(
@@ -74,13 +75,13 @@ class WithdrawAddressOverview extends Component {
           let hours;
           let minutes;
 
-        if (
-          withdrawalAddresses[key] &&
-          withdrawalAddresses[key].will_unlock_in
-        ) {
-          hours = withdrawalAddresses[key].will_unlock_in.split(":")[0];
-          minutes = withdrawalAddresses[key].will_unlock_in.split(":")[1];
-        }
+          if (
+            withdrawalAddresses[key] &&
+            withdrawalAddresses[key].will_unlock_in
+          ) {
+            hours = withdrawalAddresses[key].will_unlock_in.split(":")[0];
+            minutes = withdrawalAddresses[key].will_unlock_in.split(":")[1];
+          }
 
           return withdrawalAddresses[key] ? (
             <View>
@@ -93,26 +94,26 @@ class WithdrawAddressOverview extends Component {
                 onPressAddressLabel={() =>
                   this.handleLabelPress(key, withdrawalAddresses[key].label)
                 }
+                hodlStatus={hodlStatus}
               />
-              { withdrawalAddresses[key].locked && hours && minutes &&
-              <Card margin="0 0 10 0">
-                <CelText align="center" type="H6">
-                  Due to our security protocols, your address will be active
-                  in
-                </CelText>
+              {withdrawalAddresses[key].locked && hours && minutes && (
+                <Card margin="0 0 10 0">
+                  <CelText align="center" type="H6">
+                    Due to our security protocols, your address will be active
+                    in
+                  </CelText>
 
-                <CelText
-                  margin="10 0 0 0"
-                  align="center"
-                  type="H3"
-                  weight={"bold"}
-                >
-                  {`${hours}h ${minutes}m.`}
-                </CelText>
-              </Card>
-              }
+                  <CelText
+                    margin="10 0 0 0"
+                    align="center"
+                    type="H3"
+                    weight={"bold"}
+                  >
+                    {`${hours}h ${minutes}m.`}
+                  </CelText>
+                </Card>
+              )}
             </View>
-
           ) : null;
         })
       : null;

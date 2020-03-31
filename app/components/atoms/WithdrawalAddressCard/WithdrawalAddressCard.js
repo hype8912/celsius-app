@@ -14,9 +14,11 @@ const WithdrawalAddressCard = ({
   onPress,
   onPressAddressLabel,
   withdrawalAddress,
+  hodlStatus,
 }) => {
   const style = WithdrawalAddressCardStyle();
   const opacity = withdrawalAddress.locked ? 0.5 : 1;
+  const btnOpacity = hodlStatus.isActive ? 0.5 : 1;
 
   const renderWithdrawalAddressLabel = () => {
     if (withdrawalAddress.locked)
@@ -51,9 +53,14 @@ const WithdrawalAddressCard = ({
             <View style={{ flex: 0.7 }}>
               <CelText weight="600">{coinShort}</CelText>
             </View>
-            <View style={{ flex: 0.3 }}>
+            <View style={{ flex: 0.3, opacity: btnOpacity }}>
               {!withdrawalAddress.locked ? (
-                <CelButton size="small" onPress={() => onPress()} basic>
+                <CelButton
+                  disabled={hodlStatus.isActive}
+                  size="small"
+                  onPress={() => onPress()}
+                  basic
+                >
                   Change
                 </CelButton>
               ) : null}
@@ -76,6 +83,7 @@ WithdrawalAddressCard.propTypes = {
   onPressAddressLabel: PropTypes.func,
   withdrawalAddress: PropTypes.instanceOf(Object),
   theme: PropTypes.string,
+  hodlStatus: PropTypes.bool,
 };
 
 export default WithdrawalAddressCard;

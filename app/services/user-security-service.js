@@ -39,11 +39,9 @@ function getUserSecurityOverview() {
  * @return {Promise}
  */
 function beginTwoFactorActivation(pin) {
-  const response = axios.post(`${apiUrl}/users/two_factor/begin`, {
+  return axios.post(`${apiUrl}/users/two_factor/begin`, {
     pin,
   });
-
-  return response.data.secret;
 }
 
 /**
@@ -55,11 +53,9 @@ function beginTwoFactorActivation(pin) {
  * @return {Promise}
  */
 function enableTwoFactor(code) {
-  const response = axios.post(`${apiUrl}/users/two_factor/activate`, {
+  return axios.post(`${apiUrl}/users/two_factor/activate`, {
     twoFactorCode: code,
   });
-
-  return response.data.ok;
 }
 
 /**
@@ -70,11 +66,9 @@ function enableTwoFactor(code) {
  * @return {Promise}
  */
 function disableTwoFactor(twoFactorCode) {
-  const response = axios.post(`${apiUrl}/users/two_factor/deactivate`, {
+  return axios.post(`${apiUrl}/users/two_factor/deactivate`, {
     twoFactorCode,
   });
-
-  return response.data;
 }
 
 /**

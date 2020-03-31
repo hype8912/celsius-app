@@ -175,6 +175,7 @@ function handleAppStateChange(nextAppState) {
 
     if (profile && profile.has_pin) {
       if (nextAppState === "active") {
+        dispatch(actions.getUserStatus());
         dispatch(actions.getLoyaltyInfo());
         dispatch(actions.getInitialCelsiusData());
         dispatch(actions.getCurrencyRates());
@@ -286,6 +287,7 @@ function initAppData(initToken = null) {
         const { allowed } = getState().compliance.loan;
         // get wallet details for verified users
         if (profile.kyc && hasPassedKYC()) {
+          await dispatch(actions.getUserStatus());
           await dispatch(actions.getWalletSummary());
           await dispatch(actions.getLoyaltyInfo());
           if (allowed) await dispatch(actions.getAllLoans());
