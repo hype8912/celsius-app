@@ -8,6 +8,7 @@ import twitter from "react-native-simple-twitter";
 import CodePush from "react-native-code-push";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
+import RNUxcam from "react-native-ux-cam";
 
 import appsFlyerUtil from "./appsflyer-util";
 import Constants from "../../constants";
@@ -50,6 +51,8 @@ async function initializeThirdPartyServices() {
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
   await appsFlyerUtil.initSDK();
   await initMixpanel();
+  await RNUxcam.optIntoSchematicRecordings(); // Add this line to enable iOS screen recordings
+  await RNUxcam.startWithKey("9hfcebj8jl88oba"); // Add this line after RNUcam.optIntoSchematicRecordings();
 }
 
 /**
