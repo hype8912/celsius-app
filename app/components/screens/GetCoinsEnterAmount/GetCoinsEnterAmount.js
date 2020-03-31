@@ -55,12 +55,12 @@ class GetCoinsEnterAmount extends Component {
     const availableCryptoCoins =
       buyCoinsSettings && depositCompliance
         ? currencies
-            .filter(c => depositCompliance.coins.includes(c.short))
-            .filter(c => buyCoinsSettings.supported_coins.includes(c.short))
-            .map(c => ({
-              label: `${formatter.capitalize(c.name)} (${c.short})`,
-              value: c.short,
-            }))
+          .filter(c => depositCompliance.coins.includes(c.short))
+          .filter(c => buyCoinsSettings.supported_coins.includes(c.short))
+          .map(c => ({
+            label: `${formatter.capitalize(c.name)} (${c.short})`,
+            value: c.short,
+          }))
         : [];
 
     actions.updateFormFields({
@@ -211,7 +211,6 @@ class GetCoinsEnterAmount extends Component {
     const { availableCryptoCoins } = this.state;
 
     const theme = getTheme();
-
     const style = GetCoinsEnterAmountStyle();
 
     const isFetchingQuotes = apiUtil.areCallsInProgress(
@@ -265,8 +264,7 @@ class GetCoinsEnterAmount extends Component {
                 }
                 type={"H2"}
               >
-                {formatter.usd(formData.amountFiat, { symbol: "" })}{" "}
-                {formData.fiatCoin}
+                {formatter.fiat(formData.amountFiat, formData.fiatCoin)}
               </CelText>
             </TouchableOpacity>
           )}
@@ -293,7 +291,7 @@ class GetCoinsEnterAmount extends Component {
           </View>
           {isFetchingQuotes && formData.isFiat ? (
             <View style={{ marginVertical: 15 }}>
-              <Spinner size={30} />
+              <Spinner size={30} color={STYLES.COLORS.WHITE} />
             </View>
           ) : (
             <TouchableOpacity

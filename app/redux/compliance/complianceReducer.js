@@ -8,6 +8,7 @@ const initialCompliance = {
   celpay: { ...defaultCompliance },
   loan: { ...defaultCompliance },
   interest: { ...defaultCompliance },
+  simplex: {...defaultCompliance}
 };
 
 const initialState = {

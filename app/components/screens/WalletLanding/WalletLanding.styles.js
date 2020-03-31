@@ -18,7 +18,6 @@ const base = {
   depositWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 13,
   },
   depositedCoins: {
     alignSelf: "center",
