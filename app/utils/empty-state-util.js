@@ -62,7 +62,7 @@ function getProps(purpose, componentProps) {
             Your account was set to HODL Mode by our team, which means all
             outgoing functionalities are currently unavailable. This includes
             withdrawing funds, sending funds via CelPay, and changing
-            whitelisted withdrawal addresses. IF you would like to deactivate
+            whitelisted withdrawal addresses. If you would like to deactivate
             HODL Mode please{" "}
             <CelText
               color={STYLES.COLORS.CELSIUS_BLUE}
@@ -73,8 +73,8 @@ function getProps(purpose, componentProps) {
             .
           </CelText>,
         ],
-        secondaryOnPress: () => actions.navigateTo("Support"),
-        secondaryButton: "Contact Support",
+        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryButton: "Go back to wallet",
       };
     case EMPTY_STATES.HODL_MODE_ACTIVE:
       return {
