@@ -3,7 +3,6 @@ import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
 import { showMessage } from "../ui/uiActions";
 import simplexService from "../../services/simplex-service";
-import { navigateTo } from "../nav/navActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { mocks } from "../../../dev-settings";
 import mockTransactions from "../../mock-data/payments.mock";
@@ -131,7 +130,6 @@ function simplexCreatePaymentRequest() {
         type: ACTIONS.CREATE_PAYMENT_REQUEST_SUCCESS,
         paymentRequest: paymentRequest.data,
       });
-      dispatch(navigateTo("Simplex"));
 
       mixpanelAnalytics.initiatedBuyCoinsRequest(
         "CARD",

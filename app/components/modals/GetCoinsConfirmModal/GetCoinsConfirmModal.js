@@ -29,7 +29,11 @@ class GetCoinsConfirmModal extends Component {
     const { actions } = this.props;
 
     actions.navigateTo("VerifyProfile", {
-      onSuccess: () => actions.simplexCreatePaymentRequest(),
+      activeScreen: undefined, // TODO remove after active screen in Home.js fix CN-5037
+      onSuccess: async () => {
+        await actions.simplexCreatePaymentRequest()
+        actions.navigateTo("Simplex")
+      },
     });
     actions.closeModal();
   };

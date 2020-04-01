@@ -78,7 +78,7 @@ class Home extends Component {
           }
         }
         return prevProps.actions.navigateTo("VerifyProfile", {
-          activeScreen: "WalletLanding",
+          activeScreen: "WalletLanding",  // TODO remove activeScreen: undefined in GetCoinsConfirmModal after refactor
           showLogOutBtn: true,
         });
       }
