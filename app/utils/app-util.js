@@ -8,7 +8,6 @@ import twitter from "react-native-simple-twitter";
 import CodePush from "react-native-code-push";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
-import RNUxcam from "react-native-ux-cam";
 
 import appsFlyerUtil from "./appsflyer-util";
 import Constants from "../../constants";
