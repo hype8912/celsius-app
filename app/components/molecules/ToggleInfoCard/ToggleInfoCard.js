@@ -31,17 +31,21 @@ class ToggleInfoCard extends Component {
 
   getCardProps = () => {
     const { enabled } = this.state;
+    const { titleText } = this.props;
     const theme = getTheme();
+
     if (enabled) {
       return {
         name: "Checked",
         colors: {
-          circleColor: STYLES.COLORS.WHITE_OPACITY2,
-          fill: STYLES.COLORS.WHITE,
-          textTitle: STYLES.COLORS.WHITE,
-          textSubtitle: STYLES.COLORS.WHITE,
+          circleColor:
+            theme === "light"
+              ? STYLES.COLORS.GREEN_OPACITY
+              : STYLES.COLORS.WHITE_OPACITY1,
+          fill: STYLES.COLORS.GREEN,
+          textTitle: STYLES.COLORS.GREEN,
         },
-        titleText: "ENABLED",
+        titleText: titleText || "ENABLED",
         titleTextSize: "H2",
         textTitleTouchDisabled: true,
       };
@@ -51,8 +55,6 @@ class ToggleInfoCard extends Component {
         circleColor: STYLES.COLORS.RED_OPACITY2,
         fill: STYLES.COLORS.RED,
         textTitle: STYLES.COLORS.RED,
-        textSubtitle:
-          theme === "light" ? STYLES.COLORS.DARK_GRAY : STYLES.COLORS.WHITE,
       },
       titleText: "DISABLED",
       titleTextSize: "H2",
@@ -96,20 +98,12 @@ class ToggleInfoCard extends Component {
     const style = ToggleInfoCardStyle();
 
     const { subtitle } = this.props;
-    const { enabled } = this.state;
     const cardParams = this.getCardProps();
-    const backgroundColorStyle = enabled
-      ? { backgroundColor: STYLES.COLORS.GREEN }
-      : {};
 
     if (!cardParams) return null;
 
     return (
-      <Card
-        margin="20 0 20 0"
-        padding={"2 2 2 2"}
-        styles={[style.card, backgroundColorStyle]}
-      >
+      <Card margin="20 0 20 0" padding={"2 2 2 2"} styles={style.card}>
         {this.renderToggleOrIcon(cardParams)}
 
         <View style={style.text}>
