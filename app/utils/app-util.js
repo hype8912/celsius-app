@@ -22,6 +22,7 @@ import store from "../redux/store";
 import * as actions from "../redux/actions";
 import apiUtil from "./api-util";
 import { initMixpanel } from "./mixpanel-util";
+import { initUxCam } from "./uxcam-util";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -51,8 +52,7 @@ async function initializeThirdPartyServices() {
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
   await appsFlyerUtil.initSDK();
   await initMixpanel();
-  await RNUxcam.optIntoSchematicRecordings(); // Add this line to enable iOS screen recordings
-  await RNUxcam.startWithKey("9hfcebj8jl88oba"); // Add this line after RNUcam.optIntoSchematicRecordings();
+  await initUxCam()
 }
 
 /**
