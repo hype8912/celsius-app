@@ -25,8 +25,8 @@ import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
 const securityOverview = {
   is_2fa_set: false,
   hodl_mode_set: false,
-  hodl_status: "Deactivated",
-  is_using_oauth: false,
+  hodl_mode_state: "Deactivated",
+  is_using_external_auth: false,
   password_strength: "fair",
   pin_strength: "weak",
   password_last_change: "3 days ago",
@@ -34,7 +34,7 @@ const securityOverview = {
   withdrawal_addresses_whitelisted: false,
   withdrawal_addresses_count: 4,
   whitelisted_withdrawal_addresses_count: 2,
-  overall_score: "good",
+  overall_score: "weak",
 };
 
 @connect(
@@ -163,10 +163,12 @@ class SecurityOverview extends Component {
           <ToggleInfoCard
             subtitle={"HODL mode is"}
             onPress={() => actions.navigateTo("HodlLanding")}
-            enabled={securityOverview.hodl_status !== HODL_STATUS.DEACTIVATED}
+            enabled={
+              securityOverview.hodl_mode_state !== HODL_STATUS.DEACTIVATED
+            }
           />
 
-          {!securityOverview.is_using_oauth && (
+          {!securityOverview.is_using_external_auth && (
             <>
               <Separator text="PASSWORD" />
               <SecurityStrengthMeter
