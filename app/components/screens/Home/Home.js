@@ -74,6 +74,8 @@ class Home extends Component {
         if (user.kyc) {
           if (isKYCRejectedForever()) {
             return prevProps.actions.navigateTo("VerifyProfile", {
+              showLogOutBtn: true,
+              hideBack: true,
               onSuccess: () => {
                 actions.navigateTo("KYCFinalRejection");
                 actions.resetToScreen("KYCFinalRejection");
@@ -83,6 +85,7 @@ class Home extends Component {
         }
         return prevProps.actions.navigateTo("VerifyProfile", {
           showLogOutBtn: true,
+          hideBack: true,
           onSuccess: () => {
             actions.resetToScreen("WalletLanding");
           },
