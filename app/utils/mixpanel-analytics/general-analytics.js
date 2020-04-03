@@ -65,7 +65,7 @@ async function sessionStarted(trigger) {
     "Has referral link": !!userData.referral_link_id,
     "Is celsius member": userData.celsius_member,
     "Has SSN": !!userData.ssn,
-    "User's url": url
+    "User's UXCam url": url
   });
   await sendEvent("Session started", { trigger });
   appsFlyerUtil.setCustomerUserId(userData.id);
@@ -84,7 +84,7 @@ async function sessionEnded(trigger) {
     .duration(x.diff(sessionTime))
     .as("milliseconds");
   const formatedDuration = moment.utc(sessionDuration).format("HH:mm:ss");
-  sendEvent("Session ended", { trigger, "Session duration": formatedDuration, "UXCam User URL": sessionUrl });
+  sendEvent("Session ended", { trigger, "Session duration": formatedDuration, "UXCam Session URL": sessionUrl });
 }
 
 /**
