@@ -2,7 +2,7 @@ import moment from "moment";
 import { sendEvent, setUserData, getUserData, engage } from "../mixpanel-util";
 import store from "../../redux/store";
 import appsFlyerUtil from "../appsflyer-util";
-import { urlForCurrentSession, urlForCurrentUser } from "../uxcam-util";
+import uxCamUtil from "../uxcam-util";
 
 const generalAnalytics = {
   buttonPressed,
@@ -45,7 +45,8 @@ async function sessionStarted(trigger) {
     setUserData(store.getState().user.profile);
     userData = getUserData();
   }
-  const url = await urlForCurrentUser();
+  const url = await uxCamUtil.urlForCurrentUser();
+
   await sendEvent("$create_alias", { alias: userData.id });
   await engage(userData.id, {
     $email: userData.email,
@@ -77,14 +78,13 @@ async function sessionStarted(trigger) {
 async function sessionEnded(trigger) {
   setUserData({});
 
-  const sessionUrl = await urlForCurrentSession();
+  const sessionUrl = await uxCamUtil.urlForCurrentSession();
   const x = new moment();
   const sessionDuration = moment
     .duration(x.diff(sessionTime))
     .as("milliseconds");
   const formatedDuration = moment.utc(sessionDuration).format("HH:mm:ss");
-  sendEvent("Session ended", { trigger, "Session duration": formatedDuration });
-  sendEvent("sessionUrl", { trigger, "UXCam User URL": sessionUrl })
+  sendEvent("Session ended", { trigger, "Session duration": formatedDuration, "UXCam User URL": sessionUrl });
 }
 
 /**

@@ -4,6 +4,12 @@ import Constants from "../../constants";
 
 const { UXCAM_API_KEY } = Constants;
 
+const uxCamUtil = {
+    initUxCam,
+    urlForCurrentUser,
+    urlForCurrentSession
+};
+
 async function initUxCam() {
 
   if (!UXCAM_API_KEY) return;
@@ -36,8 +42,4 @@ async function urlForCurrentSession() {
   return url
 }
 
-export{
-  initUxCam,
-  urlForCurrentUser,
-  urlForCurrentSession
-};
+export default uxCamUtil;
