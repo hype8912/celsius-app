@@ -1,5 +1,8 @@
+import React from "react";
 import { EMPTY_STATES } from "../constants/UI";
 import { KYC_STATUSES } from "../constants/DATA";
+import CelText from "../components/atoms/CelText/CelText";
+import STYLES from "../constants/STYLES";
 
 export default {
   getProps, // TODO add JSDoc
@@ -32,8 +35,20 @@ function getProps(purpose, componentProps) {
         ],
         onPress: () => {
           actions.navigateTo("HodlLanding");
+          actions.setHodlProps(false);
         },
         button: "Deactivate HODL Mode",
+        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryButton: "Go back to wallet",
+      };
+    case EMPTY_STATES.HODL_MODE_PENDING_DEACTIVATION:
+      return {
+        ...props,
+        image: require("../../assets/images/hodlModeStatus.png"),
+        heading: "HODL Mode is active!",
+        paragraphs: [
+          `Your account is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. These will be available once HODL Mode deactivation wait period is over.`,
+        ],
         secondaryOnPress: () => actions.navigateTo("WalletLanding"),
         secondaryButton: "Go back to wallet",
       };
@@ -43,7 +58,20 @@ function getProps(purpose, componentProps) {
         image: require("../../assets/images/hodlModeStatus.png"),
         heading: "HODL Mode is active!",
         paragraphs: [
-          "Your account was set to HODL Mode by our team. If you would like to deactivate HODL Mode please contact our support team.",
+          <CelText>
+            Your account was set to HODL Mode by our team, which means all
+            outgoing functionalities are currently unavailable. This includes
+            withdrawing funds, sending funds via CelPay, and changing
+            whitelisted withdrawal addresses. If you would like to deactivate
+            HODL Mode please{" "}
+            <CelText
+              color={STYLES.COLORS.CELSIUS_BLUE}
+              onPress={() => actions.navigateTo("Support")}
+            >
+              contact our support team
+            </CelText>
+            .
+          </CelText>,
         ],
         secondaryOnPress: () => actions.navigateTo("WalletLanding"),
         secondaryButton: "Go back to wallet",
@@ -179,6 +207,15 @@ function getProps(purpose, componentProps) {
         heading: "Sorry!",
         paragraphs: [
           "We apologize for any inconvenience, but due to local laws and regulations, we are unable to work with users from your region.",
+        ],
+      };
+
+    case EMPTY_STATES.SIMPLEX_COMPLIANCE:
+      return {
+        ...props,
+        heading: "We are sorry!",
+        paragraphs: [
+          "We apologize for any inconvenience, but due to local laws and regulations, our Buy Coins service is not available to users in your region.",
         ],
       };
 

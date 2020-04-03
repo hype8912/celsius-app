@@ -21,6 +21,7 @@ import StaticScreen from "../StaticScreen/StaticScreen";
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
+    simplexCompliance: state.compliance.simplex,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -46,7 +47,7 @@ class GetCoinsLanding extends Component {
   }
 
   render() {
-    const { actions, kycStatus } = this.props;
+    const { actions, kycStatus, simplexCompliance } = this.props;
 
     if (!hasPassedKYC()) {
       if (kycStatus !== KYC_STATUSES.pending) {
@@ -66,6 +67,15 @@ class GetCoinsLanding extends Component {
         );
       }
     }
+      if (!simplexCompliance.allowed) {
+        return (
+          <StaticScreen
+          emptyState={{
+            purpose: EMPTY_STATES.SIMPLEX_COMPLIANCE
+          }}
+          />
+        )
+      }
 
     return (
       <RegularLayout>

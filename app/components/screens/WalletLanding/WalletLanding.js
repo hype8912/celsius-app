@@ -195,6 +195,7 @@ class WalletLanding extends Component {
     } = this.props;
     const style = WalletLandingStyle();
 
+
     if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
       return <LoadingScreen />;
     }
@@ -210,7 +211,8 @@ class WalletLanding extends Component {
             openModal={actions.openModal}
           />
           <View style={style.depositWrapper}>
-            <CelButton
+            <View>
+              <CelButton
               onPress={() => actions.navigateTo("GetCoinsLanding")}
               style={{ alignSelf: "flex-start" }}
               margin="10 0 2 0"
@@ -219,6 +221,9 @@ class WalletLanding extends Component {
             >
               Buy Coins
             </CelButton>
+            </View>
+
+
             <View style={style.buttonWrapper}>
               <TouchableOpacity
                 onPress={() => this.toggleView(WALLET_LANDING_VIEW_TYPES.GRID)}

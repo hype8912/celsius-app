@@ -15,6 +15,7 @@ import CelPayInfoModal from "../../modals/CelPayInfoModal/CelPayInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { openModal } from "../../../redux/ui/uiActions";
 import store from "../../../redux/store";
+import { renderHodlEmptyState } from "../../../utils/hodl-util";
 
 @connect(
   state => ({
@@ -116,10 +117,7 @@ class CelPayLanding extends Component {
       return (
         <StaticScreen
           emptyState={{
-            purpose:
-              hodlStatus.created_by === "backoffice"
-                ? EMPTY_STATES.HODL_MODE_BACKOFFICE
-                : EMPTY_STATES.HODL_MODE_WARNING,
+            purpose: renderHodlEmptyState(hodlStatus),
           }}
         />
       );

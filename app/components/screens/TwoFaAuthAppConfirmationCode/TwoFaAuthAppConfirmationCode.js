@@ -33,8 +33,7 @@ class TwoFaAuthAppConfirmationCode extends Component {
   verifyAuthCode = async () => {
     const { actions, formData } = this.props;
     const success = await actions.enableTwoFactor(formData.confirmationCode);
-
-    if (success) {
+    if (success.data.ok) {
       Keyboard.dismiss();
       actions.openModal(MODALS.VERIFY_AUTHAPP_MODAL);
     }

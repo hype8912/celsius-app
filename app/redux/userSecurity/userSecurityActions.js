@@ -34,9 +34,9 @@ export {
 function getTwoFactorSecret(pin) {
   return async dispatch => {
     try {
-      const secret = await userSecurityService.beginTwoFactorActivation(pin);
-
-      return secret;
+      const res = await userSecurityService.beginTwoFactorActivation(pin);
+      const secretData = res.data;
+      return secretData;
     } catch (error) {
       dispatch(showMessage("error", error.msg));
       return false;

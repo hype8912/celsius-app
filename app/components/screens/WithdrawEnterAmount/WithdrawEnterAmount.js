@@ -31,6 +31,7 @@ import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import LoanBannerCard from "../../atoms/LoanCard/LoanBannerCard";
 import { isLoanBannerVisible } from "../../../utils/ui-util";
+import { renderHodlEmptyState } from "../../../utils/hodl-util";
 
 @connect(
   state => ({
@@ -278,10 +279,7 @@ class WithdrawEnterAmount extends Component {
       return (
         <StaticScreen
           emptyState={{
-            purpose:
-              hodlStatus.created_by === "backoffice"
-                ? EMPTY_STATES.HODL_MODE_BACKOFFICE
-                : EMPTY_STATES.HODL_MODE_WARNING,
+            purpose: renderHodlEmptyState(hodlStatus),
           }}
         />
       );
