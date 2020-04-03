@@ -4,8 +4,10 @@ import Constants from "../../constants";
 
 const { UXCAM_API_KEY } = Constants;
 
-export{
-    initUxCam
+const uxCamUtil = {
+    initUxCam,
+    urlForCurrentUser,
+    urlForCurrentSession
 };
 
 async function initUxCam() {
@@ -20,5 +22,24 @@ async function initUxCam() {
   }
 }
 
+async function urlForCurrentUser() {
+  let url;
+  try {
+    url = await RNUxcam.urlForCurrentUser();
+  } catch(err) {
+    loggerUtil.log(err)
+  }
+  return url
+}
 
+async function urlForCurrentSession() {
+  let url;
+  try {
+    url = await RNUxcam.urlForCurrentSession()
+  } catch(err) {
+    loggerUtil.log(err)
+  }
+  return url
+}
 
+export default uxCamUtil;
