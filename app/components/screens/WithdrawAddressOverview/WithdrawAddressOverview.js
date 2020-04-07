@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import _ from "lodash";
 import formatter from "../../../utils/formatter";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
@@ -10,16 +10,19 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
+import NoWithdrawalAddressCard from "../../atoms/NoWithdrawalAddressCard/NoWithdrawalAddressCard";
 import WithdrawalAddressCard from "../../atoms/WithdrawalAddressCard/WithdrawalAddressCard";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { EMPTY_STATES } from "../../../constants/UI";
 import StaticScreen from "../StaticScreen/StaticScreen";
+import Separator from "../../atoms/Separator/Separator";
 
 @connect(
   state => ({
     withdrawalAddresses: state.wallet.withdrawalAddresses,
+    noWithdrawalAddresses: state.wallet.noWithdrawalAddresses,
     currencies: state.currencies.rates,
     callsInProgress: state.api.callsInProgress,
     currenciesRates: state.currencies.rates,
@@ -41,9 +44,9 @@ class WithdrawAddressOverview extends Component {
     actions.getAllCoinWithdrawalAddresses();
   }
 
-  handlePress = coin => {
+  handlePress = async coin => {
     const { actions } = this.props;
-    actions.updateFormFields({ coin });
+    await actions.updateFormField("coin", coin);
     actions.navigateTo("VerifyProfile", {
       onSuccess: () => actions.navigateTo("WithdrawNewAddressSetup"),
     });
@@ -64,7 +67,26 @@ class WithdrawAddressOverview extends Component {
     return `${formatter.capitalize(coin.name)} - ${coin.short}`;
   };
 
-  renderSelectedCoin = () => {
+  renderNoWithdrawalAddressCoins = () => {
+    const { noWithdrawalAddresses, currenciesRates } = this.props;
+    if (noWithdrawalAddresses && noWithdrawalAddresses.length > 0) {
+      return noWithdrawalAddresses.map(coin => {
+        const imageUrl = currenciesRates.filter(
+          image => image.short === coin.short
+        )[0].image_url;
+        return (
+          <NoWithdrawalAddressCard
+            imageUrl={imageUrl}
+            coinName={formatter.capitalize(coin.name)}
+            coinShort={coin.short}
+            onPress={() => this.handlePress(coin.short)}
+          />
+        );
+      });
+    }
+  };
+
+  renderWithdrawalAddresses = () => {
     const { withdrawalAddresses, currenciesRates, hodlStatus } = this.props;
     return withdrawalAddresses
       ? Object.keys(withdrawalAddresses).map(key => {
@@ -120,15 +142,21 @@ class WithdrawAddressOverview extends Component {
   };
 
   render() {
-    const { withdrawalAddresses, callsInProgress } = this.props;
-    // const RenderSelectedCoin = this.renderSelectedCoin;
-
+    const {
+      withdrawalAddresses,
+      noWithdrawalAddresses,
+      callsInProgress,
+    } = this.props;
+    // const RenderSelectedCoin = this.renderWithdrawalAddresses;
     const isLoading = apiUtil.areCallsInProgress(
       [API.GET_ALL_COIN_WITHDRAWAL_ADDRESSES],
       callsInProgress
     );
     if (isLoading) return <LoadingScreen />;
-    if (!Object.keys(withdrawalAddresses).length)
+    if (
+      !Object.keys(withdrawalAddresses).length &&
+      noWithdrawalAddresses && noWithdrawalAddresses.length === 0
+    )
       return (
         <StaticScreen
           emptyState={{ purpose: EMPTY_STATES.NO_WITHDRAWAL_ADDRESSES }}
@@ -157,7 +185,14 @@ class WithdrawAddressOverview extends Component {
               </View>
             </View>
           </Card>
-          {this.renderSelectedCoin()}
+          {noWithdrawalAddresses && noWithdrawalAddresses.length > 0 && (
+            <Separator text={"ACTION NEEDED"} />
+          )}
+          {this.renderNoWithdrawalAddressCoins()}
+          {withdrawalAddresses && !_.isEmpty(withdrawalAddresses) && (
+            <Separator text={"WHITELISTED WITHDRAWAL ADDRESSES"} />
+          )}
+          {this.renderWithdrawalAddresses()}
         </View>
       </RegularLayout>
     );
