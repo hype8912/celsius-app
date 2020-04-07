@@ -117,7 +117,7 @@ class CelPayLanding extends Component {
       return (
         <StaticScreen
           emptyState={{
-            purpose: renderHodlEmptyState(hodlStatus),
+            purpose: renderHodlEmptyState(hodlStatus, "celpay"),
           }}
         />
       );

@@ -25,7 +25,23 @@ function getProps(purpose, componentProps) {
   }
 
   switch (purpose) {
-    case EMPTY_STATES.HODL_MODE_WARNING:
+    case EMPTY_STATES.HODL_MODE_WARNING_CELPAY:
+      return {
+        ...props,
+        image: require("../../assets/images/error.png"),
+        heading: "CelPay is unavailable in HODL Mode",
+        paragraphs: [
+          "Your wallet is currently in HODL Mode, which means outbound transactions are currently unavailable. To make a CelPay, please deactivate HODL Mode.",
+        ],
+        onPress: () => {
+          actions.navigateTo("HodlLanding");
+          actions.setHodlProps(false);
+        },
+        button: "Deactivate HODL Mode",
+        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryButton: "Go back to wallet",
+      };
+    case EMPTY_STATES.HODL_MODE_WARNING_WITHDRAW:
       return {
         ...props,
         image: require("../../assets/images/error.png"),

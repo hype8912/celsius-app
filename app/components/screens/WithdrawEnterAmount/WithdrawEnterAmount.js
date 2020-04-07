@@ -279,7 +279,7 @@ class WithdrawEnterAmount extends Component {
       return (
         <StaticScreen
           emptyState={{
-            purpose: renderHodlEmptyState(hodlStatus),
+            purpose: renderHodlEmptyState(hodlStatus, "withdraw"),
           }}
         />
       );

@@ -16,6 +16,7 @@ import Card from "../../atoms/Card/Card";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import StaticScreen from "../StaticScreen/StaticScreen";
+import CelInputPassword from "../../atoms/CelInput/CelInputPassword";
 
 @connect(
   state => ({
@@ -99,6 +100,7 @@ class HodlDeactivationCode extends Component {
             maxLenght={8}
             field={"hodlCode"}
             value={formData.hodlCode}
+            keyboardType={"numeric"}
           />
         </Card>
 

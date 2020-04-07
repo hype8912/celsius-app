@@ -6,6 +6,8 @@ import * as appActions from "../../../redux/actions";
 // import HodlModeModalStyle from "./HodlModeModal.styles";
 import { MODALS } from "../../../constants/UI";
 import InfoModal from "../InfoModalNew/InfoModal";
+import CelText from "../../atoms/CelText/CelText";
+import STYLES from "../../../constants/STYLES";
 
 @connect(
   () => ({}),
@@ -30,7 +32,9 @@ class HodlModeModal extends Component {
         name={MODALS.HODL_MODE_MODAL}
         heading={"HODL Mode is activated"}
         paragraphs={[
-          "For your security, we have put your account in HODL Mode. If you would to exit HODL Mode, please contact our support team.",
+          <CelText>For your security, we have put your account in HODL Mode. If you would to exit HODL Mode, please
+            <CelText color={STYLES.COLORS.CELSIUS_BLUE} onPress={() => actions.navigateTo("Support")}> contact our support team</CelText>.
+          </CelText>,
         ]}
         yesCopy={"Go to Wallet"}
         onYes={() => actions.closeModal()}
