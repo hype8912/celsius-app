@@ -10,7 +10,7 @@ export default function contactsReducer(state = initialState, action) {
     case ACTIONS.GET_CONNECTED_CONTACTS_SUCCESS:
       return {
         ...state,
-        contacts: [...action.contacts],
+        contacts: action.contacts,
       };
 
     default:
