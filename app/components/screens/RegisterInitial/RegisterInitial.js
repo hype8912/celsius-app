@@ -94,16 +94,14 @@ class RegisterInitial extends Component {
 
   submitForm = () => {
     const { actions } = this.props;
-
     const isFormValid = this.isFormValid();
-
     if (isFormValid) {
       actions.createAccount();
     }
   };
 
   disabledButton = () => {
-    const { formData } = this.props;
+    const { formData, callsInProgress } = this.props;
     const fields = [
       !!formData.firstName,
       !!formData.lastName,
@@ -111,15 +109,28 @@ class RegisterInitial extends Component {
       formData.termsOfUse,
       calculatePasswordScore(formData.password).result.score > 80,
     ];
+
     if (fields.every(x => x)) {
+      const isLoading = apiUtil.areCallsInProgress(
+        [
+          API.REGISTER_USER,
+          API.REGISTER_USER_FACEBOOK,
+          API.REGISTER_USER_GOOGLE,
+          API.REGISTER_USER_TWITTER,
+        ],
+        callsInProgress
+      );
+
+      if (isLoading) return true;
+
       return false;
     }
+
     return true;
   };
 
   renderCaptcha = () => {
     const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
-
     return (
       <GoogleReCaptcha
         siteKey={RECAPTCHA_KEY}
