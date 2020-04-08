@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { View, Animated } from "react-native";
 import PropTypes from "prop-types";
+import BigNumber from "bignumber.js";
 
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
@@ -86,21 +87,25 @@ class CoinGridCard extends Component {
     </View>
   );
 
-  coinCardFull = coin => (
-    <Fragment>
-      <CelText
-        style={CoinGridCardStyle.text}
-        weight="600"
-        type="H3"
-        margin="3 0 3 0"
-      >
-        {formatter.usd(coin.amount_usd)}
-      </CelText>
-      <CelText weight="300" type="H7">
-        {formatter.crypto(coin.amount, coin.short)}
-      </CelText>
-    </Fragment>
-  );
+  coinCardFull = coin => {
+    const amountUsd = new BigNumber(coin.amount_usd.toString());
+    const amount = new BigNumber(coin.amount.toString());
+    return (
+      <Fragment>
+        <CelText
+          style={CoinGridCardStyle.text}
+          weight="600"
+          type="H3"
+          margin="3 0 3 0"
+        >
+          {formatter.usd(amountUsd)}
+        </CelText>
+        <CelText weight="300" type="H7">
+          {formatter.crypto(amount, coin.short)}
+        </CelText>
+      </Fragment>
+    );
+  };
 
   render = () => {
     const {
