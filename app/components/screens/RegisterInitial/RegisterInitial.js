@@ -100,13 +100,6 @@ class RegisterInitial extends Component {
     }
   };
 
-  reCaptchaPassed = event => {
-    const { actions } = this.props;
-    if (event.nativeEvent.data === "increaseReCap") return;
-    actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
-    this.submitForm()
-  };
-
   renderCaptcha = () => {
     const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
     const { formData, callsInProgress }  = this.props
@@ -124,7 +117,7 @@ class RegisterInitial extends Component {
         url={RECAPTCHA_URL}
         languageCode="en"
         onMessage={this.onMessage}
-        reCaptchaPassed={this.reCaptchaPassed}
+        reCaptchaPassed={this.submitForm}
         type={'register'}
         buttonDisabled={isLoading || !formData.termsOfUse}
       />

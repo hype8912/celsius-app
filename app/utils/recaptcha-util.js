@@ -25,6 +25,7 @@ const patchPostMessageJsCode = `(${String(function() {
  * @param {*} siteKey: your site key of Google captcha
  * @param {*} style: custom style
  * @param {*} url: base url
+ * @param {*} reCaptchaPassed: When reCaptcha is passed, call a function
  */
 
 @connect(
@@ -47,7 +48,7 @@ class GoogleReCaptcha extends Component {
        <html>
         <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <script>
           function onSubmit(token) {
             // after receiving token send it to message
@@ -65,17 +66,33 @@ class GoogleReCaptcha extends Component {
             const element = document.getElementById('submit');
             element.onclick = validate;
           }
+
+          function onCaptchaError(){
+            window.ReactNativeWebView.postMessage('captchaError')
+          }
         </script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
         <style>
             .btn_login {
               background-color: #3F51AB;
-              width:110px;
+              width:120px;
               height: 50px;
               color: #ffffff; padding: 8px 32px; margin-top: 8px;
               border: none; border-radius: 25px; font-size: medium;
             }
+
+             .btn_login_disabled {
+              background-color:transparent;
+              width:120px;
+              height: 50px;
+              color: #4156A6; padding: 8px 32px; margin-top: 8px;
+              border: solid;
+              border-width: 2px;
+              border-radius: 25px; font-size: medium;
+              opacity: 0.5;
+            }
+
             .btn_register {
               background-color: #3F51AB;
               width:230px;
@@ -111,6 +128,7 @@ class GoogleReCaptcha extends Component {
                 data-sitekey="${key}"
                 data-callback="onSubmit"
                 data-size="invisible"
+                data-error-callback="onCaptchaError"
               >
             </div>
             <div style="text-align: center">
@@ -143,28 +161,39 @@ class GoogleReCaptcha extends Component {
       }
     } else {
       btnStyle = "btn_login";
+      if (buttonDisabled) {
+        btnStyle = "btn_login_disabled";
+      }
     }
     return btnStyle;
   };
 
   onMsg = event => {
-    const { formData, reCaptchaPassed } = this.props;
-
-    if (
-      event &&
-      event.nativeEvent.data &&
-      event.nativeEvent.data === "increaseReCap"
-    ) {
-      if (formData.reCaptchaKey) {
-        reCaptchaPassed(event);
+    if (event && event.nativeEvent.data) {
+      if (event.nativeEvent.data === "captchaError") {
+        this.onCaptchaError();
+        this.setState({ captchaHeight: 150 });
+      } else if (event.nativeEvent.data === "increaseReCap") {
+        this.setState({ captchaHeight: 500 });
+      } else {
+        this.onCaptchaPassed(event);
+        this.setState({ captchaHeight: 150 });
       }
-      this.setState({
-        captchaHeight: 500,
-      });
-    } else {
-      reCaptchaPassed(event);
-      this.setState({ captchaHeight: 150 });
     }
+  };
+
+  onCaptchaError = () => {
+    const { actions } = this.props;
+    actions.showMessage(
+      "error",
+      "Cannot connect to reCaptcha service. Check your internet connection and try again."
+    );
+  };
+
+  onCaptchaPassed = event => {
+    const { actions, reCaptchaPassed } = this.props;
+    actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
+    reCaptchaPassed();
   };
 
   render() {

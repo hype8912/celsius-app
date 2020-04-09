@@ -7,8 +7,8 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
-// import apiUtil from "../../../utils/api-util";
-// import API from "../../../constants/API";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
 import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import Constants from "../../../../constants";
@@ -26,16 +26,23 @@ class Login extends Component {
     right: "signup",
   });
 
-  // loginUser = () => {
-  //   const { actions } = this.props;
-  //   actions.loginUser()
-  // };
-
-  reCaptchaPassed = event => {
+  loginUser = () => {
     const { actions } = this.props;
-    if (event.nativeEvent.data === "increaseReCap") return;
-    actions.updateFormField("reCaptchaKey", event.nativeEvent.data);
-    actions.loginUser();
+    actions.loginUser()
+  };
+
+  disabledButton = () => {
+    const { callsInProgress } = this.props;
+    const isLoading = apiUtil.areCallsInProgress(
+      [
+        API.LOGIN_USER,
+        API.LOGIN_USER_FACEBOOK,
+        API.LOGIN_USER_GOOGLE,
+        API.LOGIN_USER_TWITTER,
+      ],
+      callsInProgress
+    );
+    return isLoading;
   };
 
   renderCaptcha = () => {
@@ -46,22 +53,14 @@ class Login extends Component {
         url={RECAPTCHA_URL}
         languageCode="en"
         onMessage={this.onMessage}
-        reCaptchaPassed={this.reCaptchaPassed}
+        reCaptchaPassed={this.loginUser}
+        buttonDisabled={this.disabledButton()}
       />
     );
   };
 
   render() {
     const { formData, actions } = this.props;
-    // const loginLoading = apiUtil.areCallsInProgress(
-    //   [
-    //     API.LOGIN_USER,
-    //     API.LOGIN_USER_FACEBOOK,
-    //     API.LOGIN_USER_GOOGLE,
-    //     API.LOGIN_USER_TWITTER,
-    //   ],
-    //   callsInProgress <--from props
-    // );
 
     // Disabling forgot pass on Staging regarding to its bug on Staging environment
     const { ENV } = Constants;
