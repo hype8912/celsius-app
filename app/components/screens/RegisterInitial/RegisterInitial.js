@@ -100,33 +100,31 @@ class RegisterInitial extends Component {
     }
   };
 
-  disabledButton = () => {
+  disabledRegisterButton = () => {
     const { formData, callsInProgress } = this.props;
     const fields = [
       !!formData.firstName,
       !!formData.lastName,
       !!formData.email,
-      formData.termsOfUse,
       calculatePasswordScore(formData.password).result.score > 80,
     ];
+    const fieldsFilledOut = fields.every(x => x);
 
-    if (fields.every(x => x)) {
-      const isLoading = apiUtil.areCallsInProgress(
-        [
-          API.REGISTER_USER,
-          API.REGISTER_USER_FACEBOOK,
-          API.REGISTER_USER_GOOGLE,
-          API.REGISTER_USER_TWITTER,
-        ],
-        callsInProgress
-      );
+    const isLoading = apiUtil.areCallsInProgress(
+      [
+        API.REGISTER_USER,
+        API.REGISTER_USER_FACEBOOK,
+        API.REGISTER_USER_GOOGLE,
+        API.REGISTER_USER_TWITTER,
+      ],
+      callsInProgress
+    );
 
-      if (isLoading) return true;
-
-      return false;
-    }
-
-    return true;
+    if (!formData.termsOfUse) return true;
+    if (isLoading) return true;
+    if (fieldsFilledOut) return false
+    if (formData.googleId || formData.facebookId || formData.twitterId) return false
+    return true
   };
 
   renderCaptcha = () => {
@@ -139,7 +137,7 @@ class RegisterInitial extends Component {
         onMessage={this.onMessage}
         reCaptchaPassed={this.submitForm}
         type={"register"}
-        buttonDisabled={this.disabledButton()}
+        buttonDisabled={this.disabledRegisterButton()}
       />
     );
   };
