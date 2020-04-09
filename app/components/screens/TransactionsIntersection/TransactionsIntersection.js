@@ -37,9 +37,11 @@ class TransactionsIntersection extends Component {
     right: "profile",
   });
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { actions, navigation } = this.props;
+    const loanPayment = navigation.getParam("loanPayment");
     const id = navigation.getParam("id");
+    if (loanPayment) await actions.getAllLoans();
     actions.getTransactionDetails(id);
 
     // ToDO: leave for the swiping?
@@ -59,6 +61,7 @@ class TransactionsIntersection extends Component {
     } = this.props;
     const transactionId = navigation.getParam("id");
     // const transactionType = navigation.getParam("type");
+    // add API.GET_ALL_LOANS if necessary
     const loadingTransactionDetails = apiUtil.areCallsInProgress(
       [API.GET_TRANSACTION_DETAILS],
       callsInProgress

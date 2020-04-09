@@ -333,7 +333,7 @@ function prepayInterest(id) {
       dispatch({
         type: ACTIONS.PREPAY_LOAN_INTEREST_SUCCESS,
       });
-      dispatch(navigateTo("TransactionDetails", { id: transactionId }));
+      dispatch(navigateTo("TransactionsIntersection", { id: transactionId, loanPayment: true }));
       dispatch(openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -363,7 +363,8 @@ function payPrincipal(id) {
       const res = await loansService.payPrincipal(id, verification);
 
       const transactionId = res.data.transaction_id;
-      dispatch(navigateTo("TransactionDetails", { id: transactionId }));
+      dispatch(showMessage("success", "Payment successful"));
+      dispatch(navigateTo("TransactionsIntersection", { id: transactionId, loanPayment: true }));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.PAY_LOAN_PRINCIPAL, err));
@@ -391,7 +392,7 @@ function lockMarginCallCollateral(id, coin) {
       );
 
       const transactionId = res.data.transaction_id;
-      dispatch(navigateTo("TransactionDetails", { id: transactionId }));
+      dispatch(navigateTo("TransactionsIntersection", { id: transactionId }));
 
       apiCallName = API.GET_ALL_LOANS;
       startApiCall(API.GET_ALL_LOANS);
@@ -425,11 +426,11 @@ function payMonthlyInterest(id, coin) {
         pin: formData.pin,
         twoFactorCode: formData.code,
       };
-
       const res = await loansService.payMonthlyInterest(id, coin, verification);
       const transactionId = res.data.transaction_id;
       dispatch({ type: ACTIONS.PAY_LOAN_INTEREST_SUCCESS });
-      dispatch(navigateTo("TransactionDetails", { id: transactionId }));
+      dispatch(showMessage("success", "Payment successful"));
+      dispatch(navigateTo("TransactionsIntersection", { id: transactionId, loanPayment: true }));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.PAY_LOAN_PRINCIPAL, err));

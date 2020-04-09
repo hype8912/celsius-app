@@ -106,7 +106,7 @@ function cancelTransfer(transaction) {
       dispatch(cancelTransferSuccess(res.data));
       dispatch(showMessage("error", "CelPay Canceled"));
       dispatch(getAllTransactions());
-      dispatch(navigateTo("TransactionDetails", { id: transaction.id }));
+      dispatch(navigateTo("TransactionsIntersection", { id: transaction.id }));
       mixpanelAnalytics.canceledCelPay();
     } catch (err) {
       dispatch(showMessage("error", err.msg));

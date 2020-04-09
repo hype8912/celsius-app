@@ -157,7 +157,7 @@ function withdrawCrypto() {
       await celUtilityUtil.refetchMembershipIfChanged(coin.toUpperCase());
 
       dispatch(
-        navigateTo("TransactionDetails", {
+        navigateTo("TransactionsIntersection", {
           id: res.data.transaction.id,
           hideBack: true,
         })

@@ -56,7 +56,7 @@ function celPayFriend() {
       dispatch(showMessage("success", msg));
       dispatch(clearForm());
       dispatch(
-        navigateTo("TransactionDetails", {
+        navigateTo("TransactionsIntersection", {
           id: transferData.transaction_id,
           hideBack: true,
         })
@@ -105,7 +105,7 @@ function celPayShareLink() {
       );
       dispatch(clearForm());
       dispatch(
-        navigateTo("TransactionDetails", {
+        navigateTo("TransactionsIntersection", {
           id: transferData.transaction_id,
           hideBack: true,
         })
