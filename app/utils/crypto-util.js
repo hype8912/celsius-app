@@ -20,7 +20,6 @@ function isERC20(currency) {
       "tusd",
       "gusd",
       "usdc",
-      "orbs",
       "leo",
       "usdt erc20",
       "tcad",
@@ -43,7 +42,6 @@ function hasLinkToBuy(currency) {
     "CEL",
     "DASH",
     "OMG",
-    "ZEC",
     "DAI",
   ].includes(currency);
 }
@@ -104,9 +102,6 @@ function provideLink(currency) {
     case "OMG":
       link = "https://buy.moonpay.io/celsius";
       break;
-    case "ZEC":
-      link = "https://buy.moonpay.io/celsius";
-      break;
     case "DAI":
       link = "https://buy.moonpay.io/celsius";
       break;
@@ -165,9 +160,6 @@ function provideText(currency) {
       text = `Buy ${currency} in App`;
       break;
     case "OMG":
-      text = `Buy ${currency} on MoonPay`;
-      break;
-    case "ZEC":
       text = `Buy ${currency} on MoonPay`;
       break;
     case "DAI":
