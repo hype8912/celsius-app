@@ -257,12 +257,12 @@ class KYCProfileDetails extends Component {
             iconRight="IconArrowRight"
             loading={updatingProfileInProgress}
           >
-            Your residential address
+            Continue
           </CelButton>
         </View>
         <CelButton
           onPress={() => {
-            actions.navigateTo("WalletFab");
+            actions.navigateTo("WalletLanding");
             actions.clearForm();
           }}
           basic

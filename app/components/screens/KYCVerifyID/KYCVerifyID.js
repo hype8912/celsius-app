@@ -283,7 +283,7 @@ class KYCVerifyID extends Component {
             Submit
           </CelButton>
           <CelButton
-            onPress={() => actions.navigateTo("WalletFab")}
+            onPress={() => actions.navigateTo("WalletLanding")}
             basic
             margin={"20 0 20 0"}
           >
