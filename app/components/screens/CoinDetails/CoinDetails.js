@@ -35,6 +35,7 @@ const { COLORS } = STYLES;
     coinAmount: state.graph.coinLastValue,
     appSettings: state.user.appSettings,
     interestCompliance: state.compliance.interest,
+    depositCompliance: state.compliance.deposit,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -131,7 +132,8 @@ class CoinDetails extends Component {
       currencies,
       appSettings,
       buyCoinsSettings,
-      interestCompliance
+      interestCompliance,
+      depositCompliance,
     } = this.props;
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
@@ -144,14 +146,13 @@ class CoinDetails extends Component {
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short);
-    const isCoinEligibleForBuying = buyCoinsSettings && buyCoinsSettings.supported_coins.includes(
-      currency.short
-    );
-
+    const isCoinEligibleForBuying =
+      buyCoinsSettings &&
+      buyCoinsSettings.supported_coins.includes(currency.short);
+    const isCoinEligibleForDeposit =
+      depositCompliance && depositCompliance.coins.includes(currency.short);
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
-
-
 
     return (
       <RegularLayout padding={"20 0 100 0"}>
@@ -179,23 +180,29 @@ class CoinDetails extends Component {
               </View>
               <Separator />
               <View style={style.buttonWrapper}>
-                <TouchableOpacity
-                  style={{
-                    marginLeft: widthPercentageToDP("3.3%"),
-                    marginRight: widthPercentageToDP("3.3%"),
-                  }}
-                  onPress={() =>
-                    actions.navigateTo("Deposit", { coin: coinDetails.short })
-                  }
-                >
-                  <View style={style.buttonItself}>
-                    <View style={style.buttonIcon}>
-                      <Icon fill="primary" name="Deposit" width="25" />
-                    </View>
-                    <CelText type="H6">Deposit</CelText>
-                  </View>
-                </TouchableOpacity>
-                <Separator vertical height={"35%"} top={20} />
+                {isCoinEligibleForDeposit && (
+                  <>
+                    <TouchableOpacity
+                      style={{
+                        marginLeft: widthPercentageToDP("3.3%"),
+                        marginRight: widthPercentageToDP("3.3%"),
+                      }}
+                      onPress={() =>
+                        actions.navigateTo("Deposit", {
+                          coin: coinDetails.short,
+                        })
+                      }
+                    >
+                      <View style={style.buttonItself}>
+                        <View style={style.buttonIcon}>
+                          <Icon fill="primary" name="Deposit" width="25" />
+                        </View>
+                        <CelText type="H6">Deposit</CelText>
+                      </View>
+                    </TouchableOpacity>
+                    <Separator vertical height={"35%"} top={20} />
+                  </>
+                )}
                 {isCoinEligibleForCelPay && (
                   <TouchableOpacity
                     onPress={this.goToCelPay}
@@ -328,13 +335,13 @@ class CoinDetails extends Component {
               </View>
             </View>
             {celpayCompliance && (
-                <InterestCard
-                  coin={coinDetails.short}
-                  interestRate={interestRate}
-                  interestInCoins={interestInCoins}
-                  setUserAppSettings={actions.setUserAppSettings}
-                />
-                )}
+              <InterestCard
+                coin={coinDetails.short}
+                interestRate={interestRate}
+                interestInCoins={interestInCoins}
+                setUserAppSettings={actions.setUserAppSettings}
+              />
+            )}
             <RateInfoCard
               coin={coinDetails}
               navigateTo={actions.navigateTo}
