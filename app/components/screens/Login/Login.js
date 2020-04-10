@@ -7,8 +7,6 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
-// import apiUtil from "../../../utils/api-util";
-// import API from "../../../constants/API";
 import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import Constants from "../../../../constants";
@@ -29,6 +27,11 @@ class Login extends Component {
     headerSameColor: true,
   });
 
+  loginUser = () => {
+    const { actions } = this.props;
+    actions.loginUser()
+  };
+
   disabledButton = () => {
     const { callsInProgress } = this.props;
     const isLoading = apiUtil.areCallsInProgress(
@@ -45,14 +48,13 @@ class Login extends Component {
 
   renderCaptcha = () => {
     const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
-    const { actions } = this.props;
     return (
       <GoogleReCaptcha
         siteKey={RECAPTCHA_KEY}
         url={RECAPTCHA_URL}
         languageCode="en"
         onMessage={this.onMessage}
-        reCaptchaPassed={actions.loginUser}
+        reCaptchaPassed={this.loginUser}
         buttonDisabled={this.disabledButton()}
       />
     );
