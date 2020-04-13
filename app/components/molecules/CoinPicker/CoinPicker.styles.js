@@ -47,7 +47,6 @@ const base = {
     borderRadius: 8,
     ...Platform.select({
       android: {
-        borderColor: "#E9E9E9",
         borderTopWidth: 0.2,
         borderLeftWidth: 0.2,
         borderRightWidth: 0.5,
@@ -69,6 +68,11 @@ const themed = {
     },
     selectWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
+      ...Platform.select({
+        android: {
+          borderColor: "#E9E9E9",
+        },
+      }),
     },
     iconWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
@@ -84,6 +88,11 @@ const themed = {
     },
     selectWrapper: {
       backgroundColor: STYLES.COLORS.DARK_HEADER,
+      ...Platform.select({
+        android: {
+          borderColor: STYLES.COLORS.DARK_GRAY3,
+        },
+      }),
     },
     iconWrapper: {
       backgroundColor: STYLES.COLORS.DARK_HEADER,
