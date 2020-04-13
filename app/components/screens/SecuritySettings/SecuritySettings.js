@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,9 +13,13 @@ import { HODL_STATUS, MODALS } from "../../../constants/UI";
 import RemoveAuthAppModal from "../../modals/RemoveAuthAppModal/RemoveAuthAppModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
+import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
+import STYLES from "../../../constants/STYLES";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 @connect(
   state => ({
+    securityOverview: state.security.securityOverview,
     is2FAEnabled: state.user.profile.two_factor_enabled,
     user: state.user.profile,
     kycStatus: state.user.profile.kyc,
@@ -59,6 +64,7 @@ class SecuritySettings extends Component {
   componentDidMount() {
     const { actions } = this.props;
     actions.getProfileInfo();
+    actions.getSecurityOverview();
   }
 
   logoutUser = async () => {
@@ -105,16 +111,77 @@ class SecuritySettings extends Component {
     actions.navigateTo("HodlLanding");
   };
 
+  securityOverallScore = () => {
+    const { securityOverview } = this.props
+
+    if (_.isEmpty(securityOverview)) return
+
+    const strength = securityOverview.overall_score_strength.toLowerCase();
+    switch (strength) {
+      case SECURITY_STRENGTH_LEVEL.WEAK.toLowerCase():
+        return {
+          text: strength.toUpperCase(),
+          textColor: STYLES.COLORS.RED,
+        };
+      case SECURITY_STRENGTH_LEVEL.FAIR.toLowerCase():
+        return {
+          text: strength.toUpperCase(),
+          textColor: STYLES.COLORS.ORANGE_DARK,
+        };
+      case SECURITY_STRENGTH_LEVEL.GOOD.toLowerCase():
+        return {
+          text: strength.toUpperCase(),
+          textColor: STYLES.COLORS.ORANGE,
+        };
+      case SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase():
+        return {
+          text: strength.toUpperCase(),
+          textColor: STYLES.COLORS.GREEN,
+        };
+      default:
+        return null;
+    }
+  }
+
   render() {
-    const { actions, is2FAEnabled, user, kycStatus } = this.props;
+    const { actions, is2FAEnabled, user, kycStatus, securityOverview } = this.props;
     const Switcher2FA = this.rightSwitch2FA;
     const SwitcherHodl = this.rightSwitchHodl;
+    const rightText = this.securityOverallScore()
+
+    if (_.isEmpty(securityOverview)) return <LoadingScreen />;
+
 
     return (
       <RegularLayout>
+       { kycStatus && hasPassedKYC() && !_.isEmpty(securityOverview) &&
+       <IconButton
+          margin="0 0 0 0"
+          rightText={rightText.text}
+          rightTextColor={rightText.textColor}
+          onPress={() =>
+            actions.navigateTo('SecurityOverview')
+          }
+        >
+          Security Overview
+        </IconButton>}
+
         <IconButton margin={"20 0 20 0"} right={<Switcher2FA />} hideIconRight>
-          Two-Factor Authentication
+          Two-Factor Verification
         </IconButton>
+
+        <IconButton right={<SwitcherHodl />} hideIconRight margin="0 0 20 0">
+          HODL Mode
+        </IconButton>
+
+        {!user.registered_with_social && (
+          <IconButton
+            margin="0 0 20 0"
+            onPress={() => actions.navigateTo("ChangePassword")}
+          >
+            Change password
+          </IconButton>
+        )}
 
         {!is2FAEnabled && (
           <IconButton
@@ -129,28 +196,22 @@ class SecuritySettings extends Component {
           </IconButton>
         )}
 
-        <IconButton right={<SwitcherHodl />} hideIconRight margin="0 0 20 0">
-          HODL Mode
+        <IconButton
+          margin="0 0 20 0"
+          onPress={() => actions.navigateTo("WithdrawAddressOverview")}
+        >
+          Change withdrawal addresses
         </IconButton>
 
-        {!user.registered_with_social && (
-          <IconButton
-            margin="0 0 30 0"
-            onPress={() => actions.navigateTo("ChangePassword")}
-          >
-            Change password
-          </IconButton>
-        )}
 
-        {kycStatus && hasPassedKYC() ? (
-          <CelButton
-            margin="0 0 30 0"
-            basic
-            onPress={() => actions.navigateTo("SecurityOverview")}
-          >
-            Security overview
-          </CelButton>
-        ) : null}
+        {/* <CelButton*/}
+        {/*  margin="0 0 30 0"*/}
+        {/*  basic*/}
+        {/*  onPress={() => {}}*/}
+        {/* >*/}
+        {/*  User Actions*/}
+        {/* </CelButton>*/}
+
 
         <CelButton onPress={this.logoutUser}>
           Log out from all devices

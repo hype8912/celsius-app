@@ -11,6 +11,19 @@ const base = {
     marginVertical: 20,
     minHeight: 50,
   },
+  leftWrapper: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  rightWrapper: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  rightTextWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 0.3
+  }
 };
 
 const themed = {
