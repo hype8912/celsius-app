@@ -8,6 +8,7 @@ function initialState() {
     summary: undefined,
     addresses: {},
     withdrawalAddresses: {},
+    noWithdrawalAddresses: {},
     walletAddressLabels: {},
   };
 }
@@ -43,6 +44,12 @@ export default function walletReducer(state = initialState(), action) {
           ...state.withdrawalAddresses,
           ...action.allWalletAddresses,
         },
+      };
+
+    case ACTIONS.GET_COINS_WITHOUT_WITHDRAWAL_ADDRESS:
+      return {
+        ...state,
+        noWithdrawalAddresses: action.noWithdrawalAddresses,
       };
 
     case ACTIONS.SET_COIN_WITHDRAWAL_ADDRESS_LABELS:

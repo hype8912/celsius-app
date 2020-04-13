@@ -7,13 +7,17 @@ import CelText from "../../atoms/CelText/CelText";
 import { getTheme } from "../../../utils/styles-util";
 import SecurityStrengthMeterStyle from "./SecurityStrengthMeter.styles";
 import Card from "../Card/Card";
+import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
+import Separator from "../Separator/Separator";
+
 // import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
 class SecurityStrengthMeter extends Component {
   static propTypes = {
-    subtitle: PropTypes.string,
-    onPress: PropTypes.func,
-    level: PropTypes.oneOf(["1", "2", "3", "4"]).isRequired,
+    lastChangePeriod: PropTypes.string,
+    onPressEnhance: PropTypes.func,
+    enhanceText: PropTypes.string,
+    level: PropTypes.oneOf(["weak", "fair", "good", "strong"]).isRequired,
   };
   static defaultProps = {};
 
@@ -23,8 +27,8 @@ class SecurityStrengthMeter extends Component {
       lightWeak: require("../../../../assets/images/security-meter/01-pass-strength-weak-light.png"),
       darkWeak: require("../../../../assets/images/security-meter/01-pass-strength-weak-dark.png"),
 
-      lightFair: require("../../../../assets/images/security-meter/01-pass-strength-weak-light.png"),
-      darkFair: require("../../../../assets/images/security-meter/01-pass-strength-weak-dark.png"),
+      lightFair: require("../../../../assets/images/security-meter/02-pass-strength-fair-light.png"),
+      darkFair: require("../../../../assets/images/security-meter/02-pass-strength-fair-dark.png"),
 
       lightGood: require("../../../../assets/images/security-meter/03-pass-strength-good-light.png"),
       darkGood: require("../../../../assets/images/security-meter/03-pass-strength-good-dark.png"),
@@ -37,28 +41,30 @@ class SecurityStrengthMeter extends Component {
 
   getMeterProps = () => {
     const { level } = this.props;
-    switch (level) {
-      case "1":
+    const strength = level.toLowerCase();
+
+    switch (strength) {
+      case SECURITY_STRENGTH_LEVEL.WEAK.toLowerCase():
         return {
-          text: "WEAK",
+          text: strength.toUpperCase(),
           imageUrl: this.getImage("Weak"),
           textColor: STYLES.COLORS.RED,
         };
-      case "2":
+      case SECURITY_STRENGTH_LEVEL.FAIR.toLowerCase():
         return {
-          text: "FAIR",
+          text: strength.toUpperCase(),
           imageUrl: this.getImage("Fair"),
           textColor: STYLES.COLORS.ORANGE_DARK,
         };
-      case "3":
+      case SECURITY_STRENGTH_LEVEL.GOOD.toLowerCase():
         return {
-          text: "GOOD",
+          text: strength.toUpperCase(),
           imageUrl: this.getImage("Good"),
           textColor: STYLES.COLORS.ORANGE,
         };
-      case "4":
+      case SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase():
         return {
-          text: "STRONG",
+          text: strength.toUpperCase(),
           imageUrl: this.getImage("Strong"),
           textColor: STYLES.COLORS.GREEN,
         };
@@ -72,24 +78,52 @@ class SecurityStrengthMeter extends Component {
 
     if (!meterProps) return null;
 
+    const { onPressEnhance, enhanceText, lastChangePeriod } = this.props;
+
     return (
       <Card styles={style.container}>
-        <View style={style.leftSide}>
-          <Image
-            source={meterProps.imageUrl}
-            style={style.meter}
-            resizeMode={"contain"}
-          />
+        <View style={style.section}>
+          <View style={style.leftSide}>
+            <Image
+              source={meterProps.imageUrl}
+              style={style.meter}
+              resizeMode={"contain"}
+            />
+          </View>
+          <View style={style.rightSide}>
+            <CelText
+              type="H5"
+              weight="600"
+              color={meterProps.textColor}
+              align={"right"}
+            >
+              {meterProps.text}
+            </CelText>
+          </View>
         </View>
-        <View style={style.rightSide}>
-          <CelText
-            type="H5"
-            weight="600"
-            color={meterProps.textColor}
-            align={"right"}
-          >
-            {meterProps.text}
-          </CelText>
+
+        <Separator />
+
+        <View style={style.section}>
+          <View style={style.leftSide}>
+            <CelText type="H6">
+              {"Last change: "}
+              <CelText type="H6" weight="600">
+                {lastChangePeriod}
+              </CelText>
+            </CelText>
+          </View>
+          <View style={style.rightSide}>
+            <CelText
+              type="H6"
+              weight="600"
+              onPress={onPressEnhance}
+              color={STYLES.COLORS.CELSIUS_BLUE}
+              align={"right"}
+            >
+              {enhanceText}
+            </CelText>
+          </View>
         </View>
       </Card>
     );

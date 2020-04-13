@@ -9,6 +9,7 @@ import BadgeStories from "./Badge/Badge.stories";
 import BadgeSelectorStories from "./BadgeSelector/BadgeSelector.stories";
 import BalanceViewStories from "./BalanceView/BalanceView.stories";
 import CardStories from "./Card/Card.stories";
+import NoWithdrawalAddressCardStories from "./NoWithdrawalAddressCard/NoWithdrawalAddressCard.stories";
 import CelCheckboxStories from "./CelCheckbox/CelCheckbox.stories";
 import CelModalButtonStories from "./CelModalButton/CelModalButton.stories";
 import CelSwitchStories from "./CelSwitch/CelSwitch.stories";
@@ -49,6 +50,7 @@ storiesOf("Atoms", module)
   .add("BadgeSelector", BadgeSelectorStories)
   .add("BalanceView", BalanceViewStories)
   .add("Card", CardStories)
+  .add("NoWithdrawalAddressCardStories", NoWithdrawalAddressCardStories)
   .add("CelCheckbox", CelCheckboxStories)
   .add("CelModalButton", CelModalButtonStories)
   .add("CelSwitch", CelSwitchStories)
