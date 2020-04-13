@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 // import TransactionDetailsCelPayStyle from "./TransactionDetailsCelPay.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -16,15 +14,11 @@ import Separator from "../../atoms/Separator/Separator";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
 import SendCelPayLinkCard from "../../molecules/SendCelPayLinkCard/SendCelPayLinkCard";
 import TxSentSection from "../../molecules/TxSentSection/TxSentSection";
-import * as appActions from "../../../redux/actions";
 
-@connect(
-  () => ({}),
-  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
-)
 class TransactionDetailsCelPay extends Component {
   static propTypes = {
     transaction: PropTypes.string,
+    actions: PropTypes.func,
   };
   static defaultProps = {};
 
