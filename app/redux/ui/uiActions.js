@@ -35,7 +35,7 @@ function showMessage(msgType, text, disableClear, action) {
         dispatch(clearMessage());
       }
       clearTimeout(msgTimeout);
-    }, 4000);
+    }, 5000);
 
     dispatch({
       type: ACTIONS.SHOW_MESSAGE,
