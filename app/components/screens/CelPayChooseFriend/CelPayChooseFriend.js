@@ -153,7 +153,9 @@ class CelPayChooseFriend extends Component {
     const { contacts, formData } = this.props;
     return formData.search
       ? contacts.filter(c =>
-          c.name.toLowerCase().includes(formData.search.toLowerCase())
+          c.name
+            ? c.name.toLowerCase().includes(formData.search.toLowerCase())
+            : c.email.toLowerCase().includes(formData.search.toLowerCase())
         )
       : contacts;
   };
