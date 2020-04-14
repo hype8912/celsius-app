@@ -69,11 +69,13 @@ class FabMenu extends Component {
         nextProps.user.has_pin &&
         nextProps.user.has_pin !== this.props.user.has_pin)
     ) {
-      this.doAnimate();
+      this.animateInitialization();
     }
   }
 
   componentDidUpdate = prevProps => {
+    if (!prevProps.fabMenuOpen) this.stopAnimation();
+    if (prevProps.fabMenuOpen) this.animate();
     if (
       (prevProps.fabType !== this.props.fabType &&
         this.props.fabType !== "hide") ||
@@ -163,46 +165,82 @@ class FabMenu extends Component {
     }
   };
 
-  doAnimate() {
-    setTimeout(() => {
-      this.spring();
-    }, 1000);
-    setTimeout(() => {
-      this.spring();
-    }, 2500);
-    setTimeout(() => {
-      this.spring();
-    }, 4000);
-  }
+  stopAnimation = () => {
+    Animated.parallel([
+      Animated.spring(this.springValue, {
+        toValue: 1,
+        friction: 1.5,
+        tension: 3,
+        useNativeDriver: true,
+      }).start(),
+      Animated.timing(this.pulseValue, {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start(),
+      Animated.timing(this.opacityValue, {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start(),
+    ]);
+  };
 
-  spring() {
-    this.springValue.setValue(1.1);
-    this.pulseValue.setValue(1);
-    this.opacityValue.setValue(0.8);
+  springAnimation = (value = undefined) => {
     Animated.spring(this.springValue, {
-      toValue: 1,
-      friction: 2,
-      // damping: 6,
-      tension: 9,
-      // bounciness: 1,
-      // stiffness: 100,
-      // overshootClamping: true,
-      // speed: 0.01,
+      toValue: value || 1.1,
+      friction: 0.5,
+      tension: 0,
+      velocity: 3,
+      overshootClamping: true,
       useNativeDriver: true,
-    }).start();
-    Animated.timing(this.pulseValue, {
-      toValue: 1.7,
-      duration: 1500,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(this.opacityValue, {
-      toValue: 0,
-      duration: 1500,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-  }
+    }).start(({ finished }) => {
+      if (finished)
+        Animated.spring(this.springValue, {
+          toValue: 1,
+          friction: 1.5,
+          tension: 3,
+          useNativeDriver: true,
+        }).start();
+    });
+  };
+
+  pulseAnimation = (pulse, opacity) => {
+    this.pulseValue.setValue(pulse);
+    this.opacityValue.setValue(opacity);
+    Animated.parallel([
+      Animated.timing(this.pulseValue, {
+        toValue: 1.7,
+        duration: 1500,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start(),
+      Animated.timing(this.opacityValue, {
+        toValue: 0,
+        duration: 1500,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start(),
+    ]);
+  };
+
+  animate = () => {
+    setTimeout(() => {
+      this.springAnimation();
+      this.pulseAnimation(1.3, 0.6);
+    }, 50);
+  };
+
+  animateInitialization = () => {
+    this.springAnimation(1.3);
+    this.pulseAnimation(1.8, 0.8);
+    setTimeout(() => {
+      this.springAnimation();
+      this.pulseAnimation(1.5, 0.6);
+    }, 2500);
+  };
 
   fabAction = () => {
     const { fabType } = this.props;
