@@ -71,6 +71,11 @@ class TransactionsIntersection extends Component {
       callsInProgress
     );
 
+    const cancelingCelPay = apiUtil.areCallsInProgress(
+      [API.CANCEL_TRANSFER],
+      callsInProgress
+    );
+
     if (
       !transaction ||
       (loadingTransactionDetails &&
@@ -89,7 +94,7 @@ class TransactionsIntersection extends Component {
         return (
           <TransactionDetailsDeposits
             transaction={transaction}
-            actions={actions}
+            navigateTo={actions.navigateTo}
           />
         );
       case TRANSACTION_TYPES.LOAN_INTEREST:
@@ -103,7 +108,7 @@ class TransactionsIntersection extends Component {
         return (
           <TransactionDetailsLoans
             transaction={transaction}
-            actions={actions}
+            navigateTo={actions.navigateTo}
           />
         );
       case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
@@ -117,7 +122,10 @@ class TransactionsIntersection extends Component {
         return (
           <TransactionDetailsCelPay
             transaction={transaction}
-            actions={actions}
+            navigateTo={actions.navigateTo}
+            cancelTransfer={actions.cancelTransfer}
+            callsInProgress={callsInProgress}
+            cancelingCelPay={cancelingCelPay}
           />
         );
       case TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED:
@@ -128,14 +136,15 @@ class TransactionsIntersection extends Component {
         return (
           <TransactionDetailsWithdraw
             transaction={transaction}
-            actions={actions}
+            cancelWithdrawal={actions.cancelWithdrawal}
+            navigateTo={actions.navigateTo}
           />
         );
       case TRANSACTION_TYPES.INTEREST:
       case TRANSACTION_TYPES.PENDING_INTEREST:
         return (
           <TransactionDetailsInterest
-            actions={actions}
+            navigateTo={actions.navigateTo}
             transaction={transaction}
             totalInterest={totalInterestEarned}
           />
@@ -151,7 +160,7 @@ class TransactionsIntersection extends Component {
         return (
           <TransactionDetailsRewards
             transaction={transaction}
-            actions={actions}
+            navigateTo={actions.navigateTo}
           />
         );
       case TRANSACTION_TYPES.CANCELED:
