@@ -22,7 +22,6 @@ const base = {
     flexDirection: "row",
     height: headerHeight,
   },
-
   center: {
     alignSelf: "center",
     justifyContent: "center",
@@ -31,7 +30,7 @@ const base = {
   customCenterComponent: {
     flex: 1,
     alignItems: "center",
-    marginTop: heightPercentageToDP("2.5%"),
+    marginTop: heightPercentageToDP("3.5%"),
   },
   left: {
     alignItems: "flex-start",

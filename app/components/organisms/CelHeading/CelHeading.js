@@ -19,6 +19,7 @@ import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 import HodlBanner from "../../atoms/HodlBanner/HodlBanner";
 import Icon from "../../atoms/Icon/Icon";
+import Loader from "../../atoms/Loader/Loader";
 
 @connect(
   state => ({
@@ -251,7 +252,15 @@ class CelHeading extends Component {
       <View style={style.center}>
         {customCenterComponent ? (
           <View style={style.customCenterComponent}>
-            {customCenterComponent}
+            <Loader
+              barColor={STYLES.COLORS.GREEN}
+              backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+              progress={
+                customCenterComponent.currentStep / customCenterComponent.steps
+              }
+              borderColor={STYLES.COLORS.LIGHT_GRAY}
+              width={40}
+            />
           </View>
         ) : (
           <CelText align="center" weight="medium" type="H3">

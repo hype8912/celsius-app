@@ -9,7 +9,6 @@ import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
 // import KYCProfileDetailsStyle from "./KYCProfileDetails.styles";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
@@ -28,7 +27,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 class KYCProfileDetails extends Component {
   static navigationOptions = () => ({
     title: "Profile Details",
-    customCenterComponent: <ProgressBar steps={7} currentStep={1} />,
+    customCenterComponent: { steps: 7, currentStep: 1 },
     headerSameColor: true,
   });
 

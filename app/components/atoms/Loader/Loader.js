@@ -1,15 +1,25 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { View, Animated } from "react-native";
 import STYLES from "../../../constants/STYLES";
+import { widthPercentageToDP } from "../../../utils/styles-util";
 
 class Loader extends Component {
+  static propTypes = {
+    backgroundColor: PropTypes.string,
+    barColor: PropTypes.string,
+    borderColor: PropTypes.string,
+    width: PropTypes.number,
+  };
+
   static defaultProps = {
     height: 10,
-    width: "50%",
+    width: 50,
     borderWidth: 2,
     borderRadius: 4,
     borderColor: "white",
     barColor: STYLES.COLORS.MEDIUM_GRAY3,
+    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
   };
 
   constructor(props) {
@@ -42,9 +52,10 @@ class Loader extends Component {
       borderRadius,
       barColor,
       width,
+      backgroundColor,
     } = this.props;
 
-    const widthInterpolated = this.animation.interpolate({
+    const progress = this.animation.interpolate({
       inputRange: [0, 1],
       outputRange: ["0%", "100%"],
       extrapolate: "clamp",
@@ -53,12 +64,12 @@ class Loader extends Component {
     return (
       <View
         style={{
-          width,
+          width: widthPercentageToDP(`${width}%`),
           height,
           borderColor,
           borderWidth,
           borderRadius,
-          backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+          backgroundColor,
         }}
       >
         <Animated.View
@@ -67,7 +78,7 @@ class Loader extends Component {
             left: 0,
             top: 0,
             bottom: 0,
-            width: widthInterpolated,
+            width: progress,
             backgroundColor: barColor,
             borderRadius: 4,
           }}
