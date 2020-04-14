@@ -51,16 +51,15 @@ class CelModalButton extends Component {
     switch (position) {
       case "single":
         return {
-          borderRadius: 8,
+          borderBottomLeftRadius: 8,
+          borderBottomRightRadius: 8,
         };
       case "left":
         return {
-          borderTopLeftRadius: 8,
           borderBottomLeftRadius: 8,
         };
       case "right":
         return {
-          borderTopRightRadius: 8,
           borderBottomRightRadius: 8,
         };
       default:
@@ -81,13 +80,13 @@ class CelModalButton extends Component {
           onPress={buttonStyle !== "disabled" ? onPress : null}
           disabled={buttonStyle === "disabled"}
         >
-          { loading ? (
+          {loading ? (
             <Spinner size={25} color={STYLES.COLORS.WHITE} />
           ) : (
             <CelText color={buttonColor.color} type={"H4"} weight={"500"}>
               {children}
             </CelText>
-          ) }
+          )}
         </TouchableOpacity>
       </View>
     );
