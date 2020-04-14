@@ -24,8 +24,8 @@ class CoinCards extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      coinsWithAmount: [],
-      coinsWithoutAmount: [],
+      coinsWithTransactions: [],
+      coinsWithoutTransactions: [],
     };
   }
 
@@ -73,18 +73,13 @@ class CoinCards extends Component {
       const coins = [];
       allowedCoins.forEach(coin => {
         const tempCoin = coin;
-        let hasAmount = false;
-        if (coin.amount_usd > 0) {
-          hasAmount = true;
-        }
-
         tempCoin.currency = currenciesRates.find(
           c => c.short === coin.short.toUpperCase()
         );
         tempCoin.graphData = !_.isEmpty(currenciesGraphs[coin.short])
           ? currenciesGraphs[coin.short]
           : null;
-        tempCoin.navigate = hasAmount
+        tempCoin.navigate = Number(coin.has_transaction)
           ? () =>
               navigateTo("CoinDetails", {
                 coin: coin.short,
@@ -95,12 +90,18 @@ class CoinCards extends Component {
         coins.push(coin);
       });
 
-      const coinsWithAmount = _.remove(coins, c => c.amount_usd !== 0);
-      const coinsWithoutAmount = _.remove(coins, c => c.amount_usd === 0);
+      const coinsWithTransactions = _.remove(
+        coins,
+        c => Number(c.has_transaction) !== 0
+      );
+      const coinsWithoutTransactions = _.remove(
+        coins,
+        c => Number(c.has_transaction) === 0
+      );
 
       await this.setState({
-        coinsWithAmount,
-        coinsWithoutAmount,
+        coinsWithTransactions,
+        coinsWithoutTransactions,
       });
     }
   };
@@ -155,7 +156,7 @@ class CoinCards extends Component {
   render() {
     const style = CoinCardsStyle();
 
-    const { coinsWithAmount, coinsWithoutAmount } = this.state;
+    const { coinsWithTransactions, coinsWithoutTransactions } = this.state;
 
     return (
       <View>
@@ -165,7 +166,7 @@ class CoinCards extends Component {
           childrenStyle={style.coinCardContainer}
           isExpanded
         >
-          {this.renderCoinCards(coinsWithAmount)}
+          {this.renderCoinCards(coinsWithTransactions)}
           {this.renderAddMoreCoins()}
         </ExpandableItem>
 
@@ -174,7 +175,7 @@ class CoinCards extends Component {
           margin={"10 0 10 0"}
           childrenStyle={style.coinCardContainer}
         >
-          {this.renderCoinCards(coinsWithoutAmount)}
+          {this.renderCoinCards(coinsWithoutTransactions)}
         </ExpandableItem>
       </View>
     );

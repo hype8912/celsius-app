@@ -66,7 +66,7 @@ class CoinListCard extends Component {
 
   render() {
     const { coin, displayName, currencyRates, onCardPress } = this.props;
-    const amount = coin.amount_usd > 0;
+    const hasTransactions = Number(coin.has_transaction) > 0;
     const style = CoinListCardStyle();
 
     return (
@@ -83,7 +83,7 @@ class CoinListCard extends Component {
             <CelText weight="300" type="H6">
               {displayName}
             </CelText>
-            {amount
+            {hasTransactions
               ? this.coinCardFull(coin)
               : this.coinCardEmpty(coin, currencyRates)}
           </View>
