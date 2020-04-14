@@ -15,14 +15,14 @@ import { TRANSACTION_TYPES } from "../../../constants/DATA";
 class TransactionDetailsInterest extends Component {
   static propTypes = {
     transaction: PropTypes.instanceOf(Object),
-    totalInterest: PropTypes.string,
-    actions: PropTypes.instanceOf(Object),
+    totalInterest: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    navigateTo: PropTypes.func,
   };
   static defaultProps = {};
 
   render() {
     // const style = TransactionInterestCelPayStyle();
-    const { actions, totalInterest, transaction } = this.props;
+    const { navigateTo, totalInterest, transaction } = this.props;
     const transactionProps = transaction.uiProps;
 
     return (
@@ -72,23 +72,20 @@ class TransactionDetailsInterest extends Component {
               <CelButton
                 margin={"20 0 0 0"}
                 basic
-                onPress={() => actions.navigateTo("WalletSettings")}
+                onPress={() => navigateTo("WalletSettings")}
               >
                 Change Settings
               </CelButton>
             </Card>
           ) : null}
 
-          <CelButton
-            margin={"40 0 0 0"}
-            onPress={() => actions.navigateTo("Deposit")}
-          >
+          <CelButton margin={"40 0 0 0"} onPress={() => navigateTo("Deposit")}>
             Deposit coins
           </CelButton>
           <CelButton
             margin={"20 0 0 0"}
             basic
-            onPress={() => actions.navigateTo("WalletLanding")}
+            onPress={() => navigateTo("WalletLanding")}
           >
             Go Back to Wallet
           </CelButton>

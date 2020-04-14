@@ -12,12 +12,13 @@ import CelButton from "../../atoms/CelButton/CelButton";
 class TransactionDetailsDeposits extends Component {
   static propTypes = {
     transaction: PropTypes.string,
+    navigateTo: PropTypes.func,
   };
   static defaultProps = {};
 
   render() {
     // const style = TransactionDetailsDepositsStyle();
-    const { transaction, actions } = this.props;
+    const { transaction, navigateTo } = this.props;
     const transactionProps = transaction.uiProps;
 
     return (
@@ -41,16 +42,13 @@ class TransactionDetailsDeposits extends Component {
             label={"Time"}
             value={moment.utc(transaction.time).format("h:mm A (z)")}
           />
-          <CelButton
-            margin={"40 0 0 0"}
-            onPress={() => actions.navigateTo("Deposit")}
-          >
+          <CelButton margin={"40 0 0 0"} onPress={() => navigateTo("Deposit")}>
             Deposit new coins
           </CelButton>
           <CelButton
             margin={"20 0 0 0"}
             basic
-            onPress={() => actions.navigateTo("WalletLanding")}
+            onPress={() => navigateTo("WalletLanding")}
           >
             Go Back to Wallet
           </CelButton>
