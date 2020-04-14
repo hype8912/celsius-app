@@ -204,13 +204,13 @@ class SecuritySettings extends Component {
         </IconButton>
 
 
-        {/* <CelButton*/}
-        {/*  margin="0 0 30 0"*/}
-        {/*  basic*/}
-        {/*  onPress={() => {}}*/}
-        {/* >*/}
-        {/*  User Actions*/}
-        {/* </CelButton>*/}
+         <CelButton
+          margin="0 0 30 0"
+          basic
+          onPress={() => {actions.navigateTo('ActionsByUser')}}
+         >
+          User Actions
+         </CelButton>
 
 
         <CelButton onPress={this.logoutUser}>
