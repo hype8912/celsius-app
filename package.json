@@ -78,6 +78,7 @@
     "react-native-image-crop-picker": "^0.26.1",
     "react-native-markdown-renderer": "^3.2.8",
     "react-native-mixpanel": "^1.1.14",
+    "react-native-modal": "^11.5.6",
     "react-native-permissions": "^2.0.3",
     "react-native-picker-select": "^6.3.3",
     "react-native-push-notification": "^3.1.9",
