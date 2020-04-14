@@ -49,7 +49,10 @@ class ContactRow extends Component {
       : require("../../../../assets/images/empty-profile/empty-profile.png");
     const networkImage = this.getNetworkImageUrl(contact.item.network);
 
-    const name = contact.item.name.includes('null') ? contact.item.name.split(" ")[0] : contact.item.name;
+    const name =
+      contact.item.name && contact.item.name.includes("null")
+        ? contact.item.name.split(" ")[0]
+        : contact.item.name;
 
     return (
       <TouchableOpacity onPress={onPress} style={styles.container}>

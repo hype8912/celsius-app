@@ -32,10 +32,14 @@ class TransactionsIntersection extends Component {
   static propTypes = {};
   static defaultProps = {};
 
-  static navigationOptions = () => ({
-    title: "Transaction Details",
-    right: "profile",
-  });
+  static navigationOptions = ({ navigation }) => {
+    const hideBack = navigation.getParam("hideBack");
+    return {
+      title: "Transaction Details",
+      right: "profile",
+      hideBack,
+    };
+  };
 
   componentDidMount = async () => {
     const { actions, navigation } = this.props;
@@ -67,6 +71,11 @@ class TransactionsIntersection extends Component {
       callsInProgress
     );
 
+    const cancelingCelPay = apiUtil.areCallsInProgress(
+      [API.CANCEL_TRANSFER],
+      callsInProgress
+    );
+
     if (
       !transaction ||
       (loadingTransactionDetails &&
@@ -82,7 +91,12 @@ class TransactionsIntersection extends Component {
     switch (transaction.type) {
       case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
       case TRANSACTION_TYPES.DEPOSIT_PENDING:
-        return <TransactionDetailsDeposits transaction={transaction} />;
+        return (
+          <TransactionDetailsDeposits
+            transaction={transaction}
+            navigateTo={actions.navigateTo}
+          />
+        );
       case TRANSACTION_TYPES.LOAN_INTEREST:
       case TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT:
       case TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED:
@@ -94,7 +108,7 @@ class TransactionsIntersection extends Component {
         return (
           <TransactionDetailsLoans
             transaction={transaction}
-            actions={actions}
+            navigateTo={actions.navigateTo}
           />
         );
       case TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION:
@@ -105,18 +119,32 @@ class TransactionsIntersection extends Component {
       case TRANSACTION_TYPES.CELPAY_RECEIVED:
       case TRANSACTION_TYPES.CELPAY_RETURNED:
       case TRANSACTION_TYPES.CELPAY_SENT:
-        return <TransactionDetailsCelPay transaction={transaction} />;
+        return (
+          <TransactionDetailsCelPay
+            transaction={transaction}
+            navigateTo={actions.navigateTo}
+            cancelTransfer={actions.cancelTransfer}
+            callsInProgress={callsInProgress}
+            cancelingCelPay={cancelingCelPay}
+          />
+        );
       case TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED:
       case TRANSACTION_TYPES.WITHDRAWAL_PENDING:
       case TRANSACTION_TYPES.WITHDRAWAL_CANCELED:
       case TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION:
       case TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW:
-        return <TransactionDetailsWithdraw transaction={transaction} />;
+        return (
+          <TransactionDetailsWithdraw
+            transaction={transaction}
+            cancelWithdrawal={actions.cancelWithdrawal}
+            navigateTo={actions.navigateTo}
+          />
+        );
       case TRANSACTION_TYPES.INTEREST:
       case TRANSACTION_TYPES.PENDING_INTEREST:
         return (
           <TransactionDetailsInterest
-            actions={actions}
+            navigateTo={actions.navigateTo}
             transaction={transaction}
             totalInterest={totalInterestEarned}
           />
@@ -132,7 +160,7 @@ class TransactionsIntersection extends Component {
         return (
           <TransactionDetailsRewards
             transaction={transaction}
-            actions={actions}
+            navigateTo={actions.navigateTo}
           />
         );
       case TRANSACTION_TYPES.CANCELED:

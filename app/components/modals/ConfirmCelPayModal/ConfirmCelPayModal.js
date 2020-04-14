@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import ConfirmCelPayModalStyle from "./ConfirmCelPayModal.styles";
-import { MODALS } from "../../../constants/UI";
+import { MODALS, THEMES } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
@@ -17,6 +17,7 @@ import formatter from "../../../utils/formatter";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import CelModal from "../CelModal/CelModal";
+import { getTheme } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -56,6 +57,7 @@ class ConfirmCelPayModal extends Component {
     const newBalanceCrypto =
       coinData && coinData.amount - formData.amountCrypto;
     const newBalanceUsd = coinData && coinData.amount_usd - formData.amountUsd;
+    const theme = getTheme();
     const isLoading = apiUtil.areCallsInProgress(
       [API.CREATE_TRANSFER],
       callsInProgress
@@ -149,13 +151,15 @@ class ConfirmCelPayModal extends Component {
                     <CelText weight="600" type="H4">
                       {formData.friend.item.name}
                     </CelText>
-                    {formData.friend.item.email ? <CelText
-                      style={{ paddingTop: 5 }}
-                      color={STYLES.COLORS.CELSIUS_BLUE}
-                      type="H6"
-                    >
-                      {formData.friend.item.email}
-                    </CelText>  : null}
+                    {formData.friend.item.email ? (
+                      <CelText
+                        style={{ paddingTop: 5 }}
+                        color={STYLES.COLORS.CELSIUS_BLUE}
+                        type="H6"
+                      >
+                        {formData.friend.item.email}
+                      </CelText>
+                    ) : null}
                   </View>
                 )}
                 <View style={{ paddingTop: 10 }}>
@@ -181,9 +185,14 @@ class ConfirmCelPayModal extends Component {
                     margin="5 0 5 0"
                     type="H6"
                   >
-                   Note: <CelText style={{ color: STYLES.COLORS.MEDIUM_GRAY }} italic type="H6">
-                    {formData.message}
-                  </CelText>
+                    Note:{" "}
+                    <CelText
+                      style={{ color: STYLES.COLORS.MEDIUM_GRAY }}
+                      italic
+                      type="H6"
+                    >
+                      {formData.message}
+                    </CelText>
                   </CelText>
                 </View>
               )}
@@ -191,11 +200,24 @@ class ConfirmCelPayModal extends Component {
           ) : null}
 
           <Card
-            color={STYLES.COLORS.LIGHT_GRAY}
+            color={
+              theme === THEMES.LIGHT
+                ? STYLES.COLORS.LIGHT_GRAY
+                : STYLES.COLORS.DARKEST_HEADER
+            }
             margin={"20 0 0 0"}
             size={"fill"}
           >
-            <CelText align={"center"} weight={"300"} type={"H6"} color={STYLES.COLORS.DARK_GRAY7}>
+            <CelText
+              align={"center"}
+              weight={"300"}
+              type={"H6"}
+              color={
+                theme === THEMES.LIGHT
+                  ? STYLES.COLORS.DARK_GRAY7
+                  : STYLES.COLORS.WHITE_OPACITY5
+              }
+            >
               Follow instructions in email to complete this CelPay.
             </CelText>
           </Card>

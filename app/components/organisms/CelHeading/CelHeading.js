@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import CelHeadingStyle from "./CelHeading.styles";
-import { getPadding } from "../../../utils/styles-util";
+import { getPadding, getTheme } from "../../../utils/styles-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { THEMES } from "../../../constants/UI";
 import CelInput from "../../atoms/CelInput/CelInput";
@@ -119,6 +119,7 @@ class CelHeading extends Component {
 
     const rightType = formData.activeSearch ? "cancel" : right;
     const style = CelHeadingStyle();
+    const theme = getTheme();
 
     return {
       action: (
@@ -152,7 +153,11 @@ class CelHeading extends Component {
             name={"Info"}
             height={30}
             width={30}
-            fill={STYLES.COLORS.DARK_GRAY3}
+            fill={
+              theme === THEMES.LIGHT
+                ? STYLES.COLORS.DARK_GRAY3
+                : STYLES.COLORS.WHITE_OPACITY5
+            }
           />
         </TouchableOpacity>
       ),
