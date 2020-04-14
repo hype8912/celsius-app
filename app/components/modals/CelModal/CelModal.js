@@ -204,7 +204,7 @@ class CelModal extends Component {
         backdropTransitionInTiming={800}
         backdropTransitionOutTiming={800}
         onBackdropPress={() => actions.closeModal()}
-        useNativeDriver
+        useNativeDriver={!this.isIos}
       >
         <View style={[style.wrapper, modalPosition]}>
           <View style={style.modal}>
