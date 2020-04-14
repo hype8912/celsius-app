@@ -65,7 +65,7 @@ class WithdrawAddressOverview extends Component {
   renderCoinDetails = key => {
     const { currencies } = this.props;
     const coin = currencies.find(c => c.short === key);
-    return `${formatter.capitalize(coin.name)} - ${coin.short}`;
+    return `${formatter.capitalize(coin.name)} (${coin.short})`;
   };
 
   renderNoWithdrawalAddressCoins = () => {
@@ -113,6 +113,7 @@ class WithdrawAddressOverview extends Component {
                 imageUrl={imageUrl}
                 key={key}
                 coinShort={key}
+                coinName={this.renderCoinDetails(key)}
                 withdrawalAddress={withdrawalAddresses[key]}
                 onPress={() => this.handlePress(key)}
                 onPressAddressLabel={() =>
