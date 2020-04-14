@@ -4,7 +4,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Keyboard,
-  Platform,
   TouchableWithoutFeedback,
 } from "react-native";
 import Modal from "react-native-modal";
@@ -20,6 +19,7 @@ import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import { getTheme } from "../../../utils/styles-util";
+import { isIos } from "../../../utils/ui-util";
 
 @connect(
   state => ({
@@ -159,14 +159,10 @@ class CelModal extends Component {
     );
   };
 
-  isIos = () => {
-    return Platform.OS === "ios";
-  };
-
   backdrop = () => {
     const { actions } = this.props;
     const tintColor = this.getTintColor();
-    return this.isIos() ? (
+    return isIos() ? (
       <TouchableWithoutFeedback
         onPress={() => {
           actions.closeModal();
@@ -204,7 +200,7 @@ class CelModal extends Component {
         backdropTransitionInTiming={800}
         backdropTransitionOutTiming={800}
         onBackdropPress={() => actions.closeModal()}
-        useNativeDriver={!this.isIos}
+        useNativeDriver={!isIos()}
       >
         <View style={[style.wrapper, modalPosition]}>
           <View style={style.modal}>
