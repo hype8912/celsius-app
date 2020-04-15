@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { View, Animated } from "react-native";
+import { View, Animated, Easing } from "react-native";
 import PropTypes from "prop-types";
 
 import CelText from "../../atoms/CelText/CelText";
@@ -22,13 +22,15 @@ class CoinGridCard extends Component {
     onCardPress: PropTypes.func,
     graphData: PropTypes.instanceOf(Object),
     theme: PropTypes.oneOf(Object.values(THEMES)),
+    offset: PropTypes.number,
   };
+
+  positionAnim = new Animated.Value(0);
+  opacityAnim = new Animated.Value(0);
 
   constructor(props) {
     super(props);
     this.state = {
-      fadeAnim: new Animated.Value(0),
-
       dateArray: [],
       priceArray: [],
       coinPriceChange: null,
@@ -39,11 +41,6 @@ class CoinGridCard extends Component {
   async componentDidMount() {
     const { graphData, currencyRates, coin } = this.props;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
-    // Graph animation
-    Animated.timing(this.state.fadeAnim, {
-      toValue: 1,
-      duration: 5000,
-    }).start();
 
     const coinInterest = interestUtil.getUserInterestForCoin(coin.short);
 
@@ -62,6 +59,36 @@ class CoinGridCard extends Component {
       }, 500);
     }
   }
+
+  animate = () => {
+    const { offset } = this.props;
+    Animated.parallel([
+      Animated.timing(this.opacityAnim, {
+        toValue: 1,
+        duration: 1000,
+        delay: offset,
+        easing: Easing.bezier(0.5, 0, 0.5, 1),
+      }),
+      Animated.timing(this.positionAnim, {
+        toValue: 1,
+        duration: 250,
+        delay: offset,
+        easing: Easing.bezier(0.5, 0, 0.5, 1),
+      }),
+    ]).start();
+
+    return {
+      opacity: this.opacityAnim,
+      transform: [
+        {
+          translateY: this.positionAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [1000, 0],
+          }),
+        },
+      ],
+    };
+  };
 
   coinCardEmpty = () => (
     <View>
@@ -117,50 +144,50 @@ class CoinGridCard extends Component {
 
     const padding = graphData ? "12 0 0 0" : undefined; // undefined so it will fallback to default card prop padding
 
-    // Todo(ns): adjust graph size according to Card size prop
+    // console.log("animatedStyles", animatedStyles);
 
     return (
-      <Card size="half" padding={padding} onPress={onCardPress}>
-        <View style={style.cardInnerView}>
-          <View style={style.wrapper}>
-            <View style={style.coinTextWrapper}>
-              <CelText weight="300" type="H6">
-                {displayName}
-              </CelText>
-              {coinInterest.eligible && (
-                <CelText color={STYLES.COLORS.GREEN} type="H7">
-                  {coinInterest.display}
+      <Animated.View style={this.animate()}>
+        <Card size="half" padding={padding} onPress={onCardPress}>
+          <View style={style.cardInnerView}>
+            <View style={style.wrapper}>
+              <View style={style.coinTextWrapper}>
+                <CelText weight="300" type="H6">
+                  {displayName}
                 </CelText>
-              )}
+                {coinInterest.eligible && (
+                  <CelText color={STYLES.COLORS.GREEN} type="H7">
+                    {coinInterest.display}
+                  </CelText>
+                )}
+              </View>
+              {hasTransactions
+                ? this.coinCardFull(coin)
+                : this.coinCardEmpty(coin, currencyRates)}
             </View>
-            {hasTransactions
-              ? this.coinCardFull(coin)
-              : this.coinCardEmpty(coin, currencyRates)}
           </View>
-        </View>
 
-        {graphData && dateArray.length > 0 && priceArray.length > 0 ? (
-          <Animated.View
-            style={{ ...this.props.style, opacity: this.state.fadeAnim }}
-          >
-            <Graph
-              key={coin.short}
-              dateArray={dateArray}
-              priceArray={priceArray}
-              rate={coinPriceChange}
-              height={heightPercentageToDP("10%")}
-              style={{
-                borderBottomRightRadius: 8,
-                borderBottomLeftRadius: 8,
-                overflow: "hidden",
-              }}
-              theme={theme}
-            />
-          </Animated.View>
-        ) : (
-          <View style={{ marginBottom: "45%" }} />
-        )}
-      </Card>
+          {graphData && dateArray.length > 0 && priceArray.length > 0 ? (
+            <View style={{ ...this.props.style }}>
+              <Graph
+                key={coin.short}
+                dateArray={dateArray}
+                priceArray={priceArray}
+                rate={coinPriceChange}
+                height={heightPercentageToDP("10%")}
+                style={{
+                  borderBottomRightRadius: 8,
+                  borderBottomLeftRadius: 8,
+                  overflow: "hidden",
+                }}
+                theme={theme}
+              />
+            </View>
+          ) : (
+            <View style={{ marginBottom: "45%" }} />
+          )}
+        </Card>
+      </Animated.View>
     );
   };
 }

@@ -11,6 +11,9 @@ import CoinListCard from "../../molecules/CoinListCard/CoinListCard";
 import Icon from "../../atoms/Icon/Icon";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 
+const OFFSET = 100;
+const BASE_OFFSET = 500;
+
 class CoinCards extends Component {
   static propTypes = {
     activeView: PropTypes.string,
@@ -106,15 +109,61 @@ class CoinCards extends Component {
     }
   };
 
+  applyOffset = (items, numCols) => {
+    const diagonals = this.findDiagonals(items, numCols);
+
+    diagonals.forEach((diag, i) => {
+      diag.forEach(elm => {
+        // eslint-disable-next-line no-param-reassign
+        items[elm].offset = i * OFFSET + BASE_OFFSET;
+      });
+    });
+
+    return items;
+  };
+
+  findDiagonals = (items, numCols) => {
+    const offsets = [];
+    let i = 0;
+    const numRows = Math.ceil(items.length / numCols);
+
+    while (i < numRows) {
+      offsets.push(this.getAscDiagonal(i, 0, numCols, items.length));
+      i++;
+    }
+    i--;
+    for (let j = 1; j < numCols; j++) {
+      offsets.push(this.getAscDiagonal(i, j, numCols, items.length));
+    }
+
+    return offsets;
+  };
+
+  getAscDiagonal = (i, j, numCols, maxLength) => {
+    const diagonal = [];
+    while (i >= 0 && j < numCols) {
+      const mappedIndex = i * numCols + j;
+      if (mappedIndex < maxLength) diagonal.push(mappedIndex);
+      // eslint-disable-next-line no-param-reassign
+      i--;
+      // eslint-disable-next-line no-param-reassign
+      j++;
+    }
+    return diagonal;
+  };
+
   renderCoinCards = c => {
     const { activeView } = this.props;
 
     const isGrid = activeView === WALLET_LANDING_VIEW_TYPES.GRID;
+    const processedGridItems = this.applyOffset([...c], 2);
+    const processedListItems = this.applyOffset([...c], 1);
 
     // Render grid item
     if (isGrid) {
-      return c.map(coin => (
+      return processedGridItems.map(coin => (
         <CoinGridCard
+          offset={coin.offset}
           key={coin.short}
           coin={coin}
           displayName={coin.currency.displayName}
@@ -125,8 +174,9 @@ class CoinCards extends Component {
       ));
     }
     // Render list item
-    return c.map(coin => (
+    return processedListItems.map(coin => (
       <CoinListCard
+        offset={coin.offset}
         key={coin.short}
         coin={coin}
         displayName={coin.currency.displayName}
