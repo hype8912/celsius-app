@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import store from "../../../redux/store";
+import { lookup } from "country-data";
+import { Onfido, OnfidoDocumentType } from "@onfido/react-native-sdk";
 
+import store from "../../../redux/store";
 import * as appActions from "../../../redux/actions";
 import { navigateTo } from "../../../redux/nav/navActions";
 import CelText from "../../atoms/CelText/CelText";
@@ -15,6 +17,7 @@ import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import { PRIMETRUST_KYC_STATES } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -46,52 +49,53 @@ class KYCVerifyIdentity extends Component {
     actions.getKYCDocuments();
   }
 
-  selectDocument = type => {
-    const { actions } = this.props;
-    actions.updateFormFields({
-      documentType: type,
-      front: "",
-      back: "",
-    });
+  selectDocumentType = async type => {
+    try {
+      const { actions, user } = this.props;
+      const token = await actions.getMobileSDKToken();
 
-    actions.activateCamera({
-      cameraField: "front",
-      cameraHeading: "Take a Front side photo",
-      cameraCopy:
-        "Center the front side of your document in the marked area. Be sure the photo is clear and the document details are easy to read.",
-      cameraType: "back",
-      mask: "document",
-    });
+      let docType = OnfidoDocumentType.PASSPORT;
+      if (type === "driving_licence")
+        docType = OnfidoDocumentType.DRIVING_LICENCE;
+      if (type === "identity_card")
+        docType = OnfidoDocumentType.NATIONAL_IDENTITY_CARD;
 
-    actions.navigateTo("CameraScreen", {
-      hideBack: true,
-      onSave: this.saveFrontPhoto,
-    });
-  };
+      const countryCode = lookup.countries({ name: user.citizenship })[0]
+        .alpha3;
 
-  saveFrontPhoto = frontPhoto => {
-    const { actions, formData } = this.props;
-
-    actions.updateFormField("front", frontPhoto);
-
-    if (formData.documentType !== "passport") {
-      actions.activateCamera({
-        cameraField: "back",
-        cameraHeading: "Take a Back side photo",
-        cameraCopy:
-          "Now, turn the back side of your document. Center it in the marked area, and make sure that all the details are easy to read.",
-        cameraType: "back",
-        mask: "document",
-      });
-
-      actions.navigateTo("CameraScreen", {
-        onSave: backPhoto => {
-          actions.updateFormField("back", backPhoto);
-          actions.navigateTo("KYCCheckPhotos");
+      const onfidoRes = await Onfido.start({
+        sdkToken: token,
+        flowSteps: {
+          captureDocument: { docType, countryCode },
         },
       });
+
+      const frontImageId = onfidoRes.document.front
+        ? onfidoRes.document.front.id
+        : null;
+      const backImageId = onfidoRes.document.back
+        ? onfidoRes.document.back.id
+        : null;
+
+      actions.updateFormFields({
+        frontImageId,
+        backImageId,
+      });
+      this.submitKYCDocs();
+    } catch (e) {
+      // console.log({ e })
+    }
+  };
+
+  submitKYCDocs = () => {
+    const { actions, formData } = this.props;
+
+    // TODO
+    // actions.createKYCDocs();
+    if (PRIMETRUST_KYC_STATES.includes(formData.state)) {
+      actions.navigateTo("KYCAddressProof");
     } else {
-      actions.navigateTo("KYCCheckPhotos");
+      actions.navigateTo("KYCTaxpayer");
     }
   };
 
@@ -138,7 +142,7 @@ class KYCVerifyIdentity extends Component {
         {availableDocs.map(d => (
           <Card
             key={d.value}
-            onPress={() => this.selectDocument(d.value)}
+            onPress={() => this.selectDocumentType(d.value)}
             padding="20 20 20 20"
             styles={{
               flexDirection: "row",

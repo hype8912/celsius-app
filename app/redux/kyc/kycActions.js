@@ -11,6 +11,9 @@ import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import userKYCService from "../../services/user-kyc-service";
+import Constants from "../../../constants";
+
+const { ONFIDO_API_KEY } = Constants;
 
 export {
   updateProfileInfo,
@@ -26,6 +29,7 @@ export {
   getPrimeTrustToULink,
   profileTaxpayerInfo,
   getKYCDocTypes,
+  getMobileSDKToken,
 };
 
 /**
@@ -509,3 +513,70 @@ function getKYCDocTypesSuccess(kycDocTypes) {
     kycDocTypes,
   };
 }
+
+/**
+ * Gets Onfido mobile SDK token for user
+ */
+function getMobileSDKToken() {
+  return async (dispatch, getState) => {
+    try {
+      const { profile } = getState().user;
+      const applicant = {
+        first_name: profile.first_name,
+        last_name: profile.last_name,
+      };
+
+      const resApplicant = await fetch("https://api.onfido.com/v2/applicants", {
+        method: "POST",
+        headers: {
+          Authorization: `Token token=${ONFIDO_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(applicant),
+      });
+
+      if (resApplicant.ok) {
+        const data = await resApplicant.json();
+
+        const resSDKToken = await fetch("https://api.onfido.com/v3/sdk_token", {
+          method: "POST",
+          headers: {
+            Authorization: `Token token=${ONFIDO_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            applicant_id: data.id,
+            application_id: "network.celsius.wallet",
+          }),
+        });
+
+        if (resSDKToken.ok) {
+          const { token } = await resSDKToken.json();
+          return token;
+        }
+      }
+    } catch (e) {
+      // console.log({ e })
+    }
+  };
+}
+
+// function fetchOnfidoDocument(documentId) {
+//   return async (dispatch) => {
+//     try {
+//       const resDoc = await fetch(`https://api.onfido.com/v3/documents/${documentId}/download`, {
+//         headers: {
+//           'Authorization': `Token token=${ONFIDO_API_KEY}`,
+//           'Content-Type': 'application/json'
+//         }
+//       })
+//
+//       if (resDoc.ok) {
+//         const data = await resDoc.json()
+//         return data;
+//       }
+//     } catch(e) {
+//       console.log({ e })
+//     }
+//   }
+// }
