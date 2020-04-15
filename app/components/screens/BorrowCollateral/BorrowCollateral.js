@@ -11,7 +11,6 @@ import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import CollateralCoinCard from "../../molecules/CollateralCoinCard/CollateralCoinCard";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
@@ -27,6 +26,7 @@ class BorrowCollateral extends Component {
   static navigationOptions = () => ({
     title: "Collateral",
     right: "profile",
+    customCenterComponent: { steps: 8, currentStep: 3, flowProgress: true },
   });
 
   handleSelectCoin = coin => {
@@ -47,7 +47,6 @@ class BorrowCollateral extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <HeadingProgressBar steps={6} currentStep={2} />
         <RegularLayout fabType="hide">
           <View style={{ alignItems: "center" }}>
             <CelText

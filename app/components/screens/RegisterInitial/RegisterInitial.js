@@ -32,7 +32,7 @@ import calculatePasswordScore from "../../../utils/password-util";
 class RegisterInitial extends Component {
   static navigationOptions = () => ({
     right: "login",
-    customCenterComponent: { steps: 3, currentStep: 1 },
+    customCenterComponent: { steps: 3, currentStep: 1, flowProgress: false },
     headerSameColor: true,
   });
 

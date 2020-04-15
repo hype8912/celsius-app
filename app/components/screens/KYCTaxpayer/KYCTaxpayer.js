@@ -32,7 +32,7 @@ class KYCTaxpayer extends Component {
 
   static navigationOptions = () => ({
     title: "Taxpayer ID",
-    customCenterComponent: { steps: 7, currentStep: 6 },
+    customCenterComponent: { steps: 7, currentStep: 6, flowProgress: false },
     headerSameColor: true,
   });
 

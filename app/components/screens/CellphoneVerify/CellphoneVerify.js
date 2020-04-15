@@ -23,7 +23,7 @@ class CellphoneVerify extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    customCenterComponent: { steps: 5, currentStep: 3 },
+    customCenterComponent: { steps: 5, currentStep: 3, flowProgress: false },
   });
 
   constructor(props) {

@@ -18,7 +18,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 )
 class CellphoneEnter extends Component {
   static navigationOptions = () => ({
-    customCenterComponent: { steps: 5, currentStep: 2 },
+    customCenterComponent: { steps: 5, currentStep: 2, flowProgress: false },
   });
 
   componentDidMount() {

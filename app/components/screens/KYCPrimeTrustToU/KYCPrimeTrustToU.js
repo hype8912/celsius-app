@@ -27,7 +27,7 @@ class KYCPrimeTrustToU extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    customCenterComponent: { steps: 7, currentStep: 7 },
+    customCenterComponent: { steps: 7, currentStep: 7, flowProgress: false },
     headerSameColor: true,
   });
 

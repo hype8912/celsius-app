@@ -34,7 +34,7 @@ import {
 class KYCVerifyID extends Component {
   static navigationOptions = () => ({
     title: "Verify ID",
-    customCenterComponent: { steps: 4, currentStep: 4 },
+    customCenterComponent: { steps: 4, currentStep: 4, flowProgress: false },
     headerSameColor: true,
   });
 

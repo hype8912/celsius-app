@@ -30,7 +30,7 @@ class KYCAddressInfo extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    customCenterComponent: { steps: 7, currentStep: 2 },
+    customCenterComponent: { steps: 7, currentStep: 2, flowProgress: false },
     headerSameColor: true,
   });
 

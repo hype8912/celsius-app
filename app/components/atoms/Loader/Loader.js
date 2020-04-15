@@ -10,6 +10,7 @@ class Loader extends Component {
     barColor: PropTypes.string,
     borderColor: PropTypes.string,
     width: PropTypes.number,
+    flowProgress: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -20,6 +21,7 @@ class Loader extends Component {
     borderColor: "white",
     barColor: STYLES.COLORS.MEDIUM_GRAY3,
     backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    flowProgress: false,
   };
 
   constructor(props) {
@@ -29,7 +31,7 @@ class Loader extends Component {
       progress: 0,
     };
   }
-  // lifecycle methods
+
   componentWillMount() {
     this.animation = new Animated.Value(this.props.progress);
   }
@@ -42,8 +44,6 @@ class Loader extends Component {
     }
   }
 
-  // event hanlders
-  // rendering methods
   render() {
     const {
       height,
@@ -53,6 +53,7 @@ class Loader extends Component {
       barColor,
       width,
       backgroundColor,
+      flowProgress,
     } = this.props;
 
     const progress = this.animation.interpolate({
@@ -62,27 +63,50 @@ class Loader extends Component {
     });
 
     return (
-      <View
-        style={{
-          width: widthPercentageToDP(`${width}%`),
-          height,
-          borderColor,
-          borderWidth,
-          borderRadius,
-          backgroundColor,
-        }}
-      >
-        <Animated.View
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: progress,
-            backgroundColor: barColor,
-            borderRadius: 4,
-          }}
-        />
+      <View>
+        {flowProgress ? (
+          <View
+            style={{
+              width: widthPercentageToDP(`${width}%`),
+              height: 4,
+              backgroundColor,
+            }}
+          >
+            <Animated.View
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: progress,
+                backgroundColor: barColor,
+              }}
+            />
+          </View>
+        ) : (
+          <View
+            style={{
+              width: widthPercentageToDP(`${width}%`),
+              height,
+              borderColor,
+              borderWidth,
+              borderRadius,
+              backgroundColor,
+            }}
+          >
+            <Animated.View
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: progress,
+                backgroundColor: barColor,
+                borderRadius: 4,
+              }}
+            />
+          </View>
+        )}
       </View>
     );
   }

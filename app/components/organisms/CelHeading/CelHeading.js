@@ -250,7 +250,7 @@ class CelHeading extends Component {
 
     return (
       <View style={style.center}>
-        {customCenterComponent ? (
+        {customCenterComponent && !customCenterComponent.flowProgress ? (
           <View style={style.customCenterComponent}>
             <Loader
               barColor={STYLES.COLORS.GREEN}
@@ -273,7 +273,7 @@ class CelHeading extends Component {
 
   getContent = () => {
     const { formData, hodlStatus, actions, activeScreen } = this.props;
-    const scene = this.props.scene.descriptor;
+    const sceneOptions = this.props.scene.descriptor.options;
     const style = CelHeadingStyle();
     const paddings = getPadding("0 15 0 15");
     const leftStyle = formData.activeSearch
@@ -289,9 +289,9 @@ class CelHeading extends Component {
         />
         <View style={[style.content]}>
           <View style={leftStyle}>
-            {this.getLeftContent(scene.options)}
+            {this.getLeftContent(sceneOptions)}
             {formData.activeSearch &&
-              scene.state.routeName !== "VerifyProfile" && (
+              sceneOptions.state.routeName !== "VerifyProfile" && (
                 <View
                   style={[
                     {
@@ -316,9 +316,23 @@ class CelHeading extends Component {
                 </View>
               )}
           </View>
-          {!formData.activeSearch && this.getCenterContent(scene.options)}
-          <View style={style.right}>{this.getRightContent(scene.options)}</View>
+          {!formData.activeSearch && this.getCenterContent(sceneOptions)}
+          <View style={style.right}>{this.getRightContent(sceneOptions)}</View>
         </View>
+        {sceneOptions.customCenterComponent &&
+        sceneOptions.customCenterComponent.flowProgress ? (
+          <Loader
+            flowProgress={sceneOptions.customCenterComponent.flowProgress}
+            barColor={STYLES.COLORS.GREEN}
+            backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+            progress={
+              sceneOptions.customCenterComponent.currentStep /
+              sceneOptions.customCenterComponent.steps
+            }
+            borderColor={STYLES.COLORS.LIGHT_GRAY}
+            width={100}
+          />
+        ) : null}
       </View>
     );
   };
