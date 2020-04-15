@@ -1,0 +1,25 @@
+{
+  "name": "onfido-react-native-sdk",
+  "version": "0.1.1-beta.0",
+  "summary": "Onfido React Native SDK",
+  "description": "onfido-react-native-sdk",
+  "homepage": "https://github.com/onfido/onfido-react-native-sdk",
+  "license": "MIT",
+  "authors": {
+    "Your Name": "yourname@email.com"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source": {
+    "git": "https://github.com/onfido/onfido-react-native-sdk.git",
+    "tag": "0.1.1-beta.0"
+  },
+  "source_files": "ios/**/*.{h,m,swift}",
+  "exclude_files": "ios/OnfidoSdkTests/",
+  "requires_arc": true,
+  "dependencies": {
+    "React": [],
+    "Onfido": ["17.0"]
+  }
+}

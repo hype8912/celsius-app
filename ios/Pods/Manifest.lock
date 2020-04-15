@@ -157,6 +157,10 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - Onfido (17.0.0)
+  - onfido-react-native-sdk (0.1.1-beta.0):
+    - Onfido (= 17.0)
+    - React
   - Permission-Camera (2.0.10):
     - RNPermissions
   - Permission-Contacts (2.0.10):
@@ -479,6 +483,7 @@ DEPENDENCIES:
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - Mixpanel
+  - "onfido-react-native-sdk (from `../node_modules/@onfido/react-native-sdk`)"
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera.podspec`)
   - Permission-Contacts (from `../node_modules/react-native-permissions/ios/Contacts.podspec`)
   - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse.podspec`)
@@ -538,7 +543,7 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/cocoapods/specs.git:
     - AppAuth
     - AppCenter
     - AppCenterReactNativeShared
@@ -567,6 +572,7 @@ SPEC REPOS:
     - JWT
     - Mixpanel
     - nanopb
+    - Onfido
     - Protobuf
     - QBImagePickerController
     - RSKImageCropper
@@ -592,6 +598,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  onfido-react-native-sdk:
+    :path: "../node_modules/@onfido/react-native-sdk"
   Permission-Camera:
     :path: "../node_modules/react-native-permissions/ios/Camera.podspec"
   Permission-Contacts:
@@ -739,6 +747,8 @@ SPEC CHECKSUMS:
   JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
   Mixpanel: 446b6e7713aa34a9a3516ff7648d56551384fc94
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  Onfido: f0a5c5ad9f523a9fda1e9b2f61c9ffee753f7941
+  onfido-react-native-sdk: 25f4ad00119f1c71d98e64ce4a883a0240e69e36
   Permission-Camera: a8f6007d17b02ed8a2d6bac1c37c2fd5df9b4e8a
   Permission-Contacts: ac39cd8b11b8931482bf68fc3fa08dbd7ece909d
   Permission-LocationWhenInUse: 4a2764d2efe09a1f6c7a00dfbbb863149240311a
@@ -801,4 +811,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a981a1ef5beaa61a94a8f3f0dfec42f28bcb4895
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.7.1

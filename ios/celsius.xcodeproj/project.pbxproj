@@ -78,6 +78,7 @@
 		A2DEC524237EB337002537E9 /* Barlow-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2DEC512237EB337002537E9 /* Barlow-BlackItalic.ttf */; };
 		A2FC8110239E50E400193CE5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2FC810F239E50E400193CE5 /* GoogleService-Info.plist */; };
 		A7C98E0816A44414BE281CA2 /* BarlowSemiCondensed-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 930834B4752C4C6794597E0A /* BarlowSemiCondensed-ExtraLight.otf */; };
+		A83A19252447065500CDF668 /* SwiftVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83A19242447065500CDF668 /* SwiftVersion.swift */; };
 		AE3A3870450843E08673D30D /* BarlowSemiCondensed-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9753A59872174098836C7735 /* BarlowSemiCondensed-SemiBold.otf */; };
 		B269EDA9437D4215BBA3DA17 /* Barlow-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7BADDDB3B43109D1C9C17 /* Barlow-MediumItalic.ttf */; };
 		B3140E49E42646769E0B1548 /* BarlowSemiCondensed-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = FDEBBAEE44EA4067BDAEF33E /* BarlowSemiCondensed-Medium.otf */; };
@@ -192,6 +193,7 @@
 		A2FC810F239E50E400193CE5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A5A4DD3C120441DEBC7C28BA /* BarlowCondensed-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BarlowCondensed-Medium.otf"; path = "../assets/fonts/Barlow/BarlowCondensed-Medium.otf"; sourceTree = "<group>"; };
 		A5F7EAF9B54A46C8BB8EAD8F /* BarlowCondensed-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BarlowCondensed-ExtraBold.otf"; path = "../assets/fonts/Barlow/BarlowCondensed-ExtraBold.otf"; sourceTree = "<group>"; };
+		A83A19242447065500CDF668 /* SwiftVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftVersion.swift; sourceTree = "<group>"; };
 		AA5F6F6B043E464193D57B46 /* BarlowCondensed-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BarlowCondensed-LightItalic.otf"; path = "../assets/fonts/Barlow/BarlowCondensed-LightItalic.otf"; sourceTree = "<group>"; };
 		AEFF2D05579A162FC964D118 /* libPods-celsius.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-celsius.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3EE884451A1454DA0C6AF58 /* BarlowSemiCondensed-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BarlowSemiCondensed-LightItalic.otf"; path = "../assets/fonts/Barlow/BarlowSemiCondensed-LightItalic.otf"; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A83A19242447065500CDF668 /* SwiftVersion.swift */,
 				13B07FAE1A68108700A75B9A /* celsius */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* celsiusTests */,
@@ -476,6 +479,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				F9A5F394E7E855B2BE23E703 /* [CP] Copy Pods Resources */,
+				C966BB3B6568CD4B4E87DA92 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -542,6 +546,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = TMJP5LTB5N;
+						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -737,6 +742,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C966BB3B6568CD4B4E87DA92 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-celsius/Pods-celsius-frameworks.sh",
+				"${PODS_ROOT}/Onfido/Onfido.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Onfido.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-celsius/Pods-celsius-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F8B87A43E4BEBAF7D9733A77 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -914,6 +937,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A83A19252447065500CDF668 /* SwiftVersion.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -968,6 +992,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FADB363041EB26CBFEADCFCC /* Pods-celsiusTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
@@ -998,6 +1023,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A002FA53CF7C86640560A008 /* Pods-celsiusTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
@@ -1026,6 +1052,7 @@
 			baseConfigurationReference = 33A57E1E1BD7F5D3F72F1E88 /* Pods-celsius.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = celsius/celsius.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1043,6 +1070,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = network.celsius.wallet;
 				PRODUCT_NAME = celsius;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1052,6 +1081,7 @@
 			baseConfigurationReference = 865E31541DAFA43F523953D7 /* Pods-celsius.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = celsius/celsius.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1068,6 +1098,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = network.celsius.wallet;
 				PRODUCT_NAME = celsius;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
