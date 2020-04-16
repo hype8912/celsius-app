@@ -46,10 +46,12 @@ function getCoinAddress(coin) {
       dispatch(startApiCall(API.GET_COIN_ADDRESS));
 
       const res = await walletService.getCoinAddress(coin);
+      const address = res.data.wallet;
       dispatch(
         getCoinAddressSuccess({
-          [`${coin}Address`]: res.data.wallet.address,
-          [`${coin}AlternateAddress`]: res.data.wallet.address_alt,
+          [`${coin}Address`]: address.address,
+          [`${coin}AlternateAddress`]:
+            address.address !== address.address_alt && address.address_alt,
         })
       );
     } catch (err) {
