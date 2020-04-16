@@ -234,12 +234,14 @@ class FabMenu extends Component {
   };
 
   animateInitialization = () => {
-    this.springAnimation(1.3);
-    this.pulseAnimation(1.8, 0.8);
+    setTimeout(() => {
+      this.springAnimation(1.3);
+      this.pulseAnimation(1.8, 0.8);
+    }, 8000);
     setTimeout(() => {
       this.springAnimation();
       this.pulseAnimation(1.5, 0.6);
-    }, 2500);
+    }, 10500);
   };
 
   fabAction = () => {

@@ -11,7 +11,7 @@ import CoinListCard from "../../molecules/CoinListCard/CoinListCard";
 import Icon from "../../atoms/Icon/Icon";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 
-const OFFSET = 100;
+const OFFSET = 400;
 const BASE_OFFSET = 500;
 
 class CoinCards extends Component {
