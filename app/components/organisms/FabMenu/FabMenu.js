@@ -153,7 +153,7 @@ class FabMenu extends Component {
       case THEMES.DARK:
       case THEMES.CELSIUS:
         return {
-          color: STYLES.COLORS.DARK_FAB_OUTSIDE_BACKGROUND_COLOR,
+          color: "dark",
           blur: 15,
         };
       case THEMES.LIGHT:

@@ -94,15 +94,15 @@ class CelModal extends Component {
       case THEMES.DARK:
       case THEMES.CELSIUS:
         return {
-          color: STYLES.COLORS.DARK_MODAL_OUTSIDE_BACKGROUND_COLOR,
-          blur: 15,
+          color: "extraDark",
+          blur: 100,
           androidColor: style.outsideCloseModal.backgroundColor,
         };
       case THEMES.LIGHT:
       default:
         return {
-          color: STYLES.COLORS.LIGHT_MODAL_OUTSIDE_BACKGROUND_COLOR,
-          blur: 12,
+          color: "dark",
+          blur: 70,
           androidColor: style.outsideCloseModal.backgroundColor,
         };
     }
@@ -197,8 +197,8 @@ class CelModal extends Component {
         avoidKeyboard
         backdropColor={tintColor.androidColor}
         customBackdrop={this.backdrop()}
-        backdropTransitionInTiming={800}
-        backdropTransitionOutTiming={800}
+        backdropTransitionInTiming={500}
+        backdropTransitionOutTiming={500}
         onBackdropPress={() => actions.closeModal()}
         useNativeDriver={!isIos()}
       >
