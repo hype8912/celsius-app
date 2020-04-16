@@ -29,6 +29,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
     currencyRatesShort: state.currencies.currencyRatesShort,
     buyCoinsSettings: state.generalData.buyCoinsSettings,
     depositCompliance: state.compliance.deposit,
+    simplexCompliance: state.compliance.simplex,
     currencies: state.currencies.rates,
     simplexData: state.simplex.simplexData,
     callsInProgress: state.api.callsInProgress,
@@ -46,23 +47,16 @@ class GetCoinsEnterAmount extends Component {
 
   constructor(props) {
     super(props);
-    const {
-      currencies,
-      depositCompliance,
-      buyCoinsSettings,
-      actions,
-    } = this.props;
+    const { currencies, simplexCompliance, actions } = this.props;
 
-    const availableCryptoCoins =
-      buyCoinsSettings && depositCompliance
-        ? currencies
-            .filter(c => depositCompliance.coins.includes(c.short))
-            .filter(c => buyCoinsSettings.supported_coins.includes(c.short))
-            .map(c => ({
-              label: `${formatter.capitalize(c.name)} (${c.short})`,
-              value: c.short,
-            }))
-        : [];
+    const availableCryptoCoins = simplexCompliance
+      ? currencies
+          .filter(c => simplexCompliance.coins.includes(c.short))
+          .map(c => ({
+            label: `${formatter.capitalize(c.name)} (${c.short})`,
+            value: c.short,
+          }))
+      : [];
 
     actions.updateFormFields({
       amountFiat: "",
@@ -229,7 +223,6 @@ class GetCoinsEnterAmount extends Component {
   render() {
     const { actions, formData, callInProgress } = this.props;
     const { availableCryptoCoins } = this.state;
-
     const theme = getTheme();
     const style = GetCoinsEnterAmountStyle();
 
