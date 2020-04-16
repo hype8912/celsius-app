@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { View, Animated } from "react-native";
 import PropTypes from "prop-types";
-import BigNumber from "bignumber.js";
 
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
@@ -88,8 +87,8 @@ class CoinGridCard extends Component {
   );
 
   coinCardFull = coin => {
-    const amountUsd = new BigNumber(coin.amount_usd.toString());
-    const amount = new BigNumber(coin.amount.toString());
+    const amountUsd = coin.amount_usd;
+    const amount = coin.amount;
     return (
       <Fragment>
         <CelText

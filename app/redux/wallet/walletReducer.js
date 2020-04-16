@@ -1,4 +1,5 @@
 import ACTIONS from "../../constants/ACTIONS";
+import walletUtil from "../../utils/wallet-util";
 
 /**
  * TODO make it a function add JSDoc & desc for return
@@ -17,7 +18,7 @@ export default function walletReducer(state = initialState(), action) {
     case ACTIONS.GET_WALLET_SUMMARY_SUCCESS:
       return {
         ...state,
-        summary: action.wallet,
+        summary: walletUtil.mapWalletSummary(action.wallet),
       };
     case ACTIONS.GET_COIN_ADDRESS_SUCCESS:
       return {

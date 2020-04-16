@@ -1,5 +1,4 @@
 import currency from "currency-formatter";
-import BigNumber from "bignumber.js";
 
 export default {
   usd,
@@ -29,8 +28,7 @@ export default {
  * @returns {string}
  */
 function usd(amount, options = {}) {
-  const a = new BigNumber(amount.toString());
-  return currency.format(floor10(a), { code: "USD", ...options });
+  return currency.format(floor10(amount), { code: "USD", ...options });
 }
 
 /**
