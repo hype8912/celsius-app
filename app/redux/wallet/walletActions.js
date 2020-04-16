@@ -50,7 +50,6 @@ function getCoinAddress(coin) {
         getCoinAddressSuccess({
           [`${coin}Address`]: res.data.wallet.address,
           [`${coin}AlternateAddress`]: res.data.wallet.address_alt,
-          [`${coin}RawResponse`]: res.data.wallet,
         })
       );
     } catch (err) {
