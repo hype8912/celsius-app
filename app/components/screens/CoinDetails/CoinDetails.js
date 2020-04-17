@@ -21,6 +21,7 @@ import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import InterestCard from "../../molecules/InterestCard/InterestCard";
 import interestUtil from "../../../utils/interest-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
+import Counter from "../../molecules/Counter/Counter";
 
 const { COLORS } = STYLES;
 
@@ -156,8 +157,6 @@ class CoinDetails extends Component {
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
-
-
     return (
       <RegularLayout padding={"20 0 100 0"}>
         <View style={style.container}>
@@ -174,9 +173,14 @@ class CoinDetails extends Component {
                   <CelText weight="300" type="H6">
                     {currency.displayName}
                   </CelText>
-                  <CelText weight="600" type="H2" margin={"3 0 3 0"}>
-                    {formatter.usd(coinDetails.amount_usd)}
-                  </CelText>
+                  <Counter
+                    weight="600"
+                    type="H2"
+                    margin={"3 0 3 0"}
+                    number={coinDetails.amount_usd}
+                    speed={20}
+                    usd
+                  />
                   <CelText weight="300" type="H6">
                     {formatter.crypto(coinDetails.amount, coinDetails.short)}
                   </CelText>
@@ -206,7 +210,7 @@ class CoinDetails extends Component {
                     </TouchableOpacity>
                   </>
                 )}
-                {isCoinEligibleForCelPay && !hodlStatus.isActive &&(
+                {isCoinEligibleForCelPay && !hodlStatus.isActive && (
                   <>
                     <Separator vertical height={"35%"} top={20} />
                     <TouchableOpacity
