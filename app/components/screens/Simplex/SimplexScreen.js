@@ -38,7 +38,7 @@ class SimplexScreen extends Component {
     title: "Get Coins",
     gesturesEnabled: false,
     customBack: () => {
-      store.dispatch(navigateTo("WalletLanding"));
+      store.dispatch(navigateTo("GetCoinsLanding"));
     },
   });
 
