@@ -11,6 +11,7 @@ import Card from "../../atoms/Card/Card";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import interestUtil from "../../../utils/interest-util";
 import { widthPercentageToDP } from "../../../utils/styles-util";
+import Counter from "../Counter/Counter";
 
 class CoinListCard extends Component {
   static propTypes = {
@@ -45,9 +46,13 @@ class CoinListCard extends Component {
 
   coinCardFull = coin => (
     <Fragment>
-      <CelText weight="600" type="H3" margin="3 0 3 0">
-        {formatter.usd(coin.amount_usd)}
-      </CelText>
+      <Counter
+        weight="600"
+        type="H3"
+        margin="3 0 3 0"
+        number={coin.amount_usd}
+        usd
+      />
       <CelText weight="300" type="H6">
         {formatter.crypto(coin.amount, coin.short)}
       </CelText>

@@ -64,6 +64,7 @@ class CoinDetails extends Component {
 
     this.state = {
       currency,
+      refreshing: false,
     };
   }
 
@@ -125,8 +126,19 @@ class CoinDetails extends Component {
     actions.navigateTo("GetCoinsLanding", { coin: currency.short });
   };
 
+  refresh = async () => {
+    const { actions } = this.props;
+    this.setState({
+      refreshing: true,
+    });
+    await actions.getCurrencyRates();
+    this.setState({
+      refreshing: false,
+    });
+  };
+
   render() {
-    const { currency } = this.state;
+    const { currency, refreshing } = this.state;
     const {
       actions,
       interestRates,
@@ -158,7 +170,11 @@ class CoinDetails extends Component {
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
     return (
-      <RegularLayout padding={"20 0 100 0"}>
+      <RegularLayout
+        padding={"20 0 100 0"}
+        refreshing={refreshing}
+        pullToRefresh={this.refresh}
+      >
         <View style={style.container}>
           <Card padding={"0 0 7 0"}>
             <View style={style.coinAmountWrapper}>
@@ -178,7 +194,7 @@ class CoinDetails extends Component {
                     type="H2"
                     margin={"3 0 3 0"}
                     number={coinDetails.amount_usd}
-                    speed={20}
+                    speed={5}
                     usd
                   />
                   <CelText weight="300" type="H6">

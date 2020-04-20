@@ -114,8 +114,6 @@ class CoinCards extends Component {
     const processedGridItems = animationsUtil.applyOffset([...c], 2);
     const processedListItems = animationsUtil.applyOffset([...c], 1);
 
-    // console.log("processedGridItems", processedGridItems);
-
     // Render grid item
     if (isGrid) {
       return processedGridItems.map(coin => (

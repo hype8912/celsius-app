@@ -9,8 +9,6 @@ import CounterStyle from "./Counter.styles";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 
-let counter = 0;
-
 @connect(
   state => ({
     activeScreen: state.nav.activeScreen,
@@ -43,6 +41,7 @@ class Counter extends Component {
     this.state = {
       value: 0,
       shouldCount: false,
+      counter: 0,
     };
   }
 
@@ -72,10 +71,6 @@ class Counter extends Component {
     }
   }
 
-  componentWillUnmount() {
-    clearInterval(self.countInterval);
-  }
-
   countUp = () => {
     const { number, speed } = this.props;
     const increment = Number(number) / speed;
@@ -85,9 +80,11 @@ class Counter extends Component {
     const self = this;
 
     self.countInterval = setInterval(() => {
-      const { value } = self.state;
+      const { value, counter } = self.state;
       if (Number(value) < Number(number)) {
-        counter += increment;
+        self.setState({
+          counter: counter + increment,
+        });
         self.setState({
           value: counter,
         });

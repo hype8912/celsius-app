@@ -13,6 +13,7 @@ import { heightPercentageToDP } from "../../../utils/styles-util";
 import CoinGridCardStyle from "./CoinGridCard.styles";
 import { THEMES } from "../../../constants/UI";
 import interestUtil from "../../../utils/interest-util";
+import Counter from "../Counter/Counter";
 
 class CoinGridCard extends Component {
   static propTypes = {
@@ -115,14 +116,14 @@ class CoinGridCard extends Component {
 
   coinCardFull = coin => (
     <Fragment>
-      <CelText
-        style={CoinGridCardStyle.text}
+      <Counter
+        color={CoinGridCardStyle.text}
         weight="600"
         type="H3"
         margin="3 0 3 0"
-      >
-        {formatter.usd(coin.amount_usd)}
-      </CelText>
+        number={coin.amount_usd}
+        usd
+      />
       <CelText weight="300" type="H7">
         {formatter.crypto(coin.amount, coin.short)}
       </CelText>

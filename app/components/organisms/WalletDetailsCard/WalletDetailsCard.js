@@ -54,7 +54,7 @@ class WalletDetailsCard extends PureComponent {
                 type="H3"
                 margin="3 0 3 0"
                 number={walletSummary.total_amount_usd}
-                speed={10}
+                speed={5}
                 usd
               />
             </TouchableOpacity>
@@ -80,7 +80,7 @@ class WalletDetailsCard extends PureComponent {
                 type="H3"
                 margin="3 0 3 0"
                 number={walletSummary.total_interest_earned}
-                speed={10}
+                speed={5}
                 usd
               />
             </TouchableOpacity>

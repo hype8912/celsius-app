@@ -109,7 +109,7 @@ class WalletInterest extends Component {
                   weight="600"
                   type="H3"
                   number={walletSummary.total_interest_earned}
-                  speed={20}
+                  speed={5}
                   usd
                 />
                 <TouchableOpacity
