@@ -74,8 +74,8 @@ class FabMenu extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    if (!prevProps.fabMenuOpen) this.stopAnimation();
-    if (prevProps.fabMenuOpen) this.animate();
+    if (!prevProps.fabMenuOpen) this.animateOpening();
+    if (prevProps.fabMenuOpen) this.animateClosing();
     if (
       (prevProps.fabType !== this.props.fabType &&
         this.props.fabType !== "hide") ||
@@ -165,35 +165,17 @@ class FabMenu extends Component {
     }
   };
 
-  stopAnimation = () => {
-    Animated.parallel([
-      Animated.spring(this.springValue, {
-        toValue: 1,
-        friction: 1.5,
-        tension: 3,
-        useNativeDriver: true,
-      }).start(),
-      Animated.timing(this.pulseValue, {
-        toValue: 0,
-        duration: 100,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }).start(),
-      Animated.timing(this.opacityValue, {
-        toValue: 0,
-        duration: 100,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }).start(),
-    ]);
-  };
-
-  springAnimation = (value = undefined) => {
+  springAnimation = (
+    value = undefined,
+    friction = undefined,
+    tension = undefined,
+    velocity = undefined
+  ) => {
     Animated.spring(this.springValue, {
       toValue: value || 1.1,
-      friction: 0.5,
-      tension: 0,
-      velocity: 3,
+      friction: friction || 0.5,
+      tension: tension || 0,
+      velocity: velocity || 3,
       overshootClamping: true,
       useNativeDriver: true,
     }).start(({ finished }) => {
@@ -226,13 +208,6 @@ class FabMenu extends Component {
     ]);
   };
 
-  animate = () => {
-    setTimeout(() => {
-      this.springAnimation();
-      this.pulseAnimation(1.3, 0.6);
-    }, 50);
-  };
-
   animateInitialization = () => {
     setTimeout(() => {
       this.springAnimation(1.3);
@@ -242,6 +217,17 @@ class FabMenu extends Component {
       this.springAnimation();
       this.pulseAnimation(1.5, 0.6);
     }, 10500);
+  };
+
+  animateOpening = () => {
+    this.springAnimation(1.15, 1, 1, 5);
+  };
+
+  animateClosing = () => {
+    setTimeout(() => {
+      this.springAnimation();
+      this.pulseAnimation(1.3, 0.6);
+    }, 50);
   };
 
   fabAction = () => {
