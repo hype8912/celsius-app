@@ -62,7 +62,7 @@ function scrollListener(y) {
   } = store.getState().animations;
   const threshold = heightPercentageToDP("18%");
   if (y > threshold) {
-    if (activeScreen === "WalletLanding")
+    if (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory")
       store.dispatch(actions.changeWalletHeaderContent(true));
     if (activeScreen === "CoinDetails")
       store.dispatch(actions.changeCoinDetailsHeaderContent(true));
@@ -74,7 +74,7 @@ function scrollListener(y) {
       store.dispatch(actions.changeCoinDetailsHeaderContent());
   }
   if (y < threshold && changeWalletHeader) {
-    if (activeScreen === "WalletLanding")
+    if (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory")
       store.dispatch(actions.changeWalletHeaderContent());
   }
   if (y < threshold && changeInterestHeader) {

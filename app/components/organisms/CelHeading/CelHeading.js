@@ -260,7 +260,10 @@ class CelHeading extends Component {
     } = this.props;
     let screenTitle;
 
-    if (activeScreen === "WalletLanding" && changeWalletHeader) {
+    if (
+      (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory") &&
+      changeWalletHeader
+    ) {
       screenTitle = fromatter.usd(walletSummary.total_amount_usd);
       return screenTitle;
     }

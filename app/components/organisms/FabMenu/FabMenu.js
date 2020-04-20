@@ -74,8 +74,8 @@ class FabMenu extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    if (!prevProps.fabMenuOpen) this.animateOpening();
-    if (prevProps.fabMenuOpen) this.animateClosing();
+    if (!prevProps.fabMenuOpen && this.props.fabMenuOpen) this.animateOpening();
+    if (prevProps.fabMenuOpen && !this.props.fabMenuOpen) this.animateClosing();
     if (
       (prevProps.fabType !== this.props.fabType &&
         this.props.fabType !== "hide") ||
