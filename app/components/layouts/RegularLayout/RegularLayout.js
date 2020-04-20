@@ -19,6 +19,7 @@ import { FAB_TYPE } from "../../../constants/UI";
 import KeyboardShift from "../../atoms/KeyboardShift/KeyboardShift";
 import OfflineMode from "../../atoms/OfflineMode/OfflineMode";
 import Spinner from "../../atoms/Spinner/Spinner";
+import animationsUtil from "../../../utils/animations-util";
 
 @connect(
   state => ({
@@ -40,6 +41,7 @@ class RegularLayout extends Component {
     enableParentScroll: true,
     fabType: "main",
   };
+
   componentDidMount = () => this.setFabType();
   componentDidUpdate = () => this.setFabType();
 
@@ -76,6 +78,10 @@ class RegularLayout extends Component {
           scrollEnabled={enableParentScroll}
           style={style.container}
           contentContainerStyle={[{ flexGrow: 1 }, paddings]}
+          scrollEventThrottle={1}
+          onScroll={event =>
+            animationsUtil.scrollListener(event.nativeEvent.contentOffset.y)
+          }
           refreshControl={
             pullToRefresh && (
               <RefreshControl

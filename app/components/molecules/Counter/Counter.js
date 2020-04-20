@@ -25,7 +25,7 @@ class Counter extends Component {
     margin: PropTypes.string,
     speed: PropTypes.number,
     color: PropTypes.string,
-    usd: PropTypes.string,
+    usd: PropTypes.bool,
     align: PropTypes.string,
   };
 

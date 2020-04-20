@@ -20,6 +20,7 @@ import STYLES from "../../../constants/STYLES";
 import HodlBanner from "../../atoms/HodlBanner/HodlBanner";
 import Icon from "../../atoms/Icon/Icon";
 import Loader from "../../atoms/Loader/Loader";
+import fromatter from "../../../utils/formatter";
 
 @connect(
   state => ({
@@ -29,6 +30,10 @@ import Loader from "../../atoms/Loader/Loader";
     theme: state.user.appSettings.theme,
     hodlStatus: state.hodl.hodlStatus,
     activeScreen: state.nav.activeScreen,
+    walletSummary: state.wallet.summary,
+    changeWalletHeader: state.animations.changeWalletHeader,
+    changeCoinDetailsHeader: state.animations.changeCoinDetailsHeader,
+    changeInterestHeader: state.animations.changeInterestHeader,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -244,9 +249,40 @@ class CelHeading extends Component {
     }
   };
 
+  getTitle = () => {
+    const sceneOptions = this.props.scene.descriptor.options;
+    const { title } = sceneOptions;
+    const {
+      walletSummary,
+      activeScreen,
+      changeWalletHeader,
+      changeInterestHeader,
+    } = this.props;
+    let screenTitle;
+
+    if (activeScreen === "WalletLanding" && changeWalletHeader) {
+      screenTitle = fromatter.usd(walletSummary.total_amount_usd);
+      return screenTitle;
+    }
+
+    if (activeScreen === "WalletInterest" && changeInterestHeader) {
+      screenTitle = fromatter.usd(walletSummary.total_interest_earned);
+      return screenTitle;
+    }
+
+    // if (activeScreen === "CoinDetails" && changeCoinDetailsHeader ) {
+    //   screenTitle = fromatter.usd(walletSummary.total_interest_earned);
+    //   return screenTitle
+    // }
+
+    return title;
+  };
+
   getCenterContent = sceneProps => {
-    const { title, customCenterComponent } = sceneProps;
+    const { customCenterComponent } = sceneProps;
     const style = CelHeadingStyle();
+
+    const title = this.getTitle();
 
     return (
       <View style={style.center}>
@@ -263,9 +299,11 @@ class CelHeading extends Component {
             />
           </View>
         ) : (
-          <CelText align="center" weight="medium" type="H3">
-            {title || ""}
-          </CelText>
+          <View>
+            <CelText align="center" weight="medium" type="H3">
+              {title || ""}
+            </CelText>
+          </View>
         )}
       </View>
     );
