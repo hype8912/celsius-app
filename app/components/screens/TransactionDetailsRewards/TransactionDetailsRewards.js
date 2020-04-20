@@ -14,13 +14,13 @@ class TransactionDetailsRewards extends Component {
   static propTypes = {
     transaction: PropTypes.instanceOf(Object),
     totalInterest: PropTypes.string,
-    actions: PropTypes.instanceOf(Object),
+    navigateTo: PropTypes.func,
   };
   static defaultProps = {};
 
   render() {
     // const style = TransactionDetailsRewardsStyle();
-    const { transaction, actions } = this.props;
+    const { transaction, navigateTo } = this.props;
     const transactionProps = transaction.uiProps;
 
     return (
@@ -48,7 +48,7 @@ class TransactionDetailsRewards extends Component {
           <CelButton
             margin={"20 0 0 0"}
             basic
-            onPress={() => actions.navigateTo("WalletLanding")}
+            onPress={() => navigateTo("WalletLanding")}
           >
             Go Back to Wallet
           </CelButton>

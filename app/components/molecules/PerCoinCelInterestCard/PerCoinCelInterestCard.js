@@ -213,12 +213,7 @@ class PerCoinCelInterestCard extends Component {
               name="Unchecked"
               width={23}
               height={23}
-              fill={style.iconFill.color}
-              style={{
-                borderWidth: 1,
-                borderRadius: 6,
-                borderColor: STYLES.COLORS.GRAY,
-              }}
+              fill={STYLES.COLORS.GRAY}
             />
           }
         />
@@ -289,12 +284,7 @@ class PerCoinCelInterestCard extends Component {
                       name="Unchecked"
                       width="23"
                       height="23"
-                      fill={style.iconFill.color}
-                      style={{
-                        borderWidth: 1,
-                        borderRadius: 6,
-                        borderColor: STYLES.COLORS.GRAY,
-                      }}
+                      fill={STYLES.COLORS.GRAY}
                     />
                   }
                 />

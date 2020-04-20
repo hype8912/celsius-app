@@ -9,6 +9,7 @@ import BadgeStories from "./Badge/Badge.stories";
 import BadgeSelectorStories from "./BadgeSelector/BadgeSelector.stories";
 import BalanceViewStories from "./BalanceView/BalanceView.stories";
 import CardStories from "./Card/Card.stories";
+import NoWithdrawalAddressCardStories from "./NoWithdrawalAddressCard/NoWithdrawalAddressCard.stories";
 import CelCheckboxStories from "./CelCheckbox/CelCheckbox.stories";
 import CelModalButtonStories from "./CelModalButton/CelModalButton.stories";
 import CelSwitchStories from "./CelSwitch/CelSwitch.stories";
@@ -35,6 +36,9 @@ import SecurityScoreGauge from "./SecurityScoreGauge/SecurityScoreGauge.stories"
 import HodlBannerStories from "./HodlBanner/HodlBanner.stories";
 import PassStrengthMeterStories from "./PassStrengthMeter/PassStrengthMeter.stories";
 import PassMeterTooltipStories from "./PassMeterTooltip/PassMeterTooltip.stories";
+import UserActionsLogStories from "./UserActionsLog/UserActionsLog.stories";
+import AccountActivityLogStories from "./AccountActivityLog/AccountActivityLog.stories";
+import LoginDevicesLogStories from "./LoginDevicesLog/LoginDevicesLog.stories";
 // NOTE(fj): plop componentGen importing new stories here
 
 storiesOf("Atoms", module)
@@ -49,6 +53,7 @@ storiesOf("Atoms", module)
   .add("BadgeSelector", BadgeSelectorStories)
   .add("BalanceView", BalanceViewStories)
   .add("Card", CardStories)
+  .add("NoWithdrawalAddressCardStories", NoWithdrawalAddressCardStories)
   .add("CelCheckbox", CelCheckboxStories)
   .add("CelModalButton", CelModalButtonStories)
   .add("CelSwitch", CelSwitchStories)
@@ -74,5 +79,9 @@ storiesOf("Atoms", module)
   .add("SecurityScoreGauge", SecurityScoreGauge)
   .add("HodlBanner", HodlBannerStories)
   .add("PassMeterTooltipStories", PassMeterTooltipStories)
-  .add("PassStrengthMeterStories", PassStrengthMeterStories);
+  .add("PassStrengthMeterStories", PassStrengthMeterStories)
+  .add("UserActionsLogStories", UserActionsLogStories)
+  .add("AccountActivityLogStories", AccountActivityLogStories)
+  .add("LoginDevicesLogStories", LoginDevicesLogStories)
+;
 // NOTE(fj): plop componentGen adding new stories here

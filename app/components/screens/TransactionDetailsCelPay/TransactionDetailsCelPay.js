@@ -17,16 +17,24 @@ import TxSentSection from "../../molecules/TxSentSection/TxSentSection";
 
 class TransactionDetailsCelPay extends Component {
   static propTypes = {
-    transaction: PropTypes.string,
+    transaction: PropTypes.instanceOf(Object),
+    navigateTo: PropTypes.func,
+    cancelingCelPay: PropTypes.bool,
   };
   static defaultProps = {};
 
   render() {
     // const style = TransactionDetailsCelPayStyle();
-    const { transaction, actions } = this.props;
+    const {
+      transaction,
+      navigateTo,
+      cancelTransfer,
+      cancelingCelPay,
+    } = this.props;
     const transactionProps = transaction.uiProps;
 
     const type = transaction.type;
+
     const text = [
       TRANSACTION_TYPES.CELPAY_ONHOLD,
       TRANSACTION_TYPES.CELPAY_RECEIVED,
@@ -109,7 +117,7 @@ class TransactionDetailsCelPay extends Component {
           {shouldRenderCelPayButton ? (
             <CelButton
               margin={"40 0 0 0"}
-              onPress={() => actions.navigateTo("CelPayLanding")}
+              onPress={() => navigateTo("CelPayLanding")}
             >
               Start Another CelPay
             </CelButton>
@@ -118,7 +126,7 @@ class TransactionDetailsCelPay extends Component {
           {type === TRANSACTION_TYPES.CELPAY_RECEIVED ? (
             <CelButton
               margin={"40 0 0 0"}
-              onPress={() => actions.navigateTo("Deposit")}
+              onPress={() => navigateTo("Deposit")}
             >
               Deposit Coins
             </CelButton>
@@ -128,7 +136,7 @@ class TransactionDetailsCelPay extends Component {
             <CelButton
               margin={"20 0 0 0"}
               basic
-              onPress={() => actions.navigateTo("WalletLanding")}
+              onPress={() => navigateTo("WalletLanding")}
             >
               Go Back to Wallet
             </CelButton>
@@ -137,9 +145,13 @@ class TransactionDetailsCelPay extends Component {
           {shouldRenderCancel ? (
             <CelButton
               margin={"20 0 0 0"}
-              color={STYLES.COLORS.RED}
+              loading={cancelingCelPay}
+              textColor={STYLES.COLORS.RED}
               basic
-              onPress={() => actions.cancelWithdrawal(transaction.id)}
+              onPress={async () => {
+                await cancelTransfer(transaction);
+                navigateTo("CelPayLanding");
+              }}
             >
               Cancel CelPay
             </CelButton>

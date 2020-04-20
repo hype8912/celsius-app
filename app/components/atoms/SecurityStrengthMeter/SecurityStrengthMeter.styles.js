@@ -8,17 +8,24 @@ import {
 const base = {
   container: {
     flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    height: heightPercentageToDP("15%"),
+  },
+
+  section: {
+    flex: 0.5,
     flexDirection: "row",
     alignItems: "center",
-    height: heightPercentageToDP("8%"),
   },
+
   leftSide: {
-    flex: 0.5,
+    flex: 0.55,
     justifyContent: "flex-start",
   },
 
   rightSide: {
-    flex: 0.5,
+    flex: 0.45,
     justifyContent: "flex-end",
   },
   meter: {

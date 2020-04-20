@@ -389,7 +389,7 @@ function loginSocialSuccess(network, token) {
     const { showVerifyScreen } = getState().app;
     if (!showVerifyScreen) {
       await dispatch(initAppData());
-      dispatch(navigateTo("WalletFab"));
+      dispatch(navigateTo("WalletLanding"));
     }
 
     dispatch({

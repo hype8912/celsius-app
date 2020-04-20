@@ -46,7 +46,6 @@ class VerifyProfile extends Component {
       value: "",
       loading: false,
       verificationError: false,
-      forgotPin: false,
       showLogOutBtn: false,
     };
   }
@@ -117,19 +116,19 @@ class VerifyProfile extends Component {
   };
 
   onCheckError = () => {
+    const { actions, is2FAEnabled, navigation } = this.props;
     this.setState({ loading: false, value: "", verificationError: true });
-    this.setForgotPin();
     const timeout = setTimeout(() => {
       this.setState({ verificationError: false });
+
+      const showType =
+        this.getVerifyType(navigation.getParam("show", null)) || is2FAEnabled;
+      if (showType === "pin") {
+        actions.toggleKeypad(true);
+      }
+
       clearTimeout(timeout);
     }, 1000);
-  };
-
-  setForgotPin = () => {
-    const { verificationError } = this.state;
-    if (verificationError) {
-      this.setState({ forgotPin: true });
-    }
   };
 
   getVerifyType = showType => showType && showType === "2FA";
@@ -180,7 +179,7 @@ class VerifyProfile extends Component {
   };
 
   render2FA() {
-    const { loading, value, verificationError, forgotPin } = this.state;
+    const { loading, value, verificationError } = this.state;
     const { actions } = this.props;
     const style = VerifyProfileStyle();
 
@@ -217,16 +216,14 @@ class VerifyProfile extends Component {
           </CelButton>
         )}
         <View>
-          {forgotPin && (
-            <ContactSupport copy="Forgot your code? Contact our support at app@celsius.network." />
-          )}
+          <ContactSupport copy="Forgot your code? Contact our support at app@celsius.network." />
         </View>
       </View>
     );
   }
 
   renderPIN() {
-    const { loading, value, verificationError, forgotPin } = this.state;
+    const { loading, value, verificationError } = this.state;
     const { actions } = this.props;
     const style = VerifyProfileStyle();
 
@@ -243,9 +240,7 @@ class VerifyProfile extends Component {
           <HiddenField value={value} error={verificationError} />
         </TouchableOpacity>
         <View>
-          {forgotPin && (
-            <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
-          )}
+          <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
         </View>
 
         {loading && (

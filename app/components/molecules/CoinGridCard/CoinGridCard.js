@@ -116,7 +116,7 @@ class CoinGridCard extends Component {
       graphData,
     } = this.props;
     const { dateArray, priceArray, coinPriceChange, coinInterest } = this.state;
-    const amount = coin.amount_usd > 0;
+    const hasTransactions = Number(coin.has_transaction) > 0;
     const style = CoinGridCardStyle();
 
     const padding = graphData ? "12 0 0 0" : undefined; // undefined so it will fallback to default card prop padding
@@ -137,7 +137,7 @@ class CoinGridCard extends Component {
                 </CelText>
               )}
             </View>
-            {amount
+            {hasTransactions
               ? this.coinCardFull(coin)
               : this.coinCardEmpty(coin, currencyRates)}
           </View>

@@ -7,12 +7,12 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
-// import apiUtil from "../../../utils/api-util";
-// import API from "../../../constants/API";
 import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
 
 @connect(
   state => ({
@@ -27,36 +27,41 @@ class Login extends Component {
     headerSameColor: true,
   });
 
-  // loginUser = () => {
-  //   const { actions } = this.props;
-  //   actions.loginUser()
-  // };
+  loginUser = () => {
+    const { actions } = this.props;
+    actions.loginUser()
+  };
+
+  disabledButton = () => {
+    const { callsInProgress } = this.props;
+    const isLoading = apiUtil.areCallsInProgress(
+      [
+        API.LOGIN_USER,
+        API.LOGIN_USER_FACEBOOK,
+        API.LOGIN_USER_GOOGLE,
+        API.LOGIN_USER_TWITTER,
+      ],
+      callsInProgress
+    );
+    return isLoading;
+  };
 
   renderCaptcha = () => {
     const { RECAPTCHA_KEY, RECAPTCHA_URL } = Constants;
-    const { actions } = this.props;
     return (
       <GoogleReCaptcha
         siteKey={RECAPTCHA_KEY}
         url={RECAPTCHA_URL}
         languageCode="en"
         onMessage={this.onMessage}
-        reCaptchaPassed={actions.loginUser}
+        reCaptchaPassed={this.loginUser}
+        buttonDisabled={this.disabledButton()}
       />
     );
   };
 
   render() {
     const { formData, actions } = this.props;
-    // const loginLoading = apiUtil.areCallsInProgress(
-    //   [
-    //     API.LOGIN_USER,
-    //     API.LOGIN_USER_FACEBOOK,
-    //     API.LOGIN_USER_GOOGLE,
-    //     API.LOGIN_USER_TWITTER,
-    //   ],
-    //   callsInProgress <--from props
-    // );
 
     // Disabling forgot pass on Staging regarding to its bug on Staging environment
     const { ENV } = Constants;

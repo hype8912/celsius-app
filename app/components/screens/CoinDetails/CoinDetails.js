@@ -36,6 +36,7 @@ const { COLORS } = STYLES;
     appSettings: state.user.appSettings,
     interestCompliance: state.compliance.interest,
     hodlStatus: state.hodl.hodlStatus,
+    depositCompliance: state.compliance.deposit,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -132,8 +133,9 @@ class CoinDetails extends Component {
       currencies,
       appSettings,
       buyCoinsSettings,
-      interestCompliance,
       hodlStatus,
+      interestCompliance,
+      depositCompliance,
     } = this.props;
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
@@ -149,9 +151,12 @@ class CoinDetails extends Component {
     const isCoinEligibleForBuying =
       buyCoinsSettings &&
       buyCoinsSettings.supported_coins.includes(currency.short);
-
+    const isCoinEligibleForDeposit =
+      depositCompliance && depositCompliance.coins.includes(currency.short);
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
+
+
 
     return (
       <RegularLayout padding={"20 0 100 0"}>
@@ -179,90 +184,94 @@ class CoinDetails extends Component {
               </View>
               <Separator />
               <View style={style.buttonWrapper}>
-                <TouchableOpacity
-                  style={{
-                    marginLeft: widthPercentageToDP("3.3%"),
-                    marginRight: widthPercentageToDP("3.3%"),
-                  }}
-                  onPress={() =>
-                    actions.navigateTo("Deposit", { coin: coinDetails.short })
-                  }
-                >
-                  <View style={style.buttonItself}>
-                    <View style={style.buttonIcon}>
-                      <Icon fill="primary" name="Deposit" width="25" />
-                    </View>
-                    <CelText type="H6">Deposit</CelText>
-                  </View>
-                </TouchableOpacity>
-                {isCoinEligibleForCelPay && !hodlStatus.isActive && (
-                  <Separator vertical height={"35%"} top={20} />
-                )}
-                {isCoinEligibleForCelPay && !hodlStatus.isActive && (
-                  <TouchableOpacity
-                    onPress={this.goToCelPay}
-                    style={{
-                      marginLeft: widthPercentageToDP("6.9%"),
-                      marginRight: widthPercentageToDP("6.9%"),
-                    }}
-                  >
-                    <View style={style.buttonItself}>
-                      <View style={style.buttonIcon}>
-                        <Icon fill="primary" name="CelPay" width="25" />
+                {isCoinEligibleForDeposit && (
+                  <>
+                    <TouchableOpacity
+                      style={{
+                        marginLeft: widthPercentageToDP("3.3%"),
+                        marginRight: widthPercentageToDP("3.3%"),
+                      }}
+                      onPress={() =>
+                        actions.navigateTo("Deposit", {
+                          coin: coinDetails.short,
+                        })
+                      }
+                    >
+                      <View style={style.buttonItself}>
+                        <View style={style.buttonIcon}>
+                          <Icon fill="primary" name="Deposit" width="25" />
+                        </View>
+                        <CelText type="H6">Deposit</CelText>
                       </View>
-
-                      <CelText type="H6">CelPay</CelText>
-                    </View>
-                  </TouchableOpacity>
+                    </TouchableOpacity>
+                  </>
                 )}
+                {isCoinEligibleForCelPay && !hodlStatus.isActive &&(
+                  <>
+                    <Separator vertical height={"35%"} top={20} />
+                    <TouchableOpacity
+                      onPress={this.goToCelPay}
+                      style={{
+                        marginLeft: widthPercentageToDP("6.9%"),
+                        marginRight: widthPercentageToDP("6.9%"),
+                      }}
+                    >
+                      <View style={style.buttonItself}>
+                        <View style={style.buttonIcon}>
+                          <Icon fill="primary" name="CelPay" width="25" />
+                        </View>
 
-                {isCoinEligibleForCelPay && !hodlStatus.isActive && (
-                  <Separator vertical height={"35%"} top={20} />
+                        <CelText type="H6">CelPay</CelText>
+                      </View>
+                    </TouchableOpacity>
+                  </>
                 )}
 
                 {isCoinEligibleForBuying && (
-                  <TouchableOpacity
-                    onPress={this.goToBuyCoins}
-                    style={{
-                      marginLeft: widthPercentageToDP("6.9%"),
-                      marginRight: widthPercentageToDP("6.9%"),
-                    }}
-                  >
-                    <View style={style.buttonItself}>
-                      <View
-                        style={[
-                          style.buttonIcon,
-                          { transform: [{ rotate: "180deg" }] },
-                        ]}
-                      >
-                        <Icon fill="primary" name="CelPay" width="25" />
+                  <>
+                    <Separator vertical height={"35%"} top={20} />
+                    <TouchableOpacity
+                      onPress={this.goToBuyCoins}
+                      style={{
+                        marginLeft: widthPercentageToDP("6.9%"),
+                        marginRight: widthPercentageToDP("6.9%"),
+                      }}
+                    >
+                      <View style={style.buttonItself}>
+                        <View
+                          style={[
+                            style.buttonIcon,
+                            { transform: [{ rotate: "180deg" }] },
+                          ]}
+                        >
+                          <Icon fill="primary" name="CelPay" width="25" />
+                        </View>
+
+                        <CelText type="H6">Buy</CelText>
                       </View>
-
-                      <CelText type="H6">Buy</CelText>
-                    </View>
-                  </TouchableOpacity>
-                )}
-
-                {isCoinEligibleForBuying && !hodlStatus.isActive && (
-                  <Separator vertical height={"35%"} top={20} />
+                    </TouchableOpacity>
+                  </>
                 )}
 
                 {!hodlStatus.isActive && (
-                  <TouchableOpacity
-                    style={style.buttons}
-                    onPress={() =>
-                      actions.navigateTo("WithdrawEnterAmount", {
-                        coin: coinDetails.short,
-                      })
-                    }
-                  >
-                    <View style={style.buttonItself}>
-                      <View style={style.buttonIcon}>
-                        <Icon fill="primary" name="Withdraw" width="25" />
+                  <>
+                    <Separator vertical height={"35%"} top={20} />
+                    <TouchableOpacity
+                      style={style.buttons}
+                      onPress={() =>
+                        actions.navigateTo("WithdrawEnterAmount", {
+                          coin: coinDetails.short,
+                        })
+                      }
+                    >
+                      <View style={style.buttonItself}>
+                        <View style={style.buttonIcon}>
+                          <Icon fill="primary" name="Withdraw" width="25" />
+                        </View>
+                        <CelText type="H6">Withdraw</CelText>
                       </View>
-                      <CelText type="H6">Withdraw</CelText>
-                    </View>
-                  </TouchableOpacity>
+                    </TouchableOpacity>
+                  </>
                 )}
               </View>
             </View>

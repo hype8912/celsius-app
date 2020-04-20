@@ -196,7 +196,7 @@ class KYCAddressInfo extends Component {
           </CelButton>
         </View>
         <CelButton
-          onPress={() => actions.navigateTo("WalletFab")}
+          onPress={() => actions.navigateTo("WalletLanding")}
           basic
           margin={"20 0 20 0"}
         >

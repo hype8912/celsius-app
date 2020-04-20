@@ -70,6 +70,7 @@ import CelPayMessage from "../components/screens/CelPayMessage/CelPayMessage";
 import Profile from "../components/screens/Profile/Profile";
 import NotificationsSettings from "../components/screens/NotificationsSettings/NotificationsSettings";
 import SecuritySettings from "../components/screens/SecuritySettings/SecuritySettings";
+import ActionsByUser from "../components/screens/ActionsByUser/ActionsByUser";
 import SecurityOverview from "../components/screens/SecurityOverview/SecurityOverview";
 import WalletSettings from "../components/screens/WalletSettings/WalletSettings";
 import ApiAuthorization from "../components/screens/ApiAuthorization/ApiAuthorization";
@@ -240,6 +241,7 @@ export const screens = {
 
   NotificationsSettings,
   SecuritySettings,
+  ActionsByUser,
   SecurityOverview,
   WalletSettings,
   ApiAuthorization,

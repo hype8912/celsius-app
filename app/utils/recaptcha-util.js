@@ -76,11 +76,23 @@ class GoogleReCaptcha extends Component {
         <style>
             .btn_login {
               background-color: #3F51AB;
-              width:110px;
+              width:120px;
               height: 50px;
               color: #ffffff; padding: 8px 32px; margin-top: 8px;
               border: none; border-radius: 25px; font-size: medium;
             }
+
+             .btn_login_disabled {
+              background-color:transparent;
+              width:120px;
+              height: 50px;
+              color: #4156A6; padding: 8px 32px; margin-top: 8px;
+              border: solid;
+              border-width: 2px;
+              border-radius: 25px; font-size: medium;
+              opacity: 0.5;
+            }
+
             .btn_register {
               background-color: #3F51AB;
               width:230px;
@@ -149,6 +161,9 @@ class GoogleReCaptcha extends Component {
       }
     } else {
       btnStyle = "btn_login";
+      if (buttonDisabled) {
+        btnStyle = "btn_login_disabled";
+      }
     }
     return btnStyle;
   };

@@ -18,6 +18,8 @@ class IconButton extends Component {
     onPress: PropTypes.func,
     color: PropTypes.oneOf(["white", "blue"]),
     disabled: PropTypes.bool,
+    rightText: PropTypes.string,
+    rightTextColor: PropTypes.string,
   };
   static defaultProps = {
     margin: "20 0 20 0",
@@ -47,10 +49,11 @@ class IconButton extends Component {
 
   renderIconButtonContent = () => {
     const { secondary, third } = this.getColors();
-    const { children, icon, hideIconRight, right } = this.props;
+    const { children, icon, hideIconRight, right, rightText, rightTextColor } = this.props;
+    const style = IconButtonStyle();
     return (
       <>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={ [style.leftWrapper, {flex: rightText ? 0.7 : 1}] }>
           {!!icon && <Icon fill={third} name={icon} width="25" />}
           <CelText
             type="H4"
@@ -64,7 +67,14 @@ class IconButton extends Component {
             {children}
           </CelText>
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        {rightText &&
+          <View style={style.rightTextWrapper}>
+            <CelText color={rightTextColor}>
+              {rightText}
+            </CelText>
+          </View>
+        }
+        <View style={style.rightWrapper}>
           {!!right && (
             <View>
               {typeof right === "string" ? (

@@ -24,6 +24,7 @@ import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
 import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
+import LtcAddressChangeModal from "../../modals/LtcAddressChangeModal/LtcAddressChangeModal";
 
 @connect(
   state => {
@@ -46,6 +47,8 @@ import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
         : [],
       previouslyOpenedModals: state.ui.previouslyOpenedModals,
       hodlStatus: state.hodl.hodlStatus,
+      walletAddresses: state.wallet.addresses,
+      userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -91,12 +94,24 @@ class WalletLanding extends Component {
       currenciesGraphs,
       previouslyOpenedModals,
       hodlStatus,
+      walletAddresses,
+      userTriggeredActions,
     } = this.props;
     if (
       !previouslyOpenedModals.HODL_MODE_MODAL &&
       hodlStatus.created_by === "backoffice"
     )
       actions.openModal(MODALS.HODL_MODE_MODAL);
+
+    if (
+      walletAddresses &&
+      walletAddresses.LTCRawResponse &&
+      walletAddresses.LTCRawResponse.has_inactive_addresses &&
+      !userTriggeredActions.confirmedLTCAddressChange
+    ) {
+      actions.openModal(MODALS.LTC_ADDRESS_CHANGE);
+    }
+
     actions.checkForLoanAlerts();
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -272,6 +287,7 @@ class WalletLanding extends Component {
         <BecomeCelMemberModal />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
+        <LtcAddressChangeModal />
       </RegularLayout>
     );
   }

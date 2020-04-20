@@ -3,7 +3,7 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
 
-import TransactionWithdrawDetailsStyle from "./TransactionDetailsWithdraw.styles"
+import TransactionWithdrawDetailsStyle from "./TransactionDetailsWithdraw.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
 import TxAddressSection from "../../atoms/TxAddressSection/TxAddressSection";
@@ -17,15 +17,17 @@ import Icon from "../../atoms/Icon/Icon";
 
 class TransactionDetailsWithdraw extends Component {
   static propTypes = {
-    transaction: PropTypes.string,
+    transaction: PropTypes.instanceOf(Object),
+    navigateTo: PropTypes.func,
+    cancelWithdrawal: PropTypes.func,
   };
   static defaultProps = {};
 
   render() {
     // const style = TransactionDetailsDepositsStyle();
-    const { transaction, actions } = this.props;
+    const { transaction, navigateTo, cancelWithdrawal } = this.props;
     const transactionProps = transaction.uiProps;
-    const style = TransactionWithdrawDetailsStyle()
+    const style = TransactionWithdrawDetailsStyle();
 
     return (
       <RegularLayout>
@@ -49,30 +51,32 @@ class TransactionDetailsWithdraw extends Component {
                   fill={STYLES.COLORS.WHITE}
                 />
                 <CelText color={"white"} margin={"0 10 0 10"}>
-                  Due to the larger amount of funds being sent, this transaction may take a little bit longer.
+                  Due to the larger amount of funds being sent, this transaction
+                  may take a little bit longer.
                 </CelText>
               </View>
-
-              </InfoBox>
+            </InfoBox>
           )}
 
-          {transaction.type === TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION && (
+          {transaction.type ===
+            TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION && (
             <InfoBox
               backgroundColor={STYLES.COLORS.ORANGE}
               padding={"20 20 20 10"}
             >
               <View style={style.direction}>
                 <View style={style.circle}>
-              <Icon
-                name={"Mail"}
-                height="15"
-                width="15"
-                fill={STYLES.COLORS.RED}
-              />
+                  <Icon
+                    name={"Mail"}
+                    height="15"
+                    width="15"
+                    fill={STYLES.COLORS.RED}
+                  />
                 </View>
-              <CelText color={"white"} margin={"0 10 0 10"}>
-                In order to proceed, you must confirm the transaction via email.
-              </CelText>
+                <CelText color={"white"} margin={"0 10 0 10"}>
+                  In order to proceed, you must confirm the transaction via
+                  email.
+                </CelText>
               </View>
             </InfoBox>
           )}
@@ -92,7 +96,7 @@ class TransactionDetailsWithdraw extends Component {
           />
           <CelButton
             margin={"40 0 0 0"}
-            onPress={() => actions.navigateTo("WalletLanding")}
+            onPress={() => navigateTo("WalletLanding")}
           >
             Go Back to Wallet
           </CelButton>
@@ -101,7 +105,7 @@ class TransactionDetailsWithdraw extends Component {
               margin={"20 0 0 0"}
               color={STYLES.COLORS.RED}
               basic
-              onPress={() => actions.cancelWithdrawal(transaction.id)}
+              onPress={() => cancelWithdrawal(transaction.id)}
             >
               Cancel Withdrawal
             </CelButton>

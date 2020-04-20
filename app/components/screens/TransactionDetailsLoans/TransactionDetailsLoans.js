@@ -17,13 +17,13 @@ import Separator from "../../atoms/Separator/Separator";
 class TransactionDetailsLoans extends Component {
   static propTypes = {
     transaction: PropTypes.instanceOf(Object),
-    actions: PropTypes.instanceOf(Object),
+    navigateTo: PropTypes.func,
   };
   static defaultProps = {};
 
   render() {
     // const style = TransactionDetailsLoansStyle();
-    const { transaction, actions } = this.props;
+    const { transaction, navigateTo } = this.props;
     const transactionProps = transaction.uiProps;
 
     return (
@@ -36,7 +36,7 @@ class TransactionDetailsLoans extends Component {
           />
 
           <CollateralLoanCard
-            navigateTo={actions.navigateTo}
+            navigateTo={navigateTo}
             transaction={transaction}
           />
 
@@ -115,7 +115,7 @@ class TransactionDetailsLoans extends Component {
           <CelButton
             margin={"20 0 0 0"}
             basic
-            onPress={() => actions.navigateTo("WalletLanding")}
+            onPress={() => navigateTo("WalletLanding")}
           >
             Go Back to Wallet
           </CelButton>

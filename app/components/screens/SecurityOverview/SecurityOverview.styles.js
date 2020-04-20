@@ -109,9 +109,16 @@ const base = {
     // justifyContent: 'space-between',
     alignItems: "flex-end",
   },
+  infoTextWrapper: {
+    width: "100%",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    paddingVertical: 8,
+    paddingRight: 12,
+  },
   infoSubtitleWrapper: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
 };
 
