@@ -25,6 +25,7 @@ import RateInfoCard from "../RateInfoCard/RateInfoCard";
     formData: state.forms.formData,
     currencies: state.currencies.rates,
     interestCompliance: state.compliance.interest,
+    activeScreen: state.nav.activeScreen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -193,7 +194,7 @@ class PerCoinCelInterestCard extends Component {
     if (isUSResident()) return null;
     const style = PerCoinCelInterestCardStyle();
 
-    const { formData, actions, interestCompliance } = this.props;
+    const { formData, actions, interestCompliance, activeScreen } = this.props;
     const { coinList, isExpanded, coinNames, isLoading } = this.state;
 
     if (!formData.coinsInCel) return null;
@@ -213,19 +214,14 @@ class PerCoinCelInterestCard extends Component {
               name="Unchecked"
               width={23}
               height={23}
-              fill={style.iconFill.color}
-              style={{
-                borderWidth: 1,
-                borderRadius: 6,
-                borderColor: STYLES.COLORS.GRAY,
-              }}
+              fill={STYLES.COLORS.GRAY}
             />
           }
         />
 
         <RateInfoCard
           navigateTo={actions.navigateTo}
-          tierButton
+          tierButton={activeScreen !== "MyCel"}
           interestCompliance={interestCompliance}
         />
 
@@ -289,12 +285,7 @@ class PerCoinCelInterestCard extends Component {
                       name="Unchecked"
                       width="23"
                       height="23"
-                      fill={style.iconFill.color}
-                      style={{
-                        borderWidth: 1,
-                        borderRadius: 6,
-                        borderColor: STYLES.COLORS.GRAY,
-                      }}
+                      fill={STYLES.COLORS.GRAY}
                     />
                   }
                 />

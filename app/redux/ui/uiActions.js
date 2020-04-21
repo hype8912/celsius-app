@@ -201,7 +201,7 @@ function setBannerProps(newBannerProps = null) {
   return async (dispatch, getState) => {
     let bannerProps;
     try {
-      bannerProps = getState().ui.bannerProps;
+      bannerProps = getState().ui.bannerProps || {};
 
       if (!newBannerProps) {
         bannerProps = JSON.parse(await AsyncStorage.getItem("bannerProps"));

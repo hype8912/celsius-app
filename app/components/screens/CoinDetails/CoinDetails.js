@@ -31,12 +31,12 @@ const { COLORS } = STYLES;
     currencyRatesShort: state.currencies.currencyRatesShort,
     interestRates: state.generalData.interestRates,
     celpayCompliance: state.compliance.celpay,
-    buyCoinsSettings: state.generalData.buyCoinsSettings,
     coinAmount: state.graph.coinLastValue,
     appSettings: state.user.appSettings,
     interestCompliance: state.compliance.interest,
     hodlStatus: state.hodl.hodlStatus,
     depositCompliance: state.compliance.deposit,
+    simplexCompliance: state.compliance.simplex,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -132,10 +132,10 @@ class CoinDetails extends Component {
       celpayCompliance,
       currencies,
       appSettings,
-      buyCoinsSettings,
       hodlStatus,
       interestCompliance,
       depositCompliance,
+      simplexCompliance,
     } = this.props;
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
@@ -145,18 +145,22 @@ class CoinDetails extends Component {
           .map(m => m.market_quotes_usd)[0]
       : {};
     const theme = getTheme();
+
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
-      celpayCompliance.coins.includes(currency.short);
+      celpayCompliance.coins.includes(currency.short) &&
+      !hodlStatus.isActive;
+
     const isCoinEligibleForBuying =
-      buyCoinsSettings &&
-      buyCoinsSettings.supported_coins.includes(currency.short);
+      simplexCompliance && simplexCompliance.coins.includes(currency.short);
+
     const isCoinEligibleForDeposit =
       depositCompliance && depositCompliance.coins.includes(currency.short);
+
+    const isCoinEligibleForWithdraw = !hodlStatus.isActive;
+
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
-
-
 
     return (
       <RegularLayout padding={"20 0 100 0"}>
@@ -206,7 +210,7 @@ class CoinDetails extends Component {
                     </TouchableOpacity>
                   </>
                 )}
-                {isCoinEligibleForCelPay && !hodlStatus.isActive &&(
+                {isCoinEligibleForCelPay && (
                   <>
                     <Separator vertical height={"35%"} top={20} />
                     <TouchableOpacity
@@ -253,9 +257,11 @@ class CoinDetails extends Component {
                   </>
                 )}
 
-                {!hodlStatus.isActive && (
+                {isCoinEligibleForWithdraw && (
                   <>
-                    <Separator vertical height={"35%"} top={20} />
+                    {isCoinEligibleForDeposit && (
+                      <Separator vertical height={"35%"} top={20} />
+                    )}
                     <TouchableOpacity
                       style={style.buttons}
                       onPress={() =>

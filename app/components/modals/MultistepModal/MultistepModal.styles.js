@@ -34,7 +34,6 @@ const base = {
     marginTop: 40,
   },
   dots: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

@@ -11,7 +11,7 @@ import CopyButton from "../CopyButton/CopyButton";
 const TxTransactionSection = ({ transaction, text, actions }) => {
   const style = TransactionSectionStyle();
   return transaction && transaction.transaction_id ? (
-    <View style={style.container}>
+    <View>
       <Card margin={"20 0 20 0"}>
         <View style={style.content}>
           <CelText style={{ color: STYLES.COLORS.MEDIUM_GRAY }}>{text}</CelText>

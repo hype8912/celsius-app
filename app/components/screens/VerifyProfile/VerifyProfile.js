@@ -116,10 +116,17 @@ class VerifyProfile extends Component {
   };
 
   onCheckError = () => {
+    const { actions, is2FAEnabled, navigation } = this.props;
     this.setState({ loading: false, value: "", verificationError: true });
-    this.setForgotPin();
     const timeout = setTimeout(() => {
       this.setState({ verificationError: false });
+
+      const showType =
+        this.getVerifyType(navigation.getParam("show", null)) || is2FAEnabled;
+      if (showType === "pin") {
+        actions.toggleKeypad(true);
+      }
+
       clearTimeout(timeout);
     }, 1000);
   };

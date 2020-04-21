@@ -2,7 +2,7 @@
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
-  container: { paddingHorizontal: 20, marginTop: 20 },
+  container: { marginTop: 20 },
   content: { flexDirection: "row", justifyContent: "space-between" },
 };
 

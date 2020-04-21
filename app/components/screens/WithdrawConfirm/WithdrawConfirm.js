@@ -167,14 +167,16 @@ class WithdrawConfirm extends Component {
             <Separator />
             <View style={styles.address}>
               <CelText type="H6">Withdrawal address:</CelText>
-              <CelText
-                style={[styles.lineHeight, { flexShrink: 1 }]}
-                type="H6"
-                weight="bold"
-                margin={"0 5 0 5"}
-              >
-                {address}
-              </CelText>
+              <View>
+                <CelText
+                  style={[styles.lineHeight]}
+                  type="H6"
+                  weight="bold"
+                  margin={"0 5 0 5"}
+                >
+                  {address}
+                </CelText>
+              </View>
             </View>
           </View>
           <InfoBoxCmp />

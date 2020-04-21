@@ -166,6 +166,8 @@ function sendResetLink() {
 function logoutUser() {
   return async dispatch => {
     try {
+      await dispatch(resetToScreen("Welcome"));
+
       await logoutUserMixpanel();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
       await deleteSecureStoreKey("HIDE_MODAL_INTEREST_IN_CEL");
@@ -173,8 +175,6 @@ function logoutUser() {
       dispatch({
         type: ACTIONS.LOGOUT_USER,
       });
-      await dispatch(resetToScreen("Welcome"));
-      await dispatch(navigateTo("Welcome"));
       dispatch(showVerifyScreen(false));
       mixpanelAnalytics.sessionEnded("Logout user");
     } catch (err) {
