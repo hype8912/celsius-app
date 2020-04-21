@@ -29,12 +29,6 @@ const COMING_SOON_COINS = [
     image_url: require("../../../../assets/images/coins/paxGoldFullColor3x.png"),
     learn_more_link: "https://www.paxos.com/paxgold/",
   },
-  // {
-  //   name: "Saga",
-  //   short: "SGA",
-  //   image_url: require("../../../../assets/images/coins/saga.png"),
-  //   learn_more_link: "https://www.saga.org/",
-  // },
   {
     name: "Binance USD",
     short: "BUSD",
@@ -68,7 +62,7 @@ const ComingSoonCoins = props => {
   const isGrid = activeView === WALLET_LANDING_VIEW_TYPES.GRID;
   const cardSize =
     activeView === WALLET_LANDING_VIEW_TYPES.GRID ? "half" : "full";
-  const textSize = activeView === WALLET_LANDING_VIEW_TYPES.GRID ? "H4" : "H3";
+  const textSize = activeView === WALLET_LANDING_VIEW_TYPES.GRID ? "H6" : "H3";
   const theme = getTheme();
 
   return (
@@ -105,35 +99,42 @@ const ComingSoonCoins = props => {
                     source={csc.image_url}
                   />
                 )}
-                <View style={{ flexWrap: "wrap", flex: 1 }}>
-                  <CelText weight="300" type="H6">
-                    {csc.short}
-                  </CelText>
-                  <View style={{ flexShrink: 1 }}>
-                    <CelText type={textSize}>{csc.name}</CelText>
-                  </View>
-
-                  {isGrid && (
-                    <CelText
-                      color={STYLES.COLORS.CELSIUS_BLUE}
-                      type="H6"
-                      onPress={() => Linking.openURL(csc.learn_more_link)}
-                    >
-                      Learn more
+                <View style={{ flex: 1 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <CelText weight="300" type="H6">
+                      {csc.short}
                     </CelText>
-                  )}
+                    {!isGrid && (
+                      <CelText
+                        color={STYLES.COLORS.CELSIUS_BLUE}
+                        onPress={() => Linking.openURL(csc.learn_more_link)}
+                      >
+                        Learn more
+                      </CelText>
+                    )}
+                  </View>
+                  <CelText type={textSize} weight="bold">
+                    {csc.name}
+                  </CelText>
                 </View>
               </View>
-
-              {!isGrid && (
-                <CelText
-                  color={STYLES.COLORS.CELSIUS_BLUE}
-                  onPress={() => Linking.openURL(csc.learn_more_link)}
-                >
-                  Learn more
-                </CelText>
-              )}
             </View>
+
+            {isGrid && (
+              <CelText
+                margin="5 0 0 0"
+                color={STYLES.COLORS.CELSIUS_BLUE}
+                onPress={() => Linking.openURL(csc.learn_more_link)}
+              >
+                Learn more
+              </CelText>
+            )}
           </Card>
         ))}
       </View>

@@ -77,13 +77,15 @@ class ToggleInfoCard extends Component {
         </View>
       );
     }
+
     return (
-      <View
-        style={[
-          style.circle,
-          { backgroundColor: cardParams.colors.circleColor },
-        ]}
-      >
+      <View style={{ paddingLeft: 20, justifyContent: "center" }}>
+        <View
+          style={[
+            style.circle,
+            { backgroundColor: cardParams.colors.circleColor },
+          ]}
+        />
         <Icon
           name={cardParams.name}
           fill={cardParams.colors.fill}
