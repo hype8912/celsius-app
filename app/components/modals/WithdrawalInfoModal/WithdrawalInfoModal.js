@@ -171,6 +171,7 @@ class WithdrawalInfoModal extends Component {
           top={25}
           imagesArray={imagesArray}
           imageWidth={31}
+          modalHeight={45}
         >
           {steps.map(this.renderStep)}
         </MultistepModal>

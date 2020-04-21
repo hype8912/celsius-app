@@ -37,6 +37,7 @@ const { COLORS } = STYLES;
     interestCompliance: state.compliance.interest,
     hodlStatus: state.hodl.hodlStatus,
     depositCompliance: state.compliance.deposit,
+    simplexCompliance: state.compliance.simplex,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -132,10 +133,10 @@ class CoinDetails extends Component {
       celpayCompliance,
       currencies,
       appSettings,
-      buyCoinsSettings,
       hodlStatus,
       interestCompliance,
       depositCompliance,
+      simplexCompliance,
     } = this.props;
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
@@ -149,14 +150,11 @@ class CoinDetails extends Component {
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short);
     const isCoinEligibleForBuying =
-      buyCoinsSettings &&
-      buyCoinsSettings.supported_coins.includes(currency.short);
+      simplexCompliance && simplexCompliance.coins.includes(currency.short);
     const isCoinEligibleForDeposit =
       depositCompliance && depositCompliance.coins.includes(currency.short);
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
-
-
 
     return (
       <RegularLayout padding={"20 0 100 0"}>
@@ -206,7 +204,7 @@ class CoinDetails extends Component {
                     </TouchableOpacity>
                   </>
                 )}
-                {isCoinEligibleForCelPay && !hodlStatus.isActive &&(
+                {isCoinEligibleForCelPay && !hodlStatus.isActive && (
                   <>
                     <Separator vertical height={"35%"} top={20} />
                     <TouchableOpacity

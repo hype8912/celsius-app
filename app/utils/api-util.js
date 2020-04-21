@@ -202,7 +202,7 @@ function initInterceptors() {
               show: error.response.data.show,
               onSuccess: () => {
                 store.dispatch(
-                  actions.navigateTo(
+                  actions.resetToScreen(
                     isKYCRejectedForever()
                       ? "KYCFinalRejection"
                       : "WalletLanding"

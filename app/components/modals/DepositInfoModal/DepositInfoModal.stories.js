@@ -24,8 +24,9 @@ class DepositInfoModalStories extends React.Component {
       <CelButton
         style={{ marginBottom: 5 }}
         onPress={() => {
-          this.setState({ type: "USDT ERC20" });
-          store.dispatch(openModal(MODALS.DEPOSIT_INFO_MODAL));
+          this.setState({ type: "USDT ERC20" }, ()=>{
+            store.dispatch(openModal(MODALS.DEPOSIT_INFO_MODAL));
+          });
         }}
       >
         Open for USDT ERC20
@@ -33,8 +34,9 @@ class DepositInfoModalStories extends React.Component {
       <CelText margin="15 0 10 0">Deposit XRP token modal:</CelText>
       <CelButton
         onPress={() => {
-          this.setState({ type: "XRP" });
-          store.dispatch(openModal(MODALS.DEPOSIT_INFO_MODAL));
+          this.setState({ type: "XRP" }, ()=>{
+            store.dispatch(openModal(MODALS.DEPOSIT_INFO_MODAL));
+          });
         }}
       >
         Open for XRP

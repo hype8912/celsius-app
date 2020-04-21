@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import { MODALS } from "../../../constants/UI";
 import MultistepModalStyles from "./MultistepModal.styles";
-import { widthPercentageToDP } from "../../../utils/styles-util";
+import { heightPercentageToDP, widthPercentageToDP } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import CelModal from "../CelModal/CelModal";
 import multiStepUtil from "../../../utils/multistep-modal-util";
@@ -25,6 +25,7 @@ class MultistepModal extends Component {
   static propTypes = {
     name: PropTypes.oneOf(Object.keys(MODALS)).isRequired,
     hasCloseButton: PropTypes.bool,
+    modalHeight: PropTypes.number,
     verticalScroll: PropTypes.bool,
     imagesArray: PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.instanceOf(Object), PropTypes.number])
@@ -36,6 +37,7 @@ class MultistepModal extends Component {
   static defaultProps = {
     hasCloseButton: true,
     imagesArray: [],
+    modalHeight: 40,
     verticalScroll: false,
     imageWidth: 30,
     imageHeight: 30,
@@ -156,7 +158,7 @@ class MultistepModal extends Component {
   }
 
   render() {
-    const { name, children, verticalScroll, imagesArray } = this.props;
+    const { name, children, verticalScroll, imagesArray, modalHeight } = this.props;
     const { xOffset } = this.state;
 
     const style = MultistepModalStyles();
@@ -176,9 +178,8 @@ class MultistepModal extends Component {
           }
           {this.renderDots()}
 
-          <ScrollView>
             <Animated.ScrollView
-              style={{ flexGrow: 1 }}
+              style={{height: heightPercentageToDP(modalHeight)}}
               scrollEventThrottle={16}
               onScroll={Animated.event(
                 [{ nativeEvent: { contentOffset: { x: xOffset } } }],
@@ -206,7 +207,6 @@ class MultistepModal extends Component {
                 </View>
               ))}
             </Animated.ScrollView>
-          </ScrollView>
         </View>
       </CelModal>
     );

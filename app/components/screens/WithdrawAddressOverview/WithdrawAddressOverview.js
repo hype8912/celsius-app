@@ -69,7 +69,7 @@ class WithdrawAddressOverview extends Component {
   };
 
   renderNoWithdrawalAddressCoins = () => {
-    const { securityOverview, noWithdrawalAddresses, currenciesRates } = this.props;
+    const { hodlStatus, noWithdrawalAddresses, currenciesRates } = this.props;
     if (noWithdrawalAddresses && noWithdrawalAddresses.length > 0) {
       return noWithdrawalAddresses.map(coin => {
         const imageUrl = currenciesRates.filter(
@@ -81,7 +81,7 @@ class WithdrawAddressOverview extends Component {
             coinName={formatter.capitalize(coin.name)}
             coinShort={coin.short}
             onPress={() => this.handlePress(coin.short)}
-            disabledPress={securityOverview.hodl_mode_active}
+            disabledPress={hodlStatus.isActive}
           />
         );
       });
