@@ -158,7 +158,8 @@ class WithdrawAddressOverview extends Component {
     if (isLoading) return <LoadingScreen />;
     if (
       !Object.keys(withdrawalAddresses).length &&
-      noWithdrawalAddresses && noWithdrawalAddresses.length === 0
+      noWithdrawalAddresses &&
+      noWithdrawalAddresses.length === 0
     )
       return (
         <StaticScreen

@@ -83,7 +83,7 @@ class TransactionDetailsWithdraw extends Component {
 
           <TxAddressSection
             transaction={transaction}
-            address={transaction.from_address}
+            address={transaction.to_address}
             text="Withdrawn to:"
           />
           <TxBasicSection

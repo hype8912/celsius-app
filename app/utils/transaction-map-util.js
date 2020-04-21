@@ -465,7 +465,7 @@ function getTransactionProps(transaction) {
       return {
         title: () => `Canceled Transaction`,
         color: STYLES.COLORS.RED,
-        shortName: "",
+        shortName: "C",
         statusText: "Canceled",
       };
 
@@ -473,14 +473,14 @@ function getTransactionProps(transaction) {
       return {
         title: coin => `Received ${coin}`,
         color: STYLES.COLORS.GREEN,
-        shortName: "",
+        shortName: "I",
         statusText: "Received",
       };
     case TRANSACTION_TYPES.OUT:
       return {
         title: coin => `Sent ${coin}`,
         color: STYLES.COLORS.RED,
-        shortName: "",
+        shortName: "O",
         statusText: "Sent",
       };
     default:

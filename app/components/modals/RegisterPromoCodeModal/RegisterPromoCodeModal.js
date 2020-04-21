@@ -168,7 +168,13 @@ class RegisterPromoCodeModal extends Component {
           {congratsText}
         </CelText>
         <View style={style.cardWrapper}>
-          <Card color={theme===THEMES.LIGHT ? STYLES.COLORS.LIGHT_GRAY : STYLES.COLORS.DARK_GRAY2}>
+          <Card
+            color={
+              theme === THEMES.LIGHT
+                ? STYLES.COLORS.LIGHT_GRAY
+                : STYLES.COLORS.DARK_GRAY2
+            }
+          >
             <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
               1. Complete KYC (Identity Verification).
             </CelText>
@@ -286,7 +292,13 @@ class RegisterPromoCodeModal extends Component {
           {congratsText}
         </CelText>
         <View style={style.cardWrapper}>
-          <Card color={theme===THEMES.LIGHT ? STYLES.COLORS.LIGHT_GRAY : STYLES.COLORS.DARK_GRAY2}>
+          <Card
+            color={
+              theme === THEMES.LIGHT
+                ? STYLES.COLORS.LIGHT_GRAY
+                : STYLES.COLORS.DARK_GRAY2
+            }
+          >
             <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
               {messageText}
             </CelText>

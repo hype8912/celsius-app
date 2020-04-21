@@ -7,7 +7,10 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import { MODALS } from "../../../constants/UI";
 import MultistepModalStyles from "./MultistepModal.styles";
-import { heightPercentageToDP, widthPercentageToDP } from "../../../utils/styles-util";
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import CelModal from "../CelModal/CelModal";
 import multiStepUtil from "../../../utils/multistep-modal-util";
@@ -158,7 +161,13 @@ class MultistepModal extends Component {
   }
 
   render() {
-    const { name, children, verticalScroll, imagesArray, modalHeight } = this.props;
+    const {
+      name,
+      children,
+      verticalScroll,
+      imagesArray,
+      modalHeight,
+    } = this.props;
     const { xOffset } = this.state;
 
     const style = MultistepModalStyles();
@@ -178,35 +187,35 @@ class MultistepModal extends Component {
           }
           {this.renderDots()}
 
-            <Animated.ScrollView
-              style={{height: heightPercentageToDP(modalHeight)}}
-              scrollEventThrottle={16}
-              onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { x: xOffset } } }],
-                { useNativeDriver: true }
-              )}
-              horizontal
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              ref={c => (this.scrollRef = c)}
-              onMomentumScrollEnd={this.onMomentumScrollEnd}
-            >
-              {children.map((step, i) => (
-                <View key={i}>
-                  <Animated.View
-                    style={[style.screen, this.transitionAnimation(i)]}
-                  >
-                    {verticalScroll ? (
-                      <ScrollView>
-                        <View style={style.modalContent}>{step}</View>
-                      </ScrollView>
-                    ) : (
+          <Animated.ScrollView
+            style={{ height: heightPercentageToDP(modalHeight) }}
+            scrollEventThrottle={16}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { x: xOffset } } }],
+              { useNativeDriver: true }
+            )}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            ref={c => (this.scrollRef = c)}
+            onMomentumScrollEnd={this.onMomentumScrollEnd}
+          >
+            {children.map((step, i) => (
+              <View key={i}>
+                <Animated.View
+                  style={[style.screen, this.transitionAnimation(i)]}
+                >
+                  {verticalScroll ? (
+                    <ScrollView>
                       <View style={style.modalContent}>{step}</View>
-                    )}
-                  </Animated.View>
-                </View>
-              ))}
-            </Animated.ScrollView>
+                    </ScrollView>
+                  ) : (
+                    <View style={style.modalContent}>{step}</View>
+                  )}
+                </Animated.View>
+              </View>
+            ))}
+          </Animated.ScrollView>
         </View>
       </CelModal>
     );

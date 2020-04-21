@@ -6,7 +6,7 @@ const base = {
     flex: 1,
   },
   cardWrapper: {
-    marginHorizontal: 15
+    marginHorizontal: 15,
   },
   inputWrapper: {
     marginLeft: 25,
