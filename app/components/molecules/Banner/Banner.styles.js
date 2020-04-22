@@ -34,9 +34,12 @@ const base = {
     height: 40,
   },
   textAlignment: {
-    flex: 0.80,
+    flex: 0.8,
     alignItems: "flex-start",
     marginTop: heightPercentageToDP("1.7%"),
+  },
+  buttonsWrapper: {
+    flexDirection: "row",
   },
 };
 

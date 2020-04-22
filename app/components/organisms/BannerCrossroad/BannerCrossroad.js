@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import moment from "moment";
 
 import * as appActions from "../../../redux/actions";
-// import BannerCrossroadStyle from "./BannerCrossroad.styles";
 import { hasPassedKYC } from "../../../utils/user-util";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import { KYC_STATUSES } from "../../../constants/DATA";
@@ -20,6 +18,7 @@ import { isLoanBannerVisible } from "../../../utils/ui-util";
       : KYC_STATUSES.collecting,
     isBannerVisible: state.ui.isBannerVisible,
     bannerProps: state.ui.bannerProps,
+    userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -58,21 +57,33 @@ class BannerCrossroad extends Component {
   }
 
   render() {
-    const { actions, kycStatus, isBannerVisible, bannerProps } = this.props;
+    const {
+      actions,
+      kycStatus,
+      isBannerVisible,
+      bannerProps,
+      userTriggeredActions,
+    } = this.props;
     const { bannerSwitch } = this.state;
-    // const style = BannerCrossroadStyle();
-
     const currentDate = moment.utc().format();
-
     if (!hasPassedKYC())
       return <KYCTrigger actions={actions} kycType={kycStatus} />;
 
     if (this.isPowerOfTwo(bannerProps.sessionCount)) return null;
+    if (userTriggeredActions.bannerResurrectionDay) {
+      if (
+        moment(currentDate).isBefore(
+          moment(userTriggeredActions.bannerResurrectionDay)
+            .utc()
+            .format()
+        )
+      )
+        return null;
+    }
     if (!isBannerVisible) return null;
 
     if (isLoanBannerVisible()) {
-      if (!bannerSwitch)
-        return <ReferralTrigger actions={actions} />;
+      if (!bannerSwitch) return <ReferralTrigger actions={actions} />;
       return <LoanTrigger actions={actions} />;
     }
     if (

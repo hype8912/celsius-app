@@ -216,6 +216,7 @@ class DepositInfoModal extends Component {
           imageWidth={35}
           imageHeight={35}
           top={25}
+          modalHeight={45}
         >
           {multistepContent.map((s, k) =>
             this.renderStepBody(

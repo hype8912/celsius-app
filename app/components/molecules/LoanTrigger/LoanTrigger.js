@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-// import LoanTriggerStyle from "./LoanTrigger.styles";
+import moment from "moment";
 import Banner from "../Banner/Banner";
 import STYLES from "../../../constants/STYLES";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
@@ -33,6 +33,18 @@ class LoanTrigger extends Component {
           mixpanelAnalytics.userInitiatingLoanOnWallet();
         }}
         buttonText={"Get a loan"}
+        textButtonAction={() => {
+          actions.setUserAppSettings({
+            user_triggered_actions: {
+              bannerResurrectionDay: moment(moment.utc().format())
+                .add(30, "days")
+                .utc()
+                .format(),
+            },
+          });
+          actions.closeBanner();
+        }}
+        textButtonText={"Don't show"}
         title={"Did you know..."}
         content={content}
         close={() => actions.closeBanner()}
