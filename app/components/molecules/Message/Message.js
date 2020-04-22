@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, Easing, TouchableOpacity, View } from "react-native";
+import { Animated, Dimensions, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -21,18 +21,25 @@ class Message extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.message) {
-      Animated.timing(prevState.opacity, {
+      Animated.timing(prevState.yOffset, {
         toValue: 1,
-        duration: 800,
+        duration: 500,
         useNativeDriver: true,
-        easing: Easing.linear,
-      }).start();
+      }).start(({ finished }) => {
+        if (finished)
+          Animated.timing(prevState.yOffset, {
+            delay: 4000,
+            toValue: 0,
+            duration: 500,
+            useNativeDriver: true,
+          }).start();
+      });
     }
     return null;
   }
 
   state = {
-    opacity: new Animated.Value(0.3),
+    yOffset: new Animated.Value(0),
   };
 
   getIcon = () => {
@@ -51,8 +58,21 @@ class Message extends Component {
     }
   };
 
+  closeMessage = () => {
+    const { actions } = this.props;
+    Animated.timing(this.state.yOffset, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(({ finished }) => {
+      if (finished) actions.clearMessage();
+    });
+  };
+
   render() {
-    const { message, actions } = this.props;
+    const { message } = this.props;
+    const { yOffset } = this.state;
+    const { height } = Dimensions.get("window");
     if (!message || !message.text) return null;
     const { action } = message;
     const style = MessageStyle();
@@ -60,7 +80,21 @@ class Message extends Component {
     const icon = this.getIcon();
 
     return (
-      <Animated.View style={style[`${message.type}Container`]}>
+      <Animated.View
+        style={[
+          style[`${message.type}Container`],
+          {
+            transform: [
+              {
+                translateY: yOffset.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [-height, 0],
+                }),
+              },
+            ],
+          },
+        ]}
+      >
         <View style={style.circle}>
           <Icon {...icon} height="29" width="29" fill={STYLES.COLORS.WHITE} />
         </View>
@@ -82,7 +116,7 @@ class Message extends Component {
         </View>
 
         <TouchableOpacity
-          onPress={() => actions.clearMessage()}
+          onPress={() => this.closeMessage()}
           style={style.closeButton}
         >
           <View style={style.closeButtonView}>

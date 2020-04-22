@@ -167,17 +167,25 @@ class RegisterPromoCodeModal extends Component {
         >
           {congratsText}
         </CelText>
-        <Card color={STYLES.COLORS.LIGHT_GRAY}>
-          <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
-            1. Complete KYC (Identity Verification).
-          </CelText>
-          <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
-            2. Receive confirmation of account verification.
-          </CelText>
-          <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
-            3. Deposit $200 or more worth of coins to your Celsius wallet.
-          </CelText>
-        </Card>
+        <View style={style.cardWrapper}>
+          <Card
+            color={
+              theme === THEMES.LIGHT
+                ? STYLES.COLORS.LIGHT_GRAY
+                : STYLES.COLORS.DARK_GRAY2
+            }
+          >
+            <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
+              1. Complete KYC (Identity Verification).
+            </CelText>
+            <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
+              2. Receive confirmation of account verification.
+            </CelText>
+            <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
+              3. Deposit $200 or more worth of coins to your Celsius wallet.
+            </CelText>
+          </Card>
+        </View>
 
         <View style={style.buttonWrapper}>
           <CelModalButton
@@ -276,18 +284,27 @@ class RegisterPromoCodeModal extends Component {
           Congrats!
         </CelText>
         <CelText
-          margin={"0 0 30 0"}
+          margin={"0 25 10 25"}
           align={"center"}
           type={"H4"}
           weight={"300"}
         >
           {congratsText}
         </CelText>
-        <Card color={STYLES.COLORS.LIGHT_GRAY}>
-          <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
-            {messageText}
-          </CelText>
-        </Card>
+        <View style={style.cardWrapper}>
+          <Card
+            color={
+              theme === THEMES.LIGHT
+                ? STYLES.COLORS.LIGHT_GRAY
+                : STYLES.COLORS.DARK_GRAY2
+            }
+          >
+            <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
+              {messageText}
+            </CelText>
+          </Card>
+        </View>
+
         <View style={style.buttonWrapper}>
           <CelModalButton
             onPress={() => {

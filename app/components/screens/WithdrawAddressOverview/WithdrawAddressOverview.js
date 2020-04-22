@@ -65,11 +65,11 @@ class WithdrawAddressOverview extends Component {
   renderCoinDetails = key => {
     const { currencies } = this.props;
     const coin = currencies.find(c => c.short === key);
-    return `${formatter.capitalize(coin.name)} - ${coin.short}`;
+    return `${formatter.capitalize(coin.name)} (${coin.short})`;
   };
 
   renderNoWithdrawalAddressCoins = () => {
-    const { securityOverview, noWithdrawalAddresses, currenciesRates } = this.props;
+    const { hodlStatus, noWithdrawalAddresses, currenciesRates } = this.props;
     if (noWithdrawalAddresses && noWithdrawalAddresses.length > 0) {
       return noWithdrawalAddresses.map(coin => {
         const imageUrl = currenciesRates.filter(
@@ -81,7 +81,7 @@ class WithdrawAddressOverview extends Component {
             coinName={formatter.capitalize(coin.name)}
             coinShort={coin.short}
             onPress={() => this.handlePress(coin.short)}
-            disabledPress={securityOverview.hodl_mode_active}
+            disabledPress={hodlStatus.isActive}
           />
         );
       });
@@ -113,6 +113,7 @@ class WithdrawAddressOverview extends Component {
                 imageUrl={imageUrl}
                 key={key}
                 coinShort={key}
+                coinName={this.renderCoinDetails(key)}
                 withdrawalAddress={withdrawalAddresses[key]}
                 onPress={() => this.handlePress(key)}
                 onPressAddressLabel={() =>
@@ -157,7 +158,8 @@ class WithdrawAddressOverview extends Component {
     if (isLoading) return <LoadingScreen />;
     if (
       !Object.keys(withdrawalAddresses).length &&
-      noWithdrawalAddresses && noWithdrawalAddresses.length === 0
+      noWithdrawalAddresses &&
+      noWithdrawalAddresses.length === 0
     )
       return (
         <StaticScreen

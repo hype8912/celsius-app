@@ -14,32 +14,33 @@ const TxAddressSection = ({ transaction, text, address }) => {
   const link = getBlockExplorerLink(transaction);
 
   return link ? (
-    <View style={style.container}>
-      <Card margin={"20 0 20 0"}>
+    <View>
+      <Card>
         <View style={style.content}>
           <CelText>{text}</CelText>
-          {!!transaction.transaction_id && !!link.link && (
-            <TouchableOpacity
-              style={style.button}
-              onPress={() => Linking.openURL(link.link)}
-            >
-              <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-                View on {link.text}
-              </CelText>
-              <Icon
-                name="NewWindowIcon"
-                height="17"
-                width="17"
-                fill={STYLES.COLORS.CELSIUS_BLUE}
-                style={{ marginLeft: 5 }}
-              />
-            </TouchableOpacity>
-          )}
         </View>
         {address && (
           <CelText weight="500" type="H4">
             {address.split("?")[0]}
           </CelText>
+        )}
+
+        {!!transaction.transaction_id && !!link.link && (
+          <TouchableOpacity
+            style={style.button}
+            onPress={() => Linking.openURL(link.link)}
+          >
+            <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
+              View on {link.text}
+            </CelText>
+            <Icon
+              name="NewWindowIcon"
+              height="16"
+              width="16"
+              fill={STYLES.COLORS.CELSIUS_BLUE}
+              style={{ marginTop: 5, marginLeft: 10 }}
+            />
+          </TouchableOpacity>
         )}
       </Card>
       {transaction.coin === "xrp" && (

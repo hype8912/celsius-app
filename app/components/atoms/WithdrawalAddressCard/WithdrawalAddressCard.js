@@ -10,6 +10,7 @@ import RoundedBadge from "../RoundedBadge/RoundedBadge";
 
 const WithdrawalAddressCard = ({
   coinShort,
+  coinName,
   imageUrl,
   onPress,
   onPressAddressLabel,
@@ -51,7 +52,7 @@ const WithdrawalAddressCard = ({
         <View style={style.cardBody}>
           <View style={style.cardHeader}>
             <View style={{ flex: 0.7 }}>
-              <CelText weight="600">{coinShort}</CelText>
+              <CelText weight="600">{coinName}</CelText>
             </View>
             <View style={{ flex: 0.3, opacity: btnOpacity }}>
               {!withdrawalAddress.locked ? (
@@ -79,6 +80,7 @@ const WithdrawalAddressCard = ({
 WithdrawalAddressCard.propTypes = {
   imageUrl: PropTypes.string,
   coinShort: PropTypes.string,
+  coinName: PropTypes.string,
   onPress: PropTypes.func.isRequired,
   onPressAddressLabel: PropTypes.func,
   withdrawalAddress: PropTypes.instanceOf(Object),

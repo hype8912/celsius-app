@@ -31,7 +31,7 @@ class TxReferralSection extends Component {
     // TOdo(ns) no proper text for when user is invited with referral code, test that transaction one more time
 
     return (
-      <View style={style.container}>
+      <View>
         <Card margin={"20 0 20 0"}>
           <View style={style.text}>
             <CelText color={STYLES.COLORS.MEDIUM_GRAY}>{text}</CelText>

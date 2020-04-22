@@ -2,7 +2,6 @@
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
-  container: { paddingHorizontal: 20 },
   text: {
     flex: 1,
     justifyContent: "space-between",

@@ -5,32 +5,26 @@ import {
   heightPercentageToDP,
 } from "../../../utils/styles-util";
 
+const radius = Platform.OS === "ios" ? 20 : 24;
+
 const base = {
   container: {
     flex: 1,
   },
   circle: {
     position: "absolute",
-    width:
-      Platform.OS === "ios"
-        ? heightPercentageToDP("12%")
-        : heightPercentageToDP("20%"),
-    height:
-      Platform.OS === "ios"
-        ? heightPercentageToDP("12%")
-        : heightPercentageToDP("20%"),
-    borderRadius:
-      Platform.OS === "ios"
-        ? heightPercentageToDP("6%")
-        : heightPercentageToDP("10%"),
+    width: heightPercentageToDP(radius),
+    height: heightPercentageToDP(radius),
+    borderRadius: heightPercentageToDP(radius / 2),
     justifyContent: "center",
     alignItems: "stretch",
-    left: -25,
-    bottom: Platform.OS === "ios" ? -12 : -25,
+    left: -1 * heightPercentageToDP(radius / 2),
+    top: -1 * heightPercentageToDP(radius / 4),
   },
   card: {
     overflow: "hidden",
     flexDirection: "row",
+    height: heightPercentageToDP(radius / 2),
   },
   toggleWrapper: {
     flexDirection: "column",

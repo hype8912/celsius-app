@@ -34,7 +34,7 @@ class WithdrawalInfoModal extends Component {
       case "DASH":
         title = "ATTENTION";
         body =
-          "We use multi-sig DASH wallet addresses that start with a \"7\" while regular DASH addresses start with an \"X\". These two address types can send to each other just fine and neither of them is invalid. If you experience any issues the cause is your wallet’s address validator. You will have to route your transaction through a wallet that does not have this problem.";
+          'We use multi-sig DASH wallet addresses that start with a "7" while regular DASH addresses start with an "X". These two address types can send to each other just fine and neither of them is invalid. If you experience any issues the cause is your wallet’s address validator. You will have to route your transaction through a wallet that does not have this problem.';
         break;
       case "DAI":
         title = "ATTENTION";
@@ -142,25 +142,17 @@ class WithdrawalInfoModal extends Component {
         steps = modalContent.slice(1, 3);
     }
 
-    let picture
-    const theme = getTheme()
+    let picture;
+    const theme = getTheme();
     if (theme === THEMES.LIGHT) {
-      picture = require(`../../../../assets/images/modal-withdraw.png`)
+      picture = require(`../../../../assets/images/modal-withdraw.png`);
     } else {
-      picture = require(`../../../../assets/images/modal-withdraw-dark.png`)
+      picture = require(`../../../../assets/images/modal-withdraw-dark.png`);
     }
 
-
-    const imagesArray =
-      (["DASH", "DAI"].includes(type))
-        ? [
-          require("../../../../assets/images/alert-icon.png"),
-          picture,
-        ]
-        : [
-          picture,
-          picture,
-        ];
+    const imagesArray = ["DASH", "DAI"].includes(type)
+      ? [require("../../../../assets/images/alert-icon.png"), picture]
+      : [picture, picture];
 
     if (["DASH", "DAI", "CEL"].includes(type)) {
       // TODO(ns) We need to see, if buttons don't work on multistep to remove them...
@@ -171,6 +163,7 @@ class WithdrawalInfoModal extends Component {
           top={25}
           imagesArray={imagesArray}
           imageWidth={31}
+          modalHeight={45}
         >
           {steps.map(this.renderStep)}
         </MultistepModal>

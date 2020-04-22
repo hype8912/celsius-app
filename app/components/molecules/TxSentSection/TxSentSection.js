@@ -20,13 +20,12 @@ class TxSentSection extends Component {
     const { transaction, text } = this.props;
 
     const data = transaction.transfer_data;
-    const participant =
-      text === "Received from:"
-        ? transaction.transfer_data.sender
-        : transaction.transfer_data.claimer;
+    const participant = text === "Received from:" ? data.sender : data.claimer;
+
+    if (!participant) return null;
 
     return (
-      <View style={style.container}>
+      <View>
         <Card margin={"20 0 20 0"}>
           <View style={style.text}>
             <CelText
@@ -42,7 +41,7 @@ class TxSentSection extends Component {
             ) : (
               <Image
                 source={{ uri: participant.profile_picture }}
-                style={[style.image, ...STYLES.SHADOW_STYLES]}
+                style={[style.image, STYLES.SHADOW_STYLES]}
               />
             )}
             {data && participant && (

@@ -203,7 +203,12 @@ class BorrowCalculator extends Component {
     const textType = numberOfDigits > 8 ? "H7" : "H6";
 
     return INTEREST_DATA.map(num => (
-      <View style={[style.interestCardWrapper, { backgroundColor: num.color }]}>
+      <View
+        style={[
+          style.interestCardWrapper,
+          { backgroundColor: num.color, marginHorizontal: 20 },
+        ]}
+      >
         <View style={style.interestCardTitle}>
           <CelText
             type={"H6"}
@@ -341,9 +346,7 @@ class BorrowCalculator extends Component {
             }
             type={"H2"}
           >
-            {loanParams.collateralNeeded
-              ? formatter.crypto(loanParams.collateralNeeded, formData.coin)
-              : ""}
+            {formatter.crypto(loanParams.collateralNeeded || 0, formData.coin)}
           </CelText>
           <CelText
             align={"center"}

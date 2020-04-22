@@ -76,27 +76,28 @@ class SecurityOverview extends Component {
         />
       );
     }
-
     return (
       <Card margin="20 0 20 0" padding={"2 2 2 2"} styles={style.card}>
-        <View
-          style={[
-            style.circle,
-            {
-              backgroundColor:
-                theme === "light"
-                  ? STYLES.COLORS.DARK_GRAY1
-                  : STYLES.COLORS.WHITE_OPACITY1,
-            },
-          ]}
-        >
-          <Icon
-            name={"Shield"}
-            fill={STYLES.COLORS.CELSIUS_BLUE}
-            width={35}
-            height={35}
-          />
+        <View style={{ justifyContent: "center" }}>
+          <View
+            style={[style.circle,
+              {
+                backgroundColor:
+                  theme === "light"
+                    ? STYLES.COLORS.DARK_GRAY1
+                    : STYLES.COLORS.WHITE_OPACITY1,
+              },
+            ]}
+          >
+            <Icon
+              name={"Shield"}
+              fill={STYLES.COLORS.CELSIUS_BLUE}
+              width={35}
+              height={35}
+            />
+          </View>
         </View>
+
         <View style={style.infoTextWrapper}>
           <View style={style.infoSubtitleWrapper}>
             <CelText type="H2" weight="600">
@@ -120,6 +121,7 @@ class SecurityOverview extends Component {
       </Card>
     );
   };
+
 
   render() {
     const { is2FAEnabled, actions, securityOverview } = this.props;

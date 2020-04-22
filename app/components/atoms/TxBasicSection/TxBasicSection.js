@@ -14,7 +14,7 @@ const TxBasicSection = ({
 }) => {
   const style = BasicSectionStyle();
   return (
-    <View style={style.container}>
+    <View>
       <View style={style.content}>
         <CelText type="H6">{label}:</CelText>
         <CelText type="H6" color={color}>
