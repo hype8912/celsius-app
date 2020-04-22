@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import Contacts from "react-native-contacts";
 
 import * as appActions from "../../../redux/actions";
@@ -21,6 +21,9 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { CEL_PAY_TYPES } from "../../../constants/UI";
+import Card from "../../atoms/Card/Card";
+import STYLES from "../../../constants/STYLES";
+import Icon from "../../atoms/Icon/Icon";
 
 const loadingText =
   "Your contacts are being imported. This make take a couple of minutes, so we'll let you know once the import is complete. \n" +
@@ -101,7 +104,7 @@ class CelPayChooseFriend extends Component {
 
         let position = 0;
         // Set batch size for sending to BE
-        const batchSize = 50;
+        const batchSize = 100;
         const contactBatches = [];
         // Slice contacts into batches
         while (position < phoneContacts.length) {
@@ -236,12 +239,15 @@ class CelPayChooseFriend extends Component {
   renderProgressBar = () => {
     const { totalContacts, loadedContacts } = this.state;
 
+    const warningLimit = 300;
+    const shouldRenderWarning =
+      Platform.OS === "ios" && totalContacts > warningLimit;
     return (
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-          padding: 10,
+          paddingVertical: 10,
         }}
       >
         <ProgressBar
@@ -252,6 +258,22 @@ class CelPayChooseFriend extends Component {
         <CelText>
           {loadedContacts} of {totalContacts} contacts loaded
         </CelText>
+
+        {shouldRenderWarning && (
+          <Card color={STYLES.COLORS.ORANGE} margin="15 0 0 0">
+            <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
+              <Icon name="WarningCircle" width="25" height="25" fill="white" />
+              <CelText
+                color="white"
+                margin="-5 0 0 15"
+                style={{ width: "85%" }}
+              >
+                Please do not close Celsius app while contacts are being
+                imported.
+              </CelText>
+            </View>
+          </Card>
+        )}
       </View>
     );
   };

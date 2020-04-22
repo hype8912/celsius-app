@@ -107,6 +107,11 @@ class WithdrawEnterAmount extends Component {
 
   onPressPredefinedAmount = ({ label, value }) => {
     const { formData, walletSummary, currencyRatesShort, actions } = this.props;
+
+    if (!formData.coin) {
+      return actions.showMessage("info", "Please select a coin to withdraw.");
+    }
+
     let amount;
 
     const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
