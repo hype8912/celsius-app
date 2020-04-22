@@ -281,7 +281,6 @@ function initAppData(initToken = null) {
           await dispatch(actions.getUserStatus());
           await dispatch(actions.getWalletSummary());
           await dispatch(actions.getLoyaltyInfo());
-          await dispatch(actions.getCoinAddress("LTC"));
           if (allowed) await dispatch(actions.getAllLoans());
         }
       }
