@@ -24,7 +24,6 @@ import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
 import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
-import LtcAddressChangeModal from "../../modals/LtcAddressChangeModal/LtcAddressChangeModal";
 
 @connect(
   state => {
@@ -47,8 +46,6 @@ import LtcAddressChangeModal from "../../modals/LtcAddressChangeModal/LtcAddress
         : [],
       previouslyOpenedModals: state.ui.previouslyOpenedModals,
       hodlStatus: state.hodl.hodlStatus,
-      walletAddresses: state.wallet.addresses,
-      userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -94,23 +91,12 @@ class WalletLanding extends Component {
       currenciesGraphs,
       previouslyOpenedModals,
       hodlStatus,
-      walletAddresses,
-      userTriggeredActions,
     } = this.props;
     if (
       !previouslyOpenedModals.HODL_MODE_MODAL &&
       hodlStatus.created_by === "backoffice"
     )
       actions.openModal(MODALS.HODL_MODE_MODAL);
-
-    if (
-      walletAddresses &&
-      walletAddresses.LTCRawResponse &&
-      walletAddresses.LTCRawResponse.has_inactive_addresses &&
-      !userTriggeredActions.confirmedLTCAddressChange
-    ) {
-      actions.openModal(MODALS.LTC_ADDRESS_CHANGE);
-    }
 
     actions.checkForLoanAlerts();
 
@@ -210,7 +196,6 @@ class WalletLanding extends Component {
     } = this.props;
     const style = WalletLandingStyle();
 
-
     if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
       return <LoadingScreen />;
     }
@@ -228,16 +213,15 @@ class WalletLanding extends Component {
           <View style={style.depositWrapper}>
             <View>
               <CelButton
-              onPress={() => actions.navigateTo("GetCoinsLanding")}
-              style={{ alignSelf: "flex-start" }}
-              margin="10 0 2 0"
-              size="small"
-              iconRight="IconArrowRight"
-            >
-              Buy Coins
-            </CelButton>
+                onPress={() => actions.navigateTo("GetCoinsLanding")}
+                style={{ alignSelf: "flex-start" }}
+                margin="10 0 2 0"
+                size="small"
+                iconRight="IconArrowRight"
+              >
+                Buy Coins
+              </CelButton>
             </View>
-
 
             <View style={style.buttonWrapper}>
               <TouchableOpacity
@@ -287,7 +271,6 @@ class WalletLanding extends Component {
         <BecomeCelMemberModal />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
-        <LtcAddressChangeModal />
       </RegularLayout>
     );
   }
