@@ -59,6 +59,7 @@ class CelHeading extends Component {
     super(props);
     this.state = {
       activeSearch: false,
+      screen: props.scene.route.routeName,
     };
   }
 
@@ -67,46 +68,52 @@ class CelHeading extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { theme } = this.props;
+    const { theme, actions, scene, activeScreen } = this.props;
+    const right = scene.descriptor.options.right;
+
     if (prevProps.theme !== theme) {
       this.getStatusBarTextColor();
     }
+
+    if (
+      activeScreen === this.state.screen &&
+      prevProps.activeScreen !== activeScreen &&
+      right === "search"
+    ) {
+      actions.updateFormField("activeSearch", true);
+    }
   }
 
+  navigateBack = (customBack, backScreenName) => {
+    const { actions, formData } = this.props;
+    if (customBack) {
+      customBack();
+    } else {
+      actions.navigateBack(backScreenName);
+    }
+    if (formData.activeSearch) {
+      actions.updateFormFields({
+        activeSearch: false,
+        search: "",
+      });
+    }
+  };
+
   getLeftContent = sceneProps => {
-    const { hideBack, right, customBack } = sceneProps;
-    const { actions, scenes, formData } = this.props;
+    const { hideBack, customBack } = sceneProps;
+    const { scenes, formData } = this.props;
 
     const backScreenName = scenes[this.props.index - 1]
       ? scenes[this.props.index - 1].route.routeName
       : "";
-    const style = CelHeadingStyle();
-
-    // if search is active and right part of header is type of search
-    if ((right === "search" && formData.activeSearch) || customBack)
-      return (
-        <View style={style.leftContentButton}>
-          <CelButton
-            basic
-            iconRightColor={STYLES.COLORS.GRAY}
-            onPress={() =>
-              customBack
-                ? customBack()
-                : actions.updateFormField("activeSearch", true)
-            }
-            iconRight={customBack ? "IconChevronLeft" : "Search"}
-          />
-        </View>
-      );
 
     // By default if scene prop hideBack is true or it's first screen in the stack, hide back arrow
     return this.props.scene.index === 0 || hideBack === true ? null : (
       <CelButton
+        margin={formData.activeSearch ? "8 0 0 4" : null}
         iconRightColor={STYLES.COLORS.GRAY}
         basic
-        onPress={() => {
-          actions.navigateBack(backScreenName);
-        }}
+        onPress={() => this.navigateBack(customBack, backScreenName)}
         iconRight="IconChevronLeft"
       />
     );
@@ -217,7 +224,7 @@ class CelHeading extends Component {
           basic
           onPress={() => {
             actions.updateFormField("activeSearch", false);
-            this.props.actions.updateFormField("search", "");
+            actions.updateFormField("search", "");
           }}
         >
           Cancel
