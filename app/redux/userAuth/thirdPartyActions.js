@@ -412,8 +412,7 @@ function registerSocialSuccess(network, token, user) {
   return async (dispatch, getState) => {
     await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, token);
 
-    dispatch(startApiCall(API.SOCIAL_REGISTER));
-
+    await dispatch(initAppData(token));
     dispatch({
       type: ACTIONS[`REGISTER_USER_${network.toUpperCase()}_SUCCESS`],
       user,
@@ -422,7 +421,6 @@ function registerSocialSuccess(network, token, user) {
     mixpanelAnalytics.sessionStarted("User register social");
     dispatch(claimAllBranchTransfers());
 
-    await dispatch(initAppData(token));
     const { profile } = getState().user;
 
     if (!profile.pin) {
@@ -432,7 +430,5 @@ function registerSocialSuccess(network, token, user) {
         onSuccess: () => navigateTo("WalletLanding"),
       });
     }
-
-    dispatch({ type: ACTIONS.SOCIAL_REGISTER_SUCCESS });
   };
 }

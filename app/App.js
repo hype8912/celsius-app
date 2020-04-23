@@ -37,7 +37,7 @@ function getActiveRouteName(navigationState) {
 
 class App extends Component {
   async componentDidMount() {
-    appUtil.initializeThirdPartyServices();
+    await appUtil.initializeThirdPartyServices();
 
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       store.dispatch(actions.navigateBack());
