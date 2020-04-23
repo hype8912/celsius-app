@@ -86,21 +86,25 @@ class CoinGridCard extends Component {
     </View>
   );
 
-  coinCardFull = coin => (
-    <Fragment>
-      <CelText
-        style={CoinGridCardStyle.text}
-        weight="600"
-        type="H3"
-        margin="3 0 3 0"
-      >
-        {formatter.usd(coin.amount_usd)}
-      </CelText>
-      <CelText weight="300" type="H7">
-        {formatter.crypto(coin.amount, coin.short)}
-      </CelText>
-    </Fragment>
-  );
+  coinCardFull = coin => {
+    const amountUsd = coin.amount_usd;
+    const amount = coin.amount;
+    return (
+      <Fragment>
+        <CelText
+          style={CoinGridCardStyle.text}
+          weight="600"
+          type="H3"
+          margin="3 0 3 0"
+        >
+          {formatter.usd(amountUsd)}
+        </CelText>
+        <CelText weight="300" type="H7">
+          {formatter.crypto(amount, coin.short)}
+        </CelText>
+      </Fragment>
+    );
+  };
 
   render = () => {
     const {
