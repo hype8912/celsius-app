@@ -6,7 +6,7 @@ import appUtil from "./app-util";
 import loggerUtil from "./logger-util";
 import Constants from "../../constants";
 import { getSecureStoreKey } from "./expo-storage";
-import { deletePushNotificationToken } from "./push-notifications-util";
+// import { deletePushNotificationToken } from "./push-notifications-util";
 import { NOTIFICATION_TOKEN } from "../constants/DATA";
 
 let userData = {};
@@ -125,7 +125,7 @@ async function addPushDeviceToken() {
  */
 async function logoutUserMixpanel() {
   const token = await getSecureStoreKey(NOTIFICATION_TOKEN);
-  await deletePushNotificationToken();
+  // await deletePushNotificationToken();
   if (Platform.OS === "android") {
     Mixpanel.clearPushRegistrationId(token);
   } else {
