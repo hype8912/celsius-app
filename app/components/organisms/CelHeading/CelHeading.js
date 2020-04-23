@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   StatusBar,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -69,17 +70,22 @@ class CelHeading extends Component {
 
   componentDidUpdate(prevProps) {
     const { theme, actions, scene, activeScreen } = this.props;
+    const { screen } = this.state;
     const right = scene.descriptor.options.right;
 
     if (prevProps.theme !== theme) {
       this.getStatusBarTextColor();
     }
 
-    if (
-      activeScreen === this.state.screen &&
-      prevProps.activeScreen !== activeScreen &&
-      right === "search"
-    ) {
+    // iOS renders one CelHeading for the App
+    const activateSearchiOS =
+      prevProps.activeScreen !== activeScreen && right === "search";
+    // Android renders a CelHeading for each screen
+    const activateSearchAndroid = screen === activeScreen && activateSearchiOS;
+    const activateSearch =
+      Platform.OS === "ios" ? activateSearchiOS : activateSearchAndroid;
+
+    if (activateSearch) {
       actions.updateFormField("activeSearch", true);
     }
   }
@@ -303,13 +309,13 @@ class CelHeading extends Component {
                 >
                   <CelInput
                     debounce
-                    autoFocus={formData.activeSearch}
+                    autoFocus
                     basic
                     margin="0 0 0 0"
                     field="search"
                     placeholder="Search..."
                     type="text"
-                    value={this.props.formData.search}
+                    value={formData.search}
                   />
                 </View>
               )}
