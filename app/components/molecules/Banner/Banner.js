@@ -95,28 +95,30 @@ class Banner extends Component {
           >
             {content}
           </CelText>
-          {!!action && (
-            <CelButton
-              margin={"0 0 15 0"}
-              color={"white"}
-              size={"small"}
-              onPress={action}
-              textColor={backgroundColor}
-            >
-              {buttonText}
-            </CelButton>
-          )}
-          {!!textButtonAction && (
-            <TouchableOpacity onPress={textButtonAction}>
-              <CelText
-                margin={"5 0 20 0"}
-                color={STYLES.COLORS.WHITE}
-                type={"H6"}
+          <View style={style.buttonsWrapper}>
+            {!!action && (
+              <CelButton
+                margin={"0 0 15 0"}
+                color={"white"}
+                size={"small"}
+                onPress={action}
+                textColor={backgroundColor}
               >
-                {textButtonText}
-              </CelText>
-            </TouchableOpacity>
-          )}
+                {buttonText}
+              </CelButton>
+            )}
+            {!!textButtonAction && (
+              <TouchableOpacity onPress={textButtonAction}>
+                <CelText
+                  margin={"7 0 0 30"}
+                  color={STYLES.COLORS.WHITE}
+                  type={"H6"}
+                >
+                  {textButtonText}
+                </CelText>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       </View>
     );

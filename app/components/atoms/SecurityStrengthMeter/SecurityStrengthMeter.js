@@ -16,7 +16,7 @@ class SecurityStrengthMeter extends Component {
   static propTypes = {
     lastChangePeriod: PropTypes.string,
     onPressEnhance: PropTypes.func,
-    enhanceText: PropTypes.string,
+    enhanceText: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     level: PropTypes.oneOf(["weak", "fair", "good", "strong"]).isRequired,
   };
   static defaultProps = {};

@@ -188,7 +188,7 @@ class MultistepModal extends Component {
           {this.renderDots()}
 
           <Animated.ScrollView
-            style={{ height: heightPercentageToDP(modalHeight) }}
+            style={{ height: heightPercentageToDP(`${modalHeight}%`) }}
             scrollEventThrottle={16}
             onScroll={Animated.event(
               [{ nativeEvent: { contentOffset: { x: xOffset } } }],

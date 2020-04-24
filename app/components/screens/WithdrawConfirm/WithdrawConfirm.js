@@ -16,8 +16,6 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import addressUtil from "../../../utils/address-util";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
-import LoanBannerCard from "../../atoms/LoanCard/LoanBannerCard";
-import { isLoanBannerVisible } from "../../../utils/ui-util";
 
 @connect(
   state => ({
@@ -190,9 +188,6 @@ class WithdrawConfirm extends Component {
           <CelText align="center" margin="20 0 20 0" color="gray">
             {disclaimerText}
           </CelText>
-          {isLoanBannerVisible() && (
-            <LoanBannerCard type={"half"} actions={actions} />
-          )}
         </Card>
       </RegularLayout>
     );

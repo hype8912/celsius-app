@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 import Banner from "../../molecules/Banner/Banner";
 import STYLES from "../../../constants/STYLES";
@@ -15,8 +16,7 @@ class ReferralTrigger extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
@@ -35,7 +35,19 @@ class ReferralTrigger extends Component {
           actions.openModal(MODALS.REFERRAL_SEND_MODAL);
           mixpanelAnalytics.userStartingReferral();
         }}
-        buttonText={"Share referral code"}
+        buttonText={"Share code"}
+        textButtonText={"Don't show"}
+        textButtonAction={() => {
+          actions.setUserAppSettings({
+            user_triggered_actions: {
+              bannerResurrectionDay: moment(moment.utc().format())
+                .add(30, "days")
+                .utc()
+                .format(),
+            },
+          });
+          actions.closeBanner();
+        }}
         title={"Refer & Earn!"}
         content={content}
         close={() => actions.closeBanner()}

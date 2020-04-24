@@ -148,24 +148,6 @@ const WELCOME_MESSAGES = [
   },
 ];
 
-const LOAN_BANNER_MESSAGES = [
-  {
-    title: "Got crypto but need cash?",
-    content:
-      "Don’t sell your coins - borrow against them with a low-interest loan from Celsius.",
-  },
-  {
-    title: "Did you know?",
-    content:
-      "You can use your crypto as collateral to get a USD or stablecoin loan. Keep the upside potential of your coins and get the cash you need.",
-  },
-  {
-    title: "Why sell your coins?",
-    content:
-      "You can borrow against them to get the cash you need at rates you deserve. Keep calm and HODL on!",
-  },
-];
-
 const COIN_CARD_TYPE = {
   COLLATERAL_COIN_CARD: "COLATERAL_COIN_CARD",
   PRINCIPAL_PAYMENT_COIN_CARD: "PRINCIPAL_PAYMENT_COIN_CARD",
@@ -296,7 +278,6 @@ export {
   LOAN_FILTER_ITEMS,
   TRANSACTION_FILTER_DATE,
   TRANSACTION_FILTER_TYPE,
-  LOAN_BANNER_MESSAGES,
   CEL_PAY_TYPES,
   HODL_STATUS,
 };

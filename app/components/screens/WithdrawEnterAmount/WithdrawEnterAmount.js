@@ -29,8 +29,6 @@ import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
-import LoanBannerCard from "../../atoms/LoanCard/LoanBannerCard";
-import { isLoanBannerVisible } from "../../../utils/ui-util";
 import { renderHodlEmptyState } from "../../../utils/hodl-util";
 
 @connect(
@@ -258,8 +256,6 @@ class WithdrawEnterAmount extends Component {
       loyaltyInfo,
       kycStatus,
       withdrawCompliance,
-      maximumDiscount,
-      ltvs,
       hodlStatus,
     } = this.props;
 
@@ -322,25 +318,15 @@ class WithdrawEnterAmount extends Component {
       minutes = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[1];
     }
 
-    const lowestInterest = ltvs[0].interest * (1 - maximumDiscount);
-
     return (
       <RegularLayout padding="0 0 0 0">
         <View style={style.container}>
-          {isLoanBannerVisible() ? (
-            <LoanBannerCard
-              type={"full"}
-              actions={actions}
-              lowestInterest={lowestInterest}
-            />
-          ) : (
-            <BalanceView
-              opacity={0.65}
-              coin={coin}
-              crypto={coinData.amount}
-              usd={coinData.amount_usd}
-            />
-          )}
+          <BalanceView
+            opacity={0.65}
+            coin={coin}
+            crypto={coinData.amount}
+            usd={coinData.amount_usd}
+          />
           <View style={style.wrapper}>
             <View>
               <CoinPicker
