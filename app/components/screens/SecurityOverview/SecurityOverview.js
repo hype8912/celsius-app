@@ -168,20 +168,22 @@ class SecurityOverview extends Component {
             </>
           )}
 
-          <Separator text="PIN" />
-          <SecurityStrengthMeter
-            level={securityOverview.pin_strength}
-            lastChangePeriod={moment(securityOverview.pin_last_change).fromNow()}
-            enhanceText={
-              securityOverview.pin_strength !==
-                SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase() && "Change PIN"
-            }
-            onPressEnhance={() => {
-              actions.navigateTo("VerifyProfile", {
-                onSuccess: () => actions.navigateTo("ChangePin"),
-              });
-            }}
-          />
+         { !is2FAEnabled && <>
+           <Separator text="PIN" />
+           <SecurityStrengthMeter
+             level={securityOverview.pin_strength}
+             lastChangePeriod={moment(securityOverview.pin_last_change).fromNow()}
+             enhanceText={
+               securityOverview.pin_strength !==
+               SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase() && "Change PIN"
+             }
+             onPressEnhance={() => {
+               actions.navigateTo("VerifyProfile", {
+                 onSuccess: () => actions.navigateTo("ChangePin"),
+               });
+             }}
+           />
+          </>}
 
         </View>
       </RegularLayout>
