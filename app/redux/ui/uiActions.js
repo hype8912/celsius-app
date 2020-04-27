@@ -1,3 +1,4 @@
+import DeviceInfo from "react-native-device-info";
 import { AsyncStorage } from "react-native";
 import ACTIONS from "../../constants/ACTIONS";
 import loggerUtil from "../../utils/logger-util";
@@ -15,6 +16,7 @@ export {
   setActiveTab,
   closeBanner,
   setBannerProps,
+  isGoodForAnimations,
 };
 
 let msgTimeout;
@@ -224,5 +226,25 @@ function setBannerProps(newBannerProps = null) {
       type: ACTIONS.SET_BANNER_PROPS,
       bannerProps,
     });
+  };
+}
+
+/**
+ * Checks if phone can get animations
+ * @returns {Object} - Action
+ *
+ */
+
+function isGoodForAnimations() {
+  const system = DeviceInfo.getSystemVersion();
+  const name = DeviceInfo.getSystemName();
+  let shouldAnimate = true;
+
+  // ios 10 ili 11
+  if (Number(system) > 8 && name === "Android") shouldAnimate = false;
+
+  return {
+    type: ACTIONS.IS_GOOD_FOR_ANIMATIONS,
+    shouldAnimate,
   };
 }
