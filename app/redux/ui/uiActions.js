@@ -232,7 +232,6 @@ function setBannerProps(newBannerProps = null) {
 /**
  * Checks if phone can get animations
  * @returns {Object} - Action
- *
  */
 
 function isGoodForAnimations() {
@@ -240,8 +239,12 @@ function isGoodForAnimations() {
   const name = DeviceInfo.getSystemName();
   let shouldAnimate = true;
 
-  // ios 10 ili 11
-  if (Number(system) > 8 && name === "Android") shouldAnimate = false;
+  if (
+    (Number(system.split(".")[0]) < 8 && name === "Android") ||
+    (Number(system.split(".")[0]) < 13 && name === "iOS") ||
+    name === "iPhone OS"
+  )
+    shouldAnimate = false;
 
   return {
     type: ACTIONS.IS_GOOD_FOR_ANIMATIONS,
