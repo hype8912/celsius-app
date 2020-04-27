@@ -24,6 +24,7 @@ class CoinGridCard extends Component {
     graphData: PropTypes.instanceOf(Object),
     theme: PropTypes.oneOf(Object.values(THEMES)),
     offset: PropTypes.number,
+    shouldAnimate: PropTypes.bool,
   };
 
   positionAnim = new Animated.Value(0);
@@ -62,7 +63,13 @@ class CoinGridCard extends Component {
   }
 
   animate = () => {
-    const { offset } = this.props;
+    const { offset, shouldAnimate } = this.props;
+
+    if (!shouldAnimate)
+      return {
+        opacity: 1,
+      };
+
     Animated.parallel([
       Animated.timing(this.opacityAnim, {
         toValue: 1,

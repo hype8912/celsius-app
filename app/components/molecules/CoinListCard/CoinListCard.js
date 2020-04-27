@@ -20,6 +20,7 @@ class CoinListCard extends Component {
     currencyRates: PropTypes.instanceOf(Object).isRequired,
     onCardPress: PropTypes.func,
     offset: PropTypes.number,
+    shouldAnimate: PropTypes.bool,
   };
 
   positionAnim = new Animated.Value(0);
@@ -75,7 +76,13 @@ class CoinListCard extends Component {
   };
 
   animate = () => {
-    const { offset } = this.props;
+    const { offset, shouldAnimate } = this.props;
+
+    if (!shouldAnimate)
+      return {
+        opacity: 1,
+      };
+
     Animated.parallel([
       Animated.timing(this.opacityAnim, {
         toValue: 1,

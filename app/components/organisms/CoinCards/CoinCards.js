@@ -20,6 +20,7 @@ class CoinCards extends Component {
     currenciesGraphs: PropTypes.instanceOf(Object),
     navigateTo: PropTypes.func,
     depositCompliance: PropTypes.instanceOf(Object),
+    shouldAnimate: PropTypes.bool,
   };
 
   constructor(props) {
@@ -108,7 +109,7 @@ class CoinCards extends Component {
   };
 
   renderCoinCards = c => {
-    const { activeView } = this.props;
+    const { activeView, shouldAnimate } = this.props;
 
     const isGrid = activeView === WALLET_LANDING_VIEW_TYPES.GRID;
     const processedGridItems = animationsUtil.applyOffset([...c], 2);
@@ -118,6 +119,7 @@ class CoinCards extends Component {
     if (isGrid) {
       return processedGridItems.map(coin => (
         <CoinGridCard
+          shouldAnimate={shouldAnimate}
           offset={coin.offset}
           key={coin.short}
           coin={coin}
@@ -131,6 +133,7 @@ class CoinCards extends Component {
     // Render list item
     return processedListItems.map(coin => (
       <CoinListCard
+        shouldAnimate={shouldAnimate}
         offset={coin.offset}
         key={coin.short}
         coin={coin}

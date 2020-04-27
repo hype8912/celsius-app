@@ -49,6 +49,7 @@ import LtcAddressChangeModal from "../../modals/LtcAddressChangeModal/LtcAddress
       hodlStatus: state.hodl.hodlStatus,
       walletAddresses: state.wallet.addresses,
       userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
+      shouldAnimate: state.ui.shouldAnimate,
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -207,9 +208,9 @@ class WalletLanding extends Component {
       branchTransfer,
       depositCompliance,
       rejectionReasons,
+      shouldAnimate,
     } = this.props;
     const style = WalletLandingStyle();
-
 
     if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
       return <LoadingScreen />;
@@ -228,16 +229,15 @@ class WalletLanding extends Component {
           <View style={style.depositWrapper}>
             <View>
               <CelButton
-              onPress={() => actions.navigateTo("GetCoinsLanding")}
-              style={{ alignSelf: "flex-start" }}
-              margin="10 0 2 0"
-              size="small"
-              iconRight="IconArrowRight"
-            >
-              Buy Coins
-            </CelButton>
+                onPress={() => actions.navigateTo("GetCoinsLanding")}
+                style={{ alignSelf: "flex-start" }}
+                margin="10 0 2 0"
+                size="small"
+                iconRight="IconArrowRight"
+              >
+                Buy Coins
+              </CelButton>
             </View>
-
 
             <View style={style.buttonWrapper}>
               <TouchableOpacity
@@ -270,6 +270,7 @@ class WalletLanding extends Component {
             </View>
           </View>
           <CoinCards
+            shouldAnimate={shouldAnimate}
             activeView={activeView}
             navigateTo={actions.navigateTo}
             walletSummary={walletSummary}

@@ -384,7 +384,7 @@ class FabMenuAnimated extends Component {
             this.setState({
               showBackground: false,
             });
-            this.animateClosure();
+            if (screen !== "WalletLanding") this.animateClosure();
             actions.closeFabMenu();
           }
         }),

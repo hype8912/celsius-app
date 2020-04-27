@@ -17,11 +17,11 @@ import store from "./redux/store";
 import * as actions from "./redux/actions";
 import appUtil from "./utils/app-util";
 import AppNavigation from "./navigator/Navigator";
-import FabMenu from "./components/organisms/FabMenu/FabMenu";
 import Message from "./components/molecules/Message/Message";
 // import captureException from './utils/errorhandling-util'
 import ErrorBoundary from "./ErrorBoundary";
 import { remotePushController } from "./utils/push-notifications-util";
+import FabIntersection from "./components/organisms/FabIntersection/FabIntersection";
 
 function getActiveRouteName(navigationState) {
   if (!navigationState) {
@@ -88,7 +88,7 @@ const CelsiusApplication = () => (
         ref={navigatorRef => actions.setTopLevelNavigator(navigatorRef)}
       />
       <Message />
-      <FabMenu />
+      <FabIntersection />
     </React.Fragment>
     {remotePushController()}
   </Provider>

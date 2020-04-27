@@ -5,7 +5,6 @@ import {
   Platform,
   TouchableOpacity,
   Animated,
-  Easing,
   Keyboard,
 } from "react-native";
 import { connect } from "react-redux";
@@ -47,10 +46,6 @@ class FabMenu extends Component {
     this.state = {
       menuItems: [],
     };
-
-    this.springValue = new Animated.Value(1);
-    this.pulseValue = new Animated.Value(1);
-    this.opacityValue = new Animated.Value(1);
   }
 
   componentDidMount = () => {
@@ -60,22 +55,7 @@ class FabMenu extends Component {
     });
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      (nextProps.appInitialized &&
-        nextProps.appInitialized !== this.props.appInitialized &&
-        nextProps.user.has_pin) ||
-      (nextProps.appInitialized &&
-        nextProps.user.has_pin &&
-        nextProps.user.has_pin !== this.props.user.has_pin)
-    ) {
-      this.animateInitialization();
-    }
-  }
-
   componentDidUpdate = prevProps => {
-    if (!prevProps.fabMenuOpen && this.props.fabMenuOpen) this.animateOpening();
-    if (prevProps.fabMenuOpen && !this.props.fabMenuOpen) this.animateClosing();
     if (
       (prevProps.fabType !== this.props.fabType &&
         this.props.fabType !== "hide") ||
@@ -163,71 +143,6 @@ class FabMenu extends Component {
           blur: 12,
         };
     }
-  };
-
-  springAnimation = (
-    value = undefined,
-    friction = undefined,
-    tension = undefined,
-    velocity = undefined
-  ) => {
-    Animated.spring(this.springValue, {
-      toValue: value || 1.1,
-      friction: friction || 0.5,
-      tension: tension || 0,
-      velocity: velocity || 3,
-      overshootClamping: true,
-      useNativeDriver: true,
-    }).start(({ finished }) => {
-      if (finished)
-        Animated.spring(this.springValue, {
-          toValue: 1,
-          friction: 1.5,
-          tension: 3,
-          useNativeDriver: true,
-        }).start();
-    });
-  };
-
-  pulseAnimation = (pulse, opacity) => {
-    this.pulseValue.setValue(pulse);
-    this.opacityValue.setValue(opacity);
-    Animated.parallel([
-      Animated.timing(this.pulseValue, {
-        toValue: 1.7,
-        duration: 1500,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }).start(),
-      Animated.timing(this.opacityValue, {
-        toValue: 0,
-        duration: 1500,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }).start(),
-    ]);
-  };
-
-  animateInitialization = () => {
-    setTimeout(() => {
-      this.springAnimation(1.3);
-      this.pulseAnimation(1.8, 0.8);
-    }, 8000);
-    setTimeout(() => {
-      this.springAnimation();
-      this.pulseAnimation(1.5, 0.6);
-    }, 10500);
-  };
-
-  animateOpening = () => {
-    this.springAnimation(1.15, 1, 1, 5);
-  };
-
-  animateClosing = () => {
-    setTimeout(() => {
-      this.springAnimation();
-      this.pulseAnimation(1.3, 0.6);
-    }, 50);
   };
 
   fabAction = () => {
@@ -379,22 +294,8 @@ class FabMenu extends Component {
     const { fabType } = this.props;
     return (
       <Fragment>
-        <Animated.View
-          style={[
-            style.fabButton,
-            style.opacityCircle,
-            {
-              transform: [{ scale: this.pulseValue }],
-              opacity: this.opacityValue,
-            },
-          ]}
-        />
-        <Animated.View
-          style={[
-            style.fabButton,
-            { transform: [{ scale: this.springValue }] },
-          ]}
-        >
+        <Animated.View style={[style.fabButton, style.opacityCircle]} />
+        <Animated.View style={[style.fabButton]}>
           <Fab onPress={this.fabAction} type={fabType} />
         </Animated.View>
       </Fragment>
