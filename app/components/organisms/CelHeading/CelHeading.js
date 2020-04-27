@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   StatusBar,
   TouchableOpacity,
-  Platform,
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -59,7 +58,6 @@ class CelHeading extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeSearch: false,
       screen: props.scene.route.routeName,
     };
   }
@@ -69,45 +67,28 @@ class CelHeading extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { theme, actions, scene, activeScreen } = this.props;
-    const { screen } = this.state;
-    const right = scene.descriptor.options.right;
-
+    const { theme } = this.props;
     if (prevProps.theme !== theme) {
       this.getStatusBarTextColor();
     }
-
-    // iOS renders one CelHeading for the App
-    const activateSearchiOS =
-      prevProps.activeScreen !== activeScreen && right === "search";
-    // Android renders a CelHeading for each screen
-    const activateSearchAndroid = screen === activeScreen && activateSearchiOS;
-    const activateSearch =
-      Platform.OS === "ios" ? activateSearchiOS : activateSearchAndroid;
-
-    if (activateSearch) {
-      actions.updateFormField("activeSearch", true);
-    }
   }
 
+  isSearchHeader = () => {
+    return this.props.scene.descriptor.options.right === "search";
+  };
+
   navigateBack = (customBack, backScreenName) => {
-    const { actions, formData } = this.props;
+    const { actions } = this.props;
     if (customBack) {
       customBack();
     } else {
       actions.navigateBack(backScreenName);
     }
-    if (formData.activeSearch) {
-      actions.updateFormFields({
-        activeSearch: false,
-        search: "",
-      });
-    }
   };
 
   getLeftContent = sceneProps => {
     const { hideBack, customBack } = sceneProps;
-    const { scenes, formData } = this.props;
+    const { scenes } = this.props;
 
     const backScreenName = scenes[this.props.index - 1]
       ? scenes[this.props.index - 1].route.routeName
@@ -116,7 +97,7 @@ class CelHeading extends Component {
     // By default if scene prop hideBack is true or it's first screen in the stack, hide back arrow
     return this.props.scene.index === 0 || hideBack === true ? null : (
       <CelButton
-        margin={formData.activeSearch ? "8 0 0 4" : null}
+        margin={this.isSearchHeader() ? "8 0 0 4" : null}
         iconRightColor={STYLES.COLORS.GRAY}
         basic
         onPress={() => this.navigateBack(customBack, backScreenName)}
@@ -127,10 +108,9 @@ class CelHeading extends Component {
 
   getRightContent = sceneProps => {
     const { right, onInfo } = sceneProps;
-    const { profilePicture, formData, actions } = this.props;
+    const { profilePicture, actions } = this.props;
     const scene = this.props.scene.descriptor;
 
-    const rightType = formData.activeSearch ? "cancel" : right;
     const style = CelHeadingStyle();
     const theme = getTheme();
 
@@ -175,13 +155,15 @@ class CelHeading extends Component {
         </TouchableOpacity>
       ),
       search: (
-        <CelButton
-          basic
-          iconRightColor={STYLES.COLORS.GRAY}
-          onPress={() => {
-            actions.updateFormField("activeSearch", true);
-          }}
-          iconRight="Search"
+        <Icon
+          name={"Search"}
+          height={30}
+          width={30}
+          fill={
+            theme === THEMES.LIGHT
+              ? STYLES.COLORS.DARK_GRAY3
+              : STYLES.COLORS.WHITE_OPACITY5
+          }
         />
       ),
       profile: (
@@ -229,14 +211,13 @@ class CelHeading extends Component {
         <CelButton
           basic
           onPress={() => {
-            actions.updateFormField("activeSearch", false);
             actions.updateFormField("search", "");
           }}
         >
           Cancel
         </CelButton>
       ),
-    }[rightType];
+    }[right];
   };
 
   getStatusBarTextColor = () => {
@@ -275,12 +256,23 @@ class CelHeading extends Component {
     );
   };
 
+  getSearchPlaceholder = () => {
+    const { activeScreen } = this.props;
+
+    let text = "Search";
+    if (activeScreen === "SelectCoin") text = "Search assets";
+    if (activeScreen === "SelectCountry") text = "Search countries";
+    if (activeScreen === "SelectState") text = "Search US States";
+
+    return text;
+  };
+
   getContent = () => {
     const { formData, hodlStatus, actions, activeScreen } = this.props;
     const scene = this.props.scene.descriptor;
     const style = CelHeadingStyle();
     const paddings = getPadding("0 15 0 15");
-    const leftStyle = formData.activeSearch
+    const leftStyle = this.isSearchHeader()
       ? [style.left, { flexDirection: "row", flex: 2 }]
       : style.left;
 
@@ -294,14 +286,14 @@ class CelHeading extends Component {
         <View style={[style.content]}>
           <View style={leftStyle}>
             {this.getLeftContent(scene.options)}
-            {formData.activeSearch &&
+            {this.isSearchHeader() &&
               scene.state.routeName !== "VerifyProfile" && (
                 <View
                   style={[
                     {
                       width: "90%",
                       justifyContent: "center",
-                      paddingTop: 20,
+                      paddingTop: 5,
                       alignSelf: "center",
                       marginLeft: 12,
                     },
@@ -313,14 +305,14 @@ class CelHeading extends Component {
                     basic
                     margin="0 0 0 0"
                     field="search"
-                    placeholder="Search..."
+                    placeholder={this.getSearchPlaceholder()}
                     type="text"
                     value={formData.search}
                   />
                 </View>
               )}
           </View>
-          {!formData.activeSearch && this.getCenterContent(scene.options)}
+          {!this.isSearchHeader() && this.getCenterContent(scene.options)}
           <View style={style.right}>{this.getRightContent(scene.options)}</View>
         </View>
       </View>

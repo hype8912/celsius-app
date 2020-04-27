@@ -55,7 +55,6 @@ class SelectState extends Component {
     await actions.updateFormFields({
       [field]: state.value,
       search: "",
-      activeSearch: false,
     });
     actions.navigateBack();
   };
