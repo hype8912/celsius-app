@@ -19,7 +19,6 @@ function isERC20(currency) {
       "tusd",
       "gusd",
       "usdc",
-      "orbs",
       "leo",
       "usdt erc20",
       "tcad",
@@ -39,7 +38,6 @@ function hasLinkToBuy(currency) {
     "TCAD",
     "TAUD",
     "TGBP",
-    "CEL",
     "DASH",
     "OMG",
     "ZEC",
@@ -48,14 +46,7 @@ function hasLinkToBuy(currency) {
 }
 
 function buyInApp(currency) {
-  return [
-    "BTC",
-    "BCH",
-    "ETH",
-    "LTC",
-    "XRP",
-    "XLM"
-  ].includes(currency)
+  return ["BTC", "BCH", "ETH", "LTC", "XRP", "XLM", "CEL"].includes(currency);
 }
 
 function provideLink(currency) {
@@ -197,5 +188,5 @@ export default {
   hasLinkToBuy,
   provideLink,
   provideText,
-  buyInApp
+  buyInApp,
 };
