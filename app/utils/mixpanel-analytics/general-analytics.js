@@ -1,5 +1,11 @@
 import moment from "moment";
-import { sendEvent, setUserData, getUserData, engage, engageCompleted } from "../mixpanel-util";
+import {
+  sendEvent,
+  setUserData,
+  getUserData,
+  engage,
+  engageCompleted,
+} from "../mixpanel-util";
 import store from "../../redux/store";
 import appsFlyerUtil from "../appsflyer-util";
 import uxCamUtil from "../uxcam-util";
@@ -49,7 +55,7 @@ async function sessionStarted(trigger) {
     }
     const url = await uxCamUtil.urlForCurrentUser();
 
-    if (userData && userData.id && !engageCompleted.completed){
+    if (userData && userData.id && !engageCompleted.completed) {
       await engage(userData.id, {
         $email: userData.email,
         $first_name: userData.first_name,
@@ -67,7 +73,7 @@ async function sessionStarted(trigger) {
         "Has referral link": !!userData.referral_link_id,
         "Is celsius member": userData.celsius_member,
         "Has SSN": !!userData.ssn,
-        "User's UXCam url": url
+        "User's UXCam url": url,
       });
       await sendEvent("$create_alias", { alias: userData.id });
     }
@@ -75,7 +81,7 @@ async function sessionStarted(trigger) {
     await sendEvent("Session started", { trigger });
     appsFlyerUtil.setCustomerUserId(userData.id);
   } catch (e) {
-    loggerUtil.log(e)
+    loggerUtil.log(e);
   }
 }
 
@@ -92,7 +98,11 @@ async function sessionEnded(trigger) {
     .duration(x.diff(sessionTime))
     .as("milliseconds");
   const formatedDuration = moment.utc(sessionDuration).format("HH:mm:ss");
-  sendEvent("Session ended", { trigger, "Session duration": formatedDuration, "UXCam Session URL": sessionUrl });
+  sendEvent("Session ended", {
+    trigger,
+    "Session duration": formatedDuration,
+    "UXCam Session URL": sessionUrl,
+  });
 }
 
 /**

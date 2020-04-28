@@ -248,7 +248,8 @@ function initAppData(initToken = null) {
     await dispatch(actions.setBannerProps());
 
     // get user token
-    const token = initToken || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
+    const token =
+      initToken || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
 
     // fetch user
     if (token) await dispatch(actions.getProfileInfo());
@@ -266,7 +267,7 @@ function initAppData(initToken = null) {
       await dispatch(actions.getComplianceInfo());
       await dispatch(
         actions.setBannerProps({ sessionCount: bannerProps.sessionCount + 1 })
-    );
+      );
 
       if (!profile.kyc || (profile.kyc && !hasPassedKYC())) {
         await dispatch(actions.getAllTransfers(TRANSFER_STATUSES.claimed));

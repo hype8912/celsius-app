@@ -3,7 +3,7 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import _ from 'lodash';
+import _ from "lodash";
 import moment from "moment";
 import STYLES from "../../../constants/STYLES";
 import * as appActions from "../../../redux/actions";
@@ -19,7 +19,6 @@ import { getTheme } from "../../../utils/styles-util";
 import Icon from "../../atoms/Icon/Icon";
 import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-
 
 @connect(
   state => ({
@@ -43,7 +42,7 @@ class SecurityOverview extends Component {
     right: "profile",
   });
 
-   componentDidMount(){
+  componentDidMount() {
     const { actions } = this.props;
     actions.getSecurityOverview();
   }
@@ -62,7 +61,7 @@ class SecurityOverview extends Component {
     const theme = getTheme();
     const { actions, securityOverview } = this.props;
 
-    if (_.isEmpty(securityOverview)) return
+    if (_.isEmpty(securityOverview)) return;
 
     if (
       securityOverview.withdrawal_addresses_whitelisted_count ===
@@ -80,7 +79,8 @@ class SecurityOverview extends Component {
       <Card margin="20 0 20 0" padding={"2 2 2 2"} styles={style.card}>
         <View style={{ justifyContent: "center" }}>
           <View
-            style={[style.circle,
+            style={[
+              style.circle,
               {
                 backgroundColor:
                   theme === "light"
@@ -122,7 +122,6 @@ class SecurityOverview extends Component {
     );
   };
 
-
   render() {
     const { is2FAEnabled, actions, securityOverview } = this.props;
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
@@ -147,7 +146,7 @@ class SecurityOverview extends Component {
           <ToggleInfoCard
             subtitle={"HODL mode is"}
             onPress={() => actions.navigateTo("HodlLanding")}
-            enabled={ securityOverview.hodl_mode_active }
+            enabled={securityOverview.hodl_mode_active}
           />
 
           {securityOverview.is_using_password_auth && (
@@ -155,7 +154,9 @@ class SecurityOverview extends Component {
               <Separator text="PASSWORD" />
               <SecurityStrengthMeter
                 level={securityOverview.password_strength}
-                lastChangePeriod={moment(securityOverview.password_last_change).fromNow()}
+                lastChangePeriod={moment(
+                  securityOverview.password_last_change
+                ).fromNow()}
                 enhanceText={
                   securityOverview.password_strength !==
                     SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase() &&
@@ -168,23 +169,26 @@ class SecurityOverview extends Component {
             </>
           )}
 
-         { !is2FAEnabled && <>
-           <Separator text="PIN" />
-           <SecurityStrengthMeter
-             level={securityOverview.pin_strength}
-             lastChangePeriod={moment(securityOverview.pin_last_change).fromNow()}
-             enhanceText={
-               securityOverview.pin_strength !==
-               SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase() && "Change PIN"
-             }
-             onPressEnhance={() => {
-               actions.navigateTo("VerifyProfile", {
-                 onSuccess: () => actions.navigateTo("ChangePin"),
-               });
-             }}
-           />
-          </>}
-
+          {!is2FAEnabled && (
+            <>
+              <Separator text="PIN" />
+              <SecurityStrengthMeter
+                level={securityOverview.pin_strength}
+                lastChangePeriod={moment(
+                  securityOverview.pin_last_change
+                ).fromNow()}
+                enhanceText={
+                  securityOverview.pin_strength !==
+                    SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase() && "Change PIN"
+                }
+                onPressEnhance={() => {
+                  actions.navigateTo("VerifyProfile", {
+                    onSuccess: () => actions.navigateTo("ChangePin"),
+                  });
+                }}
+              />
+            </>
+          )}
         </View>
       </RegularLayout>
     );

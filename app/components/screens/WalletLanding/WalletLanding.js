@@ -24,6 +24,7 @@ import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
 import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
+import MultiAddressModal from "../../modals/MultiAddressModal/MultiAddressModal";
 
 @connect(
   state => {
@@ -46,6 +47,7 @@ import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
         : [],
       previouslyOpenedModals: state.ui.previouslyOpenedModals,
       hodlStatus: state.hodl.hodlStatus,
+      userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -91,12 +93,19 @@ class WalletLanding extends Component {
       currenciesGraphs,
       previouslyOpenedModals,
       hodlStatus,
+      userTriggeredActions,
     } = this.props;
     if (
       !previouslyOpenedModals.HODL_MODE_MODAL &&
       hodlStatus.created_by === "backoffice"
     )
       actions.openModal(MODALS.HODL_MODE_MODAL);
+
+    if (
+      this.pendingAddresses().length &&
+      !userTriggeredActions.permanently_dismiss_deposit_address_changes
+    )
+      actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
 
     actions.checkForLoanAlerts();
 
@@ -163,6 +172,16 @@ class WalletLanding extends Component {
     this.walletFetchingInterval = setInterval(() => {
       actions.getWalletSummary();
     }, 300000);
+  };
+
+  pendingAddresses = () => {
+    const { walletSummary } = this.props;
+
+    const pendingAddresses = walletSummary.coins.filter(
+      coin => coin.has_pending_deposit_address_change
+    );
+
+    return pendingAddresses;
   };
 
   handleBackButton = () => {};
@@ -271,6 +290,7 @@ class WalletLanding extends Component {
         <BecomeCelMemberModal />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
+        <MultiAddressModal actions={actions} />
       </RegularLayout>
     );
   }

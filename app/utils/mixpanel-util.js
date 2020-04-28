@@ -15,7 +15,7 @@ let advertisingId;
 
 let revisionId = "";
 let version = "";
-const engageCompleted = {completed: false}
+const engageCompleted = { completed: false };
 const appInfo = { os: Platform.OS };
 
 /**
@@ -51,11 +51,10 @@ async function engage(distinctId, payload = {}) {
 
     await Mixpanel.set(data);
     await addPushDeviceToken();
-    engageCompleted.completed = true
+    engageCompleted.completed = true;
   } catch (e) {
-   loggerUtil.log(e)
+    loggerUtil.log(e);
   }
-
 }
 
 /**
@@ -147,5 +146,5 @@ export {
   sendEvent,
   getUserData,
   setUserData,
-  engageCompleted
+  engageCompleted,
 };
