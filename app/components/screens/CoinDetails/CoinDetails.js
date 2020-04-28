@@ -36,6 +36,7 @@ const { COLORS } = STYLES;
     appSettings: state.user.appSettings,
     interestCompliance: state.compliance.interest,
     depositCompliance: state.compliance.deposit,
+    simplexCompliance: state.compliance.simplex,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -120,7 +121,7 @@ class CoinDetails extends Component {
   goToBuyCoins = () => {
     const { currency } = this.state;
     const { actions } = this.props;
-    actions.navigateTo("GetCoinsLanding", { coin: currency.short });
+    actions.navigateTo("GetCoinsEnterAmount", { coin: currency.short });
   };
 
   render() {
@@ -131,9 +132,9 @@ class CoinDetails extends Component {
       celpayCompliance,
       currencies,
       appSettings,
-      buyCoinsSettings,
       interestCompliance,
       depositCompliance,
+      simplexCompliance,
     } = this.props;
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
@@ -147,8 +148,7 @@ class CoinDetails extends Component {
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short);
     const isCoinEligibleForBuying =
-      buyCoinsSettings &&
-      buyCoinsSettings.supported_coins.includes(currency.short);
+      simplexCompliance && simplexCompliance.coins.includes(currency.short);
     const isCoinEligibleForDeposit =
       depositCompliance && depositCompliance.coins.includes(currency.short);
     const interestInCoins = appSettings.interest_in_cel_per_coin;

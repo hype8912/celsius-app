@@ -144,6 +144,15 @@ function getProps(purpose, componentProps) {
         ],
       };
 
+    case EMPTY_STATES.SIMPLEX_COMPLIANCE:
+      return {
+        ...props,
+        heading: "We are sorry!",
+        paragraphs: [
+          "We apologize for any inconvenience, but due to local laws and regulations, our Buy Coins service is not available to users in your region.",
+        ],
+      };
+
     case EMPTY_STATES.NO_CONTACTS:
       return {
         ...props,

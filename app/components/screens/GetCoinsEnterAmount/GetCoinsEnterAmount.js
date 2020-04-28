@@ -26,8 +26,8 @@ import { getTheme } from "../../../utils/styles-util";
     formData: state.forms.formData,
     keypadOpen: state.ui.isKeypadOpen,
     currencyRatesShort: state.currencies.currencyRatesShort,
-    buyCoinsSettings: state.generalData.buyCoinsSettings,
     depositCompliance: state.compliance.deposit,
+    simplexCompliance: state.compliance.simplex,
     currencies: state.currencies.rates,
     simplexData: state.simplex.simplexData,
     callsInProgress: state.api.callsInProgress,
@@ -45,23 +45,16 @@ class GetCoinsEnterAmount extends Component {
 
   constructor(props) {
     super(props);
-    const {
-      currencies,
-      depositCompliance,
-      buyCoinsSettings,
-      actions,
-    } = this.props;
+    const { currencies, actions, simplexCompliance } = this.props;
 
-    const availableCryptoCoins =
-      buyCoinsSettings && depositCompliance
-        ? currencies
-            .filter(c => depositCompliance.coins.includes(c.short))
-            .filter(c => buyCoinsSettings.supported_coins.includes(c.short))
-            .map(c => ({
-              label: `${formatter.capitalize(c.name)} (${c.short})`,
-              value: c.short,
-            }))
-        : [];
+    const availableCryptoCoins = simplexCompliance
+      ? currencies
+          .filter(c => simplexCompliance.coins.includes(c.short))
+          .map(c => ({
+            label: `${formatter.capitalize(c.name)} (${c.short})`,
+            value: c.short,
+          }))
+      : [];
 
     actions.updateFormFields({
       amountFiat: "",
