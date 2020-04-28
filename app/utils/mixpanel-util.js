@@ -15,7 +15,7 @@ let advertisingId;
 
 let revisionId = "";
 let version = "";
-
+const engageCompleted = { completed: false };
 const appInfo = { os: Platform.OS };
 
 /**
@@ -41,16 +41,20 @@ function registerMixpanelUser(distinctId) {
  * Init user data to Mixpanel
  */
 async function engage(distinctId, payload = {}) {
-  const { MIXPANEL_TOKEN } = Constants;
+  try {
+    const { MIXPANEL_TOKEN } = Constants;
+    await Mixpanel.identify(distinctId);
 
-  Mixpanel.identify(distinctId);
+    const data = payload;
+    data.distinct_id = distinctId;
+    data.token = MIXPANEL_TOKEN;
 
-  const data = payload;
-  data.distinct_id = distinctId;
-  data.token = MIXPANEL_TOKEN;
-
-  Mixpanel.set(data);
-  await addPushDeviceToken();
+    await Mixpanel.set(data);
+    await addPushDeviceToken();
+    engageCompleted.completed = true;
+  } catch (e) {
+    loggerUtil.log(e);
+  }
 }
 
 /**
@@ -142,4 +146,5 @@ export {
   sendEvent,
   getUserData,
   setUserData,
+  engageCompleted,
 };

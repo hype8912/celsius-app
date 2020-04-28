@@ -45,6 +45,7 @@ export {
  * Initializes Celsius Application
  */
 let timeout;
+
 function initCelsiusApp() {
   return async (dispatch, getState) => {
     if (getState().app.appInitializing) return;
@@ -212,41 +213,37 @@ function initAppData(initToken = null) {
     await dispatch(actions.setBannerProps());
 
     // get user token
-    const token =
-      initToken || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
+    const token = initToken || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
 
     // fetch user
     if (token) await dispatch(actions.getProfileInfo());
 
     // get expired session
     const { expiredSession } = getState().auth;
+    const { profile } = getState().user;
 
-    if (token && !expiredSession) {
-      mixpanelAnalytics.sessionStarted("Init app");
+    if (profile && profile.id && !expiredSession) {
+      await mixpanelAnalytics.sessionStarted("Init app");
       dispatch(actions.claimAllBranchTransfers());
 
-      // get all KYC document types and claimed transfers for non-verified users
-      const { profile } = getState().user;
       const { bannerProps } = getState().ui;
-      if (profile) {
-        await dispatch(actions.getUserAppSettings());
-        await dispatch(actions.getComplianceInfo());
-        await dispatch(
-          actions.setBannerProps({ sessionCount: bannerProps.sessionCount + 1 })
-        );
+      await dispatch(actions.getUserAppSettings());
+      await dispatch(actions.getComplianceInfo());
+      await dispatch(
+        actions.setBannerProps({ sessionCount: bannerProps.sessionCount + 1 })
+    );
 
-        if (!profile.kyc || (profile.kyc && !hasPassedKYC())) {
-          await dispatch(actions.getAllTransfers(TRANSFER_STATUSES.claimed));
-        }
+      if (!profile.kyc || (profile.kyc && !hasPassedKYC())) {
+        await dispatch(actions.getAllTransfers(TRANSFER_STATUSES.claimed));
+      }
 
-        const { allowed } = getState().compliance.loan;
-        // get wallet details for verified users
-        if (profile.kyc && hasPassedKYC()) {
-          await dispatch(actions.getUserStatus());
-          await dispatch(actions.getWalletSummary());
-          await dispatch(actions.getLoyaltyInfo());
-          if (allowed) await dispatch(actions.getAllLoans());
-        }
+      const { allowed } = getState().compliance.loan;
+      // get wallet details for verified users
+      if (profile.kyc && hasPassedKYC()) {
+        await dispatch(actions.getUserStatus());
+        await dispatch(actions.getWalletSummary());
+        await dispatch(actions.getLoyaltyInfo());
+        if (allowed) await dispatch(actions.getAllLoans());
       }
     } else if (token) {
       // logout if expired session or no token

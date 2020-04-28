@@ -1,8 +1,15 @@
 import moment from "moment";
-import { sendEvent, setUserData, getUserData, engage } from "../mixpanel-util";
+import {
+  sendEvent,
+  setUserData,
+  getUserData,
+  engage,
+  engageCompleted,
+} from "../mixpanel-util";
 import store from "../../redux/store";
 import appsFlyerUtil from "../appsflyer-util";
 import uxCamUtil from "../uxcam-util";
+import loggerUtil from "../logger-util";
 
 const generalAnalytics = {
   buttonPressed,
@@ -38,37 +45,44 @@ function buttonPressed(button) {
  * Set data to the user selected by distinct_id
  */
 async function sessionStarted(trigger) {
-  sessionTime = new moment();
+  try {
+    sessionTime = new moment();
 
-  let userData = getUserData();
-  if (!userData.id) {
-    setUserData(store.getState().user.profile);
-    userData = getUserData();
+    let userData = getUserData();
+    if (!userData.id) {
+      setUserData(store.getState().user.profile);
+      userData = getUserData();
+    }
+    const url = await uxCamUtil.urlForCurrentUser();
+
+    if (userData && userData.id && !engageCompleted.completed) {
+      await engage(userData.id, {
+        $email: userData.email,
+        $first_name: userData.first_name,
+        $last_name: userData.last_name,
+        $created: userData.created_at,
+        $phone: userData.cellphone,
+        "Phone verified": userData.cellphone_verified,
+        Citizenship: userData.citizenship,
+        "Country of residence": userData.country,
+        State: userData.state,
+        $city: userData.city,
+        "Two factor enabled": !!userData.two_factor_enabled,
+        "Has pin": userData.has_pin,
+        "KYC status": userData.kyc ? userData.kyc.status : "unknown",
+        "Has referral link": !!userData.referral_link_id,
+        "Is celsius member": userData.celsius_member,
+        "Has SSN": !!userData.ssn,
+        "User's UXCam url": url,
+      });
+      await sendEvent("$create_alias", { alias: userData.id });
+    }
+
+    await sendEvent("Session started", { trigger });
+    appsFlyerUtil.setCustomerUserId(userData.id);
+  } catch (e) {
+    loggerUtil.log(e);
   }
-  const url = await uxCamUtil.urlForCurrentUser();
-
-  await sendEvent("$create_alias", { alias: userData.id });
-  await engage(userData.id, {
-    $email: userData.email,
-    $first_name: userData.first_name,
-    $last_name: userData.last_name,
-    $created: userData.created_at,
-    $phone: userData.cellphone,
-    "Phone verified": userData.cellphone_verified,
-    Citizenship: userData.citizenship,
-    "Country of residence": userData.country,
-    State: userData.state,
-    $city: userData.city,
-    "Two factor enabled": !!userData.two_factor_enabled,
-    "Has pin": userData.has_pin,
-    "KYC status": userData.kyc ? userData.kyc.status : "unknown",
-    "Has referral link": !!userData.referral_link_id,
-    "Is celsius member": userData.celsius_member,
-    "Has SSN": !!userData.ssn,
-    "User's UXCam url": url
-  });
-  await sendEvent("Session started", { trigger });
-  appsFlyerUtil.setCustomerUserId(userData.id);
 }
 
 /**
@@ -84,7 +98,11 @@ async function sessionEnded(trigger) {
     .duration(x.diff(sessionTime))
     .as("milliseconds");
   const formatedDuration = moment.utc(sessionDuration).format("HH:mm:ss");
-  sendEvent("Session ended", { trigger, "Session duration": formatedDuration, "UXCam Session URL": sessionUrl });
+  sendEvent("Session ended", {
+    trigger,
+    "Session duration": formatedDuration,
+    "UXCam Session URL": sessionUrl,
+  });
 }
 
 /**
