@@ -42,13 +42,6 @@ const COMING_SOON_COINS = [
     learn_more_link: "https://www.binance.com/en/buy-Binance-Coin",
   },
   {
-    name: "Tether Gold",
-    short: "XAUt",
-    image_url: require("../../../../assets/images/coins/tethergold.png"),
-    learn_more_link:
-      "https://gold.tether.to/?__cf_chl_jschl_tk__=45a1e05e0b1be349ab373d189c245707eb4195c6-1581587418-0-AUicXZSlKPa9HKneF00mx7iRxrv2PvNJ9Yi0x3xH6VE90J3zdShP2F1ciRLMvCZYZ3Ubzmmpsm9WD2xuHlMRciuq4HI01KnRhvRrBo50iXS5hpBbP1bfSALpzZbBZmsg3SN0fuT5TZiTgwraOSgFExsmyAV3VBGCNWSWjv4LJKwh5OK9UJ36-DPV-D1ugQParC3BO-Cy_VMU_AmN1A75RgknXiUAvP2qy3X0oddZluCgFYENUOluzQ1FltBuqqcfniAE_o8b6Ia78pDDMd28XtI",
-  },
-  {
     name: "IOTA",
     short: "IOTA",
     image_url: require("../../../../assets/images/coins/iota.png"),
