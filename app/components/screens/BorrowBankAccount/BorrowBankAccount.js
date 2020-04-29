@@ -55,6 +55,7 @@ class BorrowBankAccount extends Component {
       selectedAccountType: "Checking",
       bank_city: bankAccountInfo.bank_city,
       bank_street_and_number: bankAccountInfo.bank_street_and_number,
+      account_holder_name: bankAccountInfo.account_holder_name,
       bank_zip: bankAccountInfo.bank_zip,
       swift: bankAccountInfo.swift,
       iban: bankAccountInfo.iban,
@@ -76,6 +77,7 @@ class BorrowBankAccount extends Component {
       account_type: formData.selectedAccountType,
       bank_city: formData.bank_city,
       bank_street_and_number: formData.bank_street_and_number,
+      account_holder_name: formData.account_holder_name,
       bank_zip: formData.bank_zip,
       bank_account_number: formData.bank_account_number,
       swift: formData.swift,
@@ -110,6 +112,8 @@ class BorrowBankAccount extends Component {
     if (!formData.bank_city) formErrors.bank_city = "Field is required!";
     if (!formData.bank_street_and_number)
       formErrors.bank_street_and_number = "Field is required!";
+    if (!formData.account_holder_name)
+      formErrors.account_holder_name = "Field is required!";
     if (!formData.bank_zip) formErrors.bank_zip = "Field is required!";
     if (!formData.bank_account_number)
       formErrors.bank_account_number = "Field is required!";
@@ -217,6 +221,21 @@ class BorrowBankAccount extends Component {
             blurOnSubmiting={false}
             refs={input => {
               this.bank_street_and_number = input;
+            }}
+            onSubmitEditing={() => {
+              this.account_holder_name.focus();
+            }}
+          />
+
+          <CelInput
+            placeholder="Account Holder Name"
+            field={"account_holder_name"}
+            value={formData.account_holder_name}
+            error={formErrors.account_holder_name}
+            returnKeyType={"next"}
+            blurOnSubmiting={false}
+            refs={input => {
+              this.account_holder_name = input;
             }}
             onSubmitEditing={() => {
               this.bank_zip.focus();
