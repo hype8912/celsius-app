@@ -31,7 +31,6 @@ class RegularLayout extends Component {
     padding: PropTypes.string,
     enableParentScroll: PropTypes.bool,
     fabType: PropTypes.oneOf(FAB_TYPE),
-    refreshing: PropTypes.bool,
     pullToRefresh: PropTypes.func,
   };
 
@@ -40,8 +39,28 @@ class RegularLayout extends Component {
     enableParentScroll: true,
     fabType: "main",
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      refreshing: false,
+    };
+  }
+
   componentDidMount = () => this.setFabType();
   componentDidUpdate = () => this.setFabType();
+
+  refresh = async () => {
+    const { pullToRefresh } = this.props;
+    this.setState({
+      refreshing: true,
+    });
+    await pullToRefresh();
+    this.setState({
+      refreshing: false,
+    });
+  };
 
   setFabType = () => {
     const { isFocused, fabType, actions } = this.props;
@@ -57,9 +76,9 @@ class RegularLayout extends Component {
       padding,
       enableParentScroll,
       internetConnected,
-      refreshing,
       pullToRefresh,
     } = this.props;
+    const { refreshing } = this.state;
     const style = RegularLayoutStyle(theme);
     const paddings = getPadding(padding);
 
@@ -80,7 +99,7 @@ class RegularLayout extends Component {
             pullToRefresh && (
               <RefreshControl
                 refreshing={refreshing}
-                onRefresh={pullToRefresh}
+                onRefresh={this.refresh}
                 tintColor="transparent"
                 colors={["transparent"]}
                 style={{ backgroundColor: "transparent" }}

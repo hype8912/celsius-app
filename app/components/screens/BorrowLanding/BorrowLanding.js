@@ -99,17 +99,6 @@ class BorrowLanding extends Component {
     this.setState({ isLoading: false });
   }
 
-  refresh = async () => {
-    const { actions } = this.props;
-    this.setState({
-      refreshing: true,
-    });
-    await actions.getAllLoans();
-    this.setState({
-      refreshing: false,
-    });
-  };
-
   getMinLtv = () => {
     const { ltv } = this.props;
 
@@ -195,7 +184,7 @@ class BorrowLanding extends Component {
   };
 
   renderDefaultView() {
-    const { xOffset, filterItem, refreshing } = this.state;
+    const { xOffset, filterItem } = this.state;
     const { actions, allLoans, loyaltyInfo, activeLoan } = this.props;
     const style = BorrowLandingStyle();
     const filteredLoans = this.handleFilter();
@@ -204,8 +193,7 @@ class BorrowLanding extends Component {
     return (
       <RegularLayout
         padding={"20 0 100 0"}
-        refreshing={refreshing}
-        pullToRefresh={this.refresh}
+        pullToRefresh={() => actions.getAllLoans()}
       >
         <View style={{ marginLeft: 20, marginRight: 20 }}>
           {this.renderCard()}

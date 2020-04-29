@@ -8,7 +8,7 @@ import CelPayEnterAmountStyle from "./CelPayEnterAmount.styles";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
+import { CEL_PAY_TYPES, KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
 import STYLES from "../../../constants/STYLES";
@@ -21,7 +21,6 @@ import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import LoseMembershipModal from "../../modals/LoseMembershipModal/LoseMembershipModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
-import ConfirmCelPayModal from "../../modals/ConfirmCelPayModal/ConfirmCelPayModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
@@ -282,19 +281,17 @@ class CelPayEnterAmount extends Component {
   };
 
   navigateToNextStep = () => {
-    const { actions, formData } = this.props;
+    const { actions, formData, navigation } = this.props;
+    const celPayType = navigation.getParam("celPayType");
 
-    if (formData.friend) {
-      actions.navigateTo("CelPayMessage");
-      actions.closeModal();
+    if (celPayType === CEL_PAY_TYPES.FRIEND) {
+      actions.navigateTo("CelPayChooseFriend");
     } else {
       actions.navigateTo("VerifyProfile", {
         onSuccess: () => {
-          actions.navigateBack();
-          actions.openModal(MODALS.CONFIRM_CELPAY_MODAL);
+          actions.celPayShareLink();
         },
       });
-      actions.closeModal();
     }
 
     mixpanelAnalytics.enteredAmount(
@@ -393,7 +390,6 @@ class CelPayEnterAmount extends Component {
             tierTitle={loyaltyInfo.tier.title}
           />
         )}
-        <ConfirmCelPayModal />
       </RegularLayout>
     );
   }

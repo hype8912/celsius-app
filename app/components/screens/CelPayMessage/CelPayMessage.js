@@ -7,12 +7,8 @@ import * as appActions from "../../../redux/actions";
 import CelPayMessageStyle from "./CelPayMessage.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../../components/atoms/CelButton/CelButton";
-// import CelTextArea from '../../atoms/CelTextArea/CelTextArea';
 import CelInput from "../../atoms/CelInput/CelInput";
-import { MODALS } from "../../../constants/UI";
-import ConfirmCelPayModal from "../../modals/ConfirmCelPayModal/ConfirmCelPayModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-
 
 @connect(
   state => ({
@@ -52,8 +48,7 @@ class CelPayMessage extends Component {
 
     actions.navigateTo("VerifyProfile", {
       onSuccess: () => {
-        actions.navigateBack();
-        actions.openModal(MODALS.CONFIRM_CELPAY_MODAL)
+        actions.celPayFriend();
       },
     });
 
@@ -87,7 +82,6 @@ class CelPayMessage extends Component {
             Send {formData.coin}
           </CelButton>
         </View>
-        <ConfirmCelPayModal/>
       </RegularLayout>
     );
   }

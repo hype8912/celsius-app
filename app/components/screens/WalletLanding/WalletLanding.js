@@ -78,7 +78,6 @@ class WalletLanding extends Component {
 
     this.state = {
       activeView: props.appSettings.default_wallet_view,
-      refreshing: false,
     };
 
     // NOTE (fj): quickfix for CN-2763
@@ -190,19 +189,8 @@ class WalletLanding extends Component {
     this.setState({ activeView: viewType });
   };
 
-  refresh = async () => {
-    const { actions } = this.props;
-    this.setState({
-      refreshing: true,
-    });
-    await actions.getWalletSummary();
-    this.setState({
-      refreshing: false,
-    });
-  };
-
   render() {
-    const { activeView, refreshing } = this.state;
+    const { activeView } = this.state;
     const {
       actions,
       walletSummary,
@@ -220,7 +208,7 @@ class WalletLanding extends Component {
     }
 
     return (
-      <RegularLayout refreshing={refreshing} pullToRefresh={this.refresh}>
+      <RegularLayout pullToRefresh={() => actions.getWalletSummary()}>
         <BannerCrossroad />
         <View>
           <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
