@@ -105,7 +105,7 @@ class ConfirmYourLoan extends Component {
             Account Holder Name
           </CelText>
           <CelText type="H3" weight="600" margin={"0 0 15 0"}>
-            {loan.account_holder_name}
+            {loan.bank_account_holder_name}
           </CelText>
 
           <CelText type="H6" weight="300">
