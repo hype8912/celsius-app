@@ -7,7 +7,7 @@ import Icon from "../Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import CelText from "../CelText/CelText";
 import { SECURITY_STRENGTH_ITEMS } from "../../../constants/DATA";
-import calculatePasswordScore from "../../../utils/password-util";
+import passwordUtil from "../../../utils/password-util";
 
 class PassMeterTooltip extends Component {
   static propTypes = {
@@ -17,7 +17,7 @@ class PassMeterTooltip extends Component {
 
   handleSecurityItems = () => {
     const { password } = this.props;
-    const score = calculatePasswordScore(password).result.errors;
+    const score = passwordUtil.calculatePasswordScore(password).result.errors;
     const items = SECURITY_STRENGTH_ITEMS.map(i => {
       let status;
       if (!score.includes(i.copy)) {

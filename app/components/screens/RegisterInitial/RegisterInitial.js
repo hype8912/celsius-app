@@ -18,7 +18,7 @@ import RegisterPromoCodeCard from "../../molecules/RegisterPromoCodeCard/Registe
 import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
 import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
-import calculatePasswordScore from "../../../utils/password-util";
+import passwordUtil from "../../../utils/password-util";
 
 @connect(
   state => ({
@@ -106,7 +106,7 @@ class RegisterInitial extends Component {
       !!formData.firstName,
       !!formData.lastName,
       !!formData.email,
-      calculatePasswordScore(formData.password).result.score > 80,
+      passwordUtil.calculatePasswordScore(formData.password).result.score > 80,
     ];
     const fieldsFilledOut = fields.every(x => x);
 
@@ -122,9 +122,10 @@ class RegisterInitial extends Component {
 
     if (!formData.termsOfUse) return true;
     if (isLoading) return true;
-    if (fieldsFilledOut) return false
-    if (formData.googleId || formData.facebookId || formData.twitterId) return false
-    return true
+    if (fieldsFilledOut) return false;
+    if (formData.googleId || formData.facebookId || formData.twitterId)
+      return false;
+    return true;
   };
 
   renderCaptcha = () => {
