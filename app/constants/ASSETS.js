@@ -206,6 +206,8 @@ const CACHE_IMAGES = [
   require("../../assets/images/checkEmail.png"),
   require("../../assets/images/error.png"),
   require("../../assets/images/hodlModeStatus.png"),
+  require("../../assets/images/plus-celsiusBlue.png"),
+  require("../../assets/images/plus-white.png"),
 ];
 
 export default {
