@@ -12,6 +12,7 @@ import STYLES from "../../../constants/STYLES";
 const TxBasicCardSection = ({ label, value, coin, monthly, total }) => {
   const style = BasicCardSectionStyle();
   const coinSize = coin === "USDT ERC20" ? "H6" : "H4";
+
   return (
     <View style={style.container}>
       <View style={style.percentage}>
@@ -24,7 +25,7 @@ const TxBasicCardSection = ({ label, value, coin, monthly, total }) => {
             <CelText type={"H6"}>Monthly Interest</CelText>
             <CelText type={coinSize} weight={"600"}>
               {" "}
-              {formatter.crypto(monthly, coin.toUpperCase(), { precision: 2 })}
+              {formatter.usd(monthly)}
             </CelText>
           </View>
           <Separator vertical />
@@ -35,7 +36,7 @@ const TxBasicCardSection = ({ label, value, coin, monthly, total }) => {
               type={coinSize}
               weight={"600"}
             >
-              {formatter.crypto(total, coin.toUpperCase(), { precision: 2 })}
+              {formatter.usd(total)}
             </CelText>
           </View>
         </View>
