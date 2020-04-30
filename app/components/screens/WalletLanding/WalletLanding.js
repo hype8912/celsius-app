@@ -10,7 +10,7 @@ import WalletDetailsCard from "../../organisms/WalletDetailsCard/WalletDetailsCa
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
 import CelPayReceivedModal from "../../modals/CelPayReceivedModal/CelPayReceivedModal";
-import { WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
+import { MODALS, WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import ComingSoonCoins from "../../molecules/ComingSoonCoins/ComingSoonCoins";
 import CoinCards from "../../organisms/CoinCards/CoinCards";
@@ -22,6 +22,7 @@ import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModa
 import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
+import MultiAddressModal from "../../modals/MultiAddressModal/MultiAddressModal";
 
 @connect(
   state => {
@@ -42,6 +43,8 @@ import CelButton from "../../atoms/CelButton/CelButton";
       rejectionReasons: state.user.profile.kyc
         ? state.user.profile.kyc.rejectionReasons
         : [],
+      previouslyOpenedModals: state.ui.previouslyOpenedModals,
+      userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -84,7 +87,14 @@ class WalletLanding extends Component {
       appSettings,
       currenciesRates,
       currenciesGraphs,
+      userTriggeredActions,
     } = this.props;
+
+    if (
+      this.pendingAddresses().length &&
+      !userTriggeredActions.permanently_dismiss_deposit_address_changes
+    )
+      actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
 
     actions.checkForLoanAlerts();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -149,6 +159,16 @@ class WalletLanding extends Component {
     this.walletFetchingInterval = setInterval(() => {
       actions.getWalletSummary();
     }, 300000);
+  };
+
+  pendingAddresses = () => {
+    const { walletSummary } = this.props;
+
+    const pendingAddresses = walletSummary.coins.filter(
+      coin => coin.has_pending_deposit_address_change
+    );
+
+    return pendingAddresses;
   };
 
   handleBackButton = () => {};
@@ -253,6 +273,7 @@ class WalletLanding extends Component {
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <BecomeCelMemberModal />
         <LoanAlertsModalWrapper />
+        <MultiAddressModal actions={actions} />
       </RegularLayout>
     );
   }
