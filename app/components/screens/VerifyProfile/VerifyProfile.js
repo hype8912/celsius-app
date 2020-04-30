@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Clipboard, BackHandler } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationEvents } from "react-navigation";
+import _ from 'lodash';
 
 import * as appActions from "../../../redux/actions";
 import VerifyProfileStyle from "./VerifyProfile.styles";
@@ -19,6 +20,8 @@ import store from "../../../redux/store";
 @connect(
   state => ({
     formData: state.forms.formData,
+    deepLinkData: state.deepLink.deepLinkData,
+    user: state.user.profile,
     is2FAEnabled: state.user.profile.two_factor_enabled,
     previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
@@ -91,9 +94,18 @@ class VerifyProfile extends Component {
 
   onCheckSuccess = async () => {
     this.setState({ loading: true });
-    const { navigation, actions, previousScreen } = this.props;
+
+    const { navigation, actions, previousScreen, deepLinkData, user } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
     const activeScreen = navigation.getParam("activeScreen");
+
+    // Check if app is opened from DeepLink
+    if (!_.isEmpty(deepLinkData)) {
+       if ((user && !user.id) || !user) { await actions.initAppData() };
+       actions.handleDeepLink()
+      return
+    }
+
     if (activeScreen) {
       if (activeScreen === "VerifyProfile") {
         this.setState({ loading: false });

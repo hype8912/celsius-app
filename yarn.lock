@@ -12108,6 +12108,11 @@ react-native-unimodules@^0.6.0:
     unimodules-sensors-interface "~4.0.0"
     unimodules-task-manager-interface "~4.0.0"
 
+react-native-ux-cam@^5.1.15:
+  version "5.1.15"
+  resolved "https://registry.yarnpkg.com/react-native-ux-cam/-/react-native-ux-cam-5.1.15.tgz#4a900a8d46be7510c2a62c573c67ee54a221b5df"
+  integrity sha512-88w+V8DUeF/IHYk+XcZ6pIPWek8h/BCajhm6ANCOu54fnu2OgRbi+xYAfUUKnVLHyk4a4Y6DeUAuc4EGE4bMRQ==
+
 react-native-webview@^7.4.3, react-native-webview@^7.5.0:
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-7.6.0.tgz#6bae76430200be5e5ead7d986af2fa341b650186"

@@ -9,7 +9,6 @@ import CodePush from "react-native-code-push";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
 
-import appsFlyerUtil from "./appsflyer-util";
 import Constants from "../../constants";
 import {
   deleteSecureStoreKey,
@@ -49,7 +48,6 @@ async function initializeThirdPartyServices() {
 
   apiUtil.initInterceptors();
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
-  await appsFlyerUtil.initSDK();
   await initMixpanel();
   await uxCamUtil.initUxCam()
 }
