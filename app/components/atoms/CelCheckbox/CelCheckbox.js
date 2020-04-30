@@ -7,16 +7,42 @@ import CelText from "../CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 import { THEMES } from "../../../constants/UI";
 import Spinner from "../Spinner/Spinner";
+import Icon from "../Icon/Icon";
 
-const CelCheckbox = props => {
-  const onPress = props.onChange || props.updateFormField;
+const checked = (
+  <Icon
+    name="CheckedBorder"
+    width="23"
+    height="23"
+    fill={STYLES.COLORS.GREEN}
+  />
+);
+
+const unchecked = (
+  <Icon name="Unchecked" width="23" height="23" fill={STYLES.COLORS.GRAY} />
+);
+
+const CelCheckbox = ({
+  field,
+  updateFormField,
+  onChange,
+  value,
+  rightText,
+  checkedImage = checked,
+  unCheckedImage = unchecked,
+  textWeight,
+  loading,
+  theme,
+  fillColor,
+}) => {
+  const onPress = onChange || updateFormField;
 
   return (
     <TouchableOpacity
       style={{ flexDirection: "row", marginBottom: 15, alignItems: "center" }}
-      onPress={() => onPress(props.field, !props.value)}
+      onPress={() => onPress(field, !value)}
     >
-      {props.loading ? (
+      {loading ? (
         <View style={{ marginRight: 10 }}>
           <Spinner size={24} />
         </View>
@@ -25,22 +51,22 @@ const CelCheckbox = props => {
           checkBoxColor={STYLES.COLORS.MEDIUM_GRAY}
           checkedCheckBoxColor={STYLES.COLORS.GREEN}
           style={{ paddingRight: 10 }}
-          onClick={() => onPress(props.field, !props.value)}
-          isChecked={props.value}
-          checkedImage={props.checkedImage}
-          unCheckedImage={props.unChecked}
+          onClick={() => onPress(field, !value)}
+          isChecked={value}
+          checkedImage={checkedImage}
+          unCheckedImage={unCheckedImage}
         />
       )}
 
-      {props.rightText && (
+      {rightText && (
         <CelText
           type="H4"
-          weight={props.textWeight}
-          color={props.fillColor}
+          weight={textWeight}
+          color={fillColor}
           style={{ marginRight: 30 }}
-          theme={props.theme}
+          theme={theme}
         >
-          {props.rightText}
+          {rightText}
         </CelText>
       )}
     </TouchableOpacity>
@@ -58,6 +84,7 @@ CelCheckbox.propTypes = {
   textWeight: PropTypes.string,
   loading: PropTypes.bool,
   theme: PropTypes.oneOf(Object.values(THEMES)),
+  fillColor: PropTypes.string,
 };
 
 export default CelCheckbox;
