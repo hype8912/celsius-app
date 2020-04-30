@@ -83,7 +83,7 @@ class RateInfoCard extends Component {
                 color={"white"}
                 weight={"bold"}
               >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
-              ! BTC balances greater than{" "}
+              ! {`${interestRate.coin}`} balances greater than{" "}
               {`${interestRate.coinThreshold} ${interestRate.coin}`} will
               continue to earn at {formatter.percentageDisplay(apyRate)} APY.
             </CelText>
