@@ -102,6 +102,7 @@ class WalletLanding extends Component {
       actions.openModal(MODALS.HODL_MODE_MODAL);
 
     if (
+      this.pendingAddresses() &&
       this.pendingAddresses().length &&
       !userTriggeredActions.permanently_dismiss_deposit_address_changes
     )
@@ -177,9 +178,11 @@ class WalletLanding extends Component {
   pendingAddresses = () => {
     const { walletSummary } = this.props;
 
-    const pendingAddresses = walletSummary.coins.filter(
-      coin => coin.has_pending_deposit_address_change
-    );
+    const pendingAddresses =
+      walletSummary &&
+      walletSummary.coins.filter(
+        coin => coin.has_pending_deposit_address_change
+      );
 
     return pendingAddresses;
   };
