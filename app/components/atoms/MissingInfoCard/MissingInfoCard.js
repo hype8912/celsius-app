@@ -61,7 +61,7 @@ const MissingInfoCard = props => {
               type="H7"
               margin="3 0 0 0"
             >
-              {cta}
+              {` ${cta}`}
             </CelText>
           </CelText>
         </Fragment>
