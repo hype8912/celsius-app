@@ -58,19 +58,23 @@ class RateInfoCard extends Component {
     if ((!interestCompliance && !interestCompliance.allowed) || isUSResident())
       return null;
 
-    const apyRate = interestUtil.calculateAPY(
-      interestUtil.calculateBonusRate(
-        interestRate.baseRate,
-        celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
-      )
-    );
+    const apyRate =
+      loyaltyInfo &&
+      interestUtil.calculateAPY(
+        interestUtil.calculateBonusRate(
+          interestRate.baseRate,
+          celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
+        )
+      );
 
-    const specialApyRate = interestUtil.calculateAPY(
-      interestUtil.calculateBonusRate(
-        interestRate.specialRate,
-        celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
-      )
-    );
+    const specialApyRate =
+      loyaltyInfo &&
+      interestUtil.calculateAPY(
+        interestUtil.calculateBonusRate(
+          interestRate.specialRate,
+          celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
+        )
+      );
 
     return (
       <View style={style}>
