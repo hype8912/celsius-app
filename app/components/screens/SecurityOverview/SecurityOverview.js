@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -19,6 +19,8 @@ import { getTheme } from "../../../utils/styles-util";
 import Icon from "../../atoms/Icon/Icon";
 import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import SeparatorInfoModal from "../../modals/SeparatorInfoModal/SeparatorInfoModal";
+import { MODALS } from "../../../constants/UI";
 
 @connect(
   state => ({
@@ -30,6 +32,13 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class SecurityOverview extends Component {
+  state = {
+    selectedModalData: {
+      title: "",
+      body: [],
+    },
+  };
+
   static propTypes = {
     iconName: PropTypes.string,
   };
@@ -53,6 +62,44 @@ class SecurityOverview extends Component {
       actions.navigateTo("VerifyProfile", {
         onSuccess: () => actions.navigateTo("TwoFactorSettings"),
       });
+    }
+  };
+
+  handleModalData = type => {
+    switch (type) {
+      case "hodl":
+        this.setState({
+          selectedModalData: {
+            title: "What is HODL Mode?",
+            body: [
+              "HODL Mode is a security feature that gives you the ability to temporarily disable outgoing transactions from your Celsius account. You control when HODL Mode is activated, and it is an ideal feature for those that do not plan on withdrawing or transferring funds from their wallet for an extended period of time.",
+            ],
+          },
+        });
+        return;
+      case "withdrawalAddresses":
+        this.setState({
+          selectedModalData: {
+            title: "Why should you whitelist your withdrawal addresses?",
+            body: [
+              "Whitelisting a withdrawal address means that in the rare chance a hacker is able to gain access to your account, the only place they can send your crypto is a wallet that you already control. In addition, changing a whitelisted address for a specific coin requires email confirmation and will incur a 24 hours lock-down on all withdrawals in that coin.",
+            ],
+          },
+        });
+        return;
+      case "twoFA":
+        this.setState({
+          selectedModalData: {
+            title: "What is 2FA?",
+            body: [
+              "Two-factor authentication (2FA) is the industry standard for securing online accounts. Once activated, 2FA adds a second layer of protection between a hacker and withdrawal confirmations, CelPay confirmations, logins, and other sensitive actions by using a Time-based One-time Password.",
+              "You can set up 2FA on your account by using Google Authenticator or Authy app, available on Android and iOS mobile devices.",
+            ],
+          },
+        });
+        return;
+      default:
+        return;
     }
   };
 
@@ -130,7 +177,14 @@ class SecurityOverview extends Component {
       <RegularLayout>
         <View style={{ flex: 1 }}>
           <SecurityScoreGauge level={securityOverview.overall_score_strength} />
-          <Separator text="2FA VERIFICATION" />
+          <TouchableOpacity
+            onPress={() => {
+              this.handleModalData("twoFA");
+              actions.openModal(MODALS.SEPARATOR_INFO_MODAL);
+            }}
+          >
+            <Separator text="2FA VERIFICATION" showInfo />
+          </TouchableOpacity>
           <ToggleInfoCard
             subtitle={"Your 2FA verification is"}
             onPress={this.onPress2fa}
@@ -138,11 +192,25 @@ class SecurityOverview extends Component {
           />
 
           <>
-            <Separator text="WHITELISTED WITHDRAWAL ADDRESSES" />
+            <TouchableOpacity
+              onPress={() => {
+                this.handleModalData("withdrawalAddresses");
+                actions.openModal(MODALS.SEPARATOR_INFO_MODAL);
+              }}
+            >
+              <Separator text="WHITELISTED WITH. ADDRESSES" showInfo />
+            </TouchableOpacity>
             {this.renderWhitelistedAddressesCard()}
           </>
 
-          <Separator text="HODL MODE" />
+          <TouchableOpacity
+            onPress={() => {
+              this.handleModalData("hodl");
+              actions.openModal(MODALS.SEPARATOR_INFO_MODAL);
+            }}
+          >
+            <Separator text="HODL MODE" showInfo />
+          </TouchableOpacity>
           <ToggleInfoCard
             subtitle={"HODL mode is"}
             onPress={() => actions.navigateTo("HodlLanding")}
@@ -189,6 +257,10 @@ class SecurityOverview extends Component {
               />
             </>
           )}
+          <SeparatorInfoModal
+            actions={actions}
+            data={this.state.selectedModalData}
+          />
         </View>
       </RegularLayout>
     );
