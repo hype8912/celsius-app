@@ -77,7 +77,7 @@ function resetToScreen(screenName, params) {
     _navigator.dispatch(
       StackActions.reset({
         index: 0,
-        key: null,
+        key: undefined,
         actions: [
           NavigationActions.navigate({ routeName: screenName, params }),
         ],
