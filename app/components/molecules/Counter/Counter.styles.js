@@ -15,6 +15,6 @@ const themed = {
   celsius: {},
 };
 
-const ComingSoonCoinsStyle = () => getThemedStyle(base, themed);
+const CounterStyle = () => getThemedStyle(base, themed);
 
-export default ComingSoonCoinsStyle;
+export default CounterStyle;

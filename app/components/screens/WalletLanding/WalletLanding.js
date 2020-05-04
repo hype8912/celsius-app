@@ -25,6 +25,8 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
 import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
 import MultiAddressModal from "../../modals/MultiAddressModal/MultiAddressModal";
+import animationsUtil from "../../../utils/animations-util";
+import { COMING_SOON_COINS } from "../../../constants/DATA";
 
 @connect(
   state => {
@@ -47,7 +49,9 @@ import MultiAddressModal from "../../modals/MultiAddressModal/MultiAddressModal"
         : [],
       previouslyOpenedModals: state.ui.previouslyOpenedModals,
       hodlStatus: state.hodl.hodlStatus,
+      walletAddresses: state.wallet.addresses,
       userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
+      shouldAnimate: state.ui.shouldAnimate,
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -94,19 +98,21 @@ class WalletLanding extends Component {
       hodlStatus,
       userTriggeredActions,
     } = this.props;
-    if (
-      !previouslyOpenedModals.HODL_MODE_MODAL &&
-      hodlStatus.created_by === "backoffice"
-    )
-      actions.openModal(MODALS.HODL_MODE_MODAL);
+    setTimeout(() => {
+      if (
+        !previouslyOpenedModals.HODL_MODE_MODAL &&
+        hodlStatus.created_by === "backoffice"
+      )
+        actions.openModal(MODALS.HODL_MODE_MODAL);
 
-    if (
-      this.pendingAddresses().length &&
-      !userTriggeredActions.permanently_dismiss_deposit_address_changes
-    )
-      actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
+      if (
+        this.pendingAddresses().length &&
+        !userTriggeredActions.permanently_dismiss_deposit_address_changes
+      )
+        actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
 
-    actions.checkForLoanAlerts();
+      actions.checkForLoanAlerts();
+    }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
@@ -189,6 +195,37 @@ class WalletLanding extends Component {
     this.setState({ activeView: viewType });
   };
 
+  renderComingSoon() {
+    const { activeView } = this.state;
+    const { shouldAnimate } = this.props;
+    const style = WalletLandingStyle();
+    const isGrid = activeView === WALLET_LANDING_VIEW_TYPES.GRID;
+    const processedItems = animationsUtil.applyOffset(
+      COMING_SOON_COINS,
+      isGrid ? 2 : 1
+    );
+
+    return (
+      <View
+        style={[
+          style.flexWrapper,
+          { flexDirection: isGrid ? "row" : "column" },
+        ]}
+      >
+        {processedItems.map(coin => (
+          <ComingSoonCoins
+            key={coin.name}
+            coin={coin}
+            offset={processedItems.offset}
+            isGrid={isGrid}
+            shouldAnimate={shouldAnimate}
+            activeView={activeView}
+          />
+        ))}
+      </View>
+    );
+  }
+
   render() {
     const { activeView } = this.state;
     const {
@@ -200,6 +237,7 @@ class WalletLanding extends Component {
       branchTransfer,
       depositCompliance,
       rejectionReasons,
+      shouldAnimate,
     } = this.props;
     const style = WalletLandingStyle();
 
@@ -261,6 +299,7 @@ class WalletLanding extends Component {
             </View>
           </View>
           <CoinCards
+            shouldAnimate={shouldAnimate}
             activeView={activeView}
             navigateTo={actions.navigateTo}
             walletSummary={walletSummary}
@@ -269,7 +308,7 @@ class WalletLanding extends Component {
             depositCompliance={depositCompliance}
           />
           <ExpandableItem heading={"COMING SOON"} margin={"10 0 10 0"}>
-            <ComingSoonCoins activeView={activeView} />
+            {this.renderComingSoon()}
           </ExpandableItem>
         </View>
         <CelPayReceivedModal transfer={branchTransfer} />

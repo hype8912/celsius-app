@@ -19,6 +19,8 @@ import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 import HodlBanner from "../../atoms/HodlBanner/HodlBanner";
 import Icon from "../../atoms/Icon/Icon";
+import Loader from "../../atoms/Loader/Loader";
+import fromatter from "../../../utils/formatter";
 
 @connect(
   state => ({
@@ -28,6 +30,10 @@ import Icon from "../../atoms/Icon/Icon";
     theme: state.user.appSettings.theme,
     hodlStatus: state.hodl.hodlStatus,
     activeScreen: state.nav.activeScreen,
+    walletSummary: state.wallet.summary,
+    changeWalletHeader: state.animations.changeWalletHeader,
+    changeCoinDetailsHeader: state.animations.changeCoinDetailsHeader,
+    changeInterestHeader: state.animations.changeInterestHeader,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -237,20 +243,64 @@ class CelHeading extends Component {
     }
   };
 
+  getTitle = () => {
+    const sceneOptions = this.props.scene.descriptor.options;
+    const { title } = sceneOptions;
+    const {
+      walletSummary,
+      activeScreen,
+      changeWalletHeader,
+      changeInterestHeader,
+    } = this.props;
+    let screenTitle;
+
+    if (
+      (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory") &&
+      changeWalletHeader
+    ) {
+      screenTitle = fromatter.usd(walletSummary.total_amount_usd);
+      return screenTitle;
+    }
+
+    if (activeScreen === "WalletInterest" && changeInterestHeader) {
+      screenTitle = fromatter.usd(walletSummary.total_interest_earned);
+      return screenTitle;
+    }
+
+    // if (activeScreen === "CoinDetails" && changeCoinDetailsHeader ) {
+    //   screenTitle = fromatter.usd(walletSummary.total_interest_earned);
+    //   return screenTitle
+    // }
+
+    return title;
+  };
+
   getCenterContent = sceneProps => {
-    const { title, customCenterComponent } = sceneProps;
+    const { customCenterComponent } = sceneProps;
     const style = CelHeadingStyle();
+
+    const title = this.getTitle();
 
     return (
       <View style={style.center}>
-        {customCenterComponent ? (
+        {customCenterComponent && !customCenterComponent.flowProgress ? (
           <View style={style.customCenterComponent}>
-            {customCenterComponent}
+            <Loader
+              barColor={STYLES.COLORS.GREEN}
+              backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+              progress={
+                customCenterComponent.currentStep / customCenterComponent.steps
+              }
+              borderColor={STYLES.COLORS.LIGHT_GRAY}
+              width={40}
+            />
           </View>
         ) : (
-          <CelText align="center" weight="medium" type="H3">
-            {title || ""}
-          </CelText>
+          <View>
+            <CelText align="center" weight="medium" type="H3">
+              {title || ""}
+            </CelText>
+          </View>
         )}
       </View>
     );
@@ -269,7 +319,7 @@ class CelHeading extends Component {
 
   getContent = () => {
     const { formData, hodlStatus, actions, activeScreen } = this.props;
-    const scene = this.props.scene.descriptor;
+    const sceneOptions = this.props.scene.descriptor.options;
     const style = CelHeadingStyle();
     const paddings = getPadding("0 15 0 15");
     const leftStyle = this.isSearchHeader()
@@ -285,9 +335,9 @@ class CelHeading extends Component {
         />
         <View style={[style.content]}>
           <View style={leftStyle}>
-            {this.getLeftContent(scene.options)}
+            {this.getLeftContent(sceneOptions)}
             {this.isSearchHeader() &&
-              scene.state.routeName !== "VerifyProfile" && (
+              sceneOptions.state.routeName !== "VerifyProfile" && (
                 <View
                   style={[
                     {
@@ -312,9 +362,23 @@ class CelHeading extends Component {
                 </View>
               )}
           </View>
-          {!this.isSearchHeader() && this.getCenterContent(scene.options)}
-          <View style={style.right}>{this.getRightContent(scene.options)}</View>
+          {!this.isSearchHeader() && this.getCenterContent(sceneOptions)}
+          <View style={style.right}>{this.getRightContent(sceneOptions)}</View>
         </View>
+        {sceneOptions.customCenterComponent &&
+        sceneOptions.customCenterComponent.flowProgress ? (
+          <Loader
+            flowProgress={sceneOptions.customCenterComponent.flowProgress}
+            barColor={STYLES.COLORS.GREEN}
+            backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+            progress={
+              sceneOptions.customCenterComponent.currentStep /
+              sceneOptions.customCenterComponent.steps
+            }
+            borderColor={STYLES.COLORS.LIGHT_GRAY}
+            width={100}
+          />
+        ) : null}
       </View>
     );
   };

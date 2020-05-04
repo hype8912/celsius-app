@@ -131,6 +131,13 @@ class VerifyProfile extends Component {
     }, 1000);
   };
 
+  setForgotPin = () => {
+    const { verificationError } = this.state;
+    if (verificationError) {
+      this.setState({ forgotPin: true });
+    }
+  };
+
   getVerifyType = showType => showType && showType === "2FA";
 
   handleBackButtonClick = () => true;

@@ -28,7 +28,7 @@ import Icon from "../../atoms/Icon/Icon";
 )
 class MultiAddressModal extends Component {
   static propTypes = {
-    actions: PropTypes.func.isRequired,
+    actions: PropTypes.instanceOf(Object).isRequired,
   };
   static defaultProps = {};
 

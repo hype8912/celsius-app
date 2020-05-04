@@ -247,6 +247,7 @@ function initAppData(initToken = null) {
     await dispatch(actions.getInitialCelsiusData());
     await dispatch(actions.setBannerProps());
 
+    await dispatch(actions.isGoodForAnimations());
     // get user token
     const token =
       initToken || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));

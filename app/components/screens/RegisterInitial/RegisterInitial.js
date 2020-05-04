@@ -5,7 +5,6 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
 import Separator from "../../atoms/Separator/Separator";
@@ -33,7 +32,7 @@ import passwordUtil from "../../../utils/password-util";
 class RegisterInitial extends Component {
   static navigationOptions = () => ({
     right: "login",
-    customCenterComponent: <ProgressBar steps={3} currentStep={1} />,
+    customCenterComponent: { steps: 3, currentStep: 1, flowProgress: false },
     headerSameColor: true,
   });
 

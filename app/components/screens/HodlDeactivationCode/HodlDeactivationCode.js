@@ -41,6 +41,7 @@ class HodlDeactivationCode extends Component {
     title: "HODL Mode",
     right: "profile",
     gesturesEnabled: false,
+    customCenterComponent: { steps: 2, currentStep: 2, flowProgress: true },
   });
 
   componentWillUnmount() {

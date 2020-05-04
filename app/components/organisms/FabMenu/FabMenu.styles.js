@@ -48,12 +48,30 @@ const themed = {
       opacity: 0.97,
       backgroundColor: "white",
     },
+    shadowStyle: {
+      shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW,
+      shadowOffset: { width: 0, height: 12 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      width: 60,
+      height: 60,
+      borderRadius: 30,
+    },
   },
 
   dark: {
     background: {
       opacity: 0.99,
       backgroundColor: "rgb(21, 30, 39)",
+    },
+    shadowStyle: {
+      shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW,
+      shadowOffset: { width: 0, height: 10 },
+      shadowOpacity: 0.08,
+      shadowRadius: 4,
+      width: 60,
+      height: 60,
+      borderRadius: 30,
     },
   },
 

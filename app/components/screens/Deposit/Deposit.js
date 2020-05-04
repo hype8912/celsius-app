@@ -71,7 +71,9 @@ class Deposit extends Component {
 
   componentDidMount() {
     const { actions } = this.props;
-    actions.openModal(MODALS.DEPOSIT_INFO_MODAL);
+    setTimeout(() => {
+      actions.openModal(MODALS.DEPOSIT_INFO_MODAL);
+    }, 1000);
   }
 
   getAddress = currency => {

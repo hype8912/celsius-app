@@ -5,7 +5,7 @@ import {
   heightPercentageToDP,
 } from "../../../utils/styles-util";
 
-const radius = Platform.OS === 'ios' ? 20 : 24
+const radius = Platform.OS === "ios" ? 20 : 24;
 const base = {
   container: {
     flex: 1,

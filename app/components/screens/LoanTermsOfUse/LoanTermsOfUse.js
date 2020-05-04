@@ -32,6 +32,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 class LoanTermsOfUse extends Component {
   static navigationOptions = () => ({
     title: "Terms and Conditions",
+    customCenterComponent: { steps: 8, currentStep: 8, flowProgress: true },
   });
 
   componentDidMount() {

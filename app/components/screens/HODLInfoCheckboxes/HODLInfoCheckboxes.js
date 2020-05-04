@@ -8,7 +8,6 @@ import * as appActions from "../../../redux/actions";
 // import HODLInfoCheckboxes from "./HODLInfoCheckboxes.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import { getPadding } from "../../../utils/styles-util";
 import Card from "../../atoms/Card/Card";
 import { THEMES } from "../../../constants/UI";
@@ -30,6 +29,7 @@ class HODLInfoCheckboxes extends Component {
   static navigationOptions = () => ({
     title: "HODL Mode",
     right: "profile",
+    customCenterComponent: { steps: 3, currentStep: 2, flowProgress: true },
   });
 
   render() {
@@ -61,7 +61,6 @@ class HODLInfoCheckboxes extends Component {
       formData.hodl1 && formData.hodl2 && formData.hodl3 && formData.hodl4;
     return (
       <RegularLayout padding="0 0 0 0">
-        <HeadingProgressBar steps={3} currentStep={2} />
         <View
           style={[
             { flex: 1, width: "100%", height: "100%" },

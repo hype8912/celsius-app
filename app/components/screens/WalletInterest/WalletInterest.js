@@ -3,7 +3,6 @@ import { View, TouchableOpacity, Image } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import formatter from "../../../utils/formatter";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
@@ -18,6 +17,7 @@ import Separator from "../../atoms/Separator/Separator";
 import InterestCalculatorScreen from "../InterestCalculatorScreen/InterestCalculatorScreen";
 import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util";
 import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
+import Counter from "../../molecules/Counter/Counter";
 
 @connect(
   state => ({
@@ -105,9 +105,13 @@ class WalletInterest extends Component {
                 Total interest earned
               </CelText>
               <View style={style.amountWrapper}>
-                <CelText weight="600" type="H3">
-                  {formatter.usd(walletSummary.total_interest_earned)}
-                </CelText>
+                <Counter
+                  weight="600"
+                  type="H3"
+                  number={walletSummary.total_interest_earned}
+                  speed={5}
+                  usd
+                />
                 <TouchableOpacity
                   onPress={() => actions.navigateTo("InterestRates")}
                 >

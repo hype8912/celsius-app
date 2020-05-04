@@ -10,6 +10,7 @@ import CoinGridCard from "../../molecules/CoinGridCard/CoinGridCard";
 import CoinListCard from "../../molecules/CoinListCard/CoinListCard";
 import Icon from "../../atoms/Icon/Icon";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
+import animationsUtil from "../../../utils/animations-util";
 
 class CoinCards extends Component {
   static propTypes = {
@@ -19,6 +20,7 @@ class CoinCards extends Component {
     currenciesGraphs: PropTypes.instanceOf(Object),
     navigateTo: PropTypes.func,
     depositCompliance: PropTypes.instanceOf(Object),
+    shouldAnimate: PropTypes.bool,
   };
 
   constructor(props) {
@@ -107,14 +109,18 @@ class CoinCards extends Component {
   };
 
   renderCoinCards = c => {
-    const { activeView } = this.props;
+    const { activeView, shouldAnimate } = this.props;
 
     const isGrid = activeView === WALLET_LANDING_VIEW_TYPES.GRID;
+    const processedGridItems = animationsUtil.applyOffset([...c], 2);
+    const processedListItems = animationsUtil.applyOffset([...c], 1);
 
     // Render grid item
     if (isGrid) {
-      return c.map(coin => (
+      return processedGridItems.map(coin => (
         <CoinGridCard
+          shouldAnimate={shouldAnimate}
+          offset={coin.offset}
           key={coin.short}
           coin={coin}
           displayName={coin.currency.displayName}
@@ -125,8 +131,10 @@ class CoinCards extends Component {
       ));
     }
     // Render list item
-    return c.map(coin => (
+    return processedListItems.map(coin => (
       <CoinListCard
+        shouldAnimate={shouldAnimate}
+        offset={coin.offset}
         key={coin.short}
         coin={coin}
         displayName={coin.currency.displayName}

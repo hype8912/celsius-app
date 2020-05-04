@@ -7,7 +7,6 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 // import BorrowChooseLoanStyle from "./BorrowChooseLoan.styles";
 import CelText from "../../atoms/CelText/CelText";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { getPadding } from "../../../utils/styles-util";
 import { LOAN_TYPES } from "../../../constants/DATA";
@@ -30,6 +29,7 @@ class BorrowChooseLoan extends Component {
     title: "Borrow",
     right: "profile",
     left: "back",
+    customCenterComponent: { steps: 8, currentStep: 1, flowProgress: true },
   });
 
   constructor(props) {
@@ -90,7 +90,6 @@ class BorrowChooseLoan extends Component {
 
     return (
       <RegularLayout padding="0 0 0 0">
-        <HeadingProgressBar steps={6} currentStep={1} />
         <View
           style={[
             { flex: 1, width: "100%", height: "100%" },
