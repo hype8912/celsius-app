@@ -9,12 +9,7 @@ import TransactionsHistory from "../../molecules/TransactionsHistory/Transaction
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { hasPassedKYC } from "../../../utils/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
-import {
-  CEL_PAY_TYPES,
-  EMPTY_STATES,
-  MODALS,
-  TRANSACTIONS_TYPES,
-} from "../../../constants/UI";
+import { CEL_PAY_TYPES, EMPTY_STATES, MODALS } from "../../../constants/UI";
 import cryptoUtil from "../../../utils/crypto-util";
 import CelPayInfoModal from "../../modals/CelPayInfoModal/CelPayInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
@@ -135,7 +130,7 @@ class CelPayLanding extends Component {
 
         <TransactionsHistory
           hasFilter={false}
-          additionalFilter={{ type: [TRANSACTIONS_TYPES.CELPAY], limit: 5 }}
+          additionalFilter={{ type: ["celpay"], limit: 5 }}
         />
 
         <CelPayInfoModal
