@@ -32,6 +32,13 @@ class ConfirmResponseModal extends Component {
   render() {
     const style = ConfirmResponseModalStyle();
 
+    const marginCall = {
+      amountToLock: "2 (BTC)",
+      amountToLockUsd: "$ 100",
+      collateralCrypto: "0.2 (BTC)",
+      collateralFiat: "100$",
+    };
+
     return (
       <CelModal style={style.container} name={MODALS.CONFIRM_RESPONSE_MODAL}>
         <View style={{ paddingHorizontal: 20 }}>
@@ -42,10 +49,10 @@ class ConfirmResponseModal extends Component {
             You are about to lock
           </CelText>
           <CelText align={"center"} type={"H1"} margin={"5 0 0 0"}>
-            XXX(BTC)
+            {marginCall.amountToLock}
           </CelText>
           <CelText align={"center"} type={"H3"} margin={"5 0 0 0"}>
-            $ XXX
+            {marginCall.amountToLockUsd}
           </CelText>
 
           <Card color={style.background.backgroundColor}>
@@ -53,10 +60,10 @@ class ConfirmResponseModal extends Component {
               New Collateral Balance
             </CelText>
             <CelText align={"left"} margin={"5 0 0 0"}>
-              X.XXXXXXXX
+              {marginCall.collateralCrypto}
             </CelText>
             <CelText align={"left"} margin={"5 0 0 0"}>
-              $ XXXX
+              {marginCall.collateralFiat}
             </CelText>
             <Separator margin={"10 0 10 0"} />
             <CelText align={"left"}>$ XXX</CelText>
@@ -66,10 +73,10 @@ class ConfirmResponseModal extends Component {
             <Separator margin={"10 0 10 0"} />
             <CelText align={"left"}>You are about to lock</CelText>
             <CelText align={"left"} margin={"5 0 0 0"}>
-              XXX(BTC)
+              {marginCall.amountToLock}
             </CelText>
             <CelText align={"left"} margin={"5 0 0 0"}>
-              $ XXX
+              {marginCall.amountToLockUsd}
             </CelText>
           </Card>
         </View>
