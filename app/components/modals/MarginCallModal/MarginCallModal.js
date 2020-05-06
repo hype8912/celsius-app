@@ -38,6 +38,7 @@ class MarginCallModal extends Component {
     const marginCall = {
       activeLoan: "1015",
       ltv: "30%",
+      remainingTime: "2d 12h 56m",
     };
 
     return (
@@ -70,7 +71,7 @@ class MarginCallModal extends Component {
               Time remaining to cure Margin Call
             </CelText>
             <CelText align={"left"} weight={"500"} type={"H3"}>
-              2d 12h 56m
+              {marginCall.remainingTime}
             </CelText>
           </Card>
         </View>
