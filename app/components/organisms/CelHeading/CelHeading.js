@@ -28,6 +28,7 @@ import Icon from "../../atoms/Icon/Icon";
     theme: state.user.appSettings.theme,
     hodlStatus: state.hodl.hodlStatus,
     activeScreen: state.nav.activeScreen,
+    internetConnected: state.app.internetConnected,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -316,6 +317,9 @@ class CelHeading extends Component {
 
   render() {
     let containerStyle;
+    const { internetConnected } = this.props;
+    if (!internetConnected) return null;
+
     const scene = this.props.scene.descriptor;
     const { transparent, headerSameColor } = scene.options;
     const style = CelHeadingStyle();
