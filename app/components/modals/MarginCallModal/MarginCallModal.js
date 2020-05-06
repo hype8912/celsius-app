@@ -35,6 +35,10 @@ class MarginCallModal extends Component {
     const style = MarginCallModalStyle();
 
     // TODO add map in case there are multiple margin calls
+    const marginCall = {
+      activeLoan: "1015",
+      ltv: "30%",
+    };
 
     return (
       <CelModal
@@ -48,10 +52,11 @@ class MarginCallModal extends Component {
           </CelText>
           <View style={style.loanToValue}>
             <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-              Active Loan - #1234
+              {` Active Loan - #${marginCall.activeLoan}`}
             </CelText>
             <CelText type={"H5"}>
-              Current LTV: <CelText color={STYLES.COLORS.RED}>XX%</CelText>
+              Current LTV:{" "}
+              <CelText color={STYLES.COLORS.RED}>{marginCall.ltv}</CelText>
             </CelText>
             <Separator margin={"10 0 0 0"} />
           </View>
