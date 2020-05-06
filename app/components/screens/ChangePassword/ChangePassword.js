@@ -45,7 +45,7 @@ class ChangePassword extends Component {
     );
 
     return (
-      <RegularLayout>
+      <RegularLayout fabType={"hide"}>
         <CelText
           align={"center"}
           margin={"0 0 30 0"}
