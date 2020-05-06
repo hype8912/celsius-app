@@ -35,6 +35,7 @@ import loanUtil from "../../../utils/loan-util";
       loanCompliance: state.compliance.loan,
       minimumLoanAmount: state.generalData.minimumLoanAmount,
       walletSummary: state.wallet.summary,
+      loyaltyInfo: state.loyalty.loyaltyInfo,
       kycStatus: state.user.profile.kyc
         ? state.user.profile.kyc.status
         : KYC_STATUSES.collecting,
@@ -47,12 +48,6 @@ class BorrowCalculatorScreen extends Component {
   static propTypes = {
     purpose: PropTypes.string,
   };
-  static navigationOptions = () => ({
-    title: "Borrow",
-    right: "profile",
-    left: "back",
-  });
-
   static navigationOptions = () => ({
     title: "Borrow",
     right: "profile",
@@ -245,7 +240,10 @@ class BorrowCalculatorScreen extends Component {
     if (Number(value) < minimumLoanAmount) {
       actions.showMessage(
         "warning",
-        `Minimum amount for a loan is ${formatter.usd(minimumLoanAmount)}`
+        `Minimum amount for a loan is ${formatter.fiat(
+          minimumLoanAmount,
+          "USD"
+        )}`
       );
     }
 
@@ -262,6 +260,7 @@ class BorrowCalculatorScreen extends Component {
       ltv,
       minimumLoanAmount,
       eligibleCoins,
+      loyaltyInfo,
     } = this.props;
 
     const loanParams = loanUtil.emitLoanParams(
@@ -269,7 +268,8 @@ class BorrowCalculatorScreen extends Component {
       currencies,
       ltv,
       minimumLoanAmount,
-      eligibleCoins
+      eligibleCoins,
+      loyaltyInfo
     );
 
     const purposeProps = this.getPurposeSpecificProps(loanParams);
