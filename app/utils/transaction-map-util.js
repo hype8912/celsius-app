@@ -110,7 +110,7 @@ function getTransactionType(transaction) {
   if (transaction.nature === "withdrawal") {
     if (transaction.verified === false)
       return TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION;
-    if (transaction.status === "failed")
+    if (transaction.state === "failed")
       return TRANSACTION_TYPES.WITHDRAWAL_FAILED;
     if (transaction.verified && transaction.state === "pending_manual_approval")
       return TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW;
