@@ -37,6 +37,9 @@ export default {
 function initInterceptors() {
   axios.interceptors.request.use(
     async req => {
+      const { internetConnected } = store.getState().app;
+      if (!internetConnected) return false;
+
       const newRequest = { ...req };
       newRequest.headers = {
         "X-Advertising-AFID": store.getState().app.appsFlyerUID,

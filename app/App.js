@@ -18,6 +18,7 @@ import * as actions from "./redux/actions";
 import appUtil from "./utils/app-util";
 import AppNavigation from "./navigator/Navigator";
 import Message from "./components/molecules/Message/Message";
+import DeepLinkController from "./components/molecules/DeepLinkController/DeepLinkController";
 // import captureException from './utils/errorhandling-util'
 import ErrorBoundary from "./ErrorBoundary";
 import { remotePushController } from "./utils/push-notifications-util";
@@ -90,6 +91,7 @@ const CelsiusApplication = () => (
       <Message />
       <FabIntersection />
     </React.Fragment>
+    <DeepLinkController />
     {remotePushController()}
   </Provider>
 );

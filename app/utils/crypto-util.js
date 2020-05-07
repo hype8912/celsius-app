@@ -39,7 +39,6 @@ function hasLinkToBuy(currency) {
     "TCAD",
     "TAUD",
     "TGBP",
-    "CEL",
     "DASH",
     "OMG",
     "DAI",
@@ -47,7 +46,7 @@ function hasLinkToBuy(currency) {
 }
 
 function buyInApp(currency) {
-  return ["BTC", "BCH", "ETH", "LTC", "XRP", "XLM"].includes(currency);
+  return ["BTC", "BCH", "ETH", "LTC", "XRP", "XLM", "CEL"].includes(currency);
 }
 
 function provideLink(currency) {
@@ -151,7 +150,7 @@ function provideText(currency) {
       text = `Buy ${currency} from TrustToken`;
       break;
     case "CEL":
-      text = `Buy ${currency} on Switcheo`;
+      text = `Buy ${currency} in App`;
       break;
     case "DASH":
       text = `Buy ${currency}`;

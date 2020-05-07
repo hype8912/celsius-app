@@ -306,7 +306,7 @@ function getTransactionProps(transaction) {
         title: coin => `${coin} Interest`,
         color: STYLES.COLORS.GREEN,
         shortName: "I",
-        statusText: `Confirmed`,
+        statusText: `Confirmed ${transaction.interest_coin.toUpperCase()} Interest`,
       };
     case TRANSACTION_TYPES.PENDING_INTEREST:
       return {

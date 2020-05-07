@@ -30,6 +30,7 @@ import fromatter from "../../../utils/formatter";
     theme: state.user.appSettings.theme,
     hodlStatus: state.hodl.hodlStatus,
     activeScreen: state.nav.activeScreen,
+    internetConnected: state.app.internetConnected,
     walletSummary: state.wallet.summary,
     changeWalletHeader: state.animations.changeWalletHeader,
     changeCoinDetailsHeader: state.animations.changeCoinDetailsHeader,
@@ -387,6 +388,9 @@ class CelHeading extends Component {
 
   render() {
     let containerStyle;
+    const { internetConnected } = this.props;
+    if (!internetConnected) return null;
+
     const scene = this.props.scene.descriptor;
     const { transparent, headerSameColor } = scene.options;
     const style = CelHeadingStyle();

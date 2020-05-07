@@ -83,6 +83,14 @@ class RegularLayout extends Component {
     const style = RegularLayoutStyle(theme);
     const paddings = getPadding(padding);
 
+    if (!internetConnected) {
+      return (
+        <SafeAreaView style={[style.container, style.noInternet]}>
+          <OfflineMode />
+        </SafeAreaView>
+      );
+    }
+
     return (
       <React.Fragment>
         {refreshing && (
@@ -113,13 +121,9 @@ class RegularLayout extends Component {
           }
         >
           <SafeAreaView style={{ flex: 1 }}>
-            {!internetConnected ? (
-              <OfflineMode />
-            ) : (
-              <KeyboardShift>
-                <>{children}</>
-              </KeyboardShift>
-            )}
+            <KeyboardShift>
+              <>{children}</>
+            </KeyboardShift>
           </SafeAreaView>
         </ScrollView>
       </React.Fragment>

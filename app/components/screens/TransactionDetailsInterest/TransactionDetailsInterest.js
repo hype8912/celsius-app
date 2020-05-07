@@ -44,6 +44,14 @@ class TransactionDetailsInterest extends Component {
             value={moment.utc(transaction.time).format("h:mm A (z)")}
           />
 
+          <TxBasicSection
+            label={"Coin"}
+            value={`${
+              transaction.interestCoinFull
+            }  (${transaction.interest_coin.toUpperCase()})`}
+            noSeparator
+          />
+
           <View style={{ width: "100%", paddingHorizontal: 20 }}>
             <Card>
               <CelText

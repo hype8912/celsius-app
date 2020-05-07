@@ -11,7 +11,7 @@ import {
   getSecureStoreKey,
   deleteSecureStoreKey,
 } from "../../utils/expo-storage";
-import { BRANCH_LINKS, TRANSFER_STATUSES } from "../../constants/DATA";
+import { TRANSFER_STATUSES } from "../../constants/DATA";
 import ACTIONS from "../../constants/ACTIONS";
 import appUtil from "../../utils/app-util";
 import branchUtil from "../../utils/branch-util";
@@ -114,23 +114,6 @@ function loadCelsiusAssets() {
   };
 }
 
-const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData(
-  data => {
-    loggerUtil.log(data);
-  }
-);
-
-const onAppOpenAttributionCanceller = appsFlyer.onAppOpenAttribution(res => {
-  const { data } = res;
-  switch (data.type) {
-    case BRANCH_LINKS.NAVIGATE_TO:
-      store.dispatch(actions.navigateTo(data.screen));
-      break;
-    default:
-      break;
-  }
-});
-
 /**
  * Handles state change of the app
  * @param {string} nextAppState - one of active|inactive|background
@@ -144,25 +127,6 @@ function handleAppStateChange(nextAppState) {
     const { profile } = store.getState().user;
     const { appState } = store.getState().app;
     const { activeScreen } = store.getState().nav;
-
-    if (Platform.OS === "ios") {
-      if (appState.match(/inactive|background/) && nextAppState === "active") {
-        appsFlyer.trackAppLaunch();
-      }
-    }
-
-    // if (nextAppState.match(/inactive|background/) && profile && profile.has_pin && appState === "active") {
-    if (nextAppState.match(/inactive|background/) && appState === "active") {
-      // ONLY FOR DEBUG PURPOSE
-      if (onInstallConversionDataCanceller) {
-        onInstallConversionDataCanceller();
-        loggerUtil.log("unregister onInstallConversionDataCanceller");
-      }
-      if (onAppOpenAttributionCanceller) {
-        onAppOpenAttributionCanceller();
-        loggerUtil.log("unregister onAppOpenAttributionCanceller");
-      }
-    }
 
     if (profile && profile.has_pin) {
       if (nextAppState === "active") {

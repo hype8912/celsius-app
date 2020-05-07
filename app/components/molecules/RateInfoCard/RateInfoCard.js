@@ -58,19 +58,23 @@ class RateInfoCard extends Component {
     if ((!interestCompliance && !interestCompliance.allowed) || isUSResident())
       return null;
 
-    const apyRate = interestUtil.calculateAPY(
-      interestUtil.calculateBonusRate(
-        interestRate.baseRate,
-        celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
-      )
-    );
+    const apyRate =
+      loyaltyInfo &&
+      interestUtil.calculateAPY(
+        interestUtil.calculateBonusRate(
+          interestRate.baseRate,
+          celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
+        )
+      );
 
-    const specialApyRate = interestUtil.calculateAPY(
-      interestUtil.calculateBonusRate(
-        interestRate.specialRate,
-        celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
-      )
-    );
+    const specialApyRate =
+      loyaltyInfo &&
+      interestUtil.calculateAPY(
+        interestUtil.calculateBonusRate(
+          interestRate.specialRate,
+          celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
+        )
+      );
 
     return (
       <View style={style}>
@@ -83,7 +87,7 @@ class RateInfoCard extends Component {
                 color={"white"}
                 weight={"bold"}
               >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
-              ! BTC balances greater than{" "}
+              ! {`${interestRate.coin}`} balances greater than{" "}
               {`${interestRate.coinThreshold} ${interestRate.coin}`} will
               continue to earn at {formatter.percentageDisplay(apyRate)} APY.
             </CelText>

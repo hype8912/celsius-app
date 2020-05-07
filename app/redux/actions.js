@@ -25,7 +25,7 @@ export * from "./simplex/simplexActions";
 export * from "./user/userDataActions";
 export * from "./userSecurity/userSecurityActions";
 export * from "./user/userProfileActions";
-
 export * from "./hodl/hodlActions";
 export * from "./animations/animationsActions";
+export * from "./deepLink/deepLinkActions";
 // NOTE(fj): plop reduxGen importing new Actions here
