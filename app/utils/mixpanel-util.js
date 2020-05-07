@@ -65,7 +65,7 @@ async function engage(distinctId, payload = {}) {
  */
 async function sendEvent(event, data = {}) {
   const { MIXPANEL_TOKEN } = Constants;
-  const { internetConnected } = store.getState().app.internetConnected;
+  const { internetConnected } = store.getState().app;
   if (!internetConnected) return;
 
   if (!advertisingId) {
