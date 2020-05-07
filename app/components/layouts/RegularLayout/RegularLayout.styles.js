@@ -15,6 +15,12 @@ const base = {
     zIndex: 10,
     alignItems: "center",
   },
+  noInternet: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
 };
 
 const themed = {
