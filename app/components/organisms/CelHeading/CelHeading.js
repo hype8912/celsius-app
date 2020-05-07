@@ -337,6 +337,8 @@ class CelHeading extends Component {
           <View style={leftStyle}>
             {this.getLeftContent(sceneOptions)}
             {this.isSearchHeader() &&
+              sceneOptions &&
+              sceneOptions.state &&
               sceneOptions.state.routeName !== "VerifyProfile" && (
                 <View
                   style={[
