@@ -17,6 +17,7 @@ import StaticScreen from "../StaticScreen/StaticScreen";
 
 @connect(
   state => ({
+    formData: state.forms.formData,
     navHistory: state.nav.history,
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
@@ -37,17 +38,13 @@ class GetCoinsLanding extends Component {
   });
 
   componentDidMount() {
-    const { actions, navHistory, navigation } = this.props;
+    const { actions, navHistory } = this.props;
     actions.openModal(MODALS.GET_COINS_INFO_MODAL);
     mixpanelAnalytics.navigatedToBuyCoins(navHistory[0]);
-    const coin = navigation.getParam("coin");
-    if (coin) {
-      actions.updateFormField("coin", coin);
-    }
   }
 
   render() {
-    const { actions, kycStatus, simplexCompliance } = this.props;
+    const { actions, kycStatus, simplexCompliance, formData } = this.props;
 
     if (!hasPassedKYC()) {
       if (kycStatus !== KYC_STATUSES.pending) {
@@ -87,6 +84,7 @@ class GetCoinsLanding extends Component {
           onPress={() => {
             actions.initForm({
               isFiat: true,
+              cryptoCoin: formData.selectedCoin || "ETH",
               simplexData: {
                 paymentMethod: "Credit Card",
               },

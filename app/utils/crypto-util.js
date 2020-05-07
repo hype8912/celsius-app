@@ -150,7 +150,7 @@ function provideText(currency) {
       text = `Buy ${currency} from TrustToken`;
       break;
     case "CEL":
-      text = `Buy ${currency} on Switcheo`;
+      text = `Buy ${currency} in App`;
       break;
     case "DASH":
       text = `Buy ${currency}`;

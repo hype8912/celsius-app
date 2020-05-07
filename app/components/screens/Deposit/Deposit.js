@@ -505,11 +505,7 @@ class Deposit extends Component {
                 color={STYLES.COLORS.CELSIUS_BLUE}
                 type={"H4"}
                 weight={"300"}
-                onPress={() =>
-                  actions.navigateTo("GetCoinsLanding", {
-                    coin: formData.selectedCoin,
-                  })
-                }
+                onPress={() => actions.navigateTo("GetCoinsLanding")}
               >
                 {cryptoUtil.provideText(formData.selectedCoin)}
               </CelText>

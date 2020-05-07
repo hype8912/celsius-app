@@ -121,7 +121,8 @@ class CoinDetails extends Component {
   goToBuyCoins = () => {
     const { currency } = this.state;
     const { actions } = this.props;
-    actions.navigateTo("GetCoinsLanding", { coin: currency.short });
+    actions.updateFormField("selectedCoin", currency.short);
+    actions.navigateTo("GetCoinsLanding");
   };
 
   render() {
