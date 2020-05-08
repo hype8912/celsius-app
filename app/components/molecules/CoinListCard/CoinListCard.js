@@ -70,7 +70,7 @@ class CoinListCard extends Component {
         color={STYLES.COLORS.GREEN}
         margin="0 0 0 3"
       >
-        {interestRate.display} APR
+        {interestRate.display} APY
       </CelText>
     );
   };
