@@ -12,17 +12,15 @@ import { AppState, BackHandler, StyleSheet } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import codePush from "react-native-code-push";
 import * as Font from "expo-font";
-
 import store from "./redux/store";
 import * as actions from "./redux/actions";
-import appUtil from "./utils/app-util";
 import AppNavigation from "./navigator/Navigator";
 import Message from "./components/molecules/Message/Message";
 import DeepLinkController from "./components/molecules/DeepLinkController/DeepLinkController";
-// import captureException from './utils/errorhandling-util'
 import ErrorBoundary from "./ErrorBoundary";
 import { remotePushController } from "./utils/push-notifications-util";
 import FabIntersection from "./components/organisms/FabIntersection/FabIntersection";
+import appUtil from "./utils/app-util";
 
 function getActiveRouteName(navigationState) {
   if (!navigationState) {
@@ -38,7 +36,7 @@ function getActiveRouteName(navigationState) {
 
 class App extends Component {
   async componentDidMount() {
-    await appUtil.initializeThirdPartyServices();
+    apiUtil.initInterceptors();
 
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       store.dispatch(actions.navigateBack());
@@ -48,7 +46,7 @@ class App extends Component {
       store.dispatch(actions.handleAppStateChange(nextState));
     });
 
-    await this.initApp();
+    await store.dispatch(await actions.loadCelsiusAssets());
     StyleSheet.setStyleAttributePreprocessor(
       "fontFamily",
       Font.processFontFamily
@@ -62,8 +60,6 @@ class App extends Component {
       store.dispatch(actions.handleAppStateChange(nextState));
     });
   }
-
-  initApp = async () => await store.dispatch(await actions.loadCelsiusAssets());
 
   render() {
     return (

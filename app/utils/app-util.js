@@ -46,7 +46,6 @@ async function initializeThirdPartyServices() {
   await store.dispatch(actions.setAppsFlyerUID());
   await store.dispatch(actions.setAdvertisingId());
 
-  apiUtil.initInterceptors();
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
   await initMixpanel();
   await uxCamUtil.initUxCam();

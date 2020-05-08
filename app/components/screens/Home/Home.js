@@ -15,6 +15,7 @@ import {
 import { isKYCRejectedForever } from "../../../utils/user-util";
 import { STORYBOOK } from "../../../../dev-settings";
 import HomeStyle from "./Home.styles";
+import appUtil from "../../../utils/app-util";
 
 @connect(
   state => ({
@@ -56,6 +57,7 @@ class Home extends Component {
   async componentDidMount() {
     const { actions, appInitialized } = this.props;
     if (!appInitialized) {
+      await appUtil.initializeThirdPartyServices();
       await actions.initCelsiusApp();
     }
   }
