@@ -19,15 +19,14 @@ const {
   CLIENT_VERSION,
   ENV,
   PUBLIC_KEY,
-  API_URL,
 } = Constants;
 let token;
 let deviceModel;
 let osVersion;
-let buildVersion;
+let revisionId;
 
 export default {
-  initInterceptors,
+  initInterceptors, // TODO split into multiple methods
   areCallsInProgress,
   parseValidationErrors,
 };
@@ -36,260 +35,201 @@ export default {
  * Initializes axios interceptors for every HTTP request
  */
 function initInterceptors() {
-  axios.interceptors.request.use(requestInterceptor, error =>
-    Promise.reject(error)
+  axios.interceptors.request.use(
+    async req => {
+      const { internetConnected } = store.getState().app;
+      if (!internetConnected) return false;
+
+      const newRequest = { ...req };
+      newRequest.headers = {
+        "X-Advertising-AFID": store.getState().app.appsFlyerUID,
+      };
+
+      if (Platform.OS === "ios") {
+        newRequest.headers = {
+          ...newRequest.headers,
+          "X-Advertising-IDFA": store.getState().app.advertisingId,
+        };
+      } else {
+        newRequest.headers = {
+          ...newRequest.headers,
+          "X-Advertising-AAID": store.getState().app.advertisingId,
+        };
+      }
+
+      if (!deviceModel || !osVersion) {
+        deviceModel = DeviceInfo.getModel();
+        osVersion = DeviceInfo.getSystemVersion();
+      }
+
+      if (!revisionId) {
+        CodePush.getUpdateMetadata().then(metadata => {
+          revisionId = metadata
+            ? `${metadata.appVersion}@${metadata.label}`
+            : "local";
+        });
+      }
+
+      const geolocation = store.getState().app.geolocation;
+
+      if (geolocation) {
+        newRequest.headers = {
+          ...newRequest.headers,
+          "geo-lat": geolocation.geoLat,
+          "geo-long": geolocation.geoLong,
+        };
+      }
+
+      if (!req.url.includes("branch.io")) {
+        newRequest.headers = {
+          ...newRequest.headers,
+          installationId: Constants.installationId,
+          os: Platform.OS,
+          buildVersion: revisionId,
+          deviceYearClass: Constants.deviceYearClass,
+          deviceModel,
+          osVersion,
+        };
+      }
+
+      if (
+        (req.url.includes("profile/profile_picture") &&
+          !req.data.profile_picture_url) ||
+        req.url.includes("user/profile/documents")
+      ) {
+        newRequest.headers = {
+          ...newRequest.headers,
+          "Content-Type": "multipart/form-data",
+        };
+      } else if (req.method === "post" && !req.url.includes("branch.io")) {
+        // set x-www-form-urlencoded -> https://github.com/axios/axios#using-applicationx-www-form-urlencoded-format
+        newRequest.data = qs.stringify(req.data);
+        newRequest.headers = {
+          ...newRequest.headers,
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        };
+      }
+
+      // get token from secure store
+      try {
+        const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+        if (token !== storageToken) token = storageToken;
+
+        if (token != null) {
+          newRequest.headers = {
+            ...newRequest.headers,
+            authorization: `Bearer ${token}`,
+          };
+        }
+      } catch (err) {
+        logger.err(err);
+      }
+
+      if (ENV === "PRODUCTION" || ENV === "PREPROD") {
+        newRequest.headers["X-Client-Version"] = CLIENT_VERSION;
+      } else {
+        newRequest.headers["X-Client-Version"] = ENV;
+      }
+
+      /* eslint-disable no-underscore-dangle */
+      // console.log({ [req.method.toUpperCase()]: newRequest })
+      /* eslint-enable no-underscore-dangle */
+
+      return newRequest;
+    },
+    error => Promise.reject(error)
   );
 
-  axios.interceptors.response.use(responseInterceptor, errorInterceptor);
-}
+  axios.interceptors.response.use(
+    res => {
+      const sign = res.headers["x-cel-sign"];
+      const data = res.data;
 
-/**
- * Intercepts every request going through axios and sets all important headers
- */
-async function requestInterceptor(req) {
-  // Cancel if no internet internet connection
-  const { internetConnected } = store.getState().app;
-  if (!internetConnected) return false;
+      if (verifyKey(data, sign)) {
+        /* eslint-disable no-underscore-dangle */
+        // console.log({ RESPONSE: res })
+        /* eslint-enable no-underscore-dangle */
 
-  const newRequest = { ...req };
+        return res;
+      }
 
-  if (req.url.includes(API_URL)) {
-    newRequest.headers = {
-      ...newRequest.headers,
-      ...setContentTypeHeaders(req),
-      ...setDeviceInfoHeaders(),
-      ...(await setAppVersionHeaders()),
-      ...setAppsflyerHeaders(),
-      ...setGeolocationHeaders(),
-      ...(await setAuthHeaders()),
-    };
-  }
+      const err = {
+        type: "Sign Error",
+        msg: "Wrong API key",
+      };
 
-  if (newRequest.method === "post") {
-    newRequest.data = qs.stringify(newRequest.data);
-  }
+      /* eslint-disable no-underscore-dangle */
+      // console.log({ API_ERROR: err })
+      /* eslint-enable no-underscore-dangle */
 
-  /* eslint-disable no-underscore-dangle */
-  // console.log({ [req.method.toUpperCase()]: newRequest })
-  /* eslint-enable no-underscore-dangle */
+      return Promise.reject(err);
+    },
+    async error => {
+      const defaultMsg = "Oops, it looks like something went wrong.";
+      const err = error.response
+        ? error.response.data
+        : {
+            type: "Unknown Server Error",
+            msg: defaultMsg,
+            raw_error: error,
+          };
 
-  return newRequest;
-}
+      if (!err.msg) err.msg = defaultMsg;
 
-/**
- * Sets Appsflyer IDs: AFID, IDFA, AAID
- */
-function setAppsflyerHeaders() {
-  const AFID = store.getState().app.appsFlyerUID;
-  const IDFA = Platform.OS === "ios" && store.getState().app.advertisingId;
-  const AAID = Platform.OS === "android" && store.getState().app.advertisingId;
+      mixpanelAnalytics.apiError({
+        ...err,
+        url: error.config.url,
+        method: error.config.method,
+      });
 
-  return {
-    "X-Advertising-AFID": AFID,
-    "X-Advertising-IDFA": IDFA,
-    "X-Advertising-AAID": AAID,
-  };
-}
+      if (err.status === 401 && err.slug === "SESSION_EXPIRED") {
+        store.dispatch(actions.expireSession());
+        await store.dispatch(await actions.logoutUser());
+      }
 
-/**
- * Sets Geolocation headers for every request
- */
-function setGeolocationHeaders() {
-  const { geolocation } = store.getState().app;
-  return {
-    "geo-lat": geolocation && geolocation.geoLat,
-    "geo-long": geolocation && geolocation.geoLong,
-  };
-}
+      if (err.status === 403 && err.slug === "USER_SUSPENDED") {
+        const { profile } = store.getState().user;
+        if (profile && profile.id) {
+          await store.dispatch(await actions.logoutUser());
+        }
+        await store.dispatch(await actions.showMessage("error", err.msg));
+      }
 
-/**
- * Sets Device Info Headers
- */
-function setDeviceInfoHeaders() {
-  return {
-    deviceModel: deviceModel || DeviceInfo.getModel(),
-    osVersion: osVersion || DeviceInfo.getSystemVersion(),
-    os: Platform.OS,
-    deviceYearClass: Constants.deviceYearClass,
-    installationId: Constants.installationId,
-  };
-}
-
-/**
- * Sets Content-Type of request
- */
-function setContentTypeHeaders(request) {
-  const { url, data, headers, method } = request;
-  let contentType = headers["Content-Type"];
-  let accept = headers.Accept;
-
-  if (
-    (url.includes("profile/profile_picture") && !data.profile_picture_url) ||
-    url.includes("user/profile/documents")
-  ) {
-    contentType = "multipart/form-data";
-  }
-
-  if (method === "post") {
-    contentType = "application/x-www-form-urlencoded; charset=UTF-8";
-    accept = "application/json";
-  }
-
-  return {
-    "Content-Type": contentType,
-    Accept: accept,
-  };
-}
-
-/**
- * Sets Current app version Headers
- */
-async function setAppVersionHeaders() {
-  const clientVersion = ENV === "PRODUCTION" ? CLIENT_VERSION : ENV;
-  if (!buildVersion) {
-    const metadata = await CodePush.getUpdateMetadata();
-    buildVersion = metadata
-      ? `${metadata.appVersion}@${metadata.label}`
-      : "local";
-  }
-
-  return {
-    "X-Client-Version": clientVersion,
-    buildVersion,
-  };
-}
-
-/**
- * Sets User Bearer token
- */
-async function setAuthHeaders() {
-  try {
-    const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-    if (token !== storageToken) token = storageToken;
-  } catch (err) {
-    logger.err(err);
-  }
-  return {
-    authorization: token && `Bearer ${token}`,
-  };
-}
-
-/**
- * Intercepts every successful response from server
- * TODO: make verifyKey work in 2020!
- */
-async function responseInterceptor(res) {
-  const sign = res.headers["x-cel-sign"];
-  const data = res.data;
-
-  if (res.url.includes(API_URL)) {
-    store.dispatch(actions.toggleMaintenanceMode());
-  }
-
-  if (verifyKey(data, sign)) {
-    /* eslint-disable no-underscore-dangle */
-    // console.log({ RESPONSE: res })
-    /* eslint-enable no-underscore-dangle */
-
-    return res;
-  }
-
-  const err = {
-    type: "Sign Error",
-    msg: "Wrong API key",
-  };
-
-  /* eslint-disable no-underscore-dangle */
-  // console.log({ API_ERROR: err })
-  /* eslint-enable no-underscore-dangle */
-
-  return Promise.reject(err);
-}
-
-/**
- * Intercepts every error response from server
- */
-async function errorInterceptor(serverError) {
-  const defaultMsg = "Oops, it looks like something went wrong!";
-  const defaultError = {
-    type: "Unknown Server Error",
-    msg: defaultMsg,
-    raw_error: serverError,
-  };
-
-  const err = serverError.response ? serverError.response.data : defaultError;
-
-  if (!err.msg) err.msg = defaultMsg;
-  if (!err.status)
-    err.status = serverError.response ? serverError.response.status : null;
-
-  mixpanelAnalytics.apiError({
-    ...err,
-    url: serverError.config.url,
-    method: serverError.config.method,
-  });
-
-  if (err.status === 401) handle401(err);
-  if (err.status === 403) handle403(err);
-  if (err.status === 426) {
-    handle426(err);
-    return Promise.resolve();
-  }
-  if (err.status === 429) handle429();
-  if (err.status === 503) handle503(err);
-
-  /* eslint-disable no-underscore-dangle */
-  // console.log({ API_ERROR: err })
-  /* eslint-enable no-underscore-dangle */
-
-  return Promise.reject(err);
-}
-
-function handle401(err) {
-  if (err.slug === "SESSION_EXPIRED") {
-    store.dispatch(actions.expireSession());
-    store.dispatch(actions.logoutUser());
-  }
-}
-
-function handle403(err) {
-  if (err.slug === "USER_SUSPENDED") {
-    const { profile } = store.getState().user;
-    if (profile && profile.id) {
-      store.dispatch(actions.logoutUser());
-    }
-    store.dispatch(actions.showMessage("error", err.msg));
-  }
-}
-
-function handle426(err) {
-  const { showVerifyScreen } = store.getState().app;
-  if (!showVerifyScreen) {
-    store.dispatch(
-      actions.navigateTo("VerifyProfile", {
-        hideBack: true,
-        show: err.show,
-        onSuccess: () => {
+      if (error && error.response && error.response.status === 426) {
+        const { showVerifyScreen } = store.getState().app;
+        if (!showVerifyScreen) {
           store.dispatch(
-            actions.resetToScreen(
-              isKYCRejectedForever() ? "KYCFinalRejection" : "WalletLanding"
-            )
+            actions.navigateTo("VerifyProfile", {
+              hideBack: true,
+              show: error.response.data.show,
+              onSuccess: () => {
+                store.dispatch(
+                  actions.resetToScreen(
+                    isKYCRejectedForever()
+                      ? "KYCFinalRejection"
+                      : "WalletLanding"
+                  )
+                );
+              },
+            })
           );
-        },
-      })
-    );
-    store.dispatch(actions.showVerifyScreen());
-  }
-}
+          store.dispatch(actions.showVerifyScreen());
+        }
+        return Promise.resolve();
+      }
 
-function handle429() {
-  store.dispatch(actions.navigateTo("LockedAccount"));
-}
+      if (error && error.response && error.response.status === 429) {
+        store.dispatch(actions.navigateTo("LockedAccount"));
+      }
 
-function handle503(err) {
-  if (err.slug === "BREAK_THE_GLASS") {
-    store.dispatch(actions.toggleMaintenanceMode(err.title, err.explanation));
-  }
+      /* eslint-disable no-underscore-dangle */
+      // console.log({ API_ERROR: err })
+      /* eslint-enable no-underscore-dangle */
+
+      return Promise.reject(err);
+    }
+  );
 }
 
 /**

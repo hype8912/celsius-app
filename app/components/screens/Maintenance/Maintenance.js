@@ -36,9 +36,10 @@ class Maintenance extends Component {
   }
 
   render() {
-    const { backendStatus } = this.props;
+    const { navigation, backendStatus } = this.props;
+    const maintenance = navigation.getParam("maintenance");
 
-    if (backendStatus.maintenance) {
+    if (maintenance) {
       return backendStatus.title && backendStatus.explanation ? (
         <StaticScreen
           emptyState={{
