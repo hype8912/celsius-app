@@ -45,6 +45,7 @@ class Maintenance extends Component {
             purpose: EMPTY_STATES.MAINTENANCE,
             heading: backendStatus.title,
             paragraphs: [backendStatus.explanation],
+            image: require("../../../../assets/images/icons/tool.png"),
           }}
         />
       ) : (
