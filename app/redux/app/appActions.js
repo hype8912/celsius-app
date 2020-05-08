@@ -25,6 +25,7 @@ import {
 import { hasPassedKYC } from "../../utils/user-util";
 import { showMessage } from "../ui/uiActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import { navigateBack, navigateTo } from "../nav/navActions";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -39,6 +40,7 @@ export {
   showVerifyScreen,
   setAdvertisingId,
   setAppsFlyerUID,
+  toggleMaintenanceMode,
 };
 
 /**
@@ -320,5 +322,30 @@ function getGeolocation() {
         });
       }
     });
+  };
+}
+
+/**
+ * Sets app into maintenance mode
+ *
+ * @param {string} title
+ * @param {string} explanation
+ */
+function toggleMaintenanceMode(title, explanation) {
+  return (dispatch, getState) => {
+    const { backendStatus } = getState().generalData;
+
+    dispatch({
+      type: ACTIONS.TOGGLE_MAINTENANCE_MODE,
+      maintenance: !!title,
+      title,
+      explanation,
+    });
+
+    if (backendStatus && backendStatus.maintenance && !title) {
+      dispatch(navigateBack());
+    } else {
+      dispatch(navigateTo("Maintenance"));
+    }
   };
 }
