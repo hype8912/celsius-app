@@ -20,7 +20,7 @@ import DeepLinkController from "./components/molecules/DeepLinkController/DeepLi
 import ErrorBoundary from "./ErrorBoundary";
 import { remotePushController } from "./utils/push-notifications-util";
 import FabIntersection from "./components/organisms/FabIntersection/FabIntersection";
-import appUtil from "./utils/app-util";
+import apiUtil from "./utils/api-util";
 
 function getActiveRouteName(navigationState) {
   if (!navigationState) {

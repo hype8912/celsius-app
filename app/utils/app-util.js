@@ -18,7 +18,6 @@ import {
 import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
-import apiUtil from "./api-util";
 import uxCamUtil from "./uxcam-util";
 import { initMixpanel } from "./mixpanel-util";
 
