@@ -179,10 +179,15 @@ async function setAuthHeaders() {
  * TODO: make verifyKey work in 2020!
  */
 async function responseInterceptor(res) {
+  const { backendStatus } = store.getState().generalData;
   const sign = res.headers["x-cel-sign"];
   const data = res.data;
 
-  if (res.url.includes(API_URL)) {
+  if (
+    res.config.url.includes(API_URL) &&
+    backendStatus &&
+    backendStatus.maintenance
+  ) {
     store.dispatch(actions.toggleMaintenanceMode());
   }
 
