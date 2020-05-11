@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Clipboard, BackHandler } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationEvents } from "react-navigation";
-import _ from 'lodash';
+import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
 import VerifyProfileStyle from "./VerifyProfile.styles";
@@ -95,21 +95,29 @@ class VerifyProfile extends Component {
   onCheckSuccess = async () => {
     this.setState({ loading: true });
 
-    const { navigation, actions, previousScreen, deepLinkData, user } = this.props;
+    const {
+      navigation,
+      actions,
+      previousScreen,
+      deepLinkData,
+      user,
+    } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
     const activeScreen = navigation.getParam("activeScreen");
 
     // Check if app is opened from DeepLink
     if (!_.isEmpty(deepLinkData)) {
-       if ((user && !user.id) || !user) { await actions.initAppData() };
-       actions.handleDeepLink()
-      return
+      if ((user && !user.id) || !user) {
+        await actions.initAppData();
+      }
+      actions.handleDeepLink();
+      return;
     }
 
     if (activeScreen) {
       if (activeScreen === "VerifyProfile") {
         this.setState({ loading: false });
-        actions.resetToScreen(previousScreen);
+        actions.resetToScreen(previousScreen || "WalletLanding");
         return;
       }
 
