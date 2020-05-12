@@ -37,8 +37,9 @@ export {
  * Handles response after twitter login
  * @param {string} type - one of login|register
  * @param {Object} twitterUser - response from twitter success
+ * @param {string} destination - navigate after successful sign up
  */
-function authTwitter(type, twitterUser) {
+function authTwitter(type, twitterUser, destination) {
   return (dispatch, getState) => {
     const user = getState().user.profile;
     const twitterNames = twitterUser.name.split(" ");
@@ -66,6 +67,7 @@ function authTwitter(type, twitterUser) {
           profilePicture: twitterUser.profile_image_url,
         })
       );
+      dispatch(navigateTo(destination));
     }
   };
 }
@@ -171,8 +173,9 @@ function twitterGetAccessToken(tokens) {
  * Authorizes user on Facebook
  *
  * @param {string} authReason - one of login|register
+ * @param {string} destination - navigate after successful sign up
  */
-function authFacebook(authReason) {
+function authFacebook(authReason, destination) {
   return async dispatch => {
     if (!["login", "register"].includes(authReason)) return;
     try {
@@ -191,7 +194,7 @@ function authFacebook(authReason) {
         if (authReason === "login") {
           dispatch(loginFacebook(user));
         } else {
-          dispatch(
+          await dispatch(
             updateFormFields({
               email: user.email,
               firstName: user.first_name,
@@ -200,6 +203,7 @@ function authFacebook(authReason) {
               accessToken: user.accessToken,
             })
           );
+          dispatch(navigateTo(destination));
         }
       }
     } catch (e) {
@@ -274,8 +278,9 @@ function loginFacebook(facebookUser) {
  * Authorizes user on Facebook
  *
  * @param {string} authReason - one of login|register
+ * @param {string} destination - navigate after successful sign up
  */
-function authGoogle(authReason) {
+function authGoogle(authReason, destination) {
   return async dispatch => {
     if (!["login", "register"].includes(authReason)) return;
     try {
@@ -300,7 +305,8 @@ function authGoogle(authReason) {
       if (authReason === "login") {
         dispatch(loginGoogle(user));
       } else {
-        dispatch(updateFormFields(user));
+        await dispatch(updateFormFields(user));
+        dispatch(navigateTo(destination));
       }
     } catch (error) {
       return { error: true };

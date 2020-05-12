@@ -39,6 +39,7 @@ import PassMeterTooltipStories from "./PassMeterTooltip/PassMeterTooltip.stories
 import UserActionsLogStories from "./UserActionsLog/UserActionsLog.stories";
 import AccountActivityLogStories from "./AccountActivityLog/AccountActivityLog.stories";
 import LoginDevicesLogStories from "./LoginDevicesLog/LoginDevicesLog.stories";
+import LoginButtonStories from "./LoginButton/LoginButton.stories";
 // NOTE(fj): plop componentGen importing new stories here
 
 storiesOf("Atoms", module)
@@ -83,5 +84,5 @@ storiesOf("Atoms", module)
   .add("UserActionsLogStories", UserActionsLogStories)
   .add("AccountActivityLogStories", AccountActivityLogStories)
   .add("LoginDevicesLogStories", LoginDevicesLogStories)
-;
+  .add("LoginButtonStories", LoginButtonStories);
 // NOTE(fj): plop componentGen adding new stories here

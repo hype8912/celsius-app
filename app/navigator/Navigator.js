@@ -10,6 +10,7 @@ import Home from "../components/screens/Home/Home";
 import Community from "../components/screens/Community/Community";
 import Maintenance from "../components/screens/Maintenance/Maintenance";
 import LockedAccount from "../components/screens/LockedAccount/LockedAccount";
+import LoginLanding from "../components/screens/LoginLanding/LoginLanding";
 import Login from "../components/screens/Login/Login";
 import ForgotPassword from "../components/screens/ForgotPassword/ForgotPassword";
 import RegisterInitial from "../components/screens/RegisterInitial/RegisterInitial";
@@ -120,6 +121,7 @@ export const screens = {
    */
 
   Welcome,
+  LoginLanding,
   Login,
   ForgotPassword,
   RegisterInitial,
