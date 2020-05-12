@@ -272,10 +272,10 @@ function showVerifyScreen(defaultVerifyState = true) {
  * Set advertising id for Apps Flyer
  */
 function setAdvertisingId() {
-  return async dispatch => {
+  return dispatch => {
     let userAID;
     if (Platform.OS === "ios") {
-      const res = await IDFA.getIDFA();
+      const res = IDFA.getIDFA();
       userAID = res;
     } else {
       // const res = await RNAdvertisingId.getAdvertisingId();

@@ -71,7 +71,7 @@ class CoinCards extends Component {
 
     allowedCoins.sort((a, b) => b.amount_usd - a.amount_usd);
 
-    if (allowedCoins) {
+    if (allowedCoins && currenciesRates) {
       const coins = [];
       allowedCoins.forEach(coin => {
         const tempCoin = coin;

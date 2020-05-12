@@ -7,15 +7,14 @@ import * as appActions from "../../../redux/actions";
 import Loader from "../../atoms/Loader/Loader";
 import { getPadding } from "../../../utils/styles-util";
 import CelText from "../../atoms/CelText/CelText";
-import {
-  THEMES,
-  WELCOME_MESSAGES,
-  INITIAL_API_CALLS,
-} from "../../../constants/UI";
+import { THEMES, WELCOME_MESSAGES } from "../../../constants/UI";
 import { isKYCRejectedForever } from "../../../utils/user-util";
 import { STORYBOOK } from "../../../../dev-settings";
 import HomeStyle from "./Home.styles";
 import appUtil from "../../../utils/app-util";
+import { getSecureStoreKey } from "../../../utils/expo-storage";
+import Constants from "../../../../constants";
+const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
 @connect(
   state => ({
@@ -30,10 +29,7 @@ class Home extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { callsInProgress } = nextProps;
 
-    if (
-      callsInProgress[0] &&
-      INITIAL_API_CALLS.indexOf(callsInProgress[0]) !== -1
-    ) {
+    if (callsInProgress[0]) {
       return { progress: prevState.progress + 1 };
     }
     return null;
@@ -57,8 +53,22 @@ class Home extends Component {
   async componentDidMount() {
     const { actions, appInitialized } = this.props;
     if (!appInitialized) {
-      await appUtil.initializeThirdPartyServices();
-      await actions.initCelsiusApp();
+      appUtil.initializeThirdPartyServices();
+      actions.getInitialCelsiusData();
+
+      const token = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+      if (token) await actions.getProfileInfo();
+
+      actions.getUserAppSettings();
+
+      const { user } = this.props;
+      if (user.has_pin) {
+        actions.navigateTo("VerifyProfile", {
+          hideBack: true,
+          showLogOutBtn: true,
+          onSuccess: () => actions.navigateTo("WalletLanding"),
+        });
+      }
     }
   }
 
@@ -131,7 +141,7 @@ class Home extends Component {
             >
               {randomMsg.text}
             </CelText>
-            <Loader progress={this.state.progress / INITIAL_API_CALLS.length} />
+            <Loader progress={this.state.progress / 2} />
           </View>
           <View style={style.partnerLogos}>
             <Image

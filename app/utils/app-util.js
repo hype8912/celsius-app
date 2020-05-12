@@ -41,13 +41,12 @@ export default {
 /**
  * Initializes all third party services used in Celsius app
  */
-async function initializeThirdPartyServices() {
-  await store.dispatch(actions.setAppsFlyerUID());
-  await store.dispatch(actions.setAdvertisingId());
-
+function initializeThirdPartyServices() {
+  store.dispatch(actions.setAppsFlyerUID());
+  store.dispatch(actions.setAdvertisingId());
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
-  await initMixpanel();
-  await uxCamUtil.initUxCam();
+  initMixpanel();
+  uxCamUtil.initUxCam();
 }
 
 /**

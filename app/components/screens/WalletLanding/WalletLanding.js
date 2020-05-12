@@ -243,7 +243,7 @@ class WalletLanding extends Component {
     } = this.props;
     const style = WalletLandingStyle();
 
-    if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
+    if (!walletSummary || !user) {
       return <LoadingScreen />;
     }
 
