@@ -30,7 +30,12 @@ function getProfileInfo() {
       if (err.status === 422) {
         deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
       }
-      dispatch(showMessage("error", err.msg));
+      if (
+        err.msg !==
+        "You've been inactive for a while, so we've logged you out to help protect your account. Please login again."
+      ) {
+        dispatch(showMessage("error", err.msg));
+      }
       dispatch(apiError(API.GET_USER_PERSONAL_INFO, err));
     }
   };
