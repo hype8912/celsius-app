@@ -7,6 +7,10 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import notificationService from "../services/notifications-service";
 import { getSecureStoreKey, setSecureStoreKey } from "./expo-storage";
 import { NOTIFICATION_TOKEN } from "../constants/DATA";
+import API from "../constants/API";
+import ACTIONS from "../constants/ACTIONS";
+import store from "../redux/store";
+import { apiError, startApiCall, showMessage } from "../redux/actions";
 
 export {
   deletePushNotificationToken,
@@ -94,15 +98,36 @@ function remotePushController() {
  * @returns {Promise<void>}
  */
 async function assignPushNotificationToken() {
-  const token = await getSecureStoreKey(NOTIFICATION_TOKEN);
-  if (token) await notificationService.setNotificationToken(token);
+  store.dispatch(startApiCall(API.SET_PUSH_NOTIFICATIONS_TOKEN));
+
+  try {
+    const token = await getSecureStoreKey(NOTIFICATION_TOKEN);
+    if (token) await notificationService.setNotificationToken(token);
+
+    store.dispatch({
+      type: ACTIONS.SET_PUSH_NOTIFICATIONS_TOKEN_SUCCESS,
+    });
+  } catch (err) {
+    store.dispatch(showMessage("error", err.msg));
+    store.dispatch(apiError(API.SET_PUSH_NOTIFICATIONS_TOKEN, err));
+  }
 }
 
 /**
  * Delete device push notification token from device storage and from user.
- * @param token
  * @returns {Promise}
  */
 async function deletePushNotificationToken() {
-  await notificationService.deleteNotificationToken();
+  store.dispatch(startApiCall(API.DELETE_PUSH_NOTIFICATIONS_TOKEN));
+
+  try {
+    await notificationService.deleteNotificationToken();
+
+    store.dispatch({
+      type: ACTIONS.DELETE_PUSH_NOTIFICATIONS_TOKEN_SUCCESS,
+    });
+  } catch (err) {
+    store.dispatch(showMessage("error", err.msg));
+    store.dispatch(apiError(API.DELETE_PUSH_NOTIFICATIONS_TOKEN, err));
+  }
 }
