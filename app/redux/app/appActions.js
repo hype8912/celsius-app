@@ -14,7 +14,6 @@ import {
 import { TRANSFER_STATUSES } from "../../constants/DATA";
 import ACTIONS from "../../constants/ACTIONS";
 import appUtil from "../../utils/app-util";
-import branchUtil from "../../utils/branch-util";
 import { disableAccessibilityFontScaling } from "../../utils/styles-util";
 import ASSETS from "../../constants/ASSETS";
 import loggerUtil from "../../utils/logger-util";
@@ -73,7 +72,6 @@ function initCelsiusApp() {
       await appUtil.pollBackendStatus();
       await dispatch(initAppData());
 
-      await dispatch(branchUtil.initBranch());
       dispatch({ type: ACTIONS.APP_INIT_DONE });
       clearTimeout(timeout);
     } catch (e) {

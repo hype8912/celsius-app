@@ -2,18 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, ScrollView, SafeAreaView, StatusBar } from "react-native";
-import SplashScreen from "react-native-splash-screen";
 import * as appActions from "../../../redux/actions";
 import Loader from "../../atoms/Loader/Loader";
 import { getPadding } from "../../../utils/styles-util";
 import CelText from "../../atoms/CelText/CelText";
 import { THEMES, WELCOME_MESSAGES } from "../../../constants/UI";
-import { isKYCRejectedForever } from "../../../utils/user-util";
-import { STORYBOOK } from "../../../../dev-settings";
 import HomeStyle from "./Home.styles";
 import appUtil from "../../../utils/app-util";
 import { getSecureStoreKey } from "../../../utils/expo-storage";
 import Constants from "../../../../constants";
+
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
 @connect(
@@ -26,15 +24,6 @@ const { SECURITY_STORAGE_AUTH_KEY } = Constants;
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class Home extends Component {
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { callsInProgress } = nextProps;
-
-    if (callsInProgress[0]) {
-      return { progress: prevState.progress + 1 };
-    }
-    return null;
-  }
-
   static navigationOptions = () => ({
     header: null,
     gesturesEnabled: false,
@@ -45,6 +34,7 @@ class Home extends Component {
 
     this.state = {
       progress: 0,
+      totalProgress: 5,
       randomMsg:
         WELCOME_MESSAGES[Math.floor(Math.random() * WELCOME_MESSAGES.length)],
     };
@@ -54,66 +44,42 @@ class Home extends Component {
     const { actions, appInitialized } = this.props;
     if (!appInitialized) {
       appUtil.initializeThirdPartyServices();
-      actions.getInitialCelsiusData();
+      this.setState({ progress: 1 });
+      await actions.getInitialCelsiusData();
+      this.setState({ progress: 2 });
 
       const token = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-      if (token) await actions.getProfileInfo();
+      this.setState({ progress: 3 });
 
-      actions.getUserAppSettings();
+      if (!token) {
+        return actions.navigateTo("Welcome");
+      }
+
+      if (token) {
+        await actions.getProfileInfo();
+        this.setState({ progress: 4 });
+        await actions.getUserAppSettings();
+        this.setState({ progress: 5 });
+      }
 
       const { user } = this.props;
+
       if (user.has_pin) {
-        actions.navigateTo("VerifyProfile", {
-          hideBack: true,
-          showLogOutBtn: true,
-          onSuccess: () => actions.navigateTo("WalletLanding"),
-        });
-      }
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { user, appInitialized, actions } = this.props;
-    SplashScreen.hide();
-
-    if (STORYBOOK) {
-      return prevProps.actions.navigateTo("Storybook");
-    }
-
-    if (prevProps.appInitialized === false && appInitialized === true) {
-      if (user.id) {
-        if (!user.has_pin) {
-          return prevProps.actions.navigateTo("RegisterSetPin");
-        }
-
-        if (user.kyc) {
-          if (isKYCRejectedForever()) {
-            return prevProps.actions.navigateTo("VerifyProfile", {
-              showLogOutBtn: true,
-              hideBack: true,
-              onSuccess: () => {
-                actions.navigateTo("KYCFinalRejection");
-                actions.resetToScreen("KYCFinalRejection");
-              },
-            });
-          }
-        }
-        return prevProps.actions.navigateTo("VerifyProfile", {
-          showLogOutBtn: true,
-          hideBack: true,
+        return actions.navigateTo("VerifyProfile", {
           onSuccess: () => {
             actions.resetToScreen("WalletLanding");
+            actions.handleDeepLink();
           },
         });
       }
-      return prevProps.actions.navigateTo("Welcome");
     }
   }
 
   render() {
-    const { randomMsg } = this.state;
+    const { randomMsg, progress, totalProgress } = this.state;
     const paddings = getPadding("0 20 0 20");
     const style = HomeStyle();
+
     return (
       <ScrollView contentContainerStyle={[{ flexGrow: 1 }, paddings]}>
         <SafeAreaView style={{ flex: 1, justifyContent: "space-between" }}>
@@ -141,7 +107,7 @@ class Home extends Component {
             >
               {randomMsg.text}
             </CelText>
-            <Loader progress={this.state.progress / 2} />
+            <Loader progress={progress / totalProgress} />
           </View>
           <View style={style.partnerLogos}>
             <Image

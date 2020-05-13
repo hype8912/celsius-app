@@ -44,7 +44,7 @@ const MODALS = {
   SEPARATOR_INFO_MODAL: "SEPARATOR_INFO_MODAL",
 };
 
-const INITIAL_ROUTE = "Home";
+const INITIAL_ROUTE = "SplashScreen";
 
 const THEMES = {
   LIGHT: "light",

@@ -1,6 +1,3 @@
-// TODO(sb): RN update dependencies fixes
-// import * as Font from "expo-font";
-// import { Asset } from "expo-asset";
 import React from "react";
 import { Image } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
@@ -44,6 +41,7 @@ export default {
 function initializeThirdPartyServices() {
   store.dispatch(actions.setAppsFlyerUID());
   store.dispatch(actions.setAdvertisingId());
+
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
   initMixpanel();
   uxCamUtil.initUxCam();

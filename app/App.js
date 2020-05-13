@@ -1,12 +1,4 @@
-// TODO(fj): init segment in app actions (removed from App.v2.js)
-// TODO(fj): move handle app state change to app action (removed logic from App.v2.js)
-// TODO(fj): move app loading assets to app action (removed logic from App.v2.js)
-// TODO(fj): merge App and MainLayout?
-
-// TODO(fj): create offline and no internet screens or a static screen with type?
-
 import React, { Component } from "react";
-// import { AppLoading } from "expo";
 import { Provider } from "react-redux";
 import { AppState, BackHandler, StyleSheet } from "react-native";
 import SplashScreen from "react-native-splash-screen";
@@ -21,6 +13,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import { remotePushController } from "./utils/push-notifications-util";
 import FabIntersection from "./components/organisms/FabIntersection/FabIntersection";
 import apiUtil from "./utils/api-util";
+import branchUtil from "./utils/branch-util";
 
 function getActiveRouteName(navigationState) {
   if (!navigationState) {
@@ -36,7 +29,27 @@ function getActiveRouteName(navigationState) {
 
 class App extends Component {
   async componentDidMount() {
+    SplashScreen.hide();
     apiUtil.initInterceptors();
+    store.dispatch(branchUtil.initBranch());
+
+    // Fetch CodePush Update and Restart App
+    // if no link provided and update is available
+    const { deepLinkData } = store.getState().deepLink;
+    const hasUpdate = await codePush.checkForUpdate();
+    // eslint-disable-next-line no-undef
+    if (!__DEV__ && !deepLinkData.type && hasUpdate) {
+      store.dispatch(
+        actions.showMessage(
+          "info",
+          "Please wait while Celsius app is being updated."
+        )
+      );
+      return await codePush.sync({
+        updateDialog: false,
+        installMode: codePush.InstallMode.IMMEDIATE,
+      });
+    }
 
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       store.dispatch(actions.navigateBack());
@@ -51,7 +64,8 @@ class App extends Component {
       "fontFamily",
       Font.processFontFamily
     );
-    SplashScreen.hide();
+
+    store.dispatch(actions.navigateTo("Home"));
   }
 
   componentWillUnmount() {

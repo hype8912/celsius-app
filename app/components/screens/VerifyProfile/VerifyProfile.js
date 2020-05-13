@@ -15,10 +15,11 @@ import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
-import store from "../../../redux/store";
+import { DEEP_LINKS } from "../../../constants/DATA";
 
 @connect(
   state => ({
+    appState: state.app.appState,
     formData: state.forms.formData,
     deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
@@ -110,8 +111,11 @@ class VerifyProfile extends Component {
       if ((user && !user.id) || !user) {
         await actions.initAppData();
       }
-      actions.handleDeepLink();
-      return;
+
+      if (deepLinkData.type === DEEP_LINKS.NAVIGATE_TO) {
+        actions.handleDeepLink();
+        return;
+      }
     }
 
     if (activeScreen) {
@@ -287,9 +291,8 @@ class VerifyProfile extends Component {
 
   render() {
     const { value } = this.state;
-    const { is2FAEnabled, actions, navigation } = this.props;
-    const { appState } = store.getState().app;
-    const hideBack = navigation.getParam("hideBack"); // CN-4644 show FAB on Verity Screen except after login and come from background
+    const { is2FAEnabled, actions, navigation, appState } = this.props;
+    const hideBack = navigation.getParam("hideBack");
 
     const showType =
       this.getVerifyType(navigation.getParam("show", null)) || is2FAEnabled;
