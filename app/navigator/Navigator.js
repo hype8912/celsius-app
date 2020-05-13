@@ -73,6 +73,7 @@ import NotificationsSettings from "../components/screens/NotificationsSettings/N
 import SecuritySettings from "../components/screens/SecuritySettings/SecuritySettings";
 import ActionsByUser from "../components/screens/ActionsByUser/ActionsByUser";
 import SecurityOverview from "../components/screens/SecurityOverview/SecurityOverview";
+import SecurityFixNow from "../components/screens/SecurityFixNow/SecurityFixNow";
 import WalletSettings from "../components/screens/WalletSettings/WalletSettings";
 import ApiAuthorization from "../components/screens/ApiAuthorization/ApiAuthorization";
 import ApiAuthorizationPermissions from "../components/screens/ApiAuthorizationPermissions/ApiAuthorizationPermissions";
@@ -245,6 +246,7 @@ export const screens = {
   SecuritySettings,
   ActionsByUser,
   SecurityOverview,
+  SecurityFixNow,
   WalletSettings,
   ApiAuthorization,
   ApiAuthorizationPermissions,
