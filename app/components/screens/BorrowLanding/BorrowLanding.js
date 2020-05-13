@@ -27,6 +27,7 @@ import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
 import STYLES from "../../../constants/STYLES";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
+import LoanAdvertiseModal from "../../modals/LoanAdvertiseModal/LoanAdvertiseModal";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -62,6 +63,7 @@ const cardWidth = widthPercentageToDP("70%");
       maxAmount,
       loyaltyInfo: state.loyalty.loyaltyInfo,
       activeLoan: state.loans.activeLoan,
+      userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -88,6 +90,7 @@ class BorrowLanding extends Component {
   async componentDidMount() {
     const { actions, loanCompliance, formData } = this.props;
     actions.checkForLoanAlerts();
+    actions.openModal(MODALS.LOAN_ADVERTISE_MODAL);
 
     if (formData.prepayLoanId) {
       actions.openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL);
@@ -293,7 +296,6 @@ class BorrowLanding extends Component {
             </CelText>
           </View>
         )}
-
         <LoanAlertsModalWrapper />
       </RegularLayout>
     );
@@ -328,10 +330,28 @@ class BorrowLanding extends Component {
   }
 
   render() {
-    const { walletSummary } = this.props;
+    const {
+      walletSummary,
+      actions,
+      formData,
+      userTriggeredActions,
+    } = this.props;
 
     if (!walletSummary) return null;
-    return this.renderIntersection();
+
+    return (
+      <>
+        {this.renderIntersection()}
+        {!userTriggeredActions.hide_loan_advertise_modal && (
+          <LoanAdvertiseModal
+            closeModal={actions.closeModal}
+            updateFormField={actions.updateFormField}
+            formData={formData}
+            setUserAppSettings={actions.setUserAppSettings}
+          />
+        )}
+      </>
+    );
   }
 }
 
