@@ -62,6 +62,24 @@ class WithdrawAddressOverview extends Component {
     actions.navigateTo("WithdrawAddressLabel");
   };
 
+  renderFromFixNowFlow = () => {
+    const { securityOverview, actions } = this.props;
+    if (securityOverview.fromFixNow) {
+      return (
+        <CelText
+          margin="20 0 20 0"
+          type="H6"
+          weight="600"
+          align="center"
+          color={STYLES.COLORS.CELSIUS_BLUE}
+          onPress={() => actions.navigateTo("SecurityFixNow")}
+        >
+          Go back to Fix Now
+        </CelText>
+      );
+    }
+  };
+
   renderCoinDetails = key => {
     const { currencies } = this.props;
     const coin = currencies.find(c => c.short === key);
@@ -189,6 +207,8 @@ class WithdrawAddressOverview extends Component {
               </View>
             </View>
           </Card>
+
+          {this.renderFromFixNowFlow()}
 
           {noWithdrawalAddresses && noWithdrawalAddresses.length > 0 && (
             <Separator text={"ACTION NEEDED"} />

@@ -8,13 +8,14 @@ import SecurityScoreGaugeStyle from "./SecurityScoreGauge.styles";
 // import CelButton from "../CelButton/CelButton";
 import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
 import { getTheme } from "../../../utils/styles-util";
-// import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
+import CelButton from "../CelButton/CelButton";
 
 class SecurityScoreGauge extends Component {
   static propTypes = {
     subtitle: PropTypes.string,
     onPress: PropTypes.func,
     level: PropTypes.oneOf(["weak", "fair", "good", "strong"]).isRequired,
+    fixNow: PropTypes.instanceOf(Object),
   };
   static defaultProps = {};
 
@@ -84,6 +85,8 @@ class SecurityScoreGauge extends Component {
     const gaugeProps = this.getGaugeProps();
     const theme = getTheme();
 
+    const { fixNow, onPressFixNow } = this.props;
+
     if (!gaugeProps) return null;
 
     return (
@@ -104,18 +107,17 @@ class SecurityScoreGauge extends Component {
         <CelText margin={"0 0 15 0"} type="H7" color={STYLES.COLORS.WHITE}>
           SECURITY SCORE
         </CelText>
-        {/* <CelButton*/}
-        {/*  ghost*/}
-        {/*  color={"red"}*/}
-        {/*  size={"small"}*/}
-        {/*  textColor={"white"}*/}
-        {/*  onPress={{}}*/}
-        {/* >*/}
-        {/*  <CelText weight={"600"} color={"white"}>*/}
-        {/*    FIX NOW*/}
-        {/*  </CelText>*/}
-        {/*  <CelText color={"white"}> 3/7</CelText>*/}
-        {/* </CelButton>*/}
+        {fixNow.scoreParamsFixableCount > 0 && (
+          <CelButton
+            ghost
+            color={"red"}
+            size={"small"}
+            textColor={"white"}
+            onPress={onPressFixNow}
+          >
+            FIX NOW {fixNow.scoreParamsFixableCount}/{fixNow.scoreParamsCount}
+          </CelButton>
+        )}
       </View>
     );
   }

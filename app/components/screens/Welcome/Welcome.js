@@ -44,7 +44,7 @@ class Welcome extends Component {
 
   onPressLogin = () => {
     const { actions } = this.props;
-    actions.navigateTo("Login");
+    actions.navigateTo("LoginLanding", { type: "login" });
   };
 
   render() {
@@ -68,14 +68,15 @@ class Welcome extends Component {
           </CelText>
           <CelButton
             style={style.button}
-            onPress={() => actions.navigateTo("RegisterInitial")}
+            onPress={() =>
+              actions.navigateTo("LoginLanding", { type: "register" })
+            }
           >
             Join Celsius
           </CelButton>
           <CelButton basic onPress={() => this.onPressLogin()}>
             Login
           </CelButton>
-
           <CelText
             margin="30 0 0 0"
             weight="light"

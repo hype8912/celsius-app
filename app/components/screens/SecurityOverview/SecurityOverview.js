@@ -5,27 +5,23 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import _ from "lodash";
 import moment from "moment";
-import STYLES from "../../../constants/STYLES";
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Separator from "../../atoms/Separator/Separator";
 import ToggleInfoCard from "../../molecules/ToggleInfoCard/ToggleInfoCard";
 import SecurityScoreGauge from "../../atoms/SecurityScoreGauge/SecurityScoreGauge";
 import SecurityStrengthMeter from "../../atoms/SecurityStrengthMeter/SecurityStrengthMeter";
-import CelText from "../../atoms/CelText/CelText";
-import SecurityOverviewStyle from "./SecurityOverview.styles";
-import Card from "../../atoms/Card/Card";
-import { getTheme } from "../../../utils/styles-util";
-import Icon from "../../atoms/Icon/Icon";
-import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import CheckWithdrawalAddressesCard from "../../organisms/CheckWithdrawalAddressesCard/CheckWithdrawalAddressesCard";
 import SeparatorInfoModal from "../../modals/SeparatorInfoModal/SeparatorInfoModal";
 import { MODALS } from "../../../constants/UI";
+import SecurityOverviewStyle from "./SecurityOverview.styles";
 
 @connect(
   state => ({
     withdrawalAddresses: state.wallet.withdrawalAddresses,
     securityOverview: state.security.securityOverview,
+    twoFAStatus: state.security.twoFAStatus,
     is2FAEnabled: state.user.profile.two_factor_enabled,
     hodlStatus: state.hodl.hodlStatus,
   }),
@@ -57,12 +53,46 @@ class SecurityOverview extends Component {
   }
 
   onPress2fa = () => {
-    const { actions, is2FAEnabled } = this.props;
-    if (!is2FAEnabled) {
+    const { actions, twoFAStatus } = this.props;
+    if (!twoFAStatus.isActive) {
       actions.navigateTo("VerifyProfile", {
         onSuccess: () => actions.navigateTo("TwoFactorSettings"),
       });
     }
+  };
+
+  onPressFixNow = () => {
+    const { securityOverview, actions } = this.props;
+    const fixNowContent = securityOverview.score_parameters.filter(
+      c => c.fixable && c.name !== "hodl_mode"
+    );
+    actions.navigateTo("SecurityFixNow", {
+      fixNowContentLength: fixNowContent.length,
+    });
+  };
+
+  getFixNowParams = () => {
+    const { securityOverview, twoFAStatus } = this.props;
+
+    let scoreParams = securityOverview.score_parameters;
+    const scoreParamsCount = securityOverview.score_parameters_count;
+    let scoreParamsFixableCount =
+      securityOverview.score_parameters_fixable_count;
+
+    if (
+      scoreParams.find(c => c.name === "pin" && c.fixable) &&
+      twoFAStatus.isActive
+    ) {
+      scoreParams = scoreParams.filter(c => c.name !== "pin");
+      scoreParamsFixableCount -= 1;
+    }
+
+    const fixNowParams = {
+      scoreParams,
+      scoreParamsCount,
+      scoreParamsFixableCount,
+    };
+    return fixNowParams;
   };
 
   handleModalData = type => {
@@ -103,80 +133,21 @@ class SecurityOverview extends Component {
     }
   };
 
-  renderWhitelistedAddressesCard = () => {
-    const style = SecurityOverviewStyle();
-    const theme = getTheme();
-    const { actions, securityOverview } = this.props;
-
-    if (_.isEmpty(securityOverview)) return;
-
-    if (
-      securityOverview.withdrawal_addresses_whitelisted_count ===
-      securityOverview.withdrawal_addresses_count
-    ) {
-      return (
-        <ToggleInfoCard
-          enabled
-          titleText={`${securityOverview.withdrawal_addresses_whitelisted_count}/${securityOverview.withdrawal_addresses_count}`}
-          subtitle={"You added all withdrawal addresses"}
-        />
-      );
-    }
-    return (
-      <Card margin="20 0 20 0" padding={"2 2 2 2"} styles={style.card}>
-        <View style={{ justifyContent: "center" }}>
-          <View
-            style={[
-              style.circle,
-              {
-                backgroundColor:
-                  theme === "light"
-                    ? STYLES.COLORS.DARK_GRAY1
-                    : STYLES.COLORS.WHITE_OPACITY1,
-              },
-            ]}
-          >
-            <Icon
-              name={"Shield"}
-              fill={STYLES.COLORS.CELSIUS_BLUE}
-              width={35}
-              height={35}
-            />
-          </View>
-        </View>
-
-        <View style={style.infoTextWrapper}>
-          <View style={style.infoSubtitleWrapper}>
-            <CelText type="H2" weight="600">
-              {securityOverview.withdrawal_addresses_whitelisted_count}
-            </CelText>
-            <CelText type="H4" margin="0 0 2 0">
-              /{securityOverview.withdrawal_addresses_count}
-            </CelText>
-          </View>
-          <CelText
-            type="H6"
-            weight={"600"}
-            color={STYLES.COLORS.CELSIUS_BLUE}
-            onPress={() => {
-              actions.navigateTo("WithdrawAddressOverview");
-            }}
-          >
-            Check Withdrawal Addresses
-          </CelText>
-        </View>
-      </Card>
-    );
-  };
-
   render() {
-    const { is2FAEnabled, actions, securityOverview } = this.props;
+    const { actions, securityOverview, twoFAStatus } = this.props;
+    const style = SecurityOverviewStyle();
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
 
+    const fixNowParams = this.getFixNowParams();
     return (
       <RegularLayout>
-        <View style={{ flex: 1 }}>
-          <SecurityScoreGauge level={securityOverview.overall_score_strength} />
+        <View style={style.container}>
+          <SecurityScoreGauge
+            level={securityOverview.overall_score_strength}
+            fixNow={fixNowParams}
+            onPressFixNow={() => this.onPressFixNow()}
+          />
+
           <TouchableOpacity
             onPress={() => {
               this.handleModalData("twoFA");
@@ -188,20 +159,18 @@ class SecurityOverview extends Component {
           <ToggleInfoCard
             subtitle={"Your 2FA verification is"}
             onPress={this.onPress2fa}
-            enabled={is2FAEnabled}
+            enabled={twoFAStatus.isActive}
           />
 
-          <>
-            <TouchableOpacity
-              onPress={() => {
-                this.handleModalData("withdrawalAddresses");
-                actions.openModal(MODALS.SEPARATOR_INFO_MODAL);
-              }}
-            >
-              <Separator text="WHITELISTED WITH. ADDRESSES" showInfo />
-            </TouchableOpacity>
-            {this.renderWhitelistedAddressesCard()}
-          </>
+          <TouchableOpacity
+            onPress={() => {
+              this.handleModalData("withdrawalAddresses");
+              actions.openModal(MODALS.SEPARATOR_INFO_MODAL);
+            }}
+          >
+            <Separator text="WHITELISTED WITH. ADDRESSES" showInfo />
+          </TouchableOpacity>
+          <CheckWithdrawalAddressesCard />
 
           <TouchableOpacity
             onPress={() => {
@@ -226,9 +195,9 @@ class SecurityOverview extends Component {
                   securityOverview.password_last_change
                 ).fromNow()}
                 enhanceText={
-                  securityOverview.password_strength !==
-                    SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase() &&
-                  "Change Password"
+                  securityOverview.score_parameters.find(
+                    e => e.name === "password" && e.fixable
+                  ) && "Change Password"
                 }
                 onPressEnhance={() => {
                   actions.navigateTo("ChangePassword");
@@ -237,7 +206,7 @@ class SecurityOverview extends Component {
             </>
           )}
 
-          {!is2FAEnabled && (
+          {!twoFAStatus.isActive && (
             <>
               <Separator text="PIN" />
               <SecurityStrengthMeter
@@ -246,8 +215,9 @@ class SecurityOverview extends Component {
                   securityOverview.pin_last_change
                 ).fromNow()}
                 enhanceText={
-                  securityOverview.pin_strength !==
-                    SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase() && "Change PIN"
+                  securityOverview.score_parameters.find(
+                    e => e.name === "pin" && e.fixable
+                  ) && "Change PIN"
                 }
                 onPressEnhance={() => {
                   actions.navigateTo("VerifyProfile", {

@@ -7,7 +7,6 @@ import {
 
 const base = {
   container: {
-    flex: 1,
     flexDirection: "column",
     justifyContent: "center",
     height: heightPercentageToDP("15%"),

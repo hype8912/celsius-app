@@ -11,6 +11,7 @@ import SplashScreen from "../components/screens/SplashScreen/SplashScreen";
 import Community from "../components/screens/Community/Community";
 import Maintenance from "../components/screens/Maintenance/Maintenance";
 import LockedAccount from "../components/screens/LockedAccount/LockedAccount";
+import LoginLanding from "../components/screens/LoginLanding/LoginLanding";
 import Login from "../components/screens/Login/Login";
 import ForgotPassword from "../components/screens/ForgotPassword/ForgotPassword";
 import RegisterInitial from "../components/screens/RegisterInitial/RegisterInitial";
@@ -73,6 +74,7 @@ import NotificationsSettings from "../components/screens/NotificationsSettings/N
 import SecuritySettings from "../components/screens/SecuritySettings/SecuritySettings";
 import ActionsByUser from "../components/screens/ActionsByUser/ActionsByUser";
 import SecurityOverview from "../components/screens/SecurityOverview/SecurityOverview";
+import SecurityFixNow from "../components/screens/SecurityFixNow/SecurityFixNow";
 import WalletSettings from "../components/screens/WalletSettings/WalletSettings";
 import ApiAuthorization from "../components/screens/ApiAuthorization/ApiAuthorization";
 import ApiAuthorizationPermissions from "../components/screens/ApiAuthorizationPermissions/ApiAuthorizationPermissions";
@@ -122,6 +124,7 @@ export const screens = {
    */
 
   Welcome,
+  LoginLanding,
   Login,
   ForgotPassword,
   RegisterInitial,
@@ -245,6 +248,7 @@ export const screens = {
   SecuritySettings,
   ActionsByUser,
   SecurityOverview,
+  SecurityFixNow,
   WalletSettings,
   ApiAuthorization,
   ApiAuthorizationPermissions,
