@@ -31,7 +31,7 @@ class LoanAdvertiseModal extends Component {
     const { closeModal, formData, setUserAppSettings } = this.props;
     if (formData.hideLoanAdvertiseModal) {
       setUserAppSettings({
-        userTriggeredActions: {
+        user_triggered_actions: {
           hide_loan_advertise_modal: true,
         },
       });
