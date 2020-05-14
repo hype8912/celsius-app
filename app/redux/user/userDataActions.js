@@ -29,6 +29,7 @@ export {
   linkBankAccount,
   setHodlProps,
   getUserStatus,
+  getUserAppBootstrap,
 };
 
 /**
@@ -371,5 +372,41 @@ function setHodlProps(activeHodlMode) {
   return {
     type: ACTIONS.SET_HODL_PROPS,
     activeHodlMode,
+  };
+}
+
+/**
+ * Gets app boostrap.
+ */
+function getUserAppBootstrap() {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_APP_BOOTSTRAP));
+
+      const userAppData = await userDataService.getUserAppBootstrap();
+
+      dispatch({
+        type: ACTIONS.GET_APP_BOOTSTRAP_SUCCESS,
+      });
+      dispatch({
+        type: ACTIONS.GET_COMPLIANCE_INFO_SUCCESS,
+        userAppData: userAppData.data.compliance,
+      });
+      dispatch({
+        type: ACTIONS.GET_LOYALTY_INFO_SUCCESS,
+        userAppData: userAppData.data.loyalty,
+      });
+      dispatch({
+        type: ACTIONS.GET_LOYALTY_INFO_SUCCESS,
+        userAppData: userAppData.data.loyalty,
+      });
+      dispatch({
+        type: ACTIONS.GET_APP_SETTINGS_SUCCESS,
+        userAppData: userAppData.data.user_settings,
+      });
+    } catch (e) {
+      dispatch(apiError(API.GET_APP_BOOTSTRAP, e));
+      dispatch(showMessage("error", e.msg));
+    }
   };
 }

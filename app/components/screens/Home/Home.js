@@ -58,7 +58,7 @@ class Home extends Component {
       if (token) {
         await actions.getProfileInfo();
         this.setState({ progress: 4 });
-        await actions.getUserAppSettings();
+        await actions.getUserAppBootstrap();
         this.setState({ progress: 5 });
       }
 
