@@ -117,8 +117,8 @@ class VerifyProfile extends Component {
 
     if (activeScreen) {
       if (activeScreen === "VerifyProfile") {
-        actions.resetToScreen(previousScreen);
         this.setState({ loading: false });
+        actions.resetToScreen(previousScreen || "WalletLanding");
         return;
       }
 

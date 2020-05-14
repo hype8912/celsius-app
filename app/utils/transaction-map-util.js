@@ -110,6 +110,8 @@ function getTransactionType(transaction) {
   if (transaction.nature === "withdrawal") {
     if (transaction.verified === false)
       return TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION;
+    if (transaction.state === "unconfirmed")
+      return TRANSACTION_TYPES.WITHDRAWAL_UNCONFIRMED;
     if (transaction.state === "failed")
       return TRANSACTION_TYPES.WITHDRAWAL_FAILED;
     if (transaction.verified && transaction.state === "pending_manual_approval")
@@ -308,6 +310,13 @@ function getTransactionProps(transaction) {
         color: STYLES.COLORS.RED,
         shortName: "W",
         statusText: "Failed",
+      };
+    case TRANSACTION_TYPES.WITHDRAWAL_UNCONFIRMED:
+      return {
+        title: coin => `${coin} Withdrawal`,
+        color: STYLES.COLORS.ORANGE,
+        shortName: "W",
+        statusText: "Unconfirmed",
       };
     case TRANSACTION_TYPES.INTEREST:
       return {

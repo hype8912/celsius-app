@@ -30,8 +30,8 @@ class GetCoinsConfirmModal extends Component {
 
     actions.navigateTo("VerifyProfile", {
       onSuccess: async () => {
-        await actions.simplexCreatePaymentRequest()
-        actions.navigateTo("Simplex")
+        await actions.simplexCreatePaymentRequest();
+        actions.navigateTo("Simplex");
       },
     });
     actions.closeModal();
@@ -93,7 +93,7 @@ class GetCoinsConfirmModal extends Component {
                 Payment Method:
               </CelText>
               <CelText type={"H6"} align={"right"}>
-                {formData.simplexData.paymentMethod}
+                {simplexData.paymentMethod}
               </CelText>
             </View>
             <Separator />
