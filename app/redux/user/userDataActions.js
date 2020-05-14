@@ -397,10 +397,6 @@ function getUserAppBootstrap() {
         userAppData: userAppData.data.loyalty,
       });
       dispatch({
-        type: ACTIONS.GET_LOYALTY_INFO_SUCCESS,
-        userAppData: userAppData.data.loyalty,
-      });
-      dispatch({
         type: ACTIONS.GET_APP_SETTINGS_SUCCESS,
         userAppData: userAppData.data.user_settings,
       });
