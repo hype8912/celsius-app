@@ -8,7 +8,7 @@ const base = {
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    marginVertical: 11,
+    marginVertical: 10,
     height: 50,
     backgroundColor: STYLES.COLORS.WHITE,
     ...Platform.select({

@@ -7,25 +7,24 @@ const base = {
     justifyContent: "space-between",
     height: "100%",
     flex: 1,
-    padding: 12,
-    paddingBottom: 50,
+    padding: 20,
+    paddingBottom: 84,
     backgroundColor: STYLES.COLORS.LIGHT_GRAY,
   },
   header: {
     flex: 0.3,
     justifyContent: "flex-start",
-    marginBottom: 10,
+    paddingBottom: 5,
   },
   buttons: {
-    paddingVertical: 8,
-    paddingHorizontal: 18,
+    paddingHorizontal: 10,
     flex: 0.55,
     justifyContent: "center",
   },
   footer: {
+    paddingTop: 5,
     flex: 0.15,
     justifyContent: "flex-end",
-    marginTop: 10,
   },
 };
 
