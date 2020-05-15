@@ -86,6 +86,7 @@ export default (state = initialState, action) => {
         },
       };
 
+    case ACTIONS.GET_APP_BOOTSTRAP_SUCCESS:
     case ACTIONS.SET_APP_SETTINGS_SUCCESS:
     case ACTIONS.GET_APP_SETTINGS_SUCCESS:
       return {

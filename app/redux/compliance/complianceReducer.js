@@ -8,7 +8,7 @@ const initialCompliance = {
   celpay: { ...defaultCompliance },
   loan: { ...defaultCompliance },
   interest: { ...defaultCompliance },
-  simplex: {...defaultCompliance}
+  simplex: { ...defaultCompliance },
 };
 
 const initialState = {
@@ -17,6 +17,7 @@ const initialState = {
 
 export default function complianceReducer(state = initialState, action) {
   switch (action.type) {
+    case ACTIONS.GET_APP_BOOTSTRAP_SUCCESS:
     case ACTIONS.GET_COMPLIANCE_INFO_SUCCESS:
       return {
         ...state,

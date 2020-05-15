@@ -18,6 +18,7 @@ export default function kycReducer(state = initialState, action) {
         primeTrustToULink: action.link,
       };
 
+    case ACTIONS.GET_APP_BOOTSTRAP_SUCCESS:
     case ACTIONS.GET_KYC_STATUS_SUCCESS:
       return {
         ...state,

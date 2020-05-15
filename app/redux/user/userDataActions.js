@@ -387,18 +387,10 @@ function getUserAppBootstrap() {
 
       dispatch({
         type: ACTIONS.GET_APP_BOOTSTRAP_SUCCESS,
-      });
-      dispatch({
-        type: ACTIONS.GET_COMPLIANCE_INFO_SUCCESS,
-        userAppData: userAppData.data.compliance,
-      });
-      dispatch({
-        type: ACTIONS.GET_LOYALTY_INFO_SUCCESS,
-        userAppData: userAppData.data.loyalty,
-      });
-      dispatch({
-        type: ACTIONS.GET_APP_SETTINGS_SUCCESS,
-        userAppData: userAppData.data.user_settings,
+        kyc: userAppData.data.kyc,
+        loyaltyInfo: userAppData.data.loyalty,
+        appSettings: userAppData.data.app_settings,
+        complianceInfo: userAppData.data.compliance,
       });
     } catch (e) {
       dispatch(apiError(API.GET_APP_BOOTSTRAP, e));
