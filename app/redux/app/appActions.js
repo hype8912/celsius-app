@@ -11,7 +11,6 @@ import {
   getSecureStoreKey,
   deleteSecureStoreKey,
 } from "../../utils/expo-storage";
-import { TRANSFER_STATUSES } from "../../constants/DATA";
 import ACTIONS from "../../constants/ACTIONS";
 import appUtil from "../../utils/app-util";
 import { disableAccessibilityFontScaling } from "../../utils/styles-util";
@@ -233,10 +232,6 @@ function initAppData(initToken = null) {
       await dispatch(
         actions.setBannerProps({ sessionCount: bannerProps.sessionCount + 1 })
       );
-
-      if (!profile.kyc || (profile.kyc && !hasPassedKYC())) {
-        await dispatch(actions.getAllTransfers(TRANSFER_STATUSES.claimed));
-      }
 
       const { allowed } = getState().compliance.loan;
       // get wallet details for verified users
