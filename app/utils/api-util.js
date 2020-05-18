@@ -255,6 +255,9 @@ function handle401(err) {
     store.dispatch(actions.expireSession());
     store.dispatch(actions.logoutUser());
   }
+  if (err.slug === "PASSWORD_LEAKED") {
+    store.dispatch(actions.resetToScreen("PasswordBreached"));
+  }
 }
 
 function handle403(err) {
