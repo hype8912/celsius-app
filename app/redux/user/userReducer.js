@@ -86,6 +86,20 @@ export default (state = initialState, action) => {
         },
       };
 
+    case ACTIONS.GET_APP_BOOTSTRAP_SUCCESS:
+      profile = mapProfile(action.personalInfo || action.user);
+      return {
+        ...state,
+        appSettings: {
+          ...state.appSettings,
+          ...action.appSettings,
+        },
+        profile: {
+          ...state.profile,
+          ...profile,
+        },
+      };
+
     case ACTIONS.SET_APP_SETTINGS_SUCCESS:
     case ACTIONS.GET_APP_SETTINGS_SUCCESS:
       return {

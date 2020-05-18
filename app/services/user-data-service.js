@@ -9,6 +9,7 @@ const userDataService = {
   getUserAppSettings,
   setUserAppSettings,
   getUserStatus,
+  getUserAppBootstrap,
 };
 
 /**
@@ -74,6 +75,14 @@ function setUserAppSettings(data) {
  */
 function getUserStatus() {
   return axios.get(`${apiUrl}/me/poll`);
+}
+
+/**
+ * Get user app boostrap
+ * @returns {Promise}
+ */
+function getUserAppBootstrap() {
+  return axios.get(`${apiUrl}/me/app-bootstrap`);
 }
 
 export default userDataService;

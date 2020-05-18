@@ -35,7 +35,7 @@ class Home extends Component {
 
     this.state = {
       progress: 0,
-      totalProgress: 7,
+      totalProgress: 6,
       randomMsg:
         WELCOME_MESSAGES[Math.floor(Math.random() * WELCOME_MESSAGES.length)],
     };
@@ -46,28 +46,24 @@ class Home extends Component {
     const { totalProgress } = this.state;
 
     const token = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-    this.setState({ progress: 1 });
-
-    appUtil.initializeThirdPartyServices();
-    this.setState({ progress: 2 });
 
     if (!token) {
       return actions.navigateTo("Welcome");
     }
 
-    if (token) {
-      await appUtil.checkAndRefreshAuthToken(token);
-      this.setState({ progress: 3 });
+    this.setState({ progress: 1 });
 
-      await actions.getInitialCelsiusData();
-      this.setState({ progress: 4 });
+    appUtil.initializeThirdPartyServices();
+    this.setState({ progress: 2 });
 
-      await actions.getProfileInfo();
-      this.setState({ progress: 5 });
+    await appUtil.checkAndRefreshAuthToken(token);
+    this.setState({ progress: 3 });
 
-      await actions.getUserAppSettings();
-      this.setState({ progress: 6 });
-    }
+    await actions.getInitialCelsiusData();
+    this.setState({ progress: 4 });
+
+    await actions.getUserAppBootstrap();
+    this.setState({ progress: 5 });
 
     mixpanelAnalytics.sessionStarted("Init app");
     await actions.setBannerProps();
