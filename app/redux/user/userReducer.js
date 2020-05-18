@@ -96,7 +96,6 @@ export default (state = initialState, action) => {
         profile: {
           ...state.profile,
           ...profile,
-          ...action.taxPayerInfo,
         },
       };
 

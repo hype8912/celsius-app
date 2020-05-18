@@ -34,7 +34,7 @@ class Home extends Component {
 
     this.state = {
       progress: 0,
-      totalProgress: 5,
+      totalProgress: 4,
       randomMsg:
         WELCOME_MESSAGES[Math.floor(Math.random() * WELCOME_MESSAGES.length)],
     };
@@ -56,10 +56,8 @@ class Home extends Component {
       }
 
       if (token) {
-        await actions.getProfileInfo();
-        this.setState({ progress: 4 });
         await actions.getUserAppBootstrap();
-        this.setState({ progress: 5 });
+        this.setState({ progress: 4 });
       }
 
       const { user } = this.props;
