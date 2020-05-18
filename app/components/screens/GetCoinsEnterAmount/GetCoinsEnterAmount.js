@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import BigNumber from "bignumber.js";
 
 import * as appActions from "../../../redux/actions";
 import GetCoinsEnterAmountStyle from "./GetCoinsEnterAmount.styles";
@@ -20,7 +21,9 @@ import { SIMPLEX_FIAT_CURRENCIES } from "../../../constants/DATA";
 import Spinner from "../../atoms/Spinner/Spinner";
 import { getTheme } from "../../../utils/styles-util";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import getCoinsUtil from "../../../utils/get-coins-util";
 
+let timeout;
 @connect(
   state => ({
     walletSummary: state.wallet.summary,
@@ -124,7 +127,7 @@ class GetCoinsEnterAmount extends Component {
     Math.max(simplexCryptoAmount, 0).toString();
 
   handleAmountChange = async newValue => {
-    const { formData, actions } = this.props;
+    const { formData, actions, buyCoinsSettings } = this.props;
     const splitedValue = newValue.toString().split(".");
 
     if (splitedValue && splitedValue.length > 2) return;
@@ -167,19 +170,29 @@ class GetCoinsEnterAmount extends Component {
       amountFiat,
       amountCrypto: amountCrypto.toString(),
     });
+    if (
+      Number(formData.amountFiat) <
+      buyCoinsSettings.limit_per_fiat_currency[formData.fiatCoin].max
+    )
+      await actions.simplexGetQuote();
 
-    await actions.simplexGetQuote();
     const { simplexData } = this.props;
 
     if (formData.isFiat) {
       actions.updateFormField(
         "amountCrypto",
-        this.setCryptoAmount(simplexData.digital_money.amount)
+        this.setCryptoAmount(
+          simplexData &&
+            simplexData.digital_money &&
+            simplexData.digital_money.amount
+        )
       );
     } else {
       actions.updateFormField(
         "amountFiat",
-        simplexData.fiat_money.total_amount.toString()
+        simplexData &&
+          simplexData.fiat_money &&
+          simplexData.fiat_money.total_amount.toString()
       );
     }
   };
@@ -220,12 +233,71 @@ class GetCoinsEnterAmount extends Component {
     }
   };
 
+  handleEnterAmountErrors = () => {
+    const { formData, actions } = this.props;
+
+    if (timeout) clearTimeout(timeout);
+    if (formData.isFiat && formData.amountFiat) {
+      if (
+        new BigNumber(formData.amountFiat).isLessThan(
+          getCoinsUtil.getBuyLimitsPerFiatCurrency(formData.fiatCoin).min
+        )
+      ) {
+        timeout = setTimeout(() => {
+          actions.showMessage(
+            "warning",
+            "Transaction amount too low. Please enter a value equivalent to 50 USD or more."
+          );
+        }, 1500);
+      }
+      if (
+        new BigNumber(formData.amountFiat).isGreaterThan(
+          getCoinsUtil.getBuyLimitsPerFiatCurrency(formData.fiatCoin).max
+        )
+      ) {
+        timeout = setTimeout(() => {
+          actions.showMessage(
+            "warning",
+            "Transaction amount too big. Please enter a value equivalent to 20000 USD or less."
+          );
+        }, 1500);
+      }
+    }
+    if (!formData.isFiat && formData.amountCrypto) {
+      if (
+        new BigNumber(formData.amountCrypto).isLessThan(
+          getCoinsUtil.getBuyLimitsPerCrypto(formData.cryptoCoin).min
+        )
+      ) {
+        timeout = setTimeout(() => {
+          actions.showMessage(
+            "warning",
+            "Transaction amount too low. Please enter a value equivalent to 50 USD or more."
+          );
+        }, 1500);
+      }
+      if (
+        new BigNumber(formData.amountCrypto).isGreaterThan(
+          getCoinsUtil.getBuyLimitsPerCrypto(formData.cryptoCoin).max
+        )
+      ) {
+        timeout = setTimeout(() => {
+          actions.showMessage(
+            "warning",
+            "Transaction amount too big. Please enter a value equivalent to 20000 USD or less."
+          );
+        }, 1500);
+      }
+    }
+  };
+
   render() {
     const { actions, formData, callInProgress } = this.props;
     const { availableCryptoCoins } = this.state;
     const theme = getTheme();
     const style = GetCoinsEnterAmountStyle();
 
+    this.handleEnterAmountErrors();
     const isFetchingQuotes = apiUtil.areCallsInProgress(
       [API.GET_QUOTE],
       callInProgress
@@ -265,7 +337,11 @@ class GetCoinsEnterAmount extends Component {
             <TouchableOpacity
               style={{ marginVertical: 10 }}
               onPress={() => {
-                actions.updateFormField("isFiat", true);
+                actions.updateFormFields({
+                  isFiat: true,
+                  amountFiat: "",
+                  amountCrypto: "",
+                });
                 actions.toggleKeypad(true);
               }}
             >
@@ -310,7 +386,11 @@ class GetCoinsEnterAmount extends Component {
             <TouchableOpacity
               style={{ marginVertical: 10 }}
               onPress={() => {
-                actions.updateFormField("isFiat", false);
+                actions.updateFormFields({
+                  isFiat: false,
+                  amountFiat: "",
+                  amountCrypto: "",
+                });
                 actions.toggleKeypad(true);
               }}
             >

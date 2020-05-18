@@ -6,6 +6,7 @@ import simplexService from "../../services/simplex-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { mocks } from "../../../dev-settings";
 import mockTransactions from "../../mock-data/payments.mock";
+import getCoinsUtil from "../../utils/get-coins-util";
 
 export {
   simplexGetQuote,
@@ -20,6 +21,7 @@ export {
 function simplexGetQuote() {
   return async (dispatch, getState) => {
     const { formData } = getState().forms;
+
     try {
       const requestedCurrency = formData.isFiat
         ? formData.fiatCoin
@@ -29,19 +31,27 @@ function simplexGetQuote() {
         : formData.amountCrypto;
 
       if (Number(amount)) {
-        dispatch(startApiCall(API.GET_QUOTE));
-
-        const quote = await simplexService.getQuote(
-          formData.cryptoCoin,
-          formData.fiatCoin,
-          requestedCurrency,
-          amount
-        );
-
-        dispatch({
-          type: ACTIONS.GET_QUOTE_SUCCESS,
-          quote: quote.data,
-        });
+        if (
+          (getCoinsUtil.checkIfFiatAmountIsInScope(amount, formData.fiatCoin) &&
+            formData.isFiat) ||
+          (getCoinsUtil.checkIfCryptoAmountIsInScope(
+            amount,
+            formData.cryptoCoin
+          ) &&
+            !formData.isFiat)
+        ) {
+          dispatch(startApiCall(API.GET_QUOTE));
+          const quote = await simplexService.getQuote(
+            formData.cryptoCoin,
+            formData.fiatCoin,
+            requestedCurrency,
+            amount
+          );
+          dispatch({
+            type: ACTIONS.GET_QUOTE_SUCCESS,
+            quote: quote.data,
+          });
+        }
       }
     } catch (err) {
       dispatch(showMessage("error", err.msg));
