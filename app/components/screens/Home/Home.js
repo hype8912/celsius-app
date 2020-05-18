@@ -11,15 +11,16 @@ import HomeStyle from "./Home.styles";
 import appUtil from "../../../utils/app-util";
 import { getSecureStoreKey } from "../../../utils/expo-storage";
 import Constants from "../../../../constants";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
 @connect(
   state => ({
-    appInitialized: state.app.appInitialized,
     user: state.user.profile,
     callsInProgress: state.api.callsInProgress,
     appSettings: state.user.appSettings,
+    bannerProps: state.ui.bannerProps,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -34,44 +35,56 @@ class Home extends Component {
 
     this.state = {
       progress: 0,
-      totalProgress: 5,
+      totalProgress: 7,
       randomMsg:
         WELCOME_MESSAGES[Math.floor(Math.random() * WELCOME_MESSAGES.length)],
     };
   }
 
   async componentDidMount() {
-    const { actions, appInitialized } = this.props;
-    if (!appInitialized) {
-      appUtil.initializeThirdPartyServices();
-      this.setState({ progress: 1 });
-      await actions.getInitialCelsiusData();
-      this.setState({ progress: 2 });
+    const { actions } = this.props;
+    const { totalProgress } = this.state;
 
-      const token = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+    const token = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+    this.setState({ progress: 1 });
+
+    appUtil.initializeThirdPartyServices();
+    this.setState({ progress: 2 });
+
+    if (!token) {
+      return actions.navigateTo("Welcome");
+    }
+
+    if (token) {
+      await appUtil.checkAndRefreshAuthToken(token);
       this.setState({ progress: 3 });
 
-      if (!token) {
-        return actions.navigateTo("Welcome");
-      }
+      await actions.getInitialCelsiusData();
+      this.setState({ progress: 4 });
 
-      if (token) {
-        await actions.getProfileInfo();
-        this.setState({ progress: 4 });
-        await actions.getUserAppSettings();
-        this.setState({ progress: 5 });
-      }
+      await actions.getProfileInfo();
+      this.setState({ progress: 5 });
 
-      const { user } = this.props;
+      await actions.getUserAppSettings();
+      this.setState({ progress: 6 });
+    }
 
-      if (user.has_pin) {
-        return actions.navigateTo("VerifyProfile", {
-          onSuccess: () => {
-            actions.resetToScreen("WalletLanding");
-            actions.handleDeepLink();
-          },
-        });
-      }
+    mixpanelAnalytics.sessionStarted("Init app");
+    await actions.setBannerProps();
+    this.setState({ progress: totalProgress });
+
+    const { user, bannerProps } = this.props;
+    if (user.has_pin) {
+      return actions.resetToScreen("VerifyProfile", {
+        hideBack: true,
+        onSuccess: () => {
+          actions.setBannerProps({
+            sessionCount: bannerProps.sessionCount + 1,
+          });
+          actions.resetToScreen("WalletLanding");
+          actions.handleDeepLink();
+        },
+      });
     }
   }
 

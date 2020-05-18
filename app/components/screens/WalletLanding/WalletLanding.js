@@ -84,8 +84,8 @@ class WalletLanding extends Component {
       activeView: props.appSettings.default_wallet_view,
     };
 
-    // NOTE (fj): quickfix for CN-2763
-    this.shouldInitializeMembership = true;
+    // NOTE (fj): quickfix for CN-2763 / boom: false since CN-3401
+    this.shouldInitializeMembership = false;
   }
 
   componentDidMount = async () => {

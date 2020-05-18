@@ -4,6 +4,7 @@ import { AppState, BackHandler, StyleSheet } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import codePush from "react-native-code-push";
 import * as Font from "expo-font";
+
 import store from "./redux/store";
 import * as actions from "./redux/actions";
 import AppNavigation from "./navigator/Navigator";
@@ -13,7 +14,9 @@ import ErrorBoundary from "./ErrorBoundary";
 import { remotePushController } from "./utils/push-notifications-util";
 import FabIntersection from "./components/organisms/FabIntersection/FabIntersection";
 import apiUtil from "./utils/api-util";
+import appUtil from "./utils/app-util";
 import branchUtil from "./utils/branch-util";
+import { disableAccessibilityFontScaling } from "./utils/styles-util";
 
 function getActiveRouteName(navigationState) {
   if (!navigationState) {
@@ -30,31 +33,23 @@ function getActiveRouteName(navigationState) {
 class App extends Component {
   async componentDidMount() {
     SplashScreen.hide();
+
+    appUtil.logoutOnEnvChange();
+    appUtil.initInternetConnectivityListener();
     apiUtil.initInterceptors();
     store.dispatch(branchUtil.initBranch());
 
-    // Fetch CodePush Update and Restart App
-    // if no link provided and update is available
-    const { deepLinkData } = store.getState().deepLink;
-    const hasUpdate = await codePush.checkForUpdate();
-    // eslint-disable-next-line no-undef
-    if (!__DEV__ && !deepLinkData.type && hasUpdate) {
-      store.dispatch(
-        actions.showMessage(
-          "info",
-          "Please wait while Celsius app is being updated."
-        )
-      );
-      return await codePush.sync({
-        updateDialog: false,
-        installMode: codePush.InstallMode.IMMEDIATE,
-      });
-    }
+    await appUtil.updateCelsiusApp();
+
+    disableAccessibilityFontScaling();
+    store.dispatch(actions.isGoodForAnimations());
+    store.dispatch(actions.getGeolocation());
 
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       store.dispatch(actions.navigateBack());
       return true;
     });
+
     AppState.addEventListener("change", nextState => {
       store.dispatch(actions.handleAppStateChange(nextState));
     });
