@@ -387,9 +387,9 @@ function getUserAppBootstrap() {
 
       dispatch({
         type: ACTIONS.GET_APP_BOOTSTRAP_SUCCESS,
-        kyc: userAppData.data.kyc,
+        user: userAppData.data.user,
+        appSettings: userAppData.data.user_settings,
         loyaltyInfo: userAppData.data.loyalty,
-        appSettings: userAppData.data.app_settings,
         complianceInfo: userAppData.data.compliance,
       });
     } catch (e) {
