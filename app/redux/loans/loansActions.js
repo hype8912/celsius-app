@@ -28,6 +28,7 @@ export {
   checkForLoanAlerts,
   sendBankDetailsEmail,
   lockMarginCallCollateral,
+  getLoanAlerts,
 };
 
 /**
@@ -333,7 +334,12 @@ function prepayInterest(id) {
       dispatch({
         type: ACTIONS.PREPAY_LOAN_INTEREST_SUCCESS,
       });
-      dispatch(navigateTo("TransactionsIntersection", { id: transactionId, loanPayment: true }));
+      dispatch(
+        navigateTo("TransactionsIntersection", {
+          id: transactionId,
+          loanPayment: true,
+        })
+      );
       dispatch(openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -364,7 +370,12 @@ function payPrincipal(id) {
 
       const transactionId = res.data.transaction_id;
       dispatch(showMessage("success", "Payment successful"));
-      dispatch(navigateTo("TransactionsIntersection", { id: transactionId, loanPayment: true }));
+      dispatch(
+        navigateTo("TransactionsIntersection", {
+          id: transactionId,
+          loanPayment: true,
+        })
+      );
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.PAY_LOAN_PRINCIPAL, err));
@@ -430,7 +441,12 @@ function payMonthlyInterest(id, coin) {
       const transactionId = res.data.transaction_id;
       dispatch({ type: ACTIONS.PAY_LOAN_INTEREST_SUCCESS });
       dispatch(showMessage("success", "Payment successful"));
-      dispatch(navigateTo("TransactionsIntersection", { id: transactionId, loanPayment: true }));
+      dispatch(
+        navigateTo("TransactionsIntersection", {
+          id: transactionId,
+          loanPayment: true,
+        })
+      );
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.PAY_LOAN_PRINCIPAL, err));
@@ -492,6 +508,28 @@ function checkForLoanAlerts() {
 
     if (loanAlerts.length) {
       dispatch(openModal(MODALS.LOAN_ALERT_MODAL));
+    }
+  };
+}
+
+/**
+ * Gets all loan payment alerts for user (interest, principal, margin call)
+ */
+function getLoanAlerts() {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_LOAN_ALERTS));
+
+      const alertsRes = await loansService.getLoanAlerts();
+
+      dispatch({
+        type: ACTIONS.GET_LOAN_ALERTS_SUCCESS,
+        allLoans: alertsRes.data,
+      });
+      checkForLoanAlerts();
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_LOAN_ALERTS, err));
     }
   };
 }

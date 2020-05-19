@@ -110,8 +110,6 @@ class WalletLanding extends Component {
         !userTriggeredActions.permanently_dismiss_deposit_address_changes
       )
         actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
-
-      actions.checkForLoanAlerts();
     }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -127,6 +125,8 @@ class WalletLanding extends Component {
     await actions.getWalletSummary();
     if (!currenciesRates) actions.getCurrencyRates();
     if (!currenciesGraphs) actions.getCurrencyGraphs();
+
+    actions.getLoanAlerts();
 
     // NOTE (fj): quickfix for CN-2763
     // if (user.celsius_member) {
