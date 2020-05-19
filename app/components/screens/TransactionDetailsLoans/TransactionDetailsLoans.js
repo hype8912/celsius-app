@@ -13,6 +13,8 @@ import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
+import TierCard from "../../organisms/TierCard/TierCard";
+import { TRANSACTION_TYPES } from "../../../constants/DATA";
 
 class TransactionDetailsLoans extends Component {
   static propTypes = {
@@ -39,6 +41,11 @@ class TransactionDetailsLoans extends Component {
             navigateTo={navigateTo}
             transaction={transaction}
           />
+
+          {transaction.type === TRANSACTION_TYPES.LOAN_INTEREST &&
+            transaction.coin === "cel" && (
+              <TierCard transaction={transaction} />
+            )}
 
           <TxBasicSection
             label={"Date"}

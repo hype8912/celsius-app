@@ -4,21 +4,13 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 
 // import PaymentCelStyle from "./PaymentCel.styles";
-import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import Card from "../../atoms/Card/Card";
-import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
-import formatter from "../../../utils/formatter";
+import TierCard from "../../organisms/TierCard/TierCard";
 
 @connect(
-  state => ({
-    loyaltyInfo: state.loyalty.loyaltyInfo,
-    loanSettings: state.loans.loanSettings,
-    allLoans: state.loans.allLoans,
-  }),
+  () => ({}),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class PaymentCel extends Component {
@@ -95,45 +87,13 @@ class PaymentCel extends Component {
 
   render() {
     // const style = PaymentCelCelStyle();
-    const { actions, loyaltyInfo, navigation, allLoans } = this.props;
+    const { navigation } = this.props;
     const { isLoading } = this.state;
     const id = navigation.getParam("id");
-    const loan = allLoans.find(l => l.id === id);
-    const celDiscount = formatter.percentageDisplay(
-      loyaltyInfo.tier.loanInterestBonus
-    );
-    const discountedInterest =
-      (1 - loyaltyInfo.tier.loanInterestBonus) * Number(loan.monthly_payment);
 
     return (
       <RegularLayout fabType={"hide"}>
-        <Card>
-          <CelText align={"center"}>
-            Based on your current{" "}
-            <CelText
-              onPress={() => actions.navigateTo("LoyaltyProgram")}
-              style={{ color: STYLES.COLORS.CELSIUS_BLUE }}
-            >
-              Loyalty Level
-            </CelText>
-            , your next interest payment would be:
-          </CelText>
-          <CelText type={"H1"} weight={"700"} align={"center"}>
-            {celDiscount} less
-          </CelText>
-          <Separator margin={"10 0 12 0"} />
-          <CelText>
-            Decrease your monthly interest payment from{" "}
-            <CelText weight={"500"}>
-              {formatter.usd(loan.monthly_payment)}
-            </CelText>{" "}
-            to{" "}
-            <CelText weight={"500"}>
-              {formatter.usd(discountedInterest)}
-            </CelText>{" "}
-            when paying with CEL.
-          </CelText>
-        </Card>
+        <TierCard loanId={id} />
         <CelButton
           margin={"20 0 0 0"}
           onPress={this.payInCel}
