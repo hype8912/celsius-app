@@ -237,18 +237,15 @@ function buttonsDown(
       extrapolate: "clamp",
     }).start(),
     Animated.parallel([
-      Animated.spring(buttonMoveAnimationX, {
+      Animated.timing(buttonMoveAnimationX, {
         toValue: 0,
-        frictions: 3,
-        tension: 1,
-        velocity: 5,
+        duration: 450,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(),
-      Animated.spring(buttonMoveAnimationY, {
+      Animated.timing(buttonMoveAnimationY, {
         toValue: 0,
-        frictions: 3,
-        tension: 1,
+        duration: 450,
         velocity: 5,
         useNativeDriver: true,
         extrapolate: "clamp",
@@ -261,7 +258,7 @@ function buttonsDown(
       }).start(),
       Animated.timing(helpButtonOffset, {
         toValue: 0,
-        duration: 550,
+        duration: 350,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(({ finished }) => {
@@ -292,32 +289,28 @@ function buttonsUp(
 ) {
   Animated.sequence([
     Animated.parallel([
-      Animated.spring(buttonMoveAnimationX, {
+      Animated.timing(buttonMoveAnimationX, {
         toValue: 1,
-        frictions: 3,
-        tension: 1,
-        velocity: 5,
+        duration: 350,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(),
-      Animated.spring(buttonMoveAnimationY, {
+      Animated.timing(buttonMoveAnimationY, {
         toValue: 1,
-        frictions: 3,
-        tension: 1,
-        velocity: 5,
+        duration: 350,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(),
       Animated.timing(blurOpacity, {
         toValue: 1,
-        duration: 500,
+        duration: 400,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(),
     ]),
     Animated.timing(helpButtonOffset, {
       toValue: 1,
-      duration: 550,
+      duration: 350,
       useNativeDriver: true,
       extrapolate: "clamp",
     }).start(({ finished }) => {
