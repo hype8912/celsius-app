@@ -18,6 +18,7 @@ import RegisterInitial from "../components/screens/RegisterInitial/RegisterIniti
 import RegisterSetPin from "../components/screens/RegisterSetPin/RegisterSetPin";
 import TermsOfUse from "../components/screens/TermsOfUse/TermsOfUse";
 import Welcome from "../components/screens/Welcome/Welcome";
+import PasswordBreached from "../components/screens/PasswordBreached/PasswordBreached";
 import VerifyProfile from "../components/screens/VerifyProfile/VerifyProfile";
 import TransactionsOnHold from "../components/screens/TransactionsOnHold/TransactionsOnHold";
 import KYCProfileDetails from "../components/screens/KYCProfileDetails/KYCProfileDetails";
@@ -124,6 +125,7 @@ export const screens = {
    */
 
   Welcome,
+  PasswordBreached,
   LoginLanding,
   Login,
   ForgotPassword,

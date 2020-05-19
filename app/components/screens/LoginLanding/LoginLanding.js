@@ -14,6 +14,7 @@ import LoginButton from "../../atoms/LoginButton/LoginButton";
 import loggerUtil from "../../../utils/logger-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 
 @connect(
   state => ({
@@ -96,87 +97,91 @@ class LoginLanding extends Component {
     const navigateTo = type === "login" ? "Login" : "RegisterInitial";
 
     return (
-      <View style={style.container}>
-        <View style={style.header}>
-          <CelText margin="0 0 10 0" align="center" type="H1">
-            {type === "login" ? "Log in" : "Create Account"}
-          </CelText>
-          <CelText weight="300" align="center">
-            {type === "login"
-              ? "Welcome back, please log in to your account"
-              : "Choose how you want to sign up"}
-          </CelText>
-        </View>
-        <View style={style.buttons}>
-          <LoginButton
-            text={
-              type === "login"
-                ? "Log in with Facebook"
-                : "Sign up with Facebook"
-            }
-            icon={this.getImage("facebook")}
-            disabled={this.disabledButton()}
-            onPress={() => this.loginViaFacebookHandle(type, navigateTo)}
-          />
-          <LoginButton
-            text={
-              type === "login" ? "Log in with Google" : "Sign up with Google"
-            }
-            icon={this.getImage("google")}
-            disabled={this.disabledButton()}
-            onPress={() => this.loginViaGoogleHandle(type, navigateTo)}
-          />
-          <TWLoginButton
-            type="TouchableOpacity"
-            onGetAccessToken={actions.twitterGetAccessToken}
-            onSuccess={this.onTwitterSuccess}
-            closeText="< Back to Celsius"
-            onClose={actions.twitterClose}
-            onError={this.handleError}
-            onPress={this.onOpenTwitter}
-          >
+      <AuthLayout>
+        <View style={style.container}>
+          <View style={style.header}>
+            <CelText margin="0 0 10 0" align="center" type="H1">
+              {type === "login" ? "Log in" : "Create Account"}
+            </CelText>
+            <CelText weight="300" align="center">
+              {type === "login"
+                ? "Welcome back, please log in to your account"
+                : "Choose how you want to sign up"}
+            </CelText>
+          </View>
+          <View style={style.buttons}>
             <LoginButton
               text={
                 type === "login"
-                  ? "Log in with Twitter"
-                  : "Sign up with Twitter"
+                  ? "Log in with Facebook"
+                  : "Sign up with Facebook"
               }
-              icon={this.getImage("twitter")}
+              icon={this.getImage("facebook")}
+              disabled={this.disabledButton()}
+              onPress={() => this.loginViaFacebookHandle(type, navigateTo)}
+            />
+            <LoginButton
+              text={
+                type === "login" ? "Log in with Google" : "Sign up with Google"
+              }
+              icon={this.getImage("google")}
+              disabled={this.disabledButton()}
+              onPress={() => this.loginViaGoogleHandle(type, navigateTo)}
+            />
+            <TWLoginButton
+              type="TouchableOpacity"
+              onGetAccessToken={actions.twitterGetAccessToken}
+              onSuccess={this.onTwitterSuccess}
+              closeText="< Back to Celsius"
+              onClose={actions.twitterClose}
+              onError={this.handleError}
+              onPress={this.onOpenTwitter}
+            >
+              <LoginButton
+                text={
+                  type === "login"
+                    ? "Log in with Twitter"
+                    : "Sign up with Twitter"
+                }
+                icon={this.getImage("twitter")}
+                disabled={this.disabledButton()}
+              />
+            </TWLoginButton>
+            <LoginButton
+              text={
+                type === "login" ? "Log in with Email" : "Sign up with Email"
+              }
+              icon={this.getImage("email")}
+              onPress={() => this.loginViaEmailHandle(navigateTo)}
               disabled={this.disabledButton()}
             />
-          </TWLoginButton>
-          <LoginButton
-            text={type === "login" ? "Log in with Email" : "Sign up with Email"}
-            icon={this.getImage("email")}
-            onPress={() => this.loginViaEmailHandle(navigateTo)}
-            disabled={this.disabledButton()}
-          />
-        </View>
-        <View style={style.footer}>
-          {ENV === "STAGING" ? (
-            <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
-              Open Storybook
-            </CelButton>
-          ) : null}
-          <CelText weight="300" align="center">
-            {type === "login"
-              ? "Don't have an account?"
-              : "Already have an account?"}
-            <CelText
-              weight="300"
-              align="center"
-              color={STYLES.COLORS.CELSIUS_BLUE}
-              onPress={() =>
-                actions.navigateTo("LoginLanding", {
-                  type: type === "login" ? "register" : "login",
-                })
-              }
-            >
-              {type === "login" ? ` Sign up` : ` Log in`}
+          </View>
+          <View style={style.footer}>
+            {ENV === "STAGING" ? (
+              <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
+                Open Storybook
+              </CelButton>
+            ) : null}
+            <CelText weight="300" align="center">
+              {type === "login"
+                ? "Don't have an account?"
+                : "Already have an account?"}
+              <CelText
+                weight="300"
+                align="center"
+                color={STYLES.COLORS.CELSIUS_BLUE}
+                onPress={() =>
+                  actions.navigateTo("LoginLanding", {
+                    type: type === "login" ? "register" : "login",
+                  })
+                }
+              >
+                {type === "login" ? ` Sign up` : ` Log in`}
+              </CelText>
             </CelText>
-          </CelText>
+          </View>
         </View>
-      </View>
+      </AuthLayout>
     );
   }
 }
