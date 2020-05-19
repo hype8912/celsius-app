@@ -15,7 +15,7 @@ const MemoIdModal = props => {
     <CelModal name={MODALS.MEMO_ID_MODAL}>
       <ScrollView style={{ maxHeight: heightPercentageToDP("60%") }}>
         <CelText align="center" type="H2" margin="0 25 32 25" weight="bold">
-          {coin.short === "EOS" ? `EOS (EOS) Memo ID` : `Stellar (XLM) Memo ID`}
+          {coin === "EOS" ? `EOS (EOS) Memo ID` : `Stellar (XLM) Memo ID`}
         </CelText>
         <CelText align="center" type="H4" margin="0 25 24 25">
           Memo ID is used to determine what account a given transaction should
@@ -23,7 +23,7 @@ const MemoIdModal = props => {
         </CelText>
         <CelText align="center" type="H4" margin="0 25 24 25">
           {`Quoting the Memo ID with the ${
-            coin.short === "EOS" ? "EOS" : "Stellar"
+            coin === "EOS" ? "EOS" : "Stellar"
           } wallet address ensures that your
         transaction is uniquely identified and processed successfully.`}
         </CelText>
