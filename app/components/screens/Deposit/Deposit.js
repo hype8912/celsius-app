@@ -543,7 +543,9 @@ class Deposit extends Component {
           </View>
         ) : null}
         <DestinationInfoTagModal closeModal={actions.closeModal} />
-        <MemoIdModal coin={coinInfo} />
+        {coinInfo && coinInfo.short && (
+          <MemoIdModal closeModal={actions.closeModal} coin={coinInfo.short} />
+        )}
         <DepositInfoModal type={coin} />
       </RegularLayout>
     );
