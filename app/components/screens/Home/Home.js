@@ -12,6 +12,7 @@ import appUtil from "../../../utils/app-util";
 import { getSecureStoreKey } from "../../../utils/expo-storage";
 import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { isKYCRejectedForever } from "../../../utils/user-util";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -68,6 +69,10 @@ class Home extends Component {
     mixpanelAnalytics.sessionStarted("Init app");
     await actions.setBannerProps();
     this.setState({ progress: totalProgress });
+
+    if (isKYCRejectedForever()) {
+      return actions.resetToScreen("KYCFinalRejection");
+    }
 
     const { user, bannerProps } = this.props;
     if (user.has_pin) {
