@@ -16,6 +16,7 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import store from "../../../redux/store";
+// import { askUserToProvideBiometrics } from "../../../utils/biometrics-util";
 
 @connect(
   state => ({
@@ -61,13 +62,17 @@ class VerifyProfile extends Component {
     );
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { navigation, actions } = this.props;
     const activeScreen = navigation.getParam("activeScreen");
     // actions.logoutUser()
     actions.getPreviousPinScreen(activeScreen);
 
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
+
+    // TODO - This is where I used biometrics to check
+    // const onSuccess = navigation.getParam("onSuccess");
+    // await askUserToProvideBiometrics(onSuccess)
   };
 
   componentWillUpdate(nextProps) {
