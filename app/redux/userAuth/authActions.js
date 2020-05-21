@@ -29,6 +29,7 @@ import {
   logoutUserMixpanel,
   registerMixpanelUser,
 } from "../../utils/mixpanel-util";
+import userSecurityService from "../../services/user-security-service";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -178,6 +179,7 @@ function logoutUser() {
       }
 
       await logoutUserMixpanel();
+      await userSecurityService.invalidateSession();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
       await deleteSecureStoreKey("HIDE_MODAL_INTEREST_IN_CEL");
       if (Constants.appOwnership === "standalone") Branch.logout();
