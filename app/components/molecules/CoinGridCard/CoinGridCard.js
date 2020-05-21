@@ -1,13 +1,11 @@
 import React, { Component, Fragment } from "react";
-import { View, Animated } from "react-native";
+import { View, Animated, Image } from "react-native";
 import PropTypes from "prop-types";
-
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
 import Graph from "../../graphs/Graph/Graph";
-
 import STYLES from "../../../constants/STYLES";
 import { heightPercentageToDP } from "../../../utils/styles-util";
 import CoinGridCardStyle from "./CoinGridCard.styles";
@@ -15,6 +13,9 @@ import { THEMES } from "../../../constants/UI";
 import interestUtil from "../../../utils/interest-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
+
+const GraphLight = require("../../../../assets/images/placeholders/graph-light.png");
+const GraphDark = require("../../../../assets/images/placeholders/graph-dark.png");
 
 class CoinGridCard extends Component {
   static propTypes = {
@@ -120,6 +121,9 @@ class CoinGridCard extends Component {
     const style = CoinGridCardStyle();
 
     const padding = graphData ? "12 0 0 0" : undefined; // undefined so it will fallback to default card prop padding
+    const shouldShowGraph =
+      graphData && dateArray.length > 0 && priceArray.length > 0;
+    const image = theme === THEMES.DARK ? GraphDark : GraphLight;
 
     return (
       <Animated.View style={this.animate()}>
@@ -142,7 +146,7 @@ class CoinGridCard extends Component {
             </View>
           </View>
 
-          {graphData && dateArray.length > 0 && priceArray.length > 0 ? (
+          {shouldShowGraph ? (
             <View style={{ ...this.props.style }}>
               <Graph
                 key={coin.short}
@@ -159,7 +163,13 @@ class CoinGridCard extends Component {
               />
             </View>
           ) : (
-            <View style={{ marginBottom: "45%" }} />
+            <View style={{ ...this.props.style, marginHorizontal: 0 }}>
+              <Image
+                source={image}
+                resizeMode="contain"
+                style={{ width: "100%", height: heightPercentageToDP("10%") }}
+              />
+            </View>
           )}
         </Card>
       </Animated.View>
