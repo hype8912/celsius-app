@@ -337,33 +337,30 @@ class CelHeading extends Component {
         <View style={[style.content]}>
           <View style={leftStyle}>
             {this.getLeftContent(sceneOptions)}
-            {this.isSearchHeader() &&
-              sceneOptions &&
-              sceneOptions.state &&
-              sceneOptions.state.routeName !== "VerifyProfile" && (
-                <View
-                  style={[
-                    {
-                      width: "90%",
-                      justifyContent: "center",
-                      paddingTop: 5,
-                      alignSelf: "center",
-                      marginLeft: 12,
-                    },
-                  ]}
-                >
-                  <CelInput
-                    debounce
-                    autoFocus
-                    basic
-                    margin="0 0 0 0"
-                    field="search"
-                    placeholder={this.getSearchPlaceholder()}
-                    type="text"
-                    value={formData.search}
-                  />
-                </View>
-              )}
+            {this.isSearchHeader() && (
+              <View
+                style={[
+                  {
+                    width: "90%",
+                    justifyContent: "center",
+                    paddingTop: 5,
+                    alignSelf: "center",
+                    marginLeft: 12,
+                  },
+                ]}
+              >
+                <CelInput
+                  debounce
+                  autoFocus
+                  basic
+                  margin="0 0 0 0"
+                  field="search"
+                  placeholder={this.getSearchPlaceholder()}
+                  type="text"
+                  value={formData.search}
+                />
+              </View>
+            )}
           </View>
           {!this.isSearchHeader() && this.getCenterContent(sceneOptions)}
           <View style={style.right}>{this.getRightContent(sceneOptions)}</View>

@@ -95,6 +95,7 @@ class CheckWithdrawalAddressesCard extends Component {
             weight={"600"}
             color={STYLES.COLORS.CELSIUS_BLUE}
             onPress={this.onPress}
+            margin={"4 0 0 0"}
           >
             Check Withdrawal Addresses
           </CelText>

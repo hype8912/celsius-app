@@ -106,9 +106,9 @@ class SecurityStrengthMeter extends Component {
 
         <View style={style.section}>
           <View style={style.leftSide}>
-            <CelText type="H6">
+            <CelText type="H7">
               {"Last change: "}
-              <CelText type="H6" weight="600">
+              <CelText type="H7" weight="600">
                 {lastChangePeriod}
               </CelText>
             </CelText>

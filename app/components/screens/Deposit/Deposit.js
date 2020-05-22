@@ -60,7 +60,10 @@ class Deposit extends Component {
 
     const coinSelectItems = currencies
       .filter(c => depositCompliance.coins.includes(c.short))
-      .map(c => ({ label: c.short, value: c.short }));
+      .map(c => ({
+        label: `${formatter.capitalize(c.name)} (${c.short})`,
+        value: c.short,
+      }));
 
     this.state = {
       isFetchingAddress: false,

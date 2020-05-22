@@ -165,7 +165,7 @@ function sendResetLink() {
  */
 function logoutUser() {
   return async (dispatch, getState) => {
-    const { msg: errorMsg } = getState().api.error;
+    const errorMsg = getState().api.error ? getState().api.error.msg : null;
 
     try {
       if (
