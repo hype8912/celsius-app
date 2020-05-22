@@ -54,6 +54,7 @@ class WalletInterest extends Component {
 
   async componentDidMount() {
     const { actions } = this.props;
+    actions.changeInterestHeaderContent();
     await actions.getLoyaltyInfo();
     await actions.getUserAppSettings();
     this.setState({ loading: false });
