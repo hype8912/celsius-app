@@ -105,6 +105,7 @@ function animateArrayOfObjects(animatedValue, offset, duration) {
  * Scroll y axis listener inside Regular Layout for rendering header title
  * @param y
  */
+const threshold = heightPercentageToDP("18%");
 function scrollListener(y) {
   const { activeScreen } = store.getState().nav;
   const {
@@ -112,7 +113,6 @@ function scrollListener(y) {
     changeCoinDetailsHeader,
     changeInterestHeader,
   } = store.getState().animations;
-  const threshold = heightPercentageToDP("18%");
   if (y > threshold) {
     if (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory")
       store.dispatch(actions.changeWalletHeaderContent(true));
