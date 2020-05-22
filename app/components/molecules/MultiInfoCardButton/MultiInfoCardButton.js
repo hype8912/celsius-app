@@ -60,18 +60,21 @@ class MultiInfoCardButton extends Component {
             />
           </View>
           <View style={style.explanationWrapper}>
-            <CelText
-              weight={"500"}
-              type={"H3"}
-              color={STYLES.COLORS.CELSIUS_BLUE}
-              margin={"0 0 0 0"}
-              style={disabled ? { opacity: 0.3 } : null}
-            >
-              {textButton}
+            <View style={style.titleWrapper}>
+              <CelText
+                weight={"500"}
+                type={"H3"}
+                color={STYLES.COLORS.CELSIUS_BLUE}
+                margin={"0 0 0 0"}
+                style={disabled ? { opacity: 0.3 } : null}
+              >
+                {textButton}
+              </CelText>
               <View
                 style={{
                   height: heightPercentageToDP("2.5%"),
                   width: widthPercentageToDP("4.5%"),
+                  marginTop: 10,
                 }}
               >
                 <Icon
@@ -86,7 +89,7 @@ class MultiInfoCardButton extends Component {
                   style={style.chevronStyle}
                 />
               </View>
-            </CelText>
+            </View>
             {label ? (
               <View style={style.active}>
                 <Badge

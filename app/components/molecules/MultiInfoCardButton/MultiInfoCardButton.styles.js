@@ -20,8 +20,13 @@ const base = {
     height: heightPercentageToDP("6%"),
     resizeMode: "contain",
   },
+  titleWrapper: {
+    flexDirection: "row",
+    flexWrap: "nowrap",
+  },
   explanationWrapper: {
     flex: 0.75,
+    flexWrap: "nowrap",
   },
   active: {
     alignSelf: "flex-start",
