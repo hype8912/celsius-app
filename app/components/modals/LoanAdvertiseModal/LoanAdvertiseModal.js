@@ -31,7 +31,7 @@ class LoanAdvertiseModal extends Component {
     const { closeModal, formData, setUserAppSettings } = this.props;
     if (formData.hideLoanAdvertiseModal) {
       setUserAppSettings({
-        userTriggeredActions: {
+        user_triggered_actions: {
           hide_loan_advertise_modal: true,
         },
       });
@@ -45,14 +45,15 @@ class LoanAdvertiseModal extends Component {
     return (
       <CelModal style={style.container} name={MODALS.LOAN_ADVERTISE_MODAL}>
         <CelText type="H2" align="center" weight="bold">
-          1% APR Loans
+          1% APR Loans!
         </CelText>
         <CelText align="center" margin="30 20 10 20" type={"H4"}>
           Pay only 1% interest on 25% LTV loans up to $200,000!
         </CelText>
         <CelText align="center" margin="5 20 10 20" type={"H7"}>
           Offer valid through June 1 or until $10M in qualifying loans have been
-          issued. Other terms and conditions apply.
+          issued. Maximum loan term is 12 months. Other terms and conditions
+          apply.
         </CelText>
         <View style={style.dontShowStyle}>
           <CelCheckbox
