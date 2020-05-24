@@ -2,6 +2,8 @@ import { Animated, Easing } from "react-native";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { heightPercentageToDP } from "./styles-util";
+import { isLoanBannerVisible } from "./ui-util";
+import { hasPassedKYC } from "./user-util";
 
 const animationsUtil = {
   applyOffset,
@@ -105,9 +107,12 @@ function animateArrayOfObjects(animatedValue, offset, duration) {
  * Scroll y axis listener inside Regular Layout for rendering header title
  * @param y
  */
-const threshold = heightPercentageToDP("18%");
+let threshold = heightPercentageToDP("18%");
 function scrollListener(y) {
   const { activeScreen } = store.getState().nav;
+  const { isBannerVisible } = store.getState().ui;
+  if ((isBannerVisible && isLoanBannerVisible()) || !hasPassedKYC())
+    threshold = heightPercentageToDP("40%");
   const {
     changeWalletHeader,
     changeCoinDetailsHeader,
