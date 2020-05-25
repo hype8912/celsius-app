@@ -66,6 +66,7 @@ function errorValidation(error) {
   const stringIgnore = [
     "Could not download from",
     "undefined is not an object (evaluating 't.dispatch')",
+    "JS Functions are not convertible to dynamic",
   ];
 
   for (let i = 0; i < stringIgnore.length; i++) {
