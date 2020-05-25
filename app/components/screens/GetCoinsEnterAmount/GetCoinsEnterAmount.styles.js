@@ -1,9 +1,9 @@
 import { Dimensions } from "react-native";
-import STYLES from "../../../constants/STYLES";
 import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import STYLES from "../../../constants/STYLES";
 
 const { width } = Dimensions.get("window");
 
@@ -17,11 +17,9 @@ const base = {
   },
   cryptoSection: {
     alignItems: "center",
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
     paddingVertical: 10,
   },
   fiatWrapper: {
-    backgroundColor: STYLES.COLORS.WHITE,
     padding: 10,
     borderRadius: 8,
     marginBottom: 15,
@@ -37,9 +35,17 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    text: {
+      color: STYLES.COLORS.MEDIUM_GRAY,
+    },
+  },
 
-  dark: {},
+  dark: {
+    text: {
+      color: STYLES.COLORS.WHITE_OPACITY5,
+    },
+  },
 
   celsius: {},
 };

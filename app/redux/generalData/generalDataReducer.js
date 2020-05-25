@@ -73,6 +73,15 @@ export default function generalDataReducer(state = initialState(), action) {
         interestRates: action.interestRates,
       };
 
+    case ACTIONS.GET_CRYPTO_LIMITS_SUCCESS:
+      return {
+        ...state,
+        buyCoinsSettings: {
+          ...state.buyCoinsSettings,
+          limit_per_crypto_currency: action.limitsPerCrypto,
+        },
+      };
+
     default:
       return state;
   }
