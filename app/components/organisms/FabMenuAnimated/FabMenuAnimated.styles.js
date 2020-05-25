@@ -35,7 +35,7 @@ const base = {
     width: 60,
     height: 60,
     borderRadius: 30,
-    elevation: Platform.OS === "android" ? 9 : 0,
+    elevation: Platform.OS === "android" ? 10 : 0,
   },
   background: {
     opacity: 0.95,
