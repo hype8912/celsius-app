@@ -109,8 +109,8 @@ class SecurityFixNow extends Component {
           body: `Your ${type} was last changed ${moment(
             securityOverview[`${type}_last_change`]
           ).fromNow()}. In order to keep your account secure, it is recommended to change your ${type} at least every 180 days.`,
-          strength: securityOverview.password_strength,
-          lastChange: securityOverview.password_last_change,
+          strength: securityOverview[`${type}_strength`],
+          lastChange: securityOverview[`${type}_last_change`],
           navigateToScreen: `Change${formatter.capitalize(type)}`,
           showInfoBox: securityOverview.toFixNow,
           infoBoxText: `Successfully changed your ${type}`,
