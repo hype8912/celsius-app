@@ -86,8 +86,8 @@ class SecurityFixNow extends Component {
       case "two_factor":
         return {
           type,
-          title: "Two Factor Authentication",
-          cardTitle: "Your 2FA verification is",
+          title: "Two-Factor Authentication",
+          cardTitle: "Your 2FA is",
           body:
             "Activate an extra layer of security that prevents the risk of unwanted access to your account, even if your login information is compromised.",
           enabled: twoFAStatus.isActive,
@@ -211,7 +211,7 @@ class SecurityFixNow extends Component {
     return (
       <View style={style.container}>
         <HeadingProgressBar steps={content.length} currentStep={index + 1} />
-        <RegularLayout fabType={"hide"}>
+        <RegularLayout>
           <View style={style.bodyWrapper}>
             <CelText
               margin={"0 20 20 20"}
@@ -221,7 +221,7 @@ class SecurityFixNow extends Component {
             >
               {c.title}
             </CelText>
-            <CelText margin={"0 0 20 0"} type={"H4"} align={"center"}>
+            <CelText margin={"0 0 20 0"} type={"H5"} align={"center"}>
               {c.body}
             </CelText>
 
@@ -234,7 +234,7 @@ class SecurityFixNow extends Component {
               margin="10 0 2 0"
               iconRight="IconArrowRight"
             >
-              {index === content.length - 1 ? "Finish" : "Continue"}
+              {index === content.length - 1 ? "Finish" : "Skip"}
             </CelButton>
           </View>
         </RegularLayout>

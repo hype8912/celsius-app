@@ -30,7 +30,8 @@ const base = {
     flexDirection: "column",
     width: heightPercentageToDP("14%"),
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
+    paddingLeft: 14,
   },
   text: {
     flex: 1,

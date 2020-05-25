@@ -157,7 +157,7 @@ class SecurityOverview extends Component {
             <Separator text="2FA VERIFICATION" showInfo />
           </TouchableOpacity>
           <ToggleInfoCard
-            subtitle={"Your 2FA verification is"}
+            subtitle={"Your 2FA is"}
             onPress={this.onPress2fa}
             enabled={twoFAStatus.isActive}
           />
