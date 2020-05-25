@@ -60,7 +60,10 @@ class Deposit extends Component {
 
     const coinSelectItems = currencies
       .filter(c => depositCompliance.coins.includes(c.short))
-      .map(c => ({ label: c.short, value: c.short }));
+      .map(c => ({
+        label: `${formatter.capitalize(c.name)} (${c.short})`,
+        value: c.short,
+      }));
 
     this.state = {
       isFetchingAddress: false,
@@ -71,7 +74,9 @@ class Deposit extends Component {
 
   componentDidMount() {
     const { actions } = this.props;
-    actions.openModal(MODALS.DEPOSIT_INFO_MODAL);
+    setTimeout(() => {
+      actions.openModal(MODALS.DEPOSIT_INFO_MODAL);
+    }, 1000);
   }
 
   getAddress = currency => {
@@ -541,7 +546,9 @@ class Deposit extends Component {
           </View>
         ) : null}
         <DestinationInfoTagModal closeModal={actions.closeModal} />
-        <MemoIdModal coin={coinInfo} />
+        {coinInfo && coinInfo.short && (
+          <MemoIdModal closeModal={actions.closeModal} coin={coinInfo.short} />
+        )}
         <DepositInfoModal type={coin} />
       </RegularLayout>
     );

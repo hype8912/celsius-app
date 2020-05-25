@@ -137,7 +137,7 @@ ${orderIdPt2}`,
     };
 
     return (
-      <RegularLayout padding="0 0 120 0">
+      <RegularLayout padding="0 20 120 20">
         <TxInfoSection
           margin="40 0 20 0"
           key={"button:back"}

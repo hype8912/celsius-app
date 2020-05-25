@@ -194,7 +194,7 @@ class SelectCoin extends Component {
     const { filteredCoins } = this.state;
 
     return (
-      <RegularLayout fabType="hide">
+      <RegularLayout>
         <View>
           {filteredCoins.length > 0 ? (
             <FlatList

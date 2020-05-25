@@ -26,6 +26,7 @@ import loyalty from "./loyalty/loyaltyReducer";
 import security from "./userSecurity/userSecurityReducer";
 import auth from "./userAuth/userAuthReducer";
 import hodl from "./hodl/hodlReducer";
+import animations from "./animations/animationsReducer";
 import deepLink from "./deepLink/deepLinkReducer";
 // NOTE(fj): plop reduxGen importing new Reducer here
 
@@ -55,6 +56,7 @@ const appReducers = combineReducers({
   security,
   auth,
   hodl,
+  animations,
   deepLink,
   // NOTE(fj): plop reduxGen inserting new Reducer here
 });

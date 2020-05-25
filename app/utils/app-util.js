@@ -49,7 +49,7 @@ async function initializeThirdPartyServices() {
   apiUtil.initInterceptors();
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
   await initMixpanel();
-  await uxCamUtil.initUxCam()
+  await uxCamUtil.initUxCam();
 }
 
 /**

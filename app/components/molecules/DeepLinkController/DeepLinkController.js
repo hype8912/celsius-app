@@ -1,25 +1,22 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import appsFlyer from "react-native-appsflyer";
-import _ from 'lodash';
+import _ from "lodash";
 import loggerUtil from "../../../utils/logger-util";
 import store from "../../../redux/store";
 import * as appActions from "../../../redux/actions";
 import appsFlyerUtil from "../../../utils/appsflyer-util";
 
-appsFlyer.onInstallConversionData(
-  (data) => {
-    loggerUtil.log(data);
-  },
-);
-appsFlyer.onAppOpenAttribution((res) => {
-  store.dispatch(appActions.addDeepLinkData(res.data))
-  loggerUtil.log("onAppOpenAttributionCanceller: ",res.data);
+appsFlyer.onInstallConversionData(data => {
+  loggerUtil.log(data);
+});
+appsFlyer.onAppOpenAttribution(res => {
+  store.dispatch(appActions.addDeepLinkData(res.data));
+  loggerUtil.log("onAppOpenAttributionCanceller: ", res.data);
 });
 appsFlyerUtil.initSDK();
-
 
 @connect(
   state => ({
@@ -33,34 +30,37 @@ class DeepLinkController extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allowHandleDeepLink: false
-    }
+      allowHandleDeepLink: false,
+    };
   }
 
   componentDidUpdate(prevProps) {
-    const { deepLinkData, appState, user, actions} = this.props
-    const { allowHandleDeepLink } = this.state
+    const { deepLinkData, appState, user, actions } = this.props;
+    const { allowHandleDeepLink } = this.state;
 
-    if (prevProps.appState.match(/inactive|background/) && appState === 'active') {
+    if (
+      prevProps.appState.match(/inactive|background/) &&
+      appState === "active"
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({allowHandleDeepLink: true})
+      this.setState({ allowHandleDeepLink: true });
     }
 
-    if (!_.isEqual(deepLinkData, prevProps.deepLinkData)){
+    if (!_.isEqual(deepLinkData, prevProps.deepLinkData)) {
       if (allowHandleDeepLink) {
-        if (user && user.id ) {
+        if (user && user.id) {
           if (deepLinkData && deepLinkData.type) {
-            actions.handleDeepLink()
+            actions.handleDeepLink();
           }
         }
       }
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({allowHandleDeepLink: false})
+      this.setState({ allowHandleDeepLink: false });
     }
   }
 
-  render(){
-    return (<View />)
+  render() {
+    return <View />;
   }
 }
-export default DeepLinkController
+export default DeepLinkController;

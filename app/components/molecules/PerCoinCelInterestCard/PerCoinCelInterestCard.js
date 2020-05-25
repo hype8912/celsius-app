@@ -44,7 +44,7 @@ class PerCoinCelInterestCard extends Component {
     currencies.forEach(c => {
       coinNames[c.short] = c.displayName;
     });
-    const totalCoins = Object.keys(appSettings.interest_in_cel_per_coin).length;
+    const totalCoins = coinList.length;
     let countCoinsTrue = 0;
     let checked = false;
 
@@ -209,14 +209,6 @@ class PerCoinCelInterestCard extends Component {
           rightText="Earn interest in CEL"
           textWeight="400"
           checkedImage={this.renderImage()}
-          unChecked={
-            <Icon
-              name="Unchecked"
-              width={23}
-              height={23}
-              fill={STYLES.COLORS.GRAY}
-            />
-          }
         />
 
         <RateInfoCard
@@ -272,22 +264,6 @@ class PerCoinCelInterestCard extends Component {
                   rightText={`${coinNames[c]} - ${c}`}
                   fillColor={STYLES.COLORS.MEDIUM_GRAY}
                   textWeight="300"
-                  checkedImage={
-                    <Icon
-                      name="CheckedBorder"
-                      width="23"
-                      height="23"
-                      fill={STYLES.COLORS.GREEN}
-                    />
-                  }
-                  unChecked={
-                    <Icon
-                      name="Unchecked"
-                      width="23"
-                      height="23"
-                      fill={STYLES.COLORS.GRAY}
-                    />
-                  }
                 />
               ))}
               <View style={{ height: 30 }} />

@@ -20,6 +20,7 @@ import store from "../../../redux/store";
 @connect(
   state => ({
     formData: state.forms.formData,
+    twoFAStatus: state.security.twoFAStatus,
     deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
     is2FAEnabled: state.user.profile.two_factor_enabled,
@@ -136,19 +137,27 @@ class VerifyProfile extends Component {
   };
 
   onCheckError = () => {
-    const { actions, is2FAEnabled, navigation } = this.props;
+    const { actions, twoFAStatus, navigation } = this.props;
     this.setState({ loading: false, value: "", verificationError: true });
     const timeout = setTimeout(() => {
       this.setState({ verificationError: false });
 
       const showType =
-        this.getVerifyType(navigation.getParam("show", null)) || is2FAEnabled;
+        this.getVerifyType(navigation.getParam("show", null)) ||
+        twoFAStatus.isActive;
       if (showType === "pin") {
         actions.toggleKeypad(true);
       }
 
       clearTimeout(timeout);
     }, 1000);
+  };
+
+  setForgotPin = () => {
+    const { verificationError } = this.state;
+    if (verificationError) {
+      this.setState({ forgotPin: true });
+    }
   };
 
   getVerifyType = showType => showType && showType === "2FA";
@@ -172,13 +181,15 @@ class VerifyProfile extends Component {
   handle2FAChange = newValue => {
     const { actions } = this.props;
 
-    if (newValue.length > 6) return;
+    if (newValue.length > 6) {
+      this.setState({ loading: false });
+      return;
+    }
 
     actions.updateFormField("code", newValue);
     this.setState({ value: newValue });
 
     if (newValue.length === 6) {
-      this.setState({ loading: true });
       actions.toggleKeypad();
 
       actions.checkTwoFactor(this.onCheckSuccess, this.onCheckError);
@@ -194,8 +205,8 @@ class VerifyProfile extends Component {
       this.handle2FAChange(code);
     } else {
       actions.showMessage("warning", "Nothing to paste, please try again!");
+      this.setState({ loading: false });
     }
-    this.setState({ loading: false });
   };
 
   render2FA() {
@@ -280,12 +291,13 @@ class VerifyProfile extends Component {
 
   render() {
     const { value } = this.state;
-    const { is2FAEnabled, actions, navigation } = this.props;
+    const { twoFAStatus, actions, navigation } = this.props;
     const { appState } = store.getState().app;
     const hideBack = navigation.getParam("hideBack"); // CN-4644 show FAB on Verity Screen except after login and come from background
 
     const showType =
-      this.getVerifyType(navigation.getParam("show", null)) || is2FAEnabled;
+      this.getVerifyType(navigation.getParam("show", null)) ||
+      twoFAStatus.isActive;
     const field = showType ? "code" : "pin";
     const onPressFunc = showType ? this.handle2FAChange : this.handlePINChange;
     const style = VerifyProfileStyle();

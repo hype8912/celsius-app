@@ -7,7 +7,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
 import { BANK_ACCOUNT_TYPE } from "../../../constants/DATA";
@@ -25,6 +24,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 class BorrowBankAccount extends Component {
   static navigationOptions = () => ({
     title: "Link bank account",
+    customCenterComponent: { steps: 8, currentStep: 6, flowProgress: true },
   });
 
   constructor(props) {
@@ -55,6 +55,7 @@ class BorrowBankAccount extends Component {
       selectedAccountType: "Checking",
       bank_city: bankAccountInfo.bank_city,
       bank_street_and_number: bankAccountInfo.bank_street_and_number,
+      bank_account_holder_name: bankAccountInfo.bank_account_holder_name,
       bank_zip: bankAccountInfo.bank_zip,
       swift: bankAccountInfo.swift,
       iban: bankAccountInfo.iban,
@@ -76,6 +77,7 @@ class BorrowBankAccount extends Component {
       account_type: formData.selectedAccountType,
       bank_city: formData.bank_city,
       bank_street_and_number: formData.bank_street_and_number,
+      bank_account_holder_name: formData.bank_account_holder_name,
       bank_zip: formData.bank_zip,
       bank_account_number: formData.bank_account_number,
       swift: formData.swift,
@@ -110,6 +112,8 @@ class BorrowBankAccount extends Component {
     if (!formData.bank_city) formErrors.bank_city = "Field is required!";
     if (!formData.bank_street_and_number)
       formErrors.bank_street_and_number = "Field is required!";
+    if (!formData.bank_account_holder_name)
+      formErrors.bank_account_holder_name = "Field is required!";
     if (!formData.bank_zip) formErrors.bank_zip = "Field is required!";
     if (!formData.bank_account_number)
       formErrors.bank_account_number = "Field is required!";
@@ -149,7 +153,6 @@ class BorrowBankAccount extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <HeadingProgressBar steps={6} currentStep={5} />
         <RegularLayout fabType={"hide"}>
           <CelText
             weight="300"
@@ -217,6 +220,21 @@ class BorrowBankAccount extends Component {
             blurOnSubmiting={false}
             refs={input => {
               this.bank_street_and_number = input;
+            }}
+            onSubmitEditing={() => {
+              this.bank_account_holder_name.focus();
+            }}
+          />
+
+          <CelInput
+            placeholder="Account Holder Name"
+            field={"bank_account_holder_name"}
+            value={formData.bank_account_holder_name}
+            error={formErrors.bank_account_holder_name}
+            returnKeyType={"next"}
+            blurOnSubmiting={false}
+            refs={input => {
+              this.bank_account_holder_name = input;
             }}
             onSubmitEditing={() => {
               this.bank_zip.focus();

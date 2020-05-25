@@ -19,6 +19,8 @@ import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 import HodlBanner from "../../atoms/HodlBanner/HodlBanner";
 import Icon from "../../atoms/Icon/Icon";
+import Loader from "../../atoms/Loader/Loader";
+import fromatter from "../../../utils/formatter";
 
 @connect(
   state => ({
@@ -29,6 +31,10 @@ import Icon from "../../atoms/Icon/Icon";
     hodlStatus: state.hodl.hodlStatus,
     activeScreen: state.nav.activeScreen,
     internetConnected: state.app.internetConnected,
+    walletSummary: state.wallet.summary,
+    changeWalletHeader: state.animations.changeWalletHeader,
+    changeCoinDetailsHeader: state.animations.changeCoinDetailsHeader,
+    changeInterestHeader: state.animations.changeInterestHeader,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -59,7 +65,7 @@ class CelHeading extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeSearch: false,
+      screen: props.scene.route.routeName,
     };
   }
 
@@ -74,40 +80,34 @@ class CelHeading extends Component {
     }
   }
 
+  isSearchHeader = () => {
+    return this.props.scene.descriptor.options.right === "search";
+  };
+
+  navigateBack = (customBack, backScreenName) => {
+    const { actions } = this.props;
+    if (customBack) {
+      customBack();
+    } else {
+      actions.navigateBack(backScreenName);
+    }
+  };
+
   getLeftContent = sceneProps => {
-    const { hideBack, right, customBack } = sceneProps;
-    const { actions, scenes, formData } = this.props;
+    const { hideBack, customBack } = sceneProps;
+    const { scenes } = this.props;
 
     const backScreenName = scenes[this.props.index - 1]
       ? scenes[this.props.index - 1].route.routeName
       : "";
-    const style = CelHeadingStyle();
-
-    // if search is active and right part of header is type of search
-    if ((right === "search" && formData.activeSearch) || customBack)
-      return (
-        <View style={style.leftContentButton}>
-          <CelButton
-            basic
-            iconRightColor={STYLES.COLORS.GRAY}
-            onPress={() =>
-              customBack
-                ? customBack()
-                : actions.updateFormField("activeSearch", true)
-            }
-            iconRight={customBack ? "IconChevronLeft" : "Search"}
-          />
-        </View>
-      );
 
     // By default if scene prop hideBack is true or it's first screen in the stack, hide back arrow
     return this.props.scene.index === 0 || hideBack === true ? null : (
       <CelButton
+        margin={this.isSearchHeader() ? "8 0 0 4" : null}
         iconRightColor={STYLES.COLORS.GRAY}
         basic
-        onPress={() => {
-          actions.navigateBack(backScreenName);
-        }}
+        onPress={() => this.navigateBack(customBack, backScreenName)}
         iconRight="IconChevronLeft"
       />
     );
@@ -115,10 +115,9 @@ class CelHeading extends Component {
 
   getRightContent = sceneProps => {
     const { right, onInfo } = sceneProps;
-    const { profilePicture, formData, actions } = this.props;
+    const { profilePicture, actions } = this.props;
     const scene = this.props.scene.descriptor;
 
-    const rightType = formData.activeSearch ? "cancel" : right;
     const style = CelHeadingStyle();
     const theme = getTheme();
 
@@ -163,13 +162,15 @@ class CelHeading extends Component {
         </TouchableOpacity>
       ),
       search: (
-        <CelButton
-          basic
-          iconRightColor={STYLES.COLORS.GRAY}
-          onPress={() => {
-            actions.updateFormField("activeSearch", true);
-          }}
-          iconRight="Search"
+        <Icon
+          name={"Search"}
+          height={30}
+          width={30}
+          fill={
+            theme === THEMES.LIGHT
+              ? STYLES.COLORS.DARK_GRAY3
+              : STYLES.COLORS.WHITE_OPACITY5
+          }
         />
       ),
       profile: (
@@ -217,14 +218,13 @@ class CelHeading extends Component {
         <CelButton
           basic
           onPress={() => {
-            actions.updateFormField("activeSearch", false);
-            this.props.actions.updateFormField("search", "");
+            actions.updateFormField("search", "");
           }}
         >
           Cancel
         </CelButton>
       ),
-    }[rightType];
+    }[right];
   };
 
   getStatusBarTextColor = () => {
@@ -244,31 +244,86 @@ class CelHeading extends Component {
     }
   };
 
+  getTitle = () => {
+    const sceneOptions = this.props.scene.descriptor.options;
+    const { title } = sceneOptions;
+    const {
+      walletSummary,
+      activeScreen,
+      changeWalletHeader,
+      changeInterestHeader,
+    } = this.props;
+    let screenTitle;
+
+    if (
+      (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory") &&
+      changeWalletHeader
+    ) {
+      screenTitle = fromatter.usd(walletSummary.total_amount_usd);
+      return screenTitle;
+    }
+
+    if (activeScreen === "WalletInterest" && changeInterestHeader) {
+      screenTitle = fromatter.usd(walletSummary.total_interest_earned);
+      return screenTitle;
+    }
+
+    // if (activeScreen === "CoinDetails" && changeCoinDetailsHeader ) {
+    //   screenTitle = fromatter.usd(walletSummary.total_interest_earned);
+    //   return screenTitle
+    // }
+
+    return title;
+  };
+
   getCenterContent = sceneProps => {
-    const { title, customCenterComponent } = sceneProps;
+    const { customCenterComponent } = sceneProps;
     const style = CelHeadingStyle();
+
+    const title = this.getTitle();
 
     return (
       <View style={style.center}>
-        {customCenterComponent ? (
+        {customCenterComponent && !customCenterComponent.flowProgress ? (
           <View style={style.customCenterComponent}>
-            {customCenterComponent}
+            <Loader
+              barColor={STYLES.COLORS.GREEN}
+              backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+              progress={
+                customCenterComponent.currentStep / customCenterComponent.steps
+              }
+              borderColor={STYLES.COLORS.LIGHT_GRAY}
+              width={40}
+            />
           </View>
         ) : (
-          <CelText align="center" weight="medium" type="H3">
-            {title || ""}
-          </CelText>
+          <View>
+            <CelText align="center" weight="medium" type="H3">
+              {title || ""}
+            </CelText>
+          </View>
         )}
       </View>
     );
   };
 
+  getSearchPlaceholder = () => {
+    const { activeScreen } = this.props;
+
+    let text = "Search";
+    if (activeScreen === "SelectCoin") text = "Search assets";
+    if (activeScreen === "SelectCountry") text = "Search countries";
+    if (activeScreen === "SelectState") text = "Search US States";
+
+    return text;
+  };
+
   getContent = () => {
     const { formData, hodlStatus, actions, activeScreen } = this.props;
-    const scene = this.props.scene.descriptor;
+    const sceneOptions = this.props.scene.descriptor.options;
     const style = CelHeadingStyle();
     const paddings = getPadding("0 15 0 15");
-    const leftStyle = formData.activeSearch
+    const leftStyle = this.isSearchHeader()
       ? [style.left, { flexDirection: "row", flex: 2 }]
       : style.left;
 
@@ -281,36 +336,49 @@ class CelHeading extends Component {
         />
         <View style={[style.content]}>
           <View style={leftStyle}>
-            {this.getLeftContent(scene.options)}
-            {formData.activeSearch &&
-              scene.state.routeName !== "VerifyProfile" && (
-                <View
-                  style={[
-                    {
-                      width: "90%",
-                      justifyContent: "center",
-                      paddingTop: 20,
-                      alignSelf: "center",
-                      marginLeft: 12,
-                    },
-                  ]}
-                >
-                  <CelInput
-                    debounce
-                    autoFocus={formData.activeSearch}
-                    basic
-                    margin="0 0 0 0"
-                    field="search"
-                    placeholder="Search..."
-                    type="text"
-                    value={this.props.formData.search}
-                  />
-                </View>
-              )}
+            {this.getLeftContent(sceneOptions)}
+            {this.isSearchHeader() && (
+              <View
+                style={[
+                  {
+                    width: "90%",
+                    justifyContent: "center",
+                    paddingTop: 5,
+                    alignSelf: "center",
+                    marginLeft: 12,
+                  },
+                ]}
+              >
+                <CelInput
+                  debounce
+                  autoFocus
+                  basic
+                  margin="0 0 0 0"
+                  field="search"
+                  placeholder={this.getSearchPlaceholder()}
+                  type="text"
+                  value={formData.search}
+                />
+              </View>
+            )}
           </View>
-          {!formData.activeSearch && this.getCenterContent(scene.options)}
-          <View style={style.right}>{this.getRightContent(scene.options)}</View>
+          {!this.isSearchHeader() && this.getCenterContent(sceneOptions)}
+          <View style={style.right}>{this.getRightContent(sceneOptions)}</View>
         </View>
+        {sceneOptions.customCenterComponent &&
+        sceneOptions.customCenterComponent.flowProgress ? (
+          <Loader
+            flowProgress={sceneOptions.customCenterComponent.flowProgress}
+            barColor={STYLES.COLORS.GREEN}
+            backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+            progress={
+              sceneOptions.customCenterComponent.currentStep /
+              sceneOptions.customCenterComponent.steps
+            }
+            borderColor={STYLES.COLORS.LIGHT_GRAY}
+            width={100}
+          />
+        ) : null}
       </View>
     );
   };

@@ -19,6 +19,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelStats from "../../organisms/CelStats/CelStats";
 import STYLES from "../../../constants/STYLES";
 import { TOTAL_ASSETS_AMOUNT } from "../../../constants/DATA";
+import Counter from "../../molecules/Counter/Counter";
 
 @connect(
   state => ({
@@ -59,14 +60,14 @@ class Community extends Component {
             >
               Celsius Network counts
             </CelText>
-            <CelText
+            <Counter
               weight={"600"}
               align={"center"}
               type={"H1"}
               color={STYLES.COLORS.WHITE}
-            >
-              {formatter.round(usersNum, { noPrecision: true })}
-            </CelText>
+              speed={10}
+              number={usersNum}
+            />
             <CelText
               weight={"300"}
               align={"center"}

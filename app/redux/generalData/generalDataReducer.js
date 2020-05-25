@@ -34,6 +34,16 @@ export default function generalDataReducer(state = initialState(), action) {
         backendStatus: action.backendStatus,
       };
 
+    case ACTIONS.TOGGLE_MAINTENANCE_MODE:
+      return {
+        ...state,
+        backendStatus: {
+          maintenance: action.maintenance,
+          title: action.title,
+          explanation: action.explanation,
+        },
+      };
+
     case ACTIONS.GET_INITIAL_CELSIUS_DATA_SUCCESS:
       // NOTE(fj) BE returns cel_rate as "0" every time
       interestRates = { ...state.interestRates } || {};
@@ -61,6 +71,15 @@ export default function generalDataReducer(state = initialState(), action) {
       return {
         ...state,
         interestRates: action.interestRates,
+      };
+
+    case ACTIONS.GET_CRYPTO_LIMITS_SUCCESS:
+      return {
+        ...state,
+        buyCoinsSettings: {
+          ...state.buyCoinsSettings,
+          limit_per_crypto_currency: action.limitsPerCrypto,
+        },
       };
 
     default:

@@ -12,7 +12,7 @@ export default function formsReducer(state = initialState, action) {
     case ACTIONS.ADD_DEEPLINK_DATA:
       return {
         ...state,
-        deepLinkData: action.deepLinkData
+        deepLinkData: action.deepLinkData,
       };
 
     case ACTIONS.CLEAR_DEEPLINK_DATA:

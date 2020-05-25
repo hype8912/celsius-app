@@ -142,7 +142,10 @@ class BorrowCalculator extends Component {
       timeout = setTimeout(() => {
         actions.showMessage(
           "warning",
-          `Minimum amount for a loan is ${formatter.usd(minimumLoanAmount)}`
+          `Minimum amount for a loan is ${formatter.fiat(
+            minimumLoanAmount,
+            "USD"
+          )}`
         );
       }, 3000);
     }
@@ -151,40 +154,23 @@ class BorrowCalculator extends Component {
 
   renderInterestRatesCard = () => {
     const style = BorrowCalculatorStyle();
-    const { loyaltyInfo, loanParams, formData } = this.props;
+    const { loanParams, formData } = this.props;
 
     const theme = getTheme();
-
     let numberOfDigits;
-    let monthlyInCEL;
-    let totalInCEL;
 
     if (loanParams.monthlyInterest && loanParams.totalInterest) {
       numberOfDigits = Math.max(
-        loanParams.monthlyInterest.length,
-        loanParams.totalInterest.length
+        loanParams.monthlyInterest.toNumber().length,
+        loanParams.totalInterest.toNumber().length
       );
-
-      monthlyInCEL =
-        parseFloat(loanParams.monthlyInterest.split("$")[1]) -
-        parseFloat(loanParams.monthlyInterest.split("$")[1]) *
-          loyaltyInfo.tier.loanInterestBonus;
-
-      totalInCEL =
-        parseFloat(loanParams.totalInterest.split("$")[1]) -
-        parseFloat(loanParams.totalInterest.split("$")[1]) *
-          loyaltyInfo.tier.loanInterestBonus;
     }
-
-    const loyaltyApr =
-      formData.ltv.interest -
-      formData.ltv.interest * loyaltyInfo.tier.loanInterestBonus;
 
     const INTEREST_DATA = [
       {
         apr: formatter.percentageDisplay(formData.ltv.interest),
-        monthly: loanParams.monthlyInterest,
-        total: loanParams.totalInterest,
+        monthly: formatter.fiat(loanParams.monthlyInterest, "USD"),
+        total: formatter.fiat(loanParams.totalInterest, "USD"),
         type: "USD",
         color:
           theme === THEMES.DARK
@@ -192,14 +178,13 @@ class BorrowCalculator extends Component {
             : STYLES.COLORS.LIGHT_GRAY,
       },
       {
-        apr: formatter.percentageDisplay(loyaltyApr),
-        monthly: formatter.usd(monthlyInCEL),
-        total: formatter.usd(totalInCEL),
+        apr: formatter.percentageDisplay(loanParams.loyaltyApr),
+        monthly: formatter.fiat(loanParams.monthlyInCEL, "USD"),
+        total: formatter.fiat(loanParams.totalInCEL, "USD"),
         type: "CEL",
         color: STYLES.COLORS.CELSIUS_BLUE,
       },
     ];
-
     const textType = numberOfDigits > 8 ? "H7" : "H6";
 
     return INTEREST_DATA.map(num => (
@@ -300,7 +285,7 @@ class BorrowCalculator extends Component {
           rightText="USD"
           field={"amount"}
           type={"number"}
-          placeholder={`${formatter.usd(minimumLoanAmount, {
+          placeholder={`${formatter.fiat(minimumLoanAmount, "USD", {
             precision: 0,
           })} min`}
           keyboardType={"numeric"}

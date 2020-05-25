@@ -7,12 +7,14 @@ import * as appActions from "../../../redux/actions";
 import Loader from "../../atoms/Loader/Loader";
 import { getPadding } from "../../../utils/styles-util";
 import CelText from "../../atoms/CelText/CelText";
-import { THEMES, WELCOME_MESSAGES } from "../../../constants/UI";
+import {
+  THEMES,
+  WELCOME_MESSAGES,
+  INITIAL_API_CALLS,
+} from "../../../constants/UI";
 import { isKYCRejectedForever } from "../../../utils/user-util";
 import { STORYBOOK } from "../../../../dev-settings";
 import HomeStyle from "./Home.styles";
-
-const apiCalls = [];
 
 @connect(
   state => ({
@@ -27,10 +29,11 @@ class Home extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { callsInProgress } = nextProps;
 
-    if (callsInProgress[0] && apiCalls.indexOf(callsInProgress[0]) === -1) {
-      apiCalls.push(callsInProgress[0]);
-      return { progress: prevState.progress + 1 / 6 };
-      // six is current number of calls being called while loading app
+    if (
+      callsInProgress[0] &&
+      INITIAL_API_CALLS.indexOf(callsInProgress[0]) !== -1
+    ) {
+      return { progress: prevState.progress + 1 };
     }
     return null;
   }
@@ -126,7 +129,7 @@ class Home extends Component {
             >
               {randomMsg.text}
             </CelText>
-            <Loader progress={this.state.progress} />
+            <Loader progress={this.state.progress / INITIAL_API_CALLS.length} />
           </View>
           <View style={style.partnerLogos}>
             <Image

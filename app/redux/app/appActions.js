@@ -25,6 +25,7 @@ import {
 import { hasPassedKYC } from "../../utils/user-util";
 import { showMessage } from "../ui/uiActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import { navigateBack, navigateTo } from "../nav/navActions";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -39,6 +40,7 @@ export {
   showVerifyScreen,
   setAdvertisingId,
   setAppsFlyerUID,
+  toggleMaintenanceMode,
 };
 
 /**
@@ -113,7 +115,6 @@ function loadCelsiusAssets() {
     dispatch({ type: ACTIONS.FINISH_LOADING_ASSETS });
   };
 }
-
 
 /**
  * Handles state change of the app
@@ -212,8 +213,10 @@ function initAppData(initToken = null) {
     await dispatch(actions.getInitialCelsiusData());
     await dispatch(actions.setBannerProps());
 
+    await dispatch(actions.isGoodForAnimations());
     // get user token
-    const token = initToken || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
+    const token =
+      initToken || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
 
     // fetch user
     if (token) await dispatch(actions.getProfileInfo());
@@ -231,7 +234,7 @@ function initAppData(initToken = null) {
       await dispatch(actions.getComplianceInfo());
       await dispatch(
         actions.setBannerProps({ sessionCount: bannerProps.sessionCount + 1 })
-    );
+      );
 
       if (!profile.kyc || (profile.kyc && !hasPassedKYC())) {
         await dispatch(actions.getAllTransfers(TRANSFER_STATUSES.claimed));
@@ -319,5 +322,30 @@ function getGeolocation() {
         });
       }
     });
+  };
+}
+
+/**
+ * Sets app into maintenance mode
+ *
+ * @param {string} title
+ * @param {string} explanation
+ */
+function toggleMaintenanceMode(title, explanation) {
+  return (dispatch, getState) => {
+    const { backendStatus } = getState().generalData;
+
+    dispatch({
+      type: ACTIONS.TOGGLE_MAINTENANCE_MODE,
+      maintenance: !!title,
+      title,
+      explanation,
+    });
+
+    if (backendStatus && backendStatus.maintenance && !title) {
+      dispatch(navigateBack());
+    } else {
+      dispatch(navigateTo("Maintenance"));
+    }
   };
 }

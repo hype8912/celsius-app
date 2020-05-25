@@ -7,13 +7,10 @@ function initialState() {
   return {
     simplexData: {},
     payments: [],
-    quotes: {},
   };
 }
 
 export default function simplexReducer(state = initialState(), action) {
-  const quotes = {};
-
   switch (action.type) {
     case ACTIONS.GET_QUOTE_SUCCESS:
       return {
@@ -34,20 +31,6 @@ export default function simplexReducer(state = initialState(), action) {
       return {
         ...state,
         payments: action.payments,
-      };
-
-    case ACTIONS.GET_QUOTE_FOR_COIN_SUCCESS:
-      quotes[action.cryptocurrency] = {
-        ...state.quotes[action.cryptocurrency],
-        [action.fiatCurrency]: action.coinRate,
-      };
-
-      return {
-        ...state,
-        quotes: {
-          ...state.quotes,
-          ...quotes,
-        },
       };
 
     default:

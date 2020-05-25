@@ -44,12 +44,13 @@ class Welcome extends Component {
 
   onPressLogin = () => {
     const { actions } = this.props;
-    actions.navigateTo("Login");
+    actions.navigateTo("LoginLanding", { type: "login" });
   };
 
   render() {
     const style = WelcomeStyle();
-    const { actions, referralLink } = this.props;
+    const { actions, referralLink, navigation } = this.props;
+    const inactiveUser = !!navigation.getParam("inactiveUser");
 
     const { revisionId } = this.state;
     return (
@@ -60,22 +61,24 @@ class Welcome extends Component {
             style={style.celImage}
           />
           <CelText weight="bold" align="center" type="H1" style={style.title}>
-            Welcome!
+            {inactiveUser ? "You have been logged out" : "Welcome!"}
           </CelText>
           <CelText weight="300" align="center" style={style.subtitle}>
-            A new way to earn, borrow and pay on the blockchain. Let’s bring the
-            next 100M people into crypto together.
+            {inactiveUser
+              ? "You've been inactive for a while, so we've logged you out to help protect your account. Please login again."
+              : "A new way to earn, borrow and pay on the blockchain. Let’s bring the next 100M people into crypto together."}
           </CelText>
           <CelButton
             style={style.button}
-            onPress={() => actions.navigateTo("RegisterInitial")}
+            onPress={() =>
+              actions.navigateTo("LoginLanding", { type: "register" })
+            }
           >
             Join Celsius
           </CelButton>
           <CelButton basic onPress={() => this.onPressLogin()}>
             Login
           </CelButton>
-
           <CelText
             margin="30 0 0 0"
             weight="light"

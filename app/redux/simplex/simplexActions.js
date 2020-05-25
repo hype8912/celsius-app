@@ -6,12 +6,14 @@ import simplexService from "../../services/simplex-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { mocks } from "../../../dev-settings";
 import mockTransactions from "../../mock-data/payments.mock";
+import getCoinsUtil from "../../utils/get-coins-util";
+import store from "../store";
 
 export {
   simplexGetQuote,
   simplexCreatePaymentRequest,
   getAllSimplexPayments,
-  getSimplexQuoteForCoin,
+  getCrytpoLimits,
 };
 
 /**
@@ -20,6 +22,7 @@ export {
 function simplexGetQuote() {
   return async (dispatch, getState) => {
     const { formData } = getState().forms;
+
     try {
       const requestedCurrency = formData.isFiat
         ? formData.fiatCoin
@@ -30,14 +33,12 @@ function simplexGetQuote() {
 
       if (Number(amount)) {
         dispatch(startApiCall(API.GET_QUOTE));
-
         const quote = await simplexService.getQuote(
           formData.cryptoCoin,
           formData.fiatCoin,
           requestedCurrency,
           amount
         );
-
         dispatch({
           type: ACTIONS.GET_QUOTE_SUCCESS,
           quote: quote.data,
@@ -46,44 +47,6 @@ function simplexGetQuote() {
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_QUOTE, err));
-    }
-  };
-}
-
-/**
- * Gets info Simplex quote for coin
- *
- * @param {String} coin - ETH|BTC
- * @param {String} fiat - USD|EUR
- * @param {String} amountToCheck - USD|EUR
- */
-function getSimplexQuoteForCoin(coin) {
-  return async dispatch => {
-    try {
-      dispatch(startApiCall(API.GET_QUOTE_FOR_COIN));
-
-      const amountToCheck = 10000;
-      const quote = await simplexService.getQuote(
-        coin,
-        "USD",
-        "USD",
-        amountToCheck
-      );
-
-      const fiatCurrency = quote.data.fiat_money.currency.toLowerCase();
-      const cryptocurrency = quote.data.digital_money.currency.toLowerCase();
-      const coinRate =
-        quote.data.fiat_money.base_amount / quote.data.digital_money.amount;
-
-      dispatch({
-        type: ACTIONS.GET_QUOTE_FOR_COIN_SUCCESS,
-        fiatCurrency,
-        cryptocurrency,
-        coinRate,
-      });
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_QUOTE_FOR_COIN, err));
     }
   };
 }
@@ -164,6 +127,51 @@ function getAllSimplexPayments() {
     } catch (err) {
       dispatch(apiError(API.GET_PAYMENT_REQUESTS, err));
       dispatch(showMessage("error", err.msg));
+    }
+  };
+}
+
+/**
+ * Gets min and max limits for all crypto coins based on usd limits limits
+ * @todo: move to Backend
+ */
+function getCrytpoLimits() {
+  return async (dispatch, getState) => {
+    try {
+      const buyCoinsSettings = store.getState().generalData.buyCoinsSettings;
+      if (buyCoinsSettings.limit_per_crypto_currency) return;
+
+      dispatch(startApiCall(API.GET_CRYPTO_LIMITS));
+      const allowedSimplexCoins = getState().compliance.simplex.coins;
+      const usdLimits = getCoinsUtil.getBuyLimitsPerFiatCurrency("USD");
+
+      const limitsPerCrypto = {};
+      for (let i = 0; i < allowedSimplexCoins.length; i++) {
+        const quoteMin = await simplexService.getQuote(
+          allowedSimplexCoins[i],
+          "USD",
+          "USD",
+          usdLimits.min
+        );
+        const quoteMax = await simplexService.getQuote(
+          allowedSimplexCoins[i],
+          "USD",
+          "USD",
+          usdLimits.max
+        );
+
+        limitsPerCrypto[allowedSimplexCoins[i]] = {
+          min: quoteMin.data.digital_money.amount,
+          max: quoteMax.data.digital_money.amount,
+        };
+      }
+
+      dispatch({
+        type: ACTIONS.GET_CRYPTO_LIMITS_SUCCESS,
+        limitsPerCrypto,
+      });
+    } catch (err) {
+      dispatch(apiError(API.GET_CRYPTO_LIMITS, err));
     }
   };
 }

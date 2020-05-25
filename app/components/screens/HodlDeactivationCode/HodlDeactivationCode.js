@@ -41,6 +41,7 @@ class HodlDeactivationCode extends Component {
     title: "HODL Mode",
     right: "profile",
     gesturesEnabled: false,
+    customCenterComponent: { steps: 2, currentStep: 2, flowProgress: true },
   });
 
   componentWillUnmount() {
@@ -76,7 +77,7 @@ class HodlDeactivationCode extends Component {
     );
 
     return (
-      <RegularLayout>
+      <RegularLayout fabType={"hide"}>
         <CelText
           align={"left"}
           margin={"10 0 10 0"}

@@ -325,8 +325,8 @@ function getUserStatus() {
       const res = await userDataService.getUserStatus();
       const hodlStatus = res.data.hodlModeStatus;
       const kyc = res.data.kycStatus;
+      const twoFAStatus = res.data.twoFactorStatus;
       const newStatus = res.data.kycStatus.status;
-
       dispatch({
         type: ACTIONS.POLL_HODL_STATUS_SUCCESS,
         hodlStatus,
@@ -335,6 +335,11 @@ function getUserStatus() {
       dispatch({
         type: ACTIONS.GET_KYC_STATUS_SUCCESS,
         kyc,
+      });
+
+      dispatch({
+        type: ACTIONS.GET_2FA_STATUS_SUCCESS,
+        twoFAStatus,
       });
 
       if (newStatus === KYC_STATUSES.permanently_rejected) {

@@ -100,7 +100,6 @@ class SelectCountry extends Component {
       [field]: country,
       state: null,
       search: "",
-      activeSearch: false,
     });
     actions.navigateBack();
   };

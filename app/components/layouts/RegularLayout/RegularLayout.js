@@ -19,6 +19,7 @@ import { FAB_TYPE } from "../../../constants/UI";
 import KeyboardShift from "../../atoms/KeyboardShift/KeyboardShift";
 import OfflineMode from "../../atoms/OfflineMode/OfflineMode";
 import Spinner from "../../atoms/Spinner/Spinner";
+import animationsUtil from "../../../utils/animations-util";
 
 @connect(
   state => ({
@@ -31,7 +32,6 @@ class RegularLayout extends Component {
     padding: PropTypes.string,
     enableParentScroll: PropTypes.bool,
     fabType: PropTypes.oneOf(FAB_TYPE),
-    refreshing: PropTypes.bool,
     pullToRefresh: PropTypes.func,
   };
 
@@ -40,8 +40,28 @@ class RegularLayout extends Component {
     enableParentScroll: true,
     fabType: "main",
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      refreshing: false,
+    };
+  }
+
   componentDidMount = () => this.setFabType();
   componentDidUpdate = () => this.setFabType();
+
+  refresh = async () => {
+    const { pullToRefresh } = this.props;
+    this.setState({
+      refreshing: true,
+    });
+    await pullToRefresh();
+    this.setState({
+      refreshing: false,
+    });
+  };
 
   setFabType = () => {
     const { isFocused, fabType, actions } = this.props;
@@ -57,9 +77,9 @@ class RegularLayout extends Component {
       padding,
       enableParentScroll,
       internetConnected,
-      refreshing,
       pullToRefresh,
     } = this.props;
+    const { refreshing } = this.state;
     const style = RegularLayoutStyle(theme);
     const paddings = getPadding(padding);
 
@@ -84,11 +104,15 @@ class RegularLayout extends Component {
           scrollEnabled={enableParentScroll}
           style={style.container}
           contentContainerStyle={[{ flexGrow: 1 }, paddings]}
+          scrollEventThrottle={1}
+          onScroll={event =>
+            animationsUtil.scrollListener(event.nativeEvent.contentOffset.y)
+          }
           refreshControl={
             pullToRefresh && (
               <RefreshControl
                 refreshing={refreshing}
-                onRefresh={pullToRefresh}
+                onRefresh={this.refresh}
                 tintColor="transparent"
                 colors={["transparent"]}
                 style={{ backgroundColor: "transparent" }}

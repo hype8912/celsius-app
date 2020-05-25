@@ -17,12 +17,12 @@ import store from "./redux/store";
 import * as actions from "./redux/actions";
 import appUtil from "./utils/app-util";
 import AppNavigation from "./navigator/Navigator";
-import FabMenu from "./components/organisms/FabMenu/FabMenu";
 import Message from "./components/molecules/Message/Message";
-import DeepLinkController from "./components/molecules/DeepLinkController/DeepLinkController"
+import DeepLinkController from "./components/molecules/DeepLinkController/DeepLinkController";
 // import captureException from './utils/errorhandling-util'
 import ErrorBoundary from "./ErrorBoundary";
 import { remotePushController } from "./utils/push-notifications-util";
+import FabIntersection from "./components/organisms/FabIntersection/FabIntersection";
 
 function getActiveRouteName(navigationState) {
   if (!navigationState) {
@@ -38,7 +38,7 @@ function getActiveRouteName(navigationState) {
 
 class App extends Component {
   async componentDidMount() {
-    appUtil.initializeThirdPartyServices();
+    await appUtil.initializeThirdPartyServices();
 
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       store.dispatch(actions.navigateBack());
@@ -89,9 +89,9 @@ const CelsiusApplication = () => (
         ref={navigatorRef => actions.setTopLevelNavigator(navigatorRef)}
       />
       <Message />
-      <FabMenu />
+      <FabIntersection />
     </React.Fragment>
-    <DeepLinkController/>
+    <DeepLinkController />
     {remotePushController()}
   </Provider>
 );

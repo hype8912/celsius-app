@@ -8,7 +8,6 @@ import * as appActions from "../../../redux/actions";
 import HODLViewCodeStyles from "./HODLViewCode.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import { getPadding } from "../../../utils/styles-util";
 import { EMPTY_STATES, THEMES } from "../../../constants/UI";
 import STYLES from "../../../constants/STYLES";
@@ -45,6 +44,7 @@ class HODLViewCode extends Component {
     title: "HODL Mode",
     right: "profile",
     gesturesEnabled: false,
+    customCenterComponent: { steps: 3, currentStep: 3, flowProgress: true },
   });
 
   componentWillUnmount() {
@@ -79,7 +79,6 @@ class HODLViewCode extends Component {
 
     return (
       <RegularLayout padding={"0 0 0 0"}>
-        <HeadingProgressBar steps={3} currentStep={3} />
         <View
           style={[
             { flex: 1, width: "100%", height: "100%" },

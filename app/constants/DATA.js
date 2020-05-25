@@ -381,6 +381,45 @@ const SECURITY_STRENGTH_LEVEL = {
 
 const NOTIFICATION_TOKEN = "notificationToken";
 
+const COMING_SOON_COINS = [
+  {
+    name: "Algorand",
+    short: "ALGO",
+    image_url: require("../../assets/images/coins/algorand.png"),
+    learn_more_link: "https://www.algorand.com/",
+  },
+  {
+    name: "Tron",
+    short: "TRX",
+    image_url: require("../../assets/images/coins/tron3x.png"),
+    learn_more_link: "https://tron.network/",
+  },
+  {
+    name: "PAX Gold",
+    short: "PAXG",
+    image_url: require("../../assets/images/coins/paxGoldFullColor3x.png"),
+    learn_more_link: "https://www.paxos.com/paxgold/",
+  },
+  {
+    name: "Binance USD",
+    short: "BUSD",
+    image_url: require("../../assets/images/coins/binanceusd.png"),
+    learn_more_link: "https://www.paxos.com/busd/",
+  },
+  {
+    name: "Binance Coin",
+    short: "BNB",
+    image_url: require("../../assets/images/coins/binance.png"),
+    learn_more_link: "https://www.binance.com/en/buy-Binance-Coin",
+  },
+  {
+    name: "IOTA",
+    short: "IOTA",
+    image_url: require("../../assets/images/coins/iota.png"),
+    learn_more_link: "https://www.iota.org/",
+  },
+];
+
 export {
   BLOCKEXPLORERS,
   KYC_STATUSES,
@@ -402,4 +441,5 @@ export {
   SECURITY_STRENGTH_ITEMS,
   SECURITY_STRENGTH_LEVEL,
   NOTIFICATION_TOKEN,
+  COMING_SOON_COINS,
 };

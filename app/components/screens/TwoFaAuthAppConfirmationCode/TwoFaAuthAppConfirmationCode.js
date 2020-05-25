@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { View } from 'react-native';
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -13,10 +12,12 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { MODALS } from "../../../constants/UI";
 import UI from "../../../constants/STYLES";
 import VerifyAuthAppModal from "../../modals/VerifyAuthAppModal/VerifyAuthAppModal";
+import Spinner from "../../atoms/Spinner/Spinner";
 
 @connect(
   state => ({
     formData: state.forms.formData,
+    securityOverview: state.security.securityOverview,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -25,17 +26,33 @@ class TwoFaAuthAppConfirmationCode extends Component {
     title: "Auth App",
   });
 
+  constructor(props) {
+    super(props);
+    this.state = { loading: false };
+  }
+
   async componentDidMount() {
     const { actions } = this.props;
     actions.updateFormField("confirmationCode", "");
   }
 
   verifyAuthCode = async () => {
-    const { actions, formData } = this.props;
-    const success = await actions.enableTwoFactor(formData.confirmationCode);
-    if (success.data.ok) {
-      Keyboard.dismiss();
-      actions.openModal(MODALS.VERIFY_AUTHAPP_MODAL);
+    const { actions, formData, securityOverview } = this.props;
+    try {
+      this.setState({ loading: true });
+      const success = await actions.enableTwoFactor(formData.confirmationCode);
+      if (success.data.ok) {
+        Keyboard.dismiss();
+        if (securityOverview.fromFixNow) {
+          actions.toFixNow();
+        } else {
+          actions.openModal(MODALS.VERIFY_AUTHAPP_MODAL);
+        }
+        this.setState({ loading: false });
+      }
+    } catch (e) {
+      actions.showMessage("warning", e.msg);
+      this.setState({ loading: false });
     }
   };
 
@@ -73,6 +90,7 @@ class TwoFaAuthAppConfirmationCode extends Component {
 
   render() {
     const { formData } = this.props;
+    const { loading } = this.state;
 
     return (
       <RegularLayout>
@@ -87,14 +105,26 @@ class TwoFaAuthAppConfirmationCode extends Component {
           margin={"30 0 0 0"}
           helperButton={this.pasteCodeHelperButton}
         />
-        <CelButton
-          onPress={this.verifyAuthCode}
-          margin={"20 0 0 0"}
-          disabled={!formData.confirmationCode}
-          iconRight={"IconArrowRight"}
-        >
-          Verify Auth App
-        </CelButton>
+        {loading ? (
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 15,
+            }}
+          >
+            <Spinner />
+          </View>
+        ) : (
+          <CelButton
+            onPress={this.verifyAuthCode}
+            margin={"20 0 0 0"}
+            disabled={!formData.confirmationCode}
+            iconRight={"IconArrowRight"}
+          >
+            Verify Auth App
+          </CelButton>
+        )}
 
         <VerifyAuthAppModal onVerify={this.done} />
       </RegularLayout>

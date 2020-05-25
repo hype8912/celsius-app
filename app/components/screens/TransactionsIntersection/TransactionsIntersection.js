@@ -32,6 +32,14 @@ import TransactionDetailsCelPay from "../TransactionDetailsCelPay/TransactionDet
 class TransactionsIntersection extends Component {
   static propTypes = {};
   static defaultProps = {};
+  constructor(props) {
+    super(props);
+    const { actions, navigation } = this.props;
+    const id = navigation.getParam("id");
+
+    actions.getTransactionDetails(id);
+    this.interval = null;
+  }
 
   static navigationOptions = ({ navigation }) => {
     const hideBack = navigation.getParam("hideBack");
@@ -47,13 +55,14 @@ class TransactionsIntersection extends Component {
     const loanPayment = navigation.getParam("loanPayment");
     const id = navigation.getParam("id");
     if (loanPayment) await actions.getAllLoans();
-    actions.getTransactionDetails(id);
-
-    // ToDO: leave for the swiping?
-    // this.interval = setInterval(() => {
-    //   actions.getTransactionDetails(id);
-    // }, 15000);
+    this.interval = setInterval(() => {
+      actions.getTransactionDetails(id);
+    }, 15000);
   };
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   extendTransactionObj = () => {
     const { transaction, currencies } = this.props;
@@ -147,7 +156,6 @@ class TransactionsIntersection extends Component {
             transaction={transaction}
             navigateTo={actions.navigateTo}
             cancelTransfer={actions.cancelTransfer}
-            callsInProgress={callsInProgress}
             cancelingCelPay={cancelingCelPay}
           />
         );

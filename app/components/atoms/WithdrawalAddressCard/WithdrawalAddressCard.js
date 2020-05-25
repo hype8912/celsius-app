@@ -42,7 +42,7 @@ const WithdrawalAddressCard = ({
   return (
     <Card>
       <View style={[style.bodyWrapper, { opacity }]}>
-        <View style={{ alignSelf: "center" }}>
+        <View style={{ alignSelf: "flex-start" }}>
           <CoinIcon
             customStyles={style.size}
             coinShort={coinShort}

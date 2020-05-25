@@ -164,9 +164,18 @@ function sendResetLink() {
  * Logs the user out of the app
  */
 function logoutUser() {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const errorMsg = getState().api.error ? getState().api.error.msg : null;
+
     try {
-      await dispatch(resetToScreen("Welcome"));
+      if (
+        errorMsg ===
+        "You've been inactive for a while, so we've logged you out to help protect your account. Please login again."
+      ) {
+        await dispatch(resetToScreen("Welcome", { inactiveUser: true }));
+      } else {
+        await dispatch(resetToScreen("Welcome"));
+      }
 
       await logoutUserMixpanel();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
@@ -247,7 +256,12 @@ function refreshAuthToken() {
         type: ACTIONS.REFRESH_AUTH_TOKEN_SUCCESS,
       });
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
+      if (
+        err.msg !==
+        "You've been inactive for a while, so we've logged you out to help protect your account. Please login again."
+      ) {
+        dispatch(showMessage("error", err.msg));
+      }
       dispatch(apiError(API.REFRESH_AUTH_TOKEN, err));
     }
   };

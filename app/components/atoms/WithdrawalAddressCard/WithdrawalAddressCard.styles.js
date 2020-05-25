@@ -7,6 +7,7 @@ const base = {
   },
   bodyWrapper: {
     flexDirection: "row",
+    marginVertical: 7,
   },
   cardBody: {
     flex: 1,

@@ -1,7 +1,12 @@
+import { Platform } from "react-native";
 import store from "../redux/store";
 import { hasPassedKYC } from "./user-util";
 
-export { isLoanBannerVisible };
+export { isLoanBannerVisible, isIos };
+
+function isIos() {
+  return Platform.OS === "ios";
+}
 
 function isLoanBannerVisible() {
   const { isBannerVisible } = store.getState().ui;

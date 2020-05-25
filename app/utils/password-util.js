@@ -5,22 +5,16 @@ import {
   SECURITY_STRENGTH_LEVEL,
 } from "../constants/DATA";
 
+const passwordUtil = {
+  calculatePasswordScore,
+};
 /**
  * Calculates password score based on cleartext and users first, last name and email.
  *
  * @param {string} password
  * @return {Object}
  */
-const calculatePasswordScore = password => {
-  const { formData } = store.getState().forms;
-  const { profile } = store.getState().user;
-
-  const firstName = formData.firstName || profile.first_name;
-  const lastName = formData.lastName || profile.last_name;
-  const email = formData.email || profile.email;
-
-  const excludes = [firstName, lastName, email, " "];
-
+function calculatePasswordScore(password) {
   const pm = new PasswordMeter({
     minLength: {
       value: 8,
@@ -39,12 +33,10 @@ const calculatePasswordScore = password => {
       value: 1,
       message: SECURITY_STRENGTH_ITEMS[3].copy,
     },
-    exclude: {
-      value: excludes,
-      message: SECURITY_STRENGTH_ITEMS[4].copy,
-    },
   });
+
   const result = pm.getResult(password);
+
   let customStatus;
   switch (true) {
     case result.score < 80:
@@ -63,10 +55,44 @@ const calculatePasswordScore = password => {
   if (!result.errors) {
     result.errors = [];
   }
+
+  if (excludeNames(password)) {
+    result.score = -1;
+    result.percent = 0;
+    result.status = "needs requirement(s)";
+    result.errors = [...result.errors, SECURITY_STRENGTH_ITEMS[4].copy];
+  }
+
   return {
     result,
     customStatus,
   };
-};
+}
 
-export default calculatePasswordScore;
+/**
+ * Check if password contains first name, last name or username
+ *
+ * @param {string} password
+ * @return {Object}
+ */
+function excludeNames(password) {
+  const { formData } = store.getState().forms;
+  const { profile } = store.getState().user;
+
+  const firstName = formData.firstName || profile.first_name;
+  const lastName = formData.lastName || profile.last_name;
+  const email = formData.email || profile.email;
+  const passLC = password && password.toLowerCase();
+
+  if (
+    (passLC && passLC.includes(firstName && firstName.toLowerCase())) ||
+    (passLC && passLC.includes(lastName && lastName.toLowerCase())) ||
+    (passLC && passLC.includes(email && email.toLowerCase())) ||
+    (passLC && passLC.includes(" "))
+  ) {
+    return true;
+  }
+  return false;
+}
+
+export default passwordUtil;

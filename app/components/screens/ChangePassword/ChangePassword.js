@@ -8,7 +8,7 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import calculatePasswordScore from "../../../utils/password-util";
+import passwordUtil from "../../../utils/password-util";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 
@@ -45,13 +45,15 @@ class ChangePassword extends Component {
     );
 
     return (
-      <RegularLayout>
+      <RegularLayout fabType={"hide"}>
         <CelText
           align={"center"}
           margin={"0 0 30 0"}
           color={STYLES.COLORS.MEDIUM_GRAY}
           type={"H4"}
-        >To change your password, please fill in the fields below:</CelText>
+        >
+          To change your password, please fill in the fields below:
+        </CelText>
         <CelInput
           type="password"
           field="oldPassword"
@@ -79,7 +81,10 @@ class ChangePassword extends Component {
           onPress={this.changePassword}
           loading={changingPassword}
           margin={"10 0 0 0"}
-          disabled={calculatePasswordScore(formData.newPassword).result.score < 80}
+          disabled={
+            passwordUtil.calculatePasswordScore(formData.newPassword).result
+              .score < 80
+          }
         >
           Change password
         </CelButton>

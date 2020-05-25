@@ -13,8 +13,6 @@ import { CEL_PAY_TYPES, EMPTY_STATES, MODALS } from "../../../constants/UI";
 import cryptoUtil from "../../../utils/crypto-util";
 import CelPayInfoModal from "../../modals/CelPayInfoModal/CelPayInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { openModal } from "../../../redux/ui/uiActions";
-import store from "../../../redux/store";
 import { renderHodlEmptyState } from "../../../utils/hodl-util";
 
 @connect(
@@ -37,35 +35,14 @@ class CelPayLanding extends Component {
 
   static navigationOptions = () => ({
     title: "CelPay",
-    right: "info",
-    onInfo: () => {
-      store.dispatch(openModal(MODALS.CELPAY_INFO_MODAL));
-    },
+    right: "profile",
   });
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      refreshing: false,
-    };
-  }
-
   componentDidMount() {
-    const { navHistory } = this.props;
+    const { navHistory, actions } = this.props;
+    actions.openModal(MODALS.CELPAY_INFO_MODAL);
     mixpanelAnalytics.navigatedToCelPay(navHistory[0]);
   }
-
-  refresh = async () => {
-    const { actions } = this.props;
-    this.setState({
-      refreshing: true,
-    });
-    await actions.getAllTransactions();
-    this.setState({
-      refreshing: false,
-    });
-  };
 
   sendAsLink = () => {
     const { actions } = this.props;
@@ -77,7 +54,9 @@ class CelPayLanding extends Component {
   sendToFriend = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("CelPayChooseFriend");
+    actions.navigateTo("CelPayEnterAmount", {
+      celPayType: CEL_PAY_TYPES.FRIEND,
+    });
     mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.FRIEND);
   };
 
@@ -92,8 +71,6 @@ class CelPayLanding extends Component {
       celPaySettings,
       hodlStatus,
     } = this.props;
-
-    const { refreshing } = this.state;
 
     if (kycStatus !== KYC_STATUSES.pending && !hasPassedKYC())
       return (
@@ -133,7 +110,9 @@ class CelPayLanding extends Component {
       );
 
     return (
-      <RegularLayout refreshing={refreshing} pullToRefresh={this.refresh}>
+      <RegularLayout
+        pullToRefresh={() => actions.getAllTransactions({ type: ["celpay"] })}
+      >
         <MultiInfoCardButton
           textButton={"Share as a link"}
           explanation={"Send a direct link with your preferred apps."}
