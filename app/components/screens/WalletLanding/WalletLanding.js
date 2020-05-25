@@ -98,6 +98,7 @@ class WalletLanding extends Component {
       hodlStatus,
       userTriggeredActions,
     } = this.props;
+    actions.changeWalletHeaderContent();
     setTimeout(() => {
       if (
         !previouslyOpenedModals.HODL_MODE_MODAL &&
