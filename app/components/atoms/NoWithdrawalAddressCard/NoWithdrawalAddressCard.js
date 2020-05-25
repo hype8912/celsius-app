@@ -12,14 +12,14 @@ const NoWithdrawalAddressCard = ({
   coinShort,
   imageUrl,
   onPress,
-  disabledPress
+  disabledPress,
 }) => {
   NoWithdrawalAddressCard.propTypes = {
     imageUrl: PropTypes.string.isRequired,
     coinShort: PropTypes.string.isRequired,
     coinName: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
-    disabledPress: PropTypes.bool
+    disabledPress: PropTypes.bool,
   };
 
   const style = NoWithdrawalAddressCardStyle();
@@ -27,7 +27,7 @@ const NoWithdrawalAddressCard = ({
   return (
     <Card>
       <View style={style.bodyWrapper}>
-        <View style={{ alignSelf: "center" }}>
+        <View style={{ alignSelf: "flex-start" }}>
           <CoinIcon
             customStyles={style.size}
             coinShort={coinShort}
@@ -42,8 +42,12 @@ const NoWithdrawalAddressCard = ({
             margin="5 0 0 0"
             type="H6"
             weight="400"
-            color={!disabledPress ? STYLES.COLORS.CELSIUS_BLUE : STYLES.COLORS.CELSIUS_BLUE_OPACITY5}
-            onPress={!disabledPress ? onPress : ()=>{}}
+            color={
+              !disabledPress
+                ? STYLES.COLORS.CELSIUS_BLUE
+                : STYLES.COLORS.CELSIUS_BLUE_OPACITY5
+            }
+            onPress={!disabledPress ? onPress : () => {}}
           >
             Add withdrawal address
           </CelText>
