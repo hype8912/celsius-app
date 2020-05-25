@@ -28,7 +28,7 @@ const base = {
     justifyContent: "flex-end",
   },
   meter: {
-    height: heightPercentageToDP("2"),
+    height: heightPercentageToDP("2%"),
     width: widthPercentageToDP("40%"),
   },
 };
