@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import LoginStyle from "./Login.styles";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
@@ -100,27 +100,18 @@ class Login extends Component {
                 this.pass = input;
               }}
             />
-            {ENV !== "STAGING" ? (
-              <View style={style.forgotPassword}>
-                <TouchableOpacity
-                  onPress={() => actions.navigateTo("ForgotPassword")}
-                >
-                  <CelText weight="300" color={STYLES.COLORS.CELSIUS_BLUE}>
-                    Forgot password?
-                  </CelText>
-                </TouchableOpacity>
-              </View>
-            ) : null}
 
             {this.renderCaptcha()}
 
-            {/* <CelButton*/}
-            {/*  margin="10 0 40 0"*/}
-            {/*  onPress={this.loginUser}*/}
-            {/*  loading={loginLoading}*/}
-            {/* >*/}
-            {/*  Log in*/}
-            {/* </CelButton>*/}
+            {ENV !== "STAGING" ? (
+              <CelButton
+                margin="35 0 0 0"
+                basic
+                onPress={() => actions.navigateTo("ForgotPassword")}
+              >
+                Forgot password?
+              </CelButton>
+            ) : null}
 
             {ENV === "STAGING" ? (
               <CelButton basic onPress={() => actions.navigateTo("Storybook")}>

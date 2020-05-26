@@ -120,7 +120,7 @@ function loadCelsiusAssets() {
  * Handles state change of the app
  * @param {string} nextAppState - one of active|inactive|background
  */
-const ASK_FOR_PIN_AFTER = 30 * 60 * 100;
+const ASK_FOR_PIN_AFTER = 30 * 1000;
 let pinTimeout;
 let startOfBackgroundTimer;
 

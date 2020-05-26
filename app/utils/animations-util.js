@@ -119,11 +119,14 @@ function scrollListener(y) {
     changeInterestHeader,
   } = store.getState().animations;
   if (y > threshold) {
-    if (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory")
+    if (
+      !changeWalletHeader &&
+      (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory")
+    )
       store.dispatch(actions.changeWalletHeaderContent(true));
-    if (activeScreen === "CoinDetails")
+    if (!changeCoinDetailsHeader && activeScreen === "CoinDetails")
       store.dispatch(actions.changeCoinDetailsHeaderContent(true));
-    if (activeScreen === "WalletInterest")
+    if (!changeInterestHeader && activeScreen === "WalletInterest")
       store.dispatch(actions.changeInterestHeaderContent(true));
   }
   if (y < threshold && changeCoinDetailsHeader) {
