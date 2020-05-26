@@ -25,6 +25,7 @@ let token;
 let deviceModel;
 let osVersion;
 let buildVersion;
+const decodedPublicKey = Base64.decode(PUBLIC_KEY);
 
 export default {
   initInterceptors,
@@ -339,15 +340,11 @@ function parseValidationErrors(serverError) {
  * endpont /users/hodl_mode/begin returns wrong api key
  * CN-4875 Wire hodl mode
  */
-function verifyKey(data, sign) {
-  try {
-    const sig2 = new r.KJUR.crypto.Signature({ alg: "SHA256withRSA" });
-    sig2.init(Base64.decode(PUBLIC_KEY));
-    sig2.updateString(JSON.stringify(data));
-    const isValid = true || sig2.verify(sign);
 
-    return ENV === "PRODUCTION" ? true : isValid;
-  } catch (err) {
-    return true;
-  }
+function verifyKey(data, sign) {
+  const sig2 = new r.KJUR.crypto.Signature({ alg: "SHA256withRSA" });
+  sig2.init(decodedPublicKey);
+  sig2.updateString(JSON.stringify(data));
+  const isValid = sig2.verify(sign);
+  return isValid;
 }
