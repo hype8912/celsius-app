@@ -64,7 +64,10 @@ export default function generalDataReducer(state = initialState(), action) {
         withdrawalSettings: action.withdrawalSettings,
         celPaySettings: action.celPaySettings,
         automaticLoanLimit: action.automaticLoanLimit,
-        buyCoinsSettings: action.buyCoinsSettings,
+        buyCoinsSettings: {
+          ...state.buyCoinsSettings,
+          ...action.buyCoinsSettings,
+        },
       };
 
     case ACTIONS.GET_LOYALTY_INFO_SUCCESS:
