@@ -119,7 +119,6 @@ function getUserData() {
  */
 async function addPushDeviceToken() {
   const token = await getSecureStoreKey(NOTIFICATION_TOKEN);
-
   if (Platform.OS === "android") {
     Mixpanel.setPushRegistrationId(token);
   } else {

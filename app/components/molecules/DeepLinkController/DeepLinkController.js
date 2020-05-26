@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import appsFlyer from "react-native-appsflyer";
@@ -37,11 +37,13 @@ class DeepLinkController extends Component {
   componentDidUpdate(prevProps) {
     const { deepLinkData, appState, user, actions } = this.props;
     const { allowHandleDeepLink } = this.state;
-
     if (
       prevProps.appState.match(/inactive|background/) &&
       appState === "active"
     ) {
+      if (Platform.OS === "ios") {
+        appsFlyer.trackAppLaunch();
+      }
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ allowHandleDeepLink: true });
     }

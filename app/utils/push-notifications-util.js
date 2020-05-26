@@ -1,9 +1,9 @@
 import { Platform } from "react-native";
 import { useEffect } from "react";
 import messaging from "@react-native-firebase/messaging";
-
 import PushNotification from "react-native-push-notification";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import constants from "../../constants";
 import notificationService from "../services/notifications-service";
 import { getSecureStoreKey, setSecureStoreKey } from "./expo-storage";
 import { NOTIFICATION_TOKEN } from "../constants/DATA";
@@ -80,7 +80,7 @@ function remotePushController() {
         }
       },
       // Android only: GCM or FCM Sender ID
-      senderID: "765558032297",
+      senderID: constants.ANDROID_SENDER_ID,
       popInitialNotification: true,
       requestPermissions: false, // - permisssion are requested in separate function
     });

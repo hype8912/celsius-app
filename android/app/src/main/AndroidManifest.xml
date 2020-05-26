@@ -89,14 +89,6 @@
             </intent-filter>
         </receiver>
 
-      <service
-            android:name="com.mixpanel.android.mpmetrics.MixpanelFCMMessagingService"
-             android:enabled="true"
-              android:exported="false">
-        <intent-filter>
-                  <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-        </intent-filter>
-      </service>
 
 
       <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name"
@@ -138,6 +130,18 @@
         </intent-filter>
       </service>
       <!-- </ Only if you're using GCM or localNotificationSchedule() > -->
+
+      <meta-data android:name="com.mixpanel.android.MPConfig.AutoShowMixpanelUpdates" android:value="false" />
+      <service
+            android:name="com.mixpanel.android.mpmetrics.MixpanelFCMMessagingService"
+            android:enabled="true"
+            android:exported="false"
+      >
+        <intent-filter>
+                  <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+        </intent-filter>
+      </service>
+
 
       <!-- < Else > -->
 <!--      <service-->

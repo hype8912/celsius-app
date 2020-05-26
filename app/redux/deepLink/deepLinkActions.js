@@ -14,7 +14,6 @@ function addDeepLinkData(deepLinkData) {
 function handleDeepLink() {
   return (dispatch, getState) => {
     const { deepLinkData } = getState().deepLink;
-
     dispatch({ type: ACTIONS.DEEPLINK_HANDLED });
 
     switch (deepLinkData.type) {
