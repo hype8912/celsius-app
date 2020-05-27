@@ -78,6 +78,11 @@ class BorrowEnterAmount extends Component {
     });
   }
 
+  async componentDidMount() {
+    const { actions } = this.props;
+    actions.startedLoanApplication();
+  }
+
   onPressPredefinedAmount = ({ label, value }) => {
     const { formData, minimumLoanAmount, actions } = this.props;
     let amount;
