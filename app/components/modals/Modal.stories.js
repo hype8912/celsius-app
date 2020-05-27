@@ -14,7 +14,6 @@ import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsModals/LoanAlertsMarg
 
 import ApiKeyRevokeModalStories from "./ApiKeyRevokeModal/ApiKeyRevokeModal.stories";
 import ApiKeySuccessModalStories from "./ApiKeySuccessModal/ApiKeySuccessModal.stories";
-import BecomeCelMemberModalStories from "./BecomeCelMemberModal/BecomeCelMemberModal.stories";
 import CalculateLoyaltyLevelModalStories from "./CalculateLoyaltyLevelModal/CalculateLoyaltyLevelModal.stories";
 import CancelLoanModalStories from "./CancelLoanModal/CancelLoanModal.stories";
 import CelPayReceivedModalStories from "./CelPayReceivedModal/CelPayReceivedModal.stories";
@@ -23,7 +22,6 @@ import ConfirmWithdrawalAddressModalStories from "./ConfirmWithdrawalAddressModa
 import CreateNewAccountModalStories from "./CreateNewAccountModal/CreateNewAccountModal.stories";
 import DepositInfoModalStories from "./DepositInfoModal/DepositInfoModal.stories";
 import LoanApplicationSuccessModalStories from "./LoanApplicationSuccessModal/LoanApplicationSuccessModal.stories";
-import LoseMembershipModalStories from "./LoseMembershipModal/LoseMembershipModal.stories";
 import LoseTierModalStories from "./LoseTierModal/LoseTierModal.stories";
 import MemoIdModalStories from "./MemoIdModal/MemoIdModal.stories";
 import PrepayDollarInterestModalStories from "./PrepayDollarInterestModal/PrepayDollarInterestModal.stories";
@@ -57,7 +55,6 @@ storiesOf("Modals", module)
       <InterestDueModalStories />
       <ApiKeyRevokeModalStories />
       <ApiKeySuccessModalStories />
-      <BecomeCelMemberModalStories />
       <CalculateLoyaltyLevelModalStories />
       <CancelLoanModalStories />
       <CelPayReceivedModalStories />
@@ -67,7 +64,6 @@ storiesOf("Modals", module)
       <DestinationInfoTagModalStories />
       <DepositInfoModalStories />
       <LoanApplicationSuccessModalStories />
-      <LoseMembershipModalStories />
       <LoseTierModalStories />
       <MemoIdModalStories />
       <PrepayDollarInterestModalStories />

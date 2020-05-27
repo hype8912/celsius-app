@@ -5,7 +5,6 @@ import { showMessage } from "../ui/uiActions";
 import { clearForm } from "../forms/formsActions";
 import transactionsService from "../../services/transactions-service";
 import { navigateTo } from "../nav/navActions";
-import celUtilityUtil from "../../utils/cel-utility-util";
 import { getWalletSummary } from "../wallet/walletActions";
 import mockTransactions from "../../mock-data/transactions.mock";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
@@ -153,8 +152,6 @@ function withdrawCrypto() {
         type: ACTIONS.WITHDRAW_CRYPTO_SUCCESS,
         transaction: res.data.transaction,
       });
-
-      await celUtilityUtil.refetchMembershipIfChanged(coin.toUpperCase());
 
       dispatch(
         navigateTo("TransactionsIntersection", {

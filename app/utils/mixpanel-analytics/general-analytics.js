@@ -35,7 +35,7 @@ function navigated(screen) {
 /**
  * Fires an event when a user presses a CelButton
  *
- * @param {string} buttonText - copy on the button
+ * @param {string} button - copy on the button
  */
 function buttonPressed(button) {
   sendEvent("Button pressed", { button });
@@ -71,7 +71,6 @@ async function sessionStarted(trigger) {
         "Has pin": userData.has_pin,
         "KYC status": userData.kyc ? userData.kyc.status : "unknown",
         "Has referral link": !!userData.referral_link_id,
-        "Is celsius member": userData.celsius_member,
         "Has SSN": !!userData.ssn,
         "User's UXCam url": url,
       });

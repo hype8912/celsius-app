@@ -41,30 +41,13 @@ class WithdrawConfirm extends Component {
   }
 
   renderInfoBox = () => {
-    const { walletSummary, formData, user, loyaltyInfo } = this.props;
+    const { walletSummary, formData, loyaltyInfo } = this.props;
     const coinData =
       formData.coin &&
       walletSummary.coins.filter(
         c => c.short === formData.coin.toUpperCase()
       )[0];
     const newBalance = coinData && coinData.amount - formData.amountCrypto;
-
-    if (user.celsius_member && formData.coin === "CEL" && newBalance < 1) {
-      return (
-        <InfoBox
-          backgroundColor={STYLES.COLORS.RED}
-          padding="15 15 15 15"
-          color="white"
-        >
-          <CelText color={STYLES.COLORS.WHITE}>
-            Withdrawing will leave you with less than 1 CEL in your wallet,
-            which result in losing your Celsius membership. This will restrict
-            you from using all the available Celsius features. Are you sure that
-            you want to withdraw?
-          </CelText>
-        </InfoBox>
-      );
-    }
 
     if (
       formData.coin === "CEL" &&

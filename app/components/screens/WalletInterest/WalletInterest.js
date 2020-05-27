@@ -81,11 +81,6 @@ class WalletInterest extends Component {
         <InterestCalculatorScreen purpose={EMPTY_STATES.NO_SSN_INTEREST} />
       );
     }
-    if (!user.celsius_member) {
-      return (
-        <InterestCalculatorScreen purpose={EMPTY_STATES.NON_MEMBER_INTEREST} />
-      );
-    }
     if (walletSummary.total_interest_earned <= 0) {
       return <InterestCalculatorScreen purpose={EMPTY_STATES.ZERO_INTEREST} />;
     }

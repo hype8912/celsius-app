@@ -22,7 +22,6 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import STYLES from "../../../constants/STYLES";
 import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
-import LoseMembershipModal from "../../modals/LoseMembershipModal/LoseMembershipModal";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CelText from "../../atoms/CelText/CelText";
@@ -222,9 +221,6 @@ class WithdrawEnterAmount extends Component {
     );
     const newBalance = Number(coinData.amount) - Number(formData.amountCrypto);
 
-    if (celUtilityUtil.isLosingMembership(formData.coin, newBalance)) {
-      return actions.openModal(MODALS.LOSE_MEMBERSHIP_MODAL);
-    }
     if (celUtilityUtil.isLosingTier(formData.coin, newBalance)) {
       return actions.openModal(MODALS.LOSE_TIER_MODAL);
     }
@@ -436,9 +432,6 @@ class WithdrawEnterAmount extends Component {
           />
         )}
 
-        <LoseMembershipModal
-          navigateToNextStep={() => this.navigateToNextStep(true)}
-        />
         {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
           <LoseTierModal
             navigateToNextStep={() => this.navigateToNextStep(true)}

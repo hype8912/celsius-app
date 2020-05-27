@@ -19,7 +19,6 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
 import RejectionReasonsModal from "../../modals/RejectionReasonsModal/RejectionReasonsModal";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
-import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
@@ -83,9 +82,6 @@ class WalletLanding extends Component {
     this.state = {
       activeView: props.appSettings.default_wallet_view,
     };
-
-    // NOTE (fj): quickfix for CN-2763
-    this.shouldInitializeMembership = true;
   }
 
   componentDidMount = async () => {
@@ -128,13 +124,6 @@ class WalletLanding extends Component {
     await actions.getWalletSummary();
     if (!currenciesRates) actions.getCurrencyRates();
     if (!currenciesGraphs) actions.getCurrencyGraphs();
-
-    // NOTE (fj): quickfix for CN-2763
-    // if (user.celsius_member) {
-    if (this.shouldInitializeMembership) {
-      actions.getCelsiusMemberStatus();
-      this.shouldInitializeMembership = false;
-    }
 
     this.setWalletFetchingInterval();
   };
@@ -317,7 +306,6 @@ class WalletLanding extends Component {
         <CelPayReceivedModal transfer={branchTransfer} />
         <ReferralSendModal />
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
-        <BecomeCelMemberModal />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
         <MultiAddressModal actions={actions} />

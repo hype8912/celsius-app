@@ -4,7 +4,6 @@ import apiUrl from "./api-url";
 const userDataService = {
   getLinkedBankAccount,
   linkBankAccount,
-  getCelsiusMemberStatus,
   getLoyaltyInfo,
   getUserAppSettings,
   setUserAppSettings,
@@ -36,14 +35,6 @@ function getLinkedBankAccount() {
  */
 function linkBankAccount(bankAccountInfo) {
   return axios.post(`${apiUrl}/bank/account`, bankAccountInfo);
-}
-
-/**
- * Get the user member status
- * @return {Promise}
- */
-function getCelsiusMemberStatus() {
-  return axios.post(`${apiUrl}/user/membership`);
 }
 
 /**

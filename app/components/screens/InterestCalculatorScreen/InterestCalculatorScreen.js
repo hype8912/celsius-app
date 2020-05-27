@@ -37,19 +37,6 @@ class InterestCalculatorScreen extends Component {
           text:
             "We apologize for any inconvenience, but due to local laws and regulations, we are unable to work with users from your region.",
         };
-      case EMPTY_STATES.NON_MEMBER_INTEREST:
-        return {
-          heading: "Calculate a total interest you may earn.",
-          text: "Start earning unmatched interest on your coins by depositing.",
-          button: (
-            <CelButton
-              margin="20 0 0 0"
-              onPress={() => actions.navigateTo("Deposit", { coin: "CEL" })}
-            >
-              Deposit
-            </CelButton>
-          ),
-        };
 
       case EMPTY_STATES.NO_SSN_INTEREST:
         return {

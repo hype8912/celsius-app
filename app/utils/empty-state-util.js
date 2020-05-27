@@ -197,17 +197,6 @@ function getProps(purpose, componentProps) {
         onPress: () => actions.navigateTo("WalletLanding"),
       };
 
-    case EMPTY_STATES.NON_MEMBER_CELPAY:
-      return {
-        ...props,
-        heading: "Send crypto to your friends",
-        paragraphs: [
-          "Quickly, easily and with no fees or keys required. All you have to do is become a Celsius member by adding some CEL to your wallet",
-        ],
-        button: "Deposit CEL",
-        onPress: () => actions.navigateTo("Deposit", { coin: "CEL" }),
-      };
-
     case EMPTY_STATES.NO_WITHDRAWAL_ADDRESSES:
       return {
         ...props,
