@@ -259,12 +259,16 @@ class CelHeading extends Component {
       (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory") &&
       changeWalletHeader
     ) {
-      screenTitle = fromatter.usd(walletSummary.total_amount_usd);
+      screenTitle = walletSummary
+        ? fromatter.usd(walletSummary.total_amount_usd)
+        : title;
       return screenTitle;
     }
 
     if (activeScreen === "WalletInterest" && changeInterestHeader) {
-      screenTitle = fromatter.usd(walletSummary.total_interest_earned);
+      screenTitle = walletSummary
+        ? fromatter.usd(walletSummary.total_interest_earned)
+        : title;
       return screenTitle;
     }
 

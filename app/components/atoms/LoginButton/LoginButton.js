@@ -45,8 +45,10 @@ class LoginButton extends Component {
   };
 
   render() {
-    const { onPress, disabled } = this.props;
+    const { onPress, disabled, text } = this.props;
     const LoginButtonContent = this.renderLoginButtonContent;
+
+    if (text.includes("Twitter")) return <LoginButtonContent />;
 
     return (
       <TouchableOpacity disabled={disabled} onPress={onPress}>
