@@ -51,6 +51,7 @@ class Welcome extends Component {
     const style = WelcomeStyle();
     const { actions, referralLink, navigation } = this.props;
     const inactiveUser = !!navigation.getParam("inactiveUser");
+    const logoutMsg = navigation.getParam("msg");
 
     const { revisionId } = this.state;
     return (
@@ -65,7 +66,7 @@ class Welcome extends Component {
           </CelText>
           <CelText weight="300" align="center" style={style.subtitle}>
             {inactiveUser
-              ? "You've been inactive for a while, so we've logged you out to help protect your account. Please login again."
+              ? logoutMsg
               : "A new way to earn, borrow and pay on the blockchain. Let’s bring the next 100M people into crypto together."}
           </CelText>
           <CelButton

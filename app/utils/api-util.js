@@ -13,6 +13,7 @@ import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { isKYCRejectedForever } from "./user-util";
 import mixpanelAnalytics from "./mixpanel-analytics";
+import { logoutUserMixpanel } from "./mixpanel-util";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -233,7 +234,6 @@ async function errorInterceptor(serverError) {
     url: serverError.config.url,
     method: serverError.config.method,
   });
-
   if (err.status === 401) handle401(err);
   if (err.status === 403) handle403(err);
   if (err.status === 426) {
@@ -260,13 +260,23 @@ function handle401(err) {
   }
 }
 
-function handle403(err) {
+async function handle403(err) {
   if (err.slug === "USER_SUSPENDED") {
     const { profile } = store.getState().user;
     if (profile && profile.id) {
       store.dispatch(actions.logoutUser());
     }
     store.dispatch(actions.showMessage("error", err.msg));
+  }
+  if (err.slug === "Token Expired") {
+    await logoutUserMixpanel();
+    mixpanelAnalytics.sessionEnded("Logout user");
+    store.dispatch(
+      actions.resetToScreen("Welcome", {
+        inactiveUser: true,
+        msg: err.msg,
+      })
+    );
   }
 }
 
