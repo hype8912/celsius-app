@@ -164,18 +164,9 @@ function sendResetLink() {
  * Logs the user out of the app
  */
 function logoutUser() {
-  return async (dispatch, getState) => {
-    const errorMsg = getState().api.error ? getState().api.error.msg : null;
-
+  return async dispatch => {
     try {
-      if (
-        errorMsg ===
-        "You've been inactive for a while, so we've logged you out to help protect your account. Please login again."
-      ) {
-        await dispatch(resetToScreen("Welcome", { inactiveUser: true }));
-      } else {
-        await dispatch(resetToScreen("Welcome"));
-      }
+      await dispatch(resetToScreen("Welcome"));
 
       await logoutUserMixpanel();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
