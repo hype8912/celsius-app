@@ -160,13 +160,17 @@ class TransactionDetailsCelPay extends Component {
           ) : null}
 
           {shouldRenderShareLink && !transaction.transfer_data.claimer ? (
-            <CelButton
-              margin={"40 0 0 0"}
-              onPress={this.shareCelPayLink}
-              disabled={type === TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION}
-            >
-              Share CelPay Link
-            </CelButton>
+            <>
+              <CelButton
+                margin={"20 0 0 0"}
+                onPress={this.shareCelPayLink}
+                disabled={
+                  type === TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION
+                }
+              >
+                Share CelPay Link
+              </CelButton>
+            </>
           ) : null}
 
           {type === TRANSACTION_TYPES.CELPAY_RECEIVED ? (
