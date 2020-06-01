@@ -49,9 +49,7 @@ class Welcome extends Component {
 
   render() {
     const style = WelcomeStyle();
-    const { actions, referralLink, navigation } = this.props;
-    const inactiveUser = !!navigation.getParam("inactiveUser");
-    const logoutMsg = navigation.getParam("msg");
+    const { actions, referralLink } = this.props;
 
     const { revisionId } = this.state;
     return (
@@ -62,12 +60,11 @@ class Welcome extends Component {
             style={style.celImage}
           />
           <CelText weight="bold" align="center" type="H1" style={style.title}>
-            {inactiveUser ? "You have been logged out" : "Welcome!"}
+            Welcome!
           </CelText>
           <CelText weight="300" align="center" style={style.subtitle}>
-            {inactiveUser
-              ? logoutMsg
-              : "A new way to earn, borrow and pay on the blockchain. Let’s bring the next 100M people into crypto together."}
+            A new way to earn, borrow and pay on the blockchain. Let’s bring the
+            next 100M people into crypto together.
           </CelText>
           <CelButton
             style={style.button}

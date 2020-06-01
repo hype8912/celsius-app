@@ -89,24 +89,51 @@ class LoginLanding extends Component {
     );
   };
 
+  titleCopy = () => {
+    const { navigation } = this.props;
+    const type = navigation.getParam("type");
+    const inactiveUser = !!navigation.getParam("inactiveUser");
+    const logoutMsg = navigation.getParam("msg");
+
+    if (type === "login") {
+      if (inactiveUser) {
+        return {
+          title: "You have been logged out",
+          subTitle: logoutMsg,
+        };
+      }
+      return {
+        title: "Log in",
+        subTitle: "Welcome back, please log in to your account",
+      };
+    }
+    return {
+      title: "Create Account",
+      subTitle: "Choose how you want to sign up",
+    };
+  };
+
   render() {
     const { actions, navigation } = this.props;
     const style = LoginLandingStyle();
     const { ENV } = Constants;
     const type = navigation.getParam("type");
     const navigateTo = type === "login" ? "Login" : "RegisterInitial";
+    const inactiveUser = !!navigation.getParam("inactiveUser");
 
     return (
       <AuthLayout>
         <View style={style.container}>
           <View style={style.header}>
-            <CelText margin="0 0 10 0" align="center" type="H1">
-              {type === "login" ? "Log in" : "Create Account"}
+            <CelText
+              margin="0 0 10 0"
+              align="center"
+              type={inactiveUser ? "H2" : "H1"}
+            >
+              {this.titleCopy().title}
             </CelText>
             <CelText weight="300" align="center">
-              {type === "login"
-                ? "Welcome back, please log in to your account"
-                : "Choose how you want to sign up"}
+              {this.titleCopy().subTitle}
             </CelText>
           </View>
           <View style={style.buttons}>
