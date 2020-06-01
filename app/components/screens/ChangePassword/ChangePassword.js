@@ -35,6 +35,10 @@ class ChangePassword extends Component {
       formData: { oldPassword, newPassword },
     } = this.props;
     await actions.resetPassword(oldPassword, newPassword);
+    actions.updateFormFields({
+      oldPassword: "",
+      newPassword: "",
+    });
   };
 
   render() {

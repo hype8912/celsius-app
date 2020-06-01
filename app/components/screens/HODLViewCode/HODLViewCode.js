@@ -38,27 +38,33 @@ class HODLViewCode extends Component {
     this.state = {
       emptyState: false,
     };
+    props.navigation.setParams({ hideBack: false });
   }
 
-  static navigationOptions = () => ({
-    title: "HODL Mode",
-    right: "profile",
-    gesturesEnabled: false,
-    customCenterComponent: { steps: 3, currentStep: 3, flowProgress: true },
-  });
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "HODL Mode",
+      right: "profile",
+      gesturesEnabled: false,
+      hideBack: navigation.getParam("hideBack") || false,
+      customCenterComponent: { steps: 3, currentStep: 3, flowProgress: true },
+    };
+  };
 
   componentWillUnmount() {
-    const { actions } = this.props;
+    const { actions, navigation } = this.props;
     actions.clearForm();
+    navigation.setParams({ hideBack: false });
   }
 
   checkEmail = async () => {
-    const { actions } = this.props;
+    const { actions, navigation } = this.props;
     const response = await actions.activateHodlMode();
     if (response && response.success) {
       this.setState({
         emptyState: true,
       });
+      navigation.setParams({ hideBack: true });
     }
   };
 

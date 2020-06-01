@@ -13,7 +13,6 @@ import SecurityStrengthMeter from "../../atoms/SecurityStrengthMeter/SecurityStr
 import CelText from "../../atoms/CelText/CelText";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelButton from "../../atoms/CelButton/CelButton";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import CheckWithdrawalAddressesCard from "../../organisms/CheckWithdrawalAddressesCard/CheckWithdrawalAddressesCard";
 import formatter from "../../../utils/formatter";
 import Card from "../../atoms/Card/Card";
@@ -32,6 +31,11 @@ class SecurityFixNow extends Component {
     const { params } = navigation.state;
     return {
       title: params.title || `Fix Now (1/${params.fixNowContentLength})`,
+      customCenterComponent: {
+        steps: params.fixNowContentLength,
+        currentStep: params.progressBarCurrentStep || 1,
+        flowProgress: true,
+      },
     };
   };
 
@@ -60,6 +64,7 @@ class SecurityFixNow extends Component {
       title: `Fix Now (${fixNowContent.index + 1}/${
         fixNowContent.content.length
       })`,
+      progressBarCurrentStep: fixNowContent.index + 1,
     });
   };
 
@@ -209,9 +214,8 @@ class SecurityFixNow extends Component {
     const c = this.fixNowContent(item.name);
 
     return (
-      <View style={style.container}>
-        <HeadingProgressBar steps={content.length} currentStep={index + 1} />
-        <RegularLayout>
+      <RegularLayout>
+        <View style={style.container}>
           <View style={style.bodyWrapper}>
             <CelText
               margin={"0 20 20 20"}
@@ -237,8 +241,8 @@ class SecurityFixNow extends Component {
               {index === content.length - 1 ? "Finish" : "Skip"}
             </CelButton>
           </View>
-        </RegularLayout>
-      </View>
+        </View>
+      </RegularLayout>
     );
   }
 }
