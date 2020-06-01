@@ -270,6 +270,7 @@ async function handle403(err) {
     store.dispatch(actions.showMessage("error", err.msg));
   }
   if (err.slug === "Token Expired") {
+    // TODO: (srdjan) maybe call logoutUser()?
     await logoutUserMixpanel();
     mixpanelAnalytics.sessionEnded("Logout user");
     store.dispatch(
