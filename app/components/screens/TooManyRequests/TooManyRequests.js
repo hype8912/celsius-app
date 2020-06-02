@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { Image, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
-import LockedAccountModeStyle from "./LockedAccount.styles";
 import * as appActions from "../../../redux/actions";
 
 // TODO should probably be a static screen
@@ -14,19 +12,10 @@ import * as appActions from "../../../redux/actions";
   () => ({}),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-class LockedAccountMode extends Component {
+class TooManyRequests extends Component {
   render() {
-    const style = LockedAccountModeStyle();
     return (
       <RegularLayout fabType="hide">
-        <View style={style.container}>
-          <Image
-            source={require("../../../../assets/images/illustrations-v3/PolarBearSad3x.png")}
-            //  ../../../../assets/images/illustrations-v3/PolarBearSad3x.png
-            style={{ width: 200, height: 200, resizeMode: "contain" }}
-          />
-        </View>
-
         <CelText
           margin="20 0 15 0"
           align="center"
@@ -53,4 +42,4 @@ class LockedAccountMode extends Component {
   }
 }
 
-export default LockedAccountMode;
+export default TooManyRequests;
