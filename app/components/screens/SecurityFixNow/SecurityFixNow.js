@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Animated } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import _ from "lodash";
@@ -38,6 +38,16 @@ class SecurityFixNow extends Component {
       },
     };
   };
+
+  animationDuration = 100;
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      contentAnimation: new Animated.Value(0),
+    };
+  }
 
   async componentDidMount() {
     const { actions } = this.props;
@@ -80,9 +90,24 @@ class SecurityFixNow extends Component {
     }
   };
 
-  onPressContinue = () => {
+  nextItem = async () => {
     const { actions } = this.props;
-    actions.fixNowNextItem();
+    await actions.fixNowNextItem();
+    await this.setState({ contentAnimation: new Animated.Value(400) });
+    this.animateContinue(0);
+  };
+
+  animateContinue = (toValue, callback) => {
+    const { contentAnimation } = this.state;
+    Animated.timing(contentAnimation, {
+      toValue,
+      duration: this.animationDuration,
+      useNativeDriver: true,
+    }).start(() => callback && callback());
+  };
+
+  onPressContinue = () => {
+    this.animateContinue(-400, this.nextItem);
   };
 
   fixNowContent = type => {
@@ -216,7 +241,18 @@ class SecurityFixNow extends Component {
     return (
       <RegularLayout>
         <View style={style.container}>
-          <View style={style.bodyWrapper}>
+          <Animated.View
+            style={[
+              style.bodyWrapper,
+              {
+                transform: [
+                  {
+                    translateX: this.state.contentAnimation,
+                  },
+                ],
+              },
+            ]}
+          >
             <CelText
               margin={"0 20 20 20"}
               type={"H2"}
@@ -230,7 +266,7 @@ class SecurityFixNow extends Component {
             </CelText>
 
             {this.renderCard(c)}
-          </View>
+          </Animated.View>
           <View style={style.buttonWrapper}>
             <CelButton
               onPress={this.onPressContinue}
