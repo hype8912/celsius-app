@@ -48,6 +48,27 @@ const FONTS = [
   {
     "RobotoMono-Regular": require("../../assets/fonts/Roboto-Mono/RobotoMono-Regular.ttf"),
   },
+  {
+    "Pangram-Black": require("../../android/app/src/main/assets/fonts/Pangram-Black.otf"),
+  },
+  {
+    "Pangram-Bold": require("../../android/app/src/main/assets/fonts/Pangram-Bold.otf"),
+  },
+  {
+    "Pangram-ExtraBold": require("../../android/app/src/main/assets/fonts/Pangram-ExtraBold.otf"),
+  },
+  {
+    "Pangram-ExtraLight": require("../../android/app/src/main/assets/fonts/Pangram-ExtraLight.otf"),
+  },
+  {
+    "Pangram-Light": require("../../android/app/src/main/assets/fonts/Pangram-Light.otf"),
+  },
+  {
+    "Pangram-Medium": require("../../android/app/src/main/assets/fonts/Pangram-Medium.otf"),
+  },
+  {
+    "Pangram-Regular": require("../../android/app/src/main/assets/fonts/Pangram-Regular.otf"),
+  },
 ];
 
 const WEIGHT = {
