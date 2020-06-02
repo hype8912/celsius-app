@@ -291,7 +291,7 @@ function handle426(err) {
 }
 
 function handle429() {
-  store.dispatch(actions.navigateTo("LockedAccount"));
+  store.dispatch(actions.navigateTo("TooManyRequests"));
 }
 
 function handle503(err) {
