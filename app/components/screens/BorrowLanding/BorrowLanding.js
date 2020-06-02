@@ -321,12 +321,13 @@ class BorrowLanding extends Component {
       return (
         <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_VERIFIED_BORROW} />
       );
+    if (!loanCompliance.allowed)
+      return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
+    if (hasLoans) return this.renderDefaultView();
     if (!user.celsius_member)
       return (
         <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_MEMBER_BORROW} />
       );
-    if (!loanCompliance.allowed)
-      return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
 
     if (!hasLoans) return this.renderNoLoans();
 
