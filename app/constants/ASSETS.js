@@ -72,21 +72,19 @@ const FONTS = [
 ];
 
 const WEIGHT = {
-  "100": "-Thin",
-  "200": "-ExtraLight",
-  "300": "-Light",
+  "200": "-Regular",
+  "300": "-Regular",
   "400": "-Regular",
   "500": "-Medium",
-  "600": "-SemiBold",
-  "700": "-Bold",
+  "600": "-Bold",
+  "800": "-ExtraBold",
   "900": "-Black",
-  thin: "-Thin",
   "extra-light": "-ExtraLight",
-  light: "-Light",
-  regular: "-Regular",
+  light: "-Medium",
+  regular: "-Medium",
   medium: "-Medium",
-  "semi-bold": "-SemiBold",
   bold: "-Bold",
+  extraBold: "-ExtraBold",
   black: "-Black",
 };
 

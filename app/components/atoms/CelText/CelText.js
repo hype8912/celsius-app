@@ -11,7 +11,7 @@ import { THEMES } from "../../../constants/UI";
 class CelText extends Component {
   static propTypes = {
     type: PropTypes.oneOf(["H0", "H1", "H2", "H3", "H4", "H5", "H6", "H7"]),
-    font: PropTypes.oneOf(["Barlow", "RobotoMono"]),
+    font: PropTypes.oneOf(["Pangram", "Barlow", "RobotoMono"]),
     weight: PropTypes.oneOf([
       "100",
       "200",
@@ -46,7 +46,7 @@ class CelText extends Component {
     theme: PropTypes.oneOf(Object.values(THEMES)),
   };
   static defaultProps = {
-    font: "Barlow",
+    font: "Pangram",
     type: "H5",
     margin: "0 0 0 0",
     style: {},
@@ -71,9 +71,9 @@ class CelText extends Component {
     let fontFamily = `${font}${ASSETS.WEIGHT[fontWeight.toString()]}`;
     if (italic) {
       fontFamily =
-        fontFamily !== "Barlow-Regular"
+        fontFamily !== "Pangram-Regular"
           ? `${fontFamily}Italic`
-          : `Barlow-Italic`;
+          : `Pangram-Italic`;
     }
     return fontFamily;
   };

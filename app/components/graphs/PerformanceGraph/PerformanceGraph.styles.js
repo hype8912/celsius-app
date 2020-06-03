@@ -33,7 +33,7 @@ const base = {
     alignItems: "center",
   },
   labelText: {
-    fontFamily: "Barlow-Regular",
+    fontFamily: "Pangram-Regular",
     color: "white",
     height: heightPercentageToDP("2.7%"),
   },

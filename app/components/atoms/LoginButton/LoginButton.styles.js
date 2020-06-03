@@ -24,7 +24,7 @@ const base = {
   },
   text: {
     fontSize: STYLES.FONTSIZE.H4,
-    fontFamily: "Barlow-Regular",
+    fontFamily: "Pangram-Regular",
     justifyContent: "space-between",
     textAlign: "center",
   },

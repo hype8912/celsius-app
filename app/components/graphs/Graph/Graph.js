@@ -381,7 +381,7 @@ class Graph extends React.Component {
             <TextInput
               ref={this.cursor.labelText}
               style={{
-                fontFamily: "Barlow-Regular",
+                fontFamily: "Pangram-Regular",
                 color: "white",
               }}
               editable={false}
@@ -389,7 +389,7 @@ class Graph extends React.Component {
             <TextInput
               ref={this.cursor.dateText}
               style={{
-                fontFamily: "Barlow-Regular",
+                fontFamily: "Pangram-Regular",
                 color: "white",
               }}
               editable={false}
