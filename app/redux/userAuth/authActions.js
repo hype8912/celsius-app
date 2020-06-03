@@ -6,18 +6,15 @@ import API from "../../constants/API";
 import { startApiCall, apiError } from "../api/apiActions";
 import { navigateTo, resetToScreen } from "../nav/navActions";
 import { showMessage } from "../ui/uiActions";
-import { initAppData, showVerifyScreen } from "../app/appActions";
 import {
   registerUserFacebook,
   registerUserGoogle,
   registerUserTwitter,
 } from "./thirdPartyActions";
-import { claimAllBranchTransfers } from "../transfers/transfersActions";
 import {
   deleteSecureStoreKey,
   setSecureStoreKey,
 } from "../../utils/expo-storage";
-import userProfileService from "../../services/user-profile-service";
 import userAuthService from "../../services/user-auth-service";
 import apiUtil from "../../utils/api-util";
 import logger from "../../utils/logger-util";
@@ -29,6 +26,8 @@ import {
   logoutUserMixpanel,
   registerMixpanelUser,
 } from "../../utils/mixpanel-util";
+import userSecurityService from "../../services/user-security-service";
+import { getInitialCelsiusData } from "../generalData/generalDataActions";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -51,42 +50,27 @@ function loginUser() {
       const { formData } = getState().forms;
 
       dispatch(startApiCall(API.LOGIN_USER));
+
       const res = await userAuthService.login({
         email: formData.email,
         password: formData.password,
         reCaptchaKey: formData.reCaptchaKey,
       });
+
       // add token to expo storage
       await setSecureStoreKey(
         SECURITY_STORAGE_AUTH_KEY,
         res.data.auth0.id_token
       );
 
-      const userRes = await userProfileService.getPersonalInfo();
-      const user = userRes.data;
-
-      const { showVerifyScreen: showVerifyScreenValue } = getState().app;
-      if (!showVerifyScreenValue) {
-        await dispatch(initAppData());
-        dispatch(claimAllBranchTransfers());
-      }
-
       dispatch({
         type: ACTIONS.LOGIN_USER_SUCCESS,
         callName: API.LOGIN_USER,
         tokens: res.data.auth0,
-        user,
       });
 
-      if (!user.pin) {
-        dispatch(navigateTo("RegisterSetPin"));
-      } else {
-        dispatch(navigateTo("VerifyScreen"), {
-          onSuccess: () => {
-            resetToScreen("WalletLanding");
-          },
-        });
-      }
+      await dispatch(getInitialCelsiusData());
+      dispatch(resetToScreen("Home"));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.LOGIN_USER, err));
@@ -119,15 +103,13 @@ function registerUser() {
         SECURITY_STORAGE_AUTH_KEY,
         res.data.auth0.id_token
       );
-      await dispatch(initAppData());
 
-      mixpanelAnalytics.sessionStarted("User registred");
-      dispatch(claimAllBranchTransfers());
       dispatch({
         type: ACTIONS.REGISTER_USER_SUCCESS,
         user: res.data.user,
         tokens: res.data.auth0,
       });
+
       dispatch(navigateTo("RegisterSetPin"));
     } catch (err) {
       if (err.type === "Validation error") {
@@ -169,13 +151,13 @@ function logoutUser() {
       await dispatch(resetToScreen("Welcome"));
 
       await logoutUserMixpanel();
+      await userSecurityService.invalidateSession();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
       await deleteSecureStoreKey("HIDE_MODAL_INTEREST_IN_CEL");
       if (Constants.appOwnership === "standalone") Branch.logout();
       dispatch({
         type: ACTIONS.LOGOUT_USER,
       });
-      dispatch(showVerifyScreen(false));
       mixpanelAnalytics.sessionEnded("Logout user");
     } catch (err) {
       logger.err(err);

@@ -3,7 +3,9 @@ package network.celsius.wallet;
 import com.facebook.react.ReactActivity;
 import io.branch.rnbranch.*;
 import android.content.Intent;
+import org.devio.rn.splashscreen.SplashScreen;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,11 +21,14 @@ public class MainActivity extends ReactActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+      SplashScreen.show(this);
       super.onCreate(savedInstanceState);
 
       // get the root view and activate touch filtering to prevent tap jacking
       View v = findViewById(android.R.id.content);
+      v.getRootView().setBackgroundColor(Color.parseColor("#4156A6"));
       v.setFilterTouchesWhenObscured(true);
+      getWindow().getDecorView().setBackgroundColor(Color.parseColor("#4156A6"));
   }
 
 

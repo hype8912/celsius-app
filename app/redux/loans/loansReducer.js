@@ -45,6 +45,7 @@ export default function loansReducer(state = initialState(), action) {
       };
 
     case ACTIONS.GET_ALL_LOANS_SUCCESS:
+    case ACTIONS.GET_LOAN_ALERTS_SUCCESS:
       return {
         ...state,
         allLoans: action.allLoans,

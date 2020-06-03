@@ -10,15 +10,14 @@ class OfflineMode extends Component {
     const style = OfflineModeStyle();
     return (
       <View style={style.container}>
-        <View>
+        <View style={style.circle}>
           <Image
-            source={require("../../../../assets/images/deer-sad.png")}
-            style={{ width: 200, height: 200, resizeMode: "contain" }}
+            source={require("../../../../assets/images/icons/antenna.png")}
+            style={style.icon}
           />
         </View>
-
         <CelText
-          margin="20 0 15 0"
+          margin="20 30 15 30"
           align="center"
           type="H2"
           weight={"700"}
@@ -26,7 +25,7 @@ class OfflineMode extends Component {
         >
           No internet connection
         </CelText>
-        <CelText margin="5 0 15 0" align="center" type="H4" weight={"300"}>
+        <CelText margin="5 30 15 30" align="center" type="H4" weight={"300"}>
           Please, make sure that your Wi-Fi or Cellular data is turned on, then{" "}
           <CelText type="H4" weight={"bold"}>
             try again.

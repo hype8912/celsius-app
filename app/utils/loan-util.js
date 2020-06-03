@@ -280,20 +280,20 @@ function emitLoanParams(
       loyaltyInfo &&
       loanParams.monthlyInterest.minus(
         loanParams.monthlyInterest.multipliedBy(
-          loyaltyInfo.tier.loanInterestBonus
+          loyaltyInfo && loyaltyInfo.tier.loanInterestBonus
         )
       );
     loanParams.totalInCEL =
       loyaltyInfo &&
       loanParams.totalInterest.minus(
         loanParams.totalInterest.multipliedBy(
-          loyaltyInfo.tier.loanInterestBonus
+          loyaltyInfo && loyaltyInfo.tier.loanInterestBonus
         )
       );
 
     loanParams.loyaltyApr = loanParams.annualInterestPct.minus(
       loanParams.annualInterestPct.multipliedBy(
-        loyaltyInfo.tier.loanInterestBonus
+        loyaltyInfo && loyaltyInfo.tier.loanInterestBonus
       )
     );
 

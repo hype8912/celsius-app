@@ -6,7 +6,6 @@ import ACTIONS from "../../constants/ACTIONS";
 const initialState = {
   securityOverview: {},
   twoFAStatus: {},
-  showVerifyScreen: false,
   fromFixNow: false,
   toFixNow: false,
   fixNowContent: {},
@@ -21,11 +20,7 @@ export default (state = initialState, action) => {
           ...action.overview,
         },
       };
-    case ACTIONS.SHOW_VERIFY_SCREEN:
-      return {
-        ...state,
-        showVerifyScreen: action.showVerifyScreen,
-      };
+
     case ACTIONS.FROM_FIX_NOW:
     case ACTIONS.CLEAR_FROM_FIX_NOW:
       return {
@@ -35,7 +30,7 @@ export default (state = initialState, action) => {
           fromFixNow: action.fromFixNow,
         },
       };
-    case ACTIONS.GET_2FA_STATUS_SUCCESS:
+    case ACTIONS.POLL_USER_DATA_SUCCESS:
       return {
         ...state,
         twoFAStatus: action.twoFAStatus,

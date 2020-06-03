@@ -110,7 +110,7 @@ class Banner extends Component {
             {!!textButtonAction && (
               <TouchableOpacity onPress={textButtonAction}>
                 <CelText
-                  margin={"7 0 0 30"}
+                  margin={"7 0 0 10"}
                   color={STYLES.COLORS.WHITE}
                   type={"H6"}
                 >

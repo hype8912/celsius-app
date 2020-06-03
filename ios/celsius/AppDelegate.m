@@ -54,7 +54,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  // [RNSplashScreen show];
+  [RNSplashScreen show];
   
   // for foreground notification
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
