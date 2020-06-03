@@ -3,7 +3,7 @@ import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
   text: {
-    fontFamily: "Barlow-Regular",
+    fontFamily: "Pangram-Regular",
   },
 };
 
