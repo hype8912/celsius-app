@@ -24,7 +24,6 @@ import { DEEP_LINKS } from "../../../constants/DATA";
     twoFAStatus: state.security.twoFAStatus,
     deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
-    is2FAEnabled: state.user.profile.two_factor_enabled,
     previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
     theme: state.user.appSettings.theme,
@@ -147,12 +146,12 @@ class VerifyProfile extends Component {
   };
 
   getVerificationType = () => {
-    const { twoFAStatus, navigation } = this.props;
+    const { user, navigation } = this.props;
 
     // handling 426 error - PIN || 2FA
     const typeFromNavigation = navigation.getParam("verificationType", null);
 
-    const typeFromUser = twoFAStatus.isActive ? "2FA" : "PIN";
+    const typeFromUser = user.two_factor_enabled ? "2FA" : "PIN";
     return typeFromNavigation || typeFromUser;
   };
 
