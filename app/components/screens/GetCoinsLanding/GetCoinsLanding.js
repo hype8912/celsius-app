@@ -99,8 +99,7 @@ class GetCoinsLanding extends Component {
           explanation={"Buy crypto easily through your bank account."}
           darkImage={require("../../../../assets/images/icons/bank-wire-dark.png")}
           lightImage={require("../../../../assets/images/icons/bank-wire-light.png")}
-          label={"COMING SOON!"}
-          disabled
+          onPress={() => actions.navigateTo("GetCoinsGem")}
         />
 
         <SimplexPaymentsHistory />
