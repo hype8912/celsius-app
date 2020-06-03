@@ -11,6 +11,7 @@ const ALL_CONFIGS = {
   // DEV: 'DEV',
   STAGING: "STAGING",
   PRODUCTION: "PRODUCTION",
+  RESKINNING: "RESKINNING",
 };
 
 const ENV_FILES = {
@@ -22,6 +23,7 @@ const ENV_FILES = {
   // Key for codePush
   INFO_PLIST: "info.plist",
   ANDROID_STRINGS: "strings.xml",
+  BUILD_GRADLE: "build.gradle",
 
   GOOGLE_SERVICES: "google-services.json",
   GOOGLE_INFO_PLIST: "GoogleService-Info.plist",
@@ -62,6 +64,9 @@ function getDestination(fileKey) {
         `android/app/src/main/res/values/${pathToFile}`
       );
 
+    case "BUILD_GRADLE":
+      return path.resolve(__dirname, `android/app/${pathToFile}`);
+
     case "GOOGLE_SERVICES":
       return path.resolve(__dirname, `android/app/${pathToFile}`);
 
@@ -84,6 +89,13 @@ function copyFileFromCelsiusCreds(fileKey) {
       src = path.resolve(
         __dirname,
         `${directoryPath}/production/${pathToFile}`
+      );
+      break;
+
+    case ALL_CONFIGS.RESKINNING:
+      src = path.resolve(
+        __dirname,
+        `${directoryPath}/reskinning/${pathToFile}`
       );
       break;
 
