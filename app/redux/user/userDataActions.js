@@ -304,7 +304,7 @@ function getUserStatus() {
         }
       }
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
+      if (err.status !== 429) dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.POLL_USER_DATA, err));
     }
   };

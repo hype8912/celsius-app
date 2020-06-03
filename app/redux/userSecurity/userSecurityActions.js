@@ -106,10 +106,12 @@ function checkPIN(onSuccess, onError) {
       if (onSuccess) onSuccess();
     } catch (err) {
       if (onError) onError();
-      dispatch(showMessage("error", err.msg));
+      if (err.status !== 429) {
+        dispatch(showMessage("error", err.msg));
+        dispatch(updateFormField("pin", ""));
+        dispatch(toggleKeypad());
+      }
       dispatch(apiError(API.CHECK_PIN, err));
-      dispatch(updateFormField("pin", ""));
-      dispatch(toggleKeypad());
     }
   };
 }

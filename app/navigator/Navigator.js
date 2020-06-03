@@ -9,7 +9,7 @@ import Storybook from "../components/screens/Storybook/Storybook";
 import Home from "../components/screens/Home/Home";
 import Community from "../components/screens/Community/Community";
 import Maintenance from "../components/screens/Maintenance/Maintenance";
-import LockedAccount from "../components/screens/LockedAccount/LockedAccount";
+import TooManyRequests from "../components/screens/TooManyRequests/TooManyRequests";
 import LoginLanding from "../components/screens/LoginLanding/LoginLanding";
 import Login from "../components/screens/Login/Login";
 import ForgotPassword from "../components/screens/ForgotPassword/ForgotPassword";
@@ -115,7 +115,7 @@ export const screens = {
 
   Home,
   Maintenance,
-  LockedAccount,
+  TooManyRequests,
   Storybook,
 
   /**
