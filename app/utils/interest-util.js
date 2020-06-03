@@ -3,6 +3,7 @@ import store from "../redux/store";
 
 const interestUtil = {
   getUserInterestForCoin,
+  getLoyaltyRates,
   calculateAPY,
   calculateBonusRate,
   getBaseCelRate,
@@ -41,9 +42,11 @@ function getUserInterestForCoin(coinShort) {
         (appSettings.interest_in_cel &&
           appSettings.interest_in_cel_per_coin[coinShort] === null)) &&
       coinShort !== "CEL";
+
     interestRateDisplay = !inCEL
       ? formatter.percentageDisplay(interestRates[coinShort].compound_rate)
       : formatter.percentageDisplay(interestRates[coinShort].compound_cel_rate);
+
     interestRate = !inCEL
       ? interestRates[coinShort].compound_rate
       : interestRates[coinShort].compound_cel_rate;
@@ -75,6 +78,31 @@ function getUserInterestForCoin(coinShort) {
     inCEL,
     eligible,
   };
+}
+
+/**
+ * Calculates APY from APR value
+ *
+ * param {Object} loyaltyInfo - loyaltyInfo response
+ */
+function getLoyaltyRates(loyaltyInfo) {
+  const interestRates = store.getState().generalData.interestRates;
+
+  Object.keys(interestRates).forEach(coinShort => {
+    const baseRate = interestUtil.getBaseCelRate(coinShort);
+    interestRates[coinShort].cel_rate = interestUtil.calculateBonusRate(
+      baseRate,
+      loyaltyInfo.earn_interest_bonus
+    );
+    interestRates[coinShort].compound_rate = interestUtil.calculateAPY(
+      interestRates[coinShort].rate
+    );
+    interestRates[coinShort].compound_cel_rate = interestUtil.calculateAPY(
+      interestRates[coinShort].cel_rate
+    );
+  });
+
+  return interestRates;
 }
 
 /**

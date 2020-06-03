@@ -12,6 +12,7 @@ import apiUtil from "../../utils/api-util";
 import userDataService from "../../services/user-data-service";
 import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util";
 import { KYC_STATUSES } from "../../constants/DATA";
+import interestUtil from "../../utils/interest-util";
 
 export {
   getUserAppSettings,
@@ -20,6 +21,7 @@ export {
   linkBankAccount,
   setHodlProps,
   getUserStatus,
+  getUserAppBootstrap,
 };
 
 /**
@@ -273,18 +275,11 @@ function getUserStatus() {
       const kyc = res.data.kycStatus;
       const twoFAStatus = res.data.twoFactorStatus;
       const newStatus = res.data.kycStatus.status;
+
       dispatch({
-        type: ACTIONS.POLL_HODL_STATUS_SUCCESS,
+        type: ACTIONS.POLL_USER_DATA_SUCCESS,
         hodlStatus,
-      });
-
-      dispatch({
-        type: ACTIONS.GET_KYC_STATUS_SUCCESS,
         kyc,
-      });
-
-      dispatch({
-        type: ACTIONS.GET_2FA_STATUS_SUCCESS,
         twoFAStatus,
       });
 
@@ -317,5 +312,38 @@ function setHodlProps(activeHodlMode) {
   return {
     type: ACTIONS.SET_HODL_PROPS,
     activeHodlMode,
+  };
+}
+
+/**
+ * Gets app boostrap.
+ */
+function getUserAppBootstrap() {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_APP_BOOTSTRAP));
+
+      const userAppData = await userDataService.getUserAppBootstrap();
+
+      // NOTE(fj) BE returns cel_rate as "0" every time
+      const interestRates = interestUtil.getLoyaltyRates(
+        userAppData.data.loyalty
+      );
+
+      dispatch({
+        type: ACTIONS.GET_APP_BOOTSTRAP_SUCCESS,
+        user: {
+          ...userAppData.data.user,
+          kyc: userAppData.data.kyc,
+        },
+        appSettings: userAppData.data.user_settings,
+        loyaltyInfo: userAppData.data.loyalty,
+        complianceInfo: userAppData.data.compliance,
+        interestRates,
+      });
+    } catch (e) {
+      dispatch(apiError(API.GET_APP_BOOTSTRAP, e));
+      dispatch(showMessage("error", e.msg));
+    }
   };
 }

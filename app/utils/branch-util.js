@@ -1,5 +1,4 @@
 import Branch from "react-native-branch";
-import codePush from "react-native-code-push";
 
 import store from "../redux/store";
 import * as actions from "../redux/actions";
@@ -14,30 +13,23 @@ export default {
  * Initialize & Subscribe to Branch
  */
 function initBranch() {
-  return async dispatch => {
+  return dispatch => {
     try {
       Branch.subscribe(deepLink => {
-        // Use for standalone debugging
-        // logger.logme(deepLink)
-
         if (
           !deepLink ||
           !deepLink.params["+clicked_branch_link"] ||
           deepLink.error ||
           !deepLink.params
         ) {
-          // Fetch CodePush Update and Restart App
-          // if no link provided and update is available
-
-          codePush.sync({
-            updateDialog: false,
-            installMode: codePush.InstallMode.IMMEDIATE,
-          });
-
           return;
         }
 
-        dispatch(actions.registerBranchLink(deepLink));
+        const deepLinkData = {
+          ...deepLink,
+          type: deepLink.params.type || deepLink.params.link_type,
+        };
+        dispatch(actions.addDeepLinkData(deepLinkData));
       });
     } catch (error) {
       logger.err(error);

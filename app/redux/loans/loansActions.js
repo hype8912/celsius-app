@@ -30,6 +30,7 @@ export {
   checkForLoanAlerts,
   sendBankDetailsEmail,
   lockMarginCallCollateral,
+  getLoanAlerts,
   startedLoanApplication,
 };
 
@@ -510,6 +511,28 @@ function checkForLoanAlerts() {
 
     if (loanAlerts.length) {
       dispatch(openModal(MODALS.LOAN_ALERT_MODAL));
+    }
+  };
+}
+
+/**
+ * Gets all loan payment alerts for user (interest, principal, margin call)
+ */
+function getLoanAlerts() {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_LOAN_ALERTS));
+
+      const alertsRes = await loansService.getLoanAlerts();
+
+      dispatch({
+        type: ACTIONS.GET_LOAN_ALERTS_SUCCESS,
+        allLoans: alertsRes.data,
+      });
+      checkForLoanAlerts();
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_LOAN_ALERTS, err));
     }
   };
 }

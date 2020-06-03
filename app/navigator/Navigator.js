@@ -7,6 +7,7 @@ import { transitionConfig } from "./navigationConfig";
 import Storybook from "../components/screens/Storybook/Storybook";
 
 import Home from "../components/screens/Home/Home";
+import SplashScreen from "../components/screens/SplashScreen/SplashScreen";
 import Community from "../components/screens/Community/Community";
 import Maintenance from "../components/screens/Maintenance/Maintenance";
 import TooManyRequests from "../components/screens/TooManyRequests/TooManyRequests";
@@ -113,6 +114,7 @@ export const screens = {
    * Out of limit
    */
 
+  SplashScreen,
   Home,
   Maintenance,
   TooManyRequests,

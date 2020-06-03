@@ -11,27 +11,14 @@ export { getLoyaltyInfo };
  * TODO add JSDoc
  */
 function getLoyaltyInfo() {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     try {
-      const interestRates = getState().generalData.interestRates;
       dispatch(startApiCall(API.GET_LOYALTY_INFO));
       const res = await userDataService.getLoyaltyInfo();
       const loyaltyInfo = res.data;
 
       // NOTE(fj) BE returns cel_rate as "0" every time
-      Object.keys(interestRates).forEach(coinShort => {
-        const baseRate = interestUtil.getBaseCelRate(coinShort);
-        interestRates[coinShort].cel_rate = interestUtil.calculateBonusRate(
-          baseRate,
-          loyaltyInfo.earn_interest_bonus
-        );
-        interestRates[coinShort].compound_rate = interestUtil.calculateAPY(
-          interestRates[coinShort].rate
-        );
-        interestRates[coinShort].compound_cel_rate = interestUtil.calculateAPY(
-          interestRates[coinShort].cel_rate
-        );
-      });
+      const interestRates = interestUtil.getLoyaltyRates(loyaltyInfo);
 
       dispatch(getLoyaltyInfoSuccess(loyaltyInfo, interestRates));
     } catch (err) {

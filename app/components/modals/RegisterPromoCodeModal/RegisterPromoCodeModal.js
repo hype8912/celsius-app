@@ -10,7 +10,7 @@ import CelModal from "../CelModal/CelModal.js";
 import { MODALS, THEMES } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
-import { BRANCH_LINKS } from "../../../constants/DATA";
+import { DEEP_LINKS } from "../../../constants/DATA";
 import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
 import * as appActions from "../../../redux/actions";
@@ -129,15 +129,15 @@ class RegisterPromoCodeModal extends Component {
 
     code.amount = referralLink.referred_award_amount;
     code.coin =
-      referralLink.link_type === BRANCH_LINKS.INDIVIDUAL_REFERRAL
+      referralLink.link_type === DEEP_LINKS.INDIVIDUAL_REFERRAL
         ? "USD"
         : referralLink.referred_award_coin;
 
-    if (referralLink.link_type === BRANCH_LINKS.INDIVIDUAL_REFERRAL) {
+    if (referralLink.link_type === DEEP_LINKS.INDIVIDUAL_REFERRAL) {
       congratsText =
         "Your referral code has been successfully activated. In order to receive your reward, you must:";
     }
-    if (referralLink.link_type === BRANCH_LINKS.COMPANY_REFERRAL) {
+    if (referralLink.link_type === DEEP_LINKS.COMPANY_REFERRAL) {
       if (referralLink.referred_award_trigger === "sign-up") {
         congratsText = `You have received ${code.amount} ${code.coin}. Please sign up to see it in your wallet.`;
       }

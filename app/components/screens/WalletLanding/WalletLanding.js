@@ -87,7 +87,6 @@ class WalletLanding extends Component {
   componentDidMount = async () => {
     const {
       actions,
-      appSettings,
       currenciesRates,
       currenciesGraphs,
       previouslyOpenedModals,
@@ -96,6 +95,7 @@ class WalletLanding extends Component {
     } = this.props;
 
     actions.changeWalletHeaderContent();
+
     setTimeout(() => {
       if (
         !previouslyOpenedModals.HODL_MODE_MODAL &&
@@ -108,24 +108,17 @@ class WalletLanding extends Component {
         !userTriggeredActions.permanently_dismiss_deposit_address_changes
       )
         actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
-
-      actions.checkForLoanAlerts();
     }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
-    if (appSettings && appSettings.accepted_terms_of_use === false) {
-      return actions.navigateTo("TermsOfUse", {
-        purpose: "accept",
-        nextScreen: "WalletLanding",
-      });
-    }
     await assignPushNotificationToken();
 
     await actions.getWalletSummary();
     if (!currenciesRates) actions.getCurrencyRates();
     if (!currenciesGraphs) actions.getCurrencyGraphs();
 
+    actions.getLoanAlerts();
     this.setWalletFetchingInterval();
   };
 
@@ -234,7 +227,7 @@ class WalletLanding extends Component {
     } = this.props;
     const style = WalletLandingStyle();
 
-    if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
+    if (!walletSummary || !user) {
       return <LoadingScreen />;
     }
 

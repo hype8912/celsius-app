@@ -206,7 +206,8 @@ function setBannerProps(newBannerProps = null) {
       bannerProps = getState().ui.bannerProps || {};
 
       if (!newBannerProps) {
-        bannerProps = JSON.parse(await AsyncStorage.getItem("bannerProps"));
+        bannerProps =
+          JSON.parse(await AsyncStorage.getItem("bannerProps")) || {};
       } else {
         bannerProps = {
           ...bannerProps,
@@ -217,6 +218,7 @@ function setBannerProps(newBannerProps = null) {
       bannerProps.sessionCount = bannerProps.sessionCount
         ? Number(bannerProps.sessionCount)
         : 0;
+
       await AsyncStorage.setItem("bannerProps", JSON.stringify(bannerProps));
     } catch (err) {
       loggerUtil.log(err);

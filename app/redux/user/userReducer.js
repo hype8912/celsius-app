@@ -21,14 +21,10 @@ const initialState = {
 export default (state = initialState, action) => {
   let profile;
   switch (action.type) {
-    case ACTIONS.LOGIN_USER_SUCCESS:
     case ACTIONS.REGISTER_USER_SUCCESS:
     case ACTIONS.REGISTER_USER_FACEBOOK_SUCCESS:
     case ACTIONS.REGISTER_USER_GOOGLE_SUCCESS:
     case ACTIONS.REGISTER_USER_TWITTER_SUCCESS:
-    case ACTIONS.LOGIN_USER_GOOGLE_SUCCESS:
-    case ACTIONS.LOGIN_USER_FACEBOOK_SUCCESS:
-    case ACTIONS.LOGIN_USER_TWITTER_SUCCESS:
     case ACTIONS.GET_USER_PERSONAL_INFO_SUCCESS:
     case ACTIONS.UPDATE_USER_PERSONAL_INFO_SUCCESS:
     case ACTIONS.GET_USER_TAXPAYER_INFO_SUCCESS:
@@ -83,6 +79,20 @@ export default (state = initialState, action) => {
         ...state,
         bankAccountInfo: {
           ...action.bankAccountInfo,
+        },
+      };
+
+    case ACTIONS.GET_APP_BOOTSTRAP_SUCCESS:
+      profile = mapProfile(action.personalInfo || action.user);
+      return {
+        ...state,
+        appSettings: {
+          ...state.appSettings,
+          ...action.appSettings,
+        },
+        profile: {
+          ...state.profile,
+          ...profile,
         },
       };
 

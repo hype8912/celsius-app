@@ -1,17 +1,13 @@
 import campaignsService from "../../services/campaigns-service";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
-import { BRANCH_LINKS } from "../../constants/DATA";
+import { DEEP_LINKS } from "../../constants/DATA";
 import { MODALS } from "../../constants/UI";
 import ACTIONS from "../../constants/ACTIONS";
 import * as transfersActions from "../transfers/transfersActions";
 import * as uiActions from "../ui/uiActions";
 import * as formsActions from "../forms/formsActions";
 
-// TODO add JSDoc
-// TODO add JSDoc
-// TODO add JSDoc
-// TODO add JSDoc
 export {
   registerBranchLink,
   getBranchIndividualLink,
@@ -44,17 +40,17 @@ function registerBranchLink(deepLink) {
       link: deepLinkParams,
     });
     if (
-      deepLinkParams.link_type === BRANCH_LINKS.TRANSFER ||
-      deepLinkParams.type === BRANCH_LINKS.TRANSFER
+      deepLinkParams.link_type === DEEP_LINKS.TRANSFER ||
+      deepLinkParams.type === DEEP_LINKS.TRANSFER
     ) {
       return dispatch(transfersActions.registerTransferLink(deepLinkParams));
     }
 
     if (
-      deepLinkParams.link_type === BRANCH_LINKS.COMPANY_REFERRAL ||
-      deepLinkParams.type === BRANCH_LINKS.COMPANY_REFERRAL ||
-      deepLinkParams.link_type === BRANCH_LINKS.INDIVIDUAL_REFERRAL ||
-      deepLinkParams.type === BRANCH_LINKS.INDIVIDUAL_REFERRAL
+      deepLinkParams.link_type === DEEP_LINKS.COMPANY_REFERRAL ||
+      deepLinkParams.type === DEEP_LINKS.COMPANY_REFERRAL ||
+      deepLinkParams.link_type === DEEP_LINKS.INDIVIDUAL_REFERRAL ||
+      deepLinkParams.type === DEEP_LINKS.INDIVIDUAL_REFERRAL
     ) {
       return dispatch(registerReferralLink(deepLinkParams));
     }
