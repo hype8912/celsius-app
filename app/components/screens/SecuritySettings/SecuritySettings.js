@@ -101,7 +101,10 @@ class SecuritySettings extends Component {
       <CelSwitch
         onValueChange={this.handleSwitchChangeHodl}
         value={isInHodlMode}
-        disabled={hodlStatus.state === HODL_STATUS.PENDING_DEACTIVATION || hodlStatus.created_by === "backoffice"}
+        disabled={
+          hodlStatus.state === HODL_STATUS.PENDING_DEACTIVATION ||
+          hodlStatus.created_by === "backoffice"
+        }
       />
     );
   };
@@ -112,9 +115,9 @@ class SecuritySettings extends Component {
   };
 
   securityOverallScore = () => {
-    const { securityOverview } = this.props
+    const { securityOverview } = this.props;
 
-    if (_.isEmpty(securityOverview)) return
+    if (_.isEmpty(securityOverview)) return;
 
     const strength = securityOverview.overall_score_strength.toLowerCase();
     switch (strength) {
@@ -141,30 +144,34 @@ class SecuritySettings extends Component {
       default:
         return null;
     }
-  }
+  };
 
   render() {
-    const { actions, is2FAEnabled, user, kycStatus, securityOverview } = this.props;
+    const {
+      actions,
+      is2FAEnabled,
+      user,
+      kycStatus,
+      securityOverview,
+    } = this.props;
     const Switcher2FA = this.rightSwitch2FA;
     const SwitcherHodl = this.rightSwitchHodl;
-    const rightText = this.securityOverallScore()
+    const rightText = this.securityOverallScore();
 
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
 
-
     return (
       <RegularLayout>
-       { kycStatus && hasPassedKYC() && !_.isEmpty(securityOverview) &&
-       <IconButton
-          margin="0 0 0 0"
-          rightText={rightText.text}
-          rightTextColor={rightText.textColor}
-          onPress={() =>
-            actions.navigateTo('SecurityOverview')
-          }
-        >
-          Security Overview
-        </IconButton>}
+        {kycStatus && hasPassedKYC() && !_.isEmpty(securityOverview) && (
+          <IconButton
+            margin="0 0 0 0"
+            rightText={rightText.text}
+            rightTextColor={rightText.textColor}
+            onPress={() => actions.navigateTo("SecurityOverview")}
+          >
+            Security Overview
+          </IconButton>
+        )}
 
         <IconButton margin={"20 0 20 0"} right={<Switcher2FA />} hideIconRight>
           Two-Factor Verification
@@ -172,6 +179,13 @@ class SecuritySettings extends Component {
 
         <IconButton right={<SwitcherHodl />} hideIconRight margin="0 0 20 0">
           HODL Mode
+        </IconButton>
+
+        <IconButton
+          margin="0 0 20 0"
+          onPress={() => actions.navigateTo("BlockExplorerCode")}
+        >
+          Blockexplorer code
         </IconButton>
 
         {!user.registered_with_social && (
@@ -203,15 +217,15 @@ class SecuritySettings extends Component {
           Change withdrawal addresses
         </IconButton>
 
-
-         <CelButton
+        <CelButton
           margin="0 0 30 0"
           basic
-          onPress={() => {actions.navigateTo('ActionsByUser')}}
-         >
+          onPress={() => {
+            actions.navigateTo("ActionsByUser");
+          }}
+        >
           User Actions
-         </CelButton>
-
+        </CelButton>
 
         <CelButton onPress={this.logoutUser}>
           Log out from all devices

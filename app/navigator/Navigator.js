@@ -109,6 +109,9 @@ import TransactionsIntersection from "../components/screens/TransactionsIntersec
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
 
+import BlockExplorerCode from "../components/screens/BlockExplorerCode/BlockExplorerCode";
+import BlockExplorerCodeChange from "../components/screens/BlockExplorerCodeChange/BlockExplorerCodeChange";
+
 export const screens = {
   /**
    * Out of limit
@@ -283,6 +286,11 @@ export const screens = {
   WithdrawConfirmAddress,
 
   Support,
+  /**
+   * Hackathon
+   */
+  BlockExplorerCode,
+  BlockExplorerCodeChange,
 };
 
 const navigatorProps = {
