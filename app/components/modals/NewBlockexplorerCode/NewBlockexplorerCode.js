@@ -11,7 +11,7 @@ import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 class NewBlockexplorerCode extends Component {
   render() {
     const style = NewBlockexplorerCodeStyle();
-    const { closeModal } = this.props;
+    const { closeModal, address } = this.props;
     return (
       <CelModal style={style.container} name={MODALS.NEW_BLOCKEXPLORER_CODE}>
         <CelText
@@ -32,7 +32,7 @@ class NewBlockexplorerCode extends Component {
           }}
         >
           <CelText>
-            0xDE082CC5F6F02D8B0F0A43357C77059620358BC272D88E84E922061FFCAE2BDD
+            {address}
           </CelText>
         </View>
         <View style={style.buttonsStyle}>

@@ -31,17 +31,29 @@ class BlockExplorerCodeChange extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Blockexplorer code change",
+    title: "Celsius DID",
     right: "profile",
   });
 
   generateNewCode = async () => {
     const { user, actions } = this.props
-    console.log('user je: ', user)
-    const res = await blockExplorerService.createNewIdentity(user.id)
-    console.log('res je: ', res.data)
+    try {
+      const res = await blockExplorerService.createNewIdentity(user.id)
+      if (res.data.address !== '0xERROR') {
+        await actions.updateFormField('BlockExplorerCode', res.data.address)
+        actions.openModal(MODALS.NEW_BLOCKEXPLORER_CODE)
+      }
+    } catch (e) {
+     actions.showMessage("error", e)
+    }
 
-    actions.openModal(MODALS.NEW_BLOCKEXPLORER_CODE)
+  }
+
+  closeModal = () => {
+    const { actions } = this.props
+    actions.closeModal()
+    actions.resetToScreen('BlockExplorerCode')
+    actions.showMessage("success", "Successfully changed your blockexplorer code")
   }
 
   renderCodeCard = () => {
@@ -108,14 +120,14 @@ class BlockExplorerCodeChange extends Component {
   };
 
   render() {
-    const { actions } = this.props;
+    const { formData } = this.props;
 
     return (
       <RegularLayout>
         {this.renderInfoBox()}
         {this.renderCodeCard()}
         {this.renderButton()}
-        <NewBlockexplorerCode closeModal={actions.closeModal} />
+        <NewBlockexplorerCode closeModal={this.closeModal} address={formData.BlockExplorerCode} />
       </RegularLayout>
     );
   }

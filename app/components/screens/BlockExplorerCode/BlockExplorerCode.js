@@ -8,12 +8,13 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
-import BlockExplorerCodeStyle from "./BlockExplorerCode.styles";
+// import BlockExplorerCodeStyle from "./BlockExplorerCode.styles";
 import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
-import Icon from "../../atoms/Icon/Icon";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import blockExplorerService from "../../../services/blockexplorer-service"
+import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
+import IconButton from "../../organisms/IconButton/IconButton";
 
 @connect(
   state => ({
@@ -27,16 +28,55 @@ class BlockExplorerCode extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Blockexplorer code",
+    title: "Celsius DID",
     right: "profile",
   });
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      didDisabled: false
+    }
+  }
+
   async componentDidMount() {
     const { actions, user } = this.props;
-    const res = await blockExplorerService.getUserSettings(user.id)
+    try {
+      const res = await blockExplorerService.getUserSettings(user.id)
+      console.log('getUserSettings: ', res.data)
+      const enabled = res.data.user_settings.enabled
+      if (enabled) {
+        this.setState({didDisabled: false})
+        const blockExplorerCode = res.data.user_settings.address
+        actions.updateFormField("BlockExplorerCode", blockExplorerCode);
+      } else {
+        this.setState({didDisabled: true})
+      }
+    } catch (e) {
+      actions.showMessage('error', e)
+    }
+  }
 
-    const blockExplorerCode = res.data.user_settings.address
-    actions.updateFormField("BlockExplorerCode", blockExplorerCode);
+  handleDIDswitch = async() => {
+    const { user, actions } = this.props
+    this.setState({ didDisabled: !this.state.didDisabled })
+    try {
+      if (this.state.didDisabled) {
+        const res = await blockExplorerService.enableTracking(user.id)
+        console.log('enableTracking: ', res.data)
+        const blockExplorerCode = res.data.address
+        actions.updateFormField("BlockExplorerCode", blockExplorerCode);
+
+      } else {
+        const res = await blockExplorerService.disableTracking(user.id)
+        console.log('disableTracking: ', res.data)
+
+        actions.updateFormField("BlockExplorerCode", '');
+      }
+    } catch (e) {
+      actions.showMessage('error', e)
+    }
   }
 
   renderCodeCard = () => {
@@ -83,31 +123,24 @@ class BlockExplorerCode extends Component {
     );
   };
 
-  renderInfoBox = () => {
-    const style = BlockExplorerCodeStyle();
-    const infoBoxText =
-      "With this unique code you can access to your secret blockexplorer page where you can track all your transactions on blockchain";
 
+  renderSwitch = () => {
+    const { didDisabled } = this.state;
     return (
-      <Card color={STYLES.COLORS.CELSIUS_BLUE}>
-        <View style={style.infoBoxWrapper}>
-          <View style={style.infoBoxIconWrapper}>
-            <Icon
-              name="Info"
-              width="25"
-              height="25"
-              fill={STYLES.COLORS.WHITE}
-            />
-          </View>
-          <View style={style.infoBoxTextWrapper}>
-            <CelText type={"H5"} weight={"300"} color={STYLES.COLORS.WHITE}>
-              {infoBoxText}
-            </CelText>
-          </View>
-        </View>
-      </Card>
+      <CelSwitch
+        onValueChange={this.handleDIDswitch}
+        value={didDisabled}
+      />
     );
   };
+
+  renderSwitchCard = () => {
+    return (
+        <IconButton margin={"20 0 20 0"} right={this.renderSwitch()} hideIconRight>
+          Disable Celsius DID
+        </IconButton>
+      )
+  }
 
   renderButton = () => {
     // Open web browser
@@ -133,11 +166,24 @@ class BlockExplorerCode extends Component {
   };
 
   render() {
+    const { didDisabled }  = this.state
+    const DIDDescription = 'With your Celsius DID (Decentralized Identity) you can access your secret blockexplorer page where you can track all your transactions. Also, you can share your Celsius DID with others to prove your transactions. By disabling your Celsius DID, your identity will be hidden on blockexplorer.'
     return (
       <RegularLayout>
-        {this.renderInfoBox()}
-        {this.renderCodeCard()}
-        {this.renderButton()}
+        <CelText
+          weight={"700"}
+          type={"H3"}
+          margin={'0 0 10 0'}
+        >
+          What is Celsius DID?</CelText>
+        <CelText
+          margin={'0 0 10 0'}
+        >
+          {DIDDescription}
+        </CelText>
+        {this.renderSwitchCard()}
+        {!didDisabled && this.renderCodeCard()}
+        {!didDisabled && this.renderButton()}
       </RegularLayout>
     );
   }
