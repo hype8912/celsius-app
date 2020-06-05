@@ -103,7 +103,7 @@ class BlockExplorerCodeChange extends Component {
       <View style={{ alignItems: "center" }}>
         <CelButton
           basic
-          // onPress={() => console.log("Past Identities")}
+          onPress={() => actions.navigateTo('PastIdentities')}
           margin={"10 0 2 0"}
         >
           View Past Identities

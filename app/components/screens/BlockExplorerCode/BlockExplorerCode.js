@@ -146,13 +146,13 @@ class BlockExplorerCode extends Component {
     const { formData }  = this.props
     // Open web browser
     const link = `http://hackathon.celsius.network/user-secret-page/${formData.BlockExplorerCode}`
-    // const { actions } = this.props
+    const { actions } = this.props
     return (
       <View style={{ alignItems: "center" }}>
         <CelButton
           basic
           margin={"10 0 2 0"}
-          // onPress={() => console.log("Identities List")}
+          onPress={() => actions.navigateTo('PastIdentities')}
         >
           View Past Identities
         </CelButton>

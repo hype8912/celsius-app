@@ -111,6 +111,7 @@ import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfi
 
 import BlockExplorerCode from "../components/screens/BlockExplorerCode/BlockExplorerCode";
 import BlockExplorerCodeChange from "../components/screens/BlockExplorerCodeChange/BlockExplorerCodeChange";
+import PastIdentities from "../components/screens/PastIdentities/PastIdentities";
 
 export const screens = {
   /**
@@ -291,6 +292,7 @@ export const screens = {
    */
   BlockExplorerCode,
   BlockExplorerCodeChange,
+  PastIdentities
 };
 
 const navigatorProps = {
