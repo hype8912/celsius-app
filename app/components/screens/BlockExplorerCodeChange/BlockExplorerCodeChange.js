@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 import * as appActions from "../../../redux/actions";
 
@@ -20,14 +20,12 @@ import NewBlockexplorerCode from "../../modals/NewBlockexplorerCode/NewBlockexpl
 @connect(
   state => ({
     formData: state.forms.formData,
-    user: state.user.profile
+    user: state.user.profile,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class BlockExplorerCodeChange extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
   static defaultProps = {};
 
   static navigationOptions = () => ({
@@ -36,25 +34,27 @@ class BlockExplorerCodeChange extends Component {
   });
 
   generateNewCode = async () => {
-    const { user, actions } = this.props
+    const { user, actions } = this.props;
     try {
-      const res = await blockExplorerService.createNewIdentity(user.id)
-      if (res.data.address !== '0xERROR') {
-        await actions.updateFormField('BlockExplorerCode', res.data.address)
-        actions.openModal(MODALS.NEW_BLOCKEXPLORER_CODE)
+      const res = await blockExplorerService.createNewIdentity(user.id);
+      if (res.data.address !== "0xERROR") {
+        await actions.updateFormField("BlockExplorerCode", res.data.address);
+        actions.openModal(MODALS.NEW_BLOCKEXPLORER_CODE);
       }
     } catch (e) {
-     actions.showMessage("error", e)
+      actions.showMessage("error", e);
     }
-
-  }
+  };
 
   closeModal = () => {
-    const { actions } = this.props
-    actions.closeModal()
-    actions.resetToScreen('BlockExplorerCode')
-    actions.showMessage("success", "Successfully changed your blockexplorer code")
-  }
+    const { actions } = this.props;
+    actions.closeModal();
+    actions.resetToScreen("BlockExplorerCode");
+    actions.showMessage(
+      "success",
+      "Successfully changed your blockexplorer code"
+    );
+  };
 
   renderCodeCard = () => {
     const { formData } = this.props;
@@ -103,7 +103,7 @@ class BlockExplorerCodeChange extends Component {
       <View style={{ alignItems: "center" }}>
         <CelButton
           basic
-          onPress={() => actions.navigateTo('PastIdentities')}
+          onPress={() => actions.navigateTo("PastIdentities")}
           margin={"10 0 2 0"}
         >
           View Past Identities
@@ -127,7 +127,10 @@ class BlockExplorerCodeChange extends Component {
         {this.renderInfoBox()}
         {this.renderCodeCard()}
         {this.renderButton()}
-        <NewBlockexplorerCode closeModal={this.closeModal} address={formData.BlockExplorerCode} />
+        <NewBlockexplorerCode
+          closeModal={this.closeModal}
+          address={formData.BlockExplorerCode}
+        />
       </RegularLayout>
     );
   }
