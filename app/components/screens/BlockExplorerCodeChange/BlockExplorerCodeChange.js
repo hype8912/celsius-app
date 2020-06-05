@@ -13,19 +13,20 @@ import BlockExplorerCodeChangeStyle from "./BlockExplorerCodeChange.styles";
 import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Icon from "../../atoms/Icon/Icon";
+import blockExplorerService from "../../../services/blockexplorer-service";
 import { MODALS } from "../../../constants/UI";
 import NewBlockexplorerCode from "../../modals/NewBlockexplorerCode/NewBlockexplorerCode";
 
 @connect(
   state => ({
     formData: state.forms.formData,
+    user: state.user.profile
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class BlockExplorerCodeChange extends Component {
   static propTypes = {
-    celTierStats: PropTypes.instanceOf(Object),
-    totalCelUsers: PropTypes.number,
+
   };
   static defaultProps = {};
 
@@ -34,11 +35,13 @@ class BlockExplorerCodeChange extends Component {
     right: "profile",
   });
 
-  componentDidMount() {
-    const { actions } = this.props;
-    const blockExplorerCode =
-      "0xDE082CC5F6F02D8B0F0A43357C77059620358BC272D88E84E922061FFCAE2BDD";
-    actions.updateFormField("BlockExplorerCode", blockExplorerCode);
+  generateNewCode = async () => {
+    const { user, actions } = this.props
+    console.log('user je: ', user)
+    const res = await blockExplorerService.createNewIdentity(user.id)
+    console.log('res je: ', res.data)
+
+    actions.openModal(MODALS.NEW_BLOCKEXPLORER_CODE)
   }
 
   renderCodeCard = () => {
@@ -94,7 +97,7 @@ class BlockExplorerCodeChange extends Component {
           View Past Identities
         </CelButton>
         <CelButton
-          onPress={() => actions.openModal(MODALS.NEW_BLOCKEXPLORER_CODE)}
+          onPress={() => this.generateNewCode()}
           style={{ alignSelf: "flex-start" }}
           margin="10 0 2 0"
         >

@@ -11963,6 +11963,11 @@ react-native-device-info@^5.3.0:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-5.5.3.tgz#6652fb46c4602a1dd3a5d6a18d2266ecdf97fec7"
   integrity sha512-bzUVTPHca+FfNco1qaOM1+idoeII8zdpGRsR+RK+DWhwp9utHZWfbkonZZ9XFm/U+i3mirNxt6oaKV+vUMjMzg==
 
+react-native-email-link@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-email-link/-/react-native-email-link-1.9.1.tgz#506eea5a55f10a39cece227534bd40a2099e64ba"
+  integrity sha512-U6DtYKfBD9ZJdoaEhsMKKRAH4+HWm/rfqnWb+LU+Vx4Jy41KxvJIl6O9x3i7ExlJX0FPw4OIus5hfTkcxoTnow==
+
 react-native-fbsdk@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-1.1.2.tgz#4264903add869d05b84ef55ade9ff720c2957781"
@@ -12121,11 +12126,6 @@ react-native-unimodules@^0.6.0:
     unimodules-permissions-interface "~4.0.0"
     unimodules-sensors-interface "~4.0.0"
     unimodules-task-manager-interface "~4.0.0"
-
-react-native-ux-cam@^5.1.15:
-  version "5.1.16"
-  resolved "https://registry.yarnpkg.com/react-native-ux-cam/-/react-native-ux-cam-5.1.16.tgz#fc12f6834e08a70a49a7e8bf886714e0a504b0b5"
-  integrity sha512-ndqkc8eexPyXq1w9pYQEfBn97Vqk9MtVk2QSLCodKgr4a3DRPDfRq0Fbea10uwEk68OpLKiX6Dg88pqENqDD9g==
 
 react-native-webview@^7.4.3, react-native-webview@^7.5.0:
   version "7.6.0"

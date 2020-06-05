@@ -13,10 +13,12 @@ import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Icon from "../../atoms/Icon/Icon";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
+import blockExplorerService from "../../../services/blockexplorer-service"
 
 @connect(
   state => ({
     formData: state.forms.formData,
+    user: state.user.profile
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -29,10 +31,11 @@ class BlockExplorerCode extends Component {
     right: "profile",
   });
 
-  componentDidMount() {
-    const { actions } = this.props;
-    const blockExplorerCode =
-      "0xDE082CC5F6F02D8B0F0A43357C77059620358BC272D88E84E922061FFCAE2BDD";
+  async componentDidMount() {
+    const { actions, user } = this.props;
+    const res = await blockExplorerService.getUserSettings(user.id)
+
+    const blockExplorerCode = res.data.user_settings.address
     actions.updateFormField("BlockExplorerCode", blockExplorerCode);
   }
 
