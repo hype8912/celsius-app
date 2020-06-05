@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
@@ -143,7 +143,9 @@ class BlockExplorerCode extends Component {
   }
 
   renderButton = () => {
+    const { formData }  = this.props
     // Open web browser
+    const link = `http://hackathon.celsius.network/user-secret-page/${formData.BlockExplorerCode}`
     // const { actions } = this.props
     return (
       <View style={{ alignItems: "center" }}>
@@ -155,7 +157,7 @@ class BlockExplorerCode extends Component {
           View Past Identities
         </CelButton>
         <CelButton
-          // onPress={() => console.log('Secret Page')}
+          onPress={() => Linking.openURL(link)}
           style={{ alignSelf: "flex-start" }}
           margin="10 0 2 0"
         >

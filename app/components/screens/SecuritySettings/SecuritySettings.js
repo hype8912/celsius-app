@@ -185,7 +185,7 @@ class SecuritySettings extends Component {
           margin="0 0 20 0"
           onPress={() => actions.navigateTo("BlockExplorerCode")}
         >
-          Blockexplorer code
+          Celsius DID
         </IconButton>
 
         {!user.registered_with_social && (
