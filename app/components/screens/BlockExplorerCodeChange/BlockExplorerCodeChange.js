@@ -13,6 +13,8 @@ import BlockExplorerCodeChangeStyle from "./BlockExplorerCodeChange.styles";
 import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Icon from "../../atoms/Icon/Icon";
+import { MODALS } from "../../../constants/UI";
+import NewBlockexplorerCode from "../../modals/NewBlockexplorerCode/NewBlockexplorerCode";
 
 @connect(
   state => ({
@@ -80,11 +82,19 @@ class BlockExplorerCodeChange extends Component {
   };
 
   renderButton = () => {
-    // const { actions } = this.props
+    const { actions } = this.props;
+
     return (
       <View style={{ alignItems: "center" }}>
         <CelButton
-          // onPress={() => console.log('button pressed')}
+          basic
+          // onPress={() => console.log("Past Identities")}
+          margin={"10 0 2 0"}
+        >
+          View Past Identities
+        </CelButton>
+        <CelButton
+          onPress={() => actions.openModal(MODALS.NEW_BLOCKEXPLORER_CODE)}
           style={{ alignSelf: "flex-start" }}
           margin="10 0 2 0"
         >
@@ -95,11 +105,14 @@ class BlockExplorerCodeChange extends Component {
   };
 
   render() {
+    const { actions } = this.props;
+
     return (
       <RegularLayout>
         {this.renderInfoBox()}
         {this.renderCodeCard()}
         {this.renderButton()}
+        <NewBlockexplorerCode closeModal={actions.closeModal} />
       </RegularLayout>
     );
   }

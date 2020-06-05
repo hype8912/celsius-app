@@ -112,7 +112,14 @@ class BlockExplorerCode extends Component {
     return (
       <View style={{ alignItems: "center" }}>
         <CelButton
-          // onPress={() => console.log('Button pressed')}
+          basic
+          margin={"10 0 2 0"}
+          // onPress={() => console.log("Identities List")}
+        >
+          View Past Identities
+        </CelButton>
+        <CelButton
+          // onPress={() => console.log('Secret Page')}
           style={{ alignSelf: "flex-start" }}
           margin="10 0 2 0"
         >
