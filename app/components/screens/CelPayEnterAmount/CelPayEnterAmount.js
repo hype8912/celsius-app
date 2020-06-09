@@ -63,7 +63,7 @@ class CelPayEnterAmount extends Component {
         const balanceUsd = walletSummary.coins.filter(
           coin => coin.short === c.short.toUpperCase()
         )[0].amount_usd;
-        return balanceUsd > 0;
+        return balanceUsd.isGreaterThan(0);
       })
       .map(c => ({ label: `${c.displayName}  (${c.short})`, value: c.short }));
 
@@ -267,7 +267,7 @@ class CelPayEnterAmount extends Component {
     )[0];
 
     // TODO: move newBalance calc to util
-    const newBalance = Number(coinData.amount) - Number(formData.amountCrypto);
+    const newBalance = coinData.amount.minus(formData.amountCrypto);
 
     if (celUtilityUtil.isLosingTier(formData.coin, newBalance)) {
       return actions.openModal(MODALS.LOSE_TIER_MODAL);
