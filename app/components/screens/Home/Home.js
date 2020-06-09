@@ -7,6 +7,7 @@ import { isKYCRejectedForever } from "../../../utils/user-util";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import SplashScreen from "../SplashScreen/SplashScreen";
+import CelsiusLoadingScreen from "../CelsiusLoadingScreen/CelsiusLoadingScreen";
 
 @connect(
   state => ({
@@ -76,7 +77,15 @@ class Home extends Component {
     actions.handleDeepLink();
   };
 
-  render = () => <SplashScreen />;
+  render = () => {
+    const isLoggedIn = this.props.navigation.getParam("isLoggedIn");
+
+    if (isLoggedIn) {
+      return <CelsiusLoadingScreen />;
+    }
+
+    return <SplashScreen />;
+  };
 }
 
 export default Home;

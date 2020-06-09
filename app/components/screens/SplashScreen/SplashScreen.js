@@ -6,7 +6,6 @@ import SplashScreen from "react-native-splash-screen";
 
 import SplashScreenStyle from "./SplashScreen.styles";
 import * as appActions from "../../../redux/actions";
-import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 
 const { width, height } = Dimensions.get("window");
 
@@ -86,13 +85,11 @@ class CustomSplashScreen extends Component {
 
     if (!history.length)
       return (
-        <RegularLayout fabType="hide" padding="0 0 0 0">
-          <Image
-            resizeMode="cover"
-            style={{ width, height }}
-            source={require("../../../../assets/images/loading.png")}
-          />
-        </RegularLayout>
+        <Image
+          resizeMode="cover"
+          style={{ width, height }}
+          source={require("../../../../assets/images/loading.png")}
+        />
       );
 
     return (

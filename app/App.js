@@ -72,7 +72,7 @@ class App extends Component {
     await appUtil.checkAndRefreshAuthToken(token);
 
     await store.dispatch(actions.getInitialCelsiusData());
-    store.dispatch(actions.navigateTo("Home"));
+    store.dispatch(actions.navigateTo("Home", { isLoggedIn: token || false }));
   }
 
   componentWillUnmount() {
