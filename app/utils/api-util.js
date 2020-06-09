@@ -378,7 +378,11 @@ function wereSuccessfulInHistory(callNames, numberOfCallsInHistory = 5) {
 function verifyKey(data, sign) {
   const sig2 = new r.KJUR.crypto.Signature({ alg: "SHA256withRSA" });
   sig2.init(decodedPublicKey);
-  sig2.updateString(JSON.stringify(data));
+  if (typeof data === "string") {
+    sig2.updateString(data);
+  } else {
+    sig2.updateString(JSON.stringify(data));
+  }
   const isValid = sig2.verify(sign);
   return isValid;
 }
