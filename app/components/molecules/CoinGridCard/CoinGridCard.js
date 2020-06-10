@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { View, Animated, Image } from "react-native";
+import { View, Animated } from "react-native";
 import PropTypes from "prop-types";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
@@ -13,6 +13,7 @@ import { THEMES } from "../../../constants/UI";
 import interestUtil from "../../../utils/interest-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 const GraphLight = require("../../../../assets/images/placeholders/graph-light.png");
 const GraphDark = require("../../../../assets/images/placeholders/graph-dark.png");
@@ -95,14 +96,11 @@ class CoinGridCard extends Component {
     const hasTransactions = Number(coin.has_transaction) > 0;
     const style = CoinGridCardStyle();
 
-    const padding = graphData ? "12 0 0 0" : undefined; // undefined so it will fallback to default card prop padding
-
     const dateArray = graphData ? graphData["1d"].map(data => data[0]) : [];
     const priceArray = graphData ? graphData["1d"].map(data => data[1]) : [];
 
     const shouldShowGraph =
       graphData && dateArray.length > 0 && priceArray.length > 0;
-    const image = theme === THEMES.DARK ? GraphDark : GraphLight;
 
     const coinInterest = interestUtil.getUserInterestForCoin(coin.short);
     const isBelowThreshold = interestUtil.isBelowThreshold(coin.short);
@@ -116,7 +114,7 @@ class CoinGridCard extends Component {
 
     return (
       <Animated.View style={this.animate()}>
-        <Card size="half" padding={padding} onPress={onCardPress}>
+        <Card size="half" padding={"12 0 0 0"} onPress={onCardPress}>
           <View style={style.cardInnerView}>
             <View style={style.wrapper}>
               <View style={style.coinTextWrapper}>
@@ -153,10 +151,15 @@ class CoinGridCard extends Component {
             </View>
           ) : (
             <View style={{ ...this.props.style, marginHorizontal: 0 }}>
-              <Image
-                source={image}
+              <ThemedImage
+                lightSource={GraphLight}
+                darkSource={GraphDark}
                 resizeMode="contain"
-                style={{ width: "100%", height: heightPercentageToDP("10%") }}
+                style={{
+                  width: "100%",
+                  height: heightPercentageToDP("10%"),
+                  marginBottom: "-10%",
+                }}
               />
             </View>
           )}
