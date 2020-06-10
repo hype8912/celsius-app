@@ -5,7 +5,7 @@ const buyCoinsAnalytics = {
   choseBuyCoinsType,
   enteredBuyCoinsAmount,
   initiatedBuyCoinsRequest,
-  finishedSimplexFlow,
+  finishedBuyCoinsFlow,
 };
 
 /**
@@ -83,7 +83,7 @@ function initiatedBuyCoinsRequest(
 }
 
 /**
- * Fires when user finishes Simplex flow in the app
+ * Fires when user finishes Buy Coins flow in the app
  *
  * @param {string} buyCoinsType - CARD|WIRE
  * @param {string} cryptoCoin - BTC|ETH
@@ -92,17 +92,19 @@ function initiatedBuyCoinsRequest(
  * @param {number} amountFiat
  * @param {number} amountCrypto
  * @param {string} status - success|fail
+ * @param {string} provider - simplex|gem
  */
-function finishedSimplexFlow(
+function finishedBuyCoinsFlow(
   buyCoinsType,
   cryptoCoin,
   fiatCoin,
   amountUsd,
   amountFiat,
   amountCrypto,
-  status
+  status,
+  provider
 ) {
-  sendEvent("Finished Buy Coins Simplex Flow", {
+  sendEvent("Finished Buy Coins Flow", {
     buyCoinsType,
     cryptoCoin,
     fiatCoin,
@@ -110,6 +112,7 @@ function finishedSimplexFlow(
     amountFiat,
     amountCrypto,
     status,
+    provider,
   });
 }
 
