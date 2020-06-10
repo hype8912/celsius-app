@@ -37,7 +37,7 @@ function calculateCelRatio(newCelBalance) {
     newCelBalance * celRate ||
     walletSummary.coins.find(c => c.short === "CEL").amount_usd.toNumber();
   const otherCoinsBalance =
-    walletSummary.total_amount_usd -
+    walletSummary.total_amount_usd.toNumber() -
     walletSummary.coins.find(c => c.short === "CEL").amount_usd.toNumber();
   const celRatio = otherCoinsBalance ? celBalance / otherCoinsBalance : 1;
 

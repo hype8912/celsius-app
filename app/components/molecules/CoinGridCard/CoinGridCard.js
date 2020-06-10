@@ -105,6 +105,13 @@ class CoinGridCard extends Component {
     const image = theme === THEMES.DARK ? GraphDark : GraphLight;
 
     const coinInterest = interestUtil.getUserInterestForCoin(coin.short);
+    const isBelowThreshold = interestUtil.isBelowThreshold(coin.short);
+    const specialRate = isBelowThreshold
+      ? coinInterest.specialApyRate
+      : coinInterest.apyRate;
+    const isInCel = !coinInterest.inCEL
+      ? coinInterest.compound_rate
+      : specialRate;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
 
     return (
@@ -118,7 +125,7 @@ class CoinGridCard extends Component {
                 </CelText>
                 {coinInterest.eligible && (
                   <CelText color={STYLES.COLORS.GREEN} type="H7">
-                    {coinInterest.display}
+                    {formatter.percentageDisplay(isInCel)}
                   </CelText>
                 )}
               </View>

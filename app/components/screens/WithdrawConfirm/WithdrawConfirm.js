@@ -52,7 +52,7 @@ class WithdrawConfirm extends Component {
     if (
       formData.coin === "CEL" &&
       loyaltyInfo &&
-      newBalance < Number(loyaltyInfo.min_for_tier)
+      newBalance.isLessThan(loyaltyInfo.min_for_tier)
     ) {
       return (
         <InfoBox
