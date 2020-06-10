@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import ACTIONS from "../../constants/ACTIONS";
 import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
@@ -8,7 +10,11 @@ import mockTransactions from "../../mock-data/payments.mock";
 import store from "../store";
 import getCoinsUtil from "../../utils/get-coins-util";
 import buyCoinsService from "../../services/buy-coins-service";
-import simplexService from "../../services/simplex-service";
+import {
+  BUY_COINS_PAYMENT_STATUSES,
+  TRANSACTION_TYPES,
+} from "../../constants/DATA";
+import STYLES from "../../constants/STYLES";
 
 export {
   getPaymentRequests,
@@ -28,8 +34,7 @@ function getPaymentRequests() {
     try {
       let res;
       if (!mocks.USE_MOCK_TRANSACTIONS) {
-        // res = await buyCoinsService.getAllPayments();
-        res = await simplexService.getAllPayments();
+        res = await buyCoinsService.getAllPayments();
       } else {
         res = {
           data: Object.values(mockTransactions).filter(t =>
@@ -38,9 +43,11 @@ function getPaymentRequests() {
         };
       }
 
+      const payments = res.data.map(mapPayment);
+
       dispatch({
         type: ACTIONS.GET_PAYMENT_REQUESTS_SUCCESS,
-        payments: res.data,
+        payments,
       });
     } catch (err) {
       dispatch(apiError(API.GET_PAYMENT_REQUESTS, err));
@@ -180,13 +187,13 @@ function getCrytpoLimits() {
 
       const limitsPerCrypto = {};
       for (let i = 0; i < allowedSimplexCoins.length; i++) {
-        const quoteMin = await simplexService.getQuote(
+        const quoteMin = await buyCoinsService.getQuote(
           allowedSimplexCoins[i],
           "USD",
           "USD",
           usdLimits.min
         );
-        const quoteMax = await simplexService.getQuote(
+        const quoteMax = await buyCoinsService.getQuote(
           allowedSimplexCoins[i],
           "USD",
           "USD",
@@ -206,5 +213,56 @@ function getCrytpoLimits() {
     } catch (err) {
       dispatch(apiError(API.GET_CRYPTO_LIMITS, err));
     }
+  };
+}
+
+function mapPayment(payment) {
+  let paymentType;
+  switch (payment.status) {
+    case BUY_COINS_PAYMENT_STATUSES.PENDING:
+      paymentType = TRANSACTION_TYPES.DEPOSIT_PENDING;
+      break;
+
+    case BUY_COINS_PAYMENT_STATUSES.APPROVED:
+    case BUY_COINS_PAYMENT_STATUSES.COMPLETED:
+      paymentType = TRANSACTION_TYPES.DEPOSIT_CONFIRMED;
+      break;
+
+    case BUY_COINS_PAYMENT_STATUSES.REFUNDED:
+    case BUY_COINS_PAYMENT_STATUSES.CANCELLED:
+    case BUY_COINS_PAYMENT_STATUSES.DECLINED:
+    case BUY_COINS_PAYMENT_STATUSES.EXPIRED:
+    case BUY_COINS_PAYMENT_STATUSES.FAILED:
+      paymentType = TRANSACTION_TYPES.CANCELED;
+      break;
+  }
+
+  const time = moment(payment.created_at).isSame(moment(), "day")
+    ? moment(payment.created_at).format("HH:mm")
+    : moment(payment.created_at).format("DD MMM YYYY");
+
+  const uiProps = {};
+  uiProps.shortName = payment.type === "credit_card" ? "CC" : "BW";
+
+  switch (paymentType) {
+    case TRANSACTION_TYPES.DEPOSIT_PENDING:
+      uiProps.color = STYLES.COLORS.ORANGE;
+      uiProps.statusText = "Pending";
+      break;
+    case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
+      uiProps.color = STYLES.COLORS.GREEN;
+      uiProps.statusText = "Confirmed";
+      break;
+    case TRANSACTION_TYPES.CANCELED:
+      uiProps.color = STYLES.COLORS.RED;
+      uiProps.statusText = "Cancelled";
+      break;
+  }
+
+  return {
+    ...payment,
+    paymentType,
+    time,
+    uiProps,
   };
 }
