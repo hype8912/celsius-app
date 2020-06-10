@@ -241,6 +241,12 @@ function mapPayment(payment) {
     ? moment(payment.created_at).format("HH:mm")
     : moment(payment.created_at).format("DD MMM YYYY");
 
+  const paymentMethod =
+    payment.type === "credit_card" ? "Credit Card" : "Bank Wire";
+  const orderID =
+    payment.order_id &&
+    `${payment.order_id.slice(0, 18)} \n ${payment.order_id.slice(19)}`;
+
   const uiProps = {};
   uiProps.shortName = payment.type === "credit_card" ? "CC" : "BW";
 
@@ -261,8 +267,11 @@ function mapPayment(payment) {
 
   return {
     ...payment,
+    fiat_currency: payment.fiat_currency.toUpperCase(),
     paymentType,
     time,
     uiProps,
+    paymentMethod,
+    orderID,
   };
 }
