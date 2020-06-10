@@ -12,6 +12,14 @@ const base = {
     alignItems: "center",
     justifyContent: "center",
   },
+  blueStaticContainer: {
+    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    width,
+    height,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   blueContainer: {
     backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
     zIndex: 1,
@@ -22,6 +30,10 @@ const base = {
     position: "absolute",
     top: 0,
     left: 0,
+  },
+  logoStaticImage: {
+    width: 70,
+    height: 70,
   },
   logoContainer: {
     flexDirection: "row",

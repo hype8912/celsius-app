@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Image, View, Animated, Dimensions } from "react-native";
+import { Image, View, Animated } from "react-native";
 import SplashScreen from "react-native-splash-screen";
-
 import SplashScreenStyle from "./SplashScreen.styles";
 import * as appActions from "../../../redux/actions";
-
-const { width, height } = Dimensions.get("window");
 
 @connect(
   state => ({
@@ -83,14 +80,17 @@ class CustomSplashScreen extends Component {
       : require("../../../../assets/images/icons/cel-white.png");
     const style = SplashScreenStyle();
 
-    if (!history.length)
+    if (!history.length) {
       return (
-        <Image
-          resizeMode="cover"
-          style={{ width, height }}
-          source={require("../../../../assets/images/loading.png")}
-        />
+        <View style={style.blueStaticContainer}>
+          <Image
+            resizeMode="contain"
+            style={[style.logoStaticImage]}
+            source={require("../../../../assets/images/icons/cel-white.png")}
+          />
+        </View>
       );
+    }
 
     return (
       <View style={style.container}>
