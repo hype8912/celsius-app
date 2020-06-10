@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { isKYCRejectedForever } from "../../../utils/user-util";
+import { isKYCRejectedForever, isUserLoggedIn } from "../../../utils/user-util";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import SplashScreen from "../SplashScreen/SplashScreen";
@@ -78,9 +78,7 @@ class Home extends Component {
   };
 
   render = () => {
-    const isLoggedIn = this.props.navigation.getParam("isLoggedIn");
-
-    if (isLoggedIn) {
+    if (isUserLoggedIn()) {
       return <CelsiusLoadingScreen />;
     }
 

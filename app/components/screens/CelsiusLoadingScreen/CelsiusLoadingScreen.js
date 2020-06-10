@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, Animated, Easing } from "react-native";
+import { View, Animated, Easing } from "react-native";
 import CelsiusLoadingScreenStyle from "./CelsiusLoadingScreen.styles";
 import { getTheme } from "../../../utils/styles-util";
 import { THEMES } from "../../../constants/UI";
@@ -30,11 +30,9 @@ class CelsiusLoadingScreen extends Component {
     const theme = getTheme();
     const style = CelsiusLoadingScreenStyle();
 
-    let outerImage = require("../../../../assets/images/icons/logo-outer-circle-blue.png");
-    let innerImage = require("../../../../assets/images/icons/logo-inner-circle-blue.png");
+    let logoImage = require("../../../../assets/images/icons/logo-blue.png");
     if (theme === THEMES.DARK) {
-      outerImage = require("../../../../assets/images/icons/logo-outer-circle-white.png");
-      innerImage = require("../../../../assets/images/icons/logo-inner-circle-white.png");
+      logoImage = require("../../../../assets/images/icons/logo-white.png");
     }
 
     const spin = this.state.spinValue.interpolate({
@@ -44,17 +42,10 @@ class CelsiusLoadingScreen extends Component {
 
     return (
       <View style={style.container}>
-        <View>
-          <Image
-            resizeMode="contain"
-            style={[style.outerImage]}
-            source={outerImage}
-          />
-        </View>
         <View style={style.spinContainer}>
           <Animated.Image
-            style={[style.innerImage, { transform: [{ rotate: spin }] }]}
-            source={innerImage}
+            style={[style.logoImage, { transform: [{ rotate: spin }] }]}
+            source={logoImage}
           />
         </View>
       </View>

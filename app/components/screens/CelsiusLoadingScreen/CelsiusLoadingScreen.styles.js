@@ -24,23 +24,18 @@ const base = {
     top: 0,
     left: 0,
   },
-  outerImage: {
-    flex: 1,
-    width: 70,
-    height: 70,
-  },
   spinContainer: {
     position: "absolute",
     zIndex: 2,
     top: "50%",
     left: "50%",
   },
-  innerImage: {
+  logoImage: {
     flex: 1,
-    width: 40,
-    height: 40,
-    marginLeft: -20,
-    marginTop: -20,
+    width: 70,
+    height: 70,
+    marginLeft: -35,
+    marginTop: -35,
   },
 };
 
