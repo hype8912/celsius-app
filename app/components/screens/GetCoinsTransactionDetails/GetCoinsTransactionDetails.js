@@ -9,7 +9,7 @@ import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import {
-  SIMPLEX_PAYMENT_STATUSES,
+  BUY_COINS_PAYMENT_STATUSES,
   TRANSACTION_TYPES,
 } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
@@ -110,14 +110,14 @@ ${orderIdPt2}`,
 
   getType(transactionParams) {
     switch (transactionParams) {
-      case SIMPLEX_PAYMENT_STATUSES.PENDING:
+      case BUY_COINS_PAYMENT_STATUSES.PENDING:
         return TRANSACTION_TYPES.DEPOSIT_PENDING;
 
-      case SIMPLEX_PAYMENT_STATUSES.APPROVED:
+      case BUY_COINS_PAYMENT_STATUSES.APPROVED:
         return TRANSACTION_TYPES.DEPOSIT_CONFIRMED;
 
-      case SIMPLEX_PAYMENT_STATUSES.REFUNDED:
-      case SIMPLEX_PAYMENT_STATUSES.CANCELLED:
+      case BUY_COINS_PAYMENT_STATUSES.REFUNDED:
+      case BUY_COINS_PAYMENT_STATUSES.CANCELLED:
         return TRANSACTION_TYPES.CANCELED;
     }
   }

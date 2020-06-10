@@ -10,7 +10,7 @@ import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCa
 import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import GetCoinsInfoModal from "../../modals/GetCoinsInfoModal/GetCoinsInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import SimplexPaymentsHistory from "../../molecules/SimplexPaymentsHistory/SimplexPaymentsHistory";
+import BuyCoinsPaymentsHistory from "../../molecules/BuyCoinsPaymentsHistory/BuyCoinsPaymentsHistory";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { hasPassedKYC } from "../../../utils/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
@@ -115,7 +115,7 @@ class GetCoinsLanding extends Component {
           />
         )}
 
-        <SimplexPaymentsHistory />
+        <BuyCoinsPaymentsHistory />
 
         <GetCoinsInfoModal actions={actions} />
       </RegularLayout>
