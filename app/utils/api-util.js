@@ -11,7 +11,6 @@ import Constants from "../../constants";
 import { getSecureStoreKey } from "../utils/expo-storage";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
-import { isKYCRejectedForever } from "./user-util";
 import mixpanelAnalytics from "./mixpanel-analytics";
 import { logoutUserMixpanel } from "./mixpanel-util";
 
@@ -32,6 +31,7 @@ export default {
   initInterceptors,
   areCallsInProgress,
   parseValidationErrors,
+  wereSuccessfulInHistory,
 };
 
 /**
@@ -232,14 +232,14 @@ async function errorInterceptor(serverError) {
 
   mixpanelAnalytics.apiError({
     ...err,
-    url: serverError.config.url,
-    method: serverError.config.method,
+    url: serverError.config && serverError.config.url,
+    method: serverError.config && serverError.config.method,
   });
   if (err.status === 401) handle401(err);
   if (err.status === 403) handle403(err);
   if (err.status === 426) {
-    handle426(err);
-    return Promise.resolve();
+    const res = await handle426(err, serverError.config);
+    return Promise.resolve(res);
   }
   if (err.status === 429) handle429();
   if (err.status === 503) handle503(err);
@@ -282,28 +282,31 @@ async function handle403(err) {
   }
 }
 
-function handle426(err) {
-  const { showVerifyScreen } = store.getState().app;
-  if (!showVerifyScreen) {
+async function handle426(err, reqConfig) {
+  return new Promise((resolve, reject) => {
     store.dispatch(
       actions.navigateTo("VerifyProfile", {
         hideBack: true,
-        show: err.show,
-        onSuccess: () => {
-          store.dispatch(
-            actions.resetToScreen(
-              isKYCRejectedForever() ? "KYCFinalRejection" : "WalletLanding"
-            )
-          );
+        // PIN || 2FA
+        verificationType: err.show,
+        onSuccess: async () => {
+          try {
+            // fetch failed request again after verification successful
+            const res = await axios(reqConfig);
+
+            // return successful response
+            return resolve(res);
+          } catch (e) {
+            return reject(e);
+          }
         },
       })
     );
-    store.dispatch(actions.showVerifyScreen());
-  }
+  });
 }
 
 function handle429() {
-  store.dispatch(actions.navigateTo("LockedAccount"));
+  store.dispatch(actions.navigateTo("TooManyRequests"));
 }
 
 function handle503(err) {
@@ -342,6 +345,26 @@ function parseValidationErrors(serverError) {
 }
 
 /**
+ * Checks if some endpoints were successful in history
+ *
+ * @param {Array} callNames - array of calls from API
+ * @returns {Number} numberOfCallsInHistory - number of calls to look into history
+ */
+function wereSuccessfulInHistory(callNames, numberOfCallsInHistory = 5) {
+  const history = store.getState().api.history;
+  const succesfulCalls = callNames.map(cn => `${cn}_SUCCESS`);
+  const lastNCalls = history.slice(0, numberOfCallsInHistory);
+
+  let wereSuccessful = false;
+
+  lastNCalls.forEach(cn => {
+    wereSuccessful = wereSuccessful || succesfulCalls.includes(cn);
+  });
+
+  return wereSuccessful;
+}
+
+/**
  * Verifies the data with signature key from the server
  *
  * @param {Object} address - data from server response
@@ -355,7 +378,11 @@ function parseValidationErrors(serverError) {
 function verifyKey(data, sign) {
   const sig2 = new r.KJUR.crypto.Signature({ alg: "SHA256withRSA" });
   sig2.init(decodedPublicKey);
-  sig2.updateString(JSON.stringify(data));
+  if (typeof data === "string") {
+    sig2.updateString(data);
+  } else {
+    sig2.updateString(JSON.stringify(data));
+  }
   const isValid = sig2.verify(sign);
   return isValid;
 }

@@ -22,7 +22,6 @@ appsFlyerUtil.initSDK();
   state => ({
     deepLinkData: state.deepLink.deepLinkData,
     appState: state.app.appState,
-    user: state.user.profile,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -35,7 +34,7 @@ class DeepLinkController extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { deepLinkData, appState, user, actions } = this.props;
+    const { deepLinkData, appState, actions } = this.props;
     const { allowHandleDeepLink } = this.state;
     if (
       prevProps.appState.match(/inactive|background/) &&
@@ -49,13 +48,10 @@ class DeepLinkController extends Component {
     }
 
     if (!_.isEqual(deepLinkData, prevProps.deepLinkData)) {
-      if (allowHandleDeepLink) {
-        if (user && user.id) {
-          if (deepLinkData && deepLinkData.type) {
-            actions.handleDeepLink();
-          }
-        }
+      if (allowHandleDeepLink && deepLinkData && deepLinkData.type) {
+        actions.handleDeepLink();
       }
+
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ allowHandleDeepLink: false });
     }

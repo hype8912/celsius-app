@@ -15,15 +15,15 @@ import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
-import store from "../../../redux/store";
+import { DEEP_LINKS } from "../../../constants/DATA";
 
 @connect(
   state => ({
+    appState: state.app.appState,
     formData: state.forms.formData,
     twoFAStatus: state.security.twoFAStatus,
     deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
-    is2FAEnabled: state.user.profile.two_factor_enabled,
     previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
     theme: state.user.appSettings.theme,
@@ -96,23 +96,16 @@ class VerifyProfile extends Component {
   onCheckSuccess = async () => {
     this.setState({ loading: true });
 
-    const {
-      navigation,
-      actions,
-      previousScreen,
-      deepLinkData,
-      user,
-    } = this.props;
+    const { navigation, actions, previousScreen, deepLinkData } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
     const activeScreen = navigation.getParam("activeScreen");
 
     // Check if app is opened from DeepLink
     if (!_.isEmpty(deepLinkData)) {
-      if ((user && !user.id) || !user) {
-        await actions.initAppData();
+      if (deepLinkData.type === DEEP_LINKS.NAVIGATE_TO) {
+        actions.handleDeepLink();
+        return;
       }
-      actions.handleDeepLink();
-      return;
     }
 
     if (activeScreen) {
@@ -127,30 +120,22 @@ class VerifyProfile extends Component {
       return;
     }
 
-    if (navigation.getParam("show", null)) {
-      await actions.showVerifyScreen(false);
-      await actions.initAppData();
-    }
-
     this.setState({ loading: false });
     onSuccess();
   };
 
   onCheckError = () => {
-    const { actions, twoFAStatus, navigation } = this.props;
+    const { actions } = this.props;
     this.setState({ loading: false, value: "", verificationError: true });
     const timeout = setTimeout(() => {
       this.setState({ verificationError: false });
 
-      const showType =
-        this.getVerifyType(navigation.getParam("show", null)) ||
-        twoFAStatus.isActive;
-      if (showType === "pin") {
+      if (!this.shouldShow2FA()) {
         actions.toggleKeypad(true);
       }
 
       clearTimeout(timeout);
-    }, 1000);
+    }, 5000);
   };
 
   setForgotPin = () => {
@@ -160,7 +145,17 @@ class VerifyProfile extends Component {
     }
   };
 
-  getVerifyType = showType => showType && showType === "2FA";
+  getVerificationType = () => {
+    const { user, navigation } = this.props;
+
+    // handling 426 error - PIN || 2FA
+    const typeFromNavigation = navigation.getParam("verificationType", null);
+
+    const typeFromUser = user.two_factor_enabled ? "2FA" : "PIN";
+    return typeFromNavigation || typeFromUser;
+  };
+
+  shouldShow2FA = () => this.getVerificationType() === "2FA";
 
   handleBackButtonClick = () => true;
 
@@ -291,15 +286,14 @@ class VerifyProfile extends Component {
 
   render() {
     const { value } = this.state;
-    const { twoFAStatus, actions, navigation } = this.props;
-    const { appState } = store.getState().app;
-    const hideBack = navigation.getParam("hideBack"); // CN-4644 show FAB on Verity Screen except after login and come from background
+    const { actions, navigation, appState } = this.props;
+    const hideBack = navigation.getParam("hideBack");
 
-    const showType =
-      this.getVerifyType(navigation.getParam("show", null)) ||
-      twoFAStatus.isActive;
-    const field = showType ? "code" : "pin";
-    const onPressFunc = showType ? this.handle2FAChange : this.handlePINChange;
+    const shouldShow2FA = this.shouldShow2FA();
+    const field = shouldShow2FA ? "code" : "pin";
+    const onPressFunc = shouldShow2FA
+      ? this.handle2FAChange
+      : this.handlePINChange;
     const style = VerifyProfileStyle();
 
     return (
@@ -311,7 +305,7 @@ class VerifyProfile extends Component {
       >
         <NavigationEvents onDidFocus={() => this.openKeypad()} />
         <View style={style.container}>
-          {showType ? this.render2FA() : this.renderPIN()}
+          {shouldShow2FA ? this.render2FA() : this.renderPIN()}
           <CelNumpad
             field={field}
             value={value}

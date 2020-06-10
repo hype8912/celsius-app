@@ -27,7 +27,6 @@ import STYLES from "../../../constants/STYLES";
   state => ({
     fabMenuOpen: state.ui.fabMenuOpen,
     theme: state.user.appSettings.theme,
-    appInitialized: state.app.appInitialized,
     fabType: state.ui.fabType,
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
@@ -310,7 +309,6 @@ class FabMenu extends Component {
 
     if (isKYCRejectedForever()) return null;
 
-    // if (!appInitialized) return null; // Too many bugs with this one line of code :D
     if (fabType === "hide") return null;
 
     const FabMenuCmp = this.renderFabMenu;

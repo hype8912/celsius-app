@@ -3,6 +3,7 @@ import store from "../redux/store";
 
 const interestUtil = {
   getUserInterestForCoin,
+  getLoyaltyRates,
   calculateAPY,
   calculateBonusRate,
   getBaseCelRate,
@@ -41,9 +42,11 @@ function getUserInterestForCoin(coinShort) {
         (appSettings.interest_in_cel &&
           appSettings.interest_in_cel_per_coin[coinShort] === null)) &&
       coinShort !== "CEL";
+
     interestRateDisplay = !inCEL
       ? formatter.percentageDisplay(interestRates[coinShort].compound_rate)
       : formatter.percentageDisplay(interestRates[coinShort].compound_cel_rate);
+
     interestRate = !inCEL
       ? interestRates[coinShort].compound_rate
       : interestRates[coinShort].compound_cel_rate;
@@ -80,6 +83,31 @@ function getUserInterestForCoin(coinShort) {
 /**
  * Calculates APY from APR value
  *
+ * param {Object} loyaltyInfo - loyaltyInfo response
+ */
+function getLoyaltyRates(loyaltyInfo) {
+  const interestRates = store.getState().generalData.interestRates;
+
+  Object.keys(interestRates).forEach(coinShort => {
+    const baseRate = interestUtil.getBaseCelRate(coinShort);
+    interestRates[coinShort].cel_rate = interestUtil.calculateBonusRate(
+      baseRate,
+      loyaltyInfo.earn_interest_bonus
+    );
+    interestRates[coinShort].compound_rate = interestUtil.calculateAPY(
+      interestRates[coinShort].rate
+    );
+    interestRates[coinShort].compound_cel_rate = interestUtil.calculateAPY(
+      interestRates[coinShort].cel_rate
+    );
+  });
+
+  return interestRates;
+}
+
+/**
+ * Calculates APY from APR value
+ *
  * param {number} apr - value set in BO or with tier bonus
  */
 function calculateAPY(apr) {
@@ -110,9 +138,13 @@ function getBaseCelRate(coin) {
   let baseRate = interestRates[coin].rate;
 
   if (interestRates[coin].threshold_on_first_n_coins && walletSummary) {
-    const coinBalance = walletSummary.coins.find(c => c.short === coin).amount;
-    const shouldUseSpecialRate =
-      coinBalance < interestRates[coin].threshold_on_first_n_coins;
+    const coinBalance = walletSummary.coins
+      .find(c => c.short === coin)
+      .amount.toNumber();
+
+    const shouldUseSpecialRate = coinBalance.isLessThan(
+      interestRates[coin].threshold_on_first_n_coins
+    );
     baseRate = shouldUseSpecialRate
       ? interestRates[coin].rate_on_first_n_coins
       : baseRate;

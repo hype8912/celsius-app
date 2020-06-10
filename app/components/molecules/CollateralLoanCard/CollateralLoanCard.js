@@ -102,7 +102,8 @@ const CollateralLoanCard = ({ transaction, navigateTo }) => {
             )}
           </CelText>
           <CelText type="H6" align="center">
-            Loan initiated: {moment(transaction.time).format("D MMM YYYY")}
+            Loan initiated:{" "}
+            {moment(transaction.loan_data.initiation_date).format("D MMM YYYY")}
           </CelText>
 
           <Separator margin="12 0 12 0" />

@@ -24,7 +24,6 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 @connect(
   state => ({
-    walletSummary: state.wallet.summary,
     formData: state.forms.formData,
     keypadOpen: state.ui.isKeypadOpen,
     currencyRatesShort: state.currencies.currencyRatesShort,

@@ -2,21 +2,10 @@ import axios from "axios";
 import apiUrl from "./api-url";
 
 const generalDataService = {
-  getBackendStatus,
   getCelsiusInitialData,
   getLoanTermsOfUse,
   getPDFLoanTermsOfUse,
 };
-
-/**
- * Gets application status from backend
- * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#089ffaed-d892-4fca-9b19-d0638b31325f
- *
- * @returns {Promise}
- */
-function getBackendStatus() {
-  return axios.get(`${apiUrl}/status`);
-}
 
 /**
  * Gets all general data needed for Celsius app (loan LTVs, interest rates...)

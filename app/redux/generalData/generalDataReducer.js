@@ -28,12 +28,6 @@ export default function generalDataReducer(state = initialState(), action) {
         pdf: action.pdf,
       };
 
-    case ACTIONS.GET_BACKEND_STATUS_SUCCESS:
-      return {
-        ...state,
-        backendStatus: action.backendStatus,
-      };
-
     case ACTIONS.TOGGLE_MAINTENANCE_MODE:
       return {
         ...state,
@@ -70,6 +64,7 @@ export default function generalDataReducer(state = initialState(), action) {
         },
       };
 
+    case ACTIONS.GET_APP_BOOTSTRAP_SUCCESS:
     case ACTIONS.GET_LOYALTY_INFO_SUCCESS:
       return {
         ...state,

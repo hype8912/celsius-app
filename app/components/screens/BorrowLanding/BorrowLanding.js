@@ -324,6 +324,8 @@ class BorrowLanding extends Component {
     if (!loanCompliance.allowed)
       return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
 
+    if (hasLoans) return this.renderDefaultView();
+
     if (!hasLoans) return this.renderNoLoans();
 
     return this.renderDefaultView();

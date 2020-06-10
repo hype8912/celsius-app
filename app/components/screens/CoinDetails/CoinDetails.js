@@ -200,7 +200,7 @@ class CoinDetails extends Component {
                     weight="600"
                     type="H2"
                     margin={"3 0 3 0"}
-                    number={coinDetails.amount_usd}
+                    number={coinDetails.amount_usd.toNumber()}
                     speed={5}
                     usd
                   />
