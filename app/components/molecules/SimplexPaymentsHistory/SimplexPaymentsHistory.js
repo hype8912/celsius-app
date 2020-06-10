@@ -18,7 +18,7 @@ import EmptyState from "../../atoms/EmptyState/EmptyState";
 
 @connect(
   state => ({
-    simplexPayments: state.simplex.payments,
+    simplexPayments: state.buyCoins.payments,
     currencyRatesShort: state.currencies.currencyRatesShort,
     currencies: state.currencies.rates,
     callsInProgress: state.api.callsInProgress,
@@ -31,7 +31,7 @@ class SimplexPaymentsHistory extends Component {
 
   componentDidMount() {
     const { actions } = this.props;
-    actions.getAllSimplexPayments();
+    actions.getPaymentRequests();
   }
 
   getUIProps(payment) {

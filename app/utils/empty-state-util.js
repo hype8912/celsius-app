@@ -215,7 +215,7 @@ function getProps(purpose, componentProps) {
         ],
       };
 
-    case EMPTY_STATES.SIMPLEX_COMPLIANCE:
+    case EMPTY_STATES.BUY_COINS_COMPLIANCE:
       return {
         ...props,
         heading: "We are sorry!",

@@ -23,6 +23,7 @@ import StaticScreen from "../StaticScreen/StaticScreen";
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
     simplexCompliance: state.compliance.simplex,
+    gemCompliance: state.compliance.gem,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -45,7 +46,13 @@ class GetCoinsLanding extends Component {
   }
 
   render() {
-    const { actions, kycStatus, simplexCompliance, formData } = this.props;
+    const {
+      actions,
+      kycStatus,
+      simplexCompliance,
+      gemCompliance,
+      formData,
+    } = this.props;
 
     if (!hasPassedKYC()) {
       if (kycStatus !== KYC_STATUSES.pending) {
@@ -65,11 +72,12 @@ class GetCoinsLanding extends Component {
         );
       }
     }
-    if (!simplexCompliance.allowed) {
+
+    if (!simplexCompliance.allowed && !gemCompliance.allowed) {
       return (
         <StaticScreen
           emptyState={{
-            purpose: EMPTY_STATES.SIMPLEX_COMPLIANCE,
+            purpose: EMPTY_STATES.BUY_COINS_COMPLIANCE,
           }}
         />
       );
@@ -77,30 +85,35 @@ class GetCoinsLanding extends Component {
 
     return (
       <RegularLayout>
-        <MultiInfoCardButton
-          textButton={"Credit Card"}
-          explanation={"Buy crypto easily using your credit card."}
-          darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
-          lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
-          onPress={() => {
-            actions.initForm({
-              isFiat: true,
-              cryptoCoin: formData.selectedCoin || "ETH",
-              simplexData: {
-                paymentMethod: "Credit Card",
-              },
-            });
-            actions.navigateTo("GetCoinsEnterAmount");
-            mixpanelAnalytics.choseBuyCoinsType("CARD");
-          }}
-        />
-        <MultiInfoCardButton
-          textButton={"Bank Wire"}
-          explanation={"Buy crypto easily through your bank account."}
-          darkImage={require("../../../../assets/images/icons/bank-wire-dark.png")}
-          lightImage={require("../../../../assets/images/icons/bank-wire-light.png")}
-          onPress={() => actions.navigateTo("GetCoinsGem")}
-        />
+        {simplexCompliance.allowed && (
+          <MultiInfoCardButton
+            textButton={"Credit Card"}
+            explanation={"Buy crypto easily using your credit card."}
+            darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
+            lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
+            onPress={() => {
+              actions.initForm({
+                isFiat: true,
+                cryptoCoin: formData.selectedCoin || "ETH",
+                simplexData: {
+                  paymentMethod: "Credit Card",
+                },
+              });
+              actions.navigateTo("GetCoinsEnterAmount");
+              mixpanelAnalytics.choseBuyCoinsType("CARD");
+            }}
+          />
+        )}
+
+        {gemCompliance.allowed && (
+          <MultiInfoCardButton
+            textButton={"Bank Wire"}
+            explanation={"Buy crypto easily through your bank account."}
+            darkImage={require("../../../../assets/images/icons/bank-wire-dark.png")}
+            lightImage={require("../../../../assets/images/icons/bank-wire-light.png")}
+            onPress={() => actions.navigateTo("GetCoinsGem")}
+          />
+        )}
 
         <SimplexPaymentsHistory />
 

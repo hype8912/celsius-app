@@ -21,13 +21,13 @@ import community from "./community/communityReducer";
 import compliance from "./compliance/complianceReducer";
 import kyc from "./kyc/kycReducer";
 import contacts from "./contacts/contactsReducer";
-import simplex from "./simplex/simplexReducer";
 import loyalty from "./loyalty/loyaltyReducer";
 import security from "./userSecurity/userSecurityReducer";
 import auth from "./userAuth/userAuthReducer";
 import hodl from "./hodl/hodlReducer";
 import animations from "./animations/animationsReducer";
 import deepLink from "./deepLink/deepLinkReducer";
+import buyCoins from "./buyCoins/buyCoinsReducer";
 // NOTE(fj): plop reduxGen importing new Reducer here
 
 const appReducers = combineReducers({
@@ -51,13 +51,13 @@ const appReducers = combineReducers({
   compliance,
   kyc,
   contacts,
-  simplex,
   loyalty,
   security,
   auth,
   hodl,
   animations,
   deepLink,
+  buyCoins,
   // NOTE(fj): plop reduxGen inserting new Reducer here
 });
 

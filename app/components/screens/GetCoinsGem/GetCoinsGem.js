@@ -23,13 +23,13 @@ const GemMessages = {
   EXIT: "__GEM_EXIT",
 };
 
-const coins = ["BTC", "ETH"];
-
 @connect(
   state => ({
     eligibleCoins: getDepositEligibleCoins(state),
     formData: state.forms.formData,
     walletAddresses: state.wallet.addresses,
+    user: state.user.profile,
+    gemCompliance: state.compliance.gem,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -45,28 +45,25 @@ class GetCoinsGem extends Component {
   });
 
   componentDidMount() {
-    const { walletAddresses, actions } = this.props;
+    const { walletAddresses, actions, gemCompliance } = this.props;
 
-    coins.forEach(c => {
+    gemCompliance.coins.forEach(c => {
       if (!walletAddresses[`${c}Address`]) {
         actions.getCoinAddress(c);
       }
     });
   }
 
-  onGemSuccess = data => {
+  onGemSuccess = async data => {
     const { actions } = this.props;
-    // TODO: create GEM transaction in DB
-    // eslint-disable-next-line no-console
-    console.log({ data });
-    actions.showMessage("success", "Successfully bought crypto! Yay!");
+    await actions.createGemPayment(data.userId, data.transactionId);
+    actions.showMessage("success", "You have successfully purchased crypto!");
     actions.navigateBack();
   };
 
-  onGemExit = data => {
+  onGemExit = async data => {
     const { actions } = this.props;
-    // eslint-disable-next-line no-console
-    console.log({ data });
+    await actions.createGemPayment(data.userId);
     actions.navigateBack();
   };
 
@@ -87,12 +84,13 @@ class GetCoinsGem extends Component {
   };
 
   createGemUrl = () => {
-    const { walletAddresses } = this.props;
+    const { walletAddresses, user, gemCompliance } = this.props;
 
-    onrampConfig.wallets = coins.map(c => ({
+    onrampConfig.wallets = gemCompliance.coins.map(c => ({
       asset: c.toLowerCase(),
       address: walletAddresses[`${c}Address`],
     }));
+    onrampConfig.userEmail = user.email;
 
     const queryConfig = qs.stringify({
       ...onrampConfig,
@@ -103,10 +101,10 @@ class GetCoinsGem extends Component {
   };
 
   render() {
-    const { walletAddresses } = this.props;
+    const { walletAddresses, gemCompliance } = this.props;
 
     let areAddressesFetched = true;
-    coins.forEach(c => {
+    gemCompliance.coins.forEach(c => {
       areAddressesFetched =
         areAddressesFetched && !!walletAddresses[`${c}Address`];
     });

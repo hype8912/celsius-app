@@ -18,7 +18,7 @@ import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 
 @connect(
   state => ({
-    payments: state.simplex.payments,
+    payments: state.buyCoins.payments,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )

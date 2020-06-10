@@ -27,7 +27,7 @@ const patchPostMessageJsCode = `(${String(function() {
 
 @connect(
   state => ({
-    simplexData: state.simplex.simplexData,
+    simplexData: state.buyCoins.simplexData,
     fabType: state.ui.fabType,
     formData: state.forms.formData,
   }),
