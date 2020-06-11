@@ -258,6 +258,9 @@ function handle401(err) {
   if (err.slug === "PASSWORD_LEAKED") {
     store.dispatch(actions.resetToScreen("PasswordBreached"));
   }
+  if (err.slug === "TWO_FACTOR_INVALID_CODE") {
+    store.dispatch(actions.showMessage("error", err.msg));
+  }
 }
 
 function handle403(err) {
