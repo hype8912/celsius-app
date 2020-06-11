@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Image, View, Animated } from "react-native";
+import { Image, View, Animated, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import SplashScreenStyle from "./SplashScreen.styles";
 import * as appActions from "../../../redux/actions";
@@ -71,6 +71,10 @@ class CustomSplashScreen extends Component {
 
     setTimeout(this.moveLogo, 2000);
     setTimeout(this.moveText, 2200);
+  }
+
+  componentWillUnmount() {
+    StatusBar.setHidden(false);
   }
 
   render() {
