@@ -35,7 +35,7 @@ const base = {
   input: {
     height: 50,
     fontSize,
-    fontFamily: "Pangram-Light",
+    fontFamily: "Pangram-Regular",
   },
   disabledInput: {
     opacity: 0.6,
