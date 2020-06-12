@@ -10,7 +10,7 @@ const base = {
   fabButtonStyle: {
     width: 60,
     height: 60,
-    backgroundColor: STYLES.COLORS.CELSIUS,
+    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
     borderRadius: 60,
     justifyContent: "center",
   },
