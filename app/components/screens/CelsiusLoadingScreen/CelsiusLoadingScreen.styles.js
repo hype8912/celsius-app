@@ -11,18 +11,7 @@ const base = {
     height,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-  },
-  fadeContainer: {
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-    zIndex: 1,
-    borderRadius: 10,
-    width,
-    height,
-    flex: 1,
-    position: "absolute",
-    top: 0,
-    left: 0,
+    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
   },
   spinContainer: {
     position: "absolute",
@@ -40,16 +29,8 @@ const base = {
 };
 
 const themed = {
-  light: {
-    container: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
-  dark: {
-    container: {
-      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    },
-  },
+  light: {},
+  dark: {},
   celsius: {},
 };
 
