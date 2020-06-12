@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Image } from "react-native";
+import { View, Image, StatusBar } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -38,6 +38,8 @@ class Welcome extends Component {
   };
 
   async componentDidMount() {
+    StatusBar.setHidden(false);
+
     const appVersion = await appUtil.getRevisionId();
     this.setState({ revisionId: appVersion.revisionId });
   }

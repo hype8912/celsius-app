@@ -233,10 +233,10 @@ function getMarginCallParams(loan) {
   const hasEnoughOriginalCoin = !!walletSummary.coins.find(
     coin =>
       coin.short === loan.margin_call.collateral_coin &&
-      Number(coin.amount) >= Number(loan.margin_call.margin_call_amount)
+      coin.amount.isGreaterThanOrEqualTo(loan.margin_call.margin_call_amount)
   );
-  const hasEnoughOtherCoins = !!walletSummary.coins.find(
-    coin => Number(loan.margin_call.margin_call_amount) <= Number(coin.amount)
+  const hasEnoughOtherCoins = !!walletSummary.coins.find(coin =>
+    coin.amount.isGreaterThanOrEqualTo(loan.margin_call.margin_call_amount)
   );
 
   return {

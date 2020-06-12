@@ -4,7 +4,6 @@ import { bindActionCreators } from "redux";
 
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelText from "../../atoms/CelText/CelText";
-import CelButton from "../../atoms/CelButton/CelButton";
 import * as appActions from "../../../redux/actions";
 
 // TODO should probably be a static screen
@@ -13,6 +12,17 @@ import * as appActions from "../../../redux/actions";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class TooManyRequests extends Component {
+  static navigationOptions = () => ({
+    hideBack: true,
+  });
+
+  componentDidMount() {
+    const { actions } = this.props;
+    setTimeout(() => {
+      actions.logoutUser();
+    }, 7000);
+  }
+
   render() {
     return (
       <RegularLayout fabType="hide">
@@ -30,13 +40,6 @@ class TooManyRequests extends Component {
           of time. You will be able to use the application again in less than an
           hour. You can reach out to our support team at app@celsius.network.
         </CelText>
-        <CelButton
-          margin="40 0 0 0"
-          color="blue"
-          onPress={this.props.actions.navigateBack}
-        >
-          Try again
-        </CelButton>
       </RegularLayout>
     );
   }

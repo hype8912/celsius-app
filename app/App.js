@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { AppState, BackHandler, StyleSheet } from "react-native";
+import { AppState, BackHandler, StyleSheet, StatusBar } from "react-native";
 import codePush from "react-native-code-push";
 import * as Font from "expo-font";
-
 import store from "./redux/store";
 import * as actions from "./redux/actions";
 import AppNavigation from "./navigator/Navigator";
@@ -35,6 +34,8 @@ function getActiveRouteName(navigationState) {
 
 class App extends Component {
   async componentDidMount() {
+    StatusBar.setHidden(true);
+
     appUtil.logoutOnEnvChange();
     appUtil.initInternetConnectivityListener();
     apiUtil.initInterceptors();

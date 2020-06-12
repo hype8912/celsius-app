@@ -24,7 +24,6 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 @connect(
   state => ({
-    walletSummary: state.wallet.summary,
     formData: state.forms.formData,
     keypadOpen: state.ui.isKeypadOpen,
     currencyRatesShort: state.currencies.currencyRatesShort,
@@ -32,7 +31,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
     depositCompliance: state.compliance.deposit,
     simplexCompliance: state.compliance.simplex,
     currencies: state.currencies.rates,
-    simplexData: state.simplex.simplexData,
+    simplexData: state.buyCoins.simplexData,
     callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -140,7 +139,7 @@ class GetCoinsEnterAmount extends Component {
     });
 
     if (getCoinsUtil.isAmountInScope()) {
-      await actions.simplexGetQuote();
+      await actions.getSimplexQuote();
 
       const { simplexData } = this.props;
 

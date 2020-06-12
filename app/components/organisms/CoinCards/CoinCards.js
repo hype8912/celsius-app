@@ -52,14 +52,14 @@ class CoinCards extends Component {
 
         if (
           !depositCompliance.coins.includes(coin.short) &&
-          coin.amount_usd > 0
+          coin.amount_usd.isGreaterThan(0)
         ) {
           allowedCoins.push(coin);
         }
       });
     }
 
-    allowedCoins.sort((a, b) => b.amount_usd - a.amount_usd);
+    allowedCoins.sort((a, b) => b.amount_usd.minus(a.amount_usd));
     if (allowedCoins && currenciesRates) {
       const coins = [];
       allowedCoins.forEach(coin => {

@@ -85,7 +85,7 @@ class WithdrawEnterAmount extends Component {
         const walletCoin = walletSummary.coins.find(
           wCoin => wCoin.short === c.short.toUpperCase()
         );
-        const balanceUsd = walletCoin ? walletCoin.amount_usd : 0;
+        const balanceUsd = walletCoin ? walletCoin.amount_usd.toNumber() : 0;
 
         return balanceUsd > 0;
       })
@@ -119,7 +119,7 @@ class WithdrawEnterAmount extends Component {
     if (label === "ALL") {
       amount = formData.isUsd
         ? walletSummaryObj.amount_usd.toString()
-        : walletSummaryObj.amount;
+        : walletSummaryObj.amount.toString();
     } else {
       amount = formData.isUsd ? value : (Number(value) / coinRate).toString();
     }
@@ -219,7 +219,8 @@ class WithdrawEnterAmount extends Component {
     const coinData = walletSummary.coins.find(
       c => c.short === formData.coin.toUpperCase()
     );
-    const newBalance = Number(coinData.amount) - Number(formData.amountCrypto);
+
+    const newBalance = coinData.amount.minus(formData.amountCrypto);
 
     if (celUtilityUtil.isLosingTier(formData.coin, newBalance)) {
       return actions.openModal(MODALS.LOSE_TIER_MODAL);

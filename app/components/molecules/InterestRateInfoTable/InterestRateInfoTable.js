@@ -6,12 +6,12 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 // import InterestRateInfoTableStyle from "./InterestRateInfoTable.styles";
 import InterestRateInfo from "../../atoms/InterestRateInfo/InterestRateInfo";
+import interestUtil from "../../../utils/interest-util";
 
 @connect(
   state => ({
     interestRates: state.generalData.interestRates,
     loyaltyInfo: state.loyalty.loyaltyInfo,
-    walletSummary: state.wallet.summary,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -27,25 +27,20 @@ class InterestRateInfoTable extends Component {
     const ratesPriority = ["CEL", "ETH", "BTC", "USD"];
 
     Object.keys(interestRates).forEach(currency => {
-      const obj = {};
-      obj.currency = currency;
-      obj.rate = interestRates[currency];
-
-      interestArray.push(obj);
+      const interestRate = interestUtil.getUserInterestForCoin(
+        !currency ? "BTC" : currency
+      );
+      interestArray.push(interestRate);
     });
 
     const sortedRates = interestArray.sort((a, b) => {
-      if (
-        ratesPriority.indexOf(a.currency) > ratesPriority.indexOf(b.currency)
-      ) {
+      if (ratesPriority.indexOf(a.coin) > ratesPriority.indexOf(b.coin)) {
         return -1;
       }
 
-      if (a.currency === "CEL") return -1;
+      if (a.coin === "CEL") return -1;
 
-      if (
-        ratesPriority.indexOf(a.currency) < ratesPriority.indexOf(b.currency)
-      ) {
+      if (ratesPriority.indexOf(a.coin) < ratesPriority.indexOf(b.coin)) {
         return 1;
       }
 
@@ -53,12 +48,12 @@ class InterestRateInfoTable extends Component {
     });
 
     return sortedRates.map(interest => (
-      <View key={interest.currency}>
+      <View key={interest.coin}>
         <InterestRateInfo
           actions={actions}
           compact
-          currency={interest.currency}
-          rate={interest.rate}
+          currency={interest.coin}
+          interestRate={interest}
           loyaltyInfo={loyaltyInfo}
         />
       </View>
