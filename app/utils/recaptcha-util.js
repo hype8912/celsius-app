@@ -75,7 +75,7 @@ class GoogleReCaptcha extends Component {
 
         <style>
             .btn_login {
-              background-color: #3F51AB;
+              background-color: #0c1766;
               width:120px;
               height: 50px;
               color: #ffffff; padding: 8px 32px; margin-top: 8px;
@@ -94,11 +94,12 @@ class GoogleReCaptcha extends Component {
             }
 
             .btn_register {
-              background-color: #3F51AB;
+              background-color: #0c1766;
               width:230px;
               height: 50px;
               color: #ffffff; padding: 8px 32px; margin-top: 8px;
               border: none; border-radius: 25px; font-size: medium;
+
             }
 
              .btn_register_disabled {
