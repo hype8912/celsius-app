@@ -96,15 +96,15 @@ const ANDROID_BORDER_STYLES = {
 };
 
 const FONTSIZE = {
-  H0: 50,
-  H1: 46,
-  H2: 30,
-  H3: 24,
-  H4: 20,
-  H5: 18,
-  H6: 16,
-  H7: 14,
-  H8: 12,
+  H0: 44,
+  H1: 40,
+  H2: 26,
+  H3: 21,
+  H4: 18,
+  H5: 16,
+  H6: 14,
+  H7: 12,
+  H8: 10,
 };
 
 export default {
