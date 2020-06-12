@@ -38,6 +38,7 @@ const BLOCKEXPLORERS_PRODUCTION = {
   btg: "https://btgexplorer.com/tx/",
   eth: "https://etherscan.io/tx/",
   eos: "https://bloks.io/transaction/",
+  etc: "https://explorer.bitquery.io/ethclassic/tx/", // TODO: add staging link
   erc20: "https://etherscan.io/tx/",
 };
 
@@ -275,11 +276,17 @@ const TOTAL_ASSETS_AMOUNT = {
   TOTAL_COLLATERAL_AND_CASH: 344005875,
 };
 
-const SIMPLEX_PAYMENT_STATUSES = {
+const BUY_COINS_PAYMENT_STATUSES = {
   PENDING: "pending",
+
   APPROVED: "approved",
-  CANCELLED: "declined",
+  COMPLETED: "completed",
+
+  CANCELLED: "cancelled",
+  EXPIRED: "expired",
+  DECLINED: "declined",
   REFUNDED: "refunded",
+  FAILED: "failed",
 };
 
 const SIMPLEX_FIAT_CURRENCIES = [
@@ -436,7 +443,7 @@ export {
   PRIMETRUST_KYC_STATES,
   LOAN_INTEREST_COINS,
   TOTAL_ASSETS_AMOUNT,
-  SIMPLEX_PAYMENT_STATUSES,
+  BUY_COINS_PAYMENT_STATUSES,
   SIMPLEX_FIAT_CURRENCIES,
   SECURITY_STRENGTH_ITEMS,
   SECURITY_STRENGTH_LEVEL,

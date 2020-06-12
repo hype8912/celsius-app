@@ -233,6 +233,12 @@ export function getBlockExplorerLink(transaction) {
         link: BLOCKEXPLORERS.btg && `${BLOCKEXPLORERS.btg}${tId}`,
         text: "btgexplorer",
       };
+    // ETC
+    case "etc":
+      return {
+        link: BLOCKEXPLORERS.etc && `${BLOCKEXPLORERS.etc}${tId}`,
+        text: "bitquery.io",
+      };
 
     // ETH & ERC20
     case "eth":

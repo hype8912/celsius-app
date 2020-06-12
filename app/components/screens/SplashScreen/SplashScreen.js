@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Image, View, Animated, Dimensions } from "react-native";
+import { Image, View, Animated, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
-
 import SplashScreenStyle from "./SplashScreen.styles";
 import * as appActions from "../../../redux/actions";
-import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-
-const { width, height } = Dimensions.get("window");
 
 @connect(
   state => ({
@@ -77,6 +73,10 @@ class CustomSplashScreen extends Component {
     setTimeout(this.moveText, 2200);
   }
 
+  componentWillUnmount() {
+    StatusBar.setHidden(false);
+  }
+
   render() {
     const { history } = this.props;
     const logoImage = this.state.shouldShowBlueLogo
@@ -84,16 +84,17 @@ class CustomSplashScreen extends Component {
       : require("../../../../assets/images/icons/cel-white.png");
     const style = SplashScreenStyle();
 
-    if (!history.length)
+    if (!history.length) {
       return (
-        <RegularLayout fabType="hide" padding="0 0 0 0">
+        <View style={style.blueStaticContainer}>
           <Image
-            resizeMode="cover"
-            style={{ width, height }}
-            source={require("../../../../assets/images/loading.png")}
+            resizeMode="contain"
+            style={[style.logoStaticImage]}
+            source={require("../../../../assets/images/icons/cel-white.png")}
           />
-        </RegularLayout>
+        </View>
       );
+    }
 
     return (
       <View style={style.container}>

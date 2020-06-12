@@ -7,6 +7,7 @@ import { isKYCRejectedForever } from "../../../utils/user-util";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import SplashScreen from "../SplashScreen/SplashScreen";
+import CelsiusLoadingScreen from "../CelsiusLoadingScreen/CelsiusLoadingScreen";
 
 @connect(
   state => ({
@@ -14,6 +15,7 @@ import SplashScreen from "../SplashScreen/SplashScreen";
     callsInProgress: state.api.callsInProgress,
     appSettings: state.user.appSettings,
     bannerProps: state.ui.bannerProps,
+    history: state.nav.history,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -32,6 +34,8 @@ class Home extends Component {
     await actions.setBannerProps();
 
     actions.claimAllBranchTransfers();
+
+    await actions.getWalletSummary();
 
     const { user } = this.props;
     if (!user.has_pin) {
@@ -76,7 +80,13 @@ class Home extends Component {
     actions.handleDeepLink();
   };
 
-  render = () => <SplashScreen />;
+  render = () => {
+    if (this.props.history.length > 1) {
+      return <CelsiusLoadingScreen />;
+    }
+
+    return <SplashScreen />;
+  };
 }
 
 export default Home;

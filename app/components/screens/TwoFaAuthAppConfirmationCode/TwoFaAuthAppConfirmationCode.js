@@ -51,7 +51,6 @@ class TwoFaAuthAppConfirmationCode extends Component {
         this.setState({ loading: false });
       }
     } catch (e) {
-      actions.showMessage("warning", e.msg);
       this.setState({ loading: false });
     }
   };

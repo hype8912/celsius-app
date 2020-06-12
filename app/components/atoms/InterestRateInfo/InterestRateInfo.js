@@ -27,12 +27,12 @@ class InterestRateInfo extends Component {
   render() {
     const {
       currency,
-      rate,
       walletCurrencies,
       compact,
       actions,
       walletSummary,
       interestCompliance,
+      interestRate,
     } = this.props;
 
     if (!currency || !walletCurrencies) {
@@ -124,7 +124,7 @@ class InterestRateInfo extends Component {
                 {currencyInfo.short}
               </CelText>
               <CelText type={"H7"} weight="bold" style={styles.regRateText}>
-                {formatter.percentageDisplay(rate.compound_rate)}
+                {formatter.percentageDisplay(interestRate.compound_rate)}
               </CelText>
             </View>
             {currencyInfo.short === "CEL" ? null : (
@@ -137,7 +137,9 @@ class InterestRateInfo extends Component {
                   CEL
                 </CelText>
                 <CelText type={"H7"} weight="bold" style={styles.celRateText}>
-                  {formatter.percentageDisplay(rate.compound_cel_rate)}
+                  {formatter.percentageDisplay(
+                    interestRate.specialApyRate || interestRate.apyRate
+                  )}
                 </CelText>
               </View>
             )}

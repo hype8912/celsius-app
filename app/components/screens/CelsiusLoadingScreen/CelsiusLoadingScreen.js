@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { View, Animated, Easing } from "react-native";
-import { THEMES } from "../../../constants/UI";
-import LoadingStateStyle from "./LoadingState.styles";
-import CelText from "../CelText/CelText";
+import CelsiusLoadingScreenStyle from "./CelsiusLoadingScreen.styles";
 import { getTheme } from "../../../utils/styles-util";
+import { THEMES } from "../../../constants/UI";
 
-class LoadingState extends Component {
+class CelsiusLoadingScreen extends Component {
   animationDuration = 1000;
 
   constructor(props) {
@@ -29,8 +27,8 @@ class LoadingState extends Component {
   }
 
   render() {
-    const style = LoadingStateStyle();
     const theme = getTheme();
+    const style = CelsiusLoadingScreenStyle();
 
     let logoImage = require("../../../../assets/images/icons/logo-blue.png");
     if (theme === THEMES.DARK) {
@@ -44,32 +42,15 @@ class LoadingState extends Component {
 
     return (
       <View style={style.container}>
-        <View style={{ alignSelf: "center" }}>
+        <View style={style.spinContainer}>
           <Animated.Image
-            style={[style.image, { transform: [{ rotate: spin }] }]}
+            style={[style.logoImage, { transform: [{ rotate: spin }] }]}
             source={logoImage}
           />
         </View>
-
-        <CelText
-          margin="20 0 15 0"
-          align="center"
-          type="H4"
-          style={{ paddingHorizontal: 20 }}
-        >
-          {this.props.heading}
-        </CelText>
       </View>
     );
   }
 }
 
-LoadingState.propTypes = {
-  heading: PropTypes.string,
-};
-
-LoadingState.defaultProps = {
-  heading: "Please wait. This may take a moment",
-};
-
-export default LoadingState;
+export default CelsiusLoadingScreen;

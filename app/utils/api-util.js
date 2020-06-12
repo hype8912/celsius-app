@@ -259,6 +259,9 @@ function handle401(err) {
   if (err.slug === "PASSWORD_LEAKED") {
     store.dispatch(actions.resetToScreen("PasswordBreached"));
   }
+  if (err.slug === "TWO_FACTOR_INVALID_CODE") {
+    store.dispatch(actions.showMessage("error", err.msg));
+  }
 }
 
 async function handle403(err) {
@@ -378,7 +381,11 @@ function wereSuccessfulInHistory(callNames, numberOfCallsInHistory = 5) {
 function verifyKey(data, sign) {
   const sig2 = new r.KJUR.crypto.Signature({ alg: "SHA256withRSA" });
   sig2.init(decodedPublicKey);
-  sig2.updateString(JSON.stringify(data));
+  if (typeof data === "string") {
+    sig2.updateString(data);
+  } else {
+    sig2.updateString(JSON.stringify(data));
+  }
   const isValid = sig2.verify(sign);
   return isValid;
 }

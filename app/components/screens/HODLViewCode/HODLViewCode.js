@@ -37,6 +37,7 @@ class HODLViewCode extends Component {
 
     this.state = {
       emptyState: false,
+      showHodlCode: false,
     };
     props.navigation.setParams({ hideBack: false });
   }
@@ -70,8 +71,8 @@ class HODLViewCode extends Component {
 
   render() {
     const style = HODLViewCodeStyles();
-    const { emptyState } = this.state;
-    const { formData, theme, actions, hodlCode, callsInProgress } = this.props;
+    const { emptyState, showHodlCode } = this.state;
+    const { formData, theme, actions, callsInProgress, hodlCode } = this.props;
 
     if (emptyState)
       return (
@@ -99,7 +100,7 @@ class HODLViewCode extends Component {
           >
             How to deactivate HODL Mode
           </CelText>
-          <CelText type={"H4"} align={"left"}>
+          <CelText type={"H5"} align={"left"}>
             {"When you're ready to deactivate HODL Mode, you will need to enter the unique security code below. \n" +
               "\n" +
               "You will NOT be able to access this code once you enable HODL Mode, so you must securely store this code now and remember it in order to deactivate HODL Mode in the future."}
@@ -110,14 +111,25 @@ class HODLViewCode extends Component {
               <Spinner />
             </View>
           ) : (
-            <CelText
-              align={"center"}
-              type={"H1"}
-              weight={"300"}
-              margin={"20 0 20 0"}
-            >
-              {hodlCode}
-            </CelText>
+            <Card margin={"20 0 0 0"}>
+              <View style={style.hodlCodeWrapper}>
+                <View style={style.codeWrapper}>
+                  <CelText align={"left"} type={"H2"} weight={"500"}>
+                    {showHodlCode ? hodlCode : "XXXXXXXX"}
+                  </CelText>
+                </View>
+                <View style={style.textWrapper}>
+                  <CelText
+                    color={STYLES.COLORS.CELSIUS}
+                    onPress={() =>
+                      this.setState({ showHodlCode: !this.state.showHodlCode })
+                    }
+                  >
+                    {showHodlCode ? "HIDE" : "SHOW"}
+                  </CelText>
+                </View>
+              </View>
+            </Card>
           )}
 
           <Card

@@ -4,7 +4,6 @@ import appsFlyer from "react-native-appsflyer";
 import Geolocation from "@react-native-community/geolocation";
 import { RESULTS } from "react-native-permissions";
 
-import store from "../../redux/store";
 import * as actions from "../actions";
 import ACTIONS from "../../constants/ACTIONS";
 import appUtil from "../../utils/app-util";
@@ -44,15 +43,23 @@ function loadCelsiusAssets() {
  * Handles state change of the app
  * @param {string} nextAppState - one of active|inactive|background
  */
-const ASK_FOR_PIN_AFTER = 30 * 1000;
+const SCREENS_WITH_LATER_VERIFICATION = ["Simplex"];
+const ASK_FOR_PIN_SHORT = 30 * 1000;
+const ASK_FOR_PIN_LONG = 10 * 60 * 1000;
 let pinTimeout;
 let startOfBackgroundTimer;
 
 function handleAppStateChange(nextAppState) {
-  return dispatch => {
-    const { profile } = store.getState().user;
-    const { appState } = store.getState().app;
-    const { activeScreen } = store.getState().nav;
+  return (dispatch, getState) => {
+    const { profile } = getState().user;
+    const { appState } = getState().app;
+    const { activeScreen } = getState().nav;
+
+    const askForPINAfter = SCREENS_WITH_LATER_VERIFICATION.includes(
+      activeScreen
+    )
+      ? ASK_FOR_PIN_LONG
+      : ASK_FOR_PIN_SHORT;
 
     if (profile && profile.has_pin) {
       if (nextAppState === "active") {
@@ -67,7 +74,7 @@ function handleAppStateChange(nextAppState) {
 
         if (
           Platform.OS === "android" &&
-          new Date().getTime() - startOfBackgroundTimer > ASK_FOR_PIN_AFTER
+          new Date().getTime() - startOfBackgroundTimer > askForPINAfter
         ) {
           startOfBackgroundTimer = null;
           dispatch(
@@ -97,7 +104,7 @@ function handleAppStateChange(nextAppState) {
               })
             );
             clearTimeout(pinTimeout);
-          }, ASK_FOR_PIN_AFTER);
+          }, askForPINAfter);
         }
 
         if (Platform.OS === "android") {
