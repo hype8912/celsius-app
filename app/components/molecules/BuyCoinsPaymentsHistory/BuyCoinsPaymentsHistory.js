@@ -16,6 +16,7 @@ import EmptyState from "../../atoms/EmptyState/EmptyState";
     currencyRatesShort: state.currencies.currencyRatesShort,
     currencies: state.currencies.rates,
     callsInProgress: state.api.callsInProgress,
+    activeScreen: state.nav.activeScreen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -26,6 +27,17 @@ class BuyCoinsPaymentsHistory extends Component {
   componentDidMount() {
     const { actions } = this.props;
     actions.getPaymentRequests();
+  }
+
+  componentWillUpdate(nextProps) {
+    const { activeScreen, actions } = this.props;
+
+    if (
+      activeScreen !== nextProps.activeScreen &&
+      nextProps.activeScreen === "GetCoinsLanding"
+    ) {
+      actions.getPaymentRequests();
+    }
   }
 
   render() {
