@@ -110,7 +110,8 @@ class CoinGridCard extends Component {
     const isInCel = !coinInterest.inCEL
       ? coinInterest.compound_rate
       : specialRate;
-    const coinPriceChange = currencyRates.price_change_usd["1d"];
+    const coinPriceChange =
+      currencyRates && currencyRates.price_change_usd["1d"];
 
     return (
       <Animated.View style={this.animate()}>
