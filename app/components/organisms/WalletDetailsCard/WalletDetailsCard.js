@@ -46,12 +46,12 @@ class WalletDetailsCard extends PureComponent {
         <View style={walletDetailsCardStyle.container}>
           <View>
             <TouchableOpacity onPress={this.navigateToBalanceHistory}>
-              <CelText weight="300" type="H7">
+              <CelText weight="300" type="H6">
                 Total Wallet balance
               </CelText>
               <Counter
                 weight="600"
-                type="H4"
+                type="H3"
                 margin="3 0 3 0"
                 number={walletSummary.total_amount_usd}
                 speed={5}
@@ -60,7 +60,7 @@ class WalletDetailsCard extends PureComponent {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.navigateToDeposit}>
-              <CelText color={STYLES.COLORS.CELSIUS_BLUE} type={"H6"}>
+              <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
                 Deposit coins
               </CelText>
             </TouchableOpacity>
@@ -72,12 +72,12 @@ class WalletDetailsCard extends PureComponent {
             <TouchableOpacity
               onPress={() => actions.navigateTo("WalletInterest")}
             >
-              <CelText weight="300" type="H7">
+              <CelText weight="300" type="H6">
                 Total Interest earned
               </CelText>
               <Counter
                 weight="600"
-                type="H4"
+                type="H3"
                 margin="3 0 3 0"
                 number={walletSummary.total_interest_earned}
                 speed={5}
@@ -88,7 +88,7 @@ class WalletDetailsCard extends PureComponent {
             <TouchableOpacity
               onPress={() => actions.navigateTo("InterestRates")}
             >
-              <CelText color={STYLES.COLORS.CELSIUS_BLUE} type={"H6"}>
+              <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
                 Rates this week
               </CelText>
             </TouchableOpacity>

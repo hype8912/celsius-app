@@ -156,7 +156,12 @@ function getBaseCelRate(coin) {
 
   let baseRate = interestRates[coin].rate;
 
-  if (interestRates[coin].threshold_on_first_n_coins && walletSummary) {
+  if (
+    walletSummary &&
+    interestRates &&
+    interestRates[coin] &&
+    interestRates[coin].threshold_on_first_n_coins
+  ) {
     const coinBalance = walletSummary.coins.find(c => c.short === coin).amount;
 
     const shouldUseSpecialRate = coinBalance.isLessThan(
@@ -174,7 +179,12 @@ function isBelowThreshold(coin) {
   const interestRates = store.getState().generalData.interestRates;
   const walletSummary = store.getState().wallet.summary;
 
-  if (interestRates[coin].threshold_on_first_n_coins && walletSummary) {
+  if (
+    walletSummary &&
+    interestRates &&
+    interestRates[coin] &&
+    interestRates[coin].threshold_on_first_n_coins
+  ) {
     const coinBalance = walletSummary.coins.find(c => c.short === coin).amount;
 
     return coinBalance.isLessThan(
