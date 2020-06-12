@@ -15,7 +15,8 @@ const { GEM_URL, GEM_API_KEY } = Constants;
 
 const onrampConfig = {
   partnerName: "Celsius",
-  partnerIconUrl: "",
+  partnerIconUrl:
+    "https://raw.githubusercontent.com/CelsiusNetwork/celsius-app/develop/assets/images/icons/logo-blue.png",
   apiKey: GEM_API_KEY,
 };
 

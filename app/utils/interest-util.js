@@ -174,7 +174,11 @@ function isBelowThreshold(coin) {
   const interestRates = store.getState().generalData.interestRates;
   const walletSummary = store.getState().wallet.summary;
 
-  if (interestRates[coin].threshold_on_first_n_coins && walletSummary) {
+  if (
+    interestRates[coin] &&
+    interestRates[coin].threshold_on_first_n_coins &&
+    walletSummary
+  ) {
     const coinBalance = walletSummary.coins.find(c => c.short === coin).amount;
 
     return coinBalance.isLessThan(
