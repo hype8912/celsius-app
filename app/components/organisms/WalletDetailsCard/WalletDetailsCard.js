@@ -46,7 +46,7 @@ class WalletDetailsCard extends PureComponent {
         <View style={walletDetailsCardStyle.container}>
           <View>
             <TouchableOpacity onPress={this.navigateToBalanceHistory}>
-              <CelText weight="300" type="H6">
+              <CelText weight="300" type="H6" color={STYLES.COLORS.DARK_GRAY7}>
                 Total Wallet balance
               </CelText>
               <Counter
@@ -72,7 +72,7 @@ class WalletDetailsCard extends PureComponent {
             <TouchableOpacity
               onPress={() => actions.navigateTo("WalletInterest")}
             >
-              <CelText weight="300" type="H6">
+              <CelText weight="300" type="H6" color={STYLES.COLORS.DARK_GRAY7}>
                 Total Interest earned
               </CelText>
               <Counter

@@ -31,7 +31,7 @@ const base = {
     left: widthPercentageToDP("30%"),
   },
   opacityCircle: {
-    backgroundColor: STYLES.COLORS.CELSIUS,
+    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
     width: 60,
     height: 60,
     borderRadius: 30,
