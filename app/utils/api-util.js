@@ -278,6 +278,7 @@ async function handle403(err) {
     mixpanelAnalytics.sessionEnded("Logout user");
     store.dispatch(
       actions.resetToScreen("LoginLanding", {
+        type: "login",
         inactiveUser: true,
         msg: err.msg,
       })
