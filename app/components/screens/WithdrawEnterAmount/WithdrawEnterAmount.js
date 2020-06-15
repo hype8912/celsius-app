@@ -396,24 +396,26 @@ class WithdrawEnterAmount extends Component {
                 </CelText>
 
                 <CelText align="center">
-                  You have recently changed your ${coin} withdrawal address.
+                  {`You have recently changed your ${coin} withdrawal address.`}
                 </CelText>
 
-                <Card margin="10 0 0 0">
-                  <CelText align="center" type="H6">
-                    Due to our security protocols, your address will be active
-                    in
-                  </CelText>
+                {hours && minutes && (
+                  <Card margin="10 0 0 0">
+                    <CelText align="center" type="H6">
+                      Due to our security protocols, your address will be active
+                      in
+                    </CelText>
 
-                  <CelText
-                    margin="10 0 0 0"
-                    align="center"
-                    type="H3"
-                    weight={"bold"}
-                  >
-                    {`${hours}h ${minutes}m.`}
-                  </CelText>
-                </Card>
+                    <CelText
+                      margin="10 0 0 0"
+                      align="center"
+                      type="H3"
+                      weight={"bold"}
+                    >
+                      {`${hours}h ${minutes}m.`}
+                    </CelText>
+                  </Card>
+                )}
               </View>
             )}
           </View>
