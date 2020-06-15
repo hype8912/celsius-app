@@ -13,6 +13,7 @@ import com.microsoft.codepush.react.CodePush;
 import io.branch.rnbranch.RNBranchModule;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =

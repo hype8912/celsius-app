@@ -3,6 +3,7 @@ import { IDFA } from "react-native-idfa";
 import appsFlyer from "react-native-appsflyer";
 import Geolocation from "@react-native-community/geolocation";
 import { RESULTS } from "react-native-permissions";
+import RNAdvertisingId from "react-native-advertising-id";
 
 import * as actions from "../actions";
 import ACTIONS from "../../constants/ACTIONS";
@@ -137,14 +138,15 @@ function setInternetConnection(connection) {
  * Set advertising id for Apps Flyer
  */
 function setAdvertisingId() {
-  return dispatch => {
+  return async dispatch => {
     let userAID;
     if (Platform.OS === "ios") {
       const res = IDFA.getIDFA();
       userAID = res;
     } else {
-      // const res = await RNAdvertisingId.getAdvertisingId();
-      // userAID = res.advertisingId;
+      const res = await RNAdvertisingId.getAdvertisingId();
+      userAID = res.advertisingId;
+      // console.log('userAID: ', userAID)
     }
     dispatch({
       type: ACTIONS.SET_ADVERTISING_ID,
