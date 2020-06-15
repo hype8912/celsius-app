@@ -38,7 +38,7 @@ class Home extends Component {
     await actions.getWalletSummary();
 
     const { user } = this.props;
-    if (!user.has_pin) {
+    if (user && user.id && !user.has_pin) {
       return actions.resetToScreen("RegisterSetPin");
     }
 
@@ -46,7 +46,7 @@ class Home extends Component {
       return actions.resetToScreen("KYCFinalRejection");
     }
 
-    if (user.has_pin) {
+    if (user && user.id && user.has_pin) {
       const hasAlreadyVerified = apiUtil.wereSuccessfulInHistory(
         [API.CHECK_PIN, API.CHECK_TWO_FACTOR, API.SET_PIN],
         15
