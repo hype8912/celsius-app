@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-unresolved
+import { openInbox } from "react-native-email-link";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
@@ -141,6 +143,11 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
       }
       if (flow === "change-address") {
         dispatch(navigateTo("WithdrawAddressLabel"));
+        openInbox({
+          title: "Confirm Change Address",
+          message:
+            "Please choose email app to confirm withdrawal address change",
+        });
         dispatch(
           showMessage(
             "success",

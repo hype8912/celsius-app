@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
+// eslint-disable-next-line import/no-unresolved
+import { openInbox } from "react-native-email-link";
 
 import TransactionWithdrawDetailsStyle from "./TransactionDetailsWithdraw.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -14,6 +16,7 @@ import { TRANSACTION_TYPES } from "../../../constants/DATA";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
+import CheckEmailInfoBox from "../../atoms/CheckEmailInfoBox/CheckEmailInfoBox";
 
 class TransactionDetailsWithdraw extends Component {
   static propTypes = {
@@ -60,25 +63,11 @@ class TransactionDetailsWithdraw extends Component {
 
           {transaction.type ===
             TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION && (
-            <InfoBox
-              backgroundColor={STYLES.COLORS.ORANGE}
-              padding={"20 20 20 10"}
-            >
-              <View style={style.direction}>
-                <View style={style.circle}>
-                  <Icon
-                    name={"Mail"}
-                    height="15"
-                    width="15"
-                    fill={STYLES.COLORS.RED}
-                  />
-                </View>
-                <CelText color={"white"} margin={"0 10 0 10"}>
-                  In order to proceed, you must confirm the transaction via
-                  email.
-                </CelText>
-              </View>
-            </InfoBox>
+            <CheckEmailInfoBox
+              infoText={
+                "In order to proceed, you must confirm the transaction via email."
+              }
+            />
           )}
 
           <TxAddressSection
@@ -94,8 +83,19 @@ class TransactionDetailsWithdraw extends Component {
             label={"Time"}
             value={moment.utc(transaction.time).format("h:mm A (z)")}
           />
+          {transaction.type ===
+            TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION && (
+            <CelButton
+              margin={"20 0 0 0"}
+              onPress={() => openInbox()}
+              size={"small"}
+              color={"green"}
+            >
+              Check your email!
+            </CelButton>
+          )}
           <CelButton
-            margin={"40 0 0 0"}
+            margin={"20 0 0 0"}
             onPress={() => navigateTo("WalletLanding")}
           >
             Go Back to Wallet

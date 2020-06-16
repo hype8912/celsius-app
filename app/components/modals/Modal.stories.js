@@ -29,10 +29,8 @@ import PrepaymentSuccessfulModalStories from "./PrepaymentSuccessfulModal/Prepay
 import ReferralSendModalStories from "./ReferralSendModal/ReferralSendModal.stories";
 import RegisterPromoCodeModalStories from "./RegisterPromoCodeModal/RegisterPromoCodeModal.stories";
 import RejectionReasonsModalStories from "./RejectionReasonsModal/RejectionReasonsModal.stories";
-import RemoveAuthAppModalStories from "./RemoveAuthAppModal/RemoveAuthAppModal.stories";
 import SsnModalStories from "./SsnModal/SsnModal.stories";
 import TransactionFilterModalStories from "./TransactionFilterModal/TransactionFilterModal.stories";
-import VerifyAuthAppModalStories from "./VerifyAuthAppModal/VerifyAuthAppModal.stories";
 import WithdrawalInfoModalStories from "./WithdrawalInfoModal/WithdrawalInfoModal.stories";
 import WithdrawWarningModalStories from "./WithdrawWarningModal/WithdrawWarningModal.stories";
 import DestinationInfoTagModalStories from "./DestinationInfoTagModal/DestinationInfoTagModal.stories";
@@ -71,10 +69,8 @@ storiesOf("Modals", module)
       <ReferralSendModalStories />
       <RegisterPromoCodeModalStories />
       <RejectionReasonsModalStories />
-      <RemoveAuthAppModalStories />
       <SsnModalStories />
       <TransactionFilterModalStories />
-      <VerifyAuthAppModalStories />
       <WithdrawWarningModalStories />
       <CelPayInfoModalStories />
     </View>

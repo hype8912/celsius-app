@@ -205,9 +205,9 @@ class Deposit extends Component {
     const collateralCoin = formData.selectedCoin || initialCollateral;
 
     let collateralMissing;
-    const collateralObj = walletSummary.coins.find(
-      c => c.short === formData.selectedCoin
-    );
+    const collateralObj =
+      walletSummary &&
+      walletSummary.coins.find(c => c.short === formData.selectedCoin);
 
     if (collateralObj) {
       collateralMissing = formatter.crypto(

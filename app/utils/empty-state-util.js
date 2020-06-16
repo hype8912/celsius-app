@@ -1,4 +1,7 @@
 import React from "react";
+// eslint-disable-next-line import/no-unresolved
+import { openInbox } from "react-native-email-link";
+
 import { EMPTY_STATES } from "../constants/UI";
 import { KYC_STATUSES } from "../constants/DATA";
 import CelText from "../components/atoms/CelText/CelText";
@@ -117,8 +120,14 @@ function getProps(purpose, componentProps) {
           "To complete HODL Mode activation, please follow the instructions\n" +
             "sent to you via email.",
         ],
-        onPress: () => actions.navigateTo("WalletLanding"),
-        button: "Go to wallet",
+        onPress: () =>
+          openInbox({
+            title: "HODL status confirm!",
+            message: "Please confirm HODL status in tou email app.",
+          }),
+        button: "Check Email!",
+        secondaryButton: "Go to Wallet",
+        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
       };
     case EMPTY_STATES.NO_LOANS:
       return {
