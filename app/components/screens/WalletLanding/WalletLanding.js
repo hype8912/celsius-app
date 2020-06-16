@@ -129,12 +129,12 @@ class WalletLanding extends Component {
     if (!currenciesRates) actions.getCurrencyRates();
     if (!currenciesGraphs) actions.getCurrencyGraphs();
 
-    // NOTE (fj): quickfix for CN-2763
+    // NOTE (fj): quickfix for CN-2763, boom you got crypto
     // if (user.celsius_member) {
-    if (this.shouldInitializeMembership) {
-      actions.getCelsiusMemberStatus();
-      this.shouldInitializeMembership = false;
-    }
+    // if (this.shouldInitializeMembership) {
+    //   actions.getCelsiusMemberStatus();
+    //   this.shouldInitializeMembership = false;
+    // }
 
     this.setWalletFetchingInterval();
   };
