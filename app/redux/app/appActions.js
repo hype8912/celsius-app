@@ -137,15 +137,9 @@ function setInternetConnection(connection) {
  * Set advertising id for Apps Flyer
  */
 function setAdvertisingId() {
-  return dispatch => {
-    let userAID;
-    if (Platform.OS === "ios") {
-      const res = IDFA.getIDFA();
-      userAID = res;
-    } else {
-      // const res = await RNAdvertisingId.getAdvertisingId();
-      // userAID = res.advertisingId;
-    }
+  return async dispatch => {
+    const userAID = await IDFA.getIDFA();
+
     dispatch({
       type: ACTIONS.SET_ADVERTISING_ID,
       advertisingId: userAID,
