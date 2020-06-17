@@ -41,7 +41,6 @@ class GetCoinsLanding extends Component {
   componentDidMount() {
     const { actions, navHistory } = this.props;
     actions.openModal(MODALS.GET_COINS_INFO_MODAL);
-    actions.getCrytpoLimits();
     mixpanelAnalytics.navigatedToBuyCoins(navHistory[0]);
   }
 

@@ -216,13 +216,17 @@ class GetCoinsEnterAmount extends Component {
   };
 
   handleAmountTextStyle = type => {
-    if (!getCoinsUtil.isAmountInScope()) {
+    const { formData } = this.props;
+    const isZero = formData.isFiat
+      ? !Number(formData.amountFiat)
+      : !Number(formData.amountCrypto);
+
+    if (!getCoinsUtil.isAmountInScope() && !isZero) {
       return {
         color: STYLES.COLORS.RED,
       };
     }
 
-    const { formData } = this.props;
     if (
       (!formData.isFiat && type === "crypto") ||
       (formData.isFiat && type === "fiat")
@@ -254,7 +258,7 @@ class GetCoinsEnterAmount extends Component {
     const style = GetCoinsEnterAmountStyle();
     const { availableCryptoCoins } = this.state;
     const isFetchingQuotes = apiUtil.areCallsInProgress(
-      [API.GET_QUOTE],
+      [API.GET_SIMPLEX_QUOTE],
       callInProgress
     );
 

@@ -7,8 +7,6 @@ import { showMessage } from "../ui/uiActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { mocks } from "../../../dev-settings";
 import mockTransactions from "../../mock-data/payments.mock";
-import store from "../store";
-import getCoinsUtil from "../../utils/get-coins-util";
 import buyCoinsService from "../../services/buy-coins-service";
 import {
   BUY_COINS_PAYMENT_STATUSES,
@@ -21,7 +19,6 @@ export {
   getSimplexQuote,
   createSimplexPayment,
   createGemPayment,
-  getCrytpoLimits,
 };
 
 /**
@@ -167,51 +164,6 @@ function createGemPayment(userId, transactionId = null) {
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CREATE_GEM_PAYMENT, err));
-    }
-  };
-}
-
-/**
- * Gets min and max limits for all crypto coins based on usd limits limits
- * @todo: move to Backend
- */
-function getCrytpoLimits() {
-  return async (dispatch, getState) => {
-    try {
-      const buyCoinsSettings = store.getState().generalData.buyCoinsSettings;
-      if (buyCoinsSettings.limit_per_crypto_currency) return;
-
-      dispatch(startApiCall(API.GET_CRYPTO_LIMITS));
-      const allowedSimplexCoins = getState().compliance.simplex.coins;
-      const usdLimits = getCoinsUtil.getBuyLimitsPerFiatCurrency("USD");
-
-      const limitsPerCrypto = {};
-      for (let i = 0; i < allowedSimplexCoins.length; i++) {
-        const quoteMin = await buyCoinsService.getQuote(
-          allowedSimplexCoins[i],
-          "USD",
-          "USD",
-          usdLimits.min
-        );
-        const quoteMax = await buyCoinsService.getQuote(
-          allowedSimplexCoins[i],
-          "USD",
-          "USD",
-          usdLimits.max
-        );
-
-        limitsPerCrypto[allowedSimplexCoins[i]] = {
-          min: quoteMin.data.digital_money.amount,
-          max: quoteMax.data.digital_money.amount,
-        };
-      }
-
-      dispatch({
-        type: ACTIONS.GET_CRYPTO_LIMITS_SUCCESS,
-        limitsPerCrypto,
-      });
-    } catch (err) {
-      dispatch(apiError(API.GET_CRYPTO_LIMITS, err));
     }
   };
 }
