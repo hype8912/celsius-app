@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
+import SplashScreen from "react-native-splash-screen";
 import { AppState, BackHandler, StyleSheet, StatusBar } from "react-native";
 import codePush from "react-native-code-push";
 import * as Font from "expo-font";
+
 import store from "./redux/store";
 import * as actions from "./redux/actions";
 import AppNavigation from "./navigator/Navigator";
@@ -17,6 +19,8 @@ import branchUtil from "./utils/branch-util";
 import { disableAccessibilityFontScaling } from "./utils/styles-util";
 import { getSecureStoreKey } from "./utils/expo-storage";
 import Constants from "../constants";
+import { STORYBOOK } from "../dev-settings";
+import StoryBook from "./components/screens/Storybook/Storybook";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -34,6 +38,12 @@ function getActiveRouteName(navigationState) {
 
 class App extends Component {
   async componentDidMount() {
+    // Hide Splashscreen immediately when in STORYBOOK mode
+    if (STORYBOOK) {
+      SplashScreen.hide();
+      return;
+    }
+
     StatusBar.setHidden(true);
 
     appUtil.logoutOnEnvChange();
@@ -84,6 +94,9 @@ class App extends Component {
   }
 
   render() {
+    // render StoryBook instead of regular app
+    if (STORYBOOK) return <StoryBook />;
+
     return (
       <ErrorBoundary>
         <CelsiusApplication />

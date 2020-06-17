@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+import { STORYBOOK } from "../../dev-settings";
 import api from "./api/apiReducer";
 import ui from "./ui/uiReducer";
 import user from "./user/userReducer";
@@ -63,8 +64,17 @@ const appReducers = combineReducers({
 
 function rootReducer(state, action) {
   let newState = state;
+  const newAction = action;
   if (action.type === ACTIONS.RESET_APP) newState = undefined;
   if (action.type === ACTIONS.LOGOUT_USER) newState = undefined;
+  if (action.type === ACTIONS.SET_WHOLE_STATE) newState = action.state;
+
+  // ignore all actions when in Storybook mode
+  if (STORYBOOK && action.type !== ACTIONS.SET_WHOLE_STATE) {
+    newAction.true = action.type;
+    newAction.type = ACTIONS.BLOCKED_ACTION;
+  }
+
   return appReducers(newState, action);
 }
 

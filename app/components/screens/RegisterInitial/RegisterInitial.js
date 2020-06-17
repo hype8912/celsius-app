@@ -20,7 +20,7 @@ import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
-    user: state.user.profile,
+    // user: state.user.profile,
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
     callsInProgress: state.api.callsInProgress,
