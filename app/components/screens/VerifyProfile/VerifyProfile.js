@@ -161,13 +161,15 @@ class VerifyProfile extends Component {
 
   handlePINChange = newValue => {
     const { actions } = this.props;
+    // TODO took pinLength from API endpoint
+    const pinLength = 4;
 
-    if (newValue.length > 4) return;
+    if (newValue.length > pinLength) return;
 
     actions.updateFormField("pin", newValue);
     this.setState({ value: newValue });
 
-    if (newValue.length === 4) {
+    if (newValue.length === pinLength) {
       this.setState({ loading: true });
       actions.checkPIN(this.onCheckSuccess, this.onCheckError);
     }
@@ -204,8 +206,24 @@ class VerifyProfile extends Component {
     }
   };
 
+  renderDots = length => {
+    const { actions } = this.props;
+    const { verificationError, value } = this.state;
+    // TODO took pinLength from API endpoint
+    const pinLength = length || 6;
+    return (
+      <TouchableOpacity onPress={actions.toggleKeypad}>
+        <HiddenField
+          value={value}
+          error={verificationError}
+          length={pinLength}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   render2FA() {
-    const { loading, value, verificationError } = this.state;
+    const { loading } = this.state;
     const { actions } = this.props;
     const style = VerifyProfileStyle();
 
@@ -223,9 +241,8 @@ class VerifyProfile extends Component {
           Please enter your 2FA code to proceed
         </CelText>
 
-        <TouchableOpacity onPress={actions.toggleKeypad}>
-          <HiddenField value={value} length={6} error={verificationError} />
-        </TouchableOpacity>
+        {this.renderDots()}
+
         {loading ? (
           <View
             style={{
@@ -249,8 +266,7 @@ class VerifyProfile extends Component {
   }
 
   renderPIN() {
-    const { loading, value, verificationError } = this.state;
-    const { actions } = this.props;
+    const { loading } = this.state;
     const style = VerifyProfileStyle();
 
     return (
@@ -262,9 +278,7 @@ class VerifyProfile extends Component {
           Please enter your PIN to proceed
         </CelText>
 
-        <TouchableOpacity onPress={actions.toggleKeypad}>
-          <HiddenField value={value} error={verificationError} />
-        </TouchableOpacity>
+        {this.renderDots(4)}
         <View>
           <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
         </View>
