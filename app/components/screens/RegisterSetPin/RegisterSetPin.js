@@ -82,8 +82,14 @@ class RegisterSetPin extends Component {
       if (!isSet) {
         this.setState({ pinCreated: false });
       } else {
-        await actions.getInitialCelsiusData();
-        return actions.navigateTo("Home");
+        // TODO pinOld took from endPoint
+        const pinOld = false;
+        if (pinOld) {
+          // TODO go to CheckMail Screen
+        } else {
+          await actions.getInitialCelsiusData();
+          return actions.navigateTo("Home");
+        }
       }
     } else {
       actions.showMessage("error", "Both PIN numbers should be the same.");
