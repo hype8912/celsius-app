@@ -1,4 +1,5 @@
 import currency from "currency-formatter";
+import BigNumber from "bignumber.js";
 
 export default {
   usd,
@@ -35,12 +36,15 @@ function usd(amount, options = {}) {
  * Formats number to e.g. 10,000.00 EUR
  *
  * @param {number|string} amount
- * @param {string} string
+ * @param {string} fiatCode
  * @param {Object} options - check options here https://www.npmjs.com/package/currency-formatter#advanced-usage
  * @returns {string}
  */
 function fiat(amount, fiatCode, options = {}) {
-  return currency.format(floor10(amount), { code: fiatCode, ...options });
+  return currency.format(floor10(new BigNumber(amount).toFixed(8)), {
+    code: fiatCode,
+    ...options,
+  });
 }
 
 /**
@@ -54,7 +58,7 @@ function fiat(amount, fiatCode, options = {}) {
  * @returns {string}
  */
 function crypto(amount, cryptocurrency, options = {}) {
-  return currency.format(amount, {
+  return currency.format(new BigNumber(amount).toFixed(8), {
     precision: options.noPrecision ? 0 : options.precision || 5,
     thousand: ",",
     symbol:
@@ -155,10 +159,11 @@ function percentage(number) {
 /**
  * Formats percentage from number - 0.0695 => 6.95%
  *
- * @param {number|string} - number to format
- * @param {boolean} - Hide percentage symbol
- //  * @returns {number}
- */
+ * @param {number|string} number - number to format
+ * @param {boolean} noSymbol - Hide percentage symbol
+ * @param {number} fractionDigits - Hide percentage symbol
+  @returns {number}
+ **/
 function percentageDisplay(number, noSymbol = false, fractionDigits = 2) {
   const percentageNum = Math.round(number * 10000) / 100;
   return `${percentageNum.toFixed(fractionDigits)}${noSymbol ? "" : "%"}`;
@@ -167,7 +172,6 @@ function percentageDisplay(number, noSymbol = false, fractionDigits = 2) {
 /**
  * Decimal adjustment of a number.
  *
- * @param {String}  type  The type of adjustment.
  * @param {Number}  value The number.
  * @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
  * @returns {Number} The adjusted value.
