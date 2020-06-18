@@ -108,6 +108,7 @@ class VerifyProfile extends Component {
       }
     }
 
+    // TODO - Check this cases, when whe need to handle sixDigit pin
     if (activeScreen) {
       if (activeScreen === "VerifyProfile") {
         this.setState({ loading: false });
