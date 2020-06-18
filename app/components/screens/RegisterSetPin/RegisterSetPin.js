@@ -23,11 +23,17 @@ class RegisterSetPin extends Component {
   static propTypes = {};
   static defaultProps = {};
 
-  static navigationOptions = () => ({
-    hideBack: true,
-    customCenterComponent: { steps: 3, currentStep: 2, flowProgress: false },
-    headerSameColor: true,
-  });
+  static navigationOptions = () => {
+    // TODO pinOld took from endPoint
+    const pinOld = true;
+    return {
+      hideBack: true,
+      customCenterComponent: !pinOld
+        ? { steps: 3, currentStep: 2, flowProgress: false }
+        : "",
+      headerSameColor: true,
+    };
+  };
 
   constructor(props) {
     super(props);
@@ -37,17 +43,22 @@ class RegisterSetPin extends Component {
     };
   }
 
+  componentDidMount() {
+    const { actions } = this.props;
+    actions.updateFormField("pin", "");
+  }
+
   handlePINChange = newValue => {
     const { pinCreated } = this.state;
     const { actions } = this.props;
 
-    if (newValue.length > 4) return;
+    if (newValue.length > 6) return;
 
     const field = pinCreated ? "pinConfirm" : "pin";
 
     actions.updateFormField(field, newValue);
 
-    if (newValue.length === 4) {
+    if (newValue.length === 6) {
       this.handlePinFinish(newValue);
     }
   };
@@ -94,15 +105,34 @@ class RegisterSetPin extends Component {
     });
   };
 
+  setScreenText = () => {
+    const { pinCreated } = this.state;
+
+    // TODO pinOld took from endPoint
+    const pinOld = true;
+    const screenText = {};
+    if (pinOld) {
+      screenText.headingText = !pinCreated
+        ? "Enter your 6-digits PIN"
+        : "Repeat your 6-digits PIN";
+      screenText.subheadingText = !pinCreated
+        ? "Please enter your new PIN to proceed"
+        : "Please repeat your new PIN";
+    } else {
+      screenText.headingText = !pinCreated ? "Create a PIN" : "Repeat PIN";
+      screenText.subheadingText = !pinCreated
+        ? "Create a unique PIN to secure your account."
+        : "You're almost there!";
+    }
+    return screenText;
+  };
+
   render() {
     const { loading, pinCreated } = this.state;
     const { actions, formData } = this.props;
 
     const field = !pinCreated ? "pin" : "pinConfirm";
-    const headingText = !pinCreated ? "Create a PIN" : "Repeat PIN";
-    const subheadingText = !pinCreated
-      ? "Create a unique PIN to secure your account."
-      : "You're almost there!";
+    const screenText = this.setScreenText();
 
     const style = ChangePinStyle();
 
@@ -111,14 +141,14 @@ class RegisterSetPin extends Component {
         <View style={style.container}>
           <View style={style.wrapper}>
             <CelText weight="bold" type="H1" align="center" margin="0 20 0 20">
-              {headingText}
+              {screenText.headingText}
             </CelText>
             <CelText align="center" margin="10 0 30 0">
-              {subheadingText}
+              {screenText.subheadingText}
             </CelText>
 
             <TouchableOpacity onPress={actions.toggleKeypad}>
-              <HiddenField value={formData[field]} />
+              <HiddenField value={formData[field]} length={6} />
             </TouchableOpacity>
 
             {pinCreated && !loading && (
