@@ -26,6 +26,7 @@ const BLOCKEXPLORERS_STAGING = {
   eth: "https://rinkeby.etherscan.io/tx/",
   eos: "https://jungle.bloks.io/transaction/",
   erc20: "https://rinkeby.etherscan.io/tx/",
+  bsv: "https://testnet.bitcoincloud.net/tx/",
 };
 const BLOCKEXPLORERS_PRODUCTION = {
   btc: "https://blockexplorer.com/tx/",
@@ -40,6 +41,7 @@ const BLOCKEXPLORERS_PRODUCTION = {
   eos: "https://bloks.io/transaction/",
   etc: "https://explorer.bitquery.io/ethclassic/tx/", // TODO: add staging link
   erc20: "https://etherscan.io/tx/",
+  bsv: "https://blockchair.com/bitcoin-sv/transaction/",
 };
 
 const BLOCKEXPLORERS =
