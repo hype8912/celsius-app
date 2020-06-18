@@ -24,6 +24,9 @@ import StoryBook from "./components/screens/Storybook/Storybook";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
+// eslint-disable-next-line no-console
+console.disableYellowBox = true;
+
 function getActiveRouteName(navigationState) {
   if (!navigationState) {
     return null;
