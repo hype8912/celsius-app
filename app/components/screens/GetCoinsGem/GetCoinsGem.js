@@ -42,10 +42,7 @@ class GetCoinsGem extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    headerSameColor: false,
-    transparent: true,
-    hideBack: true,
-    gesturesEnabled: false,
+    hideHeading: true,
   });
 
   componentDidMount() {

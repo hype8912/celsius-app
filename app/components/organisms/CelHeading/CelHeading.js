@@ -389,11 +389,11 @@ class CelHeading extends Component {
 
   render() {
     let containerStyle;
-    const { internetConnected } = this.props;
-    if (!internetConnected) return null;
+    const { internetConnected, scene } = this.props;
+    const sceneOptions = scene.descriptor.options;
+    const { hideHeading, transparent, headerSameColor } = sceneOptions;
+    if (hideHeading || !internetConnected) return null;
 
-    const scene = this.props.scene.descriptor;
-    const { transparent, headerSameColor } = scene.options;
     const style = CelHeadingStyle();
 
     if (headerSameColor) {
