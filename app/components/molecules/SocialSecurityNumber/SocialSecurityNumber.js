@@ -144,26 +144,18 @@ class SocialSecurityNumber extends Component {
               </CelText>
             </Card>
 
-            <View
-              style={{
-                flexWrap: "wrap",
-                alignContent: "center",
-                justifyContent: "center",
-                paddingBottom: 20,
-              }}
-            >
-              {!user.ssn && (
-                <CelButton
-                  onPress={onPress}
-                  iconRight={"IconArrowRight"}
-                  iconRightHeight={"20"}
-                  iconRightWidth={"20"}
-                  loading={updatingTaxInfo}
-                >
-                  Submit SSN
-                </CelButton>
-              )}
-            </View>
+            {!user.ssn && (
+              <CelButton
+                onPress={onPress}
+                iconRight={"IconArrowRight"}
+                iconRightHeight={"20"}
+                iconRightWidth={"20"}
+                loading={updatingTaxInfo}
+                margin="15 0 20 0"
+              >
+                Submit SSN
+              </CelButton>
+            )}
           </View>
         ) : (
           <React.Fragment>

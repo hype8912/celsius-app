@@ -255,6 +255,7 @@ class KYCProfileDetails extends Component {
             onPress={this.submitProfileDetails}
             iconRight="IconArrowRight"
             loading={updatingProfileInProgress}
+            disabled={updatingProfileInProgress}
           >
             Continue
           </CelButton>

@@ -125,6 +125,17 @@ export default (state = initialState, action) => {
         },
       };
 
+
+    case ACTIONS.START_KYC_SUCCESS:
+    case ACTIONS.POLL_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          kyc: action.kyc,
+        },
+      };
+
     case ACTIONS.SET_HODL_PROPS:
       return {
         ...state,
