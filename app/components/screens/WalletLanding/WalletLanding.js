@@ -301,7 +301,7 @@ class WalletLanding extends Component {
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
-        <MultiAddressModal actions={actions} />
+        { currenciesRates && <MultiAddressModal actions={actions} /> }
       </RegularLayout>
     );
   }
