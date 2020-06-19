@@ -19,7 +19,6 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
 import RejectionReasonsModal from "../../modals/RejectionReasonsModal/RejectionReasonsModal";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
-import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
@@ -83,21 +82,19 @@ class WalletLanding extends Component {
     this.state = {
       activeView: props.appSettings.default_wallet_view,
     };
-
-    // NOTE (fj): quickfix for CN-2763
-    this.shouldInitializeMembership = true;
   }
 
   componentDidMount = async () => {
     const {
       actions,
-      appSettings,
       currenciesRates,
       currenciesGraphs,
       previouslyOpenedModals,
       hodlStatus,
       userTriggeredActions,
     } = this.props;
+    actions.changeWalletHeaderContent();
+
     setTimeout(() => {
       if (
         !previouslyOpenedModals.HODL_MODE_MODAL &&
@@ -110,31 +107,17 @@ class WalletLanding extends Component {
         !userTriggeredActions.permanently_dismiss_deposit_address_changes
       )
         actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
-
-      actions.checkForLoanAlerts();
     }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
-    if (appSettings && appSettings.accepted_terms_of_use === false) {
-      return actions.navigateTo("TermsOfUse", {
-        purpose: "accept",
-        nextScreen: "WalletLanding",
-      });
-    }
     await assignPushNotificationToken();
 
     await actions.getWalletSummary();
     if (!currenciesRates) actions.getCurrencyRates();
     if (!currenciesGraphs) actions.getCurrencyGraphs();
 
-    // NOTE (fj): quickfix for CN-2763
-    // if (user.celsius_member) {
-    if (this.shouldInitializeMembership) {
-      actions.getCelsiusMemberStatus();
-      this.shouldInitializeMembership = false;
-    }
-
+    actions.getLoanAlerts();
     this.setWalletFetchingInterval();
   };
 
@@ -243,7 +226,7 @@ class WalletLanding extends Component {
     } = this.props;
     const style = WalletLandingStyle();
 
-    if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
+    if (!walletSummary || !user) {
       return <LoadingScreen />;
     }
 
@@ -316,7 +299,6 @@ class WalletLanding extends Component {
         <CelPayReceivedModal transfer={branchTransfer} />
         <ReferralSendModal />
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
-        <BecomeCelMemberModal />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
         <MultiAddressModal actions={actions} />

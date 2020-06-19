@@ -16,7 +16,6 @@ import STYLES from "../../../constants/STYLES";
 import Card from "../../atoms/Card/Card";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import Icon from "../../atoms/Icon/Icon";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
@@ -130,8 +129,6 @@ class LoanTermsOfUse extends Component {
 
     return (
       <RegularLayout fabType={"hide"} padding="0 0 100 0">
-        <HeadingProgressBar steps={6} currentStep={6} />
-
         <View style={{ padding: 20 }}>
           <CelText color={textColor} weight="bold" type="H3" align="center">
             {introSection.heading}

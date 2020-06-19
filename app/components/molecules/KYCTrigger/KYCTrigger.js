@@ -99,7 +99,7 @@ class KYCTrigger extends Component {
           [KYC_STATUSES.rejected, KYC_STATUSES.permanently_rejected].includes(
             kycType
           )
-            ? "What could have gone wrong?"
+            ? "Rejection reasons"
             : null
         }
         title={kycInfo.title}

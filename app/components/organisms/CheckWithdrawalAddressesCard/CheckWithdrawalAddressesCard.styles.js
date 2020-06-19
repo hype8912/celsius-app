@@ -29,6 +29,7 @@ const base = {
 
   infoTextWrapper: {
     width: "100%",
+    justifyContent: "space-around",
     flexDirection: "column",
     alignItems: "flex-end",
     paddingVertical: 8,

@@ -179,6 +179,7 @@ class CameraScreen extends Component {
   takePhoto = async camera => {
     if (camera) {
       const { actions, mask, navigation } = this.props;
+      const hideBack = navigation.getParam("hideBack");
       const maskType = mask || "utility";
       const options = {
         quality: 0.5,
@@ -195,6 +196,7 @@ class CameraScreen extends Component {
 
         actions.startApiCall(API.TAKE_CAMERA_PHOTO);
         await actions.navigateTo("ConfirmCamera", {
+          documentPicture: hideBack,
           onSave: navigation.getParam("onSave"),
         });
 

@@ -12,7 +12,7 @@ export default function hodlReducer(state = initialState, action) {
         ...state,
         hodlCode: action.hodlCode,
       };
-    case ACTIONS.POLL_HODL_STATUS_SUCCESS:
+    case ACTIONS.POLL_USER_DATA_SUCCESS:
       return {
         ...state,
         hodlStatus: action.hodlStatus,

@@ -155,7 +155,8 @@ const CACHE_IMAGES = [
     "/api/v3",
     ""
   )}/profile-images/avatar/unicorn/profile-unicorn.png`,
-  require("../../assets/images/deer-sad.png"),
+  require("../../assets/images/icons/antenna.png"),
+  require("../../assets/images/icons/tool.png"),
   require("../../assets/images/email-sent.png"),
   require("../../assets/images/email-sent-dark.png"),
   require("../../assets/images/calculator.png"),

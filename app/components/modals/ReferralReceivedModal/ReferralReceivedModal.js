@@ -8,7 +8,7 @@ import { MODALS } from "../../../constants/UI";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
-import { BRANCH_LINKS } from "../../../constants/DATA";
+import { DEEP_LINKS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
 
 class ReferralReceivedModal extends Component {
@@ -43,7 +43,7 @@ class ReferralReceivedModal extends Component {
             Welcome to Celsius!
           </CelText>
 
-          {referralLink.link_type === BRANCH_LINKS.INDIVIDUAL_REFERRAL && (
+          {referralLink.link_type === DEEP_LINKS.INDIVIDUAL_REFERRAL && (
             <CelText align="center">
               You have been referred by {owner} and received{" "}
               <CelText weight="bold">
@@ -55,7 +55,7 @@ class ReferralReceivedModal extends Component {
             </CelText>
           )}
 
-          {referralLink.link_type === BRANCH_LINKS.COMPANY_REFERRAL && (
+          {referralLink.link_type === DEEP_LINKS.COMPANY_REFERRAL && (
             <CelText align="center">
               You will receive{" "}
               <CelText weight="bold">

@@ -116,7 +116,7 @@ class WithdrawAddressLabel extends Component {
         />
         <CelButton
           loading={isLoading}
-          margin={"20 0 20 0"}
+          margin={"10 0 20 0"}
           onPress={this.setWithdrawAddressLabel}
         >
           Finish

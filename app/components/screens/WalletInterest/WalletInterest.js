@@ -54,6 +54,7 @@ class WalletInterest extends Component {
 
   async componentDidMount() {
     const { actions } = this.props;
+    actions.changeInterestHeaderContent();
     await actions.getLoyaltyInfo();
     await actions.getUserAppSettings();
     this.setState({ loading: false });
@@ -78,11 +79,6 @@ class WalletInterest extends Component {
     if (isUSCitizen() && !user.ssn) {
       return (
         <InterestCalculatorScreen purpose={EMPTY_STATES.NO_SSN_INTEREST} />
-      );
-    }
-    if (!user.celsius_member) {
-      return (
-        <InterestCalculatorScreen purpose={EMPTY_STATES.NON_MEMBER_INTEREST} />
       );
     }
     if (walletSummary.total_interest_earned <= 0) {

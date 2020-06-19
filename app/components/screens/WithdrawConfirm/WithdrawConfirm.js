@@ -41,35 +41,18 @@ class WithdrawConfirm extends Component {
   }
 
   renderInfoBox = () => {
-    const { walletSummary, formData, user, loyaltyInfo } = this.props;
+    const { walletSummary, formData, loyaltyInfo } = this.props;
     const coinData =
       formData.coin &&
       walletSummary.coins.filter(
         c => c.short === formData.coin.toUpperCase()
       )[0];
-    const newBalance = coinData && coinData.amount - formData.amountCrypto;
-
-    if (user.celsius_member && formData.coin === "CEL" && newBalance < 1) {
-      return (
-        <InfoBox
-          backgroundColor={STYLES.COLORS.RED}
-          padding="15 15 15 15"
-          color="white"
-        >
-          <CelText color={STYLES.COLORS.WHITE}>
-            Withdrawing will leave you with less than 1 CEL in your wallet,
-            which result in losing your Celsius membership. This will restrict
-            you from using all the available Celsius features. Are you sure that
-            you want to withdraw?
-          </CelText>
-        </InfoBox>
-      );
-    }
+    const newBalance = coinData && coinData.amount.minus(formData.amountCrypto);
 
     if (
       formData.coin === "CEL" &&
       loyaltyInfo &&
-      newBalance < loyaltyInfo.min_for_tier
+      newBalance.isLessThan(loyaltyInfo.min_for_tier)
     ) {
       return (
         <InfoBox
@@ -109,9 +92,11 @@ class WithdrawConfirm extends Component {
     const coinData =
       formData.coin &&
       walletSummary.coins.find(c => c.short === formData.coin.toUpperCase());
+
     const newBalanceCrypto =
-      coinData && coinData.amount - formData.amountCrypto;
-    const newBalanceUsd = coinData && coinData.amount_usd - formData.amountUsd;
+      coinData && coinData.amount.minus(formData.amountCrypto);
+    const newBalanceUsd =
+      coinData && coinData.amount_usd.minus(formData.amountUsd);
 
     const isLoading = apiUtil.areCallsInProgress(
       [API.WITHDRAW_CRYPTO],
@@ -131,7 +116,8 @@ class WithdrawConfirm extends Component {
     let disclaimerText =
       "Follow instructions in email to complete this withdrawal.";
     if (
-      formData.amountUsd > Number(withdrawalSettings.maximum_withdrawal_amount)
+      Number(formData.amountUsd) >
+      Number(withdrawalSettings.maximum_withdrawal_amount)
     ) {
       disclaimerText +=
         " Please note that withdrawals might be delayed for twenty-four (24) hours due to our security protocols.";

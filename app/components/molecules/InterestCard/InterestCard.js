@@ -61,7 +61,7 @@ class InterestCard extends Component {
   };
 
   render() {
-    const { tier, coin, actions, interestRates, interestRate } = this.props;
+    const { tier, coin, actions, interestRate } = this.props;
     const { loading } = this.state;
 
     if (!interestRate.eligible) return null;
@@ -95,7 +95,7 @@ class InterestCard extends Component {
               >
                 <CelText align="justify" type="H5" color="white">
                   {formatter.percentageDisplay(
-                    interestRates[coin].compound_cel_rate
+                    interestRate.specialApyRate || interestRate.apyRate
                   )}
                 </CelText>
               </Badge>

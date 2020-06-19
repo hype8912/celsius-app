@@ -1,24 +1,17 @@
 import React, { Component } from "react";
-// import { View } from 'react-native';
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import moment from "moment";
 
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
-import {
-  SIMPLEX_PAYMENT_STATUSES,
-  TRANSACTION_TYPES,
-} from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
 import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
 import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 
 @connect(
   state => ({
-    payments: state.simplex.payments,
+    payments: state.buyCoins.payments,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -28,126 +21,67 @@ class GetCoinsTransactionDetails extends Component {
     right: "profile",
   });
 
-  getTransactionsParams = () => {
+  render() {
     const { payments, navigation } = this.props;
     const id = navigation.getParam("id");
-
     const transaction = payments.find(t => t.id === id);
-    const orderIdSplitted = transaction.order_id.split("-");
-    const orderIdPt1 = `${orderIdSplitted[0]} - ${orderIdSplitted[1]} - ${orderIdSplitted[2]}`;
-    const orderIdPt2 = `${orderIdSplitted[3]} - ${orderIdSplitted[4]}`;
 
-    const sortedTransaction = {
-      ...transaction,
-      transactionDetails: [
-        {
-          label: "Date",
-          value: moment(transaction.created_at).format("DD MMM YYYY"),
-        },
-        {
-          label: "Time",
-          value: moment(transaction.created_at).format("HH:mm"),
-        },
-        {
-          label: "Payment Method", // TODO: change hardcoded when BE is ready
-          value: "Credit Card",
-        },
-        {
-          label: "Order ID",
-          value: `${orderIdPt1}
-${orderIdPt2}`,
-        },
-        {
-          label: "Currency",
-          value: transaction.fiat_currency,
-        },
-        {
-          label: "Price",
-          value: formatter.fiat(
-            transaction.fiat_amount - transaction.fee,
-            transaction.fiat_currency
-          ),
-        },
-        {
-          label: "Fee",
-          value: formatter.fiat(transaction.fee, transaction.fiat_currency),
-        },
-        {
-          label: "Transfer Amount",
-          value: formatter.fiat(
-            transaction.fiat_amount,
-            transaction.fiat_currency
-          ),
-        },
-      ],
-    };
-
-    return sortedTransaction;
-  };
-
-  getStatusType = transactionParams => {
-    switch (this.getType(transactionParams)) {
-      case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
-        return {
-          color: STYLES.COLORS.GREEN,
-          shortName: "CC",
-          statusText: "Confirmed",
-        };
-      case TRANSACTION_TYPES.CANCELED:
-        return {
-          color: STYLES.COLORS.RED,
-          shortName: "CC",
-          statusText: "Canceled",
-        };
-      default:
-        return {
-          color: STYLES.COLORS.ORANGE,
-          shortName: "CC",
-          statusText: "Pending",
-        };
-    }
-  };
-
-  getType(transactionParams) {
-    switch (transactionParams) {
-      case SIMPLEX_PAYMENT_STATUSES.PENDING:
-        return TRANSACTION_TYPES.DEPOSIT_PENDING;
-
-      case SIMPLEX_PAYMENT_STATUSES.APPROVED:
-        return TRANSACTION_TYPES.DEPOSIT_CONFIRMED;
-
-      case SIMPLEX_PAYMENT_STATUSES.REFUNDED:
-      case SIMPLEX_PAYMENT_STATUSES.CANCELLED:
-        return TRANSACTION_TYPES.CANCELED;
-    }
-  }
-
-  render() {
-    const transactionParams = this.getTransactionsParams();
-
-    const transaction = {
-      amount: transactionParams.amount,
-      fiat_amount: transactionParams.fiat_amount,
-      fiat_currency: transactionParams.fiat_currency,
-      coin: transactionParams.coin,
-    };
-
-    const transactionProps = {
-      ...this.getStatusType(transactionParams.status),
-    };
+    const isSimplexTransaction = transaction.provider === "simplex";
 
     return (
-      <RegularLayout padding="0 0 120 0">
+      <RegularLayout padding="0 20 120 20">
         <TxInfoSection
           margin="40 0 20 0"
           key={"button:back"}
           transaction={transaction}
-          transactionProps={transactionProps}
+          transactionProps={transaction.uiProps}
         />
 
-        {transactionParams.transactionDetails.map(i => (
-          <TxBasicSection label={i.label} value={i.value} />
-        ))}
+        <TxBasicSection
+          label="Date"
+          value={moment(transaction.created_at).format("DD MMM YYYY")}
+        />
+        <TxBasicSection
+          label="Time"
+          value={moment(transaction.created_at).format("HH:mm")}
+        />
+        <TxBasicSection
+          label="Payment method"
+          value={transaction.paymentMethod}
+        />
+        <TxBasicSection
+          label="Provider"
+          value={formatter.capitalize(transaction.provider)}
+        />
+        {isSimplexTransaction && (
+          <TxBasicSection label="Order ID" value={transaction.orderID} />
+        )}
+        <TxBasicSection
+          label="Currency"
+          value={transaction.fiat_currency.toUpperCase()}
+        />
+        {isSimplexTransaction && (
+          <TxBasicSection
+            label="Price"
+            value={formatter.fiat(
+              transaction.fiat_amount - transaction.fee,
+              transaction.fiat_currency
+            )}
+          />
+        )}
+        {isSimplexTransaction && (
+          <TxBasicSection
+            label="Fee"
+            value={formatter.fiat(transaction.fee, transaction.fiat_currency)}
+          />
+        )}
+        <TxBasicSection
+          label="Transfer Amount"
+          value={formatter.fiat(
+            transaction.fiat_amount,
+            transaction.fiat_currency
+          )}
+        />
       </RegularLayout>
     );
   }

@@ -4,103 +4,26 @@ import appsFlyer from "react-native-appsflyer";
 import Geolocation from "@react-native-community/geolocation";
 import { RESULTS } from "react-native-permissions";
 
-import Constants from "../../../constants";
-import store from "../../redux/store";
 import * as actions from "../actions";
-import {
-  getSecureStoreKey,
-  deleteSecureStoreKey,
-} from "../../utils/expo-storage";
-import { TRANSFER_STATUSES } from "../../constants/DATA";
 import ACTIONS from "../../constants/ACTIONS";
 import appUtil from "../../utils/app-util";
-import branchUtil from "../../utils/branch-util";
-import { disableAccessibilityFontScaling } from "../../utils/styles-util";
 import ASSETS from "../../constants/ASSETS";
-import loggerUtil from "../../utils/logger-util";
 import {
   requestForPermission,
   ALL_PERMISSIONS,
 } from "../../utils/device-permissions";
-import { hasPassedKYC } from "../../utils/user-util";
-import { showMessage } from "../ui/uiActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { navigateBack, navigateTo } from "../nav/navActions";
 
-const { SECURITY_STORAGE_AUTH_KEY } = Constants;
-
 export {
-  initCelsiusApp,
   loadCelsiusAssets,
-  initAppData,
-  resetCelsiusApp,
   handleAppStateChange,
   setInternetConnection,
   getGeolocation,
-  showVerifyScreen,
   setAdvertisingId,
   setAppsFlyerUID,
   toggleMaintenanceMode,
 };
-
-/**
- * Initializes Celsius Application
- */
-let timeout;
-
-function initCelsiusApp() {
-  return async (dispatch, getState) => {
-    if (getState().app.appInitializing) return;
-
-    try {
-      dispatch({ type: ACTIONS.APP_INIT_START });
-
-      timeout = setTimeout(() => {
-        dispatch(
-          showMessage(
-            "info",
-            "Hmm… this is taking a bit longer than usual. If your app doesn’t load shortly, try restarting or checking back in a few minutes."
-          )
-        );
-        clearTimeout(timeout);
-      }, 30000);
-      await appUtil.logoutOnEnvChange();
-
-      disableAccessibilityFontScaling();
-      dispatch(getGeolocation());
-
-      await appUtil.initInternetConnectivityListener();
-      await appUtil.pollBackendStatus();
-      await dispatch(initAppData());
-
-      await dispatch(branchUtil.initBranch());
-      dispatch({ type: ACTIONS.APP_INIT_DONE });
-      clearTimeout(timeout);
-    } catch (e) {
-      clearTimeout(timeout);
-      loggerUtil.err(e);
-    }
-  };
-}
-
-/**
- * Resets Celsius Application
- */
-function resetCelsiusApp() {
-  return async dispatch => {
-    try {
-      // Logout user
-      await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-      dispatch({ type: ACTIONS.RESET_APP });
-      // Dev warning message
-      dispatch(actions.showMessage("warning", "Reseting Celsius App!"));
-
-      await dispatch(initCelsiusApp());
-    } catch (e) {
-      loggerUtil.err(e);
-    }
-  };
-}
 
 /**
  * Loads all Celsius App assets from ASSETS.js
@@ -120,15 +43,23 @@ function loadCelsiusAssets() {
  * Handles state change of the app
  * @param {string} nextAppState - one of active|inactive|background
  */
-const ASK_FOR_PIN_AFTER = 30 * 60 * 100;
+const SCREENS_WITH_LATER_VERIFICATION = ["Simplex"];
+const ASK_FOR_PIN_SHORT = 30 * 1000;
+const ASK_FOR_PIN_LONG = 10 * 60 * 1000;
 let pinTimeout;
 let startOfBackgroundTimer;
 
 function handleAppStateChange(nextAppState) {
-  return dispatch => {
-    const { profile } = store.getState().user;
-    const { appState } = store.getState().app;
-    const { activeScreen } = store.getState().nav;
+  return (dispatch, getState) => {
+    const { profile } = getState().user;
+    const { appState } = getState().app;
+    const { activeScreen } = getState().nav;
+
+    const askForPINAfter = SCREENS_WITH_LATER_VERIFICATION.includes(
+      activeScreen
+    )
+      ? ASK_FOR_PIN_LONG
+      : ASK_FOR_PIN_SHORT;
 
     if (profile && profile.has_pin) {
       if (nextAppState === "active") {
@@ -143,7 +74,7 @@ function handleAppStateChange(nextAppState) {
 
         if (
           Platform.OS === "android" &&
-          new Date().getTime() - startOfBackgroundTimer > ASK_FOR_PIN_AFTER
+          new Date().getTime() - startOfBackgroundTimer > askForPINAfter
         ) {
           startOfBackgroundTimer = null;
           dispatch(
@@ -173,7 +104,7 @@ function handleAppStateChange(nextAppState) {
               })
             );
             clearTimeout(pinTimeout);
-          }, ASK_FOR_PIN_AFTER);
+          }, askForPINAfter);
         }
 
         if (Platform.OS === "android") {
@@ -203,84 +134,12 @@ function setInternetConnection(connection) {
 }
 
 /**
- * Initialize all data needed for the App
- */
-function initAppData(initToken = null) {
-  return async (dispatch, getState) => {
-    // get general data for te app
-    await dispatch(actions.getCurrencyRates());
-    await dispatch(actions.getCurrencyGraphs());
-    await dispatch(actions.getInitialCelsiusData());
-    await dispatch(actions.setBannerProps());
-
-    await dispatch(actions.isGoodForAnimations());
-    // get user token
-    const token =
-      initToken || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
-
-    // fetch user
-    if (token) await dispatch(actions.getProfileInfo());
-
-    // get expired session
-    const { expiredSession } = getState().auth;
-    const { profile } = getState().user;
-
-    if (profile && profile.id && !expiredSession) {
-      await mixpanelAnalytics.sessionStarted("Init app");
-      dispatch(actions.claimAllBranchTransfers());
-
-      const { bannerProps } = getState().ui;
-      await dispatch(actions.getUserAppSettings());
-      await dispatch(actions.getComplianceInfo());
-      await dispatch(
-        actions.setBannerProps({ sessionCount: bannerProps.sessionCount + 1 })
-      );
-
-      if (!profile.kyc || (profile.kyc && !hasPassedKYC())) {
-        await dispatch(actions.getAllTransfers(TRANSFER_STATUSES.claimed));
-      }
-
-      const { allowed } = getState().compliance.loan;
-      // get wallet details for verified users
-      if (profile.kyc && hasPassedKYC()) {
-        await dispatch(actions.getUserStatus());
-        await dispatch(actions.getWalletSummary());
-        await dispatch(actions.getLoyaltyInfo());
-        if (allowed) await dispatch(actions.getAllLoans());
-      }
-    } else if (token) {
-      // logout if expired session or no token
-      await dispatch(actions.logoutUser());
-    }
-  };
-}
-
-/**
- * Handle show verify screen on status code 426
- */
-function showVerifyScreen(defaultVerifyState = true) {
-  return async dispatch => {
-    // if (getState().app.showVerifyScreen === defaultVerifyState) return;
-    dispatch({
-      type: ACTIONS.SHOW_VERIFY_SCREEN,
-      showVerifyScreen: defaultVerifyState,
-    });
-  };
-}
-
-/**
  * Set advertising id for Apps Flyer
  */
 function setAdvertisingId() {
   return async dispatch => {
-    let userAID;
-    if (Platform.OS === "ios") {
-      const res = await IDFA.getIDFA();
-      userAID = res;
-    } else {
-      // const res = await RNAdvertisingId.getAdvertisingId();
-      // userAID = res.advertisingId;
-    }
+    const userAID = await IDFA.getIDFA();
+
     dispatch({
       type: ACTIONS.SET_ADVERTISING_ID,
       advertisingId: userAID,

@@ -190,6 +190,7 @@ class KYCAddressInfo extends Component {
             onPress={this.submitAddressInfo}
             iconRight="IconArrowRight"
             loading={updatingAddressInfoInProgress}
+            disabled={updatingAddressInfoInProgress}
           >
             Continue
           </CelButton>

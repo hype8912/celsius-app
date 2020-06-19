@@ -22,7 +22,6 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import STYLES from "../../../constants/STYLES";
 import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
-import LoseMembershipModal from "../../modals/LoseMembershipModal/LoseMembershipModal";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CelText from "../../atoms/CelText/CelText";
@@ -86,7 +85,7 @@ class WithdrawEnterAmount extends Component {
         const walletCoin = walletSummary.coins.find(
           wCoin => wCoin.short === c.short.toUpperCase()
         );
-        const balanceUsd = walletCoin ? walletCoin.amount_usd : 0;
+        const balanceUsd = walletCoin ? walletCoin.amount_usd.toNumber() : 0;
 
         return balanceUsd > 0;
       })
@@ -120,7 +119,7 @@ class WithdrawEnterAmount extends Component {
     if (label === "ALL") {
       amount = formData.isUsd
         ? walletSummaryObj.amount_usd.toString()
-        : walletSummaryObj.amount;
+        : walletSummaryObj.amount.toString();
     } else {
       amount = formData.isUsd ? value : (Number(value) / coinRate).toString();
     }
@@ -220,11 +219,9 @@ class WithdrawEnterAmount extends Component {
     const coinData = walletSummary.coins.find(
       c => c.short === formData.coin.toUpperCase()
     );
-    const newBalance = Number(coinData.amount) - Number(formData.amountCrypto);
 
-    if (celUtilityUtil.isLosingMembership(formData.coin, newBalance)) {
-      return actions.openModal(MODALS.LOSE_MEMBERSHIP_MODAL);
-    }
+    const newBalance = coinData.amount.minus(formData.amountCrypto);
+
     if (celUtilityUtil.isLosingTier(formData.coin, newBalance)) {
       return actions.openModal(MODALS.LOSE_TIER_MODAL);
     }
@@ -399,24 +396,26 @@ class WithdrawEnterAmount extends Component {
                 </CelText>
 
                 <CelText align="center">
-                  You have recently changed your ${coin} withdrawal address.
+                  {`You have recently changed your ${coin} withdrawal address.`}
                 </CelText>
 
-                <Card margin="10 0 0 0">
-                  <CelText align="center" type="H6">
-                    Due to our security protocols, your address will be active
-                    in
-                  </CelText>
+                {hours && minutes && (
+                  <Card margin="10 0 0 0">
+                    <CelText align="center" type="H6">
+                      Due to our security protocols, your address will be active
+                      in
+                    </CelText>
 
-                  <CelText
-                    margin="10 0 0 0"
-                    align="center"
-                    type="H3"
-                    weight={"bold"}
-                  >
-                    {`${hours}h ${minutes}m.`}
-                  </CelText>
-                </Card>
+                    <CelText
+                      margin="10 0 0 0"
+                      align="center"
+                      type="H3"
+                      weight={"bold"}
+                    >
+                      {`${hours}h ${minutes}m.`}
+                    </CelText>
+                  </Card>
+                )}
               </View>
             )}
           </View>
@@ -436,9 +435,6 @@ class WithdrawEnterAmount extends Component {
           />
         )}
 
-        <LoseMembershipModal
-          navigateToNextStep={() => this.navigateToNextStep(true)}
-        />
         {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
           <LoseTierModal
             navigateToNextStep={() => this.navigateToNextStep(true)}

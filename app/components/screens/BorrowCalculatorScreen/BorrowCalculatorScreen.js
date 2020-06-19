@@ -194,20 +194,6 @@ class BorrowCalculatorScreen extends Component {
             }),
         };
 
-      case EMPTY_STATES.NON_MEMBER_BORROW:
-        return {
-          ...defaultProps,
-          subtitle: "",
-          bottomHeading: "Borrow dollars for your crypto",
-          bottomParagraph:
-            "Calculate your loan interest before you deposit coins",
-          onPress: () =>
-            actions.navigateTo("Deposit", {
-              coin: "CEL",
-            }),
-          buttonCopy: "Deposit CEL",
-        };
-
       case EMPTY_STATES.COMPLIANCE:
         return {
           ...defaultProps,

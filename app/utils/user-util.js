@@ -6,7 +6,6 @@ export {
   isCompanyMember,
   isUSCitizen,
   isUSResident,
-  isCelsiusMember,
   hasPassedKYC,
   isKYCRejectedForever,
   // TODO(ns) KYC: isRejecEted, isPending
@@ -18,7 +17,7 @@ export {
 };
 
 /**
- * get if the user is a company member
+ * get if the user is a logged in
  * @returns {boolean}
  */
 function isUserLoggedIn() {
@@ -55,15 +54,6 @@ function isUSCitizen() {
 function isUSResident() {
   const { profile } = store.getState().user;
   return profile.country === "United States";
-}
-
-/**
- * get if user is celsius member
- * @returns {boolean}
- */
-function isCelsiusMember() {
-  const celsiusMember = store.getState().user.profile.celsius_member;
-  return celsiusMember;
 }
 
 /**

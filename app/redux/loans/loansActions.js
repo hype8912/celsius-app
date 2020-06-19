@@ -9,6 +9,8 @@ import loanUtil from "../../utils/loan-util";
 import { MODALS, LOAN_ALERTS } from "../../constants/UI";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import appsFlyerUtil from "../../utils/appsflyer-util";
+import loggerUtil from "../../utils/logger-util";
+import analyticsService from "../../services/analytics-service";
 
 export {
   applyForALoan,
@@ -28,6 +30,8 @@ export {
   checkForLoanAlerts,
   sendBankDetailsEmail,
   lockMarginCallCollateral,
+  getLoanAlerts,
+  startedLoanApplication,
 };
 
 /**
@@ -333,7 +337,12 @@ function prepayInterest(id) {
       dispatch({
         type: ACTIONS.PREPAY_LOAN_INTEREST_SUCCESS,
       });
-      dispatch(navigateTo("TransactionsIntersection", { id: transactionId, loanPayment: true }));
+      dispatch(
+        navigateTo("TransactionsIntersection", {
+          id: transactionId,
+          loanPayment: true,
+        })
+      );
       dispatch(openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -364,7 +373,12 @@ function payPrincipal(id) {
 
       const transactionId = res.data.transaction_id;
       dispatch(showMessage("success", "Payment successful"));
-      dispatch(navigateTo("TransactionsIntersection", { id: transactionId, loanPayment: true }));
+      dispatch(
+        navigateTo("TransactionsIntersection", {
+          id: transactionId,
+          loanPayment: true,
+        })
+      );
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.PAY_LOAN_PRINCIPAL, err));
@@ -430,7 +444,12 @@ function payMonthlyInterest(id, coin) {
       const transactionId = res.data.transaction_id;
       dispatch({ type: ACTIONS.PAY_LOAN_INTEREST_SUCCESS });
       dispatch(showMessage("success", "Payment successful"));
-      dispatch(navigateTo("TransactionsIntersection", { id: transactionId, loanPayment: true }));
+      dispatch(
+        navigateTo("TransactionsIntersection", {
+          id: transactionId,
+          loanPayment: true,
+        })
+      );
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.PAY_LOAN_PRINCIPAL, err));
@@ -496,6 +515,28 @@ function checkForLoanAlerts() {
   };
 }
 
+/**
+ * Gets all loan payment alerts for user (interest, principal, margin call)
+ */
+function getLoanAlerts() {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_LOAN_ALERTS));
+
+      const alertsRes = await loansService.getLoanAlerts();
+
+      dispatch({
+        type: ACTIONS.GET_LOAN_ALERTS_SUCCESS,
+        allLoans: alertsRes.data,
+      });
+      checkForLoanAlerts();
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_LOAN_ALERTS, err));
+    }
+  };
+}
+
 function sendBankDetailsEmail() {
   return async dispatch => {
     try {
@@ -511,6 +552,30 @@ function sendBankDetailsEmail() {
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.SEND_BANK_WIRING_INFO_DETAIL, err));
+    }
+  };
+}
+
+/**
+ * When user opens BorrowEnterAmount screen this action is called. It's related with analytics
+ *
+ */
+function startedLoanApplication() {
+  return async (dispatch, getState) => {
+    const user = getState().user.profile;
+    const userData = {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      country: user.country,
+      state: user.state,
+      email: user.email,
+    };
+    try {
+      startApiCall(API.STARTED_LOAN_APPLICATION);
+
+      await analyticsService.startedLoanApplicationService(userData);
+    } catch (e) {
+      loggerUtil.log(e);
     }
   };
 }

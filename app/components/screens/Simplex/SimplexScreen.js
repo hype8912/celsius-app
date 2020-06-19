@@ -27,7 +27,7 @@ const patchPostMessageJsCode = `(${String(function() {
 
 @connect(
   state => ({
-    simplexData: state.simplex.simplexData,
+    simplexData: state.buyCoins.simplexData,
     fabType: state.ui.fabType,
     formData: state.forms.formData,
   }),
@@ -102,14 +102,15 @@ class SimplexScreen extends Component {
     if (event && event.nativeEvent && event.nativeEvent.data === "success") {
       // user passed successfully
       actions.resetToScreen("WalletLanding");
-      mixpanelAnalytics.finishedSimplexFlow(
+      mixpanelAnalytics.finishedBuyCoinsFlow(
         "CARD",
         formData.cryptoCoin,
         formData.fiatCoin,
         formData.amountInUsd,
         formData.amountFiat,
         formData.amountCrypto,
-        "success"
+        "success",
+        "simplex"
       );
     } else {
       // user doesn't passed successfully
@@ -117,14 +118,15 @@ class SimplexScreen extends Component {
         "warning",
         "Simplex request failed. Please try again later."
       );
-      mixpanelAnalytics.finishedSimplexFlow(
+      mixpanelAnalytics.finishedBuyCoinsFlow(
         "CARD",
         formData.cryptoCoin,
         formData.fiatCoin,
         formData.amountInUsd,
         formData.amountFiat,
         formData.amountCrypto,
-        "failed"
+        "failed",
+        "simplex"
       );
     }
   };

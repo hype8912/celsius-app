@@ -5,7 +5,6 @@ import { bindActionCreators } from "redux";
 
 import moment from "moment";
 import * as appActions from "../../../redux/actions";
-import PersonalInformationStyle from "./PersonalInformation.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { isUSCitizen } from "../../../utils/user-util";
@@ -62,8 +61,8 @@ class PersonalInformation extends Component {
       if (
         !formData.ssn1 ||
         formData.ssn1.length < 3 ||
-        (!formData.ssn2 || formData.ssn2.length < 2) ||
-        (!formData.ssn3 || formData.ssn3.length < 4)
+        !formData.ssn2 || formData.ssn2.length < 2 ||
+        !formData.ssn3 || formData.ssn3.length < 4
       ) {
         errors.ssn = "Please enter valid SSN.";
         actions.setFormErrors(errors);
@@ -95,8 +94,9 @@ class PersonalInformation extends Component {
   render() {
     const { user, actions, formErrors, kycStatus } = this.props;
     const { updatingTaxInfo } = this.state;
-    const style = PersonalInformationStyle();
-    const dateOfBirth = user.date_of_birth ? user.date_of_birth.split("-") : {};
+    const dateOfBirth = user.date_of_birth
+      ? moment(user.date_of_birth).format("Do MMMM YYYY")
+      : null;
     const userSetCountry = user.country !== null;
 
     return (
@@ -212,45 +212,23 @@ class PersonalInformation extends Component {
           </View>
         )}
 
-        {!!user.date_of_birth && (
+        {!!dateOfBirth && (
           <View>
             <CelText margin={"0 0 10 0"} type={"H4"} weight={"300"}>
               Date of birth
             </CelText>
-            <View style={style.addressInfo}>
-              <CelInput
-                field={"profileMonth"}
-                margin={"0 20 0 0"}
-                large={false}
-                disabled
-                type="text"
-                value={moment(
-                  [dateOfBirth[0], dateOfBirth[1]].join("-")
-                ).format("MMM")}
-              />
-              <CelInput
-                field={"profileDay"}
-                margin={"0 20 0 0"}
-                large={false}
-                disabled
-                type="text"
-                value={dateOfBirth[2]}
-              />
-              <CelInput
-                field={"profileYear"}
-                margin={"0 20 0 0"}
-                large={false}
-                disabled
-                type="text"
-                value={dateOfBirth[0]}
-              />
-            </View>
+            <CelInput
+              field={"profileDOB"}
+              disabled
+              type="text"
+              value={dateOfBirth}
+            />
           </View>
         )}
 
         {!!user.gender && (
           <View>
-            <CelText margin={"10 0 10 0"} type={"H4"} weight={"300"}>
+            <CelText margin={"0 0 10 0"} type={"H4"} weight={"300"}>
               Gender
             </CelText>
             <CelInput
@@ -385,6 +363,20 @@ class PersonalInformation extends Component {
               disabled
               type="text"
               value={user.country}
+            />
+          </View>
+        )}
+
+        {!!user.state && (
+          <View>
+            <CelText margin={"0 0 10 0"} type={"H4"} weight={"300"}>
+              State
+            </CelText>
+            <CelInput
+              field={"profileState"}
+              disabled
+              type="text"
+              value={user.state}
             />
           </View>
         )}

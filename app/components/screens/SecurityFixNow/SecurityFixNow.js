@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Animated } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import _ from "lodash";
@@ -13,7 +13,6 @@ import SecurityStrengthMeter from "../../atoms/SecurityStrengthMeter/SecurityStr
 import CelText from "../../atoms/CelText/CelText";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelButton from "../../atoms/CelButton/CelButton";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import CheckWithdrawalAddressesCard from "../../organisms/CheckWithdrawalAddressesCard/CheckWithdrawalAddressesCard";
 import formatter from "../../../utils/formatter";
 import Card from "../../atoms/Card/Card";
@@ -32,8 +31,23 @@ class SecurityFixNow extends Component {
     const { params } = navigation.state;
     return {
       title: params.title || `Fix Now (1/${params.fixNowContentLength})`,
+      customCenterComponent: {
+        steps: params.fixNowContentLength,
+        currentStep: params.progressBarCurrentStep || 1,
+        flowProgress: true,
+      },
     };
   };
+
+  animationDuration = 100;
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      contentAnimation: new Animated.Value(0),
+    };
+  }
 
   async componentDidMount() {
     const { actions } = this.props;
@@ -60,6 +74,7 @@ class SecurityFixNow extends Component {
       title: `Fix Now (${fixNowContent.index + 1}/${
         fixNowContent.content.length
       })`,
+      progressBarCurrentStep: fixNowContent.index + 1,
     });
   };
 
@@ -75,9 +90,24 @@ class SecurityFixNow extends Component {
     }
   };
 
-  onPressContinue = () => {
+  nextItem = async () => {
     const { actions } = this.props;
-    actions.fixNowNextItem();
+    await actions.fixNowNextItem();
+    await this.setState({ contentAnimation: new Animated.Value(400) });
+    this.animateContinue(0);
+  };
+
+  animateContinue = (toValue, callback) => {
+    const { contentAnimation } = this.state;
+    Animated.timing(contentAnimation, {
+      toValue,
+      duration: this.animationDuration,
+      useNativeDriver: true,
+    }).start(() => callback && callback());
+  };
+
+  onPressContinue = () => {
+    this.animateContinue(-400, this.nextItem);
   };
 
   fixNowContent = type => {
@@ -86,8 +116,8 @@ class SecurityFixNow extends Component {
       case "two_factor":
         return {
           type,
-          title: "Two Factor Authentication",
-          cardTitle: "Your 2FA verification is",
+          title: "Two-Factor Authentication",
+          cardTitle: "Your 2FA is",
           body:
             "Activate an extra layer of security that prevents the risk of unwanted access to your account, even if your login information is compromised.",
           enabled: twoFAStatus.isActive,
@@ -109,8 +139,8 @@ class SecurityFixNow extends Component {
           body: `Your ${type} was last changed ${moment(
             securityOverview[`${type}_last_change`]
           ).fromNow()}. In order to keep your account secure, it is recommended to change your ${type} at least every 180 days.`,
-          strength: securityOverview.password_strength,
-          lastChange: securityOverview.password_last_change,
+          strength: securityOverview[`${type}_strength`],
+          lastChange: securityOverview[`${type}_last_change`],
           navigateToScreen: `Change${formatter.capitalize(type)}`,
           showInfoBox: securityOverview.toFixNow,
           infoBoxText: `Successfully changed your ${type}`,
@@ -209,10 +239,20 @@ class SecurityFixNow extends Component {
     const c = this.fixNowContent(item.name);
 
     return (
-      <View style={style.container}>
-        <HeadingProgressBar steps={content.length} currentStep={index + 1} />
-        <RegularLayout fabType={"hide"}>
-          <View style={style.bodyWrapper}>
+      <RegularLayout>
+        <View style={style.container}>
+          <Animated.View
+            style={[
+              style.bodyWrapper,
+              {
+                transform: [
+                  {
+                    translateX: this.state.contentAnimation,
+                  },
+                ],
+              },
+            ]}
+          >
             <CelText
               margin={"0 20 20 20"}
               type={"H2"}
@@ -221,12 +261,12 @@ class SecurityFixNow extends Component {
             >
               {c.title}
             </CelText>
-            <CelText margin={"0 0 20 0"} type={"H4"} align={"center"}>
+            <CelText margin={"0 0 20 0"} type={"H5"} align={"center"}>
               {c.body}
             </CelText>
 
             {this.renderCard(c)}
-          </View>
+          </Animated.View>
           <View style={style.buttonWrapper}>
             <CelButton
               onPress={this.onPressContinue}
@@ -234,11 +274,11 @@ class SecurityFixNow extends Component {
               margin="10 0 2 0"
               iconRight="IconArrowRight"
             >
-              {index === content.length - 1 ? "Finish" : "Continue"}
+              {index === content.length - 1 ? "Finish" : "Skip"}
             </CelButton>
           </View>
-        </RegularLayout>
-      </View>
+        </View>
+      </RegularLayout>
     );
   }
 }

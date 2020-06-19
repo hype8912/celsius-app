@@ -26,6 +26,7 @@ const BLOCKEXPLORERS_STAGING = {
   eth: "https://rinkeby.etherscan.io/tx/",
   eos: "https://jungle.bloks.io/transaction/",
   erc20: "https://rinkeby.etherscan.io/tx/",
+  bsv: "https://testnet.bitcoincloud.net/tx/",
 };
 const BLOCKEXPLORERS_PRODUCTION = {
   btc: "https://blockexplorer.com/tx/",
@@ -38,13 +39,15 @@ const BLOCKEXPLORERS_PRODUCTION = {
   btg: "https://btgexplorer.com/tx/",
   eth: "https://etherscan.io/tx/",
   eos: "https://bloks.io/transaction/",
+  etc: "https://explorer.bitquery.io/ethclassic/tx/", // TODO: add staging link
   erc20: "https://etherscan.io/tx/",
+  bsv: "https://blockchair.com/bitcoin-sv/transaction/",
 };
 
 const BLOCKEXPLORERS =
   ENV === "PRODUCTION" ? BLOCKEXPLORERS_PRODUCTION : BLOCKEXPLORERS_STAGING;
 
-const BRANCH_LINKS = {
+const DEEP_LINKS = {
   TRANSFER: "TRANSFER",
   INDIVIDUAL_REFERRAL: "INDIVIDUAL_REFERRAL",
   COMPANY_REFERRAL: "COMPANY_REFERRAL",
@@ -270,16 +273,22 @@ const LOAN_INTEREST_COINS = [
 ];
 
 const TOTAL_ASSETS_AMOUNT = {
-  DATE: "07 MAY 2020", // write in same format every week
-  TOTAL_AUM: 574478079,
-  TOTAL_COLLATERAL_AND_CASH: 311284892,
+  DATE: "01 JUNE 2020", // write in same format every week
+  TOTAL_AUM: 633800298,
+  TOTAL_COLLATERAL_AND_CASH: 344005875,
 };
 
-const SIMPLEX_PAYMENT_STATUSES = {
+const BUY_COINS_PAYMENT_STATUSES = {
   PENDING: "pending",
+
   APPROVED: "approved",
-  CANCELLED: "declined",
+  COMPLETED: "completed",
+
+  CANCELLED: "cancelled",
+  EXPIRED: "expired",
+  DECLINED: "declined",
   REFUNDED: "refunded",
+  FAILED: "failed",
 };
 
 const SIMPLEX_FIAT_CURRENCIES = [
@@ -423,7 +432,7 @@ const COMING_SOON_COINS = [
 export {
   BLOCKEXPLORERS,
   KYC_STATUSES,
-  BRANCH_LINKS,
+  DEEP_LINKS,
   TRANSFER_STATUSES,
   TRANSACTION_TYPES,
   CONTACT_NETWORK,
@@ -436,7 +445,7 @@ export {
   PRIMETRUST_KYC_STATES,
   LOAN_INTEREST_COINS,
   TOTAL_ASSETS_AMOUNT,
-  SIMPLEX_PAYMENT_STATUSES,
+  BUY_COINS_PAYMENT_STATUSES,
   SIMPLEX_FIAT_CURRENCIES,
   SECURITY_STRENGTH_ITEMS,
   SECURITY_STRENGTH_LEVEL,

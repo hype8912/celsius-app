@@ -60,7 +60,10 @@ class Deposit extends Component {
 
     const coinSelectItems = currencies
       .filter(c => depositCompliance.coins.includes(c.short))
-      .map(c => ({ label: c.short, value: c.short }));
+      .map(c => ({
+        label: `${formatter.capitalize(c.name)} (${c.short})`,
+        value: c.short,
+      }));
 
     this.state = {
       isFetchingAddress: false,
@@ -202,9 +205,9 @@ class Deposit extends Component {
     const collateralCoin = formData.selectedCoin || initialCollateral;
 
     let collateralMissing;
-    const collateralObj = walletSummary.coins.find(
-      c => c.short === formData.selectedCoin
-    );
+    const collateralObj =
+      walletSummary &&
+      walletSummary.coins.find(c => c.short === formData.selectedCoin);
 
     if (collateralObj) {
       collateralMissing = formatter.crypto(
@@ -543,7 +546,9 @@ class Deposit extends Component {
           </View>
         ) : null}
         <DestinationInfoTagModal closeModal={actions.closeModal} />
-        <MemoIdModal coin={coinInfo} />
+        {coinInfo && coinInfo.short && (
+          <MemoIdModal closeModal={actions.closeModal} coin={coinInfo.short} />
+        )}
         <DepositInfoModal type={coin} />
       </RegularLayout>
     );

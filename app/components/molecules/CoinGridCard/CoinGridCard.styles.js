@@ -30,6 +30,7 @@ const base = {
     width: "100%",
   },
   coinTextWrapper: {
+    flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",

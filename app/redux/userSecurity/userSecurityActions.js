@@ -106,10 +106,12 @@ function checkPIN(onSuccess, onError) {
       if (onSuccess) onSuccess();
     } catch (err) {
       if (onError) onError();
-      dispatch(showMessage("error", err.msg));
+      if (err.status !== 429) {
+        dispatch(showMessage("error", err.msg));
+        dispatch(updateFormField("pin", ""));
+        dispatch(toggleKeypad());
+      }
       dispatch(apiError(API.CHECK_PIN, err));
-      dispatch(updateFormField("pin", ""));
-      dispatch(toggleKeypad());
     }
   };
 }
@@ -256,7 +258,7 @@ function logoutFromAllDevices() {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.LOGOUT_FROM_ALL_DEVICES));
-      await userAuthService.invalidateSession();
+      await userSecurityService.invalidateSession();
       await mixpanelAnalytics.loggedOutOfAllSessions();
       dispatch({
         type: ACTIONS.LOGOUT_FROM_ALL_DEVICES_SUCCESS,

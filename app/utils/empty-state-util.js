@@ -1,4 +1,7 @@
 import React from "react";
+// eslint-disable-next-line import/no-unresolved
+import { openInbox } from "react-native-email-link";
+
 import { EMPTY_STATES } from "../constants/UI";
 import { KYC_STATUSES } from "../constants/DATA";
 import CelText from "../components/atoms/CelText/CelText";
@@ -117,8 +120,14 @@ function getProps(purpose, componentProps) {
           "To complete HODL Mode activation, please follow the instructions\n" +
             "sent to you via email.",
         ],
-        onPress: () => actions.navigateTo("WalletLanding"),
-        button: "Go to wallet",
+        onPress: () =>
+          openInbox({
+            title: "HODL status confirm!",
+            message: "Please confirm HODL status in tou email app.",
+          }),
+        button: "Check Email!",
+        secondaryButton: "Go to Wallet",
+        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
       };
     case EMPTY_STATES.NO_LOANS:
       return {
@@ -197,17 +206,6 @@ function getProps(purpose, componentProps) {
         onPress: () => actions.navigateTo("WalletLanding"),
       };
 
-    case EMPTY_STATES.NON_MEMBER_CELPAY:
-      return {
-        ...props,
-        heading: "Send crypto to your friends",
-        paragraphs: [
-          "Quickly, easily and with no fees or keys required. All you have to do is become a Celsius member by adding some CEL to your wallet",
-        ],
-        button: "Deposit CEL",
-        onPress: () => actions.navigateTo("Deposit", { coin: "CEL" }),
-      };
-
     case EMPTY_STATES.NO_WITHDRAWAL_ADDRESSES:
       return {
         ...props,
@@ -226,7 +224,7 @@ function getProps(purpose, componentProps) {
         ],
       };
 
-    case EMPTY_STATES.SIMPLEX_COMPLIANCE:
+    case EMPTY_STATES.BUY_COINS_COMPLIANCE:
       return {
         ...props,
         heading: "We are sorry!",

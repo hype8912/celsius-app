@@ -36,7 +36,7 @@ class WithdrawAddressOverview extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Withdrawal Addresses ",
+    title: "Withdrawal Addresses",
     right: "profile",
   });
 
@@ -87,22 +87,29 @@ class WithdrawAddressOverview extends Component {
   };
 
   renderNoWithdrawalAddressCoins = () => {
-    const { hodlStatus, noWithdrawalAddresses, currenciesRates } = this.props;
+    const {
+      noWithdrawalAddresses,
+      currenciesRates,
+      withdrawalAddresses,
+      securityOverview,
+    } = this.props;
     if (noWithdrawalAddresses && noWithdrawalAddresses.length > 0) {
-      return noWithdrawalAddresses.map(coin => {
-        const imageUrl = currenciesRates.filter(
-          image => image.short === coin.short
-        )[0].image_url;
-        return (
-          <NoWithdrawalAddressCard
-            imageUrl={imageUrl}
-            coinName={formatter.capitalize(coin.name)}
-            coinShort={coin.short}
-            onPress={() => this.handlePress(coin.short)}
-            disabledPress={hodlStatus.isActive}
-          />
-        );
-      });
+      return noWithdrawalAddresses
+        .filter(coin => withdrawalAddresses[coin.short] === undefined)
+        .map(coin => {
+          const imageUrl = currenciesRates.filter(
+            image => image.short === coin.short
+          )[0].image_url;
+          return (
+            <NoWithdrawalAddressCard
+              imageUrl={imageUrl}
+              coinName={formatter.capitalize(coin.name)}
+              coinShort={coin.short}
+              onPress={() => this.handlePress(coin.short)}
+              disabledPress={securityOverview.hodl_mode_active}
+            />
+          );
+        });
     }
   };
 

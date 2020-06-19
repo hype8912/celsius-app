@@ -15,9 +15,6 @@ import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCa
 @connect(
   state => ({
     loanCompliance: state.compliance.loan,
-    formData: state.forms.formData,
-    walletSummary: state.wallet.summary,
-    minimumLoanAmount: state.generalData.minimumLoanAmount,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )

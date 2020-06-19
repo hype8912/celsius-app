@@ -2,6 +2,8 @@ import { Animated, Easing } from "react-native";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { heightPercentageToDP } from "./styles-util";
+import { isLoanBannerVisible } from "./ui-util";
+import { hasPassedKYC } from "./user-util";
 
 const animationsUtil = {
   applyOffset,
@@ -105,20 +107,26 @@ function animateArrayOfObjects(animatedValue, offset, duration) {
  * Scroll y axis listener inside Regular Layout for rendering header title
  * @param y
  */
+let threshold = heightPercentageToDP("18%");
 function scrollListener(y) {
   const { activeScreen } = store.getState().nav;
+  const { isBannerVisible } = store.getState().ui;
+  if ((isBannerVisible && isLoanBannerVisible()) || !hasPassedKYC())
+    threshold = heightPercentageToDP("40%");
   const {
     changeWalletHeader,
     changeCoinDetailsHeader,
     changeInterestHeader,
   } = store.getState().animations;
-  const threshold = heightPercentageToDP("18%");
   if (y > threshold) {
-    if (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory")
+    if (
+      !changeWalletHeader &&
+      (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory")
+    )
       store.dispatch(actions.changeWalletHeaderContent(true));
-    if (activeScreen === "CoinDetails")
+    if (!changeCoinDetailsHeader && activeScreen === "CoinDetails")
       store.dispatch(actions.changeCoinDetailsHeaderContent(true));
-    if (activeScreen === "WalletInterest")
+    if (!changeInterestHeader && activeScreen === "WalletInterest")
       store.dispatch(actions.changeInterestHeaderContent(true));
   }
   if (y < threshold && changeCoinDetailsHeader) {
@@ -237,18 +245,15 @@ function buttonsDown(
       extrapolate: "clamp",
     }).start(),
     Animated.parallel([
-      Animated.spring(buttonMoveAnimationX, {
+      Animated.timing(buttonMoveAnimationX, {
         toValue: 0,
-        frictions: 3,
-        tension: 1,
-        velocity: 5,
+        duration: 450,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(),
-      Animated.spring(buttonMoveAnimationY, {
+      Animated.timing(buttonMoveAnimationY, {
         toValue: 0,
-        frictions: 3,
-        tension: 1,
+        duration: 450,
         velocity: 5,
         useNativeDriver: true,
         extrapolate: "clamp",
@@ -261,7 +266,7 @@ function buttonsDown(
       }).start(),
       Animated.timing(helpButtonOffset, {
         toValue: 0,
-        duration: 550,
+        duration: 350,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(({ finished }) => {
@@ -292,32 +297,28 @@ function buttonsUp(
 ) {
   Animated.sequence([
     Animated.parallel([
-      Animated.spring(buttonMoveAnimationX, {
+      Animated.timing(buttonMoveAnimationX, {
         toValue: 1,
-        frictions: 3,
-        tension: 1,
-        velocity: 5,
+        duration: 350,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(),
-      Animated.spring(buttonMoveAnimationY, {
+      Animated.timing(buttonMoveAnimationY, {
         toValue: 1,
-        frictions: 3,
-        tension: 1,
-        velocity: 5,
+        duration: 350,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(),
       Animated.timing(blurOpacity, {
         toValue: 1,
-        duration: 500,
+        duration: 400,
         useNativeDriver: true,
         extrapolate: "clamp",
       }).start(),
     ]),
     Animated.timing(helpButtonOffset, {
       toValue: 1,
-      duration: 550,
+      duration: 350,
       useNativeDriver: true,
       extrapolate: "clamp",
     }).start(({ finished }) => {

@@ -117,6 +117,7 @@ class WithdrawNewAddressSetup extends Component {
           onPress={() =>
             actions.openModal(MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL)
           }
+          disabled={!formData.withdrawAddress}
         >
           Confirm
         </CelButton>
