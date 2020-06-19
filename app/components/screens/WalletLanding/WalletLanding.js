@@ -23,7 +23,6 @@ import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
 import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
-import MultiAddressModal from "../../modals/MultiAddressModal/MultiAddressModal";
 import animationsUtil from "../../../utils/animations-util";
 import { COMING_SOON_COINS } from "../../../constants/DATA";
 
@@ -91,7 +90,6 @@ class WalletLanding extends Component {
       currenciesGraphs,
       previouslyOpenedModals,
       hodlStatus,
-      userTriggeredActions,
     } = this.props;
     actions.changeWalletHeaderContent();
 
@@ -102,11 +100,11 @@ class WalletLanding extends Component {
       )
         actions.openModal(MODALS.HODL_MODE_MODAL);
 
-      if (
-        this.pendingAddresses().length &&
-        !userTriggeredActions.permanently_dismiss_deposit_address_changes
-      )
-        actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
+      // if (
+      //   this.pendingAddresses().length &&
+      //   !userTriggeredActions.permanently_dismiss_deposit_address_changes
+      // )
+      //   actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
     }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -301,7 +299,6 @@ class WalletLanding extends Component {
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
-        <MultiAddressModal actions={actions} />
       </RegularLayout>
     );
   }
