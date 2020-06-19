@@ -44,7 +44,7 @@ class MyCelHeader extends Component {
           <View style={style.topContainer}>
             <View style={style.celContainer}>
               <CelText color={"white"} type={"H4"} weight={"700"}>
-                {formatter.usd(celAmount.amount_usd)}
+                {formatter.usd(celAmount.amount_usd, { precision: 0 })}
               </CelText>
               <CelText color={"white"} type={"H6"} weight={"300"}>
                 CEL coins
