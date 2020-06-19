@@ -14,6 +14,7 @@ import BuyCoinsPaymentsHistory from "../../molecules/BuyCoinsPaymentsHistory/Buy
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { hasPassedKYC } from "../../../utils/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
+import store from "../../../redux/store";
 
 @connect(
   state => ({
@@ -35,7 +36,10 @@ class GetCoinsLanding extends Component {
 
   static navigationOptions = () => ({
     title: "Buy Coins",
-    right: "profile",
+    right: "info",
+    onInfo: () => {
+      store.dispatch(appActions.openModal(MODALS.GET_COINS_INFO_MODAL));
+    },
   });
 
   componentDidMount() {
@@ -47,8 +51,8 @@ class GetCoinsLanding extends Component {
   pressCreditCard = () => {
     const { actions, formData } = this.props;
     actions.initForm({
-      isFiat: true,
       cryptoCoin: formData.selectedCoin || "ETH",
+      fiatCoin: "USD",
       simplexData: {
         paymentMethod: "Credit Card",
       },

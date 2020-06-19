@@ -15,9 +15,9 @@ class GetCoinsInfoModal extends React.Component {
     return (
       <InfoModal
         name={MODALS.GET_COINS_INFO_MODAL}
-        heading={"Buy Crypto with Credit Card"}
+        heading={"Buy Crypto"}
         paragraphs={[
-          "You can purchase crypto with a credit card at the best rates in the industry directly through your Celsius app!",
+          "You can purchase crypto with a credit card or bank wire at the best rates in the industry directly through your Celsius app!",
         ]}
         yesCopy={"Buy Coins"}
         onYes={this.goNext}

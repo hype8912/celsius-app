@@ -39,6 +39,8 @@ function getBuyLimitsPerFiatCurrency(fiat) {
  * @returns {Boolean}
  */
 function isFiatAmountInScope(amount, curr) {
+  if (!curr) return true;
+
   const isOverMin = new BigNumber(amount).isGreaterThanOrEqualTo(
     getBuyLimitsPerFiatCurrency(curr).min
   );
@@ -57,6 +59,8 @@ function isFiatAmountInScope(amount, curr) {
  * @returns {Boolean}
  */
 function isCryptoAmountInScope(amount, coin) {
+  if (!coin) return true;
+
   const isOverMin = new BigNumber(amount).isGreaterThanOrEqualTo(
     getBuyLimitsPerCrypto(coin).min
   );
@@ -76,11 +80,15 @@ function isAmountInScope() {
   const { formData } = store.getState().forms;
   const { isFiat, amountFiat, fiatCoin, amountCrypto, cryptoCoin } = formData;
 
-  if (isFiat) {
+  if (isFiat && fiatCoin) {
     return isFiatAmountInScope(amountFiat, fiatCoin);
   }
 
-  return isCryptoAmountInScope(amountCrypto, cryptoCoin);
+  if (!isFiat && cryptoCoin) {
+    return isCryptoAmountInScope(amountCrypto, cryptoCoin);
+  }
+
+  return true;
 }
 
 export default getCoinsUtil;
