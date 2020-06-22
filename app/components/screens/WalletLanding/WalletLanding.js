@@ -107,22 +107,23 @@ class WalletLanding extends Component {
     actions.changeWalletHeaderContent();
     const dontShowBankModal = await AsyncStorage.getItem("DONT_SHOW_BNK");
     setTimeout(() => {
-      if (
-        !previouslyOpenedModals.HODL_MODE_MODAL &&
-        hodlStatus.created_by === "backoffice"
-      )
-        actions.openModal(MODALS.HODL_MODE_MODAL);
+      if (dontShowBankModal === "DONT_SHOW") {
+        if (
+          !previouslyOpenedModals.HODL_MODE_MODAL &&
+          hodlStatus.created_by === "backoffice"
+        )
+          actions.openModal(MODALS.HODL_MODE_MODAL);
 
-      if (
-        this.pendingAddresses().length &&
-        !userTriggeredActions.permanently_dismiss_deposit_address_changes
-      )
-        actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
+        if (
+          this.pendingAddresses().length &&
+          !userTriggeredActions.permanently_dismiss_deposit_address_changes
+        )
+          actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
 
-      actions.checkForLoanAlerts();
-
-      if (dontShowBankModal !== "DONT_SHOW")
+        actions.checkForLoanAlerts();
+      } else {
         actions.openModal(MODALS.BANK_TO_THE_FUTURE_MODAL);
+      }
     }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
