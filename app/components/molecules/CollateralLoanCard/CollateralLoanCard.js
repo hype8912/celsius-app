@@ -63,6 +63,12 @@ function getPropsFromTransaction(transaction) {
           color: STYLES.COLORS.RED,
         };
       }
+      if (!transaction.loan_data.unlock_reason) {
+        return {
+          status: "Loan",
+          color: STYLES.COLORS.CELSIUS_BLUE,
+        };
+      }
       break;
     case TRANSACTION_TYPES.COLLATERAL_LIQUIDATED:
       return {
@@ -70,7 +76,10 @@ function getPropsFromTransaction(transaction) {
         color: STYLES.COLORS.RED,
       };
     default: {
-      return {};
+      return {
+        status: "",
+        color: STYLES.COLORS.CELSIUS_BLUE,
+      };
     }
   }
 }
