@@ -211,6 +211,7 @@ const CACHE_IMAGES = [
   require("../../assets/images/illustration-borrow-dollars.png"),
   require("../../assets/images/illustration-borrow-stablecoins.png"),
   require(`../../assets/images/modal-withdraw-dark.png`),
+  require(`../../assets/images/bankToTheFuture.png`),
 ];
 
 export default {
