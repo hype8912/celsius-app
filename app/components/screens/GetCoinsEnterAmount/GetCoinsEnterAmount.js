@@ -50,7 +50,8 @@ class GetCoinsEnterAmount extends Component {
     const { currencies, simplexCompliance, actions, formData } = this.props;
 
     const availableCryptoCoins = simplexCompliance
-      ? currencies
+      ? currencies &&
+        currencies
           .filter(c => simplexCompliance.coins.includes(c.short))
           .map(c => ({
             label: `${formatter.capitalize(c.name)} (${c.short})`,

@@ -58,12 +58,14 @@ class Deposit extends Component {
 
     const { depositCompliance, currencies } = props;
 
-    const coinSelectItems = currencies
-      .filter(c => depositCompliance.coins.includes(c.short))
-      .map(c => ({
-        label: `${formatter.capitalize(c.name)} (${c.short})`,
-        value: c.short,
-      }));
+    const coinSelectItems =
+      currencies &&
+      currencies
+        .filter(c => depositCompliance.coins.includes(c.short))
+        .map(c => ({
+          label: `${formatter.capitalize(c.name)} (${c.short})`,
+          value: c.short,
+        }));
 
     this.state = {
       isFetchingAddress: false,

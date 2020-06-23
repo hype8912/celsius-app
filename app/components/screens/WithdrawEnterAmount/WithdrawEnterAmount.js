@@ -72,15 +72,9 @@ class WithdrawEnterAmount extends Component {
       walletSummary,
     } = this.props;
 
-    const coin = navigation.getParam(
-      "coin",
-      (coinSelectItems &&
-        coinSelectItems.length > 0 &&
-        coinSelectItems[0].value) ||
-        ""
-    );
-
     const coinSelectItems =
+      withdrawCompliance &&
+      walletSummary &&
       currencies &&
       currencies
         .filter(c => withdrawCompliance.coins.includes(c.short))
@@ -93,6 +87,14 @@ class WithdrawEnterAmount extends Component {
           return balanceUsd > 0;
         })
         .map(c => ({ label: `${c.displayName} (${c.short})`, value: c.short }));
+
+    const coin = navigation.getParam(
+      "coin",
+      (coinSelectItems &&
+        coinSelectItems.length > 0 &&
+        coinSelectItems[0].value) ||
+        ""
+    );
 
     this.state = {
       coinSelectItems,
@@ -323,6 +325,7 @@ class WithdrawEnterAmount extends Component {
       hours = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[0];
       minutes = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[1];
     }
+
     return (
       <RegularLayout padding="0 0 0 0">
         <View style={style.container}>

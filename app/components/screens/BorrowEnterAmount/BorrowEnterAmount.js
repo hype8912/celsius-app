@@ -57,9 +57,14 @@ class BorrowEnterAmount extends Component {
       loanCompliance.collateral_coins.includes(coinData.short)
     );
 
-    const coinSelectItems = currencies
-      .filter(c => loanCompliance.loan_coins.includes(c.short))
-      .map(c => ({ label: `${c.displayName}  (${c.short})`, value: c.short }));
+    const coinSelectItems =
+      currencies &&
+      currencies
+        .filter(c => loanCompliance.loan_coins.includes(c.short))
+        .map(c => ({
+          label: `${c.displayName}  (${c.short})`,
+          value: c.short,
+        }));
 
     this.state = {
       activePeriod: "",
