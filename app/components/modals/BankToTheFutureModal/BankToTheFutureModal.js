@@ -53,7 +53,7 @@ class BankToTheFutureModal extends Component {
             type={"H2"}
             weight={"700"}
           >
-            Invest in the future of the finance
+            Invest in the future of finance
           </CelText>
           <CelText
             color={STYLES.COLORS.DARK_GRAY}
