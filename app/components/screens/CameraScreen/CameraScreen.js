@@ -188,7 +188,6 @@ class CameraScreen extends Component {
           Platform.OS === "ios"
             ? RNCamera.Constants.Orientation.auto
             : RNCamera.Constants.Orientation.portrait,
-        // orientation: "portrait",
         pauseAfterCapture: true,
         fixOrientation: true,
         base64: true,
