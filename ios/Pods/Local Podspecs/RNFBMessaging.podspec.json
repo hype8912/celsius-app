@@ -16,18 +16,10 @@
   },
   "source_files": "ios/**/*.{h,m}",
   "dependencies": {
-    "React": [
-
-    ],
-    "RNFBApp": [
-
-    ],
-    "Firebase/Analytics": [
-      "~> 6.13.0"
-    ],
-    "Firebase/Messaging": [
-      "~> 6.13.0"
-    ]
+    "React": [],
+    "RNFBApp": [],
+    "Firebase/Analytics": ["~> 6.13.0"],
+    "Firebase/Messaging": ["~> 6.13.0"]
   },
   "static_framework": false
 }

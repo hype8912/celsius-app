@@ -16,12 +16,8 @@
   },
   "source_files": "ios/**/*.{h,m}",
   "dependencies": {
-    "React": [
-
-    ],
-    "Firebase/CoreOnly": [
-      "~> 6.13.0"
-    ]
+    "React": [],
+    "Firebase/CoreOnly": ["~> 6.13.0"]
   },
   "static_framework": false
 }
