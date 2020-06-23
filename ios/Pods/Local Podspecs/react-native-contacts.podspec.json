@@ -15,8 +15,6 @@
   },
   "source_files": "ios/RCTContacts/*.{h,m}",
   "dependencies": {
-    "React": [
-
-    ]
+    "React": []
   }
 }

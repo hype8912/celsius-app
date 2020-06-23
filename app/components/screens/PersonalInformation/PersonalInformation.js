@@ -61,8 +61,10 @@ class PersonalInformation extends Component {
       if (
         !formData.ssn1 ||
         formData.ssn1.length < 3 ||
-        (!formData.ssn2 || formData.ssn2.length < 2) ||
-        (!formData.ssn3 || formData.ssn3.length < 4)
+        !formData.ssn2 ||
+        formData.ssn2.length < 2 ||
+        !formData.ssn3 ||
+        formData.ssn3.length < 4
       ) {
         errors.ssn = "Please enter valid SSN.";
         actions.setFormErrors(errors);
@@ -94,7 +96,9 @@ class PersonalInformation extends Component {
   render() {
     const { user, actions, formErrors, kycStatus } = this.props;
     const { updatingTaxInfo } = this.state;
-    const dateOfBirth = user.date_of_birth ? moment(user.date_of_birth).format("Do MMMM YYYY") : null;
+    const dateOfBirth = user.date_of_birth
+      ? moment(user.date_of_birth).format("Do MMMM YYYY")
+      : null;
     const userSetCountry = user.country !== null;
 
     return (
