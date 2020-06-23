@@ -30,7 +30,7 @@ class CoinPicker extends Component {
 
     let coinListFormatted = [];
     if (type === "withIcon") {
-      if (coin !== "USD")
+      if (coin !== "USD" && availableCoins)
         availableCoins.forEach(c => {
           if (c.value !== "USD") coinListFormatted.push(c);
         });
