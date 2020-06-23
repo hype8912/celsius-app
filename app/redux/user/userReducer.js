@@ -125,7 +125,6 @@ export default (state = initialState, action) => {
         },
       };
 
-
     case ACTIONS.START_KYC_SUCCESS:
     case ACTIONS.POLL_USER_DATA_SUCCESS:
       return {
