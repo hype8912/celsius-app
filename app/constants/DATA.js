@@ -368,7 +368,13 @@ const SIMPLEX_FIAT_CURRENCIES = [
   },
 ];
 
-const SECURITY_STRENGTH_ITEMS = [
+const PIN_STRENGTH_ITEMS = [
+  { copy: "No birthday pin" },
+  { copy: "No 6 digits in a row" },
+  { copy: "4 unique numbers" },
+];
+
+const PASSWORD_STRENGTH_ITEMS = [
   { copy: "Minimum 8 Characters." },
   { copy: "Capital letter - at least one." },
   { copy: "Numbers – at least one." },
@@ -445,7 +451,8 @@ export {
   TOTAL_ASSETS_AMOUNT,
   BUY_COINS_PAYMENT_STATUSES,
   SIMPLEX_FIAT_CURRENCIES,
-  SECURITY_STRENGTH_ITEMS,
+  PASSWORD_STRENGTH_ITEMS,
+  PIN_STRENGTH_ITEMS,
   SECURITY_STRENGTH_LEVEL,
   NOTIFICATION_TOKEN,
   COMING_SOON_COINS,

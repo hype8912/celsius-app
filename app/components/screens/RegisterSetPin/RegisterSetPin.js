@@ -12,10 +12,12 @@ import * as appActions from "../../../redux/actions";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
+import PinTooltip from "../../molecules/PinTooltip/PinTooltip";
 
 @connect(
   state => ({
     formData: state.forms.formData,
+    user: state.user.profile,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -24,13 +26,9 @@ class RegisterSetPin extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => {
-    // TODO pinOld took from endPoint
-    const pinOld = true;
     return {
       hideBack: true,
-      customCenterComponent: !pinOld
-        ? { steps: 3, currentStep: 2, flowProgress: false }
-        : "",
+      customCenterComponent: { steps: 3, currentStep: 2, flowProgress: false },
       headerSameColor: true,
     };
   };
@@ -82,14 +80,8 @@ class RegisterSetPin extends Component {
       if (!isSet) {
         this.setState({ pinCreated: false });
       } else {
-        // TODO pinOld took from endPoint
-        const pinOld = false;
-        if (pinOld) {
-          // TODO go to CheckMail Screen
-        } else {
-          await actions.getInitialCelsiusData();
-          return actions.navigateTo("Home");
-        }
+        await actions.getInitialCelsiusData();
+        return actions.navigateTo("Home");
       }
     } else {
       actions.showMessage("error", "Both PIN numbers should be the same.");
@@ -114,28 +106,18 @@ class RegisterSetPin extends Component {
   setScreenText = () => {
     const { pinCreated } = this.state;
 
-    // TODO pinOld took from endPoint
-    const pinOld = true;
     const screenText = {};
-    if (pinOld) {
-      screenText.headingText = !pinCreated
-        ? "Enter your 6-digits PIN"
-        : "Repeat your 6-digits PIN";
-      screenText.subheadingText = !pinCreated
-        ? "Please enter your new PIN to proceed"
-        : "Please repeat your new PIN";
-    } else {
-      screenText.headingText = !pinCreated ? "Create a PIN" : "Repeat PIN";
-      screenText.subheadingText = !pinCreated
-        ? "Create a unique PIN to secure your account."
-        : "You're almost there!";
-    }
+    screenText.headingText = !pinCreated ? "Create a PIN" : "Repeat PIN";
+    screenText.subheadingText = !pinCreated
+      ? "Create a unique PIN to secure your account."
+      : "You're almost there!";
+
     return screenText;
   };
 
   render() {
     const { loading, pinCreated } = this.state;
-    const { actions, formData } = this.props;
+    const { actions, formData, user } = this.props;
 
     const field = !pinCreated ? "pin" : "pinConfirm";
     const screenText = this.setScreenText();
@@ -185,6 +167,7 @@ class RegisterSetPin extends Component {
             onPress={this.handlePINChange}
             purpose={KEYPAD_PURPOSES.VERIFICATION}
           />
+          <PinTooltip pin={formData[field]} user={user} />
         </View>
       </RegularLayout>
     );

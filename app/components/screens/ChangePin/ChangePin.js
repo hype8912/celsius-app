@@ -12,10 +12,12 @@ import ChangePinStyle from "./ChangePin.styles";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
+import PinTooltip from "../../molecules/PinTooltip/PinTooltip";
 
 @connect(
   state => ({
     formData: state.forms.formData,
+    user: state.user.profile,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -36,17 +38,22 @@ class ChangePin extends Component {
     };
   }
 
+  componentDidMount() {
+    const { actions } = this.props;
+    actions.updateFormField("pin", "");
+  }
+
   handlePINChange = newValue => {
     const { pinCreated } = this.state;
     const { actions } = this.props;
 
-    if (newValue.length > 4) return;
+    if (newValue.length > 6) return;
 
     const field = pinCreated ? "newPinConfirm" : "newPin";
 
     actions.updateFormField(field, newValue);
 
-    if (newValue.length === 4) {
+    if (newValue.length === 6) {
       this.handlePinFinish(newValue);
     }
   };
@@ -58,7 +65,6 @@ class ChangePin extends Component {
     if (!pinCreated) {
       this.setState({ pinCreated: true });
     } else if (formData.newPin === newValue) {
-      // actions.changePin()
       this.setState({ loading: true });
       const isSet = await actions.changePin();
       if (!isSet) {
@@ -86,10 +92,12 @@ class ChangePin extends Component {
 
   render() {
     const { loading, pinCreated } = this.state;
-    const { actions, formData } = this.props;
+    const { actions, formData, user } = this.props;
 
     const field = !pinCreated ? "newPin" : "newPinConfirm";
-    const headingText = !pinCreated ? "Enter your new PIN" : "Repeat your PIN";
+    const headingText = !pinCreated
+      ? "Enter your 6-digits PIN"
+      : "Repeat your 6-digits PIN";
     const subheadingText = !pinCreated
       ? "Please enter your new PIN to proceed."
       : "Please repeat your new PIN.";
@@ -98,7 +106,7 @@ class ChangePin extends Component {
     const style = ChangePinStyle();
 
     return (
-      <RegularLayout padding="0 0 0 0">
+      <RegularLayout padding="0 0 0 0" fabType={"hide"}>
         <View style={style.container}>
           <View style={style.wrapper}>
             <CelText weight="bold" type="H1" align="center" margin="0 20 0 20">
@@ -113,7 +121,7 @@ class ChangePin extends Component {
             </CelText>
 
             <TouchableOpacity onPress={actions.toggleKeypad}>
-              <HiddenField value={formData[field]} />
+              <HiddenField value={formData[field]} length={6} />
             </TouchableOpacity>
 
             {pinCreated && !loading && (
@@ -144,6 +152,8 @@ class ChangePin extends Component {
             onPress={onPressFunc}
             purpose={KEYPAD_PURPOSES.VERIFICATION}
           />
+
+          <PinTooltip pin={formData[field]} user={user} />
         </View>
       </RegularLayout>
     );

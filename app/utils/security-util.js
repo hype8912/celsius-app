@@ -1,12 +1,15 @@
+import moment from "moment";
 import { PasswordMeter } from "password-meter";
 import store from "../redux/store";
 import {
-  SECURITY_STRENGTH_ITEMS,
+  PASSWORD_STRENGTH_ITEMS,
+  PIN_STRENGTH_ITEMS,
   SECURITY_STRENGTH_LEVEL,
 } from "../constants/DATA";
 
-const passwordUtil = {
+const securityUtil = {
   calculatePasswordScore,
+  calculatePinScore,
 };
 /**
  * Calculates password score based on cleartext and users first, last name and email.
@@ -18,20 +21,20 @@ function calculatePasswordScore(password) {
   const pm = new PasswordMeter({
     minLength: {
       value: 8,
-      message: SECURITY_STRENGTH_ITEMS[0].copy,
+      message: PASSWORD_STRENGTH_ITEMS[0].copy,
     },
     uppercaseLettersMinLength: {
       value: 1,
-      message: SECURITY_STRENGTH_ITEMS[1].copy,
+      message: PASSWORD_STRENGTH_ITEMS[1].copy,
     },
     lowercaseLettersMinLength: 2,
     numbersMinLength: {
       value: 1,
-      message: SECURITY_STRENGTH_ITEMS[2].copy,
+      message: PASSWORD_STRENGTH_ITEMS[2].copy,
     },
     symbolsMinLength: {
       value: 1,
-      message: SECURITY_STRENGTH_ITEMS[3].copy,
+      message: PASSWORD_STRENGTH_ITEMS[3].copy,
     },
   });
 
@@ -60,7 +63,7 @@ function calculatePasswordScore(password) {
     result.score = -1;
     result.percent = 0;
     result.status = "needs requirement(s)";
-    result.errors = [...result.errors, SECURITY_STRENGTH_ITEMS[4].copy];
+    result.errors = [...result.errors, PASSWORD_STRENGTH_ITEMS[4].copy];
   }
 
   return {
@@ -95,4 +98,39 @@ function excludeNames(password) {
   return false;
 }
 
-export default passwordUtil;
+function calculatePinScore(pin, dateOfBirth) {
+  // const oneNumberRegex = /(\d)\1{5}/g
+  // const sameFourInARow = /(.).*(\1{3,})/g;
+  // const numberRepeatingMoreThanFourTimesRegex = /(\d)(\d*\1){3}/g;
+
+  const birthday = moment(dateOfBirth);
+  const birthdayRegex = new RegExp(
+    `(${birthday.format("MMDDYY")}|${birthday.format(
+      "DDMMYY"
+    )}|${birthday.format("YYDDMM")}|${birthday.format("YYMMDD")})`,
+    "g"
+  );
+  const sixInARowRegex = /012345|123456|234567|345678|456789|567890|098765|987654|876543|765432|654321|543210/g;
+  const fourUniqueNumbersRegex = /(?:(.)(?!.*?\1).*){4}/g;
+
+  const birthdayCheck = !pin.match(birthdayRegex);
+  const sixInARow = !pin.match(sixInARowRegex);
+  const fourUniqueNumbers = pin.match(fourUniqueNumbersRegex);
+
+  return [
+    {
+      status: birthdayCheck,
+      copy: PIN_STRENGTH_ITEMS[0].copy,
+    },
+    {
+      status: sixInARow,
+      copy: PIN_STRENGTH_ITEMS[1].copy,
+    },
+    {
+      status: fourUniqueNumbers,
+      copy: PIN_STRENGTH_ITEMS[2].copy,
+    },
+  ];
+}
+
+export default securityUtil;
