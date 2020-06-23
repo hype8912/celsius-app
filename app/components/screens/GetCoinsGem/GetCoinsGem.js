@@ -10,6 +10,7 @@ import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import GetCoinsGemStyle from "./GetCoinsGem.styles";
 
 const { GEM_URL, GEM_API_KEY } = Constants;
 
@@ -129,9 +130,9 @@ class GetCoinsGem extends Component {
     }
 
     const gemOnrampSrc = this.createGemUrl();
-
+    const styles = GetCoinsGemStyle();
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <WebView
           source={{
             uri: gemOnrampSrc,

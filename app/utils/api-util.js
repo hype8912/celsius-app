@@ -278,24 +278,33 @@ async function handle403(err) {
 
 async function handle426(err, reqConfig) {
   return new Promise((resolve, reject) => {
-    store.dispatch(
-      actions.navigateTo("VerifyProfile", {
-        hideBack: true,
-        // PIN || 2FA
-        verificationType: err.show,
-        onSuccess: async () => {
-          try {
-            // fetch failed request again after verification successful
-            const res = await axios(reqConfig);
+    // get active screen before rerouting
+    const { activeScreen } = store.getState().nav;
+    if (activeScreen !== "VerifyProfile") {
+      store.dispatch(
+        actions.navigateTo("VerifyProfile", {
+          hideBack: true,
+          // PIN || 2FA
+          verificationType: err.show,
+          onSuccess: async () => {
+            try {
+              // fetch failed request again after verification successful
+              const res = await axios(reqConfig);
 
-            // return successful response
-            return resolve(res);
-          } catch (e) {
-            return reject(e);
-          }
-        },
-      })
-    );
+              // navigate back
+              if (!["Login", "SplashScreen"].includes(activeScreen)) {
+                store.dispatch(actions.navigateBack());
+              }
+
+              // return successful response
+              return resolve(res);
+            } catch (e) {
+              return reject(e);
+            }
+          },
+        })
+      );
+    }
   });
 }
 
