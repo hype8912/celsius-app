@@ -292,7 +292,11 @@ async function handle426(err, reqConfig) {
               const res = await axios(reqConfig);
 
               // navigate back
-              if (!["Login", "SplashScreen"].includes(activeScreen)) {
+              if (
+                !["LoginLanding", "Login", "SplashScreen"].includes(
+                  activeScreen
+                )
+              ) {
                 store.dispatch(actions.navigateBack());
               }
 
