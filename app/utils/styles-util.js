@@ -11,6 +11,7 @@ import formatter from "./formatter";
 import store from "../redux/store";
 import appUtil from "./app-util";
 import { THEMES } from "../constants/UI";
+import FONTS from "../constants/FONTS";
 
 const { width, height } = Dimensions.get("window");
 
@@ -22,6 +23,7 @@ export {
   heightPercentageToDP,
   getScaledFont,
   getFontFamily,
+  getThemeFontFamily,
   getFontSize,
   disableAccessibilityFontScaling,
   getTheme,
@@ -156,12 +158,31 @@ function getScaledFont(fontSize) {
 }
 
 /**
- * Gets font family based on theme
+ * Gets font family based on theme and weight
+ *
+ * @param {string} weight - check CelText weight properties
+ * @param {string} overrideFont - override theme font
+ * @returns {string} - Barlow-Regular|Pangram-Bold
+ */
+function getFontFamily(weight = "regular", overrideFont = null) {
+  let baseFont = overrideFont;
+
+  if (!baseFont) {
+    baseFont = getThemeFontFamily();
+  }
+
+  const fontWeight = FONTS[`FONT_WEIGHTS_${baseFont.toUpperCase()}`][weight];
+  const fontFamily = `${baseFont}${fontWeight}`;
+
+  return fontFamily;
+}
+
+/**
+ * Gets font family based on them
  *
  * @returns {string} - Barlow|Pangram
  */
-
-function getFontFamily() {
+function getThemeFontFamily() {
   const theme = getTheme();
 
   switch (theme) {

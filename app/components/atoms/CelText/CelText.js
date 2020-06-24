@@ -6,6 +6,7 @@ import {
   getMargins,
   getScaledFont,
   getFontFamily,
+  getThemeFontFamily,
 } from "../../../utils/styles-util";
 import FONTS from "../../../constants/FONTS";
 import CelTextStyle from "./CelText.styles";
@@ -61,7 +62,7 @@ class CelText extends Component {
 
   getFontSize = () => {
     const { type, font, size } = this.props;
-    const baseFontFamily = font || getFontFamily();
+    const baseFontFamily = font || getThemeFontFamily();
 
     // NOTE(fj): Check usage of size
     const fontSize = size
@@ -81,10 +82,7 @@ class CelText extends Component {
     const { font, weight, type } = this.props;
 
     const fontWeightType = weight || this.getFontWeightForType(type);
-    const baseFontFamily = font || getFontFamily();
-    const fontWeight =
-      FONTS[`FONT_WEIGHTS_${baseFontFamily.toUpperCase()}`][fontWeightType];
-    const fontFamily = `${baseFontFamily}${fontWeight}`;
+    const fontFamily = getFontFamily(fontWeightType, font);
 
     // NOTE(fj): Pangram doesn't have italic text
     // if (italic) {
