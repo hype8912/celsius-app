@@ -96,6 +96,13 @@
 		F0D65E390CC74DD4A6936C2C /* Barlow-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 276A294C6A4A401A91AD1FB4 /* Barlow-Italic.ttf */; };
 		F94092EFA7914928BD80037F /* barlowsemicondensed-thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 51AD0C43160B4E1C9A582F52 /* barlowsemicondensed-thin.otf */; };
 		FA03D02376E749C5A8529DD8 /* BarlowCondensed-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45DBFFABEAEF4BDDA88B381C /* BarlowCondensed-Thin.otf */; };
+		C571C83020754654B80BFAA5 /* Pangram-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 572AB4BC65914A76B8A4A970 /* Pangram-Black.otf */; };
+		3F003945A801426E8FA08473 /* Pangram-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4CDEEDA45F9482EBEC3397D /* Pangram-Bold.otf */; };
+		8BFD480B8A6044E38F47B493 /* Pangram-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2D4FC982D5CC4EDB80545D03 /* Pangram-ExtraBold.otf */; };
+		E3AB9D05C61146ECBCDB1BC4 /* Pangram-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A0137FC129F42AB88EFD1FD /* Pangram-ExtraLight.otf */; };
+		CE3BEBDC83F5402B8B411FE8 /* Pangram-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93C041CF6D56485E90A069B1 /* Pangram-Light.otf */; };
+		20580DE4C4E54C1AA4A5B457 /* Pangram-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C77A08BD81D24AFC94CB7498 /* Pangram-Medium.otf */; };
+		CB2FB45D261F47CDBE27F4D7 /* Pangram-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 01C1D9B6082149EF8F3E7F07 /* Pangram-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -220,6 +227,13 @@
 		FADB363041EB26CBFEADCFCC /* Pods-celsiusTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-celsiusTests.debug.xcconfig"; path = "Target Support Files/Pods-celsiusTests/Pods-celsiusTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FCC954AA1082BE58DE6ECA02 /* Pods-celsius-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-celsius-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-celsius-tvOS/Pods-celsius-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		FDEBBAEE44EA4067BDAEF33E /* BarlowSemiCondensed-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BarlowSemiCondensed-Medium.otf"; path = "../assets/fonts/Barlow/BarlowSemiCondensed-Medium.otf"; sourceTree = "<group>"; };
+		572AB4BC65914A76B8A4A970 /* Pangram-Black.otf */ = {isa = PBXFileReference; name = "Pangram-Black.otf"; path = "../assets/fonts/Pangram/Pangram-Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C4CDEEDA45F9482EBEC3397D /* Pangram-Bold.otf */ = {isa = PBXFileReference; name = "Pangram-Bold.otf"; path = "../assets/fonts/Pangram/Pangram-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2D4FC982D5CC4EDB80545D03 /* Pangram-ExtraBold.otf */ = {isa = PBXFileReference; name = "Pangram-ExtraBold.otf"; path = "../assets/fonts/Pangram/Pangram-ExtraBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8A0137FC129F42AB88EFD1FD /* Pangram-ExtraLight.otf */ = {isa = PBXFileReference; name = "Pangram-ExtraLight.otf"; path = "../assets/fonts/Pangram/Pangram-ExtraLight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		93C041CF6D56485E90A069B1 /* Pangram-Light.otf */ = {isa = PBXFileReference; name = "Pangram-Light.otf"; path = "../assets/fonts/Pangram/Pangram-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C77A08BD81D24AFC94CB7498 /* Pangram-Medium.otf */ = {isa = PBXFileReference; name = "Pangram-Medium.otf"; path = "../assets/fonts/Pangram/Pangram-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		01C1D9B6082149EF8F3E7F07 /* Pangram-Regular.otf */ = {isa = PBXFileReference; name = "Pangram-Regular.otf"; path = "../assets/fonts/Pangram/Pangram-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,6 +427,13 @@
 				46E2FE825A1548ABB3FBAF4A /* barlowsemicondensed-thinitalic.otf */,
 				276A294C6A4A401A91AD1FB4 /* Barlow-Italic.ttf */,
 				72508B90A8AC46099569CACA /* RobotoMono-Regular.ttf */,
+				572AB4BC65914A76B8A4A970 /* Pangram-Black.otf */,
+				C4CDEEDA45F9482EBEC3397D /* Pangram-Bold.otf */,
+				2D4FC982D5CC4EDB80545D03 /* Pangram-ExtraBold.otf */,
+				8A0137FC129F42AB88EFD1FD /* Pangram-ExtraLight.otf */,
+				93C041CF6D56485E90A069B1 /* Pangram-Light.otf */,
+				C77A08BD81D24AFC94CB7498 /* Pangram-Medium.otf */,
+				01C1D9B6082149EF8F3E7F07 /* Pangram-Regular.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -666,6 +687,13 @@
 				32973A53DE7E47E5A85CED91 /* barlowsemicondensed-thinitalic.otf in Resources */,
 				F0D65E390CC74DD4A6936C2C /* Barlow-Italic.ttf in Resources */,
 				9583D816B92C4929AE141EA0 /* RobotoMono-Regular.ttf in Resources */,
+				C571C83020754654B80BFAA5 /* Pangram-Black.otf in Resources */,
+				3F003945A801426E8FA08473 /* Pangram-Bold.otf in Resources */,
+				8BFD480B8A6044E38F47B493 /* Pangram-ExtraBold.otf in Resources */,
+				E3AB9D05C61146ECBCDB1BC4 /* Pangram-ExtraLight.otf in Resources */,
+				CE3BEBDC83F5402B8B411FE8 /* Pangram-Light.otf in Resources */,
+				20580DE4C4E54C1AA4A5B457 /* Pangram-Medium.otf in Resources */,
+				CB2FB45D261F47CDBE27F4D7 /* Pangram-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
