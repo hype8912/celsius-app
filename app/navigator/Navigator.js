@@ -21,6 +21,7 @@ import Welcome from "../components/screens/Welcome/Welcome";
 import PasswordBreached from "../components/screens/PasswordBreached/PasswordBreached";
 import VerifyProfile from "../components/screens/VerifyProfile/VerifyProfile";
 import SixDigitPinExplanation from "../components/screens/SixDigitPinExplanation/SixDigitPinExplanation";
+import ActivateSixDigitPin from "../components/screens/ActivateSixDigitPin/ActivateSixDigitPin";
 import TransactionsOnHold from "../components/screens/TransactionsOnHold/TransactionsOnHold";
 import KYCProfileDetails from "../components/screens/KYCProfileDetails/KYCProfileDetails";
 import KYCAddressInfo from "../components/screens/KYCAddressInfo/KYCAddressInfo";
@@ -150,6 +151,7 @@ export const screens = {
 
   VerifyProfile,
   SixDigitPinExplanation,
+  ActivateSixDigitPin,
 
   /**
    * Wallet
