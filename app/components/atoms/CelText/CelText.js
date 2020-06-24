@@ -7,15 +7,15 @@ import {
   getScaledFont,
   getFontFamily,
   getThemeFontFamily,
+  getFontSize,
 } from "../../../utils/styles-util";
-import FONTS from "../../../constants/FONTS";
 import CelTextStyle from "./CelText.styles";
 import { THEMES } from "../../../constants/UI";
 
 class CelText extends Component {
   static propTypes = {
     type: PropTypes.oneOf(["H0", "H1", "H2", "H3", "H4", "H5", "H6", "H7"]),
-    font: PropTypes.oneOf(["Barlow", "RobotoMono"]),
+    font: PropTypes.oneOf(["Pangram", "Barlow", "RobotoMono"]),
     weight: PropTypes.oneOf([
       "100",
       "200",
@@ -67,14 +67,13 @@ class CelText extends Component {
     // NOTE(fj): Check usage of size
     const fontSize = size
       ? { fontSize: getScaledFont(size), lineHeight: getScaledFont(size) }
-      : { fontSize: FONTS[`FONT_SIZES_${baseFontFamily.toUpperCase()}`][type] };
+      : { fontSize: getFontSize(type, baseFontFamily) };
 
     return fontSize;
   };
 
   getFontWeightForType(type) {
     if (type === "H1") return "bold";
-
     return "regular";
   }
 

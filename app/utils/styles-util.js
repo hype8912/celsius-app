@@ -199,20 +199,19 @@ function getThemeFontFamily() {
 /**
  * Gets scaled font size type
  *
- * @param {number} newSize
+ * @param {string} type - H0|H1|H2...H8
+ * @param {string} overrideFont - override theme font
  * @returns {number}
  */
+function getFontSize(type = "H5", overrideFont = null) {
+  let baseFont = overrideFont;
 
-function getFontSize() {
-  let newSize;
+  if (!baseFont) {
+    baseFont = getThemeFontFamily();
+  }
 
-  if (width > 350) {
-    newSize = "H4";
-  } else if (width < 350 && width > 250) {
-    newSize = "H6";
-  } else newSize = "H7";
-
-  return newSize;
+  const fontSize = FONTS[`FONT_SIZES_${baseFont.toUpperCase()}`][type];
+  return fontSize;
 }
 
 /**
