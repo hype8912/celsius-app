@@ -1,5 +1,6 @@
 import { Dimensions } from "react-native";
 import {
+  getFontFamily,
   getThemedStyle,
   heightPercentageToDP,
   widthPercentageToDP,
@@ -33,7 +34,7 @@ const base = {
     alignItems: "center",
   },
   labelText: {
-    fontFamily: "Barlow-Regular",
+    fontFamily: getFontFamily("regular"),
     color: "white",
     height: heightPercentageToDP("2.7%"),
   },

@@ -1,5 +1,5 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getFontFamily, getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
 const base = {
@@ -17,11 +17,11 @@ const base = {
   },
   inputAndroid: {
     fontSize: 26,
-    fontFamily: "Barlow-Regular",
+    fontFamily: getFontFamily("regular"),
   },
   inputIOS: {
     fontSize: 26,
-    fontFamily: "Barlow-Regular",
+    fontFamily: getFontFamily("regular"),
   },
   iconContainer: {
     position: "relative",

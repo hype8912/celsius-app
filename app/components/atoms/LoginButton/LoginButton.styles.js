@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getFontFamily, getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
 const base = {
@@ -24,7 +24,7 @@ const base = {
   },
   text: {
     fontSize: STYLES.FONTSIZE.H4,
-    fontFamily: "Barlow-Regular",
+    fontFamily: getFontFamily("regular"),
     justifyContent: "space-between",
     textAlign: "center",
   },

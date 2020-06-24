@@ -3,6 +3,7 @@ import {
   getPadding,
   getThemedStyle,
   getScaledFont,
+  getFontFamily,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
@@ -35,7 +36,7 @@ const base = {
   input: {
     height: 50,
     fontSize,
-    fontFamily: "Barlow-Light",
+    fontFamily: getFontFamily("light"),
   },
   disabledInput: {
     opacity: 0.6,
