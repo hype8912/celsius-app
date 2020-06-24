@@ -10,9 +10,14 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Icon from "../../atoms/Icon/Icon";
 import Card from "../../atoms/Card/Card";
-import { COIN_CARD_TYPE, LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import {
+  COIN_CARD_TYPE,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+} from "../../../constants/UI";
 import CollateralCoinCard from "../../molecules/CollateralCoinCard/CollateralCoinCard";
 import { LOAN_INTEREST_COINS } from "../../../constants/DATA";
+import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
 
 @connect(
   state => ({
@@ -72,16 +77,16 @@ class LoanPaymentCoin extends Component {
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      actions.navigateTo("VerifyProfile", {
-        onSuccess: () => actions.payMonthlyInterest(id, coinShort),
-      });
+      await actions.updateFormFields({ interestCoin: coinShort });
+      actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
     }
   };
 
   render() {
-    const { walletSummary, currencyRates, actions } = this.props;
+    const { walletSummary, navigation, currencyRates, actions } = this.props;
     const { isLoading } = this.state;
     const style = LoanPaymentCoinStyle();
+    const id = navigation.getParam("id");
 
     const availableCoins = walletSummary.coins
       .filter(coin => coin.amount_usd > 0)
@@ -122,6 +127,7 @@ class LoanPaymentCoin extends Component {
             payment.
           </CelText>
         </Card>
+        <ConfirmPaymentModal loanId={id} type={"CRYPTO"} />
       </RegularLayout>
     );
   }
