@@ -1,5 +1,9 @@
 // import STYLES from '../../../constants/STYLES';
-import { getFontFamily, getThemedStyle } from "../../../utils/styles-util";
+import {
+  getFontFamily,
+  getFontSize,
+  getThemedStyle,
+} from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
 const base = {
@@ -16,11 +20,11 @@ const base = {
     alignItems: "center",
   },
   inputAndroid: {
-    fontSize: 26,
+    fontSize: getFontSize("H2"),
     fontFamily: getFontFamily("regular"),
   },
   inputIOS: {
-    fontSize: 26,
+    fontSize: getFontSize("H2"),
     fontFamily: getFontFamily("regular"),
   },
   iconContainer: {
