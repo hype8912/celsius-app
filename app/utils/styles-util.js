@@ -10,6 +10,7 @@ import React from "react";
 import formatter from "./formatter";
 import store from "../redux/store";
 import appUtil from "./app-util";
+import { THEMES } from "../constants/UI";
 
 const { width, height } = Dimensions.get("window");
 
@@ -20,7 +21,7 @@ export {
   widthPercentageToDP,
   heightPercentageToDP,
   getScaledFont,
-  getFont,
+  getFontFamily,
   getFontSize,
   disableAccessibilityFontScaling,
   getTheme,
@@ -155,18 +156,23 @@ function getScaledFont(fontSize) {
 }
 
 /**
- * Gets scaled font size for different devices or different themes
+ * Gets font family based on theme
  *
- * @param {number} fontSize
- * @returns {number}
+ * @returns {string} - Barlow|Pangram
  */
 
-function getFont(fontSize) {
-  const scale = 350;
+function getFontFamily() {
+  const theme = getTheme();
 
-  const ratio = fontSize / scale; // get ratio based on your standard scale
-  const newSize = Math.round(ratio * width);
-  return newSize;
+  switch (theme) {
+    case THEMES.CELSIUS:
+    case THEMES.LIGHT:
+      return "Pangram";
+
+    case THEMES.DARK:
+    default:
+      return "Barlow";
+  }
 }
 
 /**
