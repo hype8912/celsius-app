@@ -17,13 +17,10 @@ class LoanCard extends Component {
     transaction: PropTypes.instanceOf(Object),
     navigateTo: PropTypes.func,
     loan: PropTypes.instanceOf(Object),
-    backgroundColor: PropTypes.string,
     closeModal: PropTypes.func,
   };
 
-  static defaultProps = {
-    backgroundColor: "white",
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -117,7 +114,7 @@ class LoanCard extends Component {
   };
 
   render() {
-    const { transaction, navigateTo, backgroundColor, closeModal } = this.props;
+    const { transaction, navigateTo, closeModal } = this.props;
     const { data } = this.state;
     let status = "Active Loan";
     let color = STYLES.COLORS.CELSIUS_BLUE;
@@ -127,9 +124,9 @@ class LoanCard extends Component {
     }
 
     return (
-      <View style={{ marginHorizontal: 10 }}>
+      <View>
         {!_.isEmpty(data) ? (
-          <Card noBorder padding="15 15 15 15" color={backgroundColor}>
+          <Card noBorder padding="15 15 15 15">
             <View
               style={{
                 flexDirection: "row",

@@ -36,6 +36,7 @@ class ConfirmPaymentModal extends Component {
     super(props);
     const { loanId, allLoans } = props;
     this.state = {
+      isLoading: false,
       loan: allLoans.find(l => l.id === loanId),
     };
   }
@@ -49,11 +50,15 @@ class ConfirmPaymentModal extends Component {
         return {
           heading: "Confirm Monthly Interest Payment",
           buttonText: "Pay Monthly Interest",
-          onPress: () => {
-            actions.closeModal();
-            actions.navigateTo("VerifyProfile", {
-              onSuccess: () => actions.payMonthlyInterest(loanId, crypto),
+          onPress: async () => {
+            this.setState({
+              isLoading: true,
             });
+            await actions.payMonthlyInterest(loanId, crypto);
+            this.setState({
+              isLoading: false,
+            });
+            actions.closeModal();
           },
         };
       case "PRINCIPAL":
@@ -72,7 +77,7 @@ class ConfirmPaymentModal extends Component {
       walletSummary,
       loyaltyInfo,
     } = this.props;
-    const { loan } = this.state;
+    const { loan, isLoading } = this.state;
     const style = ConfirmPaymentModalStyle();
 
     const content = this.renderContent(type);
@@ -138,7 +143,7 @@ class ConfirmPaymentModal extends Component {
         </View>
 
         <View style={style.buttonsWrapper}>
-          <CelModalButton onPress={content.onPress}>
+          <CelModalButton loading={isLoading} onPress={content.onPress}>
             {content.buttonText}
           </CelModalButton>
         </View>
