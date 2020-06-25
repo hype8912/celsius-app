@@ -15,15 +15,16 @@ import {
   LOAN_PAYMENT_REASONS,
   MODALS,
 } from "../../../constants/UI";
-import CollateralCoinCard from "../../molecules/CollateralCoinCard/CollateralCoinCard";
-import { LOAN_INTEREST_COINS } from "../../../constants/DATA";
 import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
+import STYLES from "../../../constants/STYLES";
+import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 
 @connect(
   state => ({
     currencyRates: state.currencies.rates,
     walletSummary: state.wallet.summary,
     loanCompliance: state.compliance.loan,
+    allLoans: state.loans.allLoans,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -83,14 +84,26 @@ class LoanPaymentCoin extends Component {
   };
 
   render() {
-    const { walletSummary, navigation, currencyRates, actions } = this.props;
+    const {
+      walletSummary,
+      currencyRates,
+      actions,
+      navigation,
+      allLoans,
+      loanCompliance,
+    } = this.props;
     const { isLoading } = this.state;
     const style = LoanPaymentCoinStyle();
     const id = navigation.getParam("id");
+    const loan = allLoans.find(l => l.id === id);
+    const reason = navigation.getParam("reason");
 
     const availableCoins = walletSummary.coins
-      .filter(coin => coin.amount_usd > 0)
-      .filter(coin => LOAN_INTEREST_COINS.includes(coin.short))
+      .filter(
+        coin =>
+          loanCompliance.loan_interest_coins.includes(coin.short) &&
+          coin.short !== "CEL"
+      )
       .sort((a, b) => Number(b.amount_usd) - Number(a.amount_usd));
 
     return (
@@ -99,12 +112,14 @@ class LoanPaymentCoin extends Component {
           Choose a coin from your wallet to complete your payment
         </CelText>
         {availableCoins.map(coin => (
-          <CollateralCoinCard
+          <PaymentCard
             key={coin.short}
             handleSelectCoin={this.handleSelectCoin}
             coin={currencyRates.find(cr => cr.short === coin.short)}
             type={COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD}
             isLoading={isLoading[coin.short]}
+            reason={reason}
+            loan={loan}
           />
         ))}
 
@@ -124,9 +139,15 @@ class LoanPaymentCoin extends Component {
           </CelText>
           <CelText margin={"10 0 5 0"} weight={"300"} type={"H5"}>
             Add more coins to make sure you have enough in your wallet for your
-            payment.
+            monthly interest payment.
           </CelText>
         </Card>
+        <CelText margin={"20 0 0 0"}>
+          Need help? Contact our{" "}
+          <CelText weight={"500"} color={STYLES.COLORS.CELSIUS_BLUE}>
+            Lending Support
+          </CelText>
+        </CelText>
         <ConfirmPaymentModal loanId={id} type={"CRYPTO"} />
       </RegularLayout>
     );

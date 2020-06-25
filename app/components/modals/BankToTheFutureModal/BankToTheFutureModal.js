@@ -55,10 +55,20 @@ class BankToTheFutureModal extends Component {
       <View key={screen.title} style={style.wrapper}>
         <Image source={screen.image} style={style.image} />
         <View style={[style.text]}>
-          <CelText align={"center"} type={"H2"} weight={"700"}>
+          <CelText
+            align={"center"}
+            type={"H2"}
+            weight={"700"}
+            color={STYLES.COLORS.DARK_GRAY}
+          >
             {screen.title}
           </CelText>
-          <CelText margin={"20 0 0 0"} align={"center"} type={"H5"}>
+          <CelText
+            margin={"20 0 0 0"}
+            align={"center"}
+            type={"H5"}
+            color={STYLES.COLORS.DARK_GRAY}
+          >
             {screen.text}
           </CelText>
           <CelButton

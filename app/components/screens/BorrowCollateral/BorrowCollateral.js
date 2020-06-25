@@ -11,7 +11,7 @@ import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import CollateralCoinCard from "../../molecules/CollateralCoinCard/CollateralCoinCard";
+import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
@@ -62,7 +62,7 @@ class BorrowCollateral extends Component {
 
           <View style={style.wrapper}>
             {availableCoins.map(coin => (
-              <CollateralCoinCard
+              <PaymentCard
                 key={coin.short}
                 handleSelectCoin={this.handleSelectCoin}
                 coin={coin}

@@ -61,8 +61,10 @@ class PersonalInformation extends Component {
       if (
         !formData.ssn1 ||
         formData.ssn1.length < 3 ||
-        !formData.ssn2 || formData.ssn2.length < 2 ||
-        !formData.ssn3 || formData.ssn3.length < 4
+        !formData.ssn2 ||
+        formData.ssn2.length < 2 ||
+        !formData.ssn3 ||
+        formData.ssn3.length < 4
       ) {
         errors.ssn = "Please enter valid SSN.";
         actions.setFormErrors(errors);

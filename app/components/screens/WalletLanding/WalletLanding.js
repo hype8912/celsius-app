@@ -242,7 +242,10 @@ class WalletLanding extends Component {
     }
 
     return (
-      <RegularLayout pullToRefresh={() => actions.getWalletSummary()}>
+      <RegularLayout
+        pullToRefresh={() => actions.getWalletSummary()}
+        fabType={currenciesRates ? "main" : "hide"}
+      >
         <BannerCrossroad />
         <View>
           <MissingInfoCard user={user} navigateTo={actions.navigateTo} />

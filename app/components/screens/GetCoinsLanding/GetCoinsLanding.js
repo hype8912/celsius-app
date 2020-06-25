@@ -113,7 +113,7 @@ class GetCoinsLanding extends Component {
 
         {gemCompliance.allowed && (
           <MultiInfoCardButton
-            textButton={"Bank Wire"}
+            textButton={"Bank Transfer"}
             explanation={"Buy crypto easily through your bank account."}
             darkImage={require("../../../../assets/images/icons/bank-wire-dark.png")}
             lightImage={require("../../../../assets/images/icons/bank-wire-light.png")}
