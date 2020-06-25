@@ -77,9 +77,8 @@ class GetCoinsGem extends Component {
     );
   };
 
-  onGemExit = async data => {
+  onGemExit = async () => {
     const { actions } = this.props;
-    await actions.createGemPayment(data.userId);
     actions.navigateBack();
   };
 
