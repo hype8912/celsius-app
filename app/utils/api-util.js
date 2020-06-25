@@ -284,6 +284,7 @@ async function handle426(err, reqConfig) {
       store.dispatch(
         actions.navigateTo("VerifyProfile", {
           hideBack: true,
+          showLogOutBtn: true,
           // PIN || 2FA
           verificationType: err.show,
           onSuccess: async () => {
