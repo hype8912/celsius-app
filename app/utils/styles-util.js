@@ -10,6 +10,7 @@ import React from "react";
 import formatter from "./formatter";
 import store from "../redux/store";
 import appUtil from "./app-util";
+import { COLORS } from "../constants/COLORS";
 
 const { width, height } = Dimensions.get("window");
 
@@ -86,10 +87,17 @@ function getThemedStyle(
   theme = store.getState().user.appSettings.theme
 ) {
   return StyleSheet.create(formatter.deepmerge(base, themed[theme]));
-  // return StyleSheet.flatten([StyleSheet.create(base), StyleSheet.create(themed[theme])])
-  // return StyleSheet.create(_.merge({ ...base }, { ...themed[theme] }));
-  // return _.mergeWith({ ...base }, { ...themed[theme] });
-  // return formatter.deepmerge(base, themed[theme])
+}
+
+/**
+ * Sets theme styles for component
+ *
+ * @param {Object} colorKey - color key
+ * @param {string} theme - current active theme
+ * @returns {Object} themed styles
+ */
+function getColor(colorKey, theme = store.getState().user.appSettings.theme) {
+  return COLORS[theme][colorKey];
 }
 
 /**
