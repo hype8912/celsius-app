@@ -84,6 +84,16 @@ class Appearance extends Component {
               }}
             />
             <CircleButton
+              icon={theme === THEMES.UNICORN ? "Checked" : false}
+              iconSize={15}
+              type="theme"
+              text="Unicorn"
+              style={[{ backgroundColor: "#ac35b6" }, style.themeBtn]} // TODO: change to appropriate color and move to constants
+              onPress={() => {
+                actions.setUserAppSettings({ theme: THEMES.UNICORN });
+              }}
+            />
+            <CircleButton
               icon={theme === THEMES.DARK ? "Checked" : false}
               iconSize={15}
               type="theme"
