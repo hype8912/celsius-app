@@ -10,9 +10,14 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Icon from "../../atoms/Icon/Icon";
 import Card from "../../atoms/Card/Card";
-import { COIN_CARD_TYPE, LOAN_PAYMENT_REASONS } from "../../../constants/UI";
-import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
+import {
+  COIN_CARD_TYPE,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+} from "../../../constants/UI";
+import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
 import STYLES from "../../../constants/STYLES";
+import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 
 @connect(
   state => ({
@@ -73,9 +78,8 @@ class LoanPaymentCoin extends Component {
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      actions.navigateTo("VerifyProfile", {
-        onSuccess: () => actions.payMonthlyInterest(id, coinShort),
-      });
+      await actions.updateFormFields({ interestCoin: coinShort });
+      actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
     }
   };
 
@@ -144,6 +148,7 @@ class LoanPaymentCoin extends Component {
             Lending Support
           </CelText>
         </CelText>
+        <ConfirmPaymentModal loanId={id} type={"CRYPTO"} />
       </RegularLayout>
     );
   }

@@ -7,10 +7,11 @@ import * as appActions from "../../../redux/actions";
 import ChoosePaymentMethodStyle from "./ChoosePaymentMethod.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PrepayDollarInterestModal from "../../modals/PrepayDollarInterestModal/PrepayDollarInterestModal";
-import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
+import DollarPaymentModal from "../../modals/DollarPaymentModal/DollarPaymentModal";
 
 @connect(
   state => ({
@@ -101,7 +102,7 @@ class ChoosePaymentMethod extends Component {
             actions.updateFormField("coin", "USD");
             actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
           } else {
-            actions.navigateTo("WiringBankInformation", { id, reason });
+            actions.openModal(MODALS.DOLLAR_PAYMENT_MODAL);
           }
         },
         lightImage: require("../../../../assets/images/icons/dollars.png"),
@@ -117,14 +118,21 @@ class ChoosePaymentMethod extends Component {
     return cardProps;
   };
 
+  closeModal = () => {
+    const { actions, navigation } = this.props;
+    const id = navigation.getParam("id");
+    actions.closeModal();
+    actions.navigateTo("WiringBankInformation", { id });
+  };
+
   render() {
-    const { actions, loanSettings } = this.props;
+    const { actions, loanSettings, navigation } = this.props;
     if (!loanSettings) return <LoadingScreen />;
 
     const style = ChoosePaymentMethodStyle();
 
     const cardProps = this.getCardProps();
-
+    const id = navigation.getParam("id");
     return (
       <View style={style.container}>
         <RegularLayout>
@@ -137,6 +145,7 @@ class ChoosePaymentMethod extends Component {
             actions.navigateTo("LoanPrepaymentPeriod", { type: "dollar" })
           }
         />
+        <DollarPaymentModal loanId={id} close={() => this.closeModal()} />
       </View>
     );
   }
