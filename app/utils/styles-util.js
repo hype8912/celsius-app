@@ -27,6 +27,7 @@ export {
   getTheme,
   addThemeToComponents,
   getThemedStyle,
+  getColor,
 };
 
 /**

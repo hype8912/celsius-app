@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
 import * as appActions from "../../../redux/actions";
 import AppearanceStyle from "./Appearance.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import { THEMES } from "../../../constants/UI";
 import CoinGridCard from "../../molecules/CoinGridCard/CoinGridCard";
@@ -23,16 +20,11 @@ import CoinGridCard from "../../molecules/CoinGridCard/CoinGridCard";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class Appearance extends Component {
-  static propTypes = {
-    // text: PropTypes.string
-  };
-  static defaultProps = {};
-
   static navigationOptions = () => ({
     title: "Appearance",
   });
 
-  renderCard = () => {
+  renderCard = appearanceStyle => {
     const {
       walletSummary,
       currenciesRates,
@@ -47,7 +39,7 @@ class Appearance extends Component {
     const btcRates = currenciesRates.find(c => c.short === "BTC");
 
     return (
-      <View style={{ alignItems: "center", paddingBottom: 20 }}>
+      <View style={appearanceStyle.coinContainer}>
         <CoinGridCard
           key={btcCoin.short}
           coin={btcCoin}
@@ -67,18 +59,16 @@ class Appearance extends Component {
     return (
       <RegularLayout>
         <View style={style.container}>
-          {this.renderCard()}
+          {this.renderCard(style)}
 
           <Separator text="COLOR THEME" margin="0 0 20 0" />
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-around" }}
-          >
+          <View style={style.buttonsContainer}>
             <CircleButton
               icon={theme === THEMES.LIGHT ? "Checked" : false}
               iconSize={15}
               type="theme"
               text="Light"
-              style={[{ backgroundColor: STYLES.COLORS.WHITE }, style.themeBtn]}
+              style={[style.lightThemeButton, style.themeBtn]}
               onPress={() => {
                 actions.setUserAppSettings({ theme: THEMES.LIGHT });
               }}
@@ -88,7 +78,7 @@ class Appearance extends Component {
               iconSize={15}
               type="theme"
               text="Unicorn"
-              style={[{ backgroundColor: "#ac35b6" }, style.themeBtn]} // TODO: change to appropriate color and move to constants
+              style={[style.unicornThemeButton, style.themeBtn]} // TODO: change to appropriate color and move to constants
               onPress={() => {
                 actions.setUserAppSettings({ theme: THEMES.UNICORN });
               }}
@@ -98,10 +88,7 @@ class Appearance extends Component {
               iconSize={15}
               type="theme"
               text="Dark"
-              style={[
-                { backgroundColor: STYLES.COLORS.DARK_HEADER },
-                style.themeBtn,
-              ]}
+              style={[style.darkThemeButton, style.themeBtn]}
               onPress={() => {
                 actions.setUserAppSettings({ theme: THEMES.DARK });
               }}
