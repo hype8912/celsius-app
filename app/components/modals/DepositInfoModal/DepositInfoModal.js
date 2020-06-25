@@ -34,7 +34,7 @@ class DepositInfoModal extends Component {
 
     const theme = getTheme();
 
-    const coinName = currencies.find(coin => coin.short === type);
+    const coinName = currencies && currencies.find(coin => coin.short === type);
     let steps;
 
     switch (type) {

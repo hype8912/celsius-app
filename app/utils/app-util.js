@@ -100,10 +100,6 @@ let iteration = 0;
 let backendPollInterval;
 async function pollBackendStatus() {
   if (backendPollInterval) clearInterval(backendPollInterval);
-
-  await store.dispatch(actions.getUserStatus());
-  await checkAndRefreshAuthToken();
-
   backendPollInterval = setInterval(async () => {
     if (isUserLoggedIn()) {
       await store.dispatch(actions.getUserStatus());
