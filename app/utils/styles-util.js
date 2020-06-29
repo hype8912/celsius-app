@@ -11,6 +11,8 @@ import formatter from "./formatter";
 import store from "../redux/store";
 import appUtil from "./app-util";
 import { COLORS } from "../constants/COLORS";
+import { THEMES } from "../constants/UI";
+import FONTS from "../constants/FONTS";
 
 const { width, height } = Dimensions.get("window");
 
@@ -21,12 +23,14 @@ export {
   widthPercentageToDP,
   heightPercentageToDP,
   getScaledFont,
-  getFont,
+  getFontFamily,
+  getThemeFontFamily,
   getFontSize,
   disableAccessibilityFontScaling,
   getTheme,
   addThemeToComponents,
   getThemedStyle,
+  getColor,
 };
 
 /**
@@ -163,37 +167,66 @@ function getScaledFont(fontSize) {
 }
 
 /**
- * Gets scaled font size for different devices or different themes
+ * Gets font family based on theme and weight
  *
- * @param {number} fontSize
- * @returns {number}
+ * @param {string} weight - check CelText weight properties
+ * @param {string} overrideFont - override theme font
+ * @returns {string} - Barlow-Regular|Pangram-Bold
  */
+function getFontFamily(weight = "regular", overrideFont = null) {
+  let baseFont = overrideFont;
 
-function getFont(fontSize) {
-  const scale = 350;
+  if (!baseFont) {
+    baseFont = getThemeFontFamily();
+  }
 
-  const ratio = fontSize / scale; // get ratio based on your standard scale
-  const newSize = Math.round(ratio * width);
-  return newSize;
+  if (baseFont === "RobotoMono") {
+    return "RobotoMono-Regular";
+  }
+
+  const fontWeight = FONTS[`FONT_WEIGHTS_${baseFont.toUpperCase()}`][weight];
+  const fontFamily = `${baseFont}${fontWeight}`;
+
+  return fontFamily;
+}
+
+/**
+ * Gets font family based on them
+ *
+ * @returns {string} - Barlow|Pangram
+ */
+function getThemeFontFamily() {
+  const theme = getTheme();
+
+  switch (theme) {
+    case THEMES.UNICORN:
+      return "Pangram";
+
+    case THEMES.LIGHT:
+    case THEMES.DARK:
+    default:
+      return "Barlow";
+  }
 }
 
 /**
  * Gets scaled font size type
  *
- * @param {number} newSize
+ * @param {string} type - H0|H1|H2...H8
+ * @param {string} overrideFont - override theme font
  * @returns {number}
  */
+function getFontSize(type = "H5", overrideFont = null) {
+  let baseFont = overrideFont;
 
-function getFontSize() {
-  let newSize;
+  if (!baseFont) {
+    baseFont = getThemeFontFamily();
+  }
 
-  if (width > 350) {
-    newSize = "H4";
-  } else if (width < 350 && width > 250) {
-    newSize = "H6";
-  } else newSize = "H7";
-
-  return newSize;
+  const fontSizes =
+    FONTS[`FONT_SIZES_${baseFont.toUpperCase()}`] || FONTS.FONT_SIZES_BARLOW;
+  const fontSize = fontSizes[type];
+  return fontSize;
 }
 
 /**

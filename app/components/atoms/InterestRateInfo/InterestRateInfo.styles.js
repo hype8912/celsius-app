@@ -75,23 +75,19 @@ const base = {
   },
   regularRateText: {
     color: STYLES.COLORS.MEDIUM_GRAY,
-    fontFamily: "Barlow-Regular",
   },
   celRateText: {
     color: "#fff",
-    fontFamily: "Barlow-SemiBold",
   },
   regRateText: {
     color: STYLES.COLORS.MEDIUM_GRAY,
-    fontFamily: "Barlow-SemiBold",
   },
   celsiusRateText: {
     color: "#fff",
-    fontFamily: "Barlow-Regular",
   },
   rateInfoCard: {
-    marginTop: 20
-  }
+    marginTop: 20,
+  },
 };
 
 const themed = {

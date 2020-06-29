@@ -9,6 +9,7 @@ import { scaleLinear, scalePoint, scaleTime } from "d3-scale";
 
 import formatter from "../../../utils/formatter";
 import {
+  getFontFamily,
   getTheme,
   heightPercentageToDP,
   widthPercentageToDP,
@@ -381,7 +382,7 @@ class Graph extends React.Component {
             <TextInput
               ref={this.cursor.labelText}
               style={{
-                fontFamily: "Barlow-Regular",
+                fontFamily: getFontFamily("regular"),
                 color: "white",
               }}
               editable={false}
@@ -389,7 +390,7 @@ class Graph extends React.Component {
             <TextInput
               ref={this.cursor.dateText}
               style={{
-                fontFamily: "Barlow-Regular",
+                fontFamily: getFontFamily("regular"),
                 color: "white",
               }}
               editable={false}

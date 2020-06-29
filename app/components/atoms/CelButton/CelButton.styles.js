@@ -1,5 +1,9 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle, getScaledFont } from "../../../utils/styles-util";
+import {
+  getThemedStyle,
+  getScaledFont,
+  getFontSize,
+} from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
 const base = {
@@ -43,10 +47,10 @@ const base = {
     // margin: 'auto',
   },
   mediumTitle: {
-    fontSize: getScaledFont(18),
+    fontSize: getScaledFont(getFontSize("H4")),
   },
   smallTitle: {
-    fontSize: getScaledFont(14),
+    fontSize: getScaledFont(getFontSize("H6")),
   },
   ghostButton: {
     backgroundColor: "transparent",

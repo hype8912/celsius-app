@@ -16,6 +16,7 @@ import { scaleLinear, scaleTime } from "d3-scale";
 import {
   heightPercentageToDP,
   widthPercentageToDP,
+  getFontSize,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import PerformanceGraphStyle from "./PerformanceGraph.styles";
@@ -212,7 +213,7 @@ class PerformanceGraph extends React.Component {
                   style={{
                     color: "white",
                     height: heightPercentageToDP("5.7%"),
-                    fontSize: 12,
+                    fontSize: getFontSize("H7"),
                     width: widthPercentageToDP("25.73%"),
                     textAlign: "center",
                   }} // TextInput issue- styles cannot override and need to be inline
