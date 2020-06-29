@@ -6,6 +6,7 @@ const buyCoinsService = {
   getSimplexQuote,
   createSimplexPayment,
   createGemPayment,
+  getGemCoinAddresses,
 };
 
 /**
@@ -70,6 +71,15 @@ function createSimplexPayment(payment, verification) {
  */
 function createGemPayment(payment) {
   return axios.post(`${apiUrl}/buy_coins/payment/gem`, payment);
+}
+
+/**
+ * Gets deposit address for coin for user
+ *
+ * @return {Promise}
+ */
+function getGemCoinAddresses() {
+  return axios.get(`${apiUrl}/buy_coins/deposit-addresses/gem`);
 }
 
 export default buyCoinsService;
