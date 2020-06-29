@@ -7,21 +7,21 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import ReferralReceivedModal from "./ReferralReceivedModal";
 import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
-import { BRANCH_LINKS } from "../../../constants/DATA";
+import { DEEP_LINKS } from "../../../constants/DATA";
 
 const referralLinks = {
-  [BRANCH_LINKS.INDIVIDUAL_REFERRAL]: {
+  [DEEP_LINKS.INDIVIDUAL_REFERRAL]: {
     owner: {
       display_name: "Nuke",
     },
-    link_type: BRANCH_LINKS.INDIVIDUAL_REFERRAL,
+    link_type: DEEP_LINKS.INDIVIDUAL_REFERRAL,
     referred_award_amount: 200,
     referred_award_base_currency: "CEL",
     referred_award_coin: "CEL",
   },
-  [BRANCH_LINKS.COMPANY_REFERRAL]: {
+  [DEEP_LINKS.COMPANY_REFERRAL]: {
     owner: {},
-    link_type: BRANCH_LINKS.COMPANY_REFERRAL,
+    link_type: DEEP_LINKS.COMPANY_REFERRAL,
     referred_award_amount: 0.01,
     referred_award_base_currency: "BTC",
     referred_award_coin: "CEL",
@@ -34,7 +34,7 @@ class ReferralReceivedModalStories extends React.Component {
     super(props);
 
     this.state = {
-      activeLink: referralLinks[BRANCH_LINKS.INDIVIDUAL_REFERRAL],
+      activeLink: referralLinks[DEEP_LINKS.INDIVIDUAL_REFERRAL],
     };
   }
 
@@ -45,7 +45,7 @@ class ReferralReceivedModalStories extends React.Component {
         <CelButton
           onPress={() => {
             this.setState({
-              activeLink: referralLinks[BRANCH_LINKS.INDIVIDUAL_REFERRAL],
+              activeLink: referralLinks[DEEP_LINKS.INDIVIDUAL_REFERRAL],
             });
             store.dispatch(openModal(MODALS.REFERRAL_RECEIVED_MODAL));
           }}
@@ -57,7 +57,7 @@ class ReferralReceivedModalStories extends React.Component {
         <CelButton
           onPress={() => {
             this.setState({
-              activeLink: referralLinks[BRANCH_LINKS.COMPANY_REFERRAL],
+              activeLink: referralLinks[DEEP_LINKS.COMPANY_REFERRAL],
             });
             store.dispatch(openModal(MODALS.REFERRAL_RECEIVED_MODAL));
           }}

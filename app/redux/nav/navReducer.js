@@ -1,12 +1,13 @@
 import ACTIONS from "../../constants/ACTIONS";
+import { INITIAL_ROUTE } from "../../constants/UI";
 
 /**
  * TODO make it a function add JSDoc & desc for return
  */
 const initialState = {
-  activeScreen: "",
+  activeScreen: INITIAL_ROUTE,
   previousScreen: undefined, // NOTE: used in VerifyProfile.js
-  history: [],
+  history: [INITIAL_ROUTE],
 };
 
 export default function navReducer(state = initialState, action) {

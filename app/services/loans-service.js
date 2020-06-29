@@ -18,6 +18,7 @@ const loansService = {
   payMonthlyInterest,
   getAmortizationTable,
   sendBankDetailsEmail,
+  getLoanAlerts,
 };
 
 /**
@@ -223,6 +224,15 @@ function getAmortizationTable(id) {
  */
 function sendBankDetailsEmail() {
   return axios.get(`${apiUrl}/loans/bank-details`);
+}
+
+/**
+ * Gets all loan payment alerts for user (interest, principal, margin call)
+ *
+ * @returns {Promise}
+ */
+function getLoanAlerts() {
+  return axios.get(`${apiUrl}/loans/alerts`);
 }
 
 export default loansService;

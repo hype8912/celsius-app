@@ -82,12 +82,12 @@ class SecurityStrengthMeter extends Component {
 
     return (
       <Card styles={style.container}>
-        <View style={style.section}>
+        <View style={[style.section, { marginBottom: 10 }]}>
           <View style={style.leftSide}>
             <Image
               source={meterProps.imageUrl}
               style={style.meter}
-              resizeMode={"contain"}
+              resizeMode={"stretch"}
             />
           </View>
           <View style={style.rightSide}>
@@ -104,11 +104,11 @@ class SecurityStrengthMeter extends Component {
 
         <Separator />
 
-        <View style={style.section}>
+        <View style={[style.section, { marginTop: 5 }]}>
           <View style={style.leftSide}>
-            <CelText type="H6">
+            <CelText type="H7">
               {"Last change: "}
-              <CelText type="H6" weight="600">
+              <CelText type="H7" weight="600">
                 {lastChangePeriod}
               </CelText>
             </CelText>

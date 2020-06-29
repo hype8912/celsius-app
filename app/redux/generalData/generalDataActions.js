@@ -3,10 +3,8 @@ import generalDataService from "../../services/general-data-service";
 import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
 import ACTIONS from "../../constants/ACTIONS";
-import { navigateTo } from "../nav/navActions";
 
-// TODO Move to KYC actions
-export { getBackendStatus, getInitialCelsiusData, getLoanTermsOfUse };
+export { getInitialCelsiusData, getLoanTermsOfUse };
 
 /**
  * Gets all general app data (interest rates, borrow ltvs, ...)
@@ -37,37 +35,6 @@ function getInitialCelsiusData() {
   };
 }
 
-/**
- * Gets backend status of the app
- */
-function getBackendStatus() {
-  return async dispatch => {
-    dispatch(startApiCall(API.GET_BACKEND_STATUS));
-
-    try {
-      const res = await generalDataService.getBackendStatus();
-      const backendStatus = res.data;
-      await dispatch(getBackendStatusSuccess(backendStatus));
-      if (backendStatus.maintenance)
-        dispatch(navigateTo("Maintenance", { maintenance: true }));
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_BACKEND_STATUS, err));
-    }
-  };
-}
-
-/**
- * TODO add JSDoc
- */
-function getBackendStatusSuccess(backendStatus) {
-  return {
-    type: ACTIONS.GET_BACKEND_STATUS_SUCCESS,
-    callName: API.GET_BACKEND_STATUS,
-    backendStatus,
-  };
-}
-
 function getLoanTermsOfUse() {
   return async dispatch => {
     dispatch(startApiCall(API.GET_LOAN_TERMS_OF_USE));
@@ -86,7 +53,7 @@ function getLoanTermsOfUse() {
       });
     } catch (err) {
       dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_BACKEND_STATUS, err));
+      dispatch(apiError(API.GET_LOAN_TERMS_OF_USE, err));
     }
   };
 }

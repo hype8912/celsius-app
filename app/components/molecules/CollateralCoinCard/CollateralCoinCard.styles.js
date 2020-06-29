@@ -1,54 +1,34 @@
+// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
-
-// import { FONT_SCALE } from "../../../config/constants/style";
 
 const base = {
-  container: {
-    flex: 1,
-  },
   mainContainer: {
     flex: 1,
+  },
+  coinInfo: {
     flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
-    flex: 0.2,
+    marginRight: 10,
   },
   coinImage: {
     width: 40,
     height: 40,
   },
-  textContainer: {
-    marginVertical: 5,
-    flex: 0.8,
-  },
-  marginRequired: {
-    marginTop: 5,
-    paddingVertical: 2,
-    paddingHorizontal: 5,
-    borderRadius: 5,
-    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-  },
 };
 
 const themed = {
-  light: {
-    cardStyle: {
-      color: STYLES.COLORS.WHITE_OPACITY7,
-    },
-  },
+  light: {},
 
-  dark: {
-    cardStyle: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
-    },
-  },
+  dark: {},
 
   celsius: {},
 };
 
-const CoinCardStyle = () => getThemedStyle(base, themed);
+const CollateralCoinCardStyle = () => getThemedStyle(base, themed);
 
-export default CoinCardStyle;
+export default CollateralCoinCardStyle;

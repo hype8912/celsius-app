@@ -63,7 +63,6 @@ class CelPayLanding extends Component {
   render() {
     // const style = CelPayLandingStyle();
     const {
-      user,
       kycStatus,
       celpayCompliance,
       walletSummary,
@@ -82,12 +81,6 @@ class CelPayLanding extends Component {
       return (
         <StaticScreen
           emptyState={{ purpose: EMPTY_STATES.VERIFICATION_IN_PROCESS_CELPAY }}
-        />
-      );
-    if (!user.celsius_member)
-      return (
-        <StaticScreen
-          emptyState={{ purpose: EMPTY_STATES.NON_MEMBER_CELPAY }}
         />
       );
     if (hodlStatus.isActive) {

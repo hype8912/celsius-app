@@ -21,11 +21,11 @@ export * from "./graph/graphActions";
 export * from "./community/communityActions";
 export * from "./compliance/complianceActions";
 export * from "./contacts/contactsActions";
-export * from "./simplex/simplexActions";
 export * from "./user/userDataActions";
 export * from "./userSecurity/userSecurityActions";
 export * from "./user/userProfileActions";
 export * from "./hodl/hodlActions";
 export * from "./animations/animationsActions";
 export * from "./deepLink/deepLinkActions";
+export * from "./buyCoins/buyCoinsActions";
 // NOTE(fj): plop reduxGen importing new Actions here

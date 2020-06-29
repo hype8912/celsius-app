@@ -151,6 +151,7 @@ class CoinDetails extends Component {
       depositCompliance,
       simplexCompliance,
     } = this.props;
+
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
     const coinPrice = currencies
@@ -176,6 +177,14 @@ class CoinDetails extends Component {
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
+    const isBelowThreshold = interestUtil.isBelowThreshold(coinDetails.short);
+    const specialRate = isBelowThreshold
+      ? interestRate.specialApyRate
+      : interestRate.apyRate;
+    const isInCel = !interestRate.inCEL
+      ? interestRate.compound_rate
+      : specialRate;
+
     return (
       <RegularLayout
         padding={"20 0 100 0"}
@@ -200,7 +209,7 @@ class CoinDetails extends Component {
                     weight="600"
                     type="H2"
                     margin={"3 0 3 0"}
-                    number={coinDetails.amount_usd}
+                    number={coinDetails.amount_usd.toNumber()}
                     speed={5}
                     usd
                   />
@@ -351,7 +360,9 @@ class CoinDetails extends Component {
                           align="justify"
                           type="H5"
                           color="white"
-                        >{`${interestRate.display} APY`}</CelText>
+                        >{`${formatter.percentageDisplay(
+                          isInCel
+                        )} APY`}</CelText>
                       </Badge>
                     </View>
                   )}

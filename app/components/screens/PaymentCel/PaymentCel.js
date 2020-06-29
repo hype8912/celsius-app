@@ -6,11 +6,22 @@ import * as appActions from "../../../redux/actions";
 // import PaymentCelStyle from "./PaymentCel.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import {
+  COIN_CARD_TYPE,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+} from "../../../constants/UI";
+import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import TierCard from "../../organisms/TierCard/TierCard";
+import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
 
 @connect(
-  () => ({}),
+  state => ({
+    loyaltyInfo: state.loyalty.loyaltyInfo,
+    loanSettings: state.loans.loanSettings,
+    allLoans: state.loans.allLoans,
+    currencyRates: state.currencies.rates,
+  }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class PaymentCel extends Component {
@@ -79,20 +90,30 @@ class PaymentCel extends Component {
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      actions.navigateTo("VerifyProfile", {
-        onSuccess: () => actions.payMonthlyInterest(id, "CEL"),
-      });
+      actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
     }
   };
 
   render() {
     // const style = PaymentCelCelStyle();
     const { navigation } = this.props;
+    const { allLoans, currencyRates } = this.props;
     const { isLoading } = this.state;
+    const reason = navigation.getParam("reason");
     const id = navigation.getParam("id");
+    const loan = allLoans.find(l => l.id === id);
+
+    const coin = currencyRates.find(c => c.short === "CEL");
 
     return (
       <RegularLayout fabType={"hide"}>
+        <PaymentCard
+          handleSelectCoin={this.payInCel}
+          coin={coin}
+          loan={loan}
+          reason={reason}
+          type={COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD}
+        />
         <TierCard loanId={id} />
         <CelButton
           margin={"20 0 0 0"}
@@ -102,6 +123,7 @@ class PaymentCel extends Component {
         >
           Pay with CEL
         </CelButton>
+        <ConfirmPaymentModal loanId={id} type={"CRYPTO"} cryptoType={"CEL"} />
       </RegularLayout>
     );
   }

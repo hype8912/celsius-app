@@ -15,6 +15,7 @@ import Counter from "../../molecules/Counter/Counter";
 
 @connect(
   state => ({
+    currencies: state.currencies.rates,
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
@@ -28,12 +29,14 @@ class WalletDetailsCard extends PureComponent {
   };
 
   navigateToBalanceHistory = () => {
-    const { actions } = this.props;
+    const { actions, currencies } = this.props;
+    if (!currencies) return;
     actions.navigateTo("BalanceHistory");
   };
 
   navigateToDeposit = () => {
-    const { actions } = this.props;
+    const { actions, currencies } = this.props;
+    if (!currencies) return;
     actions.navigateTo("Deposit");
   };
 

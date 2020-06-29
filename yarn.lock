@@ -1575,24 +1575,24 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-2.0.9.tgz#bf74045c96f1fb22e3ec961e321300c230c63990"
   integrity sha512-6GHUKXxiDSs75VZQRa6B+nxo8rqpIEcegZ1iCSQG4aW2oSVepceqDol+0y3/KaBt5WMpD4KybLw8ZZqkT6olaQ==
 
-"@react-native-firebase/app-types@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app-types/-/app-types-6.3.4.tgz#e54a3de33455417db63a7b1de2b7795af1c25cae"
-  integrity sha512-xZ1rVo+GvAfQ/fk6PalYgfsAoV6bd09Vh6SNqR7RPVf9PltaBS0gNxfITXAx6fR+7OyZ1H54orSBjyOIhM+g5Q==
+"@react-native-firebase/app-types@6.7.2":
+  version "6.7.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app-types/-/app-types-6.7.2.tgz#d2e1530af5702e00578914b41468898c10d3289c"
+  integrity sha512-pIwc6e0ZINw6PJqNVsAxzOVJUDg6au2TdulY+ZOYQ11SPDs5I2n9likoGrElPmJjajT4s9h87uz/6PWP2k9PxQ==
 
-"@react-native-firebase/app@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-6.3.4.tgz#5beee0f8ffb1e58bfc8edc054988c3a4007c5984"
-  integrity sha512-hDV3kjBn1X0KAR5kj2DVnm+65K3WVVPtIpcM4TDQIbXudsKsxoG8Z1lGZ4EY89K6EHgCouapdJf5aoqVQ4UDNw==
+"@react-native-firebase/app@7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-7.0.1.tgz#9cf1836138e9ef3770139a9d3ce35d43c5c53bf1"
+  integrity sha512-OTjTSxk2erJKCuURdN7cwc6wB7SFyBPuuFFDoKl3tg7NdQQS1vDNor2uvFC4WSjfDiaR4/UUNZEBtwtOuG1Fwg==
   dependencies:
-    "@react-native-firebase/app-types" "6.3.4"
+    "@react-native-firebase/app-types" "6.7.2"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-firebase/messaging@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-6.3.4.tgz#6a9154957e32f5e4a10cca29ed5d95a72ef1a2e7"
-  integrity sha512-75TJr98RuWDH//svGSOovdU6exs8MUFjsIbb9WwqyQZQFaChjr0Nnh0pX7tgBObLyP5+U70b1xUODz/REEthFw==
+"@react-native-firebase/messaging@7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-7.0.1.tgz#b18ae2852e6a26757f7bb602e1e8253476e4ee5a"
+  integrity sha512-d3daoHOXBHIBhn3McAcfD2tvenK1auLKfAld2U51/AFTf+6KDlcAMauCFXWSjZZR3dTo0boZf3EfWCRY1khBVQ==
 
 "@react-navigation/core@^3.7.0":
   version "3.7.0"
@@ -11909,6 +11909,13 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-animatable@1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.3.tgz#a13a4af8258e3bb14d0a9d839917e9bb9274ec8a"
+  integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-appsflyer@^1.4.6:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/react-native-appsflyer/-/react-native-appsflyer-1.4.7.tgz#c5a8520fcdd5f368b7bae13f4b71ac29aee405b4"
@@ -11956,6 +11963,11 @@ react-native-device-info@^5.3.0:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-5.5.3.tgz#6652fb46c4602a1dd3a5d6a18d2266ecdf97fec7"
   integrity sha512-bzUVTPHca+FfNco1qaOM1+idoeII8zdpGRsR+RK+DWhwp9utHZWfbkonZZ9XFm/U+i3mirNxt6oaKV+vUMjMzg==
 
+react-native-email-link@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-email-link/-/react-native-email-link-1.9.1.tgz#506eea5a55f10a39cece227534bd40a2099e64ba"
+  integrity sha512-U6DtYKfBD9ZJdoaEhsMKKRAH4+HWm/rfqnWb+LU+Vx4Jy41KxvJIl6O9x3i7ExlJX0FPw4OIus5hfTkcxoTnow==
+
 react-native-fbsdk@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-1.1.2.tgz#4264903add869d05b84ef55ade9ff720c2957781"
@@ -11999,10 +12011,17 @@ react-native-markdown-renderer@^3.2.8:
     prop-types "^15.5.10"
     react-native-fit-image "^1.5.2"
 
-react-native-mixpanel@^1.1.14:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.2.0.tgz#17c24151cf2039482cd20decc54ccf0e49ccebc5"
-  integrity sha512-Xy+KEIEVFidWuASBdexZquXTJBb3JCyFM7xSgnIOZt5PRzpARGFrYMDErTUZ1wSPK+KFaf1oylInOoC2DddI/Q==
+react-native-mixpanel@lorenc-tomasz/react-native-mixpanel:
+  version "1.2.4"
+  resolved "https://codeload.github.com/lorenc-tomasz/react-native-mixpanel/tar.gz/38cc7150c03e7d174e0d8ac73220a1706fcef4b6"
+
+react-native-modal@^11.5.6:
+  version "11.5.6"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.5.6.tgz#bb25a78c35a5e24f45de060e5f64284397d38a87"
+  integrity sha512-APGNfbvgC4hXbJqcSADu79GLoMKIHUmgR3fDQ7rCGZNBypkStSP8imZ4PKK/OzIZZfjGU9aP49jhMgGbhY9KHA==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-animatable "1.3.3"
 
 react-native-permissions@^2.0.3:
   version "2.0.10"
@@ -12107,11 +12126,6 @@ react-native-unimodules@^0.6.0:
     unimodules-permissions-interface "~4.0.0"
     unimodules-sensors-interface "~4.0.0"
     unimodules-task-manager-interface "~4.0.0"
-
-react-native-ux-cam@^5.1.15:
-  version "5.1.15"
-  resolved "https://registry.yarnpkg.com/react-native-ux-cam/-/react-native-ux-cam-5.1.15.tgz#4a900a8d46be7510c2a62c573c67ee54a221b5df"
-  integrity sha512-88w+V8DUeF/IHYk+XcZ6pIPWek8h/BCajhm6ANCOu54fnu2OgRbi+xYAfUUKnVLHyk4a4Y6DeUAuc4EGE4bMRQ==
 
 react-native-webview@^7.4.3, react-native-webview@^7.5.0:
   version "7.6.0"

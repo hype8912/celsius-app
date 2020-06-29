@@ -108,7 +108,7 @@ class TierCard extends Component {
 
         {!isTransaction && (
           <View style={style.discount}>
-            <CelText>
+            <CelText weight={"300"}>
               Your monthly interest payment will decrease from{" "}
               <CelText style={{ textDecorationLine: "line-through" }}>
                 {formatter.usd(loan.monthly_payment)}

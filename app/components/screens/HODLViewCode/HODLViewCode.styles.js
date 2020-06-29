@@ -11,6 +11,17 @@ const base = {
     marginTop: 20,
     marginBottom: 20,
   },
+  hodlCodeWrapper: {
+    flexDirection: "row",
+  },
+  codeWrapper: {
+    flex: 0.8,
+  },
+  textWrapper: {
+    flex: 0.2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 };
 
 const themed = {

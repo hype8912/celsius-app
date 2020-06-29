@@ -259,12 +259,16 @@ class CelHeading extends Component {
       (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory") &&
       changeWalletHeader
     ) {
-      screenTitle = fromatter.usd(walletSummary.total_amount_usd);
+      screenTitle = walletSummary
+        ? fromatter.usd(walletSummary.total_amount_usd)
+        : title;
       return screenTitle;
     }
 
     if (activeScreen === "WalletInterest" && changeInterestHeader) {
-      screenTitle = fromatter.usd(walletSummary.total_interest_earned);
+      screenTitle = walletSummary
+        ? fromatter.usd(walletSummary.total_interest_earned)
+        : title;
       return screenTitle;
     }
 
@@ -337,33 +341,30 @@ class CelHeading extends Component {
         <View style={[style.content]}>
           <View style={leftStyle}>
             {this.getLeftContent(sceneOptions)}
-            {this.isSearchHeader() &&
-              sceneOptions &&
-              sceneOptions.state &&
-              sceneOptions.state.routeName !== "VerifyProfile" && (
-                <View
-                  style={[
-                    {
-                      width: "90%",
-                      justifyContent: "center",
-                      paddingTop: 5,
-                      alignSelf: "center",
-                      marginLeft: 12,
-                    },
-                  ]}
-                >
-                  <CelInput
-                    debounce
-                    autoFocus
-                    basic
-                    margin="0 0 0 0"
-                    field="search"
-                    placeholder={this.getSearchPlaceholder()}
-                    type="text"
-                    value={formData.search}
-                  />
-                </View>
-              )}
+            {this.isSearchHeader() && (
+              <View
+                style={[
+                  {
+                    width: "90%",
+                    justifyContent: "center",
+                    paddingTop: 5,
+                    alignSelf: "center",
+                    marginLeft: 12,
+                  },
+                ]}
+              >
+                <CelInput
+                  debounce
+                  autoFocus
+                  basic
+                  margin="0 0 0 0"
+                  field="search"
+                  placeholder={this.getSearchPlaceholder()}
+                  type="text"
+                  value={formData.search}
+                />
+              </View>
+            )}
           </View>
           {!this.isSearchHeader() && this.getCenterContent(sceneOptions)}
           <View style={style.right}>{this.getRightContent(sceneOptions)}</View>
@@ -388,11 +389,11 @@ class CelHeading extends Component {
 
   render() {
     let containerStyle;
-    const { internetConnected } = this.props;
-    if (!internetConnected) return null;
+    const { internetConnected, scene } = this.props;
+    const sceneOptions = scene.descriptor.options;
+    const { hideHeading, transparent, headerSameColor } = sceneOptions;
+    if (hideHeading || !internetConnected) return null;
 
-    const scene = this.props.scene.descriptor;
-    const { transparent, headerSameColor } = scene.options;
     const style = CelHeadingStyle();
 
     if (headerSameColor) {

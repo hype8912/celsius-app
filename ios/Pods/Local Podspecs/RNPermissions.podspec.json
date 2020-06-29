@@ -1,9 +1,7 @@
 {
   "name": "RNPermissions",
   "dependencies": {
-    "React": [
-
-    ]
+    "React": []
   },
   "version": "2.0.10",
   "license": "MIT",

@@ -10,9 +10,8 @@ import CelModal from "../CelModal/CelModal.js";
 import { MODALS, THEMES } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
-import { BRANCH_LINKS } from "../../../constants/DATA";
+import { DEEP_LINKS } from "../../../constants/DATA";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import * as appActions from "../../../redux/actions";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import { getTheme } from "../../../utils/styles-util";
@@ -129,15 +128,15 @@ class RegisterPromoCodeModal extends Component {
 
     code.amount = referralLink.referred_award_amount;
     code.coin =
-      referralLink.link_type === BRANCH_LINKS.INDIVIDUAL_REFERRAL
+      referralLink.link_type === DEEP_LINKS.INDIVIDUAL_REFERRAL
         ? "USD"
         : referralLink.referred_award_coin;
 
-    if (referralLink.link_type === BRANCH_LINKS.INDIVIDUAL_REFERRAL) {
+    if (referralLink.link_type === DEEP_LINKS.INDIVIDUAL_REFERRAL) {
       congratsText =
         "Your referral code has been successfully activated. In order to receive your reward, you must:";
     }
-    if (referralLink.link_type === BRANCH_LINKS.COMPANY_REFERRAL) {
+    if (referralLink.link_type === DEEP_LINKS.COMPANY_REFERRAL) {
       if (referralLink.referred_award_trigger === "sign-up") {
         congratsText = `You have received ${code.amount} ${code.coin}. Please sign up to see it in your wallet.`;
       }
@@ -168,13 +167,7 @@ class RegisterPromoCodeModal extends Component {
           {congratsText}
         </CelText>
         <View style={style.cardWrapper}>
-          <Card
-            color={
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.LIGHT_GRAY
-                : STYLES.COLORS.DARK_GRAY2
-            }
-          >
+          <Card color={style.messageTextCard.color}>
             <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
               1. Complete KYC (Identity Verification).
             </CelText>
@@ -292,13 +285,7 @@ class RegisterPromoCodeModal extends Component {
           {congratsText}
         </CelText>
         <View style={style.cardWrapper}>
-          <Card
-            color={
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.LIGHT_GRAY
-                : STYLES.COLORS.DARK_GRAY2
-            }
-          >
+          <Card color={style.messageTextCard.color}>
             <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
               {messageText}
             </CelText>

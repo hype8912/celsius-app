@@ -4,11 +4,11 @@ import apiUrl from "./api-url";
 const userDataService = {
   getLinkedBankAccount,
   linkBankAccount,
-  getCelsiusMemberStatus,
   getLoyaltyInfo,
   getUserAppSettings,
   setUserAppSettings,
   getUserStatus,
+  getUserAppBootstrap,
 };
 
 /**
@@ -39,14 +39,6 @@ function linkBankAccount(bankAccountInfo) {
 }
 
 /**
- * Get the user member status
- * @return {Promise}
- */
-function getCelsiusMemberStatus() {
-  return axios.post(`${apiUrl}/user/membership`);
-}
-
-/**
  * Gets Loyalty info for user
  *
  * @returns {Promise}
@@ -74,6 +66,14 @@ function setUserAppSettings(data) {
  */
 function getUserStatus() {
   return axios.get(`${apiUrl}/me/poll`);
+}
+
+/**
+ * Get user app boostrap
+ * @returns {Promise}
+ */
+function getUserAppBootstrap() {
+  return axios.get(`${apiUrl}/me/app-bootstrap`);
 }
 
 export default userDataService;

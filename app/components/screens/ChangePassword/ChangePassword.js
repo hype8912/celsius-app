@@ -35,6 +35,10 @@ class ChangePassword extends Component {
       formData: { oldPassword, newPassword },
     } = this.props;
     await actions.resetPassword(oldPassword, newPassword);
+    actions.updateFormFields({
+      oldPassword: "",
+      newPassword: "",
+    });
   };
 
   render() {
@@ -80,7 +84,7 @@ class ChangePassword extends Component {
         <CelButton
           onPress={this.changePassword}
           loading={changingPassword}
-          margin={"10 0 0 0"}
+          margin={"30 0 0 0"}
           disabled={
             passwordUtil.calculatePasswordScore(formData.newPassword).result
               .score < 80

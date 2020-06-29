@@ -71,7 +71,8 @@ class RegisterSetPin extends Component {
       if (!isSet) {
         this.setState({ pinCreated: false });
       } else {
-        return actions.navigateTo("WalletLanding");
+        await actions.getInitialCelsiusData();
+        return actions.navigateTo("Home");
       }
     } else {
       actions.showMessage("error", "Both PIN numbers should be the same.");

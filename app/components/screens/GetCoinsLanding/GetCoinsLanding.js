@@ -10,10 +10,11 @@ import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCa
 import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import GetCoinsInfoModal from "../../modals/GetCoinsInfoModal/GetCoinsInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import SimplexPaymentsHistory from "../../molecules/SimplexPaymentsHistory/SimplexPaymentsHistory";
+import BuyCoinsPaymentsHistory from "../../molecules/BuyCoinsPaymentsHistory/BuyCoinsPaymentsHistory";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { hasPassedKYC } from "../../../utils/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
+import store from "../../../redux/store";
 
 @connect(
   state => ({
@@ -23,6 +24,7 @@ import StaticScreen from "../StaticScreen/StaticScreen";
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
     simplexCompliance: state.compliance.simplex,
+    gemCompliance: state.compliance.gem,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -34,7 +36,10 @@ class GetCoinsLanding extends Component {
 
   static navigationOptions = () => ({
     title: "Buy Coins",
-    right: "profile",
+    right: "info",
+    onInfo: () => {
+      store.dispatch(appActions.openModal(MODALS.GET_COINS_INFO_MODAL));
+    },
   });
 
   componentDidMount() {
@@ -43,8 +48,27 @@ class GetCoinsLanding extends Component {
     mixpanelAnalytics.navigatedToBuyCoins(navHistory[0]);
   }
 
+  pressCreditCard = () => {
+    const { actions, formData } = this.props;
+    actions.initForm({
+      cryptoCoin: formData.selectedCoin || "ETH",
+      fiatCoin: "USD",
+      simplexData: {
+        paymentMethod: "Credit Card",
+      },
+    });
+    actions.navigateTo("GetCoinsEnterAmount");
+    mixpanelAnalytics.choseBuyCoinsType("CARD");
+  };
+
+  pressBankWire = () => {
+    const { actions } = this.props;
+    actions.navigateTo("GetCoinsGem");
+    mixpanelAnalytics.choseBuyCoinsType("WIRE");
+  };
+
   render() {
-    const { actions, kycStatus, simplexCompliance, formData } = this.props;
+    const { actions, kycStatus, simplexCompliance, gemCompliance } = this.props;
 
     if (!hasPassedKYC()) {
       if (kycStatus !== KYC_STATUSES.pending) {
@@ -64,11 +88,12 @@ class GetCoinsLanding extends Component {
         );
       }
     }
-    if (!simplexCompliance.allowed) {
+
+    if (!simplexCompliance.allowed && !gemCompliance.allowed) {
       return (
         <StaticScreen
           emptyState={{
-            purpose: EMPTY_STATES.SIMPLEX_COMPLIANCE,
+            purpose: EMPTY_STATES.BUY_COINS_COMPLIANCE,
           }}
         />
       );
@@ -76,33 +101,27 @@ class GetCoinsLanding extends Component {
 
     return (
       <RegularLayout>
-        <MultiInfoCardButton
-          textButton={"Credit Card"}
-          explanation={"Buy crypto easily using your credit card."}
-          darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
-          lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
-          onPress={() => {
-            actions.initForm({
-              isFiat: true,
-              cryptoCoin: formData.selectedCoin || "ETH",
-              simplexData: {
-                paymentMethod: "Credit Card",
-              },
-            });
-            actions.navigateTo("GetCoinsEnterAmount");
-            mixpanelAnalytics.choseBuyCoinsType("CARD");
-          }}
-        />
-        <MultiInfoCardButton
-          textButton={"Bank Wire"}
-          explanation={"Buy crypto easily through your bank account."}
-          darkImage={require("../../../../assets/images/icons/bank-wire-dark.png")}
-          lightImage={require("../../../../assets/images/icons/bank-wire-light.png")}
-          label={"COMING SOON!"}
-          disabled
-        />
+        {simplexCompliance.allowed && (
+          <MultiInfoCardButton
+            textButton={"Credit Card"}
+            explanation={"Buy crypto easily using your credit card."}
+            darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
+            lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
+            onPress={this.pressCreditCard}
+          />
+        )}
 
-        <SimplexPaymentsHistory />
+        {gemCompliance.allowed && (
+          <MultiInfoCardButton
+            textButton={"Bank Transfer"}
+            explanation={"Buy crypto easily through your bank account."}
+            darkImage={require("../../../../assets/images/icons/bank-wire-dark.png")}
+            lightImage={require("../../../../assets/images/icons/bank-wire-light.png")}
+            onPress={this.pressBankWire}
+          />
+        )}
+
+        <BuyCoinsPaymentsHistory />
 
         <GetCoinsInfoModal actions={actions} />
       </RegularLayout>

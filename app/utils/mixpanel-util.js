@@ -18,6 +18,8 @@ let version = "";
 const engageCompleted = { completed: false };
 const appInfo = { os: Platform.OS };
 
+let isMixpanelInitialized = false;
+
 /**
  * Initialize Mixpanel
  */
@@ -25,6 +27,7 @@ async function initMixpanel() {
   const { MIXPANEL_TOKEN } = Constants;
   try {
     await Mixpanel.sharedInstanceWithToken(MIXPANEL_TOKEN);
+    isMixpanelInitialized = true;
   } catch (err) {
     loggerUtil.log(err);
   }
@@ -99,6 +102,12 @@ async function sendEvent(event, data = {}) {
  * Set event tracking
  */
 function track(event, payload = {}) {
+  // if not initialized, try again in 5s
+  if (!isMixpanelInitialized)
+    return setTimeout(() => {
+      track(event, payload);
+    }, 5000);
+
   const data = {
     event,
     ...payload,
@@ -119,7 +128,6 @@ function getUserData() {
  */
 async function addPushDeviceToken() {
   const token = await getSecureStoreKey(NOTIFICATION_TOKEN);
-
   if (Platform.OS === "android") {
     Mixpanel.setPushRegistrationId(token);
   } else {
@@ -140,6 +148,7 @@ async function logoutUserMixpanel() {
   }
 }
 
+// TODO: make export default for easier search
 export {
   initMixpanel,
   registerMixpanelUser,

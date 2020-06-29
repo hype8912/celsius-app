@@ -77,7 +77,9 @@ class LoyaltyProgram extends Component {
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <CelText color={"white"} type={"H4"} weight={"700"}>
               {formatter.usd(
-                walletSummary.total_amount_usd - celAmount.amount_usd,
+                walletSummary.total_amount_usd
+                  .minus(celAmount.amount_usd)
+                  .toNumber(),
                 { precision: 0 }
               )}
             </CelText>

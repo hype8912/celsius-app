@@ -7,9 +7,10 @@ import { transitionConfig } from "./navigationConfig";
 import Storybook from "../components/screens/Storybook/Storybook";
 
 import Home from "../components/screens/Home/Home";
+import SplashScreen from "../components/screens/SplashScreen/SplashScreen";
 import Community from "../components/screens/Community/Community";
 import Maintenance from "../components/screens/Maintenance/Maintenance";
-import LockedAccount from "../components/screens/LockedAccount/LockedAccount";
+import TooManyRequests from "../components/screens/TooManyRequests/TooManyRequests";
 import LoginLanding from "../components/screens/LoginLanding/LoginLanding";
 import Login from "../components/screens/Login/Login";
 import ForgotPassword from "../components/screens/ForgotPassword/ForgotPassword";
@@ -36,6 +37,7 @@ import AllTransactions from "../components/screens/AllTransactions/AllTransactio
 import GetCoinsLanding from "../components/screens/GetCoinsLanding/GetCoinsLanding";
 import GetCoinsEnterAmount from "../components/screens/GetCoinsEnterAmount/GetCoinsEnterAmount";
 import GetCoinsTransactionDetails from "../components/screens/GetCoinsTransactionDetails/GetCoinsTransactionDetails";
+import GetCoinsGem from "../components/screens/GetCoinsGem/GetCoinsGem";
 import MyCel from "../components/screens/MyCel/MyCel";
 import Simplex from "../components/screens/Simplex/SimplexScreen";
 import InterestCalculatorScreen from "../components/screens/InterestCalculatorScreen/InterestCalculatorScreen";
@@ -113,9 +115,10 @@ export const screens = {
    * Out of limit
    */
 
+  SplashScreen,
   Home,
   Maintenance,
-  LockedAccount,
+  TooManyRequests,
   Storybook,
 
   /**
@@ -173,6 +176,7 @@ export const screens = {
   GetCoinsEnterAmount,
   GetCoinsTransactionDetails,
   Simplex,
+  GetCoinsGem,
 
   /**
    * Borrow

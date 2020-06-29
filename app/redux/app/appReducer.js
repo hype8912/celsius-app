@@ -5,8 +5,6 @@ import ACTIONS from "../../constants/ACTIONS";
  */
 function initialState() {
   return {
-    appInitialized: false,
-    appInitializing: false,
     geolocation: null,
 
     // App states: active|inactive|background
@@ -26,37 +24,6 @@ export default function appReducer(state = initialState(), action) {
   newState.lastTenActions = newState.lastTenActions.slice(0, 10);
 
   switch (action.type) {
-    case ACTIONS.APP_INIT_START:
-      return {
-        ...newState,
-        appInitialized: false,
-        appInitializing: true,
-      };
-
-    // TODO: double check if duplicated can be removed here
-    // case ACTIONS.REGISTER_USER_SUCCESS:
-    // case ACTIONS.LOGIN_USER_SUCCESS:
-    // case ACTIONS.REGISTER_USER_FACEBOOK_SUCCESS:
-    // case ACTIONS.REGISTER_USER_GOOGLE_SUCCESS:
-    // case ACTIONS.REGISTER_USER_TWITTER_SUCCESS:
-    // case ACTIONS.LOGIN_USER_GOOGLE_SUCCESS:
-    // case ACTIONS.LOGIN_USER_FACEBOOK_SUCCESS:
-    // case ACTIONS.LOGIN_USER_TWITTER_SUCCESS:
-    // case ACTIONS.CHECK_TWO_FACTOR_SUCCESS:
-    // case ACTIONS.CHECK_PIN_SUCCESS:
-    case ACTIONS.APP_INIT_DONE:
-      return {
-        ...newState,
-        appInitialized: true,
-        appInitializing: false,
-      };
-
-    case ACTIONS.RESET_APP:
-      return {
-        ...newState,
-        appInitialized: false,
-      };
-
     case ACTIONS.SET_APP_STATE:
       return {
         ...newState,

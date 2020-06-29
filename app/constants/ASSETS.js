@@ -155,7 +155,8 @@ const CACHE_IMAGES = [
     "/api/v3",
     ""
   )}/profile-images/avatar/unicorn/profile-unicorn.png`,
-  require("../../assets/images/deer-sad.png"),
+  require("../../assets/images/icons/antenna.png"),
+  require("../../assets/images/icons/tool.png"),
   require("../../assets/images/email-sent.png"),
   require("../../assets/images/email-sent-dark.png"),
   require("../../assets/images/calculator.png"),
@@ -211,6 +212,9 @@ const CACHE_IMAGES = [
   require("../../assets/images/illustration-borrow-dollars.png"),
   require("../../assets/images/illustration-borrow-stablecoins.png"),
   require(`../../assets/images/modal-withdraw-dark.png`),
+  require(`../../assets/images/bankToTheFuture.png`),
+  require(`../../assets/images/bankToTheFuture2.png`),
+  require(`../../assets/images/bankToTheFuture3.png`),
 ];
 
 export default {

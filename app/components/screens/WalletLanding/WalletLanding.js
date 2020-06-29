@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, BackHandler } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  BackHandler,
+  AsyncStorage,
+} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withNavigationFocus } from "react-navigation";
@@ -19,7 +24,6 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
 import RejectionReasonsModal from "../../modals/RejectionReasonsModal/RejectionReasonsModal";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
-import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
@@ -27,6 +31,7 @@ import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
 import MultiAddressModal from "../../modals/MultiAddressModal/MultiAddressModal";
 import animationsUtil from "../../../utils/animations-util";
 import { COMING_SOON_COINS } from "../../../constants/DATA";
+import BankToTheFutureModal from "../../modals/BankToTheFutureModal/BankToTheFutureModal";
 
 @connect(
   state => {
@@ -83,58 +88,47 @@ class WalletLanding extends Component {
     this.state = {
       activeView: props.appSettings.default_wallet_view,
     };
-
-    // NOTE (fj): quickfix for CN-2763
-    this.shouldInitializeMembership = true;
   }
 
   componentDidMount = async () => {
     const {
       actions,
-      appSettings,
       currenciesRates,
       currenciesGraphs,
       previouslyOpenedModals,
       hodlStatus,
       userTriggeredActions,
     } = this.props;
+    actions.changeWalletHeaderContent();
+
+    const dontShowBankModal = await AsyncStorage.getItem("DONT_SHOW_BNK");
     setTimeout(() => {
-      if (
-        !previouslyOpenedModals.HODL_MODE_MODAL &&
-        hodlStatus.created_by === "backoffice"
-      )
-        actions.openModal(MODALS.HODL_MODE_MODAL);
+      if (dontShowBankModal === "DONT_SHOW") {
+        if (
+          !previouslyOpenedModals.HODL_MODE_MODAL &&
+          hodlStatus.created_by === "backoffice"
+        )
+          actions.openModal(MODALS.HODL_MODE_MODAL);
 
-      if (
-        this.pendingAddresses().length &&
-        !userTriggeredActions.permanently_dismiss_deposit_address_changes
-      )
-        actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
+        if (
+          this.pendingAddresses().length &&
+          !userTriggeredActions.permanently_dismiss_deposit_address_changes
+        )
+          actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
 
-      actions.checkForLoanAlerts();
+        actions.getLoanAlerts();
+      } else {
+        actions.openModal(MODALS.BANK_TO_THE_FUTURE_MODAL);
+      }
     }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
-    if (appSettings && appSettings.accepted_terms_of_use === false) {
-      return actions.navigateTo("TermsOfUse", {
-        purpose: "accept",
-        nextScreen: "WalletLanding",
-      });
-    }
     await assignPushNotificationToken();
 
     await actions.getWalletSummary();
     if (!currenciesRates) actions.getCurrencyRates();
     if (!currenciesGraphs) actions.getCurrencyGraphs();
-
-    // NOTE (fj): quickfix for CN-2763
-    // if (user.celsius_member) {
-    if (this.shouldInitializeMembership) {
-      actions.getCelsiusMemberStatus();
-      this.shouldInitializeMembership = false;
-    }
-
     this.setWalletFetchingInterval();
   };
 
@@ -243,12 +237,15 @@ class WalletLanding extends Component {
     } = this.props;
     const style = WalletLandingStyle();
 
-    if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
+    if (!walletSummary || !user) {
       return <LoadingScreen />;
     }
 
     return (
-      <RegularLayout pullToRefresh={() => actions.getWalletSummary()}>
+      <RegularLayout
+        pullToRefresh={() => actions.getWalletSummary()}
+        fabType={currenciesRates ? "main" : "hide"}
+      >
         <BannerCrossroad />
         <View>
           <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
@@ -316,10 +313,10 @@ class WalletLanding extends Component {
         <CelPayReceivedModal transfer={branchTransfer} />
         <ReferralSendModal />
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
-        <BecomeCelMemberModal />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
-        <MultiAddressModal actions={actions} />
+        <BankToTheFutureModal />
+        {currenciesRates && <MultiAddressModal actions={actions} />}
       </RegularLayout>
     );
   }
