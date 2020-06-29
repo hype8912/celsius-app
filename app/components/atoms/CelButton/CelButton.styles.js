@@ -1,6 +1,7 @@
 import {
   getThemedStyle,
   getScaledFont,
+  getFontSize,
   getColor,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -45,10 +46,10 @@ const base = {
     color: getColor(COLOR_KEYS.NEUTRAL),
   },
   mediumTitle: {
-    fontSize: getScaledFont(18),
+    fontSize: getScaledFont(getFontSize("H4")),
   },
   smallTitle: {
-    fontSize: getScaledFont(14),
+    fontSize: getScaledFont(getFontSize("H6")),
   },
   ghostButton: {
     backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
