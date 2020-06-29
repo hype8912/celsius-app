@@ -180,6 +180,10 @@ function getFontFamily(weight = "regular", overrideFont = null) {
     baseFont = getThemeFontFamily();
   }
 
+  if (baseFont === "RobotoMono") {
+    return "RobotoMono-Regular";
+  }
+
   const fontWeight = FONTS[`FONT_WEIGHTS_${baseFont.toUpperCase()}`][weight];
   const fontFamily = `${baseFont}${fontWeight}`;
 
@@ -195,10 +199,10 @@ function getThemeFontFamily() {
   const theme = getTheme();
 
   switch (theme) {
-    case THEMES.CELSIUS:
-    case THEMES.LIGHT:
+    case THEMES.UNICORN:
       return "Pangram";
 
+    case THEMES.LIGHT:
     case THEMES.DARK:
     default:
       return "Barlow";
@@ -219,7 +223,9 @@ function getFontSize(type = "H5", overrideFont = null) {
     baseFont = getThemeFontFamily();
   }
 
-  const fontSize = FONTS[`FONT_SIZES_${baseFont.toUpperCase()}`][type];
+  const fontSizes =
+    FONTS[`FONT_SIZES_${baseFont.toUpperCase()}`] || FONTS.FONT_SIZES_BARLOW;
+  const fontSize = fontSizes[type];
   return fontSize;
 }
 

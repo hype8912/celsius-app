@@ -78,18 +78,19 @@ class CelText extends Component {
   }
 
   getFontFamily = () => {
-    const { font, weight, type } = this.props;
+    const { font, weight, type, italic } = this.props;
 
     const fontWeightType = weight || this.getFontWeightForType(type);
-    const fontFamily = getFontFamily(fontWeightType, font);
+    let fontFamily = getFontFamily(fontWeightType, font);
 
     // NOTE(fj): Pangram doesn't have italic text
-    // if (italic) {
-    //   fontFamily =
-    //     fontFamily !== "Barlow-Regular"
-    //       ? `${fontFamily}Italic`
-    //       : `Barlow-Italic`;
-    // }
+    if (italic && getThemeFontFamily() === "Barlow") {
+      fontFamily =
+        fontFamily !== "Barlow-Regular"
+          ? `${fontFamily}Italic`
+          : `Barlow-Italic`;
+    }
+
     return fontFamily;
   };
 
