@@ -18,7 +18,12 @@ import STYLES from "../../../constants/STYLES";
 import DepositStyle from "./Deposit.styles";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
-import { EMPTY_STATES, MODALS, THEMES } from "../../../constants/UI";
+import {
+  EMPTY_STATES,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+  THEMES,
+} from "../../../constants/UI";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import { KYC_STATUSES } from "../../../constants/DATA";
@@ -231,19 +236,19 @@ class Deposit extends Component {
     }
 
     switch (reason) {
-      case "MANUAL_INTEREST":
-      case "INTEREST":
-      case "INTEREST_PREPAYMENT":
+      case LOAN_PAYMENT_REASONS.MANUAL_INTEREST:
+      case LOAN_PAYMENT_REASONS.INTEREST:
+      case LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT:
         text = "required for the next interest payment.";
         usd = amountUsd;
         crypto = additionalCryptoAmount;
         break;
-      case "PRINCIPAL":
+      case LOAN_PAYMENT_REASONS.PRINCIPAL:
         text = "required for the principal payment.";
         usd = amountUsd;
         crypto = additionalCryptoAmount;
         break;
-      case "MARGIN_CALL":
+      case LOAN_PAYMENT_REASONS.MARGIN_CALL:
         text = "required to cover the margin call";
         usd = collateralMissing;
         break;
