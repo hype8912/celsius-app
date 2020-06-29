@@ -16,6 +16,7 @@ import Card from "../../atoms/Card/Card";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import StaticScreen from "../StaticScreen/StaticScreen";
+import { getFontSize } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -96,7 +97,7 @@ class HodlDeactivationCode extends Component {
             placeholder={"  X X X X X X X X  "}
             type="text"
             returnKeyType={"done"}
-            style={{ textAlign: "center", fontSize: 30 }}
+            style={{ textAlign: "center", fontSize: getFontSize("H2") }}
             maxLenght={8}
             field={"hodlCode"}
             value={formData.hodlCode}

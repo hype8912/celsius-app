@@ -48,26 +48,28 @@ const FONTS = [
   {
     "RobotoMono-Regular": require("../../assets/fonts/Roboto-Mono/RobotoMono-Regular.ttf"),
   },
+  {
+    "Pangram-Black": require("../../assets/fonts/Pangram/Pangram-Black.otf"),
+  },
+  {
+    "Pangram-Bold": require("../../assets/fonts/Pangram/Pangram-Bold.otf"),
+  },
+  {
+    "Pangram-ExtraBold": require("../../assets/fonts/Pangram/Pangram-ExtraBold.otf"),
+  },
+  {
+    "Pangram-ExtraLight": require("../../assets/fonts/Pangram/Pangram-ExtraLight.otf"),
+  },
+  {
+    "Pangram-Light": require("../../assets/fonts/Pangram/Pangram-Light.otf"),
+  },
+  {
+    "Pangram-Medium": require("../../assets/fonts/Pangram/Pangram-Medium.otf"),
+  },
+  {
+    "Pangram-Regular": require("../../assets/fonts/Pangram/Pangram-Regular.otf"),
+  },
 ];
-
-const WEIGHT = {
-  "100": "-Thin",
-  "200": "-ExtraLight",
-  "300": "-Light",
-  "400": "-Regular",
-  "500": "-Medium",
-  "600": "-SemiBold",
-  "700": "-Bold",
-  "900": "-Black",
-  thin: "-Thin",
-  "extra-light": "-ExtraLight",
-  light: "-Light",
-  regular: "-Regular",
-  medium: "-Medium",
-  "semi-bold": "-SemiBold",
-  bold: "-Bold",
-  black: "-Black",
-};
 
 const CACHE_IMAGES = [
   require("../../assets/images/security-meter/01-pass-strength-weak-light.png"),
@@ -220,5 +222,4 @@ const CACHE_IMAGES = [
 export default {
   FONTS,
   CACHE_IMAGES,
-  WEIGHT,
 };

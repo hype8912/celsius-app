@@ -18,6 +18,7 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import Icon from "../../atoms/Icon/Icon";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { getFontSize } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -111,7 +112,7 @@ class LoanTermsOfUse extends Component {
       theme === THEMES.LIGHT ? STYLES.COLORS.MEDIUM_GRAY : "white";
 
     const markdownStyle = {
-      text: { color: textColor, fontSize: 16 },
+      text: { color: textColor, fontSize: getFontSize("H5") },
       link: { color: STYLES.COLORS.CELSIUS_BLUE },
       listOrderedItemIcon: {
         color: textColor,

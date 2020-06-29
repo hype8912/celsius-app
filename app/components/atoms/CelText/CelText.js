@@ -2,16 +2,20 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Text } from "react-native";
 
-import { getMargins, getScaledFont } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
-import ASSETS from "../../../constants/ASSETS";
+import {
+  getMargins,
+  getScaledFont,
+  getFontFamily,
+  getThemeFontFamily,
+  getFontSize,
+} from "../../../utils/styles-util";
 import CelTextStyle from "./CelText.styles";
 import { THEMES } from "../../../constants/UI";
 
 class CelText extends Component {
   static propTypes = {
     type: PropTypes.oneOf(["H0", "H1", "H2", "H3", "H4", "H5", "H6", "H7"]),
-    font: PropTypes.oneOf(["Barlow", "RobotoMono"]),
+    font: PropTypes.oneOf(["Pangram", "Barlow", "RobotoMono"]),
     weight: PropTypes.oneOf([
       "100",
       "200",
@@ -29,6 +33,7 @@ class CelText extends Component {
       "medium",
       "semi-bold",
       "bold",
+      "extra-bold",
       "black",
     ]),
     italic: PropTypes.bool,
@@ -46,7 +51,6 @@ class CelText extends Component {
     theme: PropTypes.oneOf(Object.values(THEMES)),
   };
   static defaultProps = {
-    font: "Barlow",
     type: "H5",
     margin: "0 0 0 0",
     style: {},
@@ -56,25 +60,37 @@ class CelText extends Component {
     strikethrough: false,
   };
 
-  getFontSize = type => getScaledFont(STYLES.FONTSIZE[type]);
+  getFontSize = () => {
+    const { type, font, size } = this.props;
+    const baseFontFamily = font || getThemeFontFamily();
+
+    // NOTE(fj): Check usage of size
+    const fontSize = size
+      ? { fontSize: getScaledFont(size), lineHeight: getScaledFont(size) }
+      : { fontSize: getFontSize(type, baseFontFamily) };
+
+    return fontSize;
+  };
 
   getFontWeightForType(type) {
     if (type === "H1") return "bold";
-
     return "regular";
   }
 
   getFontFamily = () => {
-    const { font, weight, italic, type } = this.props;
+    const { font, weight, type, italic } = this.props;
 
-    const fontWeight = weight || this.getFontWeightForType(type);
-    let fontFamily = `${font}${ASSETS.WEIGHT[fontWeight.toString()]}`;
-    if (italic) {
+    const fontWeightType = weight || this.getFontWeightForType(type);
+    let fontFamily = getFontFamily(fontWeightType, font);
+
+    // NOTE(fj): Pangram doesn't have italic text
+    if (italic && getThemeFontFamily() === "Barlow") {
       fontFamily =
         fontFamily !== "Barlow-Regular"
           ? `${fontFamily}Italic`
           : `Barlow-Italic`;
     }
+
     return fontFamily;
   };
 
@@ -91,11 +107,9 @@ class CelText extends Component {
   };
 
   getFontStyle = () => {
-    const { type, margin, align, size, strikethrough, theme } = this.props;
+    const { margin, align, strikethrough, theme } = this.props;
     const cmpStyle = CelTextStyle(theme);
-    const fontSize = size
-      ? { fontSize: getScaledFont(size), lineHeight: getScaledFont(size) }
-      : { fontSize: this.getFontSize(type) };
+    const fontSize = this.getFontSize();
     const fontFamily = { fontFamily: this.getFontFamily() };
     const colorStyle = this.getTextColor();
     const marginStyle = getMargins(margin);
