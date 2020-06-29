@@ -95,7 +95,7 @@ function createSimplexPayment() {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
-      const { simplexData } = getState().simplex;
+      const { simplexData } = getState().buyCoins;
 
       const { pin, code } = formData;
 
