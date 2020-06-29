@@ -1,6 +1,9 @@
-// import STYLES from '../../../constants/STYLES';
-import { getThemedStyle, getScaledFont } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import {
+  getThemedStyle,
+  getScaledFont,
+  getColor,
+} from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -27,20 +30,19 @@ const base = {
   },
   disabledButton: {
     opacity: 0.5,
-    backgroundColor: "transparent",
+    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
     borderWidth: 2,
   },
   basicButton: {
-    borderColor: "transparent",
-    backgroundColor: "transparent",
+    borderColor: getColor(COLOR_KEYS.TRANSPARENT),
+    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
     height: "auto",
     paddingLeft: 0,
     paddingRight: 0,
   },
   baseTitle: {
     textAlign: "center",
-    color: "white",
-    // margin: 'auto',
+    color: getColor(COLOR_KEYS.NEUTRAL),
   },
   mediumTitle: {
     fontSize: getScaledFont(18),
@@ -49,41 +51,41 @@ const base = {
     fontSize: getScaledFont(14),
   },
   ghostButton: {
-    backgroundColor: "transparent",
+    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
     borderWidth: 1,
-    borderColor: STYLES.COLORS.CELSIUS_BLUE,
+    borderColor: getColor(COLOR_KEYS.PRIMARY),
   },
   ghostredButton: {
-    backgroundColor: "transparent",
+    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
     borderWidth: 1,
-    borderColor: STYLES.COLORS.WHITE,
+    borderColor: getColor(COLOR_KEYS.NEUTRAL),
   },
   ghostgreenButton: {
-    backgroundColor: "transparent",
+    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
     borderWidth: 1,
-    borderColor: STYLES.COLORS.WHITE,
+    borderColor: getColor(COLOR_KEYS.NEUTRAL),
   },
   basicredButton: {
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: getColor(COLOR_KEYS.NEUTRAL),
     margin: 20,
   },
   basicgreenButton: {
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: getColor(COLOR_KEYS.NEUTRAL),
   },
   ghostColorTitle: {
-    color: STYLES.COLORS.WHITE,
+    color: getColor(COLOR_KEYS.NEUTRAL),
   },
   ghostTitle: {
-    color: STYLES.COLORS.CELSIUS_BLUE,
+    color: getColor(COLOR_KEYS.PRIMARY),
   },
   greenButton: {
-    backgroundColor: STYLES.COLORS.GREEN,
+    backgroundColor: getColor(COLOR_KEYS.SUCCESS),
   },
   redButton: {
-    backgroundColor: STYLES.COLORS.RED,
+    backgroundColor: getColor(COLOR_KEYS.FAILURE),
   },
   whiteButton: {
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: getColor(COLOR_KEYS.NEUTRAL),
   },
   basicredTitleButton: {
     paddingHorizontal: 10,
@@ -98,42 +100,31 @@ const base = {
 const themed = {
   light: {
     container: {
-      backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-      borderColor: STYLES.COLORS.CELSIUS_BLUE,
+      backgroundColor: getColor(COLOR_KEYS.PRIMARY),
+      borderColor: getColor(COLOR_KEYS.PRIMARY),
     },
     basicTitle: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
+      color: getColor(COLOR_KEYS.PRIMARY),
     },
     disabledTitleColor: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
+      color: getColor(COLOR_KEYS.PRIMARY),
     },
   },
 
   dark: {
     container: {
-      backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-      borderColor: STYLES.COLORS.CELSIUS_BLUE,
+      backgroundColor: getColor(COLOR_KEYS.PRIMARY),
+      borderColor: getColor(COLOR_KEYS.PRIMARY),
     },
     basicTitle: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
+      color: getColor(COLOR_KEYS.PRIMARY),
     },
     disabledTitleColor: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
+      color: getColor(COLOR_KEYS.PRIMARY),
     },
   },
 
-  celsius: {
-    container: {
-      backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-      borderColor: STYLES.COLORS.CELSIUS_BLUE,
-    },
-    basicTitle: {
-      color: STYLES.COLORS.WHITE,
-    },
-    disabledTitleColor: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
-    },
-  },
+  celsius: {},
 };
 
 const CelButtonStyle = () => getThemedStyle(base, themed);
