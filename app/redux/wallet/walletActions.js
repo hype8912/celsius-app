@@ -39,23 +39,24 @@ function getWalletSummary() {
 
 /**
  * Gets Deposit address for coin
- * @param {string} coin - btc|eth|xrp
  */
-function getCoinAddress(coin) {
+function getCoinAddress() {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.GET_COIN_ADDRESS));
 
-      const res = await walletService.getCoinAddress(coin);
-      const address = res.data.wallet;
-      dispatch(
-        getCoinAddressSuccess({
-          [`${coin}Address`]: address.address,
-          [`${coin}AlternateAddress`]:
-            address.address !== address.address_alt && address.address_alt,
-          [`${coin}RawResponse`]: address,
-        })
-      );
+      const res = await walletService.getCoinAddresses();
+      const addresses = res.data;
+      const walletAddresses = [];
+      Object.keys(addresses).forEach(coin => {
+        const value = addresses[coin];
+
+        walletAddresses.push({
+          asset: coin,
+          address: value,
+        });
+      });
+      dispatch(getCoinAddressSuccess(walletAddresses));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_COIN_ADDRESS, err));

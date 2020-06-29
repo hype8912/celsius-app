@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import qs from "qs";
+import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
 import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
@@ -33,7 +34,6 @@ const GemMessages = {
     formData: state.forms.formData,
     walletAddresses: state.wallet.addresses,
     user: state.user.profile,
-    gemCompliance: state.compliance.gem,
     currencies: state.currencies.rates,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -47,13 +47,9 @@ class GetCoinsGem extends Component {
   });
 
   componentDidMount() {
-    const { walletAddresses, actions, gemCompliance } = this.props;
+    const { actions } = this.props;
 
-    gemCompliance.coins.forEach(c => {
-      if (!walletAddresses[`${c}Address`]) {
-        actions.getCoinAddress(c);
-      }
-    });
+    actions.getCoinAddress();
   }
 
   onGemSuccess = async data => {
@@ -99,32 +95,18 @@ class GetCoinsGem extends Component {
   };
 
   createGemUrl = () => {
-    const { walletAddresses, user, gemCompliance } = this.props;
-
-    onrampConfig.wallets = gemCompliance.coins.map(c => ({
-      asset: c.toLowerCase(),
-      address: walletAddresses[`${c}Address`],
-    }));
+    const { walletAddresses, user } = this.props;
+    onrampConfig.wallets = walletAddresses;
     onrampConfig.userEmail = user.email;
-
-    const queryConfig = qs.stringify({
-      ...onrampConfig,
-      wallets: JSON.stringify(onrampConfig.wallets),
-    });
+    const queryConfig = qs.stringify(onrampConfig);
 
     return `${GEM_URL}?${queryConfig}`;
   };
 
   render() {
-    const { walletAddresses, gemCompliance } = this.props;
+    const { walletAddresses } = this.props;
 
-    let areAddressesFetched = true;
-    gemCompliance.coins.forEach(c => {
-      areAddressesFetched =
-        areAddressesFetched && !!walletAddresses[`${c}Address`];
-    });
-
-    if (!areAddressesFetched) {
+    if (_.isEmpty(walletAddresses)) {
       return <LoadingScreen />;
     }
 
