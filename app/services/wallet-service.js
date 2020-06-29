@@ -3,7 +3,7 @@ import apiUrl from "./api-url";
 
 const walletService = {
   getWalletSummary,
-  getCoinAddresses,
+  getCoinAddress,
   setCoinWithdrawalAddress,
   setCoinWithdrawalAddressLabel,
   getAllCoinWithdrawalAddresses,
@@ -23,10 +23,11 @@ function getWalletSummary() {
  * Gets deposit address for coin for user
  * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#16084590-d24a-4beb-b704-4b2397650d7b
  *
+ * @param {string} coin - eg. eth|ETH
  * @return {Promise}
  */
-function getCoinAddresses() {
-  return axios.get(`${apiUrl}/buy_coins/deposit-addresses/gem`);
+function getCoinAddress(coin) {
+  return axios.get(`${apiUrl}/wallet/${coin.toLowerCase()}/address`);
 }
 
 /**

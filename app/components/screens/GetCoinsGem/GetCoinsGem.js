@@ -32,7 +32,7 @@ const GemMessages = {
   state => ({
     eligibleCoins: getDepositEligibleCoins(state),
     formData: state.forms.formData,
-    walletAddresses: state.wallet.addresses,
+    walletGemAddresses: state.buyCoins.walletGemAddresses,
     user: state.user.profile,
     currencies: state.currencies.rates,
   }),
@@ -49,7 +49,7 @@ class GetCoinsGem extends Component {
   componentDidMount() {
     const { actions } = this.props;
 
-    actions.getCoinAddress();
+    actions.getGemCoinAddress();
   }
 
   onGemSuccess = async data => {
@@ -95,8 +95,8 @@ class GetCoinsGem extends Component {
   };
 
   createGemUrl = () => {
-    const { walletAddresses, user } = this.props;
-    onrampConfig.wallets = walletAddresses;
+    const { walletGemAddresses, user } = this.props;
+    onrampConfig.wallets = walletGemAddresses;
     onrampConfig.userEmail = user.email;
     const queryConfig = qs.stringify(onrampConfig);
 
@@ -104,9 +104,8 @@ class GetCoinsGem extends Component {
   };
 
   render() {
-    const { walletAddresses } = this.props;
-
-    if (_.isEmpty(walletAddresses)) {
+    const { walletGemAddresses } = this.props;
+    if (_.isEmpty(walletGemAddresses)) {
       return <LoadingScreen />;
     }
 
