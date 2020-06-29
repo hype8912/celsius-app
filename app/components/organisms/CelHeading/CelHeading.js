@@ -11,16 +11,16 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import CelHeadingStyle from "./CelHeading.styles";
-import { getPadding, getTheme } from "../../../utils/styles-util";
+import { getPadding, getTheme, getColor } from "../../../utils/styles-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { THEMES } from "../../../constants/UI";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import HodlBanner from "../../atoms/HodlBanner/HodlBanner";
 import Icon from "../../atoms/Icon/Icon";
 import Loader from "../../atoms/Loader/Loader";
 import fromatter from "../../../utils/formatter";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -105,7 +105,7 @@ class CelHeading extends Component {
     return this.props.scene.index === 0 || hideBack === true ? null : (
       <CelButton
         margin={this.isSearchHeader() ? "8 0 0 4" : null}
-        iconRightColor={STYLES.COLORS.GRAY}
+        iconRightColor={getColor(COLOR_KEYS.SUBHEADING_LIGHT_TEXT)}
         basic
         onPress={() => this.navigateBack(customBack, backScreenName)}
         iconRight="IconChevronLeft"
@@ -155,8 +155,8 @@ class CelHeading extends Component {
             width={30}
             fill={
               theme === THEMES.LIGHT
-                ? STYLES.COLORS.DARK_GRAY3
-                : STYLES.COLORS.WHITE_OPACITY5
+                ? getColor(COLOR_KEYS.INFO)
+                : getColor(COLOR_KEYS.NEUTRAL_LIGHT)
             }
           />
         </TouchableOpacity>
@@ -168,8 +168,8 @@ class CelHeading extends Component {
           width={30}
           fill={
             theme === THEMES.LIGHT
-              ? STYLES.COLORS.DARK_GRAY3
-              : STYLES.COLORS.WHITE_OPACITY5
+              ? getColor(COLOR_KEYS.INFO)
+              : getColor(COLOR_KEYS.NEUTRAL_LIGHT)
           }
         />
       ),
@@ -291,12 +291,12 @@ class CelHeading extends Component {
         {customCenterComponent && !customCenterComponent.flowProgress ? (
           <View style={style.customCenterComponent}>
             <Loader
-              barColor={STYLES.COLORS.GREEN}
-              backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+              barColor={getColor(COLOR_KEYS.SUCCESS)}
+              backgroundColor={getColor(COLOR_KEYS.SUCCESS_LIGHT)}
               progress={
                 customCenterComponent.currentStep / customCenterComponent.steps
               }
-              borderColor={STYLES.COLORS.LIGHT_GRAY}
+              borderColor={getColor(COLOR_KEYS.HEADING_LIGHT_TEXT)}
               width={40}
             />
           </View>
@@ -373,13 +373,13 @@ class CelHeading extends Component {
         sceneOptions.customCenterComponent.flowProgress ? (
           <Loader
             flowProgress={sceneOptions.customCenterComponent.flowProgress}
-            barColor={STYLES.COLORS.GREEN}
-            backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+            barColor={getColor(COLOR_KEYS.SUCCESS)}
+            backgroundColor={getColor(COLOR_KEYS.SUCCESS_LIGHT)}
             progress={
               sceneOptions.customCenterComponent.currentStep /
               sceneOptions.customCenterComponent.steps
             }
-            borderColor={STYLES.COLORS.LIGHT_GRAY}
+            borderColor={getColor(COLOR_KEYS.HEADING_LIGHT_TEXT)}
             width={100}
           />
         ) : null}
