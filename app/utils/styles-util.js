@@ -90,7 +90,9 @@ function getThemedStyle(
   themed,
   theme = store.getState().user.appSettings.theme
 ) {
-  return StyleSheet.create(formatter.deepmerge(base, themed[theme]));
+  return StyleSheet.create(
+    formatter.deepmerge(base, themed[theme] || themed.light)
+  );
 }
 
 /**
