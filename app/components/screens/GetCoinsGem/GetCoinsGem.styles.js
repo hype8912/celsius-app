@@ -8,7 +8,7 @@ const base = {
   container: {
     flex: 1,
     backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    paddingTop: hasNotch ? 30 : 0,
+    paddingTop: hasNotch ? 60 : 30,
   },
 };
 
