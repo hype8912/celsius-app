@@ -219,12 +219,12 @@ class PaymentCard extends Component {
       >
         <CelText
           color={"white"}
-          align="left"
-          weight="600"
-          type="H3"
+          align={"left"}
+          weight={"600"}
+          type={"H3"}
         >{`${formatter.fiat(additionalUsd, "USD")}`}</CelText>
-        <CelText color={"white"} align="left" weight="300" type="H6">
-          <CelText color={"white"} align="left" type="H6">
+        <CelText color={"white"} align={"left"} weight={"300"} type={"H6"}>
+          <CelText color={"white"} align={"left"} type={"H6"}>
             {`${formatter.crypto(additionalCryptoAmount, coin.short)} `}
           </CelText>
           additionally required
@@ -248,12 +248,20 @@ class PaymentCard extends Component {
   };
 
   renderDepositMore = () => {
-    const { coin, actions, marginCall } = this.props;
+    const { coin, actions, marginCall, reason } = this.props;
+    const { amountUsd, additionalCryptoAmount } = this.state;
     return (
       <View>
         <CelButton
           margin={"20 0 10 0"}
-          onPress={() => actions.navigateTo("Deposit", { coin: coin.short })}
+          onPress={() =>
+            actions.navigateTo("Deposit", {
+              coin: coin.short,
+              reason,
+              amountUsd,
+              additionalCryptoAmount,
+            })
+          }
         >
           {`Deposit more ${coin.short}`}
         </CelButton>
@@ -399,7 +407,7 @@ class PaymentCard extends Component {
 
               {amountUsd < loan.monthly_payment ? (
                 <View>
-                  {this.renderAdditionalAmountRequired()}}
+                  {this.renderAdditionalAmountRequired()}
                   {this.renderDepositMore()}
                 </View>
               ) : null}
