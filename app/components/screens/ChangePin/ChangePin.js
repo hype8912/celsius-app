@@ -13,6 +13,7 @@ import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import PinTooltip from "../../molecules/PinTooltip/PinTooltip";
+import securityUtil from "../../../utils/security-util";
 
 @connect(
   state => ({
@@ -45,15 +46,17 @@ class ChangePin extends Component {
 
   handlePINChange = newValue => {
     const { pinCreated } = this.state;
-    const { actions } = this.props;
+    const { actions, user } = this.props;
 
     if (newValue.length > 6) return;
 
     const field = pinCreated ? "newPinConfirm" : "newPin";
-
     actions.updateFormField(field, newValue);
-
-    if (newValue.length === 6) {
+    // Check PIN strength
+    const pinScoreNotPassed = !!securityUtil
+      .calculatePinScore(newValue, user.date_of_birth)
+      .find(i => i.status === (null || false));
+    if (newValue.length === 6 && !pinScoreNotPassed) {
       this.handlePinFinish(newValue);
     }
   };

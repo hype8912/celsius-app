@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+// eslint-disable-next-line import/no-unresolved
 import { openInbox } from "react-native-email-link";
 import * as appActions from "../../../redux/actions";
 
@@ -17,12 +18,15 @@ import STYLES from "../../../constants/STYLES";
   state => ({
     formData: state.forms.formData,
     user: state.user.profile,
+    // hasSixDigitPin: state.security.hasSixDigitPin, // TODO - When API endpoint is finished, activate this line
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class ActivateSixDigitPin extends Component {
   static propTypes = {};
-  static defaultProps = {};
+  static defaultProps = {
+    hasSixDigitPin: false, // TODO - When API endpoint is finished, check Redux and remove this line
+  };
 
   static navigationOptions = () => ({
     headerSameColor: false,
@@ -31,7 +35,7 @@ class ActivateSixDigitPin extends Component {
     gesturesEnabled: false,
   });
 
-  onPressLogin = () => {
+  onPressBtn = () => {
     const { actions } = this.props;
     actions.resetToScreen("WalletLanding");
   };
@@ -71,6 +75,7 @@ class ActivateSixDigitPin extends Component {
   };
 
   render() {
+    const { hasSixDigitPin } = this.props;
     const style = ActivateSixDigitPinStyle();
 
     return (
@@ -78,10 +83,10 @@ class ActivateSixDigitPin extends Component {
         <View style={style.container}>
           <View style={style.contentWrapper}>
             <CelText
-              weight="600"
+              weight="bold"
               align="center"
-              type="H1"
-              margin="20 20 10 20"
+              type="H2"
+              margin="20 40 10 40"
               style={style.title}
             >
               Activate your 6-digits PIN
@@ -96,12 +101,11 @@ class ActivateSixDigitPin extends Component {
               6-Digits PIN code.
             </CelText>
 
-            {this.renderInfoBox()}
-            {/* {this.renderEmailAppCard()}*/}
+            {hasSixDigitPin ? this.renderInfoBox() : this.renderEmailAppCard()}
           </View>
 
           <View style={style.buttonWrapper}>
-            <CelButton style={style.button} onPress={this.onPressLogin}>
+            <CelButton style={style.button} onPress={this.onPressBtn}>
               Go to wallet
             </CelButton>
           </View>

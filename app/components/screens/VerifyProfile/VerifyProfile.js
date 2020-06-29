@@ -24,6 +24,7 @@ import { DEEP_LINKS } from "../../../constants/DATA";
     twoFAStatus: state.security.twoFAStatus,
     deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
+    // hasSixDigitPin: state.user.profile.has_six_digit_pin, // TODO when api endpoint is finished, activate this line
     previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
     theme: state.user.appSettings.theme,
@@ -32,7 +33,9 @@ import { DEEP_LINKS } from "../../../constants/DATA";
 )
 class VerifyProfile extends Component {
   static propTypes = {};
-  static defaultProps = {};
+  static defaultProps = {
+    hasSixDigitPin: false, // TODO when api endpoint is finished, remove this line
+  };
 
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
@@ -161,9 +164,8 @@ class VerifyProfile extends Component {
   handleBackButtonClick = () => true;
 
   handlePINChange = newValue => {
-    const { actions } = this.props;
-    // TODO took pinLength from API endpoint
-    const pinLength = 4;
+    const { actions, hasSixDigitPin } = this.props;
+    const pinLength = hasSixDigitPin ? 6 : 4;
 
     if (newValue.length > pinLength) return;
 
@@ -210,7 +212,7 @@ class VerifyProfile extends Component {
   renderDots = length => {
     const { actions } = this.props;
     const { verificationError, value } = this.state;
-    // TODO took pinLength from API endpoint
+
     const pinLength = length || 6;
     return (
       <TouchableOpacity onPress={actions.toggleKeypad}>
@@ -267,6 +269,7 @@ class VerifyProfile extends Component {
   }
 
   renderPIN() {
+    const { hasSixDigitPin } = this.props;
     const { loading } = this.state;
     const style = VerifyProfileStyle();
 
@@ -279,7 +282,7 @@ class VerifyProfile extends Component {
           Please enter your PIN to proceed
         </CelText>
 
-        {this.renderDots(4)}
+        {this.renderDots(hasSixDigitPin ? 6 : 4)}
         <View>
           <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
         </View>

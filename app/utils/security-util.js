@@ -116,7 +116,6 @@ function calculatePinScore(pin, dateOfBirth) {
   const birthdayCheck = !pin.match(birthdayRegex);
   const sixInARow = !pin.match(sixInARowRegex);
   const fourUniqueNumbers = pin.match(fourUniqueNumbersRegex);
-
   return [
     {
       status: birthdayCheck,

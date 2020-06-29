@@ -34,7 +34,6 @@ class PinTooltip extends Component {
 
   handleSecurityItems = () => {
     const { pin, user } = this.props;
-
     const score = securityUtil.calculatePinScore(pin, user.date_of_birth);
     const items = PIN_STRENGTH_ITEMS.map(i => {
       const securityItem = score.find(s => i.copy === s.copy);

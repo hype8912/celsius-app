@@ -39,6 +39,7 @@ function getProps(purpose, componentProps) {
         button: "Generate 6-Digits PIN",
         onPress: () => {
           actions.navigateTo("ChangePin");
+          // actions.navigateTo("ActivateSixDigitPin");
         },
       };
 
