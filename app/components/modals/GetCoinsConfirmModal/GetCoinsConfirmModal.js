@@ -93,7 +93,7 @@ class GetCoinsConfirmModal extends Component {
                 Payment Method:
               </CelText>
               <CelText type={"H6"} align={"right"}>
-                {simplexData.paymentMethod}
+                Credit Card
               </CelText>
             </View>
             <Separator />

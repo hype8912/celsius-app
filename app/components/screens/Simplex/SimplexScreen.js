@@ -28,6 +28,7 @@ const patchPostMessageJsCode = `(${String(function() {
 @connect(
   state => ({
     simplexData: state.buyCoins.simplexData,
+    paymentRequest: state.buyCoins.paymentRequest,
     fabType: state.ui.fabType,
     formData: state.forms.formData,
   }),
@@ -132,12 +133,19 @@ class SimplexScreen extends Component {
   };
 
   render() {
-    const { simplexData } = this.props;
+    const { paymentRequest, simplexData } = this.props;
     const { webViewLoaded } = this.state;
+
+    const data = {
+      ...paymentRequest,
+      ...simplexData,
+    };
 
     return (
       <View style={{ flex: 1 }}>
-        {!webViewLoaded && <LoadingState heading="Please wait..." />}
+        {(!webViewLoaded || !paymentRequest) && (
+          <LoadingState heading="Please wait..." />
+        )}
 
         <WebView
           style={{ opacity: webViewLoaded ? 1 : 0 }}
@@ -145,7 +153,7 @@ class SimplexScreen extends Component {
           javaScriptEnabled
           injectedJavaScript={patchPostMessageJsCode}
           automaticallyAdjustContentInsets
-          source={{ html: this.generateWebViewContent(simplexData) }}
+          source={{ html: this.generateWebViewContent(data) }}
         />
       </View>
     );

@@ -6,9 +6,14 @@ import * as appActions from "../../../redux/actions";
 // import PaymentCelStyle from "./PaymentCel.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { COIN_CARD_TYPE, LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import {
+  COIN_CARD_TYPE,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+} from "../../../constants/UI";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import TierCard from "../../organisms/TierCard/TierCard";
+import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
 
 @connect(
   state => ({
@@ -85,9 +90,7 @@ class PaymentCel extends Component {
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      actions.navigateTo("VerifyProfile", {
-        onSuccess: () => actions.payMonthlyInterest(id, "CEL"),
-      });
+      actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
     }
   };
 
@@ -118,8 +121,9 @@ class PaymentCel extends Component {
           loading={isLoading}
           disabled={isLoading}
         >
-          Confirm Payment
+          Pay with CEL
         </CelButton>
+        <ConfirmPaymentModal loanId={id} type={"CRYPTO"} cryptoType={"CEL"} />
       </RegularLayout>
     );
   }

@@ -3,6 +3,7 @@ import ACTIONS from "../../constants/ACTIONS";
 function initialState() {
   return {
     simplexData: {},
+    paymentRequest: undefined,
     payments: [],
   };
 }
@@ -13,6 +14,12 @@ export default function buyCoinsReducer(state = initialState(), action) {
       return {
         ...state,
         simplexData: action.quote,
+      };
+
+    case ACTIONS.CREATE_SIMPLEX_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        paymentRequest: action.paymentRequest,
       };
 
     case ACTIONS.GET_PAYMENT_REQUESTS_SUCCESS:

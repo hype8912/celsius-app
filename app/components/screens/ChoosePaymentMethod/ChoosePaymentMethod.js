@@ -7,7 +7,7 @@ import * as appActions from "../../../redux/actions";
 import ChoosePaymentMethodStyle from "./ChoosePaymentMethod.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PrepayDollarInterestModal from "../../modals/PrepayDollarInterestModal/PrepayDollarInterestModal";
-import { LOAN_PAYMENT_REASONS, THEMES } from "../../../constants/UI";
+import { LOAN_PAYMENT_REASONS, THEMES, MODALS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
@@ -17,6 +17,7 @@ import STYLES from "../../../constants/STYLES";
 import { getTheme } from "../../../utils/styles-util";
 import Separator from "../../atoms/Separator/Separator";
 import Spinner from "../../atoms/Spinner/Spinner";
+import DollarPaymentModal from "../../modals/DollarPaymentModal/DollarPaymentModal";
 
 @connect(
   state => ({
@@ -130,7 +131,7 @@ class ChoosePaymentMethod extends Component {
             actions.updateFormField("coin", "USD");
             actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
           } else {
-            actions.navigateTo("WiringBankInformation", { id, reason });
+            actions.openModal(MODALS.DOLLAR_PAYMENT_MODAL);
           }
         },
         lightImage: require("../../../../assets/images/icons/dollars.png"),
@@ -195,15 +196,15 @@ class ChoosePaymentMethod extends Component {
   };
 
   render() {
-    const { actions, loanSettings } = this.props;
+    const { actions, loanSettings, navigation } = this.props;
     const { loading } = this.state;
     if (!loanSettings) return <LoadingScreen />;
     const Automatic = this.automaticSwitch;
 
     const style = ChoosePaymentMethodStyle();
+    const id = navigation.getParam("id");
 
     const cardProps = this.getCardProps();
-
     return (
       <View style={style.container}>
         <RegularLayout>
@@ -225,6 +226,7 @@ class ChoosePaymentMethod extends Component {
             actions.navigateTo("LoanPrepaymentPeriod", { type: "dollar" })
           }
         />
+        <DollarPaymentModal loanId={id} close={() => this.closeModal()} />
       </View>
     );
   }
