@@ -36,8 +36,8 @@ class IconButton extends Component {
     if (color === "blue") {
       return {
         primary: getColor(COLOR_KEYS.PRIMARY_BUTTON),
-        secondary: STYLES.COLORS.WHITE,
-        third: STYLES.COLORS.WHITE,
+        secondary: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
+        third: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
       };
     }
 
