@@ -49,11 +49,18 @@ class IconButton extends Component {
 
   renderIconButtonContent = () => {
     const { secondary, third } = this.getColors();
-    const { children, icon, hideIconRight, right, rightText, rightTextColor } = this.props;
+    const {
+      children,
+      icon,
+      hideIconRight,
+      right,
+      rightText,
+      rightTextColor,
+    } = this.props;
     const style = IconButtonStyle();
     return (
       <>
-        <View style={ [style.leftWrapper, {flex: rightText ? 0.7 : 1}] }>
+        <View style={[style.leftWrapper, { flex: rightText ? 0.7 : 1 }]}>
           {!!icon && <Icon fill={third} name={icon} width="25" />}
           <CelText
             type="H4"
@@ -67,13 +74,11 @@ class IconButton extends Component {
             {children}
           </CelText>
         </View>
-        {rightText &&
+        {rightText && (
           <View style={style.rightTextWrapper}>
-            <CelText color={rightTextColor}>
-              {rightText}
-            </CelText>
+            <CelText color={rightTextColor}>{rightText}</CelText>
           </View>
-        }
+        )}
         <View style={style.rightWrapper}>
           {!!right && (
             <View>
