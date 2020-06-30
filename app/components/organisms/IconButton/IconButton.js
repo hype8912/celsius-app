@@ -6,7 +6,8 @@ import IconButtonStyle from "./IconButton.styles";
 import Icon from "../../atoms/Icon/Icon";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
-import { getMargins, getPadding } from "../../../utils/styles-util";
+import { getMargins, getPadding, getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class IconButton extends Component {
   static propTypes = {
@@ -34,7 +35,7 @@ class IconButton extends Component {
 
     if (color === "blue") {
       return {
-        primary: STYLES.COLORS.CELSIUS_BLUE,
+        primary: getColor(COLOR_KEYS.PRIMARY_BUTTON),
         secondary: STYLES.COLORS.WHITE,
         third: STYLES.COLORS.WHITE,
       };

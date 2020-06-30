@@ -13,17 +13,17 @@ const base = {
   },
   leftWrapper: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   rightWrapper: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   rightTextWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 0.3
-  }
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 0.3,
+  },
 };
 
 const themed = {
