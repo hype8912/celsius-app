@@ -12,7 +12,6 @@ import { getSecureStoreKey } from "../utils/expo-storage";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import mixpanelAnalytics from "./mixpanel-analytics";
-import { logoutUserMixpanel } from "./mixpanel-util";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -251,10 +250,10 @@ async function errorInterceptor(serverError) {
   return Promise.reject(err);
 }
 
-function handle401(err) {
+async function handle401(err) {
   if (err.slug === "SESSION_EXPIRED") {
     store.dispatch(actions.expireSession());
-    store.dispatch(actions.logoutUser());
+    store.dispatch(actions.logoutFormDevice());
   }
   if (err.slug === "PASSWORD_LEAKED") {
     store.dispatch(actions.resetToScreen("PasswordBreached"));
@@ -268,21 +267,12 @@ async function handle403(err) {
   if (err.slug === "USER_SUSPENDED") {
     const { profile } = store.getState().user;
     if (profile && profile.id) {
-      store.dispatch(actions.logoutUser());
+      store.dispatch(actions.logoutFormDevice());
     }
     store.dispatch(actions.showMessage("error", err.msg));
   }
   if (err.slug === "Token Expired") {
-    // TODO: (srdjan) maybe call logoutUser()?
-    await logoutUserMixpanel();
-    mixpanelAnalytics.sessionEnded("Logout user");
-    store.dispatch(
-      actions.resetToScreen("LoginLanding", {
-        type: "login",
-        inactiveUser: true,
-        msg: err.msg,
-      })
-    );
+    store.dispatch(actions.logoutFormDevice());
   }
   // TODO complete with Filip and Lazar
   if (err.slug === "SIX_DIGIT_PIN_REQUIRED") {
@@ -301,24 +291,38 @@ async function handle403(err) {
 
 async function handle426(err, reqConfig) {
   return new Promise((resolve, reject) => {
-    store.dispatch(
-      actions.navigateTo("VerifyProfile", {
-        hideBack: true,
-        // PIN || 2FA
-        verificationType: err.show,
-        onSuccess: async () => {
-          try {
-            // fetch failed request again after verification successful
-            const res = await axios(reqConfig);
+    // get active screen before rerouting
+    const { activeScreen } = store.getState().nav;
+    if (activeScreen !== "VerifyProfile") {
+      store.dispatch(
+        actions.navigateTo("VerifyProfile", {
+          hideBack: true,
+          showLogOutBtn: true,
+          // PIN || 2FA
+          verificationType: err.show,
+          onSuccess: async () => {
+            try {
+              // fetch failed request again after verification successful
+              const res = await axios(reqConfig);
 
-            // return successful response
-            return resolve(res);
-          } catch (e) {
-            return reject(e);
-          }
-        },
-      })
-    );
+              // navigate back
+              if (
+                !["LoginLanding", "Login", "SplashScreen"].includes(
+                  activeScreen
+                )
+              ) {
+                store.dispatch(actions.navigateBack());
+              }
+
+              // return successful response
+              return resolve(res);
+            } catch (e) {
+              return reject(e);
+            }
+          },
+        })
+      );
+    }
   });
 }
 
@@ -365,7 +369,8 @@ function parseValidationErrors(serverError) {
  * Checks if some endpoints were successful in history
  *
  * @param {Array} callNames - array of calls from API
- * @returns {Number} numberOfCallsInHistory - number of calls to look into history
+ * @params {Number} numberOfCallsInHistory - number of calls to look into history
+ * @return {Boolean}
  */
 function wereSuccessfulInHistory(callNames, numberOfCallsInHistory = 5) {
   const history = store.getState().api.history;
@@ -384,7 +389,7 @@ function wereSuccessfulInHistory(callNames, numberOfCallsInHistory = 5) {
 /**
  * Verifies the data with signature key from the server
  *
- * @param {Object} address - data from server response
+ * @param {Object} data - data from server response
  * @param {string} sign - sign from response headers
  * @returns {boolean}
  *

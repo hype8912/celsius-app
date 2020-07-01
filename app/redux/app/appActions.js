@@ -67,6 +67,7 @@ function handleAppStateChange(nextAppState) {
         dispatch(actions.getLoyaltyInfo());
         dispatch(actions.getInitialCelsiusData());
         dispatch(actions.getCurrencyRates());
+        dispatch(actions.closeModal());
 
         if (Platform.OS === "ios") {
           clearTimeout(pinTimeout);

@@ -47,10 +47,11 @@ class GetCoinsEnterAmount extends Component {
 
   constructor(props) {
     super(props);
-    const { currencies, simplexCompliance, actions } = this.props;
+    const { currencies, simplexCompliance, actions, formData } = this.props;
 
     const availableCryptoCoins = simplexCompliance
-      ? currencies
+      ? currencies &&
+        currencies
           .filter(c => simplexCompliance.coins.includes(c.short))
           .map(c => ({
             label: `${formatter.capitalize(c.name)} (${c.short})`,
@@ -62,8 +63,8 @@ class GetCoinsEnterAmount extends Component {
       amountFiat: "",
       amountCrypto: "",
       isFiat: false,
-      fiatCoin: "USD",
-      cryptoCoin: simplexCompliance.coins[0],
+      fiatCoin: formData.fiatCoin || "USD",
+      cryptoCoin: formData.cryptoCoin || simplexCompliance.coins[0],
     });
 
     this.state = {
@@ -221,7 +222,7 @@ class GetCoinsEnterAmount extends Component {
       ? !Number(formData.amountFiat)
       : !Number(formData.amountCrypto);
 
-    if (!getCoinsUtil.isAmountInScope() && !isZero) {
+    if (!isZero && !getCoinsUtil.isAmountInScope()) {
       return {
         color: STYLES.COLORS.RED,
       };

@@ -222,7 +222,7 @@ function setUserAppSettings(data) {
                   .day(8)
                   .format(
                     "DD MMMM"
-                  )}, you will receive interest income on selected coinsin in original coins.`
+                  )}, you will receive interest income on selected coins in in original coins.`
               )
             );
           }

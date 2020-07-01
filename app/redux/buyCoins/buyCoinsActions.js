@@ -19,6 +19,7 @@ export {
   getSimplexQuote,
   createSimplexPayment,
   createGemPayment,
+  getGemCoinAddress,
 };
 
 /**
@@ -95,7 +96,7 @@ function createSimplexPayment() {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
-      const { simplexData } = getState().simplex;
+      const { simplexData } = getState().buyCoins;
 
       const { pin, code } = formData;
 
@@ -164,6 +165,36 @@ function createGemPayment(userId, transactionId = null) {
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CREATE_GEM_PAYMENT, err));
+    }
+  };
+}
+
+/**
+ * Gets Deposit address for coin
+ */
+function getGemCoinAddress() {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_GEM_COIN_ADDRESS));
+
+      const res = await buyCoinsService.getGemCoinAddresses();
+      const addresses = res.data;
+      const walletGemAddresses = [];
+      Object.keys(addresses).forEach(coin => {
+        const value = addresses[coin];
+
+        walletGemAddresses.push({
+          asset: coin,
+          address: value,
+        });
+      });
+      dispatch({
+        type: ACTIONS.GET_GEM_COIN_ADDRESS_SUCCESS,
+        walletGemAddresses,
+      });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_GEM_COIN_ADDRESS, err));
     }
   };
 }

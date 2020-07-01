@@ -4,12 +4,14 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import qs from "qs";
+import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
 import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import GetCoinsGemStyle from "./GetCoinsGem.styles";
 
 const { GEM_URL, GEM_API_KEY } = Constants;
 
@@ -30,9 +32,8 @@ const GemMessages = {
   state => ({
     eligibleCoins: getDepositEligibleCoins(state),
     formData: state.forms.formData,
-    walletAddresses: state.wallet.addresses,
+    walletGemAddresses: state.buyCoins.walletGemAddresses,
     user: state.user.profile,
-    gemCompliance: state.compliance.gem,
     currencies: state.currencies.rates,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -42,20 +43,13 @@ class GetCoinsGem extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    headerSameColor: false,
-    transparent: true,
-    hideBack: true,
-    gesturesEnabled: false,
+    hideHeading: true,
   });
 
   componentDidMount() {
-    const { walletAddresses, actions, gemCompliance } = this.props;
+    const { actions } = this.props;
 
-    gemCompliance.coins.forEach(c => {
-      if (!walletAddresses[`${c}Address`]) {
-        actions.getCoinAddress(c);
-      }
-    });
+    actions.getGemCoinAddress();
   }
 
   onGemSuccess = async data => {
@@ -79,9 +73,8 @@ class GetCoinsGem extends Component {
     );
   };
 
-  onGemExit = async data => {
+  onGemExit = async () => {
     const { actions } = this.props;
-    await actions.createGemPayment(data.userId);
     actions.navigateBack();
   };
 
@@ -102,39 +95,24 @@ class GetCoinsGem extends Component {
   };
 
   createGemUrl = () => {
-    const { walletAddresses, user, gemCompliance } = this.props;
-
-    onrampConfig.wallets = gemCompliance.coins.map(c => ({
-      asset: c.toLowerCase(),
-      address: walletAddresses[`${c}Address`],
-    }));
+    const { walletGemAddresses, user } = this.props;
+    onrampConfig.wallets = walletGemAddresses;
     onrampConfig.userEmail = user.email;
-
-    const queryConfig = qs.stringify({
-      ...onrampConfig,
-      wallets: JSON.stringify(onrampConfig.wallets),
-    });
+    const queryConfig = qs.stringify(onrampConfig);
 
     return `${GEM_URL}?${queryConfig}`;
   };
 
   render() {
-    const { walletAddresses, gemCompliance } = this.props;
-
-    let areAddressesFetched = true;
-    gemCompliance.coins.forEach(c => {
-      areAddressesFetched =
-        areAddressesFetched && !!walletAddresses[`${c}Address`];
-    });
-
-    if (!areAddressesFetched) {
+    const { walletGemAddresses } = this.props;
+    if (_.isEmpty(walletGemAddresses)) {
       return <LoadingScreen />;
     }
 
     const gemOnrampSrc = this.createGemUrl();
-
+    const styles = GetCoinsGemStyle();
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <WebView
           source={{
             uri: gemOnrampSrc,

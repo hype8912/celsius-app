@@ -1,5 +1,3 @@
-import Branch from "react-native-branch";
-
 import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
@@ -39,6 +37,7 @@ export {
   expireSession,
   sendResetLink,
   refreshAuthToken,
+  logoutFormDevice,
 };
 
 /**
@@ -153,12 +152,29 @@ function logoutUser() {
       await logoutUserMixpanel();
       await userSecurityService.invalidateSession();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-      await deleteSecureStoreKey("HIDE_MODAL_INTEREST_IN_CEL");
-      if (Constants.appOwnership === "standalone") Branch.logout();
       dispatch({
         type: ACTIONS.LOGOUT_USER,
       });
       mixpanelAnalytics.sessionEnded("Logout user");
+    } catch (err) {
+      logger.err(err);
+    }
+  };
+}
+
+/**
+ *
+ */
+function logoutFormDevice() {
+  return async dispatch => {
+    try {
+      await dispatch(resetToScreen("Welcome"));
+
+      await logoutUserMixpanel();
+      await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+      dispatch({
+        type: ACTIONS.LOGOUT_USER,
+      });
     } catch (err) {
       logger.err(err);
     }

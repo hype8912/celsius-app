@@ -5,10 +5,13 @@ import { bindActionCreators } from "redux";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelText from "../../atoms/CelText/CelText";
 import * as appActions from "../../../redux/actions";
+import CelButton from "../../atoms/CelButton/CelButton";
 
 // TODO should probably be a static screen
 @connect(
-  () => ({}),
+  state => ({
+    user: state.user.profile,
+  }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class TooManyRequests extends Component {
@@ -17,13 +20,16 @@ class TooManyRequests extends Component {
   });
 
   componentDidMount() {
-    const { actions } = this.props;
-    setTimeout(() => {
-      actions.logoutUser();
-    }, 7000);
+    const { actions, user } = this.props;
+    if (user.id) {
+      setTimeout(() => {
+        actions.logoutUser();
+      }, 7000);
+    }
   }
 
   render() {
+    const { user } = this.props;
     return (
       <RegularLayout fabType="hide">
         <CelText
@@ -40,6 +46,15 @@ class TooManyRequests extends Component {
           of time. You will be able to use the application again in less than an
           hour. You can reach out to our support team at app@celsius.network.
         </CelText>
+        {!user.id && (
+          <CelButton
+            margin="40 0 0 0"
+            color="blue"
+            onPress={this.props.actions.navigateBack}
+          >
+            Try again
+          </CelButton>
+        )}
       </RegularLayout>
     );
   }

@@ -1,4 +1,4 @@
-// import STYLES from '../../../constants/STYLES';
+import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
@@ -19,9 +19,17 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    messageTextCard: {
+      color: STYLES.COLORS.LIGHT_GRAY,
+    },
+  },
 
-  dark: {},
+  dark: {
+    messageTextCard: {
+      color: STYLES.COLORS.DARK_GRAY2,
+    },
+  },
 
   celsius: {},
 };

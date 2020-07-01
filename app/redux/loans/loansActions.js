@@ -529,7 +529,7 @@ function getLoanAlerts() {
         type: ACTIONS.GET_LOAN_ALERTS_SUCCESS,
         allLoans: alertsRes.data,
       });
-      checkForLoanAlerts();
+      dispatch(checkForLoanAlerts());
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_LOAN_ALERTS, err));

@@ -17,7 +17,7 @@ export {
 };
 
 /**
- * get if the user is a company member
+ * get if the user is a logged in
  * @returns {boolean}
  */
 function isUserLoggedIn() {

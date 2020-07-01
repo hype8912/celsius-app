@@ -16,6 +16,7 @@ import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { initMixpanel } from "./mixpanel-util";
+import { isUserLoggedIn } from "./user-util";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -99,14 +100,11 @@ let iteration = 0;
 let backendPollInterval;
 async function pollBackendStatus() {
   if (backendPollInterval) clearInterval(backendPollInterval);
-
-  await store.dispatch(actions.getUserStatus());
-  await checkAndRefreshAuthToken();
-
   backendPollInterval = setInterval(async () => {
-    await store.dispatch(actions.getUserStatus());
-    await checkAndRefreshAuthToken();
-
+    if (isUserLoggedIn()) {
+      await store.dispatch(actions.getUserStatus());
+      await checkAndRefreshAuthToken();
+    }
     iteration++;
   }, POLL_INTERVAL);
 }
