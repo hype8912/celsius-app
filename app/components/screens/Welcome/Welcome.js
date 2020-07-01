@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Image, StatusBar } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
@@ -11,8 +10,6 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import appUtil from "../../../utils/app-util";
 import ReferralReceivedModal from "../../modals/ReferralReceivedModal/ReferralReceivedModal";
-
-// import STYLES from '../../../constants/STYLES';
 
 @connect(
   state => ({
