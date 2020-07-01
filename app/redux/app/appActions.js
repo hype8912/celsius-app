@@ -79,6 +79,7 @@ function handleAppStateChange(nextAppState) {
           startOfBackgroundTimer = null;
           dispatch(
             actions.navigateTo("VerifyProfile", {
+              hideBack: true,
               activeScreen,
               showLogOutBtn: true,
             })

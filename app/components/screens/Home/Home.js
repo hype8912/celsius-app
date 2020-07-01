@@ -76,7 +76,7 @@ class Home extends Component {
     });
 
     // TODO pinOld took from endPoint
-    const pinOld = true;
+    const pinOld = false;
     if (pinOld) {
       actions.resetToScreen("SixDigitPinExplanation");
       return;

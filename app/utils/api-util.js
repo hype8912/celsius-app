@@ -284,6 +284,19 @@ async function handle403(err) {
       })
     );
   }
+  // TODO complete with Filip and Lazar
+  if (err.slug === "SIX_DIGIT_PIN_REQUIRED") {
+    store.dispatch(
+      actions.navigateTo("VerifyProfile", {
+        hideBack: true,
+        // SIX_DIGIT_PIN_MISSING
+        verificationType: err.show,
+        onSuccess: async () => {
+          actions.navigateTo("SixDigitPinExplanation");
+        },
+      })
+    );
+  }
 }
 
 async function handle426(err, reqConfig) {
