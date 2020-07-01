@@ -1,5 +1,6 @@
 import ACTIONS from "../../constants/ACTIONS";
 import { mapProfile } from "../../utils/user-util";
+import { THEMES } from "../../constants/UI";
 
 /**
  * TODO make it a function add JSDoc & desc for return
@@ -11,7 +12,7 @@ const initialState = {
 
   // TODO move to userDataReducer
   appSettings: {
-    theme: "light",
+    theme: THEMES.LIGHT,
     activeHodlMode: undefined,
   },
 
