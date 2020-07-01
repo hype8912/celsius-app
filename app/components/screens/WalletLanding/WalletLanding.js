@@ -146,15 +146,6 @@ class WalletLanding extends Component {
       this.toggleView(appSettings.default_wallet_view);
     }
 
-    // if (
-    //   (prevProps.user && prevProps.user.first_name) !==
-    //   (this.props.user && this.props.user.first_name)
-    // ) {
-    //   navigation.setParams({
-    //     title: `Welcome ${this.props.user.first_name}!`
-    //   })
-    // }
-
     if (isFocused === false && this.walletFetchingInterval) {
       clearInterval(this.walletFetchingInterval);
     }

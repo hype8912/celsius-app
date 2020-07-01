@@ -259,7 +259,7 @@ class Profile extends Component {
                 name={"Twitter"}
                 width={35}
                 height={35}
-                fill={getColor(COLOR_KEYS.INFO)}
+                fill={getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Twitter
@@ -274,7 +274,7 @@ class Profile extends Component {
                 name={"Facebook"}
                 width={35}
                 height={35}
-                fill={getColor(COLOR_KEYS.INFO)}
+                fill={getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Facebook
@@ -289,7 +289,7 @@ class Profile extends Component {
                 name={"Reddit"}
                 width={35}
                 height={35}
-                fill={getColor(COLOR_KEYS.INFO)}
+                fill={getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Reddit
@@ -302,7 +302,7 @@ class Profile extends Component {
                 name={"Telegram"}
                 width={35}
                 height={35}
-                fill={getColor(COLOR_KEYS.INFO)}
+                fill={getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Telegram

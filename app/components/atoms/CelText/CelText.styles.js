@@ -4,8 +4,6 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 const base = {
   text: {
     fontFamily: "Barlow-Regular",
-  },
-  textColor: {
     color: getColor(COLOR_KEYS.HEADLINE),
   },
 };

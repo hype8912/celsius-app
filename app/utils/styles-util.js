@@ -98,7 +98,7 @@ function getThemedStyle(
 /**
  * Sets theme styles for component
  *
- * @param {Object} colorKey - color key
+ * @param {string} colorKey - color key
  * @param {string} theme - current active theme
  * @returns {Object} themed styles
  */

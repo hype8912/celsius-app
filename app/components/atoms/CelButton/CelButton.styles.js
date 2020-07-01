@@ -12,6 +12,8 @@ const base = {
     alignItems: "center",
     flexDirection: "row",
     opacity: 1,
+    backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+    borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON),
   },
   mediumContainer: {
     borderRadius: 60,
@@ -31,19 +33,19 @@ const base = {
   },
   disabledButton: {
     opacity: 0.5,
-    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
+    backgroundColor: "transparent",
     borderWidth: 2,
   },
   basicButton: {
-    borderColor: getColor(COLOR_KEYS.TRANSPARENT),
-    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
+    borderColor: "transparent",
+    backgroundColor: "transparent",
     height: "auto",
     paddingLeft: 0,
     paddingRight: 0,
   },
   baseTitle: {
     textAlign: "center",
-    color: getColor(COLOR_KEYS.NEUTRAL),
+    color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
   mediumTitle: {
     fontSize: getScaledFont(getFontSize("H4")),
@@ -52,41 +54,41 @@ const base = {
     fontSize: getScaledFont(getFontSize("H6")),
   },
   ghostButton: {
-    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
+    backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: getColor(COLOR_KEYS.PRIMARY),
+    borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
   ghostredButton: {
-    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
+    backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: getColor(COLOR_KEYS.NEUTRAL),
+    borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
   ghostgreenButton: {
-    backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
+    backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: getColor(COLOR_KEYS.NEUTRAL),
+    borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
   basicredButton: {
-    backgroundColor: getColor(COLOR_KEYS.NEUTRAL),
+    backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
     margin: 20,
   },
   basicgreenButton: {
-    backgroundColor: getColor(COLOR_KEYS.NEUTRAL),
+    backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
   ghostColorTitle: {
-    color: getColor(COLOR_KEYS.NEUTRAL),
+    color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
   ghostTitle: {
-    color: getColor(COLOR_KEYS.PRIMARY),
+    color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
   greenButton: {
-    backgroundColor: getColor(COLOR_KEYS.SUCCESS),
+    backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE),
   },
   redButton: {
-    backgroundColor: getColor(COLOR_KEYS.FAILURE),
+    backgroundColor: getColor(COLOR_KEYS.NEGATIVE_STATE),
   },
   whiteButton: {
-    backgroundColor: getColor(COLOR_KEYS.NEUTRAL),
+    backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
   basicredTitleButton: {
     paddingHorizontal: 10,
@@ -96,34 +98,18 @@ const base = {
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
+  basicTitle: {
+    color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
+  },
+  disabledTitleColor: {
+    color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
+  },
 };
 
 const themed = {
-  light: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.PRIMARY),
-      borderColor: getColor(COLOR_KEYS.PRIMARY),
-    },
-    basicTitle: {
-      color: getColor(COLOR_KEYS.PRIMARY),
-    },
-    disabledTitleColor: {
-      color: getColor(COLOR_KEYS.PRIMARY),
-    },
-  },
+  light: {},
 
-  dark: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.PRIMARY),
-      borderColor: getColor(COLOR_KEYS.PRIMARY),
-    },
-    basicTitle: {
-      color: getColor(COLOR_KEYS.PRIMARY),
-    },
-    disabledTitleColor: {
-      color: getColor(COLOR_KEYS.PRIMARY),
-    },
-  },
+  dark: {},
 
   celsius: {},
 };

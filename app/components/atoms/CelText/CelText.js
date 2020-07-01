@@ -95,12 +95,12 @@ class CelText extends Component {
   };
 
   getTextColor = () => {
-    const { color, theme } = this.props;
-    const cmpStyle = CelTextStyle(theme);
+    const { color } = this.props;
+    const cmpStyle = CelTextStyle();
 
     if (color) return { color };
 
-    return cmpStyle.textColor;
+    return { color: cmpStyle.text.color };
   };
 
   getFontStyle = () => {
