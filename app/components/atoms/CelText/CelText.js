@@ -40,7 +40,7 @@ class CelText extends Component {
     color: PropTypes.string,
     margin: PropTypes.string,
     style: PropTypes.oneOfType([
-      PropTypes.number, // StyleSheet.create() returns number
+      PropTypes.number,
       PropTypes.instanceOf(Object),
     ]),
     align: PropTypes.oneOf(["auto", "left", "right", "center", "justify"]),
@@ -95,15 +95,12 @@ class CelText extends Component {
   };
 
   getTextColor = () => {
-    const { color, theme, type } = this.props;
+    const { color, theme } = this.props;
     const cmpStyle = CelTextStyle(theme);
 
     if (color) return { color };
 
-    return {
-      ...cmpStyle.textColor,
-      ...cmpStyle[type],
-    };
+    return cmpStyle.textColor;
   };
 
   getFontStyle = () => {
