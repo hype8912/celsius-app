@@ -80,6 +80,7 @@ function handleAppStateChange(nextAppState) {
           startOfBackgroundTimer = null;
           dispatch(
             actions.navigateTo("VerifyProfile", {
+              hideBack: true,
               activeScreen,
               showLogOutBtn: true,
             })
@@ -100,6 +101,7 @@ function handleAppStateChange(nextAppState) {
           pinTimeout = setTimeout(() => {
             dispatch(
               actions.navigateTo("VerifyProfile", {
+                hideBack: true,
                 activeScreen,
                 showLogOutBtn: true,
               })
