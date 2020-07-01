@@ -69,14 +69,16 @@ class ScreenStoryWrapper extends React.Component {
   };
 
   render() {
-    const { screen, screenName } = this.props;
+    const { screen, screenName, navigationProps } = this.props;
 
     const navigatorProps = {
       initialRouteName: screenName,
+      initialRouteParams: navigationProps,
       defaultNavigationOptions: {
         header: props => <CelHeading {...props} />,
       },
     };
+
     const screens = { [screenName]: screen };
 
     const AppNavigator = createStackNavigator(screens, navigatorProps);
@@ -89,7 +91,7 @@ class ScreenStoryWrapper extends React.Component {
           width,
           height,
         }}
-        onPress={() => this.updateTheme()}
+        onLongPress={() => this.updateTheme()}
       >
         <Provider store={store}>
           <AppNavigation />
