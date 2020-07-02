@@ -39,6 +39,7 @@ const base = {
     height: 50,
     fontSize,
     fontFamily: getFontFamily("light"),
+    color: getColor(COLOR_KEYS.HEADLINE),
   },
   disabledInput: {
     opacity: 0.6,
@@ -60,37 +61,19 @@ const base = {
     right: 10,
     top: 12,
     height: 23,
-    color: STYLES.COLORS.MEDIUM_GRAY,
+    color: getColor(COLOR_KEYS.PARAGRAPH),
+  },
+  textPlaceholderColor: {
+    color: getColor(COLOR_KEYS.PARAGRAPH),
   },
 };
 
 const themed = {
-  light: {
-    input: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-    textPlaceholderColor: {
-      color: STYLES.COLORS.MEDIUM_GRAY5,
-    },
-  },
+  light: {},
 
-  dark: {
-    input: {
-      color: STYLES.COLORS.WHITE,
-    },
-    textPlaceholderColor: {
-      color: STYLES.COLORS.WHITE_OPACITY3,
-    },
-  },
+  dark: {},
 
-  celsius: {
-    input: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-    textPlaceholderColor: {
-      color: STYLES.COLORS.MEDIUM_GRAY5,
-    },
-  },
+  celsius: {},
 };
 
 const CelInputStyle = theme =>

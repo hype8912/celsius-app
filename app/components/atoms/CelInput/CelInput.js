@@ -140,14 +140,15 @@ class CelInput extends Component {
       rightText,
       showPasswordTooltip,
       toolTipPositionTop,
-      showPassMeter
+      showPassMeter,
     } = this.props;
     const inputStyle = this.getInputStyle();
 
-    const borderBottom = value && showPassMeter && {
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0
-    }
+    const borderBottom = value &&
+      showPassMeter && {
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+      };
 
     switch (type) {
       case "password":
@@ -202,8 +203,8 @@ class CelInput extends Component {
   };
 
   render() {
-    const { error, margin, large, theme } = this.props;
-    const cmpStyle = theme ? CelInputStyle(theme) : CelInputStyle();
+    const { error, margin, large } = this.props;
+    const cmpStyle = CelInputStyle();
     const styleWrapper = [
       getMargins(margin),
       cmpStyle.container,
