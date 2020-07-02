@@ -26,7 +26,6 @@ import CelButton from "../../atoms/CelButton/CelButton";
   state => ({
     transactions: state.transactions.transactionList,
     currencyRatesShort: state.currencies.currencyRatesShort,
-    currencies: state.currencies.rates,
     formData: state.forms.formData,
     callsInProgress: state.api.callsInProgress,
   }),
