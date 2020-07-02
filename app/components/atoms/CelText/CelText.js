@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Text } from "react-native";
-
 import {
   getMargins,
   getScaledFont,
@@ -49,6 +48,7 @@ class CelText extends Component {
     size: PropTypes.number,
     strikethrough: PropTypes.bool,
     theme: PropTypes.oneOf(Object.values(THEMES)),
+    link: PropTypes.bool,
   };
   static defaultProps = {
     type: "H5",
@@ -58,6 +58,7 @@ class CelText extends Component {
     allCaps: false,
     italic: false,
     strikethrough: false,
+    link: false,
   };
 
   getFontSize = () => {
@@ -95,12 +96,18 @@ class CelText extends Component {
   };
 
   getTextColor = () => {
-    const { color } = this.props;
+    const { color, link, type } = this.props;
     const cmpStyle = CelTextStyle();
 
     if (color) return { color };
 
-    return { color: cmpStyle.text.color };
+    let textColor = cmpStyle.type ? cmpStyle[type].color : cmpStyle.text.color;
+
+    if (link) {
+      textColor = cmpStyle.link.color;
+    }
+
+    return { color: textColor };
   };
 
   getFontStyle = () => {
