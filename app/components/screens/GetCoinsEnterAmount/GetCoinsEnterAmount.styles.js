@@ -47,7 +47,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const GetCoinsEnterAmountStyle = () => getThemedStyle(base, themed);

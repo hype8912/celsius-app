@@ -318,7 +318,7 @@ class Profile extends Component {
               onPress={() => {
                 Linking.openURL("https://celsius.network/terms-of-use/");
               }}
-              textColor={getColor(COLOR_KEYS.PRIMARY)}
+              textColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
             >
               See Terms of Use
             </CelButton>

@@ -71,7 +71,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CardStyle = theme =>

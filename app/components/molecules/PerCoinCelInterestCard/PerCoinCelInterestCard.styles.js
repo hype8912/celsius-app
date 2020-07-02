@@ -27,7 +27,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const PerCoinCelInterestCardStyle = () => getThemedStyle(base, themed);

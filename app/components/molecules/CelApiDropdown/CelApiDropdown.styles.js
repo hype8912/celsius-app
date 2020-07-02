@@ -86,7 +86,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     expand: {
       backgroundColor: STYLES.COLORS.WHITE,
     },

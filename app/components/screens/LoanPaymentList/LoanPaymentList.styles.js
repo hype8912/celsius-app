@@ -11,7 +11,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const LoanPaymentListStyle = () => getThemedStyle(base, themed);

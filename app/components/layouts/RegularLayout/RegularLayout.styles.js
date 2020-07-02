@@ -38,7 +38,7 @@ const themed = {
     // },
   },
 
-  celsius: {
+  unicorn: {
     // container: {
     //   backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
     // },

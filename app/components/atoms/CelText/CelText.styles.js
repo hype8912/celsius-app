@@ -23,7 +23,7 @@ const base = {
 const themed = {
   light: {},
   dark: {},
-  celsius: {},
+  unicorn: {},
 };
 
 const CelTextStyle = theme =>

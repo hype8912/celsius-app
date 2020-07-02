@@ -75,7 +75,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const FabMenuStyle = () => getThemedStyle(base, themed);

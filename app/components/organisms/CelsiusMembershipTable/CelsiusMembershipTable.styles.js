@@ -118,7 +118,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 const CelsiusMembershipTableStyle = theme =>
   getThemedStyle(base, themed, theme);

@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { StyleSheet } from "react-native";
 import { getThemedStyle, getPadding } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
@@ -47,7 +46,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     amounts: {
       backgroundColor: STYLES.COLORS.LIGHT_GRAY,
     },

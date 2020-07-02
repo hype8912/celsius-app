@@ -62,7 +62,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     selectWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
     },

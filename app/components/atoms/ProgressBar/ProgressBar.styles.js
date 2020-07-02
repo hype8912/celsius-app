@@ -28,7 +28,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ProgressBarStyle = () => getThemedStyle(base, themed);

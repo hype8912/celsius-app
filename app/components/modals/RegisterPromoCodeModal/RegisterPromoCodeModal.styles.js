@@ -31,7 +31,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const RegisterPromoCodeModalStyle = () => getThemedStyle(base, themed);

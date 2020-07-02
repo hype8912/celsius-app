@@ -73,7 +73,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelInputStyle = theme =>

@@ -84,7 +84,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     cursorBackgroundColor: {
       backgroundColor: "white",
     },

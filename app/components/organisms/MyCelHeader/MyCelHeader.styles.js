@@ -88,7 +88,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 const MyCelHeaderStyle = () => getThemedStyle(base, themed);
 

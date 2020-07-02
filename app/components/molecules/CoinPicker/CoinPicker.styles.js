@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { Platform } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
@@ -102,7 +101,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     circleWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
     },

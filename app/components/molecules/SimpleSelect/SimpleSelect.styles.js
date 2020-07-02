@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getFontFamily,
   getFontSize,
@@ -52,7 +51,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     inputAndroid: {
       color: STYLES.COLORS.DARK_GRAY,
     },

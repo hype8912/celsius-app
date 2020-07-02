@@ -28,7 +28,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const RoundedBadgeStyle = () => getThemedStyle(base, themed);

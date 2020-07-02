@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   widthPercentageToDP,
@@ -28,7 +27,6 @@ const base = {
     marginTop: 10,
   },
   celTierIndentation: {
-    // flex: 0.07,
     width: 22,
     borderBottomLeftRadius: 8,
     borderTopLeftRadius: 8,
@@ -55,7 +53,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelsiusStatsStyle = () => getThemedStyle(base, themed);

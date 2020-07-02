@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
@@ -48,7 +47,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ReferralSendModalStyle = () => getThemedStyle(base, themed);

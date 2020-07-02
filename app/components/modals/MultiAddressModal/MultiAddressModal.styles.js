@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
@@ -42,7 +41,7 @@ const themed = {
       backgroundColor: STYLES.COLORS.DARK_SECONDARY_BUTTON_GRAY,
     },
   },
-  celsius: {},
+  unicorn: {},
 };
 
 const MultiAddressModalStyle = () => getThemedStyle(base, themed);

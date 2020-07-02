@@ -69,7 +69,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const PerformanceGraphStyle = () => getThemedStyle(base, themed);

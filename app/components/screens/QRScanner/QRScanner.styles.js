@@ -46,7 +46,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     maskOverlayColor: {
       backgroundColor: "rgba(241,239,238,0.6)",
     },

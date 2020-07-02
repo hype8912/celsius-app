@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   heightPercentageToDP,
@@ -41,7 +40,6 @@ const base = {
     justifyContent: "center",
     alignItems: "center",
     marginTop: heightPercentageToDP("3%"),
-    // marginTop: heightPercentageToDP("1,53%"),
     marginRight: widthPercentageToDP("3%"),
     marginBottom: heightPercentageToDP("0.8%"),
   },
@@ -70,7 +68,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const MyCelLoansTabStyle = () => getThemedStyle(base, themed);

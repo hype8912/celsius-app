@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { Dimensions } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
@@ -43,7 +42,6 @@ const base = {
     width: 29,
     height: 29,
     borderRadius: 15,
-    // backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -66,7 +64,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const MessageStyle = () => getThemedStyle(base, themed);

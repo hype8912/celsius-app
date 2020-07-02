@@ -12,7 +12,6 @@ const base = {
     ],
   },
   buttonStyle: {
-    // flex: 1,
     borderStyle: "solid",
     justifyContent: "center",
     alignItems: "center",
@@ -74,7 +73,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelModalButtonStyle = () => getThemedStyle(base, themed);

@@ -1,5 +1,4 @@
 import { Platform } from "react-native";
-// import DeviceInfo from "react-native-device-info";
 import {
   getThemedStyle,
   heightPercentageToDP,
@@ -8,9 +7,6 @@ import {
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
-// const hasNotch = DeviceInfo.hasNotch();
-// const isAndroidWithNotch = Platform.OS === "android" && hasNotch
-// const paddingTop = Platform.OS === "android" && !isAndroidWithNotch ? StatusBar.currentHeight : 0
 const headerHeight = 60;
 
 const base = {
@@ -106,7 +102,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelHeadingStyle = () => getThemedStyle(base, themed);

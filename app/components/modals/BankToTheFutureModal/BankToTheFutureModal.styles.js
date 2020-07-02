@@ -26,7 +26,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const BankToTheFutureModalStyle = () => getThemedStyle(base, themed);

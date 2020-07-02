@@ -34,7 +34,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const PasswordBreachedStyle = () => getThemedStyle(base, themed);

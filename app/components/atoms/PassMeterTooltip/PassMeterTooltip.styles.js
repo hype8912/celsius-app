@@ -1,6 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
-// import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -20,7 +19,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const PassMeterTooltipStyle = () => getThemedStyle(base, themed);

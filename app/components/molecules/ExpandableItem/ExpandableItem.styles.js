@@ -68,7 +68,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ExpandableItemStyle = () => getThemedStyle(base, themed);

@@ -56,7 +56,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const LoginButtonStyle = () => getThemedStyle(base, themed);

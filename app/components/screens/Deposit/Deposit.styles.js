@@ -10,7 +10,6 @@ const base = {
 
   copyShareWrapper: {
     width: "100%",
-    // marginTop: 15
   },
 
   copyShareButtonsWrapper: {
@@ -33,8 +32,8 @@ const base = {
     alignItems: "center",
   },
   rateInfoCard: {
-    marginHorizontal: 20
-  }
+    marginHorizontal: 20,
+  },
 };
 
 const themed = {
@@ -57,7 +56,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const DepositStyle = () => getThemedStyle(base, themed);
