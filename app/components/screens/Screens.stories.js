@@ -12,6 +12,33 @@ import LoginLandingStories from "./LoginLanding/LoginLanding.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
 import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
+import TransactionsIntersectionStories from "./TransactionsIntersection/TransactionsIntersection.stories";
+
+storiesOf("TransactionsIntersection", module)
+  .add("Deposit Pending", TransactionsIntersectionStories.depositPending)
+  .add("Deposit Confirmed", TransactionsIntersectionStories.depositConfirmed)
+  .add("Withdrawal Pending", TransactionsIntersectionStories.withdrawalPending)
+  .add(
+    "Withdrawal Confirmed",
+    TransactionsIntersectionStories.withdrawalConfirmed
+  )
+  .add(
+    "Withdrawal Canceled",
+    TransactionsIntersectionStories.withdrawalCanceled
+  )
+  .add(
+    "Withdrawal Pending Verification",
+    TransactionsIntersectionStories.withdrawalPendingVerification
+  )
+  .add(
+    "Withdrawal Pending Review",
+    TransactionsIntersectionStories.withdrawalPendingReview
+  )
+  .add("Loan Interest", TransactionsIntersectionStories.loanInterest)
+  .add(
+    "Loan Principal Received",
+    TransactionsIntersectionStories.loanPrincipalReceived
+  );
 
 storiesOf("AllTransactions", module)
   .add("Regular", AllTransactionsStories.regular)
