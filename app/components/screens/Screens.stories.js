@@ -11,6 +11,11 @@ import CoinDetailsStories from "./CoinDetails/CoinDetails.stories";
 import LoginLandingStories from "./LoginLanding/LoginLanding.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
 import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
+import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
+
+storiesOf("AllTransactions", module)
+  .add("Regular", AllTransactionsStories.regular)
+  .add("Non Compliant", AllTransactionsStories.noTransactions);
 
 storiesOf("WalletInterest", module)
   .add("Regular", WalletInterestStories.regular)
