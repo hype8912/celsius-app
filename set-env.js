@@ -18,7 +18,6 @@ const ENV_FILES = {
   APP_JSON: "app.json",
   CONSTANTS: "constants.js",
   BRANCH: "branch.json",
-  BUILD_GRADLE: "build.gradle",
   // ANDROID_KEYSTORE: 'celsius.jks', // check if we need this
 
   // Key for codePush
@@ -64,9 +63,6 @@ function getDestination(fileKey) {
         __dirname,
         `android/app/src/main/res/values/${pathToFile}`
       );
-
-    case "BUILD_GRADLE":
-      return path.resolve(__dirname, `android/app/${pathToFile}`);
 
     case "GOOGLE_SERVICES":
     case "BUILD_GRADLE":
