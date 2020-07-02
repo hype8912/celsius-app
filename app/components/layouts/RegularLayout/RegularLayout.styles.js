@@ -1,6 +1,6 @@
 import { getThemedStyle, getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
+// import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -27,21 +27,21 @@ const base = {
 
 const themed = {
   light: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT),
-    },
+    // container: {
+    //   backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT),
+    // },
   },
 
   dark: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK),
-    },
+    // container: {
+    //   backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK),
+    // },
   },
 
   celsius: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
-    },
+    // container: {
+    //   backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
+    // },
   },
 };
 

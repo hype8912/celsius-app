@@ -1,9 +1,10 @@
-// import STYLES from '../../../constants/STYLES';
 import { Dimensions } from "react-native";
 import {
   getThemedStyle,
   heightPercentageToDP,
+  getColor,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width, height } = Dimensions.get("window");
 
@@ -13,7 +14,7 @@ const base = {
     margin: -20,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: getColor(COLOR_KEYS.BACKGROUND),
     width,
     height,
   },

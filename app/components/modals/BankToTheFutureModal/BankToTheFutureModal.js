@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import PropTypes from 'prop-types';
 import { AsyncStorage, Image, Linking, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -10,7 +9,6 @@ import { MODALS } from "../../../constants/UI";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
-import STYLES from "../../../constants/STYLES";
 import { isIos } from "../../../utils/ui-util";
 
 @connect(
@@ -55,20 +53,10 @@ class BankToTheFutureModal extends Component {
       <View key={screen.title} style={style.wrapper}>
         <Image source={screen.image} style={style.image} />
         <View style={[style.text]}>
-          <CelText
-            align={"center"}
-            type={"H2"}
-            weight={"700"}
-            color={STYLES.COLORS.DARK_GRAY}
-          >
+          <CelText align={"center"} type={"H2"} weight={"700"}>
             {screen.title}
           </CelText>
-          <CelText
-            margin={"20 0 0 0"}
-            align={"center"}
-            type={"H5"}
-            color={STYLES.COLORS.DARK_GRAY}
-          >
+          <CelText margin={"20 0 0 0"} align={"center"} type={"H5"}>
             {screen.text}
           </CelText>
           <CelButton
@@ -79,7 +67,6 @@ class BankToTheFutureModal extends Component {
           </CelButton>
           <CelButton
             basic
-            color={STYLES.COLORS.CELSIUS_BLUE}
             onPress={() => this.dontShowAgain()}
             margin={"20 0 0 0"}
           >
