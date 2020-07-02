@@ -21,8 +21,6 @@ const initialState = {
   transactions: {
     transactionList: mockTransactionsStore.postman13.transactionList,
   },
-  // loyalty: mockLoyaltyStore.loyalty.postman13,
-  // generalData: mockGeneralDataStore,
 };
 
 const navigationProps = {
