@@ -29,7 +29,6 @@ const { COLORS } = STYLES;
   state => ({
     currencies: state.currencies.rates,
     walletSummary: state.wallet.summary,
-    currencyRatesShort: state.currencies.currencyRatesShort,
     interestRates: state.generalData.interestRates,
     celpayCompliance: state.compliance.celpay,
     coinAmount: state.graph.coinLastValue,

@@ -7,6 +7,14 @@ import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
 import InterestRatesStories from "./InterestRates/InterestRates.stories";
 import SelectCoinStories from "./SelectCoin/SelectCoin.stories";
 import WalletLandingStories from "./WalletLanding/WalletLanding.stories";
+import CoinDetailsStories from "./CoinDetails/CoinDetails.stories";
+
+storiesOf("CoinDetails", module)
+  .add("BTC", CoinDetailsStories.btc)
+  .add("OMG", CoinDetailsStories.omg)
+  .add("XRP", CoinDetailsStories.xrp)
+  .add("EOS", CoinDetailsStories.eos)
+  .add("CEL", CoinDetailsStories.cel);
 
 storiesOf("WalletLanding", module)
   .add("Grid", WalletLandingStories.grid)
