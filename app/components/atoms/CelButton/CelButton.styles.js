@@ -107,7 +107,11 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    basicTitle: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+    },
+  },
 
   dark: {},
 

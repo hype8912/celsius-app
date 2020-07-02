@@ -3,8 +3,10 @@ import { Platform } from "react-native";
 import {
   getThemedStyle,
   heightPercentageToDP,
+  getColor,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 // const hasNotch = DeviceInfo.hasNotch();
 // const isAndroidWithNotch = Platform.OS === "android" && hasNotch
@@ -52,6 +54,7 @@ const base = {
   },
 
   headingBackground: {
+    backgroundColor: getColor(COLOR_KEYS.HEADER),
     ...Platform.select({
       android: {
         borderColor: "#E9E9E9",
@@ -93,36 +96,17 @@ const base = {
     overflow: "hidden",
     borderColor: "black",
   },
+  sameBackground: {
+    backgroundColor: getColor(COLOR_KEYS.BACKGROUND),
+  },
 };
 
 const themed = {
-  light: {
-    headingBackground: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    sameBackground: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
+  light: {},
 
-  dark: {
-    headingBackground: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-      borderColor: "transparent",
-    },
-    sameBackground: {
-      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    },
-  },
+  dark: {},
 
-  celsius: {
-    headingBackground: {
-      backgroundColor: STYLES.COLORS.CELSIUS,
-    },
-    sameBackground: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
+  celsius: {},
 };
 
 const CelHeadingStyle = () => getThemedStyle(base, themed);
