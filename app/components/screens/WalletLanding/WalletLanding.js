@@ -54,7 +54,6 @@ import BankToTheFutureModal from "../../modals/BankToTheFutureModal/BankToTheFut
         : [],
       previouslyOpenedModals: state.ui.previouslyOpenedModals,
       hodlStatus: state.hodl.hodlStatus,
-      walletAddresses: state.wallet.addresses,
       userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
       shouldAnimate: state.ui.shouldAnimate,
     };

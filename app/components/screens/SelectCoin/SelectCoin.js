@@ -17,7 +17,6 @@ import { getTheme } from "../../../utils/styles-util";
 @connect(
   state => ({
     formData: state.forms.formData,
-    walletSummary: state.wallet.summary,
     currencies: state.currencies.rates,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
