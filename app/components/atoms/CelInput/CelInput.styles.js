@@ -4,8 +4,10 @@ import {
   getThemedStyle,
   getScaledFont,
   getFontFamily,
+  getColor,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const fontSize = getScaledFont(STYLES.FONTSIZE.H4);
 const base = {
@@ -22,7 +24,7 @@ const base = {
     ...StyleSheet.flatten(getPadding("0 16 0 16")),
     height: 50,
     borderRadius: 8,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: getColor(COLOR_KEYS.CARDS),
     ...Platform.select({
       android: {
         ...STYLES.ANDROID_BORDER_STYLES,
@@ -47,7 +49,6 @@ const base = {
     shadowOpacity: 0,
   },
   borderView: {
-    // borderWidth: 1,
     borderColor: "#E9E9E9",
     borderTopWidth: 0.5,
     borderLeftWidth: 0.5,
@@ -65,9 +66,6 @@ const base = {
 
 const themed = {
   light: {
-    inputWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
     input: {
       color: STYLES.COLORS.DARK_GRAY,
     },
@@ -77,9 +75,6 @@ const themed = {
   },
 
   dark: {
-    inputWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
     input: {
       color: STYLES.COLORS.WHITE,
     },
@@ -89,9 +84,6 @@ const themed = {
   },
 
   celsius: {
-    inputWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
     input: {
       color: STYLES.COLORS.DARK_GRAY,
     },

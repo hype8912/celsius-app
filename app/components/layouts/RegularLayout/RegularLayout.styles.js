@@ -1,5 +1,6 @@
 import { getThemedStyle, getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -25,11 +26,23 @@ const base = {
 };
 
 const themed = {
-  dark: {},
+  light: {
+    container: {
+      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT),
+    },
+  },
 
-  light: {},
+  dark: {
+    container: {
+      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK),
+    },
+  },
 
-  celsius: {},
+  celsius: {
+    container: {
+      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
+    },
+  },
 };
 
 const RegularLayoutStyle = theme =>
