@@ -8,6 +8,11 @@ import InterestRatesStories from "./InterestRates/InterestRates.stories";
 import SelectCoinStories from "./SelectCoin/SelectCoin.stories";
 import WalletLandingStories from "./WalletLanding/WalletLanding.stories";
 import CoinDetailsStories from "./CoinDetails/CoinDetails.stories";
+import LoginLandingStories from "./LoginLanding/LoginLanding.stories";
+
+storiesOf("LoginLanding", module)
+  .add("Login", LoginLandingStories.login)
+  .add("Register", LoginLandingStories.register);
 
 storiesOf("CoinDetails", module)
   .add("BTC", CoinDetailsStories.btc)
