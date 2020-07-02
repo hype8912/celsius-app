@@ -1,15 +1,11 @@
 import React from "react";
 
-import CoinDetails from "./CoinDetails";
+import BalanceHistory from "./BalanceHistory";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
-import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";
 import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
-import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
-import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
 import mockGraphStore from "../../../../celsius-app-creds/mock-data/mockGraphStore";
-
 import walletUtil from "../../../utils/wallet-util";
 
 const initialState = {
@@ -19,34 +15,23 @@ const initialState = {
   currencies: {
     rates: mockCurrenciesStore.rates,
   },
-  compliance: mockComplianceStore.allowedAll,
   user: {
     profile: mockUserStore.profile.postman13,
     appSettings: mockUserStore.appSettings.postman13,
   },
-  loyalty: mockLoyaltyStore.loyalty.postman13,
-  generalData: mockGeneralDataStore,
+  graph: mockGraphStore.wallet,
 };
 
-const coinDetails = coin => {
-  const state = {
-    ...initialState,
-    graph: mockGraphStore[coin.toLowerCase()],
-  };
+const regular = () => {
   return (
     <ScreenStoryWrapper
-      screenName="CoinDetails"
-      screen={CoinDetails}
-      state={state}
-      navigationProps={{ coin }}
+      screenName="BalanceHistory"
+      screen={BalanceHistory}
+      state={initialState}
     />
   );
 };
 
-const btc = () => coinDetails("BTC");
-const omg = () => coinDetails("OMG");
-
 export default {
-  btc,
-  omg,
+  regular,
 };

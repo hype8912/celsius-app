@@ -9,17 +9,25 @@ import SelectCoinStories from "./SelectCoin/SelectCoin.stories";
 import WalletLandingStories from "./WalletLanding/WalletLanding.stories";
 import CoinDetailsStories from "./CoinDetails/CoinDetails.stories";
 import LoginLandingStories from "./LoginLanding/LoginLanding.stories";
+import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
+import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
+
+storiesOf("WalletInterest", module)
+  .add("Regular", WalletInterestStories.regular)
+  .add("Non Compliant", WalletInterestStories.nonCompliant);
+
+storiesOf("BalanceHistory", module).add(
+  "Regular",
+  BalanceHistoryStories.regular
+);
+
+storiesOf("CoinDetails", module)
+  .add("BTC", CoinDetailsStories.btc)
+  .add("OMG", CoinDetailsStories.omg);
 
 storiesOf("LoginLanding", module)
   .add("Login", LoginLandingStories.login)
   .add("Register", LoginLandingStories.register);
-
-storiesOf("CoinDetails", module)
-  .add("BTC", CoinDetailsStories.btc)
-  .add("OMG", CoinDetailsStories.omg)
-  .add("XRP", CoinDetailsStories.xrp)
-  .add("EOS", CoinDetailsStories.eos)
-  .add("CEL", CoinDetailsStories.cel);
 
 storiesOf("WalletLanding", module)
   .add("Grid", WalletLandingStories.grid)
