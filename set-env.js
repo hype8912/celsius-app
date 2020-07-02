@@ -65,9 +65,6 @@ function getDestination(fileKey) {
         `android/app/src/main/res/values/${pathToFile}`
       );
 
-    case "BUILD_GRADLE":
-      return path.resolve(__dirname, `android/app/${pathToFile}`);
-
     case "GOOGLE_SERVICES":
     case "BUILD_GRADLE":
       return path.resolve(__dirname, `android/app/${pathToFile}`);
