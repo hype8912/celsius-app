@@ -3,8 +3,10 @@ import {
   getFontFamily,
   getFontSize,
   getThemedStyle,
+  getColor,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -14,7 +16,7 @@ const base = {
     width: "100%",
     marginVertical: 10,
     height: 50,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: getColor(COLOR_KEYS.CARDS),
     ...Platform.select({
       android: {
         ...STYLES.ANDROID_BORDER_STYLES,
@@ -43,6 +45,9 @@ const base = {
     justifyContent: "center",
     height: "100%",
     width: "100%",
+  },
+  textColor: {
+    color: getColor(COLOR_KEYS.PARAGRAPH),
   },
 };
 
