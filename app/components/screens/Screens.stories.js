@@ -10,8 +10,16 @@ import WalletLandingStories from "./WalletLanding/WalletLanding.stories";
 import CoinDetailsStories from "./CoinDetails/CoinDetails.stories";
 import LoginLandingStories from "./LoginLanding/LoginLanding.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
+import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
 
-storiesOf("BalanceHistory", module).add("BTC", BalanceHistoryStories.regular);
+storiesOf("WalletInterest", module)
+  .add("Regular", WalletInterestStories.regular)
+  .add("Non Compliant", WalletInterestStories.nonCompliant);
+
+storiesOf("BalanceHistory", module).add(
+  "Regular",
+  BalanceHistoryStories.regular
+);
 
 storiesOf("CoinDetails", module)
   .add("BTC", CoinDetailsStories.btc)
