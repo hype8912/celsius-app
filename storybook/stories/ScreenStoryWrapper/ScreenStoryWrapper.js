@@ -75,7 +75,11 @@ class ScreenStoryWrapper extends React.Component {
       initialRouteName: screenName,
       initialRouteParams: navigationProps,
       defaultNavigationOptions: {
-        header: props => <CelHeading {...props} />,
+        header: props => (
+          <TouchableOpacity onPress={() => this.updateTheme()}>
+            <CelHeading {...props} />
+          </TouchableOpacity>
+        ),
       },
     };
 
@@ -85,18 +89,9 @@ class ScreenStoryWrapper extends React.Component {
     const AppNavigation = createAppContainer(AppNavigator);
 
     return (
-      <TouchableOpacity
-        style={{
-          position: "absolute",
-          width,
-          height,
-        }}
-        onLongPress={() => this.updateTheme()}
-      >
-        <Provider store={store}>
-          <AppNavigation />
-        </Provider>
-      </TouchableOpacity>
+      <Provider store={store}>
+        <AppNavigation />
+      </Provider>
     );
   }
 }
