@@ -8,9 +8,9 @@ import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletS
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
-import walletUtil from "../../../utils/wallet-util";
-import mockUIStore from "../../../../celsius-app-creds/mock-data/mockUIStore";
 import mockGraphStore from "../../../../celsius-app-creds/mock-data/mockGraphStore";
+
+import walletUtil from "../../../utils/wallet-util";
 
 const initialState = {
   wallet: {
@@ -18,15 +18,12 @@ const initialState = {
   },
   currencies: {
     rates: mockCurrenciesStore.rates,
-    graphs: mockCurrenciesStore.graphs,
-    currencyRatesShort: mockCurrenciesStore.currencyRatesShort,
   },
   compliance: mockComplianceStore.allowedAll,
   user: {
     profile: mockUserStore.profile.postman13,
     appSettings: mockUserStore.appSettings.postman13,
   },
-  ui: mockUIStore.noBannerNoAnimations,
   loyalty: mockLoyaltyStore.loyalty.postman13,
   generalData: mockGeneralDataStore,
 };
@@ -48,14 +45,8 @@ const coinDetails = coin => {
 
 const btc = () => coinDetails("BTC");
 const omg = () => coinDetails("OMG");
-const xrp = () => coinDetails("XRP");
-const eos = () => coinDetails("EOS");
-const cel = () => coinDetails("CEL");
 
 export default {
   btc,
   omg,
-  xrp,
-  eos,
-  cel,
 };
