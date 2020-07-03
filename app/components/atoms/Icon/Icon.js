@@ -160,7 +160,7 @@ class Icon extends Component {
       case "Filter":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={{ height: 50 }}
             source={require(`../../../../assets/images/unicorn-icons/Filter.png`)}
           />
         );
@@ -490,17 +490,19 @@ class Icon extends Component {
 
     if (getTheme() === "unicorn") {
       svgIcons = { ...Svgs, ...CommonSvgs };
+
+      if (UNICORN_ICONS.includes(name)) {
+        return (
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            {this.renderPngIcon(name)}
+          </View>
+        );
+      }
     }
 
     if (["primary"].includes(fill)) fillColor = iconColors[fill][theme];
     const viewBox = svgIcons[`${name}ViewBox`] || this.props.viewBox;
-    if (UNICORN_ICONS.includes(name) && getTheme() === "unicorn") {
-      return (
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          {this.renderPngIcon(name)}
-        </View>
-      );
-    }
+
     return (
       <View style={{ overflow: "hidden", opacity: iconOpacity }}>
         <SvgIcon
