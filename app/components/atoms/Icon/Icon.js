@@ -246,7 +246,7 @@ class Icon extends Component {
       case "Mail":
         return (
           <Image
-            style={{ height: 40, resizeMode: "contain" }}
+            style={iconStyle.pngIcon}
             source={require(`../../../../assets/images/unicorn-icons/Mail.png`)}
           />
         );

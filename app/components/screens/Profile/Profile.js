@@ -39,9 +39,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class Profile extends Component {
-  static propTypes = {
-    // text: PropTypes.string
-  };
+  static propTypes = {};
   static defaultProps = {};
 
   static navigationOptions = () => ({
@@ -163,7 +161,7 @@ class Profile extends Component {
               <TouchableOpacity
                 onPress={() => actions.navigateTo("ChangeAvatar")}
               >
-                <CelText color={STYLES.COLORS.CELSIUS_BLUE} margin="10 0 0 0">
+                <CelText link margin="10 0 0 0">
                   Change photo
                 </CelText>
               </TouchableOpacity>
@@ -233,6 +231,7 @@ class Profile extends Component {
             <CelText margin={"0 0 20 0"}>
               Receive your total transaction history report via email.
             </CelText>
+
             <IconButton
               onPress={() => this.sendCsvRequest()}
               margin="0 0 20 0"
@@ -316,7 +315,6 @@ class Profile extends Component {
               onPress={() => {
                 Linking.openURL("https://celsius.network/terms-of-use/");
               }}
-              textColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
             >
               See Terms of Use
             </CelButton>
