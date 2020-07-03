@@ -109,6 +109,7 @@ import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/Hod
 import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
+import LoanOverviewScreen from "../components/screens/LoanOverviewScreen/LoanOverviewScreen";
 
 export const screens = {
   /**
@@ -195,6 +196,7 @@ export const screens = {
   ChoosePaymentMethod,
   ChooseMarginCollateralCoin,
   PaymentCel,
+  LoanOverviewScreen,
   LoanPrepaymentPeriod,
   LoanPaymentList,
   LoanPaymentCoin,
