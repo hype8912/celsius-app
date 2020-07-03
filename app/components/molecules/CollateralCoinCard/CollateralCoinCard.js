@@ -241,7 +241,7 @@ class CollateralCoinCard extends Component {
             height="13"
             name="CirclePlus"
           />
-          <CelText margin={"0 0 0 5"} color={STYLES.COLORS.CELSIUS_BLUE}>
+          <CelText margin={"0 0 0 5"} link>
             Deposit more
           </CelText>
         </View>

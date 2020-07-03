@@ -58,11 +58,7 @@ class CoinGridCard extends Component {
           height="13"
           name="CirclePlus"
         />
-        <CelText
-          margin={"0 0 0 5"}
-          type={"H7"}
-          color={STYLES.COLORS.CELSIUS_BLUE}
-        >
+        <CelText margin={"0 0 0 5"} type={"H7"} link>
           Deposit
         </CelText>
       </View>
