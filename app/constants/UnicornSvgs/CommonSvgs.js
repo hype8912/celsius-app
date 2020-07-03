@@ -13,11 +13,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-57.000000, -2812.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-57.000000, -2812.000000)">
         <G id="Row" transform="translate(10.000000, 2810.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Accomplishments" transform="translate(10.000000, 2.000000)">
@@ -40,11 +36,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-52.000000, -2765.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-52.000000, -2765.000000)">
         <G id="Row" transform="translate(10.000000, 2760.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="AlertIcon" transform="translate(5.000000, 5.000000)">
@@ -67,11 +59,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-51.000000, -3169.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-51.000000, -3169.000000)">
         <G id="Row" transform="translate(10.000000, 3160.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Backspace" transform="translate(4.000000, 9.000000)">
@@ -95,11 +83,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-54.000000, -2866.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-54.000000, -2866.000000)">
         <G id="Row" transform="translate(10.000000, 2860.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Bell" transform="translate(7.616135, 6.000000)">
@@ -122,11 +106,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-57.000000, -766.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-57.000000, -766.000000)">
         <G id="Row" transform="translate(10.000000, 760.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="CaretDown" transform="translate(10.000000, 6.000000)">
@@ -150,11 +130,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-57.000000, -824.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-57.000000, -824.000000)">
         <G id="Row" transform="translate(10.000000, 810.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="CaretUp" transform="translate(10.000000, 14.000000)">
@@ -178,11 +154,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-57.000000, -4018.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-57.000000, -4018.000000)">
         <G id="Row" transform="translate(10.000000, 4010.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="CheckboxChecked" transform="translate(10.853553, 8.853553)">
@@ -206,11 +178,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-57.000000, -3220.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-57.000000, -3220.000000)">
         <G id="Row" transform="translate(10.000000, 3210.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Checked" transform="translate(10.000000, 10.000000)">
@@ -234,11 +202,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-53.000000, -3316.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-53.000000, -3316.000000)">
         <G id="Row" transform="translate(10.000000, 3310.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="CheckedBorder" transform="translate(6.000000, 6.000000)">
@@ -261,11 +225,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-56.000000, -569.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-56.000000, -569.000000)">
         <G id="Row" transform="translate(10.000000, 560.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Close" transform="translate(9.000000, 9.000000)">
@@ -288,11 +248,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-52.000000, -3765.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-52.000000, -3765.000000)">
         <G id="Row" transform="translate(10.000000, 3760.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Collapse" transform="translate(5.000000, 5.000000)">
@@ -315,11 +271,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-52.000000, -2266.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-52.000000, -2266.000000)">
         <G id="Row" transform="translate(10.000000, 2260.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="CopyIcon" transform="translate(5.000000, 6.000000)">
@@ -342,11 +294,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-59.000000, -3668.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-59.000000, -3668.000000)">
         <G id="Row" transform="translate(10.000000, 3660.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Download" transform="translate(12.414214, 8.000000)">
@@ -369,11 +317,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-52.000000, -3715.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-52.000000, -3715.000000)">
         <G id="Row" transform="translate(10.000000, 3710.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Expand" transform="translate(5.000000, 5.000000)">
@@ -396,11 +340,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-47.000000, -2660.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-47.000000, -2660.000000)">
         <G id="Row" transform="translate(10.000000, 2660.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Facebook">
@@ -423,11 +363,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-47.000000, -2610.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-47.000000, -2610.000000)">
         <G id="Row" transform="translate(10.000000, 2610.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Google">
@@ -450,11 +386,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-50.000000, -619.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-50.000000, -619.000000)">
         <G id="Row" transform="translate(10.000000, 610.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="IconArrowRight" transform="translate(3.000000, 9.000000)">
@@ -478,11 +410,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-60.000000, -976.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-60.000000, -976.000000)">
         <G id="Row" transform="translate(10.000000, 960.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="IconChevronDown" transform="translate(13.000000, 16.000000)">
@@ -505,11 +433,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-62.000000, -873.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-62.000000, -873.000000)">
         <G id="Row" transform="translate(10.000000, 860.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="IconChevronLeft" transform="translate(15.000000, 13.000000)">
@@ -533,11 +457,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-62.000000, -923.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-62.000000, -923.000000)">
         <G id="Row" transform="translate(10.000000, 910.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G
@@ -564,11 +484,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-60.000000, -1026.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-60.000000, -1026.000000)">
         <G id="Row" transform="translate(10.000000, 1010.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="IconChevronUp" transform="translate(13.000000, 16.000000)">
@@ -592,11 +508,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-52.000000, -2568.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-52.000000, -2568.000000)">
         <G id="Row" transform="translate(10.000000, 2560.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="KycCamera" transform="translate(5.000065, 8.322452)">
@@ -619,11 +531,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-58.000000, -3278.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-58.000000, -3278.000000)">
         <G id="Row" transform="translate(10.000000, 3260.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Minus" transform="translate(11.500000, 18.500000)">
@@ -647,11 +555,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-53.000000, -3366.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-53.000000, -3366.000000)">
         <G id="Row" transform="translate(10.000000, 3360.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="MinusBorder" transform="translate(6.000000, 6.000000)">
@@ -674,11 +578,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-57.000000, -3469.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-57.000000, -3469.000000)">
         <G id="Row" transform="translate(10.000000, 3460.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Present" transform="translate(10.000000, 9.000000)">
@@ -701,11 +601,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-52.000000, -3515.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-52.000000, -3515.000000)">
         <G id="Row" transform="translate(10.000000, 3510.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="QuestionCircle" transform="translate(5.000000, 5.000000)">
@@ -728,11 +624,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-57.000000, -3620.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-57.000000, -3620.000000)">
         <G id="Row" transform="translate(10.000000, 3610.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Share" transform="translate(10.000000, 10.000000)">
@@ -755,11 +647,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-53.000000, -3566.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-53.000000, -3566.000000)">
         <G id="Row" transform="translate(10.000000, 3560.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Stop" transform="translate(6.092242, 6.092242)">
@@ -782,11 +670,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-52.000000, -2218.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-52.000000, -2218.000000)">
         <G id="Row" transform="translate(10.000000, 2210.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Swap" transform="translate(5.000065, 8.322452)">
@@ -809,11 +693,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-47.000000, -2710.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-47.000000, -2710.000000)">
         <G id="Row" transform="translate(10.000000, 2710.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Twitter">
@@ -836,11 +716,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-53.000000, -3416.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-53.000000, -3416.000000)">
         <G id="Row" transform="translate(10.000000, 3410.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="Unchecked" transform="translate(6.000000, 6.000000)">
@@ -867,11 +743,7 @@ export default {
       fill="none"
       fill-rule="evenodd"
     >
-      <G
-        id="Screen-A---2"
-        transform="translate(-56.000000, -2373.000000)"
-        fill="#100B20"
-      >
+      <G id="Screen-A---2" transform="translate(-56.000000, -2373.000000)">
         <G id="Row" transform="translate(10.000000, 2360.000000)">
           <G id="Icon" transform="translate(37.000000, 0.000000)">
             <G id="UpArrow" transform="translate(9.899495, 13.899495)">
