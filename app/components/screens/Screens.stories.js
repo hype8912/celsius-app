@@ -13,10 +13,26 @@ import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
 import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
 import TransactionsIntersectionStories from "./TransactionsIntersection/TransactionsIntersection.stories";
+import CommunityStories from "./Community/Community.stories";
+import MyCelStories from "./MyCel/MyCel.stories";
+import ProfileStories from "./Profile/Profile.stories";
 
 storiesOf("WalletLanding", module)
   .add("Grid", WalletLandingStories.grid)
   .add("List", WalletLandingStories.list);
+
+storiesOf("Profile", module).add("Regular", ProfileStories.regular);
+
+storiesOf("MyCel", module)
+  .add("None", MyCelStories.none)
+  .add("Silver", MyCelStories.silver)
+  .add("Gold", MyCelStories.gold)
+  .add("Platinum", MyCelStories.platinum)
+  .add("Overview", MyCelStories.overview)
+  .add("Interest", MyCelStories.interest)
+  .add("Loans", MyCelStories.loans);
+
+storiesOf("Community", module).add("Regular", CommunityStories.regular);
 
 storiesOf("TransactionsIntersection", module)
   .add("Deposit Pending", TransactionsIntersectionStories.depositPending)

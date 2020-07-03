@@ -31,8 +31,6 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
   state => ({
     user: state.user.profile,
     profilePicture: state.user.profile.profile_picture,
-    formData: state.forms.formData,
-    formErrors: state.forms.formErrors,
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
