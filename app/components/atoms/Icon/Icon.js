@@ -121,7 +121,8 @@ class Icon extends Component {
       case "Couple":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
+            resizeMode={"contain"}
             source={require(`../../../../assets/images/unicorn-icons/Couple.png`)}
           />
         );
@@ -294,7 +295,8 @@ class Icon extends Component {
       case "PiggyBank":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
+            resizeMode={"contain"}
             source={require(`../../../../assets/images/unicorn-icons/PiggyBank.png`)}
           />
         );
@@ -322,7 +324,8 @@ class Icon extends Component {
       case "Refer":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
+            resizeMode={"contain"}
             source={require(`../../../../assets/images/unicorn-icons/Refer.png`)}
           />
         );
@@ -336,7 +339,8 @@ class Icon extends Component {
       case "Security":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
+            resizeMode={"contain"}
             source={require(`../../../../assets/images/unicorn-icons/Security.png`)}
           />
         );
@@ -385,7 +389,8 @@ class Icon extends Component {
       case "Total":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
+            resizeMode={"contain"}
             source={require(`../../../../assets/images/unicorn-icons/Total.png`)}
           />
         );
@@ -469,7 +474,8 @@ class Icon extends Component {
       case "WalletSettings":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
+            resizeMode={"contain"}
             source={require(`../../../../assets/images/unicorn-icons/WalletSettings.png`)}
           />
         );
