@@ -99,7 +99,6 @@ class CoinPicker extends Component {
               </View>
               <View style={style.iconStyle}>
                 <CelText
-                  color={iconColor}
                   type="H3"
                   margin={"10 0 10 0"}
                   style={{ paddingRight: 10 }}
@@ -107,12 +106,7 @@ class CoinPicker extends Component {
                   {label}
                 </CelText>
                 {coin !== "USD" && (
-                  <Icon
-                    width="13"
-                    height="13"
-                    name="CaretDown"
-                    fill={iconColor}
-                  />
+                  <Icon width="13" height="13" name="CaretDown" />
                 )}
               </View>
             </TouchableOpacity>

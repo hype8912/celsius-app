@@ -1,6 +1,8 @@
 import { Platform } from "react-native";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -46,15 +48,9 @@ const themed = {
     textmenu: {
       color: STYLES.COLORS.DARK_GRAY,
     },
-    viewcoin: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    textcoin: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-    fillColor: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
+    viewcoin: { backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.LIGHT) },
+    textcoin: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
+    fillColor: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
   },
 
   dark: {
@@ -75,15 +71,9 @@ const themed = {
     textmenu: {
       color: STYLES.COLORS.WHITE,
     },
-    viewcoin: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    textcoin: {
-      color: STYLES.COLORS.WHITE,
-    },
-    fillColor: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
+    viewcoin: { backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.DARK) },
+    textcoin: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
+    fillColor: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
   },
 
   unicorn: {
@@ -93,15 +83,9 @@ const themed = {
     textmenu: {
       color: STYLES.COLORS.WHITE,
     },
-    viewcoin: {
-      backgroundColor: STYLES.COLORS.CELSIUS,
-    },
-    textcoin: {
-      color: STYLES.COLORS.WHITE,
-    },
-    fillColor: {
-      color: STYLES.COLORS.WHITE,
-    },
+    viewcoin: { backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.UNICORN) },
+    textcoin: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
+    fillColor: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
   },
 };
 

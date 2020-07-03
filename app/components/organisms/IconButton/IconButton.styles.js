@@ -1,6 +1,8 @@
 import { Platform } from "react-native";
 import STYLES from "../../../constants/STYLES";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -28,20 +30,14 @@ const base = {
 
 const themed = {
   light: {
-    container: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    textColor: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY6,
-    },
+    container: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT) },
+    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
+    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
   },
 
   dark: {
     container: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
       ...Platform.select({
         android: {
           ...STYLES.ANDROID_BORDER_STYLES,
@@ -51,17 +47,13 @@ const themed = {
         },
       }),
     },
-    textColor: {
-      color: STYLES.COLORS.WHITE,
-    },
-    iconColor: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
+    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
+    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
   },
 
   unicorn: {
     container: {
-      backgroundColor: STYLES.COLORS.WHITE,
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
       ...Platform.select({
         android: {
           ...STYLES.ANDROID_SHADOW_STYLES,
@@ -72,12 +64,8 @@ const themed = {
         },
       }),
     },
-    textColor: {
-      color: STYLES.COLORS.DARK_GRAY6,
-    },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY6,
-    },
+    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
+    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
   },
 };
 

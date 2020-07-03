@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
 
 import cryptoUtil from "../../../utils/crypto-util";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import * as appActions from "../../../redux/actions";
 import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
@@ -30,6 +30,7 @@ import { hasPassedKYC } from "../../../utils/user-util";
 import formatter from "../../../utils/formatter";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -267,7 +268,7 @@ class Deposit extends Component {
     }
 
     return (
-      <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+      <Card color={getColor(COLOR_KEYS.LINK)}>
         <CelText
           style={style.infoBubble}
           weight="300"
@@ -496,7 +497,7 @@ class Deposit extends Component {
               <CelText
                 margin={"20 0 10 0"}
                 align={"center"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
                 type={"H4"}
                 weight={"300"}
                 onPress={() => Linking.openURL(link)}
@@ -509,7 +510,7 @@ class Deposit extends Component {
               <CelText
                 margin={"20 0 20 0"}
                 align={"center"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
                 type={"H4"}
                 weight={"300"}
                 onPress={() => actions.navigateTo("GetCoinsLanding")}
