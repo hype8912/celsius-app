@@ -332,7 +332,7 @@ class Icon extends Component {
       case "Search":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
             source={require(`../../../../assets/images/unicorn-icons/Search.png`)}
           />
         );
