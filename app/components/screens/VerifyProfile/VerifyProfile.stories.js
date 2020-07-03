@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import VerifyProfile from "./VerifyProfile";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -13,24 +14,26 @@ const initialState = {
 };
 
 const pin = () => {
+  const state = _.cloneDeep(initialState);
+
   return (
     <ScreenStoryWrapper
       screenName="VerifyProfile"
       screen={VerifyProfile}
-      state={initialState}
+      state={state}
     />
   );
 };
 
 const twoFA = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.user.profile.two_factor_enabled = true;
 
   return (
     <ScreenStoryWrapper
       screenName="VerifyProfile"
       screen={VerifyProfile}
-      state={initialState}
+      state={state}
     />
   );
 };

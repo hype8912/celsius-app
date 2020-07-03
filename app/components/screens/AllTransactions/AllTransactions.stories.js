@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import AllTransactions from "./AllTransactions";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -50,18 +51,20 @@ const navigationProps = {
 };
 
 const regular = () => {
+  const state = _.cloneDeep(initialState);
+
   return (
     <ScreenStoryWrapper
       screenName="AllTransactions"
       screen={AllTransactions}
-      state={initialState}
+      state={state}
       navigationProps={navigationProps}
     />
   );
 };
 
 const noTransactions = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.transactions.transactionList = {};
 
   return (

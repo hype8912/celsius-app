@@ -26,13 +26,15 @@ const initialState = {
   generalData: mockGeneralDataStore,
 };
 
-const regular = () => (
-  <ScreenStoryWrapper
-    screen={InterestRates}
-    screenName="InterestRates"
-    state={initialState}
-  />
-);
+const regular = () => {
+  return (
+    <ScreenStoryWrapper
+      screen={InterestRates}
+      screenName="InterestRates"
+      state={initialState}
+    />
+  );
+};
 
 export default {
   regular,

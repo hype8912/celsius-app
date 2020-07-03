@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import GetCoinsLanding from "./GetCoinsLanding";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -18,17 +19,18 @@ const initialState = {
 // const regular = () => {}
 
 const noTransactions = () => {
+  const state = _.cloneDeep(initialState);
   return (
     <ScreenStoryWrapper
       screenName="GetCoinsLanding"
       screen={GetCoinsLanding}
-      state={initialState}
+      state={state}
     />
   );
 };
 
 const notCompliant = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.compliance.simplex.allowed = false;
   state.compliance.gem.allowed = false;
 
@@ -42,7 +44,7 @@ const notCompliant = () => {
 };
 
 const pendingVerification = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.user.profile.kyc.status = KYC_STATUSES.pending;
 
   return (
@@ -55,7 +57,7 @@ const pendingVerification = () => {
 };
 
 const notVerified = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.user.profile.kyc.status = KYC_STATUSES.collecting;
 
   return (

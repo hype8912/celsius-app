@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import WalletLanding from "./WalletLanding";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -31,26 +32,19 @@ const initialState = {
 };
 
 const grid = () => {
+  const state = _.cloneDeep(initialState);
   return (
     <ScreenStoryWrapper
       screenName="WalletLanding"
       screen={WalletLanding}
-      state={initialState}
+      state={state}
     />
   );
 };
 
 const list = () => {
-  const state = {
-    ...initialState,
-    user: {
-      ...initialState.user,
-      appSettings: {
-        ...initialState.user.appSettings,
-        default_wallet_view: "list",
-      },
-    },
-  };
+  const state = _.cloneDeep(initialState);
+  state.user.appSettings.default_wallet_view = "list";
 
   return (
     <ScreenStoryWrapper

@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import MyCel from "./MyCel";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -24,14 +25,14 @@ const initialState = {
 };
 
 const setTab = tab => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.ui = { activeTab: tab };
 
   return <ScreenStoryWrapper screenName="MyCel" screen={MyCel} state={state} />;
 };
 
 const setTier = tier => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.loyalty = mockLoyaltyStore.loyalty[tier];
 
   return <ScreenStoryWrapper screenName="MyCel" screen={MyCel} state={state} />;

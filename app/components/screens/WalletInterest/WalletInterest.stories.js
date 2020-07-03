@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import WalletInterest from "./WalletInterest";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -33,17 +34,19 @@ const initialState = {
 };
 
 const regular = () => {
+  const state = _.cloneDeep(initialState);
+
   return (
     <ScreenStoryWrapper
       screenName="WalletInterest"
       screen={WalletInterest}
-      state={initialState}
+      state={state}
     />
   );
 };
 
 const nonCompliant = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.compliance = mockComplianceStore.interestBlocked;
   state.forms = { formData: { coin: "ETH" } };
 

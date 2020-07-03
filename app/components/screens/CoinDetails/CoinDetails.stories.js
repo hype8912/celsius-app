@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import CoinDetails from "./CoinDetails";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -29,10 +30,9 @@ const initialState = {
 };
 
 const coinDetails = coin => {
-  const state = {
-    ...initialState,
-    graph: mockGraphStore[coin.toLowerCase()],
-  };
+  const state = _.cloneDeep(initialState);
+  state.graph = mockGraphStore[coin.toLowerCase()];
+
   return (
     <ScreenStoryWrapper
       screenName="CoinDetails"

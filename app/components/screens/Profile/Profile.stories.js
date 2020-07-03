@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import Profile from "./Profile";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -13,17 +14,15 @@ const initialState = {
 };
 
 const regular = () => {
+  const state = _.cloneDeep(initialState);
+
   return (
-    <ScreenStoryWrapper
-      screenName="Profile"
-      screen={Profile}
-      state={initialState}
-    />
+    <ScreenStoryWrapper screenName="Profile" screen={Profile} state={state} />
   );
 };
 
 const notVerified = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.user.profile.kyc.status = KYC_STATUSES.collecting;
 
   return (
@@ -32,7 +31,7 @@ const notVerified = () => {
 };
 
 const pendingVerification = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.user.profile.kyc.status = KYC_STATUSES.pending;
 
   return (
@@ -41,7 +40,7 @@ const pendingVerification = () => {
 };
 
 const rejeceted = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.user.profile.kyc.status = KYC_STATUSES.rejected;
 
   return (

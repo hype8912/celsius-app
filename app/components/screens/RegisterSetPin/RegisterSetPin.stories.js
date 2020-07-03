@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import RegisterSetPin from "./RegisterSetPin";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -10,24 +11,24 @@ const initialState = {
 };
 
 const createPin = () => {
+  const state = _.cloneDeep(initialState);
   return (
     <ScreenStoryWrapper
       screen={RegisterSetPin}
       screenName="RegisterSetPin"
-      state={initialState}
+      state={state}
     />
   );
 };
 
 const confirmPin = () => {
-  const state = {
-    ...initialState,
-    forms: {
-      formData: {
-        pin: "1234",
-      },
+  const state = _.cloneDeep(initialState);
+  state.forms = {
+    formData: {
+      pin: "1234",
     },
   };
+
   return (
     <ScreenStoryWrapper
       screen={RegisterSetPin}

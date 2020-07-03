@@ -1,25 +1,28 @@
 import { storiesOf } from "@storybook/react-native/dist";
 
+import WalletLandingStories from "./WalletLanding/WalletLanding.stories";
+import VerifyProfileStories from "./VerifyProfile/VerifyProfile.stories";
+import CoinDetailsStories from "./CoinDetails/CoinDetails.stories";
 import WelcomeStories from "./Welcome/Welcome.stories";
 import DepositStories from "./Deposit/Deposit.stories";
+import ProfileStories from "./Profile/Profile.stories";
 import LoginStories from "./Login/Login.stories";
+import SelectCoinStories from "./SelectCoin/SelectCoin.stories";
+import LoginLandingStories from "./LoginLanding/LoginLanding.stories";
+import GetCoinsLandingStories from "./GetCoinsLanding/GetCoinsLanding.stories";
+import WithdrawEnterAmountStories from "./WithdrawEnterAmount/WithdrawEnterAmount.stories";
 import RegisterInitialStories from "./RegisterInitial/RegisterInitial.stories";
 import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
 import InterestRatesStories from "./InterestRates/InterestRates.stories";
-import SelectCoinStories from "./SelectCoin/SelectCoin.stories";
-import WalletLandingStories from "./WalletLanding/WalletLanding.stories";
-import CoinDetailsStories from "./CoinDetails/CoinDetails.stories";
-import LoginLandingStories from "./LoginLanding/LoginLanding.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
 import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
 import TransactionsIntersectionStories from "./TransactionsIntersection/TransactionsIntersection.stories";
 import CommunityStories from "./Community/Community.stories";
 import MyCelStories from "./MyCel/MyCel.stories";
-import ProfileStories from "./Profile/Profile.stories";
-import VerifyProfileStories from "./VerifyProfile/VerifyProfile.stories";
 
-// Link to screens spreadsheet ->
+// Link to screens spreadsheet
+// https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
 
 storiesOf("WalletLanding", module)
   .add("Grid", WalletLandingStories.grid)
@@ -36,20 +39,43 @@ storiesOf("CoinDetails", module)
 storiesOf("Welcome", module).add("Regular", WelcomeStories.regular);
 
 storiesOf("Deposit", module)
-  .add("BTC", DepositStories.btc)
+  .add("Loading", DepositStories.btc)
   .add("Alternate address - BCH", DepositStories.bch)
   .add("ETH", DepositStories.eth)
   .add("With Loyalty - CEL", DepositStories.cel)
-  .add("OMG", DepositStories.omg)
   .add("With Tag - XRP", DepositStories.xrp)
-  .add("With Memo ID - XLM", DepositStories.xlm)
-  .add("With Memo ID - EOS", DepositStories.eos);
+  .add("With Memo ID - XLM", DepositStories.xlm);
 
-storiesOf("WalletLanding", module)
-  .add("Grid", WalletLandingStories.grid)
-  .add("List", WalletLandingStories.list);
+storiesOf("Profile", module)
+  .add("Regular", ProfileStories.regular)
+  .add("Not Verified", ProfileStories.notVerified)
+  .add("Pending Verification", ProfileStories.pendingVerification)
+  .add("Rejeceted", ProfileStories.rejeceted);
 
-storiesOf("Profile", module).add("Regular", ProfileStories.regular);
+storiesOf("Login", module).add("Regular", LoginStories.regular);
+
+storiesOf("SelectCoin", module)
+  .add("Crypto", SelectCoinStories.crypto)
+  .add("Fiat", SelectCoinStories.fiat);
+
+storiesOf("LoginLanding", module)
+  .add("Login", LoginLandingStories.login)
+  .add("Register", LoginLandingStories.register);
+
+storiesOf("GetCoinsLandingStories", module)
+  .add("No Transactions", GetCoinsLandingStories.noTransactions)
+  .add("Not Compliant", GetCoinsLandingStories.notCompliant)
+  .add("Pending Verification", GetCoinsLandingStories.pendingVerification)
+  .add("Not Verified", GetCoinsLandingStories.notVerified);
+
+storiesOf("WithdrawEnterAmount", module)
+  .add("Regular", WithdrawEnterAmountStories.regular)
+  .add("Locked Address", WithdrawEnterAmountStories.lockedAddress)
+  .add("Without Amount", WithdrawEnterAmountStories.withoutAmount)
+  .add("Not Compliant", WithdrawEnterAmountStories.notCompliant)
+  .add("Pending Verification", WithdrawEnterAmountStories.pendingVerification)
+  .add("Not Verified", WithdrawEnterAmountStories.notVerified)
+  .add("HODL Mode Activated", WithdrawEnterAmountStories.hodlModeActive);
 
 storiesOf("MyCel", module)
   .add("None", MyCelStories.none)
@@ -121,16 +147,7 @@ storiesOf("BalanceHistory", module).add(
   BalanceHistoryStories.regular
 );
 
-storiesOf("LoginLanding", module)
-  .add("Login", LoginLandingStories.login)
-  .add("Register", LoginLandingStories.register);
-
-storiesOf("Login", module).add("Regular", LoginStories.regular);
 storiesOf("InterestRates", module).add("Regular", InterestRatesStories.regular);
-
-storiesOf("SelectCoin", module)
-  .add("Crypto", SelectCoinStories.crypto)
-  .add("Fiat", SelectCoinStories.fiat);
 
 storiesOf("RegisterInitial", module)
   .add("Empty", RegisterInitialStories.empty)

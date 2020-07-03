@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import Community from "./Community";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -14,11 +15,13 @@ const initialState = {
 };
 
 const regular = () => {
+  const state = _.cloneDeep(initialState);
+
   return (
     <ScreenStoryWrapper
       screenName="Community"
       screen={Community}
-      state={initialState}
+      state={state}
     />
   );
 };

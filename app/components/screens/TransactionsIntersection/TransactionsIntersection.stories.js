@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
@@ -53,7 +54,7 @@ function getTransaction(type) {
 }
 
 const transactionStory = type => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.transactions.transactionDetails = getTransaction(type);
   return (
     <ScreenStoryWrapper

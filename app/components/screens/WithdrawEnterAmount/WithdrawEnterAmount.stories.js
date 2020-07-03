@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import WithdrawEnterAmount from "./WithdrawEnterAmount";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -13,12 +14,14 @@ import mockHodlStore from "../../../../celsius-app-creds/mock-data/mockHodlStore
 const initialState = {
   forms: { formData: { coin: "BTC" } },
   wallet: {
-    summary: walletUtil.mapWalletSummary(mockWalletStore.summary.postman13),
+    summary: _.cloneDeep(
+      walletUtil.mapWalletSummary(mockWalletStore.summary.postman13)
+    ),
     addresses: mockWalletStore.addresses,
     withdrawalAddresses: mockWalletStore.withdrawalAddresses.postman13,
   },
   user: {
-    profile: mockUserStore.profile.postman13,
+    profile: _.cloneDeep(mockUserStore.profile.postman13),
     appSettings: mockUserStore.appSettings.postman13,
   },
   currencies: {
@@ -30,7 +33,7 @@ const initialState = {
 };
 
 const regular = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.forms.formData = {
     coin: "BTC",
     amountCrypto: 0.1,
@@ -40,23 +43,25 @@ const regular = () => {
     <ScreenStoryWrapper
       screenName="WithdrawEnterAmount"
       screen={WithdrawEnterAmount}
-      state={initialState}
+      state={state}
     />
   );
 };
 
 const withoutAmount = () => {
+  const state = _.cloneDeep(initialState);
+
   return (
     <ScreenStoryWrapper
       screenName="WithdrawEnterAmount"
       screen={WithdrawEnterAmount}
-      state={initialState}
+      state={state}
     />
   );
 };
 
 const notCompliant = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.compliance.withdraw.allowed = false;
   return (
     <ScreenStoryWrapper
@@ -68,7 +73,7 @@ const notCompliant = () => {
 };
 
 const pendingVerification = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.user.profile.kyc.status = KYC_STATUSES.pending;
   return (
     <ScreenStoryWrapper
@@ -80,7 +85,7 @@ const pendingVerification = () => {
 };
 
 const notVerified = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.user.profile.kyc.status = KYC_STATUSES.collecting;
   return (
     <ScreenStoryWrapper
@@ -92,7 +97,7 @@ const notVerified = () => {
 };
 
 const hodlModeActive = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.hodl = mockHodlStore.active;
 
   return (
@@ -105,7 +110,7 @@ const hodlModeActive = () => {
 };
 
 const lockedAddress = () => {
-  const state = { ...initialState };
+  const state = _.cloneDeep(initialState);
   state.forms.formData = {
     coin: "CEL",
     amountCrypto: 0.1,
