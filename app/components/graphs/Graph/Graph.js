@@ -9,6 +9,7 @@ import { scaleLinear, scalePoint, scaleTime } from "d3-scale";
 
 import formatter from "../../../utils/formatter";
 import {
+  getColor,
   getFontFamily,
   getTheme,
   heightPercentageToDP,
@@ -17,6 +18,7 @@ import {
 import GraphStyle from "./Graph.styles";
 import { THEMES } from "../../../constants/UI";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 // const { Path, Defs, LinearGradient, Stop } = Svg;
 const d3 = { shape };
@@ -109,12 +111,12 @@ class Graph extends React.Component {
       color =
         rate >= 0
           ? {
-              line: "#4FB895",
+              line: areaColors.green,
               area: areaColors.green,
               back: areaColors.back,
             }
           : {
-              line: "#EF461A",
+              line: areaColors.red,
               area: areaColors.red,
               back: areaColors.back,
             };
@@ -124,29 +126,11 @@ class Graph extends React.Component {
   };
 
   getGraphBackgroundColor = () => {
-    const theme = getTheme();
-
-    switch (theme) {
-      case THEMES.DARK:
-        return {
-          green: "#25454b",
-          red: "#423439",
-          back: STYLES.COLORS.DARK_BACKGROUND,
-        };
-      case THEMES.LIGHT:
-        return {
-          green: "#E5F5EF",
-          red: "#FDE4DD",
-          back: STYLES.COLORS.LIGHT_GRAY,
-        };
-
-      default:
-        return {
-          green: "#E5F5EF",
-          red: "#FDE4DD",
-          back: STYLES.COLORS.LIGHT_GRAY,
-        };
-    }
+    return {
+      green: getColor(COLOR_KEYS.POSITIVE_STATE),
+      red: getColor(COLOR_KEYS.NEGATIVE_STATE),
+      back: getColor(COLOR_KEYS.CARDS),
+    };
   };
 
   calculateLine() {
@@ -340,7 +324,7 @@ class Graph extends React.Component {
               y2={"100%"}
               id={"gradient"}
             >
-              <Stop stopColor={color.area} offset={"100%"} />
+              <Stop stopColor={color.area} stopOpacity={0.4} offset={"100%"} />
             </LinearGradient>
           ) : null}
         </Defs>
