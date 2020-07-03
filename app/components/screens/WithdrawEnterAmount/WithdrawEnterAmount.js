@@ -45,11 +45,6 @@ import { renderHodlEmptyState } from "../../../utils/hodl-util";
     keypadOpen: state.ui.isKeypadOpen,
     withdrawalSettings: state.generalData.withdrawalSettings,
     loyaltyInfo: state.loyalty.loyaltyInfo,
-    ltvs: state.loans.ltvs,
-    communityStats: state.community.stats,
-    isBannerVisible: state.ui.isBannerVisible,
-    maximumDiscount:
-      state.generalData.celUtilityTiers.PLATINUM.loan_interest_bonus,
     hodlStatus: state.hodl.hodlStatus,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })

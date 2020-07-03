@@ -42,9 +42,7 @@ const themed = {
         },
       }),
     },
-    viewmenu: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
+    viewmenu: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT) },
     textmenu: {
       color: STYLES.COLORS.DARK_GRAY,
     },
@@ -65,9 +63,7 @@ const themed = {
         },
       }),
     },
-    viewmenu: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
+    viewmenu: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK) },
     textmenu: {
       color: STYLES.COLORS.WHITE,
     },
@@ -77,9 +73,7 @@ const themed = {
   },
 
   unicorn: {
-    viewmenu: {
-      backgroundColor: STYLES.COLORS.CELSIUS,
-    },
+    viewmenu: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN) },
     textmenu: {
       color: STYLES.COLORS.WHITE,
     },

@@ -1,6 +1,8 @@
 import { Platform } from "react-native";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -66,19 +68,17 @@ const themed = {
       backgroundColor: STYLES.COLORS.WHITE,
     },
     selectWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT),
       ...Platform.select({
         android: {
-          borderColor: "#E9E9E9",
+          borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT),
         },
       }),
     },
     iconWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
     },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
+    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
   },
 
   dark: {
@@ -86,19 +86,17 @@ const themed = {
       backgroundColor: STYLES.COLORS.DARK_HEADER,
     },
     selectWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
       ...Platform.select({
         android: {
-          borderColor: STYLES.COLORS.DARK_GRAY3,
+          borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK),
         },
       }),
     },
     iconWrapper: {
       backgroundColor: STYLES.COLORS.DARK_HEADER,
     },
-    iconColor: {
-      color: STYLES.COLORS.WHITE_OPACITY3,
-    },
+    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
   },
 
   unicorn: {
@@ -106,14 +104,17 @@ const themed = {
       backgroundColor: STYLES.COLORS.WHITE,
     },
     selectWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
+      ...Platform.select({
+        android: {
+          borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN),
+        },
+      }),
     },
     iconWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
     },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
-    },
+    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
   },
 };
 

@@ -56,7 +56,7 @@ class CoinPicker extends Component {
     }
   }
 
-  getIconColor = style => StyleSheet.flatten(style.iconColor).color; // get color from raw json depending on style theme
+  getIconColor = style => StyleSheet.flatten(style.iconColor).color;
 
   renderByType = () => {
     const { type, coin, navigateTo, field, onChange } = this.props;
