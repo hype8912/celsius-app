@@ -1,5 +1,6 @@
-import STYLES from "../../../constants/STYLES";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -39,36 +40,27 @@ const base = {
 
 const themed = {
   light: {
-    leftSegment: {
-      borderColor: STYLES.COLORS.DARK_GRAY1,
-    },
-    left: {
-      borderColor: STYLES.COLORS.DARK_GRAY1,
-    },
-    right: {
-      borderColor: STYLES.COLORS.DARK_GRAY1,
-    },
-    centralText: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
-    },
+    leftSegment: { borderColor: getColor(COLOR_KEYS.SEPARATORS, THEMES.LIGHT) },
+    left: { borderColor: getColor(COLOR_KEYS.SEPARATORS, THEMES.LIGHT) },
+    right: { borderColor: getColor(COLOR_KEYS.SEPARATORS, THEMES.LIGHT) },
+    centralText: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
   },
 
   dark: {
-    leftSegment: {
-      borderColor: STYLES.COLORS.WHITE_OPACITY3,
-    },
-    left: {
-      borderColor: STYLES.COLORS.WHITE_OPACITY3,
-    },
-    right: {
-      borderColor: STYLES.COLORS.WHITE_OPACITY3,
-    },
-    centralText: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
+    leftSegment: { borderColor: getColor(COLOR_KEYS.SEPARATORS, THEMES.DARK) },
+    left: { borderColor: getColor(COLOR_KEYS.SEPARATORS, THEMES.DARK) },
+    right: { borderColor: getColor(COLOR_KEYS.SEPARATORS, THEMES.DARK) },
+    centralText: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
   },
 
-  unicorn: {},
+  unicorn: {
+    leftSegment: {
+      borderColor: getColor(COLOR_KEYS.SEPARATORS, THEMES.UNICORN),
+    },
+    left: { borderColor: getColor(COLOR_KEYS.SEPARATORS, THEMES.UNICORN) },
+    right: { borderColor: getColor(COLOR_KEYS.SEPARATORS, THEMES.UNICORN) },
+    centralText: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
+  },
 };
 
 const ExpandableItemStyle = () => getThemedStyle(base, themed);

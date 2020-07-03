@@ -1,5 +1,6 @@
 import { getThemedStyle, getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   content: {
@@ -27,17 +28,26 @@ const base = {
     marginLeft: 10,
     alignItems: "flex-end",
   },
-  separatorColor: {
-    color: getColor(COLOR_KEYS.SEPARATORS),
-  },
 };
 
 const themed = {
-  light: {},
+  light: {
+    separatorColor: {
+      color: getColor(COLOR_KEYS.SEPARATORS, THEMES.LIGHT),
+    },
+  },
 
-  dark: {},
+  dark: {
+    separatorColor: {
+      color: getColor(COLOR_KEYS.SEPARATORS, THEMES.DARK),
+    },
+  },
 
-  unicorn: {},
+  unicorn: {
+    separatorColor: {
+      color: getColor(COLOR_KEYS.SEPARATORS, THEMES.UNICORN),
+    },
+  },
 };
 
 const SeparatorStyle = () => getThemedStyle(base, themed);

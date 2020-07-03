@@ -5,6 +5,7 @@ import {
   getColor,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -108,14 +109,34 @@ const base = {
 
 const themed = {
   light: {
-    basicTitle: {
-      color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+    container: {
+      backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.LIGHT),
+      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.LIGHT),
+    },
+    baseTitle: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.LIGHT),
     },
   },
 
-  dark: {},
+  dark: {
+    container: {
+      backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.DARK),
+      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.DARK),
+    },
+    baseTitle: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.DARK),
+    },
+  },
 
-  unicorn: {},
+  unicorn: {
+    container: {
+      backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
+      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
+    },
+    baseTitle: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.UNICORN),
+    },
+  },
 };
 
 const CelButtonStyle = () => getThemedStyle(base, themed);
