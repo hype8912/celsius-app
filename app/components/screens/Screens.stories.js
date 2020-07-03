@@ -14,6 +14,10 @@ import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
 import TransactionsIntersectionStories from "./TransactionsIntersection/TransactionsIntersection.stories";
 
+storiesOf("WalletLanding", module)
+  .add("Grid", WalletLandingStories.grid)
+  .add("List", WalletLandingStories.list);
+
 storiesOf("TransactionsIntersection", module)
   .add("Deposit Pending", TransactionsIntersectionStories.depositPending)
   .add("Deposit Confirmed", TransactionsIntersectionStories.depositConfirmed)
@@ -80,10 +84,6 @@ storiesOf("CoinDetails", module)
 storiesOf("LoginLanding", module)
   .add("Login", LoginLandingStories.login)
   .add("Register", LoginLandingStories.register);
-
-storiesOf("WalletLanding", module)
-  .add("Grid", WalletLandingStories.grid)
-  .add("List", WalletLandingStories.list);
 
 storiesOf("Welcome", module).add("Regular", WelcomeStories.regular);
 
