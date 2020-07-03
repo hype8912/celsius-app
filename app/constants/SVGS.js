@@ -1,5 +1,5 @@
 import FabMenuSvgs from "./Svgs/FabMenuSvgs";
-import CommonSvgs from "./UnicornSvgs/CommonSvgs";
+import CommonSvgs from "./Svgs/CommonSvgs";
 import CoinSvgs from "./Svgs/CoinSvgs";
 import TransactionTypeSvgs from "./Svgs/TransactionTypeSvgs";
 import CommunitySvgs from "./Svgs/CommunitySvgs";
