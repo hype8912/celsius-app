@@ -3,6 +3,8 @@ import { WebView } from "react-native-webview";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../redux/actions";
+import { getColor } from "./styles-util";
+import { COLOR_KEYS } from "../constants/COLORS";
 
 // fix https://github.com/facebook/react-native/issues/10865
 const patchPostMessageJsCode = `(${String(function() {
@@ -75,10 +77,11 @@ class GoogleReCaptcha extends Component {
 
         <style>
             .btn_login {
-              background-color: #3F51AB;
+              background-color: ${getColor(COLOR_KEYS.PRIMARY_BUTTON)} ;
               width:120px;
               height: 50px;
-              color: #ffffff; padding: 8px 32px; margin-top: 8px;
+              color: ${getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)};
+              padding: 8px 32px; margin-top: 8px;
               border: none; border-radius: 25px; font-size: medium;
             }
 
@@ -94,10 +97,11 @@ class GoogleReCaptcha extends Component {
             }
 
             .btn_register {
-              background-color: #3F51AB;
+              background-color: ${getColor(COLOR_KEYS.PRIMARY_BUTTON)};
               width:230px;
               height: 50px;
-              color: #ffffff; padding: 8px 32px; margin-top: 8px;
+              color: ${getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)};
+              padding: 8px 32px; margin-top: 8px;
               border: none; border-radius: 25px; font-size: medium;
             }
 

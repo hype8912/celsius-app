@@ -24,7 +24,9 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
-    profilePicture: state.user.profile.profile_picture,
+    profilePicture: state.user.profile
+      ? state.user.profile.profile_picture
+      : "",
     message: state.ui.message,
     formData: state.forms.formData,
     theme: state.user.appSettings.theme,
