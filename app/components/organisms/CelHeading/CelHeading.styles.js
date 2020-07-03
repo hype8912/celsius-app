@@ -6,6 +6,7 @@ import {
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const headerHeight = 60;
 
@@ -98,11 +99,33 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    headingBackground: {
+      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.LIGHT),
+    },
+    sameBackground: {
+      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT),
+    },
+  },
 
-  dark: {},
+  dark: {
+    headingBackground: {
+      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.DARK),
+      borderColor: "transparent",
+    },
+    sameBackground: {
+      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK),
+    },
+  },
 
-  unicorn: {},
+  unicorn: {
+    headingBackground: {
+      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.UNICORN),
+    },
+    sameBackground: {
+      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
+    },
+  },
 };
 
 const CelHeadingStyle = () => getThemedStyle(base, themed);

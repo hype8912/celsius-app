@@ -45,32 +45,6 @@ const getDifferentTransactions = () => {
     })
     .filter(tx => !!tx);
 
-  // "DEPOSIT_PENDING"
-  // "DEPOSIT_CONFIRMED"
-  // "WITHDRAWAL_PENDING"
-  // "WITHDRAWAL_CONFIRMED"
-  // "WITHDRAWAL_CANCELED"
-  // "WITHDRAWAL_PENDING_VERIFICATION"
-  // "WITHDRAWAL_PENDING_REVIEW"
-  // "LOAN_INTEREST"
-  // "LOAN_PRINCIPAL_RECEIVED"
-  // "INTEREST"
-  // "BONUS_TOKEN"
-  // "CELPAY_CLAIMED"
-  // "CELPAY_SENT"
-  // "CELPAY_RECEIVED"
-  // "CELPAY_RETURNED"
-  // "CELPAY_CANCELED"
-  // "COLLATERAL_PENDING"
-  // "COLLATERAL_LOCKED"
-  // "COLLATERAL_UNLOCKED"
-  // "PROMO_CODE_BONUS"
-  // "REFERRED_HODL"
-  // "REFERRED_PENDING"
-  // "REFERRER_HODL"
-  // "REFERRER"
-  // "REFERRER_PENDING"
-  // "CANCELED"
   return diffTransactions;
 };
 
@@ -106,4 +80,23 @@ export default {
   loanInterest: () => transactionStory(TRANSACTION_TYPES.LOAN_INTEREST),
   loanPrincipalReceived: () =>
     transactionStory(TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED),
+  interest: () => transactionStory(TRANSACTION_TYPES.INTEREST),
+  bonusToken: () => transactionStory(TRANSACTION_TYPES.BONUS_TOKEN),
+  celpayClaimed: () => transactionStory(TRANSACTION_TYPES.CELPAY_CLAIMED),
+  celpaySent: () => transactionStory(TRANSACTION_TYPES.CELPAY_SENT),
+  celpayReceived: () => transactionStory(TRANSACTION_TYPES.CELPAY_RECEIVED),
+  celpayReturned: () => transactionStory(TRANSACTION_TYPES.CELPAY_RETURNED),
+  celpayCanceled: () => transactionStory(TRANSACTION_TYPES.CELPAY_CANCELED),
+  collateralPending: () =>
+    transactionStory(TRANSACTION_TYPES.COLLATERAL_PENDING),
+  collateralLocked: () => transactionStory(TRANSACTION_TYPES.COLLATERAL_LOCKED),
+  collateralUnlocked: () =>
+    transactionStory(TRANSACTION_TYPES.COLLATERAL_UNLOCKED),
+  promoCodeBonus: () => transactionStory(TRANSACTION_TYPES.PROMO_CODE_BONUS),
+  referredHodl: () => transactionStory(TRANSACTION_TYPES.REFERRED_HODL),
+  referredPending: () => transactionStory(TRANSACTION_TYPES.REFERRED_PENDING),
+  referrerHodl: () => transactionStory(TRANSACTION_TYPES.REFERRER_HODL),
+  referrer: () => transactionStory(TRANSACTION_TYPES.REFERRER),
+  referrerPending: () => transactionStory(TRANSACTION_TYPES.REFERRER_PENDING),
+  canceled: () => transactionStory(TRANSACTION_TYPES.CANCELED),
 };

@@ -14,6 +14,10 @@ import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
 import TransactionsIntersectionStories from "./TransactionsIntersection/TransactionsIntersection.stories";
 
+storiesOf("WalletLanding", module)
+  .add("Grid", WalletLandingStories.grid)
+  .add("List", WalletLandingStories.list);
+
 storiesOf("TransactionsIntersection", module)
   .add("Deposit Pending", TransactionsIntersectionStories.depositPending)
   .add("Deposit Confirmed", TransactionsIntersectionStories.depositConfirmed)
@@ -38,11 +42,31 @@ storiesOf("TransactionsIntersection", module)
   .add(
     "Loan Principal Received",
     TransactionsIntersectionStories.loanPrincipalReceived
-  );
+  )
+  .add("Interest", TransactionsIntersectionStories.interest)
+  .add("Bonus Token", TransactionsIntersectionStories.bonusToken)
+  .add("CelPay Claimed", TransactionsIntersectionStories.celpayClaimed)
+  .add("CelPay Sent", TransactionsIntersectionStories.celpaySent)
+  .add("CelPay Received", TransactionsIntersectionStories.celpayReceived)
+  .add("CelPay Returned", TransactionsIntersectionStories.celpayReturned)
+  .add("CelPay Canceled", TransactionsIntersectionStories.celpayCanceled)
+  .add("Collateral Pending", TransactionsIntersectionStories.collateralPending)
+  .add("Collateral Locked", TransactionsIntersectionStories.collateralLocked)
+  .add(
+    "Collateral Unlocked",
+    TransactionsIntersectionStories.collateralUnlocked
+  )
+  .add("Promo Code Bonus", TransactionsIntersectionStories.promoCodeBonus)
+  .add("Referred HODL", TransactionsIntersectionStories.referredHodl)
+  .add("Referred Pending", TransactionsIntersectionStories.referredPending)
+  .add("Referrer HODL", TransactionsIntersectionStories.referrerHodl)
+  .add("Referrer", TransactionsIntersectionStories.referrer)
+  .add("Referrer Pending", TransactionsIntersectionStories.referrerPending)
+  .add("Canceled", TransactionsIntersectionStories.canceled);
 
 storiesOf("AllTransactions", module)
   .add("Regular", AllTransactionsStories.regular)
-  .add("Non Compliant", AllTransactionsStories.noTransactions);
+  .add("Non Transactions", AllTransactionsStories.noTransactions);
 
 storiesOf("WalletInterest", module)
   .add("Regular", WalletInterestStories.regular)
@@ -60,10 +84,6 @@ storiesOf("CoinDetails", module)
 storiesOf("LoginLanding", module)
   .add("Login", LoginLandingStories.login)
   .add("Register", LoginLandingStories.register);
-
-storiesOf("WalletLanding", module)
-  .add("Grid", WalletLandingStories.grid)
-  .add("List", WalletLandingStories.list);
 
 storiesOf("Welcome", module).add("Regular", WelcomeStories.regular);
 

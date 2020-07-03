@@ -7,13 +7,14 @@ import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
 import Graph from "../../graphs/Graph/Graph";
 import STYLES from "../../../constants/STYLES";
-import { heightPercentageToDP } from "../../../utils/styles-util";
+import { getColor, heightPercentageToDP } from "../../../utils/styles-util";
 import CoinGridCardStyle from "./CoinGridCard.styles";
 import { THEMES } from "../../../constants/UI";
 import interestUtil from "../../../utils/interest-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const GraphLight = require("../../../../assets/images/placeholders/graph-light.png");
 const GraphDark = require("../../../../assets/images/placeholders/graph-dark.png");
@@ -122,7 +123,10 @@ class CoinGridCard extends Component {
                   {displayName}
                 </CelText>
                 {coinInterest.eligible && (
-                  <CelText color={STYLES.COLORS.GREEN} type="H7">
+                  <CelText
+                    color={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                    type="H7"
+                  >
                     {formatter.percentageDisplay(isInCel)}
                   </CelText>
                 )}

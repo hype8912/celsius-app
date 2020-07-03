@@ -7,6 +7,7 @@ import {
   getColor,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   card: {
@@ -45,33 +46,37 @@ const base = {
     width: widthPercentageToDP("20.5%"),
     minWidth: widthPercentageToDP("20.5%"),
   },
-  cardBackground: {
-    backgroundColor: getColor(COLOR_KEYS.CARDS),
-  },
 };
 
 const themed = {
   light: {
+    cardBackground: {
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT),
+    },
     cardBorder: {
-      ...Platform.select({
-        android: {
-          borderColor: "#E9E9E9",
-        },
-      }),
+      ...Platform.select({ android: { borderColor: "#E9E9E9" } }),
     },
   },
 
   dark: {
+    cardBackground: {
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
+    },
     cardBorder: {
       ...Platform.select({
-        android: {
-          borderColor: STYLES.COLORS.BLACK_OPACITY2,
-        },
+        android: { borderColor: STYLES.COLORS.BLACK_OPACITY2 },
       }),
     },
   },
 
-  unicorn: {},
+  unicorn: {
+    cardBackground: {
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
+    },
+    cardBorder: {
+      ...Platform.select({ android: { borderColor: "#E9E9E9" } }),
+    },
+  },
 };
 
 const CardStyle = theme =>
