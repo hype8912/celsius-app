@@ -7,6 +7,26 @@ import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockCom
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 
 import mockTransactionsStore from "../../../../celsius-app-creds/mock-data/mockTransactionsStore";
+import { TRANSACTION_TYPES } from "../../../constants/DATA";
+
+const getDifferentTransactions = () => {
+  const allTypes = Object.keys(TRANSACTION_TYPES);
+  const allTransactions = Object.values(
+    mockTransactionsStore.mt.transactionList
+  );
+
+  const diffTransactions = {};
+  allTypes
+    .map(tt => {
+      return allTransactions.find(t => t.type === tt && t.uiProps);
+    })
+    .filter(tx => !!tx)
+    .forEach(tx => {
+      diffTransactions[tx.id] = tx;
+    });
+
+  return diffTransactions;
+};
 
 const initialState = {
   currencies: {
@@ -19,7 +39,7 @@ const initialState = {
     appSettings: mockUserStore.appSettings.postman13,
   },
   transactions: {
-    transactionList: mockTransactionsStore.postman13.transactionList,
+    transactionList: getDifferentTransactions(),
   },
 };
 
@@ -42,7 +62,7 @@ const regular = () => {
 
 const noTransactions = () => {
   const state = { ...initialState };
-  state.transactions.transactionList = [];
+  state.transactions.transactionList = {};
 
   return (
     <ScreenStoryWrapper
