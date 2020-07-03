@@ -1,4 +1,5 @@
 import { storiesOf } from "@storybook/react-native/dist";
+
 import WelcomeStories from "./Welcome/Welcome.stories";
 import DepositStories from "./Deposit/Deposit.stories";
 import LoginStories from "./Login/Login.stories";
@@ -18,9 +19,31 @@ import MyCelStories from "./MyCel/MyCel.stories";
 import ProfileStories from "./Profile/Profile.stories";
 import VerifyProfileStories from "./VerifyProfile/VerifyProfile.stories";
 
+// Link to screens spreadsheet ->
+
+storiesOf("WalletLanding", module)
+  .add("Grid", WalletLandingStories.grid)
+  .add("List", WalletLandingStories.list);
+
 storiesOf("VerifyProfile", module)
   .add("PIN", VerifyProfileStories.pin)
   .add("2FA", VerifyProfileStories.twoFA);
+
+storiesOf("CoinDetails", module)
+  .add("BTC", CoinDetailsStories.btc)
+  .add("OMG", CoinDetailsStories.omg);
+
+storiesOf("Welcome", module).add("Regular", WelcomeStories.regular);
+
+storiesOf("Deposit", module)
+  .add("BTC", DepositStories.btc)
+  .add("Alternate address - BCH", DepositStories.bch)
+  .add("ETH", DepositStories.eth)
+  .add("With Loyalty - CEL", DepositStories.cel)
+  .add("OMG", DepositStories.omg)
+  .add("With Tag - XRP", DepositStories.xrp)
+  .add("With Memo ID - XLM", DepositStories.xlm)
+  .add("With Memo ID - EOS", DepositStories.eos);
 
 storiesOf("WalletLanding", module)
   .add("Grid", WalletLandingStories.grid)
@@ -98,25 +121,9 @@ storiesOf("BalanceHistory", module).add(
   BalanceHistoryStories.regular
 );
 
-storiesOf("CoinDetails", module)
-  .add("BTC", CoinDetailsStories.btc)
-  .add("OMG", CoinDetailsStories.omg);
-
 storiesOf("LoginLanding", module)
   .add("Login", LoginLandingStories.login)
   .add("Register", LoginLandingStories.register);
-
-storiesOf("Welcome", module).add("Regular", WelcomeStories.regular);
-
-storiesOf("Deposit", module)
-  .add("BTC", DepositStories.btc)
-  .add("Alternate address - BCH", DepositStories.bch)
-  .add("ETH", DepositStories.eth)
-  .add("With Loyalty - CEL", DepositStories.cel)
-  .add("OMG", DepositStories.omg)
-  .add("With Tag - XRP", DepositStories.xrp)
-  .add("With Memo ID - XLM", DepositStories.xlm)
-  .add("With Memo ID - EOS", DepositStories.eos);
 
 storiesOf("Login", module).add("Regular", LoginStories.regular);
 storiesOf("InterestRates", module).add("Regular", InterestRatesStories.regular);

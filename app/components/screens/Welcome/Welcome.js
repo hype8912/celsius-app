@@ -24,10 +24,7 @@ class Welcome extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    headerSameColor: false,
-    transparent: true,
-    hideBack: true,
-    gesturesEnabled: false,
+    headerSameColor: true,
   });
 
   state = {

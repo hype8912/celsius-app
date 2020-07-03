@@ -101,7 +101,7 @@ class CelText extends Component {
 
     if (color) return { color };
 
-    let textColor = cmpStyle.type ? cmpStyle[type].color : cmpStyle.text.color;
+    let textColor = cmpStyle[type] ? cmpStyle[type].color : cmpStyle.text.color;
 
     if (link) {
       textColor = cmpStyle.link.color;

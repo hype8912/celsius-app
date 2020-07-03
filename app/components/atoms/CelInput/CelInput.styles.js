@@ -73,7 +73,10 @@ const themed = {
   light: {
     inputWrapper: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT) },
     activeInput: { borderColor: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
-    input: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
+    input: {
+      color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT),
+      fontFamily: getFontFamily("light", "Barlow"),
+    },
     rightText: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
     textPlaceholderColor: {
       color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT),
@@ -83,7 +86,10 @@ const themed = {
   dark: {
     inputWrapper: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK) },
     activeInput: { borderColor: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
-    input: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
+    input: {
+      color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK),
+      fontFamily: getFontFamily("light", "Barlow"),
+    },
     rightText: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
     textPlaceholderColor: {
       color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK),
@@ -95,7 +101,10 @@ const themed = {
       backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
     },
     activeInput: { borderColor: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
-    input: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
+    input: {
+      color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN),
+      fontFamily: getFontFamily("light", "Pangram"),
+    },
     rightText: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
     textPlaceholderColor: {
       color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN),

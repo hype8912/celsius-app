@@ -5,8 +5,13 @@ import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper
 import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
 import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";
 import { SIMPLEX_FIAT_CURRENCIES } from "../../../constants/DATA";
+import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 
 const initialState = {
+  user: {
+    profile: mockUserStore.profile.postman13,
+    appSettings: mockUserStore.appSettings.postman13,
+  },
   currencies: {
     rates: mockCurrenciesStore.rates,
   },

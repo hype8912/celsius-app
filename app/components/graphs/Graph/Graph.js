@@ -96,15 +96,11 @@ class Graph extends React.Component {
   getColor = () => {
     const { interest, rate } = this.props;
     const areaColors = this.getGraphBackgroundColor();
-    const theme = getTheme();
 
     let color = {
-      line: STYLES.COLORS.CELSIUS_BLUE,
-      area:
-        theme === THEMES.DARK
-          ? STYLES.COLORS.DARK_BACKGROUND
-          : STYLES.COLORS.LIGHT_GRAY,
-      back: STYLES.COLORS.CELSIUS_BLUE,
+      line: getColor(COLOR_KEYS.LINK),
+      area: getColor(COLOR_KEYS.LINK),
+      back: getColor(COLOR_KEYS.CARDS),
     };
 
     if (!interest) {
@@ -129,7 +125,7 @@ class Graph extends React.Component {
     return {
       green: getColor(COLOR_KEYS.POSITIVE_STATE),
       red: getColor(COLOR_KEYS.NEGATIVE_STATE),
-      back: getColor(COLOR_KEYS.CARDS),
+      back: getColor(COLOR_KEYS.BACKGROUND),
     };
   };
 
@@ -271,12 +267,8 @@ class Graph extends React.Component {
               y2={"100%"}
               id={"gradient"}
             >
-              <Stop
-                stopColor={
-                  theme === THEMES.DARK ? STYLES.COLORS.DARK_HEADER : "white"
-                }
-                offset={"100%"}
-              />
+              <Stop stopColor={color.area} offset={"40%"} spotOpacity={0.1} />
+              <Stop stopColor={color.back} offset={"90%"} spotOpacity={0.1} />
             </LinearGradient>
           ) : null}
 
@@ -288,8 +280,8 @@ class Graph extends React.Component {
               y2={"100%"}
               id={"gradient"}
             >
-              <Stop stopColor={color.area} offset={"50%"} />
-              <Stop stopColor={color.back} offset={"80%"} />
+              <Stop stopColor={color.area} offset={"50%"} stopOpacity={0.8} />
+              <Stop stopColor={color.back} offset={"95%"} />
             </LinearGradient>
           ) : null}
 

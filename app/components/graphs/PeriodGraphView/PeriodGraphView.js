@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import * as appActions from "../../../redux/actions";
 import PeriodGraphViewStyle from "./PeriodGraphView.styles";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -98,9 +97,7 @@ class PeriodGraphView extends Component {
               key={period}
               type="H6"
               weight={activePeriod === period ? "medium" : "regular"}
-              color={
-                activePeriod === period ? STYLES.COLORS.CELSIUS_BLUE : null
-              }
+              link={activePeriod === period}
             >
               {period}
             </CelText>

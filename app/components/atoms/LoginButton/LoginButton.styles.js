@@ -1,12 +1,12 @@
 import { Platform } from "react-native";
 import {
-  getFontFamily,
   getFontSize,
   getThemedStyle,
   getColor,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -30,7 +30,6 @@ const base = {
   },
   text: {
     fontSize: getFontSize("H4"),
-    fontFamily: getFontFamily("regular"),
     justifyContent: "space-between",
     textAlign: "center",
   },
@@ -52,11 +51,20 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    container: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT) },
+    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
+  },
 
-  dark: {},
+  dark: {
+    container: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK) },
+    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
+  },
 
-  unicorn: {},
+  unicorn: {
+    container: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN) },
+    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
+  },
 };
 
 const LoginButtonStyle = () => getThemedStyle(base, themed);
