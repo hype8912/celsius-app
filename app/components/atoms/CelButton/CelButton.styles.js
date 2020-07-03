@@ -116,6 +116,9 @@ const themed = {
     baseTitle: {
       color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.LIGHT),
     },
+    basicTitle: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.LIGHT),
+    },
   },
 
   dark: {
@@ -126,6 +129,9 @@ const themed = {
     baseTitle: {
       color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.DARK),
     },
+    basicTitle: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.DARK),
+    },
   },
 
   unicorn: {
@@ -134,6 +140,9 @@ const themed = {
       borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
     },
     baseTitle: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.UNICORN),
+    },
+    basicTitle: {
       color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.UNICORN),
     },
   },
