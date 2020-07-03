@@ -69,7 +69,10 @@ class Icon extends Component {
       case "CelPay":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[
+              iconStyle.pngIcon,
+              { marginVertical: 3, height: 30, width: 30 },
+            ]}
             source={require(`../../../../assets/images/unicorn-icons/CelPay.png`)}
           />
         );
@@ -125,8 +128,12 @@ class Icon extends Component {
       case "Deposit":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[
+              iconStyle.pngIcon,
+              { marginVertical: 3, height: 30, width: 30 },
+            ]}
             source={require(`../../../../assets/images/unicorn-icons/Deposit.png`)}
+            resizeMode={"contain"}
           />
         );
       case "DrivingLicense":
@@ -160,7 +167,8 @@ class Icon extends Component {
       case "Filter":
         return (
           <Image
-            style={{ height: 50 }}
+            style={[iconStyle.pngIcon, { height: 30 }]}
+            resizeMode={"contain"}
             source={require(`../../../../assets/images/unicorn-icons/Filter.png`)}
           />
         );
@@ -237,7 +245,7 @@ class Icon extends Component {
       case "Mail":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={{ height: 40, resizeMode: "contain" }}
             source={require(`../../../../assets/images/unicorn-icons/Mail.png`)}
           />
         );
@@ -475,7 +483,10 @@ class Icon extends Component {
       case "Withdraw":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[
+              iconStyle.pngIcon,
+              { marginVertical: 3, height: 30, width: 30 },
+            ]}
             source={require(`../../../../assets/images/unicorn-icons/Withdraw.png`)}
           />
         );

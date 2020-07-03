@@ -5,6 +5,8 @@ const base = {
   pngIcon: {
     height: 20,
     width: 20,
+    resizeMode: "contain",
+    marginHorizontal: 2,
   },
 };
 
