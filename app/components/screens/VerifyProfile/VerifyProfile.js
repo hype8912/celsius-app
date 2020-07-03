@@ -20,8 +20,6 @@ import { DEEP_LINKS } from "../../../constants/DATA";
 @connect(
   state => ({
     appState: state.app.appState,
-    formData: state.forms.formData,
-    twoFAStatus: state.security.twoFAStatus,
     deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
     previousScreen: state.nav.previousScreen,

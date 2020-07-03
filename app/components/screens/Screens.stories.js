@@ -16,6 +16,11 @@ import TransactionsIntersectionStories from "./TransactionsIntersection/Transact
 import CommunityStories from "./Community/Community.stories";
 import MyCelStories from "./MyCel/MyCel.stories";
 import ProfileStories from "./Profile/Profile.stories";
+import VerifyProfileStories from "./VerifyProfile/VerifyProfile.stories";
+
+storiesOf("VerifyProfile", module)
+  .add("PIN", VerifyProfileStories.pin)
+  .add("2FA", VerifyProfileStories.twoFA);
 
 storiesOf("WalletLanding", module)
   .add("Grid", WalletLandingStories.grid)
