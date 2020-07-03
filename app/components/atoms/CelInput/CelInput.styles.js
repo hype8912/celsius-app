@@ -8,6 +8,7 @@ import {
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const fontSize = getScaledFont(STYLES.FONTSIZE.H4);
 const base = {
@@ -69,11 +70,37 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    inputWrapper: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT) },
+    activeInput: { borderColor: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
+    input: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
+    rightText: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
+    textPlaceholderColor: {
+      color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT),
+    },
+  },
 
-  dark: {},
+  dark: {
+    inputWrapper: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK) },
+    activeInput: { borderColor: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
+    input: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
+    rightText: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
+    textPlaceholderColor: {
+      color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK),
+    },
+  },
 
-  unicorn: {},
+  unicorn: {
+    inputWrapper: {
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
+    },
+    activeInput: { borderColor: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
+    input: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
+    rightText: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
+    textPlaceholderColor: {
+      color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN),
+    },
+  },
 };
 
 const CelInputStyle = theme =>
