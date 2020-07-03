@@ -115,7 +115,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelButtonStyle = () => getThemedStyle(base, themed);

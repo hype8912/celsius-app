@@ -14,7 +14,7 @@ const themed = {
     dark: {
     },
 
-    celsius: {
+    unicorn: {
     }
 }
 

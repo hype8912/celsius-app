@@ -61,7 +61,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const MultistepModalStyle = () => getThemedStyle(base, themed);

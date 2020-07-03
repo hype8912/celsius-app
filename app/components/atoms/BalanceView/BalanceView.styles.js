@@ -38,7 +38,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const BalanceViewStyle = () => getThemedStyle(base, themed);

@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   heightPercentageToDP,
@@ -41,7 +40,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     separatorColor: {
       color: "black",
     },

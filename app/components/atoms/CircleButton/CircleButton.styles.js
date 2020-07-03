@@ -86,7 +86,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     viewmenu: {
       backgroundColor: STYLES.COLORS.CELSIUS,
     },

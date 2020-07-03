@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   heightPercentageToDP,
@@ -35,7 +34,6 @@ const base = {
     width: heightPercentageToDP("17%"),
     height: heightPercentageToDP("17%"),
     borderRadius: height / 2,
-    // backgroundColor: "rgba(255,255,255,0.3)"
   },
 };
 
@@ -44,7 +42,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const PieProgressBarStyle = () => getThemedStyle(base, themed);

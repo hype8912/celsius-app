@@ -51,7 +51,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     activeItem: {
       backgroundColor: STYLES.COLORS.WHITE,
     },

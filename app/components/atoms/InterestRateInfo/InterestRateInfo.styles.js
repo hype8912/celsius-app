@@ -101,7 +101,7 @@ const themed = {
       backgroundColor: STYLES.COLORS.DARKEST_HEADER,
     },
   },
-  celsius: {},
+  unicorn: {},
 };
 
 const InterestRateInfoStyle = () => getThemedStyle(base, themed);

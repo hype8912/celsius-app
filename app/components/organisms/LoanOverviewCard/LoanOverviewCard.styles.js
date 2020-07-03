@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   widthPercentageToDP,
@@ -16,7 +15,6 @@ const base = {
     justifyContent: "space-evenly",
   },
   interests: {
-    // flexDirection: "row",
     flex: 1,
     padding: 12,
   },
@@ -49,7 +47,7 @@ const themed = {
     card: { color: STYLES.COLORS.MEDIUM_GRAY },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const LoanOverviewCardStyle = () => getThemedStyle(base, themed);

@@ -43,7 +43,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const WithdrawalAddressStyle = () => getThemedStyle(base, themed);

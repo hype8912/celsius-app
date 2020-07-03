@@ -4,7 +4,9 @@ import STYLES from "../../../constants/STYLES";
 import {
   getThemedStyle,
   widthPercentageToDP,
+  getColor,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   card: {
@@ -43,13 +45,13 @@ const base = {
     width: widthPercentageToDP("20.5%"),
     minWidth: widthPercentageToDP("20.5%"),
   },
+  cardBackground: {
+    backgroundColor: getColor(COLOR_KEYS.CARDS),
+  },
 };
 
 const themed = {
   light: {
-    cardBackground: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
     cardBorder: {
       ...Platform.select({
         android: {
@@ -60,9 +62,6 @@ const themed = {
   },
 
   dark: {
-    cardBackground: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
     cardBorder: {
       ...Platform.select({
         android: {
@@ -72,7 +71,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CardStyle = theme =>

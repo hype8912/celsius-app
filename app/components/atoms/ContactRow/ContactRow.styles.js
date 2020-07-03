@@ -60,7 +60,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ContactRowStyle = () => getThemedStyle(base, themed);

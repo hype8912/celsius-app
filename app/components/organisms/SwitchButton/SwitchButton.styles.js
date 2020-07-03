@@ -27,7 +27,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const SwitchButtonStyle = () => getThemedStyle(base, themed);

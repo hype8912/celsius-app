@@ -1,21 +1,6 @@
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
-  // coinsTextGrid: {
-  //   marginTop: '35%',
-  //   alignItems: 'center',
-  //   alignContent: 'center',
-  //   justifyContent: 'space-between'
-  //
-  // },
-  //
-  // coinsTextList: {
-  //   marginTop: '15%',
-  //   alignItems: 'center',
-  //   alignContent: 'center',
-  //   // justifyContent: 'space-between'
-  // },
-
   flexWrapper: {
     flexWrap: "wrap",
     justifyContent: "space-between",
@@ -42,7 +27,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const WalletLandingStyle = () => getThemedStyle(base, themed);

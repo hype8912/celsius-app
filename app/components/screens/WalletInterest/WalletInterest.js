@@ -48,7 +48,6 @@ class WalletInterest extends Component {
         left: "back",
         right: "profile",
       },
-      loading: true,
     };
   }
 
@@ -57,7 +56,6 @@ class WalletInterest extends Component {
     actions.changeInterestHeaderContent();
     await actions.getLoyaltyInfo();
     await actions.getUserAppSettings();
-    this.setState({ loading: false });
   }
 
   render() {
@@ -69,11 +67,10 @@ class WalletInterest extends Component {
       actions,
       interestCompliance,
     } = this.props;
-    const { loading } = this.state;
     const style = WalletInterestStyle();
 
-    if (loading || !appSettings || !loyaltyInfo) return <LoadingScreen />;
-    if (!interestCompliance) {
+    if (!appSettings || !loyaltyInfo) return <LoadingScreen />;
+    if (!interestCompliance.allowed) {
       return <InterestCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
     }
     if (isUSCitizen() && !user.ssn) {

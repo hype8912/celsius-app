@@ -7,7 +7,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const SeparatorInfoModalStyle = () => getThemedStyle(base, themed);

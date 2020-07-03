@@ -87,7 +87,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const BorrowLandingStyle = () => getThemedStyle(base, themed);

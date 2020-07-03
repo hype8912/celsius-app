@@ -36,7 +36,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ChooseMarginCollateralCoinStyle = () => getThemedStyle(base, themed);

@@ -33,7 +33,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ChangeWithdrawalAddressModalStyle = () => getThemedStyle(base, themed);

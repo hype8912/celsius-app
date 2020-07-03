@@ -17,7 +17,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const GetCoinsGemStyle = () => getThemedStyle(base, themed);

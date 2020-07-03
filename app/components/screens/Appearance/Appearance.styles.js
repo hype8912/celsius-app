@@ -35,7 +35,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const AppearanceStyle = () => getThemedStyle(base, themed);

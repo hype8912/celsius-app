@@ -1,8 +1,6 @@
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
-// import { FONT_SCALE } from "../../../config/constants/style";
-
 const base = {
   container: {
     flex: 1,
@@ -46,7 +44,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CoinCardStyle = () => getThemedStyle(base, themed);

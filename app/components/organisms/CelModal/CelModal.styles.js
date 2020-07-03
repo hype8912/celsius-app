@@ -70,7 +70,6 @@ const base = {
     marginBottom: 20,
   },
   contentWrapperDeposit: {
-    // height: width * 0.85,
     marginTop: 100,
     paddingRight: 20,
     paddingLeft: 20,
@@ -155,7 +154,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelModalStyle = () => getThemedStyle(base, themed);

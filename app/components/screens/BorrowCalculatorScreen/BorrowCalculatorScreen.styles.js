@@ -59,7 +59,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const LoanCalculatorStyle = () => getThemedStyle(base, themed);

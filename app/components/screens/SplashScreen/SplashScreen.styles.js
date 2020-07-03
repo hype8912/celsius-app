@@ -64,7 +64,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const SplashScreenStyle = () => getThemedStyle(base, themed);

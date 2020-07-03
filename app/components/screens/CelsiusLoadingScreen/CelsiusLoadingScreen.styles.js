@@ -31,7 +31,7 @@ const base = {
 const themed = {
   light: {},
   dark: {},
-  celsius: {},
+  unicorn: {},
 };
 
 const CelsiusLoadingScreenStyle = () => getThemedStyle(base, themed);

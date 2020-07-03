@@ -56,7 +56,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const SocialSecurityNumberStyle = () => getThemedStyle(base, themed);

@@ -21,7 +21,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ShareButtonStyle = () => getThemedStyle(base, themed);

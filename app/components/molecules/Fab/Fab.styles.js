@@ -1,5 +1,5 @@
-import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { getThemedStyle, getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -10,7 +10,7 @@ const base = {
   fabButtonStyle: {
     width: 60,
     height: 60,
-    backgroundColor: STYLES.COLORS.CELSIUS,
+    backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON),
     borderRadius: 60,
     justifyContent: "center",
   },
@@ -27,7 +27,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const FabStyle = () => getThemedStyle(base, themed);
