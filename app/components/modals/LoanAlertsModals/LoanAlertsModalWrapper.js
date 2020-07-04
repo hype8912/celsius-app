@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import moment from "moment";
 
 import { LOAN_ALERTS } from "../../../constants/UI";
 import * as appActions from "../../../redux/actions";
@@ -9,6 +10,7 @@ import LoanAlertsDepositCoinsModal from "./LoanAlertsDepositCoinsModal/LoanAlert
 import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsMarginCallLockCoinModal/LoanAlertsMarginCallLockCoinModal";
 import LoanAlertsMarginCallDepositCoinsModal from "./LoanAlertsMarginCallDepositCoinsModal/LoanAlertsMarginCallDepositCoinsModal";
 import InterestDueModal from "../InterestDueModal/InterestDueModal";
+import InterestReminderModal from "../InterestReminderModal/InterestReminderModal";
 
 @connect(
   state => ({
@@ -21,6 +23,8 @@ import InterestDueModal from "../InterestDueModal/InterestDueModal";
 class LoanAlertsModalWrapper extends Component {
   static getDerivedStateFromProps(nextProps) {
     let activeAlert;
+
+    // console.log("nextProps.loanAlerts", nextProps.loanAlerts);
 
     if (nextProps.loanAlerts && nextProps.loanAlerts.length) {
       activeAlert = nextProps.loanAlerts.find(
@@ -40,11 +44,14 @@ class LoanAlertsModalWrapper extends Component {
       activeAlert = null;
     }
 
+    // console.log("activeAlert", activeAlert)
+
     const loan = LoanAlertsModalWrapper.getLoan(
       activeAlert,
       nextProps.allLoans
     );
     if (loan) {
+      // console.log("loan", loan);
       const principalCoinWallet = LoanAlertsModalWrapper.getPrincipalCoinWallet(
         nextProps.walletSummary,
         loan
@@ -83,8 +90,8 @@ class LoanAlertsModalWrapper extends Component {
     this.state = { activeAlert, loan };
   }
 
-  componentDidMount() {
-    const { walletSummary } = this.props;
+  componentDidMount = async () => {
+    const { walletSummary, actions } = this.props;
     const { loan } = this.state;
     if (loan) {
       const principalCoinWallet = LoanAlertsModalWrapper.getPrincipalCoinWallet(
@@ -95,9 +102,10 @@ class LoanAlertsModalWrapper extends Component {
         walletSummary,
         loan
       );
+      await actions.setActiveLoan(loan.id);
       this.setState({ loan, principalCoinWallet, collateralCoinWallet });
     }
-  }
+  };
 
   getFirstAlert = loanAlerts => {
     if (!loanAlerts || !loanAlerts.length) return null;
@@ -140,14 +148,48 @@ class LoanAlertsModalWrapper extends Component {
     return null;
   };
 
+  isSame = activeLoan => {
+    if (
+      activeLoan &&
+      activeLoan.installments_to_be_paid &&
+      activeLoan.installments_to_be_paid.installments[0]
+    ) {
+      const currDay = moment.utc();
+      const currentDay = moment.utc();
+      const isThreeDays = moment(
+        activeLoan.installments_to_be_paid.installments[0].to
+      ).isSame(currentDay.add(3, "days"), "day");
+      const isSevenDays = moment(
+        activeLoan.installments_to_be_paid.installments[0].to
+      ).isSame(currDay.add(7, "days"), "day");
+      return {
+        threeDays: isThreeDays ? 3 : null,
+        sevenDays: isSevenDays ? 7 : null,
+      };
+    }
+  };
+
   renderInterestModal = loan => {
-    const { actions } = this.props;
+    const { actions, activeAlert } = this.props;
+
+    const isSameDay = this.isSame(loan);
+    if (isSameDay.sevenDays || isSameDay.threeDays) {
+      return (
+        <InterestReminderModal
+          closeModal={actions.closeModal}
+          navigateTo={actions.navigateTo}
+          activeLoan={loan}
+          isSameDay={isSameDay}
+        />
+      );
+    }
+
     return (
       <InterestDueModal
         closeModal={actions.closeModal}
-        activeLoan={loan}
         navigateTo={actions.navigateTo}
-        alert
+        activeLoan={loan}
+        alert={activeAlert}
       />
     );
   };

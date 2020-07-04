@@ -10,6 +10,11 @@ const base = {
     marginTop: 20,
     height: 50,
   },
+  installmentsWrapper: {
+    borderRadius: 5,
+    padding: 10,
+    margin: 10,
+  },
 };
 
 const themed = {
