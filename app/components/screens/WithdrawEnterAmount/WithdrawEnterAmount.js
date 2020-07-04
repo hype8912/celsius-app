@@ -153,7 +153,11 @@ class WithdrawEnterAmount extends Component {
       // if no predefined label is forwarded and the value is in usd
       if (predefined.label.length === 0) {
         amountUsd = formatter.setCurrencyDecimals(newValue, "USD");
-        amountCrypto = new BigNumber(amountUsd).dividedBy(coinRate);
+        if (amountUsd === "" || amountUsd === ".") {
+          amountCrypto = new BigNumber(0).dividedBy(coinRate);
+        } else {
+          amountCrypto = new BigNumber(amountUsd).dividedBy(coinRate);
+        }
       } else {
         amountUsd = predefined.label === "ALL" ? balanceUsd : newValue;
         amountUsd = this.getUsdValue(amountUsd);
@@ -165,8 +169,12 @@ class WithdrawEnterAmount extends Component {
       }
       // if no predefined label is forwarded and the value is no in usd (crypto)
     } else if (predefined.label.length === 0) {
-      amountCrypto = new BigNumber(formatter.setCurrencyDecimals(newValue));
-      amountUsd = amountCrypto.multipliedBy(coinRate);
+      if (newValue === ".") {
+        amountCrypto = formatter.setCurrencyDecimals(0);
+      } else {
+        amountCrypto = formatter.setCurrencyDecimals(newValue);
+      }
+      amountUsd = Number(amountCrypto) * coinRate;
       amountUsd = this.getUsdValue(amountUsd);
       if (amountUsd === "0") amountUsd = "";
     } else {
@@ -180,6 +188,7 @@ class WithdrawEnterAmount extends Component {
       amountUsd = predefined.label === "ALL" ? balanceUsd : predefined.value;
       amountUsd = this.getUsdValue(amountUsd);
     }
+    // amountCrypto = amountCrypto.toString();
 
     // Change value '.' to '0.'
     if (amountUsd[0] === ".") amountUsd = `0${amountUsd}`;
@@ -187,11 +196,17 @@ class WithdrawEnterAmount extends Component {
     if (amountUsd.length > 1 && amountUsd[0] === "0" && amountUsd[1] !== ".") {
       amountUsd = amountUsd[1];
     }
+
     // if crypto amount is undefined, set it to empty string
     // if (amountCrypto && !amountCrypto.toNumber()) amountCrypto = "";
-    if (!new BigNumber(amountCrypto).toNumber()) amountCrypto = "";
+    // if (!new BigNumber(amountCrypto).toNumber()) {
+    //   amountCrypto = "0."
+    // }
     // Change value '.' to '0.'
-    if (amountCrypto[0] === ".") amountCrypto = `0${amountCrypto}`;
+    // console.log("stringifiedAmountCrypto", stringifiedAmountCrypto);
+    if (amountCrypto[0] === ".") {
+      amountCrypto = `0${amountCrypto}}`;
+    }
     // if the crypto amount is eg. 01 the value will be 1, 00 -> 0
     if (
       amountCrypto.length > 1 &&
