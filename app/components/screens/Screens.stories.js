@@ -23,6 +23,7 @@ import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
 import CommunityStories from "./Community/Community.stories";
 import KYCProfileDetailsStories from "./KYCProfileDetails/KYCProfileDetails.stories";
+import KYCAddressInfoStories from "./KYCAddressInfo/KYCAddressInfo.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -174,7 +175,6 @@ storiesOf("RegisterSetPin", module)
   .add("Create PIN", RegisterSetPinStories.createPin)
   .add("Confirm PIN", RegisterSetPinStories.confirmPin);
 
-storiesOf("KYC", module).add(
-  "Profile Details",
-  KYCProfileDetailsStories.createPin
-);
+storiesOf("KYC", module)
+  .add("Profile Details", KYCProfileDetailsStories.regular)
+  .add("Address Info", KYCAddressInfoStories.regular);
