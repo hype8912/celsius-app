@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import * as appActions from "../../../redux/actions";
 import CelTabsStyle from "./CelTabs.styles";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import { heightPercentageToDP } from "../../../utils/styles-util";
 
 @connect(
@@ -61,9 +60,7 @@ class CelTabs extends Component {
                 <CelText
                   type="H6"
                   weight={activeTab === tab.label ? "medium" : "regular"}
-                  color={
-                    activeTab === tab.label ? STYLES.COLORS.CELSIUS_BLUE : null
-                  }
+                  link={activeTab === tab.label}
                 >
                   {tab.label}
                 </CelText>

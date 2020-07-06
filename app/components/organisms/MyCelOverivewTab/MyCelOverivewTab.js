@@ -37,7 +37,6 @@ class MyCelOverivewTab extends Component {
               type={"H5"}
               weight={"500"}
               style={{ marginTop: widthPercentageToDP("15.3") / 3 }}
-              // color={color}
             >
               Your CEL Ratio is
             </CelText>
@@ -89,10 +88,11 @@ class MyCelOverivewTab extends Component {
             }
           >
             <CelText
-              style={style.loyalityQuestion}
+              link
               type={"H4"}
               align={"center"}
               weight={"400"}
+              margin="30 0 0 0"
             >
               How do we calculate loyalty level?
             </CelText>

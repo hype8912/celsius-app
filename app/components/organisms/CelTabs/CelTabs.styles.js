@@ -1,8 +1,11 @@
 import {
+  getColor,
   getThemedStyle,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -30,11 +33,21 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    underlineActive: {
+      borderTopColor: getColor(COLOR_KEYS.LINK, THEMES.LIGHT),
+    },
+  },
 
-  dark: {},
+  dark: {
+    underlineActive: { borderTopColor: getColor(COLOR_KEYS.LINK, THEMES.DARK) },
+  },
 
-  unicorn: {},
+  unicorn: {
+    underlineActive: {
+      borderTopColor: getColor(COLOR_KEYS.LINK, THEMES.UNICORN),
+    },
+  },
 };
 
 const CelTabsStyle = () => getThemedStyle(base, themed);
