@@ -5,6 +5,7 @@ function initialState() {
     simplexData: {},
     paymentRequest: undefined,
     payments: [],
+    walletGemAddresses: [],
   };
 }
 
@@ -26,6 +27,11 @@ export default function buyCoinsReducer(state = initialState(), action) {
       return {
         ...state,
         payments: action.payments,
+      };
+    case ACTIONS.GET_GEM_COIN_ADDRESS_SUCCESS:
+      return {
+        ...state,
+        walletGemAddresses: action.walletGemAddresses,
       };
 
     default:

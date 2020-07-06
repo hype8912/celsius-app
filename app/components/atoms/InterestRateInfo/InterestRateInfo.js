@@ -76,18 +76,7 @@ class InterestRateInfo extends Component {
               </CelText>
             </View>
 
-            {cryptoUtil.hasLinkToBuy(currencyInfo.short) && (
-              <CelText
-                align={"center"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
-                type={"H7"}
-                weight={"300"}
-                onPress={() => Linking.openURL(link)}
-              >
-                {`Buy ${currencyInfo.short}`}
-              </CelText>
-            )}
-            {cryptoUtil.buyInApp(currencyInfo.short) && (
+            {cryptoUtil.buyInApp(currencyInfo.short) ? (
               <CelText
                 align={"center"}
                 color={STYLES.COLORS.CELSIUS_BLUE}
@@ -98,6 +87,16 @@ class InterestRateInfo extends Component {
                     coin: currencyInfo.short,
                   })
                 }
+              >
+                {`Buy ${currencyInfo.short}`}
+              </CelText>
+            ) : (
+              <CelText
+                align={"center"}
+                color={STYLES.COLORS.CELSIUS_BLUE}
+                type={"H7"}
+                weight={"300"}
+                onPress={() => Linking.openURL(link)}
               >
                 {`Buy ${currencyInfo.short}`}
               </CelText>
