@@ -12,14 +12,15 @@ import LoginLandingStories from "./LoginLanding/LoginLanding.stories";
 import GetCoinsLandingStories from "./GetCoinsLanding/GetCoinsLanding.stories";
 import WithdrawEnterAmountStories from "./WithdrawEnterAmount/WithdrawEnterAmount.stories";
 import MyCelStories from "./MyCel/MyCel.stories";
+import TransactionsIntersectionStories from "./TransactionsIntersection/TransactionsIntersection.stories";
+import InterestRatesStories from "./InterestRates/InterestRates.stories";
+import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
+import GetCoinsEnterAmountStories from "./GetCoinsEnterAmount/GetCoinsEnterAmount.stories";
+import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
 
 import RegisterInitialStories from "./RegisterInitial/RegisterInitial.stories";
 import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
-import InterestRatesStories from "./InterestRates/InterestRates.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
-import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
-import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
-import TransactionsIntersectionStories from "./TransactionsIntersection/TransactionsIntersection.stories";
 import CommunityStories from "./Community/Community.stories";
 import KYCProfileDetailsStories from "./KYCProfileDetails/KYCProfileDetails.stories";
 
@@ -94,8 +95,6 @@ storiesOf("MyCel", module)
   .add("Interest", MyCelStories.interest)
   .add("Loans", MyCelStories.loans);
 
-storiesOf("Community", module).add("Regular", CommunityStories.regular);
-
 storiesOf("TransactionsIntersection", module)
   .add("Deposit Pending", TransactionsIntersectionStories.depositPending)
   .add("Deposit Confirmed", TransactionsIntersectionStories.depositConfirmed)
@@ -142,20 +141,28 @@ storiesOf("TransactionsIntersection", module)
   .add("Referrer Pending", TransactionsIntersectionStories.referrerPending)
   .add("Canceled", TransactionsIntersectionStories.canceled);
 
-storiesOf("AllTransactions", module)
-  .add("Regular", AllTransactionsStories.regular)
-  .add("Non Transactions", AllTransactionsStories.noTransactions);
+storiesOf("InterestRates", module).add("Regular", InterestRatesStories.regular);
 
 storiesOf("WalletInterest", module)
   .add("Regular", WalletInterestStories.regular)
   .add("Non Compliant", WalletInterestStories.nonCompliant);
 
+storiesOf("GetCoinsEnterAmount", module)
+  .add("With Amount", GetCoinsEnterAmountStories.regular)
+  .add("Out of Range", GetCoinsEnterAmountStories.notInRange)
+  .add("No Amount", GetCoinsEnterAmountStories.withoutAmount)
+  .add("In Fiat", GetCoinsEnterAmountStories.inFiat);
+
+storiesOf("AllTransactions", module)
+  .add("Regular", AllTransactionsStories.regular)
+  .add("Non Transactions", AllTransactionsStories.noTransactions);
+
+storiesOf("Community", module).add("Regular", CommunityStories.regular);
+
 storiesOf("BalanceHistory", module).add(
   "Regular",
   BalanceHistoryStories.regular
 );
-
-storiesOf("InterestRates", module).add("Regular", InterestRatesStories.regular);
 
 storiesOf("RegisterInitial", module)
   .add("Empty", RegisterInitialStories.empty)

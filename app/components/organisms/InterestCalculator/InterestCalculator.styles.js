@@ -1,6 +1,11 @@
 import { StyleSheet } from "react-native";
-import { getThemedStyle, getPadding } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import {
+  getThemedStyle,
+  getPadding,
+  getColor,
+} from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -9,12 +14,6 @@ const base = {
   earningCard: {
     flex: 1,
     borderWidth: 1,
-    backgroundColor: STYLES.COLORS.WHITE,
-    borderColor: STYLES.COLORS.DARK_GRAY3,
-  },
-  selectedCard: {
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-    borderColor: STYLES.COLORS.CELSIUS_BLUE,
   },
   amounts: {
     ...StyleSheet.flatten(getPadding("20 20 20 20")),
@@ -23,32 +22,62 @@ const base = {
 
 const themed = {
   light: {
-    amounts: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    earningCard: {
+      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.LIGHT),
+      borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT),
     },
-    calculatorInfo: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
+    selectedCard: {
+      backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.LIGHT),
+      borderColor: getColor(COLOR_KEYS.LINK, THEMES.LIGHT),
     },
+    // amounts: {
+    //   backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
+    // },
+    // calculatorInfo: {
+    //   color: STYLES.COLORS.MEDIUM_GRAY,
+    // },
     showInterestWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
+      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.LIGHT),
     },
   },
 
   dark: {
-    amounts: {
-      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
+    earningCard: {
+      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.DARK),
+      borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK),
     },
-    calculatorInfo: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
+    selectedCard: {
+      backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.DARK),
+      borderColor: getColor(COLOR_KEYS.LINK, THEMES.DARK),
     },
+    // amounts: {
+    //   backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
+    // },
+    // calculatorInfo: {
+    //   color: STYLES.COLORS.MEDIUM_GRAY,
+    // },
     showInterestWrapper: {
-      backgroundColor: STYLES.COLORS.SEMI_GRAY,
+      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.DARK),
     },
   },
 
   unicorn: {
-    amounts: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    earningCard: {
+      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.UNICORN),
+      borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN),
+    },
+    selectedCard: {
+      backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.UNICORN),
+      borderColor: getColor(COLOR_KEYS.LINK, THEMES.UNICORN),
+    },
+    // amounts: {
+    //   backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
+    // },
+    // calculatorInfo: {
+    //   color: STYLES.COLORS.MEDIUM_GRAY,
+    // },
+    showInterestWrapper: {
+      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.UNICORN),
     },
   },
 };

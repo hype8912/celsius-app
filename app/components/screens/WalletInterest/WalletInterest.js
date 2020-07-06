@@ -7,7 +7,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import WalletInterestStyle from "./WalletInterest.styles";
 import { EMPTY_STATES } from "../../../constants/UI";
@@ -108,9 +107,7 @@ class WalletInterest extends Component {
                 <TouchableOpacity
                   onPress={() => actions.navigateTo("InterestRates")}
                 >
-                  <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-                    Rates this week
-                  </CelText>
+                  <CelText link>Rates this week</CelText>
                 </TouchableOpacity>
               </View>
               <Separator margin="10 0 0 0" />
@@ -130,7 +127,9 @@ class WalletInterest extends Component {
                   }}
                   source={require("../../../../assets/images/calculator.png")}
                 />
-                <CelText align="center">Calculator</CelText>
+                <CelText align="center" link>
+                  Calculator
+                </CelText>
               </TouchableOpacity>
             </>
           </Card>
