@@ -55,7 +55,7 @@ class Icon extends Component {
       case "Average":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
             source={require(`../../../../assets/images/unicorn-icons/Average.png`)}
           />
         );
@@ -147,7 +147,7 @@ class Icon extends Component {
       case "Earned":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
             source={require(`../../../../assets/images/unicorn-icons/Earned.png`)}
           />
         );
@@ -453,7 +453,7 @@ class Icon extends Component {
       case "Transactions":
         return (
           <Image
-            style={iconStyle.pngIcon}
+            style={[iconStyle.pngIcon, { height: 30, width: 30 }]}
             source={require(`../../../../assets/images/unicorn-icons/Transactions.png`)}
           />
         );

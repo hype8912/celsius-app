@@ -18,7 +18,7 @@ const ENV_FILES = {
   APP_JSON: "app.json",
   CONSTANTS: "constants.js",
   BRANCH: "branch.json",
-  BUILD_GRADLE: "build.gradle",
+  // BUILD_GRADLE: "build.gradle",
   // ANDROID_KEYSTORE: 'celsius.jks', // check if we need this
 
   // Key for codePush
