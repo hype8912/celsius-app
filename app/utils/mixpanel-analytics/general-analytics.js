@@ -70,6 +70,7 @@ async function sessionStarted(trigger) {
         "KYC status": userData.kyc ? userData.kyc.status : "unknown",
         "Has referral link": !!userData.referral_link_id,
         "Has SSN": !!userData.ssn,
+        "Has six digit pin": userData.has_six_digit_pin,
       });
       await sendEvent("$create_alias", { alias: userData.id });
     }
