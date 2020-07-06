@@ -11,6 +11,7 @@ import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyalt
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
 import walletUtil from "../../../utils/wallet-util";
 import mockUIStore from "../../../../celsius-app-creds/mock-data/mockUIStore";
+import { KYC_STATUSES } from "../../../constants/DATA";
 
 const initialState = {
   wallet: {
@@ -55,7 +56,92 @@ const list = () => {
   );
 };
 
+const notVerified = () => {
+  const state = _.cloneDeep(initialState);
+  state.user.profile.kyc.status = KYC_STATUSES.collecting;
+
+  return (
+    <ScreenStoryWrapper
+      screenName="WalletLanding"
+      screen={WalletLanding}
+      state={state}
+    />
+  );
+};
+
+const pendingVerification = () => {
+  const state = _.cloneDeep(initialState);
+  state.user.profile.kyc.status = KYC_STATUSES.pending;
+
+  return (
+    <ScreenStoryWrapper
+      screenName="WalletLanding"
+      screen={WalletLanding}
+      state={state}
+    />
+  );
+};
+
+const rejeceted = () => {
+  const state = _.cloneDeep(initialState);
+  state.user.profile.kyc.status = KYC_STATUSES.rejected;
+
+  return (
+    <ScreenStoryWrapper
+      screenName="WalletLanding"
+      screen={WalletLanding}
+      state={state}
+    />
+  );
+};
+
+const loanReferralBanner = () => {
+  const state = _.cloneDeep(initialState);
+  state.ui.isBannerVisible = true;
+
+  return (
+    <ScreenStoryWrapper
+      screenName="WalletLanding"
+      screen={WalletLanding}
+      state={state}
+    />
+  );
+};
+
+const noSSN = () => {
+  const state = _.cloneDeep(initialState);
+  state.user.profile.ssn = null;
+  state.user.profile.country = "United States";
+
+  return (
+    <ScreenStoryWrapper
+      screenName="WalletLanding"
+      screen={WalletLanding}
+      state={state}
+    />
+  );
+};
+
+const noAddress = () => {
+  const state = _.cloneDeep(initialState);
+  state.user.profile.country = null;
+
+  return (
+    <ScreenStoryWrapper
+      screenName="WalletLanding"
+      screen={WalletLanding}
+      state={state}
+    />
+  );
+};
+
 export default {
   grid,
   list,
+  notVerified,
+  pendingVerification,
+  rejeceted,
+  loanReferralBanner,
+  noSSN,
+  noAddress,
 };

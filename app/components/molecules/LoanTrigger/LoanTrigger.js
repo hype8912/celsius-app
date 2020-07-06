@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 
 import moment from "moment";
 import Banner from "../Banner/Banner";
-import STYLES from "../../../constants/STYLES";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class LoanTrigger extends Component {
   static propTypes = {
@@ -26,7 +27,7 @@ class LoanTrigger extends Component {
 
     return (
       <Banner
-        backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
+        backgroundColor={getColor(COLOR_KEYS.LINK)}
         image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
         action={() => {
           actions.navigateTo("BorrowChooseLoan");
