@@ -16,6 +16,8 @@ import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
 import InterestCalculatorStyle from "./InterestCalculator.styles";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -131,8 +133,6 @@ class InterestCalculator extends Component {
           : interestRateForCoin.rate)) /
       52;
 
-
-
     const yearlyInterest =
       formData.amountCrypto *
       (earnInterestIn && formData.coin !== "CEL"
@@ -143,10 +143,10 @@ class InterestCalculator extends Component {
 
     const noCelTextColor = !earnInterestIn
       ? STYLES.COLORS.WHITE
-      : STYLES.COLORS.DARK_GRAY;
+      : getColor(COLOR_KEYS.PARAGRAPH);
     const celTextColor = earnInterestIn
       ? STYLES.COLORS.WHITE
-      : STYLES.COLORS.DARK_GRAY;
+      : getColor(COLOR_KEYS.PARAGRAPH);
 
     if (!earnInterestIn) {
       noCelCardStyle.push(style.selectedCard);
@@ -164,11 +164,7 @@ class InterestCalculator extends Component {
     return (
       <View style={style.showInterestWrapper}>
         {formData.coin !== "CEL" && (
-          <CelText
-            style={style.calculatorInfo}
-            align={"center"}
-            margin="20 0 5 0"
-          >
+          <CelText align={"center"} margin="20 0 5 0">
             Choose how you want to earn interest.
           </CelText>
         )}
@@ -186,7 +182,10 @@ class InterestCalculator extends Component {
             }
           >
             <CelText color={noCelTextColor} align={"center"} weight="bold">
-              {formatter.percentageDisplay(interestRateForCoin.compound_rate, true)}
+              {formatter.percentageDisplay(
+                interestRateForCoin.compound_rate,
+                true
+              )}
               <CelText type="H4" weight="600" color={noCelTextColor}>
                 %
               </CelText>
@@ -234,17 +233,13 @@ class InterestCalculator extends Component {
             marginHorizontal: 20,
           }}
         >
-          <Card
-            // styles={{ flex: 1 }}
-            color={STYLES.COLORS.LIGHT_GRAY}
-            margin="0 20 0 20"
-          >
-            <CelText theme={THEMES.LIGHT} align={"center"}>
+          <Card color={getColor(COLOR_KEYS.BACKGROUND)} margin="0 20 0 20">
+            <CelText align={"center"}>
               {formatter.usd(
                 weeklyInterest * currencyRatesShort[selectedCoin.toLowerCase()]
               )}
             </CelText>
-            <CelText theme={THEMES.LIGHT} align={"center"} weight="bold">
+            <CelText align={"center"} weight="bold">
               {earnInterestIn === true
                 ? formatter.crypto(interestInCelPerWeek, "CEL", {
                     precision: 2,
@@ -253,21 +248,17 @@ class InterestCalculator extends Component {
                     precision: 2,
                   })}
             </CelText>
-            <CelText theme={THEMES.LIGHT} type="H6" align={"center"}>
+            <CelText type="H6" align={"center"}>
               Interest per week
             </CelText>
           </Card>
-          <Card
-            // styles={{ flex: 1 }}
-            color={STYLES.COLORS.LIGHT_GRAY}
-            margin="20 20 20 20"
-          >
-            <CelText theme={THEMES.LIGHT} align={"center"}>
+          <Card color={getColor(COLOR_KEYS.BACKGROUND)} margin="20 20 20 20">
+            <CelText align={"center"}>
               {formatter.usd(
                 yearlyInterest * currencyRatesShort[selectedCoin.toLowerCase()]
               )}
             </CelText>
-            <CelText theme={THEMES.LIGHT} align={"center"} weight="bold">
+            <CelText align={"center"} weight="bold">
               {earnInterestIn === true
                 ? formatter.crypto(interestInCelPerYear, "CEL", {
                     precision: 2,
@@ -276,7 +267,7 @@ class InterestCalculator extends Component {
                     precision: 2,
                   })}
             </CelText>
-            <CelText theme={THEMES.LIGHT} type="H6" align={"center"}>
+            <CelText type="H6" align={"center"}>
               Interest per year
             </CelText>
           </Card>
@@ -296,7 +287,7 @@ class InterestCalculator extends Component {
 
     return (
       <RegularLayout>
-        <View style={style.amounts}>
+        <View>
           <View style={style.selectWrapper}>
             <SimpleSelect
               theme={theme}
@@ -319,7 +310,9 @@ class InterestCalculator extends Component {
             coin={selectedCoin}
             theme={theme}
             amountColor={
-              keypadOpen ? STYLES.COLORS.CELSIUS_BLUE : STYLES.COLORS.DARK_GRAY
+              keypadOpen
+                ? getColor(COLOR_KEYS.LINK)
+                : getColor(COLOR_KEYS.HEADLINE)
             }
           />
         </View>
