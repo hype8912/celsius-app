@@ -9,6 +9,8 @@ import Icon from "../../atoms/Icon/Icon";
 import CelButton from "../../atoms/CelButton/CelButton";
 import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class RegisterPromoCodeCard extends Component {
   static propTypes = {
@@ -137,7 +139,11 @@ class RegisterPromoCodeCard extends Component {
     return (
       <Card
         size="full"
-        color={promoCode ? STYLES.COLORS.GREEN : STYLES.COLORS.CELSIUS_BLUE}
+        color={
+          promoCode
+            ? getColor(COLOR_KEYS.POSITIVE_STATE)
+            : getColor(COLOR_KEYS.BANNER_INFO)
+        }
         onPress={() => {
           this.setState({ isExpanded: !isExpanded });
         }}
