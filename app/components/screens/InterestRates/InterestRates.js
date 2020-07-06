@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-// import { View } from 'react-native';
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -8,7 +6,6 @@ import * as appActions from "../../../redux/actions";
 import InterestRatesStyle from "./InterestRates.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import InterestRateInfoTable from "../../molecules/InterestRateInfoTable/InterestRateInfoTable";
-import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 
 @connect(
@@ -37,10 +34,7 @@ class InterestRates extends Component {
           style={style.explanation}
         >
           Bonus rates are provided if you choose to earn interest in CEL tokens.{" "}
-          <CelText
-            onPress={() => actions.navigateTo("LoyaltyProgram")}
-            style={{ color: STYLES.COLORS.CELSIUS_BLUE }}
-          >
+          <CelText onPress={() => actions.navigateTo("LoyaltyProgram")} link>
             Learn more
           </CelText>
         </CelText>

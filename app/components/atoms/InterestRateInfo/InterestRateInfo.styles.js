@@ -1,9 +1,12 @@
 import {
+  getColor,
   getThemedStyle,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const currencyImageSize = widthPercentageToDP("10.67%");
 
@@ -92,16 +95,29 @@ const base = {
 
 const themed = {
   light: {
+    celRateWrapper: {
+      backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE, THEMES.LIGHT),
+    },
     inKindColor: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT),
     },
   },
   dark: {
+    celRateWrapper: {
+      backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE, THEMES.DARK),
+    },
     inKindColor: {
-      backgroundColor: STYLES.COLORS.DARKEST_HEADER,
+      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK),
     },
   },
-  unicorn: {},
+  unicorn: {
+    celRateWrapper: {
+      backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE, THEMES.UNICORN),
+    },
+    inKindColor: {
+      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
+    },
+  },
 };
 
 const InterestRateInfoStyle = () => getThemedStyle(base, themed);

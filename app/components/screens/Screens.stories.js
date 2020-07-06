@@ -11,6 +11,8 @@ import SelectCoinStories from "./SelectCoin/SelectCoin.stories";
 import LoginLandingStories from "./LoginLanding/LoginLanding.stories";
 import GetCoinsLandingStories from "./GetCoinsLanding/GetCoinsLanding.stories";
 import WithdrawEnterAmountStories from "./WithdrawEnterAmount/WithdrawEnterAmount.stories";
+import MyCelStories from "./MyCel/MyCel.stories";
+
 import RegisterInitialStories from "./RegisterInitial/RegisterInitial.stories";
 import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
 import InterestRatesStories from "./InterestRates/InterestRates.stories";
@@ -19,14 +21,19 @@ import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
 import TransactionsIntersectionStories from "./TransactionsIntersection/TransactionsIntersection.stories";
 import CommunityStories from "./Community/Community.stories";
-import MyCelStories from "./MyCel/MyCel.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
 
 storiesOf("WalletLanding", module)
   .add("Grid", WalletLandingStories.grid)
-  .add("List", WalletLandingStories.list);
+  .add("List", WalletLandingStories.list)
+  .add("Not Verified", WalletLandingStories.notVerified)
+  .add("Pending Verification", WalletLandingStories.pendingVerification)
+  .add("KYC Rejeceted", WalletLandingStories.rejeceted)
+  .add("Loan & Referral Banner", WalletLandingStories.loanReferralBanner)
+  .add("No SSN", WalletLandingStories.noSSN)
+  .add("No Address", WalletLandingStories.noAddress);
 
 storiesOf("VerifyProfile", module)
   .add("PIN", VerifyProfileStories.pin)
