@@ -36,7 +36,6 @@ class Icon extends Component {
 
   renderPngIcon = name => {
     const iconStyle = IconStyle();
-    const { height, width } = this.props;
     switch (name) {
       case "Ape":
         return (
@@ -246,7 +245,7 @@ class Icon extends Component {
       case "Mail":
         return (
           <Image
-            style={[iconStyle.pngIcon, { height, width }]}
+            style={[iconStyle.pngIcon]}
             source={require(`../../../../assets/images/unicorn-icons/Mail.png`)}
           />
         );

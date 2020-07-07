@@ -139,7 +139,6 @@ storiesOf("TransactionsIntersection", module)
   .add("Promo Code Bonus", TransactionsIntersectionStories.promoCodeBonus)
   .add("Referred HODL", TransactionsIntersectionStories.referredHodl)
   .add("Referred Pending", TransactionsIntersectionStories.referredPending)
-  .add("Referrer HODL", TransactionsIntersectionStories.referrerHodl)
   .add("Referrer", TransactionsIntersectionStories.referrer)
   .add("Referrer Pending", TransactionsIntersectionStories.referrerPending)
   .add("Canceled", TransactionsIntersectionStories.canceled);
