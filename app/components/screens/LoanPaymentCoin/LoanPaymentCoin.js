@@ -59,6 +59,8 @@ class LoanPaymentCoin extends Component {
     const reason = navigation.getParam("reason");
     const id = navigation.getParam("id");
 
+    // console.log("reason", reason);
+
     if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
       actions.updateFormField("coin", coinShort);
       actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
@@ -78,7 +80,7 @@ class LoanPaymentCoin extends Component {
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      await actions.updateFormFields({ interestCoin: coinShort });
+      await actions.updateFormFields({ coin: coinShort });
       actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
     }
   };

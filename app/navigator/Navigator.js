@@ -110,6 +110,7 @@ import TransactionsIntersection from "../components/screens/TransactionsIntersec
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
 import LoanOverviewScreen from "../components/screens/LoanOverviewScreen/LoanOverviewScreen";
+import ExtendLoanScreen from "../components/screens/ExtendLoanScreen/ExtendLoanScreen";
 
 export const screens = {
   /**
@@ -210,6 +211,7 @@ export const screens = {
   InterestPaymentSettings,
   BorrowChooseLoan,
   BorrowCalculatorScreen,
+  ExtendLoanScreen,
 
   /**
    * MyCel

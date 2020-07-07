@@ -30,9 +30,9 @@ const base = {
   status: {
     flexDirection: "row",
     alignItems: "center",
+    marginVertical: 10,
   },
   info: {
-    alignItems: "center",
     padding: 12,
   },
   progress: {

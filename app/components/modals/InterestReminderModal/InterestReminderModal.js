@@ -61,7 +61,6 @@ class InterestReminderModal extends Component {
     if (!activeLoan || !activeLoan.installments_to_be_paid) return null;
     const instalmentsToBePaid = activeLoan.installments_to_be_paid;
     const isDay = isSameDay.sevenDays || isSameDay.threeDays;
-
     const isAutomatic = true;
     const buttonTitle = payment.hasEnough ? "Pay Interest" : "Deposit More";
     const content = isAutomatic
@@ -69,7 +68,7 @@ class InterestReminderModal extends Component {
       : `Interest Payment Due is in ${isDay} Days`;
 
     return (
-      <CelModal name={MODALS.INTEREST_REMINDER_MODAL}>
+      <CelModal name={MODALS.LOAN_ALERT_MODAL}>
         <View style={{ marginHorizontal: 20 }}>
           <CelText type="H2" align="center" weight="bold">
             {content}

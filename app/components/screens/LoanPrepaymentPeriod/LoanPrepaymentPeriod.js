@@ -11,7 +11,8 @@ import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
 import CelButton from "../../atoms/CelButton/CelButton";
 import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
-import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
+import ConfirmPrepaymentModal from "../../modals/ConfirmPrepaymentModal/ConfirmPrepaymentModal";
 
 @connect(
   state => ({
@@ -19,6 +20,7 @@ import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
     allLoans: state.loans.allLoans,
     loanSettings: state.loans.loanSettings,
     currencyRates: state.currencies.currencyRatesShort,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -49,12 +51,7 @@ class LoanPrepaymentPeriod extends Component {
         actions.updateFormField("amountUsd", amountUsd);
         actions.navigateTo("WiringBankInformation");
       } else {
-        actions.navigateTo("VerifyProfile", {
-          onSuccess: () => {
-            actions.prepayInterest(id);
-            actions.updateFormField("prepayLoanId", id);
-          },
-        });
+        actions.openModal(MODALS.CONFIRM_INTEREST_PREPAYMENT);
       }
     }
   };
@@ -76,7 +73,13 @@ class LoanPrepaymentPeriod extends Component {
   };
 
   calculatePrepaidValue = (usdValue, coinRate, coin) => {
+    const { formData, loyaltyInfo } = this.props;
     const rate = coin === "USD" ? 1 : coinRate;
+    if (formData.coin === "CEL")
+      return formatter.crypto(
+        ((1 - loyaltyInfo.tier.loanInterestBonus) * usdValue) / rate,
+        coin
+      );
     return formatter.crypto(usdValue / rate, coin);
   };
 
@@ -156,14 +159,17 @@ class LoanPrepaymentPeriod extends Component {
         >
           Continue
         </CelButton>
+        <ConfirmPrepaymentModal loanId={loanId} />
       </RegularLayout>
     );
   };
 
   render() {
+    const { navigation } = this.props;
     const style = LoanPrepaymentPeriodStyle();
     const verticalSlider = this.renderSlider();
     const monthValues = this.getMonthValues();
+    const loanId = navigation.getParam("id");
 
     if (monthValues.length === 1) return this.renderWhenOnly6Months();
 
@@ -187,6 +193,7 @@ class LoanPrepaymentPeriod extends Component {
           >
             Continue
           </CelButton>
+          <ConfirmPrepaymentModal loanId={loanId} />
         </RegularLayout>
       </View>
     );

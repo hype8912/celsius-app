@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 
-import ConfirmPaymentModalStyle from "./ConfirmPaymentModal.styles";
+import ConfirmPrepaymentModalStyle from "./ConfirmPrepaymentModal.styles";
 import { MODALS } from "../../../constants/UI";
 import CelModal from "../CelModal/CelModal";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
@@ -19,15 +19,14 @@ import formatter from "../../../utils/formatter";
     formData: state.forms.formData,
     walletSummary: state.wallet.summary,
     allLoans: state.loans.allLoans,
+    currencyRates: state.currencies.currencyRatesShort,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-class ConfirmPaymentModal extends Component {
+class ConfirmPrepaymentModal extends Component {
   static propTypes = {
     loanId: PropTypes.number,
     type: PropTypes.string,
-    cryptoType: PropTypes.string,
-    reason: PropTypes.string,
   };
   static defaultProps = {
     type: "CRYPTO",
@@ -42,60 +41,42 @@ class ConfirmPaymentModal extends Component {
     };
   }
 
-  renderContent = type => {
-    const { actions, loanId, cryptoType, formData } = this.props;
-
-    const crypto = cryptoType || formData.coin;
-    switch (type) {
-      case "CRYPTO":
-        return {
-          heading: "Confirm Monthly Interest Payment",
-          buttonText: "Pay Monthly Interest",
-          onPress: async () => {
-            this.setState({
-              isLoading: true,
-            });
-            await actions.payMonthlyInterest(loanId, crypto);
-            this.setState({
-              isLoading: false,
-            });
-            actions.closeModal();
-          },
-        };
-      case "PRINCIPAL":
-        return {
-          heading: "Confirm Monthly Interest Payment",
-          buttonText: "Pay Monthly Interest",
-        };
-    }
+  renderContent = () => {
+    const { actions, loanId } = this.props;
+    return {
+      heading: "Confirm Interest Prepayment",
+      buttonText: "Prepay Interest",
+      onPress: async () => {
+        this.setState({
+          isLoading: true,
+        });
+        await actions.prepayInterest(loanId);
+        this.setState({
+          isLoading: false,
+        });
+        actions.closeModal();
+      },
+    };
   };
 
   render() {
-    const {
-      type,
-      cryptoType,
-      formData,
-      walletSummary,
-      loyaltyInfo,
-    } = this.props;
+    const { type, formData, walletSummary, loyaltyInfo } = this.props;
     const { loan, isLoading } = this.state;
-    const style = ConfirmPaymentModalStyle();
+    const style = ConfirmPrepaymentModalStyle();
 
     const content = this.renderContent(type);
-
     if (!loan) return null;
-
-    const crypto = cryptoType || formData.coin;
-    const walletCoin = walletSummary.coins.find(c => c.short === crypto);
-
+    const walletCoin = walletSummary.coins.find(c => c.short === formData.coin);
     const amountUsd = walletCoin ? walletCoin.amount_usd : 0;
+    const prepaymentAmount =
+      Number(loan.monthly_payment) * Number(formData.prepaidPeriod);
 
-    const sumToPay = cryptoType
-      ? loan.monthly_payment -
-        (loan.monthly_payment -
-          (1 - loyaltyInfo.tier.loanInterestBonus) *
-            Number(loan.monthly_payment))
-      : loan.monthly_payment;
+    const sumToPay =
+      formData.coin === "CEL"
+        ? prepaymentAmount -
+          (prepaymentAmount -
+            (1 - loyaltyInfo.tier.loanInterestBonus) * prepaymentAmount)
+        : prepaymentAmount;
     const cryptoAmountToPay = walletCoin
       ? (walletCoin.amount.toNumber() / walletCoin.amount_usd.toNumber()) *
         sumToPay
@@ -106,7 +87,10 @@ class ConfirmPaymentModal extends Component {
     const newBalanceUsd = amountUsd && amountUsd.minus(sumToPay);
 
     return (
-      <CelModal style={style.container} name={MODALS.CONFIRM_INTEREST_PAYMENT}>
+      <CelModal
+        style={style.container}
+        name={MODALS.CONFIRM_INTEREST_PREPAYMENT}
+      >
         <View
           style={{
             alignItems: "center",
@@ -122,7 +106,7 @@ class ConfirmPaymentModal extends Component {
               You are about to pay
             </CelText>
             <CelText align={"center"} type={"H1"}>
-              {formatter.crypto(cryptoAmountToPay, crypto)}
+              {formatter.crypto(cryptoAmountToPay, formData.coin)}
             </CelText>
             <CelText align={"center"}>
               {formatter.fiat(sumToPay, "USD")}
@@ -137,10 +121,10 @@ class ConfirmPaymentModal extends Component {
               margin={"5 0 0 0"}
               align={"center"}
               type={"H6"}
-            >{`${formatter.crypto(newBalanceCrypto, crypto)} | ${formatter.fiat(
-              newBalanceUsd,
-              "USD"
-            )}`}</CelText>
+            >{`${formatter.crypto(
+              newBalanceCrypto,
+              formData.coin
+            )} | ${formatter.fiat(newBalanceUsd, "USD")}`}</CelText>
           </View>
         </View>
 
@@ -154,4 +138,4 @@ class ConfirmPaymentModal extends Component {
   }
 }
 
-export default ConfirmPaymentModal;
+export default ConfirmPrepaymentModal;

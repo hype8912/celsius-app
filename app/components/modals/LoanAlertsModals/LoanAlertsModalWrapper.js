@@ -24,8 +24,6 @@ class LoanAlertsModalWrapper extends Component {
   static getDerivedStateFromProps(nextProps) {
     let activeAlert;
 
-    // console.log("nextProps.loanAlerts", nextProps.loanAlerts);
-
     if (nextProps.loanAlerts && nextProps.loanAlerts.length) {
       activeAlert = nextProps.loanAlerts.find(
         la => la.type === LOAN_ALERTS.INTEREST_ALERT
@@ -44,14 +42,11 @@ class LoanAlertsModalWrapper extends Component {
       activeAlert = null;
     }
 
-    // console.log("activeAlert", activeAlert)
-
     const loan = LoanAlertsModalWrapper.getLoan(
       activeAlert,
       nextProps.allLoans
     );
     if (loan) {
-      // console.log("loan", loan);
       const principalCoinWallet = LoanAlertsModalWrapper.getPrincipalCoinWallet(
         nextProps.walletSummary,
         loan
@@ -110,9 +105,11 @@ class LoanAlertsModalWrapper extends Component {
   getFirstAlert = loanAlerts => {
     if (!loanAlerts || !loanAlerts.length) return null;
     let activeAlert;
-    loanAlerts.forEach(la => {
-      if (la.type === LOAN_ALERTS.MARGIN_CALL_ALERT) activeAlert = la;
-    });
+    loanAlerts
+      .sort((a, b) => b.id - a.id)
+      .forEach(la => {
+        if (la.type === LOAN_ALERTS.MARGIN_CALL_ALERT) activeAlert = la;
+      });
     return activeAlert || loanAlerts[0];
   };
 
@@ -170,10 +167,13 @@ class LoanAlertsModalWrapper extends Component {
   };
 
   renderInterestModal = loan => {
-    const { actions, activeAlert } = this.props;
+    const { actions } = this.props;
+    const { activeAlert } = this.state;
+
+    // ako nemas pare da te smara 3 i 7 dana , ako imas automatic ne smara, manuel 3 dana unapred
 
     const isSameDay = this.isSame(loan);
-    if (isSameDay.sevenDays || isSameDay.threeDays) {
+    if (isSameDay && (isSameDay.sevenDays || isSameDay.threeDays)) {
       return (
         <InterestReminderModal
           closeModal={actions.closeModal}
