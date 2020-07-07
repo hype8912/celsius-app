@@ -30,7 +30,7 @@ class ReferralTrigger extends Component {
 
     return (
       <Banner
-        backgroundColor={getColor(COLOR_KEYS.LINK)}
+        backgroundColor={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
         image={require("../../../../assets/images/present-image.png")}
         action={() => {
           actions.openModal(MODALS.REFERRAL_SEND_MODAL);

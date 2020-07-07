@@ -268,7 +268,7 @@ class Deposit extends Component {
     }
 
     return (
-      <Card color={getColor(COLOR_KEYS.LINK)}>
+      <Card color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}>
         <CelText
           style={style.infoBubble}
           weight="300"
