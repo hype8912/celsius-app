@@ -27,11 +27,8 @@ const themed = {
       borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT),
     },
     selectedCard: {
-      backgroundColor: getColor(
-        COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
-        THEMES.LIGHT
-      ),
-      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.LIGHT),
+      backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.LIGHT),
+      borderColor: getColor(COLOR_KEYS.LINK, THEMES.LIGHT),
     },
     // amounts: {
     //   backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
@@ -50,11 +47,8 @@ const themed = {
       borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK),
     },
     selectedCard: {
-      backgroundColor: getColor(
-        COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
-        THEMES.DARK
-      ),
-      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.DARK),
+      backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.DARK),
+      borderColor: getColor(COLOR_KEYS.LINK, THEMES.DARK),
     },
     // amounts: {
     //   backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
@@ -73,14 +67,8 @@ const themed = {
       borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN),
     },
     selectedCard: {
-      backgroundColor: getColor(
-        COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
-        THEMES.UNICORN
-      ),
-      borderColor: getColor(
-        COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
-        THEMES.UNICORN
-      ),
+      backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.UNICORN),
+      borderColor: getColor(COLOR_KEYS.LINK, THEMES.UNICORN),
     },
     // amounts: {
     //   backgroundColor: STYLES.COLORS.DARK_BACKGROUND,

@@ -27,7 +27,7 @@ class LoanTrigger extends Component {
 
     return (
       <Banner
-        backgroundColor={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+        backgroundColor={getColor(COLOR_KEYS.LINK)}
         image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
         action={() => {
           actions.navigateTo("BorrowChooseLoan");

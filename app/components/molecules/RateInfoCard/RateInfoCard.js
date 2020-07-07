@@ -61,7 +61,7 @@ class RateInfoCard extends Component {
     return (
       <View style={style}>
         {!interestRate.inCEL ? (
-          <Card color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}>
+          <Card color={getColor(COLOR_KEYS.LINK)}>
             <CelText color={"white"}>
               Upgrade your interest settings to earn in CEL and you could get up
               to {formatter.percentageDisplay(interestRate.specialApyRate)} APY

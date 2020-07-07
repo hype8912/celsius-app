@@ -30,7 +30,7 @@ class KYCTrigger extends Component {
         color = getColor(COLOR_KEYS.NEGATIVE_STATE);
         break;
       default:
-        color = getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND);
+        color = getColor(COLOR_KEYS.LINK);
     }
 
     return color;
