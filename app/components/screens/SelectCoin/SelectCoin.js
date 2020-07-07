@@ -109,7 +109,7 @@ class SelectCoin extends Component {
     const theme = getTheme();
     const style = SelectCoinStyle();
 
-    if (theme === THEMES.LIGHT && item.image) {
+    if (theme !== THEMES.DARK && item.image) {
       return (
         <Image source={{ uri: item.image }} style={{ width: 30, height: 30 }} />
       );
