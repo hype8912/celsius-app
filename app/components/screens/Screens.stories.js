@@ -72,7 +72,7 @@ storiesOf("LoginLanding", module)
   .add("Login", LoginLandingStories.login)
   .add("Register", LoginLandingStories.register);
 
-storiesOf("GetCoinsLandingStories", module)
+storiesOf("GetCoinsLanding", module)
   .add("No Transactions", GetCoinsLandingStories.noTransactions)
   .add("Not Compliant", GetCoinsLandingStories.notCompliant)
   .add("Pending Verification", GetCoinsLandingStories.pendingVerification)
@@ -175,6 +175,12 @@ storiesOf("RegisterSetPin", module)
   .add("Create PIN", RegisterSetPinStories.createPin)
   .add("Confirm PIN", RegisterSetPinStories.confirmPin);
 
-storiesOf("KYC", module)
-  .add("Profile Details", KYCProfileDetailsStories.regular)
-  .add("Address Info", KYCAddressInfoStories.regular);
+storiesOf("KYCProfileDetails", module)
+  .add("Empty", KYCProfileDetailsStories.empty)
+  .add("Prefilled", KYCProfileDetailsStories.prefilled)
+  .add("With Errors", KYCProfileDetailsStories.withErrors);
+
+storiesOf("KYCAddressInfo", module).add(
+  "Address Info",
+  KYCAddressInfoStories.regular
+);
