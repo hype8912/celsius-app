@@ -159,7 +159,7 @@ class CelHeading extends Component {
             fill={
               theme === THEMES.LIGHT
                 ? getColor(COLOR_KEYS.INFO)
-                : getColor(COLOR_KEYS.NEUTRAL_LIGHT)
+                : getColor(COLOR_KEYS.SECTION_TITLE)
             }
           />
         </TouchableOpacity>
