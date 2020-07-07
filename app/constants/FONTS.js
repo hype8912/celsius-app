@@ -45,8 +45,8 @@ const FONT_WEIGHTS_BARLOW = {
 };
 
 const FONT_WEIGHTS_PANGRAM = {
-  "100": "-ExtraLight",
-  "200": "-ExtraLight",
+  "100": "-Light",
+  "200": "-Light",
   "300": "-Light",
   "400": "-Regular",
   "500": "-Medium",
