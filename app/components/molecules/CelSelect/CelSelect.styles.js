@@ -1,13 +1,18 @@
 import { StyleSheet, Platform } from "react-native";
 
 import STYLES from "../../../constants/STYLES";
-import { getPadding, getThemedStyle } from "../../../utils/styles-util";
+import {
+  getPadding,
+  getThemedStyle,
+  getColor,
+} from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
     height: 50,
     ...StyleSheet.flatten(getPadding("10 16 13 16")),
-    backgroundColor: STYLES.COLORS.WHITE,
     borderRadius: 8,
     ...Platform.select({
       android: {
@@ -35,19 +40,19 @@ const base = {
 const themed = {
   light: {
     container: {
-      backgroundColor: STYLES.COLORS.WHITE,
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT),
     },
     iconColor: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
+      color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT),
     },
     textColor: {
-      color: STYLES.COLORS.DARK_GRAY,
+      color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT),
     },
   },
 
   dark: {
     container: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
       ...Platform.select({
         android: {
           borderColor: "transparent",
@@ -55,22 +60,22 @@ const themed = {
       }),
     },
     iconColor: {
-      color: STYLES.COLORS.WHITE_OPACITY3,
+      color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK),
     },
     textColor: {
-      color: STYLES.COLORS.WHITE,
+      color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK),
     },
   },
 
   unicorn: {
     container: {
-      backgroundColor: STYLES.COLORS.WHITE,
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
     },
     iconColor: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
+      color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN),
     },
     textColor: {
-      color: STYLES.COLORS.DARK_GRAY,
+      color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN),
     },
   },
 };

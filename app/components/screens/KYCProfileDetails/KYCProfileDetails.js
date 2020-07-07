@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-// import { View } from 'react-native';
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View } from "react-native";
@@ -8,7 +6,6 @@ import moment from "moment";
 import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
-// import KYCProfileDetailsStyle from "./KYCProfileDetails.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
