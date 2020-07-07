@@ -16,6 +16,7 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
+import STORYBOOK from "../../../../dev-settings.json";
 
 @connect(
   state => ({
@@ -88,7 +89,7 @@ class VerifyProfile extends Component {
 
   openKeypad = () => {
     const { actions } = this.props;
-    actions.toggleKeypad(true);
+    actions.toggleKeypad(!STORYBOOK);
   };
 
   onCheckSuccess = async () => {
