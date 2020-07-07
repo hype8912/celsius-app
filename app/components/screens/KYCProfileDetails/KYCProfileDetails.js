@@ -15,6 +15,7 @@ import CelSelect from "../../molecules/CelSelect/CelSelect";
 import CelButton from "../../atoms/CelButton/CelButton";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
+import { STORYBOOK } from "../../../../dev-settings.json";
 
 @connect(
   state => ({
@@ -35,7 +36,7 @@ class KYCProfileDetails extends Component {
     super(props);
 
     this.state = {
-      isLoading: true,
+      isLoading: !STORYBOOK,
       updatingProfileInProgress: false,
     };
   }
