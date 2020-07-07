@@ -13,6 +13,7 @@ import {
 } from "../../../constants/UI";
 import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
+import STORYBOOK from "../../../../dev-settings.json";
 
 const BUTTONS = {
   [KEYPAD_PURPOSES.WITHDRAW]: [
@@ -204,7 +205,7 @@ class CelNumpad extends Component {
         ref={input => {
           this.inputRef = input;
         }}
-        autoFocus={autofocus}
+        autoFocus={!STORYBOOK ? autofocus : false}
       />
     );
   }
