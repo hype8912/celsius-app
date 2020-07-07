@@ -143,7 +143,6 @@ class KYCProfileDetails extends Component {
   render() {
     const { formData, formErrors, actions } = this.props;
     const { isLoading, updatingProfileInProgress } = this.state;
-    // const style = KYCProfileDetailsStyle();
     if (isLoading) return <LoadingScreen />;
 
     return (
