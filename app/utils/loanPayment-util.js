@@ -53,13 +53,16 @@ function calculateAdditionalPayment(
 
     if (cardType === COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD) {
       hasEnough = loanCoin.amount_usd.isGreaterThan(loan.loan_amount_usd);
-      color = !isAllowed ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
+      color = !hasEnough ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
       value =
         (loan.loan_amount_usd - loanCoin.amount_usd.toNumber()) /
         currencyRatesShort[loanCoin.short.toLowerCase()];
       additionalCryptoAmount = formatter.crypto(value, loanCoin.short, {
         precision: 2,
       });
+      additionalCryptoAmount = value;
+      additionalUsdAmount =
+        loan.loan_amount_usd - loanCoin.amount_usd.toNumber();
     }
 
     if (cardType === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD) {

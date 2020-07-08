@@ -171,7 +171,7 @@ class LoanAlertsModalWrapper extends Component {
     const { actions } = this.props;
     const { activeAlert } = this.state;
 
-    // if no money reminder 3 & 7 days, if you have money and manual payment 3 days
+    // if no money reminder 3 & 7 days, if you have money and manual payment reminder 3 days
     const payment = loanPaymentUtil.calculateAdditionalPayment(loan);
     const isSameDay = this.isSameInterestDay(loan);
     const hasNoMoney =
