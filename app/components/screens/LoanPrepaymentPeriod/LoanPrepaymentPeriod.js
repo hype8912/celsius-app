@@ -21,6 +21,7 @@ import ConfirmPrepaymentModal from "../../modals/ConfirmPrepaymentModal/ConfirmP
     loanSettings: state.loans.loanSettings,
     currencyRates: state.currencies.currencyRatesShort,
     loyaltyInfo: state.loyalty.loyaltyInfo,
+    walletSummary: state.wallet.summary,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -72,6 +73,46 @@ class LoanPrepaymentPeriod extends Component {
     return monthValues;
   };
 
+  calculateModalData = () => {
+    const {
+      formData,
+      navigation,
+      loyaltyInfo,
+      walletSummary,
+      allLoans,
+    } = this.props;
+    const loanId = navigation.getParam("id");
+    const loan = allLoans.find(l => l.id === loanId);
+    const walletCoin = walletSummary.coins.find(c => c.short === formData.coin);
+    const amountUsd = walletCoin ? walletCoin.amount_usd : 0;
+    const prepaymentAmount =
+      Number(loan.monthly_payment) * Number(formData.prepaidPeriod);
+
+    const sumToPay =
+      formData.coin === "CEL"
+        ? prepaymentAmount -
+          (prepaymentAmount -
+            (1 - loyaltyInfo.tier.loanInterestBonus) * prepaymentAmount)
+        : prepaymentAmount;
+    const cryptoAmountToPay = walletCoin
+      ? (walletCoin.amount.toNumber() / walletCoin.amount_usd.toNumber()) *
+        sumToPay
+      : 0;
+
+    const newBalanceCrypto =
+      walletCoin && walletCoin.amount.minus(cryptoAmountToPay);
+    const newBalanceUsd = amountUsd && amountUsd.minus(sumToPay);
+
+    return {
+      coin: formData.coin,
+      sumToPay,
+      cryptoAmountToPay,
+      newBalanceCrypto,
+      newBalanceUsd,
+      loanId,
+    };
+  };
+
   calculatePrepaidValue = (usdValue, coinRate, coin) => {
     const { formData, loyaltyInfo } = this.props;
     const rate = coin === "USD" ? 1 : coinRate;
@@ -94,7 +135,6 @@ class LoanPrepaymentPeriod extends Component {
     const loanId = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === loanId);
     const coinRate = currencyRates[formData.coin.toLowerCase()];
-
     const monthValues = this.getMonthValues();
 
     const sliderItems = monthValues.map(m => ({
@@ -143,6 +183,8 @@ class LoanPrepaymentPeriod extends Component {
       formData.coin
     );
 
+    const modalData = this.calculateModalData();
+
     return (
       <RegularLayout>
         <CelText type="H3" weight="bold" align="center" margin="50 0 15 0">
@@ -159,19 +201,18 @@ class LoanPrepaymentPeriod extends Component {
         >
           Continue
         </CelButton>
-        <ConfirmPrepaymentModal loanId={loanId} />
+        <ConfirmPrepaymentModal modalData={modalData} />
       </RegularLayout>
     );
   };
 
   render() {
-    const { navigation } = this.props;
     const style = LoanPrepaymentPeriodStyle();
     const verticalSlider = this.renderSlider();
     const monthValues = this.getMonthValues();
-    const loanId = navigation.getParam("id");
-
     if (monthValues.length === 1) return this.renderWhenOnly6Months();
+
+    const modalData = this.calculateModalData();
 
     return (
       <View style={style.container}>
@@ -193,7 +234,7 @@ class LoanPrepaymentPeriod extends Component {
           >
             Continue
           </CelButton>
-          <ConfirmPrepaymentModal loanId={loanId} />
+          <ConfirmPrepaymentModal modalData={modalData} />
         </RegularLayout>
       </View>
     );

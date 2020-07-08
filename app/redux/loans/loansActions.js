@@ -135,8 +135,6 @@ function getAllLoans() {
       startApiCall(API.GET_ALL_LOANS);
       const allLoans = await loansService.getAllLoans();
 
-      // kad se ovo poziva ????
-
       dispatch({
         type: ACTIONS.GET_ALL_LOANS_SUCCESS,
         callName: API.GET_ALL_LOANS,

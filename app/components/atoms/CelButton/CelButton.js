@@ -10,7 +10,7 @@ import Spinner from "../Spinner/Spinner";
 import STYLES from "../../../constants/STYLES";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
-const buttonSizes = ["small", "mediumSmall", "medium"];
+const buttonSizes = ["small", "medium"];
 
 class CelButton extends Component {
   static propTypes = {

@@ -152,14 +152,14 @@ class LoanAlertsModalWrapper extends Component {
       activeLoan.installments_to_be_paid &&
       activeLoan.installments_to_be_paid.installments[0]
     ) {
-      const currDay = moment.utc();
       const currentDay = moment.utc();
+      const newCurrentDay = moment.utc();
       const isThreeDays = moment(
         activeLoan.installments_to_be_paid.installments[0].to
       ).isSame(currentDay.add(3, "days"), "day");
       const isSevenDays = moment(
         activeLoan.installments_to_be_paid.installments[0].to
-      ).isSame(currDay.add(7, "days"), "day");
+      ).isSame(newCurrentDay.add(7, "days"), "day");
       return {
         threeDays: isThreeDays ? 3 : null,
         sevenDays: isSevenDays ? 7 : null,

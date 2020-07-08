@@ -14,35 +14,23 @@ import Separator from "../../atoms/Separator/Separator";
 import formatter from "../../../utils/formatter";
 
 @connect(
-  state => ({
-    loyaltyInfo: state.loyalty.loyaltyInfo,
-    formData: state.forms.formData,
-    walletSummary: state.wallet.summary,
-    allLoans: state.loans.allLoans,
-    currencyRates: state.currencies.currencyRatesShort,
-  }),
+  () => ({}),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class ConfirmPrepaymentModal extends Component {
   static propTypes = {
-    loanId: PropTypes.number,
-    type: PropTypes.string,
-  };
-  static defaultProps = {
-    type: "CRYPTO",
+    modalData: PropTypes.instanceOf(Object),
   };
 
   constructor(props) {
     super(props);
-    const { loanId, allLoans } = props;
     this.state = {
       isLoading: false,
-      loan: allLoans.find(l => l.id === loanId),
     };
   }
 
-  renderContent = () => {
-    const { actions, loanId } = this.props;
+  renderContent = loanId => {
+    const { actions } = this.props;
     return {
       heading: "Confirm Interest Prepayment",
       buttonText: "Prepay Interest",
@@ -60,31 +48,12 @@ class ConfirmPrepaymentModal extends Component {
   };
 
   render() {
-    const { type, formData, walletSummary, loyaltyInfo } = this.props;
+    const { modalData } = this.props;
     const { loan, isLoading } = this.state;
     const style = ConfirmPrepaymentModalStyle();
 
-    const content = this.renderContent(type);
+    const content = this.renderContent(modalData.loanId);
     if (!loan) return null;
-    const walletCoin = walletSummary.coins.find(c => c.short === formData.coin);
-    const amountUsd = walletCoin ? walletCoin.amount_usd : 0;
-    const prepaymentAmount =
-      Number(loan.monthly_payment) * Number(formData.prepaidPeriod);
-
-    const sumToPay =
-      formData.coin === "CEL"
-        ? prepaymentAmount -
-          (prepaymentAmount -
-            (1 - loyaltyInfo.tier.loanInterestBonus) * prepaymentAmount)
-        : prepaymentAmount;
-    const cryptoAmountToPay = walletCoin
-      ? (walletCoin.amount.toNumber() / walletCoin.amount_usd.toNumber()) *
-        sumToPay
-      : 0;
-
-    const newBalanceCrypto =
-      walletCoin && walletCoin.amount.minus(cryptoAmountToPay);
-    const newBalanceUsd = amountUsd && amountUsd.minus(sumToPay);
 
     return (
       <CelModal
@@ -106,10 +75,10 @@ class ConfirmPrepaymentModal extends Component {
               You are about to pay
             </CelText>
             <CelText align={"center"} type={"H1"}>
-              {formatter.crypto(cryptoAmountToPay, formData.coin)}
+              {formatter.crypto(modalData.cryptoAmountToPay, modalData.coin)}
             </CelText>
             <CelText align={"center"}>
-              {formatter.fiat(sumToPay, "USD")}
+              {formatter.fiat(modalData.sumToPay, "USD")}
             </CelText>
             <View>
               <Separator margin={"20 0 20 0"} />
@@ -122,9 +91,9 @@ class ConfirmPrepaymentModal extends Component {
               align={"center"}
               type={"H6"}
             >{`${formatter.crypto(
-              newBalanceCrypto,
-              formData.coin
-            )} | ${formatter.fiat(newBalanceUsd, "USD")}`}</CelText>
+              modalData.newBalanceCrypto,
+              modalData.coin
+            )} | ${formatter.fiat(modalData.newBalanceUsd, "USD")}`}</CelText>
           </View>
         </View>
 

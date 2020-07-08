@@ -35,7 +35,6 @@ class LoanAlertsPayoutPrincipalModal extends Component {
     const { actions } = this.props;
     const { loan } = this.state;
 
-    // const crypto = cryptoType || formData.coin;
     return {
       heading: "Confirm Principal Payment",
       buttonText: "Close Loan",

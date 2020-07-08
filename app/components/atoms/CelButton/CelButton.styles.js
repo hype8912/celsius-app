@@ -45,9 +45,6 @@ const base = {
   mediumTitle: {
     fontSize: getScaledFont(18),
   },
-  mediumSmallTitle: {
-    fontSize: getScaledFont(14),
-  },
   smallTitle: {
     fontSize: getScaledFont(14),
   },
