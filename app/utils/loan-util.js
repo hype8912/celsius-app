@@ -1,11 +1,6 @@
 import BigNumber from "bignumber.js";
 import _ from "lodash";
-import {
-  LOAN_INTEREST_COINS,
-  LOAN_PAYMENT_TYPES,
-  LOAN_STATUS,
-  LOAN_TYPES,
-} from "../constants/DATA";
+import { LOAN_PAYMENT_TYPES, LOAN_STATUS, LOAN_TYPES } from "../constants/DATA";
 import STYLES from "../constants/STYLES";
 import formatter from "./formatter";
 import store from "../redux/store";
@@ -20,15 +15,6 @@ function mapLoan(loan) {
   newLoan.uiProps = getLoanStatusDetails(loan);
   newLoan.uiSections = getLoanSections(loan);
   newLoan.amortization_table = flagPaidPayments(loan);
-  newLoan.loanSettings = {
-    automatic_interest_payment: Math.random() > 0.5,
-    interest_payment_asset:
-      LOAN_INTEREST_COINS[
-        Math.floor(Math.random() * LOAN_INTEREST_COINS.length)
-      ],
-    // payout_principal_from_collateral: false,
-    // principal_payment_asset: "USDT ERC20",
-  };
 
   if (newLoan.id) {
     newLoan.total_interest = Number(newLoan.total_interest).toFixed(2);
