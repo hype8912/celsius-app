@@ -35,6 +35,7 @@ import { hasPassedKYC } from "../../../utils/user-util";
 import formatter from "../../../utils/formatter";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
+import AdditionalAmountCard from "../../molecules/AdditionalAmountCard/AdditionalAmountCard";
 
 @connect(
   state => ({
@@ -263,22 +264,13 @@ class Deposit extends Component {
 
     return (
       <View style={{ alignSelf: "center" }}>
-        <Card color={color}>
-          <CelText
-            color={"white"}
-            align={"left"}
-            weight={"600"}
-            type={"H3"}
-          >{`${formatter.fiat(usd, "USD")}`}</CelText>
-          <CelText color={"white"} align={"left"} weight={"300"} type={"H6"}>
-            {crypto && (
-              <CelText color={"white"} align={"left"} type={"H6"}>
-                {`${formatter.crypto(crypto, coin)} `}
-              </CelText>
-            )}
-            {text}
-          </CelText>
-        </Card>
+        <AdditionalAmountCard
+          color={color}
+          additionalUsd={usd}
+          additionalCryptoAmount={crypto}
+          text={text}
+          coin={coin}
+        />
       </View>
     );
   };

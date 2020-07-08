@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 
 import InfoModal from "../../InfoModalNew/InfoModal";
-import { MODALS } from "../../../../constants/UI";
+import {
+  COIN_CARD_TYPE,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+} from "../../../../constants/UI";
 import * as appActions from "../../../../redux/actions";
+import loanPaymentUtil from "../../../../utils/loanPayment-util";
 
 @connect(
   () => ({}),
@@ -19,42 +23,36 @@ class LoanAlertsDepositCoinsModal extends Component {
 
   depositCoin = () => {
     const { actions, loan } = this.props;
-    actions.navigateTo("Deposit", {
-      coin: loan.coin_loan_asset ? loan.coin_loan_asset : "DAI",
+    const payment = loanPaymentUtil.calculateAdditionalPayment(
       loan,
-      isMarginWarning: true,
+      COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD
+    );
+    actions.navigateTo("Deposit", {
+      coin: loan.coin_loan_asset,
+      reason: LOAN_PAYMENT_REASONS.PRINCIPAL,
+      amountUsd: payment.additionalUsdAmount,
+      additionalCryptoAmount: payment.additionalCryptoAmount,
     });
     actions.closeModal();
   };
 
   render() {
     const { loan } = this.props;
+
+    if (!loan) return;
+
     return (
       <InfoModal
         name={MODALS.LOAN_ALERT_MODAL}
         heading={"You Are Almost Done With Your Loan Payout!"}
         paragraphs={[
-          `You have a principle of ${
-            loan && loan.loanAmount ? loan.loanAmount : "123"
-          } ${
-            loan && loan.coin_loan_asset ? loan.coin_loan_asset : "DAI"
-          }, but there are not enough funds in your wallet. Please deposit more ${
-            loan && loan.coin_loan_asset ? loan.coin_loan_asset : "DAI"
-          } to pay out your principle.`,
+          `You have a principle of ${loan.loan_amount} ${loan.coin_loan_asset}, but there are not enough funds in your wallet. Please deposit more ${loan.coin_loan_asset} to pay out your principle.`,
         ]}
-        yesCopy={`Deposit ${
-          loan && loan.coin_loan_asset ? loan.coin_loan_asset : "DAI"
-        }`}
+        yesCopy={`Deposit ${loan && loan.coin_loan_asset}`}
         onYes={this.depositCoin}
       />
     );
   }
 }
-
-LoanAlertsDepositCoinsModal.propTypes = {
-  amount: PropTypes.string,
-  coin: PropTypes.string,
-  onYes: PropTypes.func,
-};
 
 export default LoanAlertsDepositCoinsModal;

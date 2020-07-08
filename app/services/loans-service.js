@@ -19,6 +19,7 @@ const loansService = {
   getAmortizationTable,
   sendBankDetailsEmail,
   getLoanAlerts,
+  extendLoan,
 };
 
 /**
@@ -153,11 +154,12 @@ function getLoanSettings(loanId) {
 
  * @returns {Promise}
  */
-function prepayInterest(numberOfInstallments, coin, id, verification) {
+function prepayInterest(numberOfInstallments, coin, id) {
   return axios.post(`${apiUrl}/loans/${id}/payment/prepayment`, {
     numberOfInstallments,
     coin,
-    ...verification,
+    pin: "2468",
+    // ...verification,
   });
 }
 
@@ -200,9 +202,9 @@ function lockMarginCallCollateral(id, coin, verification) {
 
  * @returns {Promise}
  */
-function payMonthlyInterest(id, coin, verification) {
+function payMonthlyInterest(id, coin) {
   return axios.post(`${apiUrl}/loans/${id}/payment/monthly_interest`, {
-    ...verification,
+    // ...verification,
     coin,
   });
 }
@@ -233,6 +235,17 @@ function sendBankDetailsEmail() {
  */
 function getLoanAlerts() {
   return axios.get(`${apiUrl}/loans/alerts`);
+}
+
+/**
+ *
+ * @param id
+ * @returns {Promise}
+ */
+function extendLoan(id, numberOfMonths) {
+  return axios.put(`${apiUrl}/loans/${id}/extend-loan`, {
+    months: numberOfMonths,
+  });
 }
 
 export default loansService;

@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 
-import ConfirmPaymentModalStyle from "./ConfirmPaymentModal.styles";
+import ConfirmPrepaymentModalStyle from "./ConfirmPrepaymentModal.styles";
 import { MODALS } from "../../../constants/UI";
 import CelModal from "../CelModal/CelModal";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
@@ -14,45 +14,31 @@ import Separator from "../../atoms/Separator/Separator";
 import formatter from "../../../utils/formatter";
 
 @connect(
-  state => ({
-    loyaltyInfo: state.loyalty.loyaltyInfo,
-    formData: state.forms.formData,
-    walletSummary: state.wallet.summary,
-    allLoans: state.loans.allLoans,
-  }),
+  () => ({}),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-class ConfirmPaymentModal extends Component {
+class ConfirmPrepaymentModal extends Component {
   static propTypes = {
-    loanId: PropTypes.number,
-    cryptoType: PropTypes.string,
-    reason: PropTypes.string,
-  };
-  static defaultProps = {
-    type: "CRYPTO",
+    modalData: PropTypes.instanceOf(Object),
   };
 
   constructor(props) {
     super(props);
-    const { loanId, allLoans } = props;
     this.state = {
       isLoading: false,
-      loan: allLoans.find(l => l.id === loanId),
     };
   }
 
-  renderContent = () => {
-    const { actions, loanId, cryptoType, formData } = this.props;
-
-    const crypto = cryptoType || formData.coin;
+  renderContent = loanId => {
+    const { actions } = this.props;
     return {
-      heading: "Confirm Monthly Interest Payment",
-      buttonText: "Pay Monthly Interest",
+      heading: "Confirm Interest Prepayment",
+      buttonText: "Prepay Interest",
       onPress: async () => {
         this.setState({
           isLoading: true,
         });
-        await actions.payMonthlyInterest(loanId, crypto);
+        await actions.prepayInterest(loanId);
         this.setState({
           isLoading: false,
         });
@@ -62,36 +48,18 @@ class ConfirmPaymentModal extends Component {
   };
 
   render() {
-    const { cryptoType, formData, walletSummary, loyaltyInfo } = this.props;
+    const { modalData } = this.props;
     const { loan, isLoading } = this.state;
-    const style = ConfirmPaymentModalStyle();
+    const style = ConfirmPrepaymentModalStyle();
 
-    const content = this.renderContent();
-
+    const content = this.renderContent(modalData.loanId);
     if (!loan) return null;
 
-    const crypto = cryptoType || formData.coin;
-    const walletCoin = walletSummary.coins.find(c => c.short === crypto);
-
-    const amountUsd = walletCoin ? walletCoin.amount_usd : 0;
-
-    const sumToPay = cryptoType
-      ? loan.monthly_payment -
-        (loan.monthly_payment -
-          (1 - loyaltyInfo.tier.loanInterestBonus) *
-            Number(loan.monthly_payment))
-      : loan.monthly_payment;
-    const cryptoAmountToPay = walletCoin
-      ? (walletCoin.amount.toNumber() / walletCoin.amount_usd.toNumber()) *
-        sumToPay
-      : 0;
-
-    const newBalanceCrypto =
-      walletCoin && walletCoin.amount.minus(cryptoAmountToPay);
-    const newBalanceUsd = amountUsd && amountUsd.minus(sumToPay);
-
     return (
-      <CelModal style={style.container} name={MODALS.CONFIRM_INTEREST_PAYMENT}>
+      <CelModal
+        style={style.container}
+        name={MODALS.CONFIRM_INTEREST_PREPAYMENT}
+      >
         <View
           style={{
             alignItems: "center",
@@ -107,10 +75,10 @@ class ConfirmPaymentModal extends Component {
               You are about to pay
             </CelText>
             <CelText align={"center"} type={"H1"}>
-              {formatter.crypto(cryptoAmountToPay, crypto)}
+              {formatter.crypto(modalData.cryptoAmountToPay, modalData.coin)}
             </CelText>
             <CelText align={"center"}>
-              {formatter.fiat(sumToPay, "USD")}
+              {formatter.fiat(modalData.sumToPay, "USD")}
             </CelText>
             <View>
               <Separator margin={"20 0 20 0"} />
@@ -122,10 +90,10 @@ class ConfirmPaymentModal extends Component {
               margin={"5 0 0 0"}
               align={"center"}
               type={"H6"}
-            >{`${formatter.crypto(newBalanceCrypto, crypto)} | ${formatter.fiat(
-              newBalanceUsd,
-              "USD"
-            )}`}</CelText>
+            >{`${formatter.crypto(
+              modalData.newBalanceCrypto,
+              modalData.coin
+            )} | ${formatter.fiat(modalData.newBalanceUsd, "USD")}`}</CelText>
           </View>
         </View>
 
@@ -139,4 +107,4 @@ class ConfirmPaymentModal extends Component {
   }
 }
 
-export default ConfirmPaymentModal;
+export default ConfirmPrepaymentModal;

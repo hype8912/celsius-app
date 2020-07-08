@@ -13,11 +13,12 @@ import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
 // import Icon from "../../atoms/Icon/Icon";
 
-import STYLES from "../../../constants/STYLES";
 import PaymentCardStyle from "./PaymentCard.styles";
 import Separator from "../../atoms/Separator/Separator";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CollateralCoinCard from "../CollateralCoinCard/CollateralCoinCard";
+import AdditionalAmountCard from "../AdditionalAmountCard/AdditionalAmountCard";
+import loanPaymentUtil from "../../../utils/loanPayment-util";
 
 @connect(
   state => ({
@@ -68,168 +69,92 @@ class PaymentCard extends Component {
   }
 
   setValues = async () => {
-    const {
-      type,
-      formData,
-      coin,
-      currencies,
-      walletSummary,
-      isMarginCall,
-      marginCall,
-      currencyRatesShort,
-      amountNeededUsd,
-      loan,
-    } = this.props;
-    let value;
-    let cryptoAmount;
-    let amountUsd;
-    let additionalCryptoAmount;
-    let isAllowed;
-    let color;
-
+    const { type, coin, currencies, loan } = this.props;
     // constant values
     const name = formatter.capitalize(coin.name);
     const currency = currencies.filter(
       c => c.short === coin.short.toUpperCase()
     )[0];
-    const walletCoin = walletSummary.find(c => c.short === coin.short);
-    // formatter.crypto(walletCoin.amount, walletCoin.short, { precision: 2 })
-    // default values
-    cryptoAmount = walletCoin ? walletCoin.amount.toNumber() : null;
-    amountUsd = walletCoin ? walletCoin.amount_usd.toNumber() : null;
-    isAllowed = walletCoin ? walletCoin.amount_usd.isGreaterThan(0) : false; // TODO check this!
-
-    await this.setState({ name, currency, isAllowed });
-    if (type !== COIN_CARD_TYPE.COLLATERAL_COIN_CARD) {
-      additionalCryptoAmount =
-        Number(loan.monthly_payment) -
-        currency.market_quotes_usd.price * cryptoAmount;
-    }
+    await this.setState({ name, currency });
 
     if (type === COIN_CARD_TYPE.COLLATERAL_COIN_CARD) {
-      cryptoAmount = formatter.crypto(coin.amount, coin.short, {
-        precision: 2,
-      });
-      amountUsd = coin.amount_usd.toNumber();
-
-      const collateralAmount = Number(formData.loanAmount) * 2;
-      isAllowed = coin.amount_usd >= collateralAmount;
-      color =
-        coin.amount_usd < collateralAmount
-          ? STYLES.COLORS.RED
-          : STYLES.COLORS.MEDIUM_GRAY;
-      if (currency) {
-        value =
-          (formData.loanAmount * 2 - coin.amount_usd) /
-          currency.market_quotes_usd.price;
-      }
-
-      additionalCryptoAmount = formatter.crypto(value, coin.short, {
-        precision: 2,
-      });
-
+      const collateralPayment = loanPaymentUtil.calculateAdditionalPayment(
+        loan,
+        COIN_CARD_TYPE.COLLATERAL_COIN_CARD,
+        coin
+      );
       await this.setState({
         additionalInfoExplanation: "required.",
-        cryptoAmount,
-        amountUsd,
-        additionalCryptoAmount,
-        color,
-        isAllowed,
+        cryptoAmount: collateralPayment.cryptoAmount,
+        amountUsd: collateralPayment.amountUsd,
+        additionalCryptoAmount: collateralPayment.additionalCryptoAmount,
+        color: collateralPayment.color,
+        isAllowed: collateralPayment.isAllowed,
+        hasEnough: collateralPayment.hasEnough,
       });
     } else if (type === COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD) {
-      isAllowed = walletCoin
-        ? walletCoin.amount_usd.isGreaterThan(amountNeededUsd)
-        : false;
-      color = !isAllowed ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
-      value =
-        (amountNeededUsd - walletCoin.amount_usd.toNumber()) /
-        currencyRatesShort[coin.short.toLowerCase()];
-      additionalCryptoAmount = formatter.crypto(value, coin.short, {
-        precision: 2,
-      });
-
+      const principalPayment = loanPaymentUtil.calculateAdditionalPayment(
+        loan,
+        COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD
+      );
       await this.setState({
         additionalInfoExplanation: "required for a principal payout.",
-        cryptoAmount,
-        amountUsd,
-        isAllowed,
-        color,
-        additionalCryptoAmount,
+        cryptoAmount: principalPayment.cryptoAmount,
+        amountUsd: principalPayment.amountUsd,
+        isAllowed: principalPayment.isAllowed,
+        color: principalPayment.color,
+        additionalCryptoAmount: principalPayment.additionalCryptoAmount,
+        hasEnough: principalPayment.hasEnough,
       });
     } else if (type === COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD) {
-      color =
-        additionalCryptoAmount > 0
-          ? STYLES.COLORS.RED
-          : STYLES.COLORS.MEDIUM_GRAY;
+      const loanPayment = loanPaymentUtil.calculateAdditionalPayment(
+        loan,
+        COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD,
+        coin
+      );
       await this.setState({
         additionalInfoExplanation:
           "required for a first month of loan interest payment.",
-        cryptoAmount,
-        amountUsd,
-        isAllowed,
-        color,
-        additionalCryptoAmount,
+        cryptoAmount: loanPayment.cryptoAmount,
+        amountUsd: loanPayment.amountUsd,
+        isAllowed: loanPayment.isAllowed,
+        color: loanPayment.color,
+        additionalCryptoAmount: loanPayment.additionalCryptoAmount,
+        additionalUsdAmount: loanPayment.additionalUsdAmount,
+        hasEnough: loanPayment.hasEnough,
         // TODO when API is completed add state: additionalCryptoAmount
       });
     } else if (type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD) {
-      const amountNeededInCoin =
-        Number(marginCall.margin_call_usd_amount) /
-        currencyRatesShort[coin.short.toLowerCase()];
-      isAllowed = coin.amount >= amountNeededInCoin;
-      color = !isAllowed ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
-
-      // additionalCryptoAmount - margin call value
-      // let marginCallValue;
-
-      if (isMarginCall && amountNeededInCoin > Number(coin.amount)) {
-        // marginCallValue = formatter.crypto(
-        //   amountNeededInCoin - Number(coin.amount),
-        //   coin.short,
-        //   { precision: 4 }
-        // );
-      } else {
-        // marginCallValue = formatter.crypto(amountNeededInCoin, coin.short, {
-        //   precision: 4,
-        // });
-      }
-
+      const marginCallPayment = loanPaymentUtil.calculateAdditionalPayment(
+        loan,
+        COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD
+      );
       await this.setState({
         additionalInfoExplanation: "required.",
-        cryptoAmount,
-        amountUsd,
-        isAllowed,
-        additionalCryptoAmount,
-        color,
+        cryptoAmount: marginCallPayment.cryptoAmount,
+        amountUsd: marginCallPayment.amountUsd,
+        isAllowed: marginCallPayment.isAllowed,
+        additionalCryptoAmount: marginCallPayment.additionalCryptoAmount,
+        color: marginCallPayment.color,
+        hasEnough: marginCallPayment.hasEnough,
       });
     }
   };
 
   renderAdditionalAmountRequired = () => {
-    const { coin, loan } = this.props;
-    const { amountUsd, additionalCryptoAmount } = this.state;
-
-    const additionalUsd = loan.monthly_payment - amountUsd;
-    // const amountCrypto = amountUsd / cryptoAmount;
-
+    const { coin } = this.props;
+    const { additionalUsdAmount, additionalCryptoAmount } = this.state;
     const style = PaymentCardStyle();
+
     return (
-      <Card
+      <AdditionalAmountCard
         color={style.marginRequired.backgroundColor}
         style={style.marginRequired}
-      >
-        <CelText
-          color={"white"}
-          align={"left"}
-          weight={"600"}
-          type={"H3"}
-        >{`${formatter.fiat(additionalUsd, "USD")}`}</CelText>
-        <CelText color={"white"} align={"left"} weight={"300"} type={"H6"}>
-          <CelText color={"white"} align={"left"} type={"H6"}>
-            {`${formatter.crypto(additionalCryptoAmount, coin.short)} `}
-          </CelText>
-          additionally required
-        </CelText>
-      </Card>
+        additionalCryptoAmount={additionalCryptoAmount}
+        additionalUsd={additionalUsdAmount}
+        text={"additionally required"}
+        coin={coin.short}
+      />
     );
   };
 
@@ -249,7 +174,7 @@ class PaymentCard extends Component {
 
   renderDepositMore = () => {
     const { coin, actions, marginCall, reason } = this.props;
-    const { amountUsd, additionalCryptoAmount } = this.state;
+    const { additionalUsdAmount, additionalCryptoAmount } = this.state;
     return (
       <View>
         <CelButton
@@ -258,7 +183,7 @@ class PaymentCard extends Component {
             actions.navigateTo("Deposit", {
               coin: coin.short,
               reason,
-              amountUsd,
+              amountUsd: additionalUsdAmount,
               additionalCryptoAmount,
             })
           }
@@ -310,6 +235,7 @@ class PaymentCard extends Component {
       isAllowed,
       additionalCryptoAmount,
       additionalInfoExplanation,
+      hasEnough,
     } = this.state;
 
     const style = PaymentCardStyle();
@@ -345,7 +271,9 @@ class PaymentCard extends Component {
     ) {
       return (
         <Card
-          onPress={isAllowed ? () => handleSelectCoin(coin.short) : null}
+          onPress={
+            isAllowed && hasEnough ? () => handleSelectCoin(coin.short) : null
+          }
           color={isAllowed ? null : style.cardStyle.color}
           opacity={isLoading ? 0.7 : 1}
         >
@@ -390,7 +318,7 @@ class PaymentCard extends Component {
                 <CelText weight={"300"} align="left">
                   In wallet:{" "}
                 </CelText>
-                <View style={{ opacity: isAllowed ? 1 : 0.4 }}>
+                <View>
                   <CelText weight={"300"} align="right" style={{ color }}>
                     {formatter.crypto(cryptoAmount, coin.short, {
                       precision: 2,

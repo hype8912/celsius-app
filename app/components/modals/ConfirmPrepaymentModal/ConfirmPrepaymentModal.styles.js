@@ -1,12 +1,12 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from "../../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
   container: {
     flex: 1,
   },
   buttonsWrapper: {
-    flexDirection: "row",
+    justifyContent: "flex-end",
     marginTop: 20,
     height: 50,
   },
@@ -20,6 +20,6 @@ const themed = {
   celsius: {},
 };
 
-const LoanAlertsDepositCoinsModalStyle = () => getThemedStyle(base, themed);
+const ConfirmPrepaymentModalStyle = () => getThemedStyle(base, themed);
 
-export default LoanAlertsDepositCoinsModalStyle;
+export default ConfirmPrepaymentModalStyle;

@@ -195,12 +195,18 @@ class ChoosePaymentMethod extends Component {
     );
   };
 
+  closeModal = () => {
+    const { actions, navigation } = this.props;
+    const id = navigation.getParam("id");
+    actions.closeModal();
+    actions.navigateTo("WiringBankInformation", { id });
+  };
+
   render() {
     const { actions, loanSettings, navigation } = this.props;
     const { loading } = this.state;
     if (!loanSettings) return <LoadingScreen />;
     const Automatic = this.automaticSwitch;
-
     const style = ChoosePaymentMethodStyle();
     const id = navigation.getParam("id");
 

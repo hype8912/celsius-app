@@ -32,6 +32,7 @@ export {
   lockMarginCallCollateral,
   getLoanAlerts,
   startedLoanApplication,
+  extendLoan,
 };
 
 /**
@@ -576,6 +577,26 @@ function startedLoanApplication() {
       await analyticsService.startedLoanApplicationService(userData);
     } catch (e) {
       loggerUtil.log(e);
+    }
+  };
+}
+
+function extendLoan(id, numberOfMonths) {
+  return async dispatch => {
+    dispatch(startApiCall(API.EXTEND_LOAN));
+    try {
+      await loansService.extendLoan(id, numberOfMonths);
+      getAllLoans();
+      dispatch(navigateTo("BorrowLanding"));
+      dispatch(
+        showMessage(
+          "success",
+          `You have successfully extended loan for additional ${numberOfMonths} months`
+        )
+      );
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.EXTEND_LOAN, err));
     }
   };
 }

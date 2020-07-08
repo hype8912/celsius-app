@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import moment from "moment";
 
 import { LOAN_ALERTS } from "../../../constants/UI";
 import * as appActions from "../../../redux/actions";
@@ -9,6 +10,8 @@ import LoanAlertsDepositCoinsModal from "./LoanAlertsDepositCoinsModal/LoanAlert
 import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsMarginCallLockCoinModal/LoanAlertsMarginCallLockCoinModal";
 import LoanAlertsMarginCallDepositCoinsModal from "./LoanAlertsMarginCallDepositCoinsModal/LoanAlertsMarginCallDepositCoinsModal";
 import InterestDueModal from "../InterestDueModal/InterestDueModal";
+import InterestReminderModal from "../InterestReminderModal/InterestReminderModal";
+import loanPaymentUtil from "../../../utils/loanPayment-util";
 
 @connect(
   state => ({
@@ -83,8 +86,8 @@ class LoanAlertsModalWrapper extends Component {
     this.state = { activeAlert, loan };
   }
 
-  componentDidMount() {
-    const { walletSummary } = this.props;
+  componentDidMount = async () => {
+    const { walletSummary, actions } = this.props;
     const { loan } = this.state;
     if (loan) {
       const principalCoinWallet = LoanAlertsModalWrapper.getPrincipalCoinWallet(
@@ -95,16 +98,19 @@ class LoanAlertsModalWrapper extends Component {
         walletSummary,
         loan
       );
+      await actions.setActiveLoan(loan.id);
       this.setState({ loan, principalCoinWallet, collateralCoinWallet });
     }
-  }
+  };
 
   getFirstAlert = loanAlerts => {
     if (!loanAlerts || !loanAlerts.length) return null;
     let activeAlert;
-    loanAlerts.forEach(la => {
-      if (la.type === LOAN_ALERTS.MARGIN_CALL_ALERT) activeAlert = la;
-    });
+    loanAlerts
+      .sort((a, b) => b.id - a.id)
+      .forEach(la => {
+        if (la.type === LOAN_ALERTS.MARGIN_CALL_ALERT) activeAlert = la;
+      });
     return activeAlert || loanAlerts[0];
   };
 
@@ -113,7 +119,7 @@ class LoanAlertsModalWrapper extends Component {
     const canPayPrincipal = loan.can_pay_principal;
     if (canPayPrincipal) {
       if (loan.loan_amount <= principalCoinWallet.amount) {
-        return <LoanAlertsPayoutPrincipalModal loan={loan} />;
+        return <LoanAlertsPayoutPrincipalModal loanId={loan.id} />;
       }
       return <LoanAlertsDepositCoinsModal loan={loan} />;
     }
@@ -140,14 +146,61 @@ class LoanAlertsModalWrapper extends Component {
     return null;
   };
 
+  isSameInterestDay = activeLoan => {
+    if (
+      activeLoan &&
+      activeLoan.installments_to_be_paid &&
+      activeLoan.installments_to_be_paid.installments[0]
+    ) {
+      const currentDay = moment.utc();
+      const newCurrentDay = moment.utc();
+      const isThreeDays = moment(
+        activeLoan.installments_to_be_paid.installments[0].to
+      ).isSame(currentDay.add(3, "days"), "day");
+      const isSevenDays = moment(
+        activeLoan.installments_to_be_paid.installments[0].to
+      ).isSame(newCurrentDay.add(7, "days"), "day");
+      return {
+        threeDays: isThreeDays ? 3 : null,
+        sevenDays: isSevenDays ? 7 : null,
+      };
+    }
+  };
+
   renderInterestModal = loan => {
     const { actions } = this.props;
+    const { activeAlert } = this.state;
+
+    // if no money reminder 3 & 7 days, if you have money and manual payment reminder 3 days
+    const payment = loanPaymentUtil.calculateAdditionalPayment(loan);
+    const isSameDay = this.isSameInterestDay(loan);
+    const hasNoMoney =
+      !payment.hasEnough &&
+      isSameDay &&
+      (isSameDay.sevenDays || isSameDay.threeDays);
+    const manuelPaymentNoMoney =
+      payment.hasEnough &&
+      !loan.loanPaymentSettings.automatic_interest_payment &&
+      isSameDay &&
+      isSameDay.threeDays;
+
+    if (hasNoMoney || manuelPaymentNoMoney) {
+      return (
+        <InterestReminderModal
+          closeModal={actions.closeModal}
+          navigateTo={actions.navigateTo}
+          activeLoan={loan}
+          isSameDay={isSameDay}
+        />
+      );
+    }
+
     return (
       <InterestDueModal
         closeModal={actions.closeModal}
-        activeLoan={loan}
         navigateTo={actions.navigateTo}
-        alert
+        activeLoan={loan}
+        alert={activeAlert}
       />
     );
   };
