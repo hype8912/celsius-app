@@ -18,15 +18,13 @@ import STYLES from "../../../constants/STYLES";
   state => ({
     formData: state.forms.formData,
     user: state.user.profile,
-    // hasSixDigitPin: state.security.hasSixDigitPin, // TODO - When API endpoint is finished, activate this line
+    hasSixDigitPin: state.user.profile.hasSixDigitPin,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class ActivateSixDigitPin extends Component {
   static propTypes = {};
-  static defaultProps = {
-    hasSixDigitPin: false, // TODO - When API endpoint is finished, check Redux and remove this line
-  };
+  static defaultProps = {};
 
   static navigationOptions = () => ({
     headerSameColor: false,
@@ -35,8 +33,10 @@ class ActivateSixDigitPin extends Component {
     gesturesEnabled: false,
   });
 
-  onPressBtn = () => {
+  onPressBtn = async () => {
     const { actions } = this.props;
+    // TODO add failed endpoint continue handling
+    // await apiUtil.callFailedRequest()
     actions.resetToScreen("WalletLanding");
   };
 
@@ -77,7 +77,6 @@ class ActivateSixDigitPin extends Component {
   render() {
     const { hasSixDigitPin } = this.props;
     const style = ActivateSixDigitPinStyle();
-
     return (
       <RegularLayout fabType="hide">
         <View style={style.container}>
@@ -105,8 +104,12 @@ class ActivateSixDigitPin extends Component {
           </View>
 
           <View style={style.buttonWrapper}>
-            <CelButton style={style.button} onPress={this.onPressBtn}>
-              Go to wallet
+            <CelButton
+              disabled={!hasSixDigitPin}
+              style={style.button}
+              onPress={this.onPressBtn}
+            >
+              Continue
             </CelButton>
           </View>
         </View>

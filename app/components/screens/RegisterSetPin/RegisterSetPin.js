@@ -52,6 +52,7 @@ class RegisterSetPin extends Component {
     const { actions, user } = this.props;
 
     if (newValue.length > 6) return;
+    // if (newValue.length > 4) return; // TODO remove after testing
 
     const field = pinCreated ? "pinConfirm" : "pin";
 
@@ -61,6 +62,7 @@ class RegisterSetPin extends Component {
       .calculatePinScore(newValue, user.date_of_birth)
       .find(i => i.status === (null || false));
     if (newValue.length === 6 && !pinScoreNotPassed) {
+      // if (newValue.length === 4 && !pinScoreNotPassed) {
       this.handlePinFinish(newValue);
     }
   };
@@ -141,6 +143,7 @@ class RegisterSetPin extends Component {
 
             <TouchableOpacity onPress={actions.toggleKeypad}>
               <HiddenField value={formData[field]} length={6} />
+              {/* <HiddenField value={formData[field]} length={4} />*/}
             </TouchableOpacity>
 
             {pinCreated && !loading && (
