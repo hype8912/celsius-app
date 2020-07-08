@@ -26,6 +26,7 @@ import SelectCountryStories from "./SelectCountry/SelectCountry.stories";
 import SecuritySettingsStories from "./SecuritySettings/SecuritySettings.stories";
 import KYCProfileDetailsStories from "./KYCProfileDetails/KYCProfileDetails.stories";
 import KYCAddressInfoStories from "./KYCAddressInfo/KYCAddressInfo.stories";
+import WalletSettingsStories from "./WalletSettings/WalletSettings.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -193,4 +194,9 @@ storiesOf("SelectCountry", module)
 storiesOf("SecuritySettings", module).add(
   "Security Settings",
   SecuritySettingsStories.regular
+);
+
+storiesOf("WalletSettings", module).add(
+  "Wallet Settings",
+  WalletSettingsStories.regular
 );
