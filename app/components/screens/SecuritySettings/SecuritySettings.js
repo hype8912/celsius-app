@@ -169,7 +169,6 @@ class SecuritySettings extends Component {
     const Switcher2FA = this.rightSwitch2FA;
     const SwitcherHodl = this.rightSwitchHodl;
     const rightText = this.securityOverallScore();
-
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
 
     return (

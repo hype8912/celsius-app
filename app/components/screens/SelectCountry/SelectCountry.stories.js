@@ -3,15 +3,11 @@ import React from "react";
 import SelectCountry from "./SelectCountry";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
-import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
 
 const initialState = {
   user: {
     profile: mockUserStore.profile.postman13,
     appSettings: mockUserStore.appSettings.postman13,
-  },
-  currencies: {
-    rates: mockCurrenciesStore.rates,
   },
   forms: {
     formData: {

@@ -23,7 +23,7 @@ import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
 import CommunityStories from "./Community/Community.stories";
 import SelectCountryStories from "./SelectCountry/SelectCountry.stories";
-// import SecuritySettings from "./SecuritySettings/SecuritySetings.stories";
+import SecuritySettingsStories from "./SecuritySettings/SecuritySettings.stories";
 import KYCProfileDetailsStories from "./KYCProfileDetails/KYCProfileDetails.stories";
 import KYCAddressInfoStories from "./KYCAddressInfo/KYCAddressInfo.stories";
 
@@ -190,4 +190,7 @@ storiesOf("SelectCountry", module)
   .add("Calling Codes", SelectCountryStories.noCodes)
   .add("No Calling Codes", SelectCountryStories.withCodes);
 
-// storiesOf("SecuritySettings", module).add("Regular", SecuritySettings.regular);
+storiesOf("SecuritySettings", module).add(
+  "Security Settings",
+  SecuritySettingsStories.regular
+);
