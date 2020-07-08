@@ -41,7 +41,10 @@ class ChangePin extends Component {
 
   componentDidMount() {
     const { actions } = this.props;
-    actions.updateFormField("pin", "");
+    actions.updateFormFields({
+      newPin: "",
+      newPinConfirm: "",
+    });
   }
 
   handlePINChange = newValue => {

@@ -275,14 +275,14 @@ function getUserStatus() {
       const kyc = res.data.kycStatus;
       const twoFAStatus = res.data.twoFactorStatus;
       const newStatus = res.data.kycStatus.status;
-      // const hasSixDigitPin = res.data.has_six_digit_pin
+      const hasSixDigitPin = res.data.has_six_digit_pin
 
       dispatch({
         type: ACTIONS.POLL_USER_DATA_SUCCESS,
         hodlStatus,
         kyc,
         twoFAStatus,
-        // hasSixDigitPin,
+        hasSixDigitPin,
       });
 
       if (newStatus === KYC_STATUSES.permanently_rejected) {

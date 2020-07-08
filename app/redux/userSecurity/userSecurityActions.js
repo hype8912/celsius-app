@@ -179,17 +179,20 @@ function changePin() {
         new_pin: formData.newPin,
         new_pin_confirm: formData.newPinConfirm,
       };
-
       dispatch(toggleKeypad());
       dispatch(startApiCall(API.CHANGE_PIN));
       await userSecurityService.changePin(pinData);
 
       dispatch({ type: ACTIONS.CHANGE_PIN_SUCCESS });
       dispatch({ type: ACTIONS.CLEAR_FORM });
-      dispatch(showMessage("success", "Successfully changed PIN number"));
-      mixpanelAnalytics.changePin();
-      // dispatch(navigateTo("SecuritySettings"));
 
+      mixpanelAnalytics.changePin();
+      if (formData.upgradeToSixDigitPin) {
+        dispatch(navigateTo('ActivateSixDigitPin'))
+        return true;
+      }
+
+      dispatch(showMessage("success", "Successfully changed PIN number"));
       if (securityOverview.fromFixNow) {
         dispatch(toFixNow());
       } else {

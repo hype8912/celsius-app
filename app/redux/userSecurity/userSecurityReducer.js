@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         twoFAStatus: action.twoFAStatus,
-        // hasSixDigitPin: action.hasSixDigitPin // TODO - Check this
+        hasSixDigitPin: action.hasSixDigitPin // TODO - Check this
       };
     case ACTIONS.CLEAR_TO_FIX_NOW:
     case ACTIONS.TO_FIX_NOW:

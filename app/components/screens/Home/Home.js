@@ -23,6 +23,7 @@ class Home extends Component {
   static navigationOptions = () => ({
     header: null,
     gesturesEnabled: false,
+    hideBack: true
   });
 
   async componentDidMount() {
@@ -74,13 +75,6 @@ class Home extends Component {
     actions.setBannerProps({
       sessionCount: bannerProps.sessionCount + 1,
     });
-
-    // TODO pinOld took from endPoint
-    const pinOld = false;
-    if (pinOld) {
-      actions.resetToScreen("SixDigitPinExplanation");
-      return;
-    }
 
     actions.resetToScreen("WalletLanding");
     actions.handleDeepLink();

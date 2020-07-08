@@ -33,9 +33,6 @@ import { DEEP_LINKS } from "../../../constants/DATA";
 )
 class VerifyProfile extends Component {
   static propTypes = {};
-  static defaultProps = {
-    hasSixDigitPin: false, // TODO when api endpoint is finished, remove this line
-  };
 
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
@@ -54,6 +51,7 @@ class VerifyProfile extends Component {
       loading: false,
       verificationError: false,
       showLogOutBtn: false,
+      hasSixDigitPin: false,
     };
   }
 
@@ -65,11 +63,12 @@ class VerifyProfile extends Component {
   }
 
   componentDidMount = () => {
-    const { navigation, actions } = this.props;
+    const { navigation, actions , user} = this.props;
     const activeScreen = navigation.getParam("activeScreen");
+    const hasSixDigitPin = navigation.getParam("hasSixDigitPin");
     // actions.logoutUser()
     actions.getPreviousPinScreen(activeScreen);
-
+    if (hasSixDigitPin || user.has_six_digit_pin) this.setState({hasSixDigitPin: true})
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
   };
 
@@ -164,7 +163,8 @@ class VerifyProfile extends Component {
   handleBackButtonClick = () => true;
 
   handlePINChange = newValue => {
-    const { actions, hasSixDigitPin } = this.props;
+    const { actions } = this.props;
+    const { hasSixDigitPin } = this.state
     const pinLength = hasSixDigitPin ? 6 : 4;
 
     if (newValue.length > pinLength) return;
@@ -269,7 +269,7 @@ class VerifyProfile extends Component {
   }
 
   renderPIN() {
-    const { hasSixDigitPin } = this.props;
+    const { hasSixDigitPin } = this.state;
     const { loading } = this.state;
     const style = VerifyProfileStyle();
 
