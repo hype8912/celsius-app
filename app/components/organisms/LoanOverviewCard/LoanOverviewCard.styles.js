@@ -1,8 +1,10 @@
 import {
+  getColor,
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -40,14 +42,16 @@ const base = {
 
 const themed = {
   light: {
-    card: { color: "#F3F3F3" },
+    card: { color: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT) },
   },
 
   dark: {
-    card: { color: STYLES.COLORS.MEDIUM_GRAY },
+    card: { color: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK) },
   },
 
-  unicorn: {},
+  unicorn: {
+    card: { color: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN) },
+  },
 };
 
 const LoanOverviewCardStyle = () => getThemedStyle(base, themed);

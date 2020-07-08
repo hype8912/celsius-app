@@ -17,10 +17,11 @@ import InterestRatesStories from "./InterestRates/InterestRates.stories";
 import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
 import GetCoinsEnterAmountStories from "./GetCoinsEnterAmount/GetCoinsEnterAmount.stories";
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
+import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
+import BorrowLandingStories from "./BorrowLanding/BorrowLanding.stories";
 
 import RegisterInitialStories from "./RegisterInitial/RegisterInitial.stories";
 import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
-import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
 import CommunityStories from "./Community/Community.stories";
 import SelectCountryStories from "./SelectCountry/SelectCountry.stories";
 import SecuritySettingsStories from "./SecuritySettings/SecuritySettings.stories";
@@ -160,12 +161,18 @@ storiesOf("AllTransactions", module)
   .add("Regular", AllTransactionsStories.regular)
   .add("Non Transactions", AllTransactionsStories.noTransactions);
 
-storiesOf("Community", module).add("Regular", CommunityStories.regular);
-
 storiesOf("BalanceHistory", module).add(
   "Regular",
   BalanceHistoryStories.regular
 );
+
+storiesOf("BorrowLanding", module)
+  .add("With Loans", BorrowLandingStories.withLoans)
+  .add("No Loans", BorrowLandingStories.noLoans)
+  .add("Not Compliant", BorrowLandingStories.notCompliant)
+  .add("Not Verified", BorrowLandingStories.notVerified);
+
+storiesOf("Community", module).add("Regular", CommunityStories.regular);
 
 storiesOf("RegisterInitial", module)
   .add("Empty", RegisterInitialStories.empty)
