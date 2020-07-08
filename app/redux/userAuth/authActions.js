@@ -17,13 +17,9 @@ import userAuthService from "../../services/user-auth-service";
 import apiUtil from "../../utils/api-util";
 import logger from "../../utils/logger-util";
 import { setFormErrors } from "../forms/formsActions";
-import appsFlyerUtil from "../../utils/appsflyer-util";
 import branchUtil from "../../utils/branch-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
-import {
-  logoutUserMixpanel,
-  registerMixpanelUser,
-} from "../../utils/mixpanel-util";
+import { logoutUserMixpanel } from "../../utils/mixpanel-util";
 import userSecurityService from "../../services/user-security-service";
 import { getInitialCelsiusData } from "../generalData/generalDataActions";
 
@@ -217,13 +213,6 @@ function createAccount() {
 
     if (!formData.googleId && !formData.facebookId && !formData.twitterId) {
       await dispatch(registerUser());
-    }
-
-    const user = getState().user.profile;
-    if (user.id) {
-      appsFlyerUtil.registrationCompleted(user);
-      registerMixpanelUser(user.id);
-      mixpanelAnalytics.registrationCompleted(user);
     }
   };
 }

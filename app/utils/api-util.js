@@ -66,7 +66,10 @@ async function requestInterceptor(req) {
     };
   }
 
-  if (newRequest.method === "post") {
+  if (
+    newRequest.method === "post" &&
+    newRequest.headers["Content-Type"] !== "multipart/form-data"
+  ) {
     newRequest.data = qs.stringify(newRequest.data);
   }
 
@@ -124,16 +127,16 @@ function setContentTypeHeaders(request) {
   let contentType = headers["Content-Type"];
   let accept = headers.Accept;
 
+  if (method === "post") {
+    contentType = "application/x-www-form-urlencoded; charset=UTF-8";
+    accept = "application/json";
+  }
+
   if (
     (url.includes("profile/profile_picture") && !data.profile_picture_url) ||
     url.includes("user/profile/documents")
   ) {
     contentType = "multipart/form-data";
-  }
-
-  if (method === "post") {
-    contentType = "application/x-www-form-urlencoded; charset=UTF-8";
-    accept = "application/json";
   }
 
   return {

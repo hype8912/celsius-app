@@ -8,6 +8,8 @@ import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import SplashScreen from "../SplashScreen/SplashScreen";
 import CelsiusLoadingScreen from "../CelsiusLoadingScreen/CelsiusLoadingScreen";
+import appsFlyerUtil from "../../../utils/appsflyer-util";
+import { registerMixpanelUser } from "../../../utils/mixpanel-util";
 
 @connect(
   state => ({
@@ -47,6 +49,21 @@ class Home extends Component {
     }
 
     if (user && user.id && user.has_pin) {
+      const newRegistration = apiUtil.wereSuccessfulInHistory(
+        [
+          API.REGISTER_USER,
+          API.REGISTER_USER_FACEBOOK,
+          API.REGISTER_USER_GOOGLE,
+          API.REGISTER_USER_TWITTER,
+        ],
+        5
+      );
+      if (newRegistration) {
+        appsFlyerUtil.registrationCompleted(user);
+        registerMixpanelUser(user.id);
+        mixpanelAnalytics.registrationCompleted(user);
+      }
+
       const hasAlreadyVerified = apiUtil.wereSuccessfulInHistory(
         [API.CHECK_PIN, API.CHECK_TWO_FACTOR, API.SET_PIN],
         15
