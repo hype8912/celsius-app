@@ -32,7 +32,6 @@ const regular = () => {
       screenName="VerifyProfile"
       screen={SecuritySettings}
       state={initialState}
-      ß
     />
   );
 };
