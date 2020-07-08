@@ -29,7 +29,14 @@ const themed = {
     },
   },
 
-  unicorn: {},
+  unicorn: {
+    gradientColor: {
+      color: STYLES.COLORS.DARK_HEADER,
+    },
+    iconFill: {
+      color: STYLES.COLORS.WHITE_OPACITY5,
+    },
+  },
 };
 
 const ScrollMoreStyle = () => getThemedStyle(base, themed);

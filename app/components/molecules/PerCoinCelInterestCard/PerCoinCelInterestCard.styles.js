@@ -27,7 +27,14 @@ const themed = {
     },
   },
 
-  unicorn: {},
+  unicorn: {
+    iconFill: {
+      color: STYLES.COLORS.DARK_HEADER,
+    },
+    fillColor: {
+      color: STYLES.COLORS.WHITE,
+    },
+  },
 };
 
 const PerCoinCelInterestCardStyle = () => getThemedStyle(base, themed);
