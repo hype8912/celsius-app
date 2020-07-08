@@ -26,7 +26,7 @@ class ExtendLoanScreen extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "ExtendLoanScreen Screen",
+    title: "Extend Loan",
     right: "profile",
   });
 

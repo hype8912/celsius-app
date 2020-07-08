@@ -25,7 +25,6 @@ import formatter from "../../../utils/formatter";
 class ConfirmPaymentModal extends Component {
   static propTypes = {
     loanId: PropTypes.number,
-    type: PropTypes.string,
     cryptoType: PropTypes.string,
     reason: PropTypes.string,
   };
@@ -42,46 +41,32 @@ class ConfirmPaymentModal extends Component {
     };
   }
 
-  renderContent = type => {
+  renderContent = () => {
     const { actions, loanId, cryptoType, formData } = this.props;
 
     const crypto = cryptoType || formData.coin;
-    switch (type) {
-      case "CRYPTO":
-        return {
-          heading: "Confirm Monthly Interest Payment",
-          buttonText: "Pay Monthly Interest",
-          onPress: async () => {
-            this.setState({
-              isLoading: true,
-            });
-            await actions.payMonthlyInterest(loanId, crypto);
-            this.setState({
-              isLoading: false,
-            });
-            actions.closeModal();
-          },
-        };
-      case "PRINCIPAL":
-        return {
-          heading: "Confirm Monthly Interest Payment",
-          buttonText: "Pay Monthly Interest",
-        };
-    }
+    return {
+      heading: "Confirm Monthly Interest Payment",
+      buttonText: "Pay Monthly Interest",
+      onPress: async () => {
+        this.setState({
+          isLoading: true,
+        });
+        await actions.payMonthlyInterest(loanId, crypto);
+        this.setState({
+          isLoading: false,
+        });
+        actions.closeModal();
+      },
+    };
   };
 
   render() {
-    const {
-      type,
-      cryptoType,
-      formData,
-      walletSummary,
-      loyaltyInfo,
-    } = this.props;
+    const { cryptoType, formData, walletSummary, loyaltyInfo } = this.props;
     const { loan, isLoading } = this.state;
     const style = ConfirmPaymentModalStyle();
 
-    const content = this.renderContent(type);
+    const content = this.renderContent();
 
     if (!loan) return null;
 

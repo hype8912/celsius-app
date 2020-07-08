@@ -11,6 +11,7 @@ import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsMarginCallLockCoinMod
 import LoanAlertsMarginCallDepositCoinsModal from "./LoanAlertsMarginCallDepositCoinsModal/LoanAlertsMarginCallDepositCoinsModal";
 import InterestDueModal from "../InterestDueModal/InterestDueModal";
 import InterestReminderModal from "../InterestReminderModal/InterestReminderModal";
+import loanPaymentUtil from "../../../utils/loanPayment-util";
 
 @connect(
   state => ({
@@ -118,7 +119,7 @@ class LoanAlertsModalWrapper extends Component {
     const canPayPrincipal = loan.can_pay_principal;
     if (canPayPrincipal) {
       if (loan.loan_amount <= principalCoinWallet.amount) {
-        return <LoanAlertsPayoutPrincipalModal loan={loan} />;
+        return <LoanAlertsPayoutPrincipalModal loanId={loan.id} />;
       }
       return <LoanAlertsDepositCoinsModal loan={loan} />;
     }
@@ -145,7 +146,7 @@ class LoanAlertsModalWrapper extends Component {
     return null;
   };
 
-  isSame = activeLoan => {
+  isSameInterestDay = activeLoan => {
     if (
       activeLoan &&
       activeLoan.installments_to_be_paid &&
@@ -170,10 +171,20 @@ class LoanAlertsModalWrapper extends Component {
     const { actions } = this.props;
     const { activeAlert } = this.state;
 
-    // ako nemas pare da te smara 3 i 7 dana , ako imas automatic ne smara, manuel 3 dana unapred
+    // if no money reminder 3 & 7 days, if you have money and manual payment 3 days
+    const payment = loanPaymentUtil.calculateAdditionalPayment(loan);
+    const isSameDay = this.isSameInterestDay(loan);
+    const hasNoMoney =
+      !payment.hasEnough &&
+      isSameDay &&
+      (isSameDay.sevenDays || isSameDay.threeDays);
+    const manuelPaymentNoMoney =
+      payment.hasEnough &&
+      !loan.loanPaymentSettings.automatic_interest_payment &&
+      isSameDay &&
+      isSameDay.threeDays;
 
-    const isSameDay = this.isSame(loan);
-    if (isSameDay && (isSameDay.sevenDays || isSameDay.threeDays)) {
+    if (hasNoMoney || manuelPaymentNoMoney) {
       return (
         <InterestReminderModal
           closeModal={actions.closeModal}
