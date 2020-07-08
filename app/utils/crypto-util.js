@@ -27,6 +27,8 @@ function isERC20(currency) {
       "tgbp",
       "thkd",
       "taud",
+      "busd",
+      "bat",
     ].indexOf(currency.toLowerCase()) !== -1
   );
 }
