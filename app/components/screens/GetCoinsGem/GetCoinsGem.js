@@ -60,7 +60,6 @@ class GetCoinsGem extends Component {
     const { actions, currencies } = this.props;
     await actions.createGemPayment(data.userId, data.transactionId);
     actions.showMessage("success", "You have successfully purchased crypto!");
-    actions.navigateBack();
 
     const currency = currencies.find(c => c.name === data.destinationCurrency);
     const amountUsd = data.destinationAmount * currency.market_quotes_usd.price;
