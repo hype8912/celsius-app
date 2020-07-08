@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { View } from "react-native";
+import LoginStyle from "./Login.styles";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
-import Separator from "../../atoms/Separator/Separator";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
-import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -23,13 +24,12 @@ import API from "../../../constants/API";
 )
 class Login extends Component {
   static navigationOptions = () => ({
-    right: "signup",
     headerSameColor: true,
   });
 
   loginUser = () => {
     const { actions } = this.props;
-    actions.loginUser()
+    actions.loginUser();
   };
 
   disabledButton = () => {
@@ -62,69 +62,79 @@ class Login extends Component {
 
   render() {
     const { formData, actions } = this.props;
+    const style = LoginStyle();
 
     // Disabling forgot pass on Staging regarding to its bug on Staging environment
     const { ENV } = Constants;
     return (
       <AuthLayout>
-        <CelText margin="0 0 30 0" align="center" type="H1">
-          Welcome back
-        </CelText>
+        <View style={style.container}>
+          <View style={style.form}>
+            <CelText margin="0 0 10 0" align="center" type="H1">
+              Log in
+            </CelText>
+            <CelText margin="0 0 30 0" weight="300" align="center">
+              Welcome back, please log in to your account
+            </CelText>
 
-        <SocialLogin type="login" actions={actions} />
+            <CelInput
+              type="text"
+              keyboardType={KEYBOARD_TYPE.EMAIL}
+              autoCapitalize="none"
+              field="email"
+              placeholder="E-mail"
+              value={formData.email}
+              returnKeyType={"next"}
+              blurOnSubmiting={false}
+              onSubmitEditing={() => {
+                this.pass.focus();
+              }}
+            />
+            <CelInput
+              type="password"
+              field="password"
+              placeholder="Password"
+              autoCapitalize="none"
+              value={formData.password}
+              refs={input => {
+                this.pass = input;
+              }}
+            />
 
-        <Separator text="or login with email" margin="0 0 20 0" />
+            {this.renderCaptcha()}
 
-        <CelInput
-          type="text"
-          keyboardType={KEYBOARD_TYPE.EMAIL}
-          autoCapitalize="none"
-          field="email"
-          placeholder="E-mail"
-          value={formData.email}
-          returnKeyType={"next"}
-          blurOnSubmiting={false}
-          onSubmitEditing={() => {
-            this.pass.focus();
-          }}
-        />
-        <CelInput
-          type="password"
-          field="password"
-          placeholder="Password"
-          autoCapitalize="none"
-          value={formData.password}
-          refs={input => {
-            this.pass = input;
-          }}
-        />
+            {ENV !== "STAGING" ? (
+              <CelButton
+                margin="35 0 0 0"
+                basic
+                onPress={() => actions.navigateTo("ForgotPassword")}
+              >
+                Forgot password?
+              </CelButton>
+            ) : null}
 
-        {this.renderCaptcha()}
-
-        {/* <CelButton*/}
-        {/*  margin="10 0 40 0"*/}
-        {/*  onPress={this.loginUser}*/}
-        {/*  loading={loginLoading}*/}
-        {/* >*/}
-        {/*  Log in*/}
-        {/* </CelButton>*/}
-
-        {ENV === "STAGING" ? (
-          <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
-            Open Storybook
-          </CelButton>
-        ) : null}
-
-        {ENV !== "STAGING" ? (
-          <>
-            <CelButton
-              basic
-              onPress={() => actions.navigateTo("ForgotPassword")}
-            >
-              Forgot password
-            </CelButton>
-          </>
-        ) : null}
+            {ENV === "STAGING" ? (
+              <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
+                Open Storybook
+              </CelButton>
+            ) : null}
+          </View>
+          <View style={style.bottom}>
+            <CelText weight="300" align="center">
+              Don't have an account?
+              <CelText
+                weight="300"
+                align="center"
+                color={STYLES.COLORS.CELSIUS_BLUE}
+                onPress={() =>
+                  actions.navigateTo("LoginLanding", { type: "register" })
+                }
+              >
+                {` Sign up`}
+              </CelText>
+            </CelText>
+          </View>
+        </View>
       </AuthLayout>
     );
   }

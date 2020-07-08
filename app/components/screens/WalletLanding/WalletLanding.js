@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, BackHandler } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  BackHandler,
+  AsyncStorage,
+} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withNavigationFocus } from "react-navigation";
@@ -19,12 +24,14 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
 import RejectionReasonsModal from "../../modals/RejectionReasonsModal/RejectionReasonsModal";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
-import BecomeCelMemberModal from "../../modals/BecomeCelMemberModal/BecomeCelMemberModal";
 import BannerCrossroad from "../../organisms/BannerCrossroad/BannerCrossroad";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
 import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
 import MultiAddressModal from "../../modals/MultiAddressModal/MultiAddressModal";
+import animationsUtil from "../../../utils/animations-util";
+import { COMING_SOON_COINS } from "../../../constants/DATA";
+import BankToTheFutureModal from "../../modals/BankToTheFutureModal/BankToTheFutureModal";
 
 @connect(
   state => {
@@ -47,7 +54,9 @@ import MultiAddressModal from "../../modals/MultiAddressModal/MultiAddressModal"
         : [],
       previouslyOpenedModals: state.ui.previouslyOpenedModals,
       hodlStatus: state.hodl.hodlStatus,
+      walletAddresses: state.wallet.addresses,
       userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
+      shouldAnimate: state.ui.shouldAnimate,
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -79,56 +88,47 @@ class WalletLanding extends Component {
     this.state = {
       activeView: props.appSettings.default_wallet_view,
     };
-
-    // NOTE (fj): quickfix for CN-2763
-    this.shouldInitializeMembership = true;
   }
 
   componentDidMount = async () => {
     const {
       actions,
-      appSettings,
       currenciesRates,
       currenciesGraphs,
       previouslyOpenedModals,
       hodlStatus,
       userTriggeredActions,
     } = this.props;
-    if (
-      !previouslyOpenedModals.HODL_MODE_MODAL &&
-      hodlStatus.created_by === "backoffice"
-    )
-      actions.openModal(MODALS.HODL_MODE_MODAL);
+    actions.changeWalletHeaderContent();
 
-    if (
-      this.pendingAddresses().length &&
-      !userTriggeredActions.permanently_dismiss_deposit_address_changes
-    )
-      actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
+    const dontShowBankModal = await AsyncStorage.getItem("DONT_SHOW_BNK");
+    setTimeout(() => {
+      if (dontShowBankModal === "DONT_SHOW") {
+        if (
+          !previouslyOpenedModals.HODL_MODE_MODAL &&
+          hodlStatus.created_by === "backoffice"
+        )
+          actions.openModal(MODALS.HODL_MODE_MODAL);
 
-    actions.checkForLoanAlerts();
+        if (
+          this.pendingAddresses().length &&
+          !userTriggeredActions.permanently_dismiss_deposit_address_changes
+        )
+          actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
+
+        actions.getLoanAlerts();
+      } else {
+        actions.openModal(MODALS.BANK_TO_THE_FUTURE_MODAL);
+      }
+    }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
-    if (appSettings && appSettings.accepted_terms_of_use === false) {
-      return actions.navigateTo("TermsOfUse", {
-        purpose: "accept",
-        nextScreen: "WalletLanding",
-      });
-    }
     await assignPushNotificationToken();
 
     await actions.getWalletSummary();
     if (!currenciesRates) actions.getCurrencyRates();
     if (!currenciesGraphs) actions.getCurrencyGraphs();
-
-    // NOTE (fj): quickfix for CN-2763
-    // if (user.celsius_member) {
-    if (this.shouldInitializeMembership) {
-      actions.getCelsiusMemberStatus();
-      this.shouldInitializeMembership = false;
-    }
-
     this.setWalletFetchingInterval();
   };
 
@@ -176,11 +176,13 @@ class WalletLanding extends Component {
   pendingAddresses = () => {
     const { walletSummary } = this.props;
 
-    const pendingAddresses = walletSummary.coins.filter(
-      coin => coin.has_pending_deposit_address_change
-    );
+    const pendingAddresses =
+      walletSummary &&
+      walletSummary.coins.filter(
+        coin => coin.has_pending_deposit_address_change
+      );
 
-    return pendingAddresses;
+    return pendingAddresses || [];
   };
 
   handleBackButton = () => {};
@@ -188,6 +190,37 @@ class WalletLanding extends Component {
   toggleView = viewType => {
     this.setState({ activeView: viewType });
   };
+
+  renderComingSoon() {
+    const { activeView } = this.state;
+    const { shouldAnimate } = this.props;
+    const style = WalletLandingStyle();
+    const isGrid = activeView === WALLET_LANDING_VIEW_TYPES.GRID;
+    const processedItems = animationsUtil.applyOffset(
+      COMING_SOON_COINS,
+      isGrid ? 2 : 1
+    );
+
+    return (
+      <View
+        style={[
+          style.flexWrapper,
+          { flexDirection: isGrid ? "row" : "column" },
+        ]}
+      >
+        {processedItems.map(coin => (
+          <ComingSoonCoins
+            key={coin.name}
+            coin={coin}
+            offset={processedItems.offset}
+            isGrid={isGrid}
+            shouldAnimate={shouldAnimate}
+            activeView={activeView}
+          />
+        ))}
+      </View>
+    );
+  }
 
   render() {
     const { activeView } = this.state;
@@ -200,15 +233,19 @@ class WalletLanding extends Component {
       branchTransfer,
       depositCompliance,
       rejectionReasons,
+      shouldAnimate,
     } = this.props;
     const style = WalletLandingStyle();
 
-    if (!walletSummary || !currenciesRates || !currenciesGraphs || !user) {
+    if (!walletSummary || !user) {
       return <LoadingScreen />;
     }
 
     return (
-      <RegularLayout pullToRefresh={() => actions.getWalletSummary()}>
+      <RegularLayout
+        pullToRefresh={() => actions.getWalletSummary()}
+        fabType={currenciesRates ? "main" : "hide"}
+      >
         <BannerCrossroad />
         <View>
           <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
@@ -261,6 +298,7 @@ class WalletLanding extends Component {
             </View>
           </View>
           <CoinCards
+            shouldAnimate={shouldAnimate}
             activeView={activeView}
             navigateTo={actions.navigateTo}
             walletSummary={walletSummary}
@@ -269,16 +307,16 @@ class WalletLanding extends Component {
             depositCompliance={depositCompliance}
           />
           <ExpandableItem heading={"COMING SOON"} margin={"10 0 10 0"}>
-            <ComingSoonCoins activeView={activeView} />
+            {this.renderComingSoon()}
           </ExpandableItem>
         </View>
         <CelPayReceivedModal transfer={branchTransfer} />
         <ReferralSendModal />
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
-        <BecomeCelMemberModal />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
-        <MultiAddressModal actions={actions} />
+        <BankToTheFutureModal />
+        {currenciesRates && <MultiAddressModal actions={actions} />}
       </RegularLayout>
     );
   }

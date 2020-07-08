@@ -15,20 +15,25 @@ const base = {
   //   alignContent: 'center',
   //   // justifyContent: 'space-between'
   // },
+
+  flexWrapper: {
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
   depositWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
   depositedCoins: {
     alignSelf: "center",
-    marginTop: 20
+    marginTop: 20,
   },
   buttonWrapper: {
     flexDirection: "row",
-    marginTop: 6
+    marginTop: 6,
   },
   listView: {
-    marginLeft: 16
+    marginLeft: 16,
   },
 };
 

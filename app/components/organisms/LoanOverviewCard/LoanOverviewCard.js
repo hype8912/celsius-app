@@ -66,7 +66,7 @@ class LoanOverviewCard extends Component {
 
   payInterest = async () => {
     const { actions, loan } = this.props;
-    actions.setActiveLoan(loan.id);
+    await actions.setActiveLoan(loan.id);
     actions.openModal(MODALS.INTEREST_DUE_MODAL);
   };
 
@@ -100,6 +100,9 @@ class LoanOverviewCard extends Component {
       previous5Payments = previousPayments.slice(-5);
     }
 
+    const discountedInterest = (1 - celDiscount) * loan.monthly_payment;
+    const savedAmount = loan.monthly_payment - discountedInterest;
+
     return (
       <View
         style={[
@@ -107,8 +110,36 @@ class LoanOverviewCard extends Component {
           getMargins(this.getMarginForIndex(index, length)),
         ]}
       >
+        {loan.can_pay_principal && (
+          <Card>
+            <CelText>You have completed all of your interest payments</CelText>
+            <CelButton
+              margin={"10 0 0 0"}
+              size={"small"}
+              color={"green"}
+              onPress={() =>
+                navigateTo("ExtendLoanScreen", {
+                  id: loan.id,
+                })
+              }
+            >
+              Extend the Loan
+            </CelButton>
+            <CelButton
+              margin={"10 0 0 0"}
+              size={"small"}
+              ghost
+              color={"green"}
+              onPress={this.payPrincipal}
+              loading={isLoading}
+              disabled={isLoading}
+            >
+              Close Loan
+            </CelButton>
+          </Card>
+        )}
         <Card padding={"0 0 0 0"}>
-          <View style={style.info}>
+          <View style={{ flex: 1, alignItems: "center" }}>
             <View style={style.status}>
               <Icon
                 name={"TransactionLoan"}
@@ -125,96 +156,114 @@ class LoanOverviewCard extends Component {
               </CelText>
             </View>
 
-            <CelText type={"H2"} weight={"600"} margin={"5 0 5 0"}>
+            <CelText type={"H2"} weight={"600"} margin={"0 0 5 0"}>
               {loan.uiProps.displayAmount}
             </CelText>
+          </View>
 
-            {loan.status === LOAN_STATUS.COMPLETED && (
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <CelText type={"H6"}>Loan Completed:</CelText>
-                <CelText type={"H6"}>
-                  {moment(loan.maturity_date).format("MMM DD, YYYY")}
-                </CelText>
-              </View>
-            )}
+          <Separator />
 
-            {[LOAN_STATUS.CANCELED].includes(loan.status) && (
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <CelText type={"H6"}>{"Request Canceled: "}</CelText>
-                <CelText type={"H6"}>
-                  {moment(loan.canceled_at).format("MMM DD, YYYY")}
-                </CelText>
-              </View>
-            )}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginHorizontal: 10,
+            }}
+          >
+            <CelText type={"H6"} margin={"10 5 10 0"}>
+              Loan ID:
+            </CelText>
+            <CelText type={"H6"} margin={"10 0 10 0"}>
+              #{loan.id}
+            </CelText>
+          </View>
+          <Separator />
 
-            {[LOAN_STATUS.REFINANCED].includes(loan.status) &&
-              loan.refinanced_at && (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <CelText type={"H6"}>{"Loan Refinanced: "}</CelText>
-                  <CelText type={"H6"}>
-                    {moment(loan.refinanced_at).format("MMM DD, YYYY")}
-                  </CelText>
-                </View>
-              )}
-
-            {[LOAN_STATUS.APPROVED, LOAN_STATUS.ACTIVE].includes(
-              loan.status
-            ) && (
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <CelText type={"H6"}>Loan Approved: </CelText>
-                <CelText type={"H6"}>
-                  {moment(loan.approved_at).format("MMM DD, YYYY")}
-                </CelText>
-              </View>
-            )}
-
+          {loan.status === LOAN_STATUS.COMPLETED && (
             <View
               style={{
                 flexDirection: "row",
-                alignItems: "center",
                 justifyContent: "space-between",
-                marginTop: 5,
+                marginHorizontal: 10,
               }}
             >
-              <CelText type={"H6"}>Loan Requested: </CelText>
+              <CelText type={"H6"}>Loan Completed:</CelText>
               <CelText type={"H6"}>
-                {moment(loan.created_at).format("MMM DD, YYYY")}
+                {moment(loan.maturity_date).format("MMM DD, YYYY")}
               </CelText>
             </View>
+          )}
 
-            {loan.status === LOAN_STATUS.PENDING && (
-              <Card color={style.card.color} margin={"30 0 0 0"}>
-                <CelText type={"H7"}>
-                  Someone from our team is already reviewing your request. You
-                  will be notified when your request is approved.
+          {[LOAN_STATUS.CANCELED].includes(loan.status) && (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginHorizontal: 10,
+              }}
+            >
+              <CelText type={"H6"}>{"Request Canceled: "}</CelText>
+              <CelText type={"H6"}>
+                {moment(loan.canceled_at).format("MMM DD, YYYY")}
+              </CelText>
+            </View>
+          )}
+
+          {[LOAN_STATUS.REFINANCED].includes(loan.status) &&
+            loan.refinanced_at && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginHorizontal: 10,
+                }}
+              >
+                <CelText type={"H6"}>{"Loan Refinanced: "}</CelText>
+                <CelText type={"H6"}>
+                  {moment(loan.refinanced_at).format("MMM DD, YYYY")}
                 </CelText>
-              </Card>
+              </View>
             )}
+
+          {[LOAN_STATUS.APPROVED, LOAN_STATUS.ACTIVE].includes(loan.status) && (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginHorizontal: 10,
+                marginTop: 10,
+              }}
+            >
+              <CelText type={"H6"}>Loan Originated: </CelText>
+              <CelText type={"H6"}>
+                {moment(loan.approved_at).format("MMM DD, YYYY")}
+              </CelText>
+            </View>
+          )}
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 10,
+              margin: 10,
+            }}
+          >
+            <CelText type={"H6"}>Loan Maturity: </CelText>
+            <CelText type={"H6"}>
+              {moment(loan.maturity_date).format("MMM DD, YYYY")}
+            </CelText>
           </View>
+
+          {loan.status === LOAN_STATUS.PENDING && (
+            <Card color={style.card.color} margin={"30 0 0 0"}>
+              <CelText type={"H7"}>
+                Someone from our team is already reviewing your request. You
+                will be notified when your request is approved.
+              </CelText>
+            </Card>
+          )}
 
           {loan.status === LOAN_STATUS.ACTIVE && loan.margin_call_activated && (
             <Card
@@ -264,23 +313,23 @@ class LoanOverviewCard extends Component {
 
           {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(loan.status) && (
             <View styles={{ flex: 1 }}>
-              <Separator size={2} margin={"0 0 0 0"} />
+              <Separator margin={"0 0 0 0"} />
               <View style={{ flexDirection: "row" }}>
                 <View>
                   <View style={style.interests}>
                     <View style={[style.interest, { marginBottom: 8 }]}>
-                      <CelText align={"center"} type={"H6"} weight={"300"}>
+                      <CelText align={"left"} type={"H6"} weight={"300"}>
                         Monthly interest
                       </CelText>
-                      <CelText align={"center"} type={"H3"} weight={"600"}>
+                      <CelText align={"left"} type={"H3"} weight={"600"}>
                         {formatter.usd(loan.monthly_payment)}
                       </CelText>
                     </View>
                     <View style={style.interest}>
-                      <CelText align={"center"} type={"H6"} weight={"300"}>
+                      <CelText align={"left"} type={"H6"} weight={"300"}>
                         Total interest
                       </CelText>
-                      <CelText align={"center"} type={"H3"} weight={"600"}>
+                      <CelText align={"left"} type={"H3"} weight={"600"}>
                         {formatter.usd(loan.total_interest)}
                       </CelText>
                     </View>
@@ -294,24 +343,43 @@ class LoanOverviewCard extends Component {
                   />
                 </View>
               </View>
-              <Separator margin={"0 0 20 0"} />
               <View styles={{ flex: 1 }}>
                 <Card
                   color={style.card.color}
                   padding={"5 5 5 5"}
-                  margin={"0 0 20 0"}
-                  size={"half"}
+                  size={"twoThirds"}
                   styles={{ alignSelf: "center" }}
                 >
-                  <CelText type={"H7"} weight={"300"} align={"center"}>
-                    -{formatter.percentageDisplay(celDiscount)} if paid in CEL
+                  <CelText
+                    margin={"5 5 5 5"}
+                    type={"H6"}
+                    weight={"300"}
+                    align={"left"}
+                  >
+                    {`You could have saved ${formatter.fiat(
+                      savedAmount,
+                      "USD"
+                    )} if you paid interest in CEL.`}
+                  </CelText>
+                  <CelText
+                    onPress={() =>
+                      navigateTo("ChoosePaymentMethod", {
+                        id: loan.id,
+                        reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
+                      })
+                    }
+                    margin={"5 5 5 5"}
+                    type={"H6"}
+                    weight={"400"}
+                    align={"left"}
+                    color={STYLES.COLORS.CELSIUS_BLUE}
+                  >
+                    Change payment type
                   </CelText>
                 </Card>
               </View>
             </View>
           )}
-
-          <Separator size={2} margin={"0 0 0 0"} />
 
           <View style={style.buttonContainer}>
             <CelButton
@@ -339,20 +407,6 @@ class LoanOverviewCard extends Component {
             )}
           </View>
 
-          {loan.can_pay_principal && (
-            <View>
-              <Separator size={2} margin={"0 0 0 0"} />
-              <CelButton
-                onPress={this.payPrincipal}
-                margin={"15 0 15 0"}
-                color="green"
-                loading={isLoading}
-                disabled={isLoading}
-              >
-                Payout Principal
-              </CelButton>
-            </View>
-          )}
           {loan.can_pay_interest && (
             <View>
               <Separator size={2} margin={"0 0 0 0"} />

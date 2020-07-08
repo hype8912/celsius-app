@@ -40,7 +40,7 @@ class HodlBanner extends Component {
         disabled={isDisabled}
         onPress={() => {
           actions.setHodlProps(true);
-          actions.navigateTo("HodlLanding");
+          actions.navigateTo("HodlLanding", { deactivation: true });
         }}
       >
         {status.state === HODL_STATUS.ACTIVATED ? (

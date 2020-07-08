@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import Card from "../../atoms/Card/Card";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import STYLES from "../../../constants/STYLES";
@@ -28,7 +27,7 @@ class KYCPrimeTrustToU extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    customCenterComponent: <ProgressBar steps={7} currentStep={7} />,
+    customCenterComponent: { steps: 7, currentStep: 7, flowProgress: false },
     headerSameColor: true,
   });
 

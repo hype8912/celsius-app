@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity } from "react-native";
+import { BigNumber } from "bignumber.js";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -9,7 +10,6 @@ import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import { KEYPAD_PURPOSES, THEMES } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import STYLES from "../../../constants/STYLES";
@@ -40,6 +40,7 @@ class BorrowEnterAmount extends Component {
 
   static navigationOptions = () => ({
     title: "Enter the loan amount",
+    customCenterComponent: { steps: 8, currentStep: 2, flowProgress: true },
   });
 
   constructor(props) {
@@ -51,13 +52,19 @@ class BorrowEnterAmount extends Component {
       currencies,
       formData,
     } = props;
+
     const eligibleCoins = walletSummary.coins.filter(coinData =>
       loanCompliance.collateral_coins.includes(coinData.short)
     );
 
-    const coinSelectItems = currencies
-      .filter(c => loanCompliance.loan_coins.includes(c.short))
-      .map(c => ({ label: `${c.displayName}  (${c.short})`, value: c.short }));
+    const coinSelectItems =
+      currencies &&
+      currencies
+        .filter(c => loanCompliance.loan_coins.includes(c.short))
+        .map(c => ({
+          label: `${c.displayName}  (${c.short})`,
+          value: c.short,
+        }));
 
     this.state = {
       activePeriod: "",
@@ -65,17 +72,22 @@ class BorrowEnterAmount extends Component {
     };
 
     const maxAmount =
-      eligibleCoins.reduce(
-        (max, element) => (element.amount_usd > max ? element.amount_usd : max),
-        0
-      ) / 2;
+      eligibleCoins.reduce((max, element) => {
+        const amountUsd = new BigNumber(element.amount_usd).toNumber();
+        return amountUsd > max ? amountUsd : max;
+      }, new BigNumber(0).toNumber()) / 2;
 
     props.actions.initForm({
-      loanAmount: minimumLoanAmount.toString(),
+      loanAmount: minimumLoanAmount,
       maxAmount,
       coin: formData.coin,
       loanType: formData.loanType,
     });
+  }
+
+  async componentDidMount() {
+    const { actions } = this.props;
+    actions.startedLoanApplication();
   }
 
   onPressPredefinedAmount = ({ label, value }) => {
@@ -108,7 +120,7 @@ class BorrowEnterAmount extends Component {
       }, 3000);
     }
 
-    if (newValue > formData.maxAmount) {
+    if (Number(newValue) > formData.maxAmount) {
       return actions.showMessage("warning", "Insufficient funds!");
     }
 
@@ -186,7 +198,7 @@ class BorrowEnterAmount extends Component {
 
     const coin = formData.coin || "";
 
-    const predifinedAmount = [
+    const predefinedAmount = [
       { label: `${minimumLoanAmount} min`, value: "min" },
       {
         label: `${formatter.floor10(formData.maxAmount, 0)} max`,
@@ -198,7 +210,6 @@ class BorrowEnterAmount extends Component {
 
     return (
       <RegularLayout padding="0 0 0 0" fabType={"hide"}>
-        <HeadingProgressBar steps={6} currentStep={1} />
         <View
           style={[
             { flex: 1, width: "100%", height: "100%" },
@@ -252,9 +263,9 @@ class BorrowEnterAmount extends Component {
             </View>
           </View>
 
-          {formData.maxAmount > minimumLoanAmount && (
+          {formData.maxAmount > Number(minimumLoanAmount) && (
             <PredefinedAmounts
-              data={predifinedAmount}
+              data={predefinedAmount}
               onSelect={this.onPressPredefinedAmount}
               activePeriod={activePeriod}
             />

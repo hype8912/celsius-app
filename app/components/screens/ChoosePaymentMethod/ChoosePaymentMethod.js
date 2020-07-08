@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
@@ -7,10 +7,17 @@ import * as appActions from "../../../redux/actions";
 import ChoosePaymentMethodStyle from "./ChoosePaymentMethod.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PrepayDollarInterestModal from "../../modals/PrepayDollarInterestModal/PrepayDollarInterestModal";
-import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import { LOAN_PAYMENT_REASONS, THEMES, MODALS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
+import IconButton from "../../organisms/IconButton/IconButton";
+import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
+import STYLES from "../../../constants/STYLES";
+import { getTheme } from "../../../utils/styles-util";
+import Separator from "../../atoms/Separator/Separator";
+import Spinner from "../../atoms/Spinner/Spinner";
+import DollarPaymentModal from "../../modals/DollarPaymentModal/DollarPaymentModal";
 
 @connect(
   state => ({
@@ -23,6 +30,15 @@ import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCa
 class ChoosePaymentMethod extends Component {
   static propTypes = {};
   static defaultProps = {};
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isAutomaticInterestPaymentEnabled: undefined,
+      loading: false,
+    };
+  }
 
   static navigationOptions = ({ navigation }) => {
     const reason = navigation.getParam("reason");
@@ -38,6 +54,20 @@ class ChoosePaymentMethod extends Component {
       left: "back",
     };
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      nextProps.loanSettings &&
+      nextProps.loanSettings.automatic_interest_payment !==
+        prevState.isAutomaticInterestPaymentEnabled
+    ) {
+      return {
+        isAutomaticInterestPaymentEnabled:
+          nextProps.loanSettings.automatic_interest_payment,
+      };
+    }
+    return null;
+  }
 
   componentDidMount() {
     const { actions, navigation } = this.props;
@@ -101,7 +131,7 @@ class ChoosePaymentMethod extends Component {
             actions.updateFormField("coin", "USD");
             actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
           } else {
-            actions.navigateTo("WiringBankInformation", { id, reason });
+            actions.openModal(MODALS.DOLLAR_PAYMENT_MODAL);
           }
         },
         lightImage: require("../../../../assets/images/icons/dollars.png"),
@@ -117,26 +147,92 @@ class ChoosePaymentMethod extends Component {
     return cardProps;
   };
 
-  render() {
-    const { actions, loanSettings } = this.props;
-    if (!loanSettings) return <LoadingScreen />;
+  handleSwitchChange = async () => {
+    const { navigation, actions } = this.props;
+    const { isAutomaticInterestPaymentEnabled } = this.state;
+    const id = navigation.getParam("id");
 
+    this.setState({
+      loading: true,
+    });
+
+    await actions.updateLoanSettings(id, {
+      automatic_interest_payment: !isAutomaticInterestPaymentEnabled,
+    });
+
+    this.setState({
+      loading: false,
+    });
+
+    const msg = !isAutomaticInterestPaymentEnabled
+      ? `Automatic Interest Payments Enabled.`
+      : `Manual Interest Payments Enabled.`;
+    actions.showMessage("success", msg);
+  };
+
+  automaticSwitch = () => {
+    const { isAutomaticInterestPaymentEnabled } = this.state;
+
+    const isIos = Platform.OS === "ios";
+    const falseColor = isIos ? "transparent" : STYLES.COLORS.DARK_GRAY3;
+    const theme = getTheme();
+    return (
+      <CelSwitch
+        onValueChange={this.handleSwitchChange}
+        value={isAutomaticInterestPaymentEnabled}
+        iosBackgroundColor={
+          theme === THEMES.LIGHT
+            ? STYLES.COLORS.DARK_GRAY3
+            : STYLES.COLORS.DARK_TOGGLE_BACKGROUND
+        }
+        thumbColor={
+          theme === THEMES.LIGHT
+            ? STYLES.COLORS.WHITE
+            : STYLES.COLORS.DARK_TOGGLE_FOREGROUND
+        }
+        trackColor={{ false: falseColor, true: STYLES.COLORS.GREEN }}
+      />
+    );
+  };
+
+  closeModal = () => {
+    const { actions, navigation } = this.props;
+    const id = navigation.getParam("id");
+    actions.closeModal();
+    actions.navigateTo("WiringBankInformation", { id });
+  };
+
+  render() {
+    const { actions, loanSettings, navigation } = this.props;
+    const { loading } = this.state;
+    if (!loanSettings) return <LoadingScreen />;
+    const Automatic = this.automaticSwitch;
     const style = ChoosePaymentMethodStyle();
+    const id = navigation.getParam("id");
 
     const cardProps = this.getCardProps();
-
     return (
       <View style={style.container}>
         <RegularLayout>
           {cardProps.map(i => (
             <MultiInfoCardButton {...i} key={i.cardTitle} />
           ))}
+          <Separator margin={"20 0 20 0"} />
+          <IconButton
+            padding={"5 10 5 5"}
+            right={loading ? <Spinner size={30} /> : <Automatic />}
+            hideIconRight
+            margin="0 0 20 0"
+          >
+            Automatic Interest Payment
+          </IconButton>
         </RegularLayout>
         <PrepayDollarInterestModal
           onPressConfirm={() =>
             actions.navigateTo("LoanPrepaymentPeriod", { type: "dollar" })
           }
         />
+        <DollarPaymentModal loanId={id} close={() => this.closeModal()} />
       </View>
     );
   }

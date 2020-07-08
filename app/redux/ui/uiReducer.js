@@ -15,6 +15,7 @@ const initialState = {
   isKeypadOpen: false,
   isBannerVisible: true,
   bannerProps: {},
+  shouldAnimate: undefined,
 };
 
 export default (state = initialState, action) => {
@@ -96,6 +97,12 @@ export default (state = initialState, action) => {
         bannerProps: {
           ...action.bannerProps,
         },
+      };
+
+    case ACTIONS.IS_GOOD_FOR_ANIMATIONS:
+      return {
+        ...state,
+        shouldAnimate: action.shouldAnimate,
       };
 
     default:

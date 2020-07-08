@@ -8,7 +8,6 @@ import * as appActions from "../../../redux/actions";
 import HODLViewCodeStyles from "./HODLViewCode.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import { getPadding } from "../../../utils/styles-util";
 import { EMPTY_STATES, THEMES } from "../../../constants/UI";
 import STYLES from "../../../constants/STYLES";
@@ -38,34 +37,42 @@ class HODLViewCode extends Component {
 
     this.state = {
       emptyState: false,
+      showHodlCode: false,
     };
+    props.navigation.setParams({ hideBack: false });
   }
 
-  static navigationOptions = () => ({
-    title: "HODL Mode",
-    right: "profile",
-    gesturesEnabled: false,
-  });
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "HODL Mode",
+      right: "profile",
+      gesturesEnabled: false,
+      hideBack: navigation.getParam("hideBack") || false,
+      customCenterComponent: { steps: 3, currentStep: 3, flowProgress: true },
+    };
+  };
 
   componentWillUnmount() {
-    const { actions } = this.props;
+    const { actions, navigation } = this.props;
     actions.clearForm();
+    navigation.setParams({ hideBack: false });
   }
 
   checkEmail = async () => {
-    const { actions } = this.props;
+    const { actions, navigation } = this.props;
     const response = await actions.activateHodlMode();
     if (response && response.success) {
       this.setState({
         emptyState: true,
       });
+      navigation.setParams({ hideBack: true });
     }
   };
 
   render() {
     const style = HODLViewCodeStyles();
-    const { emptyState } = this.state;
-    const { formData, theme, actions, hodlCode, callsInProgress } = this.props;
+    const { emptyState, showHodlCode } = this.state;
+    const { formData, theme, actions, callsInProgress, hodlCode } = this.props;
 
     if (emptyState)
       return (
@@ -79,7 +86,6 @@ class HODLViewCode extends Component {
 
     return (
       <RegularLayout padding={"0 0 0 0"}>
-        <HeadingProgressBar steps={3} currentStep={3} />
         <View
           style={[
             { flex: 1, width: "100%", height: "100%" },
@@ -94,7 +100,7 @@ class HODLViewCode extends Component {
           >
             How to deactivate HODL Mode
           </CelText>
-          <CelText type={"H4"} align={"left"}>
+          <CelText type={"H5"} align={"left"}>
             {"When you're ready to deactivate HODL Mode, you will need to enter the unique security code below. \n" +
               "\n" +
               "You will NOT be able to access this code once you enable HODL Mode, so you must securely store this code now and remember it in order to deactivate HODL Mode in the future."}
@@ -105,14 +111,25 @@ class HODLViewCode extends Component {
               <Spinner />
             </View>
           ) : (
-            <CelText
-              align={"center"}
-              type={"H1"}
-              weight={"300"}
-              margin={"20 0 20 0"}
-            >
-              {hodlCode}
-            </CelText>
+            <Card margin={"20 0 0 0"}>
+              <View style={style.hodlCodeWrapper}>
+                <View style={style.codeWrapper}>
+                  <CelText align={"left"} type={"H2"} weight={"500"}>
+                    {showHodlCode ? hodlCode : "XXXXXXXX"}
+                  </CelText>
+                </View>
+                <View style={style.textWrapper}>
+                  <CelText
+                    color={STYLES.COLORS.CELSIUS}
+                    onPress={() =>
+                      this.setState({ showHodlCode: !this.state.showHodlCode })
+                    }
+                  >
+                    {showHodlCode ? "HIDE" : "SHOW"}
+                  </CelText>
+                </View>
+              </View>
+            </Card>
           )}
 
           <Card

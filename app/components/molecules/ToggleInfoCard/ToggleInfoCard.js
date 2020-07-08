@@ -25,8 +25,21 @@ class ToggleInfoCard extends Component {
     this.state = {
       loading: false,
       switchActivated: false,
-      enabled: props.enabled,
     };
+  }
+
+  componentDidMount() {
+    const { enabled } = this.props;
+    this.setState({
+      enabled,
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.enabled !== this.props.enabled) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ enabled: this.props.enabled });
+    }
   }
 
   getCardProps = () => {

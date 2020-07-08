@@ -9,7 +9,6 @@ import * as appActions from "../../../redux/actions";
 import ConfirmYourLoanStyle from "./ConfirmYourLoan.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
@@ -39,6 +38,7 @@ class ConfirmYourLoan extends Component {
   static navigationOptions = () => ({
     title: "Confirm Your Loan",
     right: "profile",
+    customCenterComponent: { steps: 8, currentStep: 7, flowProgress: true },
   });
 
   componentDidMount() {
@@ -199,7 +199,6 @@ class ConfirmYourLoan extends Component {
 
     return (
       <View flex={1}>
-        <HeadingProgressBar steps={6} currentStep={5} />
         <RegularLayout fabType={"hide"}>
           <View>
             <CelText align="center">You are about to borrow</CelText>

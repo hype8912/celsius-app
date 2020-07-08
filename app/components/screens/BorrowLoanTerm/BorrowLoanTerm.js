@@ -10,7 +10,6 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
 import STYLES from "../../../constants/STYLES";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import { LOAN_TYPES } from "../../../constants/DATA";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
@@ -28,6 +27,7 @@ class BorrowLoanTerm extends Component {
   static navigationOptions = () => ({
     title: "Term of loan",
     right: "profile",
+    customCenterComponent: { steps: 8, currentStep: 5, flowProgress: true },
   });
 
   constructor(props) {
@@ -99,7 +99,6 @@ class BorrowLoanTerm extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <HeadingProgressBar steps={6} currentStep={4} />
         <RegularLayout fabType={"hide"}>
           <View style={{ paddingTop: 10, alignItems: "center" }}>
             <CelText margin={"0 0 30 0"} align={"center"} weight={"300"}>

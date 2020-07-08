@@ -36,16 +36,16 @@ class Maintenance extends Component {
   }
 
   render() {
-    const { navigation, backendStatus } = this.props;
-    const maintenance = navigation.getParam("maintenance");
+    const { backendStatus } = this.props;
 
-    if (maintenance) {
+    if (backendStatus.maintenance) {
       return backendStatus.title && backendStatus.explanation ? (
         <StaticScreen
           emptyState={{
             purpose: EMPTY_STATES.MAINTENANCE,
             heading: backendStatus.title,
             paragraphs: [backendStatus.explanation],
+            image: require("../../../../assets/images/icons/tool.png"),
           }}
         />
       ) : (

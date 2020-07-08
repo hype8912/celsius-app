@@ -7,7 +7,6 @@ import { View } from "react-native";
 
 import * as appActions from "../../../redux/actions";
 // import KYCAddressInfoStyle from "./KYCAddressInfo.styles";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
@@ -31,7 +30,7 @@ class KYCAddressInfo extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    customCenterComponent: <ProgressBar steps={7} currentStep={2} />,
+    customCenterComponent: { steps: 7, currentStep: 2, flowProgress: false },
     headerSameColor: true,
   });
 
@@ -191,6 +190,7 @@ class KYCAddressInfo extends Component {
             onPress={this.submitAddressInfo}
             iconRight="IconArrowRight"
             loading={updatingAddressInfoInProgress}
+            disabled={updatingAddressInfoInProgress}
           >
             Continue
           </CelButton>

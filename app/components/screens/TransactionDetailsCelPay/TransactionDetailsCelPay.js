@@ -3,7 +3,6 @@ import { Share, View } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
 
-import TransactionDetailsCelPayStyle from "./TransactionDetailsCelPay.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
 import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
@@ -15,8 +14,7 @@ import { TRANSACTION_TYPES } from "../../../constants/DATA";
 import TxSentSection from "../../molecules/TxSentSection/TxSentSection";
 import formatter from "../../../utils/formatter";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import InfoBox from "../../atoms/InfoBox/InfoBox";
-import Icon from "../../atoms/Icon/Icon";
+import CheckEmailInfoBox from "../../atoms/CheckEmailInfoBox/CheckEmailInfoBox";
 
 class TransactionDetailsCelPay extends Component {
   static propTypes = {
@@ -47,7 +45,6 @@ class TransactionDetailsCelPay extends Component {
       cancelingCelPay,
     } = this.props;
     const transactionProps = transaction.uiProps;
-    const style = TransactionDetailsCelPayStyle();
     const type = transaction.type;
 
     const text = [
@@ -104,25 +101,11 @@ class TransactionDetailsCelPay extends Component {
           ) : null}
 
           {shouldRenderInfoBox && (
-            <InfoBox
-              backgroundColor={STYLES.COLORS.ORANGE}
-              padding={"20 30 20 10"}
-            >
-              <View style={style.direction}>
-                <View style={style.circle}>
-                  <Icon
-                    name={"Mail"}
-                    height="20"
-                    width="20"
-                    fill={STYLES.COLORS.ORANGE}
-                  />
-                </View>
-                <CelText color={"white"} margin={"0 20 0 10"}>
-                  After you confirm the transaction via email you will be able
-                  to share your CelPay link.
-                </CelText>
-              </View>
-            </InfoBox>
+            <CheckEmailInfoBox
+              infoText={
+                "After you confirm the transaction via email you will be able to share your CelPay link."
+              }
+            />
           )}
 
           <TxBasicSection
@@ -158,15 +141,18 @@ class TransactionDetailsCelPay extends Component {
               Start Another CelPay
             </CelButton>
           ) : null}
-
-          {shouldRenderShareLink && !transaction.transfer_data.claimer ? (
-            <CelButton
-              margin={"40 0 0 0"}
-              onPress={this.shareCelPayLink}
-              disabled={type === TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION}
-            >
-              Share CelPay Link
-            </CelButton>
+          {shouldRenderShareLink ? (
+            <>
+              <CelButton
+                margin={"10 0 0 0"}
+                onPress={this.shareCelPayLink}
+                disabled={
+                  type === TRANSACTION_TYPES.CELPAY_PENDING_VERIFICATION
+                }
+              >
+                Share CelPay Link
+              </CelButton>
+            </>
           ) : null}
 
           {type === TRANSACTION_TYPES.CELPAY_RECEIVED ? (
@@ -190,7 +176,7 @@ class TransactionDetailsCelPay extends Component {
 
           {shouldRenderCancel ? (
             <CelButton
-              margin={"20 0 0 0"}
+              margin={"10 0 0 0"}
               loading={cancelingCelPay}
               textColor={STYLES.COLORS.RED}
               basic

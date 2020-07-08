@@ -1,23 +1,17 @@
-// TODO(sb): RN update dependencies fixes
-// import * as GoogleSignInAndroid from "expo-google-sign-in";
 import { GoogleSignin } from "@react-native-community/google-signin";
-// import * as Facebook from "expo-facebook";
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 
 import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { startApiCall, apiError } from "../api/apiActions";
-import { navigateTo } from "../nav/navActions";
+import { navigateTo, resetToScreen } from "../nav/navActions";
 import { showMessage } from "../ui/uiActions";
 import { updateFormFields } from "../forms/formsActions";
 import { setSecureStoreKey } from "../../utils/expo-storage";
-import userProfileService from "../../services/user-profile-service";
-import { initAppData } from "../app/appActions";
-import { claimAllBranchTransfers } from "../transfers/transfersActions";
 import branchUtil from "../../utils/branch-util";
-import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import userAuthService from "../../services/user-auth-service";
+import { getInitialCelsiusData } from "../generalData/generalDataActions";
 
 const { SECURITY_STORAGE_AUTH_KEY, FACEBOOK_URL } = Constants;
 
@@ -37,8 +31,9 @@ export {
  * Handles response after twitter login
  * @param {string} type - one of login|register
  * @param {Object} twitterUser - response from twitter success
+ * @param {string} destination - navigate after successful sign up
  */
-function authTwitter(type, twitterUser) {
+function authTwitter(type, twitterUser, destination) {
   return (dispatch, getState) => {
     const user = getState().user.profile;
     const twitterNames = twitterUser.name.split(" ");
@@ -66,6 +61,7 @@ function authTwitter(type, twitterUser) {
           profilePicture: twitterUser.profile_image_url,
         })
       );
+      dispatch(navigateTo(destination));
     }
   };
 }
@@ -171,8 +167,9 @@ function twitterGetAccessToken(tokens) {
  * Authorizes user on Facebook
  *
  * @param {string} authReason - one of login|register
+ * @param {string} destination - navigate after successful sign up
  */
-function authFacebook(authReason) {
+function authFacebook(authReason, destination) {
   return async dispatch => {
     if (!["login", "register"].includes(authReason)) return;
     try {
@@ -191,7 +188,7 @@ function authFacebook(authReason) {
         if (authReason === "login") {
           dispatch(loginFacebook(user));
         } else {
-          dispatch(
+          await dispatch(
             updateFormFields({
               email: user.email,
               firstName: user.first_name,
@@ -200,6 +197,7 @@ function authFacebook(authReason) {
               accessToken: user.accessToken,
             })
           );
+          dispatch(navigateTo(destination));
         }
       }
     } catch (e) {
@@ -251,7 +249,6 @@ function loginFacebook(facebookUser) {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.LOGIN_USER_FACEBOOK));
-
       const user = {
         email: facebookUser.email,
         first_name: facebookUser.first_name,
@@ -274,8 +271,9 @@ function loginFacebook(facebookUser) {
  * Authorizes user on Facebook
  *
  * @param {string} authReason - one of login|register
+ * @param {string} destination - navigate after successful sign up
  */
-function authGoogle(authReason) {
+function authGoogle(authReason, destination) {
   return async dispatch => {
     if (!["login", "register"].includes(authReason)) return;
     try {
@@ -300,7 +298,8 @@ function authGoogle(authReason) {
       if (authReason === "login") {
         dispatch(loginGoogle(user));
       } else {
-        dispatch(updateFormFields(user));
+        await dispatch(updateFormFields(user));
+        dispatch(navigateTo(destination));
       }
     } catch (error) {
       return { error: true };
@@ -380,23 +379,15 @@ function loginGoogle(googleUser) {
  * @param {string} token - auth token from social network
  */
 function loginSocialSuccess(network, token) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, token);
-
-    const userRes = await userProfileService.getPersonalInfo();
-    const user = userRes.data;
-
-    const { showVerifyScreen } = getState().app;
-    if (!showVerifyScreen) {
-      await dispatch(initAppData());
-      dispatch(navigateTo("WalletLanding"));
-    }
 
     dispatch({
       type: ACTIONS[`LOGIN_USER_${network.toUpperCase()}_SUCCESS`],
-      user,
     });
 
+    await dispatch(getInitialCelsiusData());
+    dispatch(resetToScreen("Home"));
     // dispatch(claimAllBranchTransfers());
   };
 }
@@ -409,26 +400,14 @@ function loginSocialSuccess(network, token) {
  * @param {string} user - registered user on Celsius
  */
 function registerSocialSuccess(network, token, user) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, token);
 
-    await dispatch(initAppData(token));
     dispatch({
       type: ACTIONS[`REGISTER_USER_${network.toUpperCase()}_SUCCESS`],
       user,
     });
 
-    mixpanelAnalytics.sessionStarted("User register social");
-    dispatch(claimAllBranchTransfers());
-
-    const { profile } = getState().user;
-
-    if (!profile.pin) {
-      dispatch(navigateTo("RegisterSetPin"));
-    } else {
-      dispatch(navigateTo("VerifyProfile"), {
-        onSuccess: () => navigateTo("WalletLanding"),
-      });
-    }
+    dispatch(navigateTo("RegisterSetPin"));
   };
 }

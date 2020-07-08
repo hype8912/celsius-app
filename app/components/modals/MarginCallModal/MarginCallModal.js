@@ -45,7 +45,7 @@ class MarginCallModal extends Component {
       <CelModal
         style={style.container}
         name={MODALS.MARGIN_CALL_MODAL}
-        picture={require("../../../../assets/images/alert.png")}
+        picture={require("../../../../assets/images/alert-icon.png")}
       >
         <View style={style.wrapper}>
           <CelText align={"left"} type={"H2"} weight={"500"}>

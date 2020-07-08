@@ -1,13 +1,10 @@
 {
-  "extends": [
-    "equimper",
-    "prettier/react",
-    "prettier"
-  ],
+  "extends": ["equimper", "prettier/react", "prettier"],
   "rules": {
-    "default-case": 1,
+    "default-case": 0,
     "no-console": 2,
-    "react/no-array-index-key": 1,
+    "no-constant-condition": 0,
+    "react/no-array-index-key": 0,
     "react/sort-comp": 0
   }
 }

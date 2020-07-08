@@ -1,3 +1,4 @@
+import DeviceInfo from "react-native-device-info";
 import { AsyncStorage } from "react-native";
 import ACTIONS from "../../constants/ACTIONS";
 import loggerUtil from "../../utils/logger-util";
@@ -15,6 +16,7 @@ export {
   setActiveTab,
   closeBanner,
   setBannerProps,
+  isGoodForAnimations,
 };
 
 let msgTimeout;
@@ -204,7 +206,8 @@ function setBannerProps(newBannerProps = null) {
       bannerProps = getState().ui.bannerProps || {};
 
       if (!newBannerProps) {
-        bannerProps = JSON.parse(await AsyncStorage.getItem("bannerProps"));
+        bannerProps =
+          JSON.parse(await AsyncStorage.getItem("bannerProps")) || {};
       } else {
         bannerProps = {
           ...bannerProps,
@@ -215,6 +218,7 @@ function setBannerProps(newBannerProps = null) {
       bannerProps.sessionCount = bannerProps.sessionCount
         ? Number(bannerProps.sessionCount)
         : 0;
+
       await AsyncStorage.setItem("bannerProps", JSON.stringify(bannerProps));
     } catch (err) {
       loggerUtil.log(err);
@@ -224,5 +228,28 @@ function setBannerProps(newBannerProps = null) {
       type: ACTIONS.SET_BANNER_PROPS,
       bannerProps,
     });
+  };
+}
+
+/**
+ * Checks if phone can get animations
+ * @returns {Object} - Action
+ */
+
+function isGoodForAnimations() {
+  const system = DeviceInfo.getSystemVersion();
+  const name = DeviceInfo.getSystemName();
+  let shouldAnimate = true;
+
+  if (
+    (Number(system.split(".")[0]) < 9 && name === "Android") ||
+    (Number(system.split(".")[0]) < 13 && name === "iOS") ||
+    name === "iPhone OS"
+  )
+    shouldAnimate = false;
+
+  return {
+    type: ACTIONS.IS_GOOD_FOR_ANIMATIONS,
+    shouldAnimate,
   };
 }

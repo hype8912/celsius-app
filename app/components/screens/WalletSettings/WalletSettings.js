@@ -77,7 +77,7 @@ class WalletSettings extends Component {
   };
 
   render() {
-    const { callsInProgress, actions } = this.props;
+    const { callsInProgress } = this.props;
     const { defaultView } = this.state;
 
     const loading = apiUtil.areCallsInProgress(
@@ -108,15 +108,8 @@ class WalletSettings extends Component {
             Default view: {this.getViewText(defaultView)}
           </IconButton>
         </RNPickerSelect>
-        <IconButton
-          onPress={() => actions.navigateTo("WithdrawAddressOverview")}
-          margin={"0 0 20 0"}
-          IconRight
-        >
-          Withdrawal addresses
-        </IconButton>
-        {!isUSCitizen() && <Separator text="INTEREST" margin="0 0 10 0" />}
 
+        {!isUSCitizen() && <Separator text="INTEREST" margin="0 0 10 0" />}
         <PerCoinCelInterestCard />
       </RegularLayout>
     );

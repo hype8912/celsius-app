@@ -25,6 +25,13 @@
 //#import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
 
 
+#import <React/RCTLinkingManager.h>
+#if __has_include(<AppsFlyerLib/AppsFlyerTracker.h>) // from Pod
+#import <AppsFlyerLib/AppsFlyerTracker.h>
+#else
+#import "AppsFlyerTracker.h"
+#endif
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -47,12 +54,12 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  // [RNSplashScreen show];
+  [RNSplashScreen show];
   
   // for foreground notification
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
-
+  
   return YES;
 }
 
@@ -62,14 +69,18 @@
 
 // Add the openURL and continueUserActivity functions
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  
     if (![RNBranch.branch application:app openURL:url options:options]) {
         // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+      [[AppsFlyerTracker sharedTracker] handleOpenUrl:url options:options];
     }
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-    return [RNBranch continueUserActivity:userActivity];
+
+      return [RNBranch continueUserActivity:userActivity] ||
+          [[AppsFlyerTracker sharedTracker] continueUserActivity:userActivity restorationHandler:restorationHandler];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
@@ -116,6 +127,5 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
 }
-
 
 @end

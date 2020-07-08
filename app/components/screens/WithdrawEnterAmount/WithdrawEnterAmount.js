@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import BigNumber from "bignumber.js";
 
 import * as appActions from "../../../redux/actions";
 import WithdrawEnterAmountStyle from "./WithdrawEnterAmount.styles";
@@ -22,7 +23,6 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import STYLES from "../../../constants/STYLES";
 import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
-import LoseMembershipModal from "../../modals/LoseMembershipModal/LoseMembershipModal";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CelText from "../../atoms/CelText/CelText";
@@ -80,24 +80,26 @@ class WithdrawEnterAmount extends Component {
         ""
     );
 
-    const coinSelectItems = currencies
-      .filter(c => withdrawCompliance.coins.includes(c.short))
-      .filter(c => {
-        const walletCoin = walletSummary.coins.find(
-          wCoin => wCoin.short === c.short.toUpperCase()
-        );
-        const balanceUsd = walletCoin ? walletCoin.amount_usd : 0;
+    const coinSelectItems =
+      currencies &&
+      currencies
+        .filter(c => withdrawCompliance.coins.includes(c.short))
+        .filter(c => {
+          const walletCoin = walletSummary.coins.find(
+            wCoin => wCoin.short === c.short.toUpperCase()
+          );
+          const balanceUsd = walletCoin ? walletCoin.amount_usd.toNumber() : 0;
 
-        return balanceUsd > 0;
-      })
-      .map(c => ({ label: `${c.displayName} (${c.short})`, value: c.short }));
+          return balanceUsd > 0;
+        })
+        .map(c => ({ label: `${c.displayName} (${c.short})`, value: c.short }));
 
     this.state = {
       coinSelectItems,
       activePeriod: { label: "", value: "" },
     };
 
-    if (coin || coinSelectItems.length > 0) {
+    if (coin || (coinSelectItems && coinSelectItems.length > 0)) {
       props.actions.initForm({ coin: coin || coinSelectItems[0].value });
     }
     props.actions.getAllCoinWithdrawalAddresses();
@@ -120,7 +122,7 @@ class WithdrawEnterAmount extends Component {
     if (label === "ALL") {
       amount = formData.isUsd
         ? walletSummaryObj.amount_usd.toString()
-        : walletSummaryObj.amount;
+        : walletSummaryObj.amount.toString();
     } else {
       amount = formData.isUsd ? value : (Number(value) / coinRate).toString();
     }
@@ -151,23 +153,30 @@ class WithdrawEnterAmount extends Component {
       // if no predefined label is forwarded and the value is in usd
       if (predefined.label.length === 0) {
         amountUsd = formatter.setCurrencyDecimals(newValue, "USD");
-        amountCrypto = amountUsd / coinRate;
+        amountCrypto = new BigNumber(amountUsd).dividedBy(coinRate);
       } else {
         amountUsd = predefined.label === "ALL" ? balanceUsd : newValue;
         amountUsd = this.getUsdValue(amountUsd);
         amountCrypto =
-          predefined.label === "ALL" ? balanceCrypto : amountUsd / coinRate;
+          predefined.label === "ALL"
+            ? balanceCrypto
+            : new BigNumber(amountUsd).dividedBy(coinRate);
         amountCrypto = formatter.removeDecimalZeros(amountCrypto);
       }
       // if no predefined label is forwarded and the value is no in usd (crypto)
     } else if (predefined.label.length === 0) {
-      amountCrypto = formatter.setCurrencyDecimals(newValue);
-      amountUsd = amountCrypto * coinRate;
+      amountCrypto = new BigNumber(formatter.setCurrencyDecimals(newValue));
+      amountUsd = amountCrypto.multipliedBy(coinRate);
       amountUsd = this.getUsdValue(amountUsd);
       if (amountUsd === "0") amountUsd = "";
     } else {
-      amountCrypto = predefined.label === "ALL" ? balanceCrypto : newValue;
-      amountCrypto = formatter.removeDecimalZeros(amountCrypto);
+      amountCrypto =
+        predefined.label === "ALL"
+          ? new BigNumber(balanceCrypto).toFixed(8)
+          : newValue;
+      amountCrypto = new BigNumber(
+        formatter.removeDecimalZeros(amountCrypto)
+      ).toFixed(8);
       amountUsd = predefined.label === "ALL" ? balanceUsd : predefined.value;
       amountUsd = this.getUsdValue(amountUsd);
     }
@@ -178,9 +187,9 @@ class WithdrawEnterAmount extends Component {
     if (amountUsd.length > 1 && amountUsd[0] === "0" && amountUsd[1] !== ".") {
       amountUsd = amountUsd[1];
     }
-
     // if crypto amount is undefined, set it to empty string
-    if (!amountCrypto) amountCrypto = "";
+    // if (amountCrypto && !amountCrypto.toNumber()) amountCrypto = "";
+    if (!new BigNumber(amountCrypto).toNumber()) amountCrypto = "";
     // Change value '.' to '0.'
     if (amountCrypto[0] === ".") amountCrypto = `0${amountCrypto}`;
     // if the crypto amount is eg. 01 the value will be 1, 00 -> 0
@@ -191,8 +200,7 @@ class WithdrawEnterAmount extends Component {
     ) {
       amountCrypto = amountCrypto[1];
     }
-
-    if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto)) {
+    if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto.toFixed(8))) {
       return actions.showMessage("warning", "Insufficient funds!");
     }
 
@@ -220,11 +228,9 @@ class WithdrawEnterAmount extends Component {
     const coinData = walletSummary.coins.find(
       c => c.short === formData.coin.toUpperCase()
     );
-    const newBalance = Number(coinData.amount) - Number(formData.amountCrypto);
 
-    if (celUtilityUtil.isLosingMembership(formData.coin, newBalance)) {
-      return actions.openModal(MODALS.LOSE_MEMBERSHIP_MODAL);
-    }
+    const newBalance = coinData.amount.minus(formData.amountCrypto);
+
     if (celUtilityUtil.isLosingTier(formData.coin, newBalance)) {
       return actions.openModal(MODALS.LOSE_TIER_MODAL);
     }
@@ -317,14 +323,13 @@ class WithdrawEnterAmount extends Component {
       hours = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[0];
       minutes = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[1];
     }
-
     return (
       <RegularLayout padding="0 0 0 0">
         <View style={style.container}>
           <BalanceView
             opacity={0.65}
             coin={coin}
-            crypto={coinData.amount}
+            crypto={coinData && coinData.amount && coinData.amount.toFixed(8)}
             usd={coinData.amount_usd}
           />
           <View style={style.wrapper}>
@@ -399,24 +404,26 @@ class WithdrawEnterAmount extends Component {
                 </CelText>
 
                 <CelText align="center">
-                  You have recently changed your ${coin} withdrawal address.
+                  {`You have recently changed your ${coin} withdrawal address.`}
                 </CelText>
 
-                <Card margin="10 0 0 0">
-                  <CelText align="center" type="H6">
-                    Due to our security protocols, your address will be active
-                    in
-                  </CelText>
+                {hours && minutes && (
+                  <Card margin="10 0 0 0">
+                    <CelText align="center" type="H6">
+                      Due to our security protocols, your address will be active
+                      in
+                    </CelText>
 
-                  <CelText
-                    margin="10 0 0 0"
-                    align="center"
-                    type="H3"
-                    weight={"bold"}
-                  >
-                    {`${hours}h ${minutes}m.`}
-                  </CelText>
-                </Card>
+                    <CelText
+                      margin="10 0 0 0"
+                      align="center"
+                      type="H3"
+                      weight={"bold"}
+                    >
+                      {`${hours}h ${minutes}m.`}
+                    </CelText>
+                  </Card>
+                )}
               </View>
             )}
           </View>
@@ -436,9 +443,6 @@ class WithdrawEnterAmount extends Component {
           />
         )}
 
-        <LoseMembershipModal
-          navigateToNextStep={() => this.navigateToNextStep(true)}
-        />
         {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
           <LoseTierModal
             navigateToNextStep={() => this.navigateToNextStep(true)}

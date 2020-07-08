@@ -13,8 +13,8 @@ const base = {
     minHeight: 0.8 * height,
   },
   image: {
-    width: 140,
-    height: 140,
+    width: 30,
+    height: 30,
     resizeMode: "contain",
   },
 };

@@ -8,7 +8,6 @@ import {
 } from "../mixpanel-util";
 import store from "../../redux/store";
 import appsFlyerUtil from "../appsflyer-util";
-import uxCamUtil from "../uxcam-util";
 import loggerUtil from "../logger-util";
 
 const generalAnalytics = {
@@ -35,7 +34,7 @@ function navigated(screen) {
 /**
  * Fires an event when a user presses a CelButton
  *
- * @param {string} buttonText - copy on the button
+ * @param {string} button - copy on the button
  */
 function buttonPressed(button) {
   sendEvent("Button pressed", { button });
@@ -53,7 +52,6 @@ async function sessionStarted(trigger) {
       setUserData(store.getState().user.profile);
       userData = getUserData();
     }
-    const url = await uxCamUtil.urlForCurrentUser();
 
     if (userData && userData.id && !engageCompleted.completed) {
       await engage(userData.id, {
@@ -71,9 +69,7 @@ async function sessionStarted(trigger) {
         "Has pin": userData.has_pin,
         "KYC status": userData.kyc ? userData.kyc.status : "unknown",
         "Has referral link": !!userData.referral_link_id,
-        "Is celsius member": userData.celsius_member,
         "Has SSN": !!userData.ssn,
-        "User's UXCam url": url,
       });
       await sendEvent("$create_alias", { alias: userData.id });
     }
@@ -92,7 +88,6 @@ async function sessionStarted(trigger) {
 async function sessionEnded(trigger) {
   setUserData({});
 
-  const sessionUrl = await uxCamUtil.urlForCurrentSession();
   const x = new moment();
   const sessionDuration = moment
     .duration(x.diff(sessionTime))
@@ -101,7 +96,6 @@ async function sessionEnded(trigger) {
   sendEvent("Session ended", {
     trigger,
     "Session duration": formatedDuration,
-    "UXCam Session URL": sessionUrl,
   });
 }
 

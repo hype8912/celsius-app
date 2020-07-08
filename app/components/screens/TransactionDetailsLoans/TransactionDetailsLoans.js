@@ -8,11 +8,13 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
 import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 import CelButton from "../../atoms/CelButton/CelButton";
-import CollateralLoanCard from "../../molecules/CollateralLoanCard/CollateralLoanCard";
+import LoanCard from "../../molecules/LoanCard/LoanCard";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
+import TierCard from "../../organisms/TierCard/TierCard";
+import { TRANSACTION_TYPES } from "../../../constants/DATA";
 
 class TransactionDetailsLoans extends Component {
   static propTypes = {
@@ -35,10 +37,12 @@ class TransactionDetailsLoans extends Component {
             transactionProps={transactionProps}
           />
 
-          <CollateralLoanCard
-            navigateTo={navigateTo}
-            transaction={transaction}
-          />
+          <LoanCard navigateTo={navigateTo} transaction={transaction} />
+
+          {transaction.type === TRANSACTION_TYPES.LOAN_INTEREST &&
+            transaction.coin === "cel" && (
+              <TierCard transaction={transaction} />
+            )}
 
           <TxBasicSection
             label={"Date"}

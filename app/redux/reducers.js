@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+import { STORYBOOK } from "../../dev-settings";
 import api from "./api/apiReducer";
 import ui from "./ui/uiReducer";
 import user from "./user/userReducer";
@@ -21,11 +22,13 @@ import community from "./community/communityReducer";
 import compliance from "./compliance/complianceReducer";
 import kyc from "./kyc/kycReducer";
 import contacts from "./contacts/contactsReducer";
-import simplex from "./simplex/simplexReducer";
 import loyalty from "./loyalty/loyaltyReducer";
 import security from "./userSecurity/userSecurityReducer";
 import auth from "./userAuth/userAuthReducer";
 import hodl from "./hodl/hodlReducer";
+import animations from "./animations/animationsReducer";
+import deepLink from "./deepLink/deepLinkReducer";
+import buyCoins from "./buyCoins/buyCoinsReducer";
 // NOTE(fj): plop reduxGen importing new Reducer here
 
 const appReducers = combineReducers({
@@ -49,18 +52,29 @@ const appReducers = combineReducers({
   compliance,
   kyc,
   contacts,
-  simplex,
   loyalty,
   security,
   auth,
   hodl,
+  animations,
+  deepLink,
+  buyCoins,
   // NOTE(fj): plop reduxGen inserting new Reducer here
 });
 
 function rootReducer(state, action) {
   let newState = state;
+  const newAction = action;
   if (action.type === ACTIONS.RESET_APP) newState = undefined;
   if (action.type === ACTIONS.LOGOUT_USER) newState = undefined;
+  if (action.type === ACTIONS.SET_WHOLE_STATE) newState = action.state;
+
+  // ignore all actions when in Storybook mode
+  if (STORYBOOK && action.type !== ACTIONS.SET_WHOLE_STATE) {
+    newAction.true = action.type;
+    newAction.type = ACTIONS.BLOCKED_ACTION;
+  }
+
   return appReducers(newState, action);
 }
 

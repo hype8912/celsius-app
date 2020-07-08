@@ -1,3 +1,5 @@
+import BigNumber from "bignumber.js";
+import _ from "lodash";
 import { LOAN_PAYMENT_TYPES, LOAN_STATUS, LOAN_TYPES } from "../constants/DATA";
 import STYLES from "../constants/STYLES";
 import formatter from "./formatter";
@@ -231,10 +233,10 @@ function getMarginCallParams(loan) {
   const hasEnoughOriginalCoin = !!walletSummary.coins.find(
     coin =>
       coin.short === loan.margin_call.collateral_coin &&
-      Number(coin.amount) >= Number(loan.margin_call.margin_call_amount)
+      coin.amount.isGreaterThanOrEqualTo(loan.margin_call.margin_call_amount)
   );
-  const hasEnoughOtherCoins = !!walletSummary.coins.find(
-    coin => Number(loan.margin_call.margin_call_amount) <= Number(coin.amount)
+  const hasEnoughOtherCoins = !!walletSummary.coins.find(coin =>
+    coin.amount.isGreaterThanOrEqualTo(loan.margin_call.margin_call_amount)
   );
 
   return {
@@ -249,50 +251,81 @@ function emitLoanParams(
   currencies,
   ltv,
   minimumLoanAmount,
-  eligibleCoins
+  eligibleCoins,
+  loyaltyInfo
 ) {
   const loanParams = {};
 
-  if (formData && formData.coin !== "USD" && formData.ltv) {
-    loanParams.annualInterestPct = formData.ltv.interest;
-    loanParams.totalInterestPct =
-      loanParams.annualInterestPct * (formData.termOfLoan / 12);
-    loanParams.monthlyInterestPct =
-      loanParams.totalInterestPct / formData.termOfLoan;
+  const enteredAmount = new BigNumber(formData.amount);
 
-    loanParams.totalInterest = formatter.fiat(
-      Number(loanParams.totalInterestPct * formData.amount),
-      "USD"
+  if (formData && formData.coin !== "USD" && formData.ltv) {
+    loanParams.annualInterestPct = new BigNumber(formData.ltv.interest);
+
+    loanParams.totalInterestPct = loanParams.annualInterestPct.multipliedBy(
+      formData.termOfLoan / 12
     );
-    loanParams.monthlyInterest = formatter.fiat(
-      Number(
-        (loanParams.totalInterestPct * formData.amount) / formData.termOfLoan
-      ),
-      "USD"
+    loanParams.monthlyInterestPct = loanParams.totalInterestPct.dividedBy(
+      formData.termOfLoan
     );
-    loanParams.collateralNeeded =
-      Number(formData.amount) /
-      currencies.find(c => c.short === formData.coin).market_quotes_usd.price /
-      formData.ltv.percent;
-    loanParams.bestLtv = Math.max(...ltv.map(x => x.percent));
+
+    loanParams.totalInterest = loanParams.totalInterestPct.multipliedBy(
+      enteredAmount
+    );
+
+    loanParams.monthlyInterest = loanParams.totalInterestPct
+      .multipliedBy(enteredAmount)
+      .dividedBy(formData.termOfLoan);
+
+    loanParams.monthlyInCEL =
+      loyaltyInfo &&
+      loanParams.monthlyInterest.minus(
+        loanParams.monthlyInterest.multipliedBy(
+          loyaltyInfo && loyaltyInfo.tier.loanInterestBonus
+        )
+      );
+    loanParams.totalInCEL =
+      loyaltyInfo &&
+      loanParams.totalInterest.minus(
+        loanParams.totalInterest.multipliedBy(
+          loyaltyInfo && loyaltyInfo.tier.loanInterestBonus
+        )
+      );
+
+    loanParams.loyaltyApr = loanParams.annualInterestPct.minus(
+      loanParams.annualInterestPct.multipliedBy(
+        loyaltyInfo && loyaltyInfo.tier.loanInterestBonus
+      )
+    );
+
+    loanParams.collateralNeeded = enteredAmount.dividedBy(
+      new BigNumber(
+        currencies.find(c => c.short === formData.coin).market_quotes_usd.price
+      ).multipliedBy(formData.ltv.percent)
+    );
+
+    loanParams.bestLtv = BigNumber.max(...ltv.map(x => x.percent));
 
     const arrayOfAmountUsd = eligibleCoins.map(c => c.amount_usd);
 
-    const indexOfLargestAmount = arrayOfAmountUsd.indexOf(
-      Math.max(...arrayOfAmountUsd)
+    const indexOfLargestAmount = _.findIndex(
+      arrayOfAmountUsd,
+      BigNumber.max(...arrayOfAmountUsd)
     );
 
     loanParams.largestAmountCrypto = eligibleCoins[indexOfLargestAmount].amount;
     loanParams.largestShortCrypto = eligibleCoins[indexOfLargestAmount].short;
-    loanParams.minimumLoanAmountCrypto =
-      minimumLoanAmount /
+    loanParams.minimumLoanAmountCrypto = new BigNumber(
+      minimumLoanAmount
+    ).dividedBy(
       currencies.find(
         c => c.short === eligibleCoins[indexOfLargestAmount].short
-      ).market_quotes_usd.price;
-    loanParams.missingCollateral = Math.abs(
-      (loanParams.largestAmountCrypto - loanParams.minimumLoanAmountCrypto) /
-        loanParams.bestLtv
+      ).market_quotes_usd.price
     );
+
+    loanParams.missingCollateral = loanParams.largestAmountCrypto
+      .minus(loanParams.minimumLoanAmountCrypto)
+      .abs()
+      .dividedBy(loanParams.bestLtv);
   }
   return loanParams;
 }

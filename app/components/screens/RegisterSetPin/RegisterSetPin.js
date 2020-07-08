@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import CelText from "../../atoms/CelText/CelText";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import ChangePinStyle from "../ChangePin/ChangePin.styles";
 import { KEYPAD_PURPOSES } from "../../../constants/UI";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
@@ -26,7 +25,7 @@ class RegisterSetPin extends Component {
 
   static navigationOptions = () => ({
     hideBack: true,
-    customCenterComponent: <ProgressBar steps={3} currentStep={2} />,
+    customCenterComponent: { steps: 3, currentStep: 2, flowProgress: false },
     headerSameColor: true,
   });
 
@@ -60,7 +59,11 @@ class RegisterSetPin extends Component {
     if (!pinCreated) {
       this.setState({ pinCreated: true });
       navigation.setParams({
-        customCenterComponent: <ProgressBar steps={3} currentStep={3} />,
+        customCenterComponent: {
+          steps: 3,
+          currentStep: 3,
+          flowProgress: false,
+        },
       });
     } else if (formData.pin === newValue) {
       this.setState({ loading: true });
@@ -68,7 +71,8 @@ class RegisterSetPin extends Component {
       if (!isSet) {
         this.setState({ pinCreated: false });
       } else {
-        return actions.navigateTo("WalletLanding");
+        await actions.getInitialCelsiusData();
+        return actions.navigateTo("Home");
       }
     } else {
       actions.showMessage("error", "Both PIN numbers should be the same.");

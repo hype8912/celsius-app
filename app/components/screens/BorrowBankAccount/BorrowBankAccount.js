@@ -7,7 +7,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
 import { BANK_ACCOUNT_TYPE } from "../../../constants/DATA";
@@ -25,6 +24,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 class BorrowBankAccount extends Component {
   static navigationOptions = () => ({
     title: "Link bank account",
+    customCenterComponent: { steps: 8, currentStep: 6, flowProgress: true },
   });
 
   constructor(props) {
@@ -153,7 +153,6 @@ class BorrowBankAccount extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <HeadingProgressBar steps={6} currentStep={5} />
         <RegularLayout fabType={"hide"}>
           <CelText
             weight="300"

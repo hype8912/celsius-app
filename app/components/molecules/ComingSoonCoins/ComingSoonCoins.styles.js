@@ -5,12 +5,6 @@ const base = {
   container: {
     flex: 1,
   },
-
-  flexWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
 };
 
 const themed = {

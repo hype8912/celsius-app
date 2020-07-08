@@ -7,10 +7,9 @@ import {
 
 const base = {
   container: {
-    flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    height: heightPercentageToDP("15%"),
+    height: heightPercentageToDP("12%"),
   },
 
   section: {
@@ -29,6 +28,7 @@ const base = {
     justifyContent: "flex-end",
   },
   meter: {
+    height: heightPercentageToDP("2%"),
     width: widthPercentageToDP("40%"),
   },
 };

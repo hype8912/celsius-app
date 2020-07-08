@@ -6,6 +6,7 @@ import {
   Image,
   SafeAreaView,
   Dimensions,
+  Platform,
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -179,12 +180,17 @@ class CameraScreen extends Component {
   takePhoto = async camera => {
     if (camera) {
       const { actions, mask, navigation } = this.props;
+      const hideBack = navigation.getParam("hideBack");
       const maskType = mask || "utility";
       const options = {
         quality: 0.5,
-        orientation: RNCamera.Constants.Orientation.auto,
+        orientation:
+          Platform.OS === "ios"
+            ? RNCamera.Constants.Orientation.auto
+            : RNCamera.Constants.Orientation.portrait,
         pauseAfterCapture: true,
         fixOrientation: true,
+        base64: true,
       };
 
       try {
@@ -195,6 +201,7 @@ class CameraScreen extends Component {
 
         actions.startApiCall(API.TAKE_CAMERA_PHOTO);
         await actions.navigateTo("ConfirmCamera", {
+          documentPicture: hideBack,
           onSave: navigation.getParam("onSave"),
         });
 

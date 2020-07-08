@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
 import SeparatorStyle from "./Separator.styles";
 import CelText from "../CelText/CelText";
 import { getMargins, getTheme } from "../../../utils/styles-util";
 import { THEMES } from "../../../constants/UI";
 import STYLES from "../../../constants/STYLES";
+import infoIcon from "../../../../assets/images/icon-info.png";
 
 class Separator extends Component {
   static propTypes = {
@@ -22,6 +23,7 @@ class Separator extends Component {
     margin: PropTypes.string,
     height: PropTypes.string,
     top: PropTypes.number,
+    showInfo: PropTypes.bool,
   };
   static defaultProps = {
     vertical: false,
@@ -35,6 +37,7 @@ class Separator extends Component {
     margin: "0 0 0 0",
     height: "100%",
     top: 0,
+    showInfo: false,
   };
 
   getSeparatorColor = style => StyleSheet.flatten(style.separatorColor).color; // get color from raw json depending on style theme
@@ -97,6 +100,7 @@ class Separator extends Component {
       color,
       dashed,
       margin,
+      showInfo,
     } = this.props;
     const style = SeparatorStyle();
     const separatorColor = color || this.getSeparatorColor(style);
@@ -116,7 +120,16 @@ class Separator extends Component {
             },
           ]}
         />
-        <View style={[style.center, { opacity: textOpacity }]}>
+        <View
+          style={[
+            style.center,
+            {
+              opacity: textOpacity,
+              flexDirection: "row",
+              alignItems: "center",
+            },
+          ]}
+        >
           <CelText
             allCaps={allCaps}
             color={
@@ -129,6 +142,12 @@ class Separator extends Component {
           >
             {text}
           </CelText>
+          {showInfo && (
+            <Image
+              source={infoIcon}
+              style={{ width: 18, height: 18, marginLeft: 5 }}
+            />
+          )}
         </View>
         <View
           style={[

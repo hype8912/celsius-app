@@ -3,7 +3,7 @@ import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage, toggleKeypad } from "../ui/uiActions";
 import { updateFormField } from "../forms/formsActions";
-import { navigateTo } from "../nav/navActions";
+import { navigateTo, navigateBack } from "../nav/navActions";
 import userSecurityService from "../../services/user-security-service";
 import userAuthService from "../../services/user-auth-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
@@ -25,6 +25,11 @@ export {
   resetPassword,
   logoutFromAllDevices,
   getSecurityOverview,
+  fromFixNow,
+  toFixNow,
+  clearToFixNow,
+  updateFixNowContent,
+  fixNowNextItem,
 };
 
 /**
@@ -101,10 +106,12 @@ function checkPIN(onSuccess, onError) {
       if (onSuccess) onSuccess();
     } catch (err) {
       if (onError) onError();
-      dispatch(showMessage("error", err.msg));
+      if (err.status !== 429) {
+        dispatch(showMessage("error", err.msg));
+        dispatch(updateFormField("pin", ""));
+        dispatch(toggleKeypad());
+      }
       dispatch(apiError(API.CHECK_PIN, err));
-      dispatch(updateFormField("pin", ""));
-      dispatch(toggleKeypad());
     }
   };
 }
@@ -165,6 +172,7 @@ function changePin() {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
+      const { securityOverview } = getState().security;
 
       const pinData = {
         pin: formData.pin,
@@ -179,8 +187,14 @@ function changePin() {
       dispatch({ type: ACTIONS.CHANGE_PIN_SUCCESS });
       dispatch({ type: ACTIONS.CLEAR_FORM });
       dispatch(showMessage("success", "Successfully changed PIN number"));
-      dispatch(navigateTo("SecuritySettings"));
       mixpanelAnalytics.changePin();
+      // dispatch(navigateTo("SecuritySettings"));
+
+      if (securityOverview.fromFixNow) {
+        dispatch(toFixNow());
+      } else {
+        dispatch(navigateTo("SecuritySettings"));
+      }
       return true;
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -198,9 +212,10 @@ function changePin() {
  * @param {string} newPassword
  */
 function resetPassword(currentPassword, newPassword) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(startApiCall(API.RESET_PASSWORD));
     try {
+      const { securityOverview } = getState().security;
       const { data } = await userAuthService.resetPassword(
         currentPassword,
         newPassword
@@ -212,7 +227,11 @@ function resetPassword(currentPassword, newPassword) {
       await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, newAuthToken);
 
       dispatch(showMessage("success", "Password successfully changed."));
-      dispatch(navigateTo("SecuritySettings"));
+      if (securityOverview.fromFixNow) {
+        dispatch(toFixNow());
+      } else {
+        dispatch(navigateTo("SecuritySettings"));
+      }
       dispatch(resetPasswordSuccess());
       mixpanelAnalytics.changePassword();
     } catch (err) {
@@ -239,7 +258,7 @@ function logoutFromAllDevices() {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.LOGOUT_FROM_ALL_DEVICES));
-      await userAuthService.invalidateSession();
+      await userSecurityService.invalidateSession();
       await mixpanelAnalytics.loggedOutOfAllSessions();
       dispatch({
         type: ACTIONS.LOGOUT_FROM_ALL_DEVICES_SUCCESS,
@@ -262,7 +281,21 @@ function getSecurityOverview() {
     try {
       dispatch(startApiCall(API.GET_USER_SECURITY_OVERVIEW));
       const res = await userSecurityService.getUserSecurityOverview();
-      const overview = res.data;
+
+      const content = res.data.score_parameters.filter(
+        c => c.fixable && c.name !== "hodl_mode"
+      );
+      const index = 0;
+      const item = content[index];
+
+      const overview = {
+        ...res.data,
+        fixNowContent: {
+          content,
+          index,
+          item,
+        },
+      };
       dispatch(getSecurityOverviewSuccess(overview));
     } catch (err) {
       dispatch(showMessage(`error`, err.msg));
@@ -278,5 +311,113 @@ function getSecurityOverviewSuccess(overview) {
   return {
     type: ACTIONS.GET_USER_SECURITY_OVERVIEW_SUCCESS,
     overview,
+  };
+}
+
+/**
+ *
+ * fromFixNow flag, used in navigation handling. If true, on end of fixable flow app will go back to fixNowScreen.
+ */
+function fromFixNow() {
+  return {
+    type: ACTIONS.FROM_FIX_NOW,
+    fromFixNow: true,
+  };
+}
+
+/**
+ *
+ * When app navigate back to fix now screen, clean fromFixNow flag
+ */
+function clearFromFixNow() {
+  return {
+    type: ACTIONS.CLEAR_FROM_FIX_NOW,
+    fromFixNow: false,
+  };
+}
+
+/**
+ *
+ * toFixNow flag, used in navigation handling. Fires when app went back to fixNow screen.
+ */
+function toFixNow() {
+  return dispatch => {
+    dispatch({
+      type: ACTIONS.TO_FIX_NOW,
+      toFixNow: true,
+    });
+    dispatch(navigateTo("SecurityFixNow"));
+    dispatch(clearFromFixNow());
+  };
+}
+
+/**
+ *
+ * When next fix now element is opened , clean fromFixNow flag
+ */
+function clearToFixNow() {
+  return {
+    type: ACTIONS.CLEAR_TO_FIX_NOW,
+    toFixNow: false,
+  };
+}
+
+/**
+ *
+ * Check is 2fa activated. If it is and PIN is fixable, remove PIN from flow
+ */
+function updateFixNowContent() {
+  return (dispatch, getState) => {
+    try {
+      const twoFAStatus = getState().security.twoFAStatus;
+      const currentContent = getState().security.securityOverview.fixNowContent
+        .content;
+      if (
+        twoFAStatus.isActive &&
+        currentContent &&
+        currentContent.find(c => c.name === "pin")
+      ) {
+        const content = currentContent.filter(c => c.name !== "pin");
+        dispatch({
+          type: ACTIONS.UPDATE_FIX_NOW_CONTENT,
+          content,
+        });
+      }
+    } catch (err) {
+      dispatch(showMessage(`error`, err.msg));
+    }
+  };
+}
+
+/**
+ *
+ * Next fixNow element handler
+ */
+function fixNowNextItem() {
+  return (dispatch, getState) => {
+    try {
+      const content = getState().security.securityOverview.fixNowContent
+        .content;
+      const index = getState().security.securityOverview.fixNowContent.index;
+
+      dispatch(clearToFixNow());
+
+      if (index === content.length - 1) {
+        dispatch(navigateBack("SecurityOverview"));
+        return;
+      }
+
+      if (index < content.length) {
+        dispatch({
+          type: ACTIONS.NEXT_FIX_NOW_ITEM,
+          content: {
+            index: index + 1,
+            item: content[index + 1],
+          },
+        });
+      }
+    } catch (err) {
+      dispatch(showMessage(`error`, err.msg));
+    }
   };
 }

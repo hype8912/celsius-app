@@ -44,7 +44,7 @@ class PerCoinCelInterestCard extends Component {
     currencies.forEach(c => {
       coinNames[c.short] = c.displayName;
     });
-    const totalCoins = Object.keys(appSettings.interest_in_cel_per_coin).length;
+    const totalCoins = coinList.length;
     let countCoinsTrue = 0;
     let checked = false;
 

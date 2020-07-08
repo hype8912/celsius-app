@@ -10,7 +10,6 @@ import Icon from "../../atoms/Icon/Icon";
 import Separator from "../../atoms/Separator/Separator";
 import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -35,7 +34,7 @@ import {
 class KYCVerifyID extends Component {
   static navigationOptions = () => ({
     title: "Verify ID",
-    customCenterComponent: <ProgressBar steps={4} currentStep={4} />,
+    customCenterComponent: { steps: 4, currentStep: 4, flowProgress: false },
     headerSameColor: true,
   });
 

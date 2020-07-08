@@ -7,15 +7,18 @@ import { transitionConfig } from "./navigationConfig";
 import Storybook from "../components/screens/Storybook/Storybook";
 
 import Home from "../components/screens/Home/Home";
+import SplashScreen from "../components/screens/SplashScreen/SplashScreen";
 import Community from "../components/screens/Community/Community";
 import Maintenance from "../components/screens/Maintenance/Maintenance";
-import LockedAccount from "../components/screens/LockedAccount/LockedAccount";
+import TooManyRequests from "../components/screens/TooManyRequests/TooManyRequests";
+import LoginLanding from "../components/screens/LoginLanding/LoginLanding";
 import Login from "../components/screens/Login/Login";
 import ForgotPassword from "../components/screens/ForgotPassword/ForgotPassword";
 import RegisterInitial from "../components/screens/RegisterInitial/RegisterInitial";
 import RegisterSetPin from "../components/screens/RegisterSetPin/RegisterSetPin";
 import TermsOfUse from "../components/screens/TermsOfUse/TermsOfUse";
 import Welcome from "../components/screens/Welcome/Welcome";
+import PasswordBreached from "../components/screens/PasswordBreached/PasswordBreached";
 import VerifyProfile from "../components/screens/VerifyProfile/VerifyProfile";
 import TransactionsOnHold from "../components/screens/TransactionsOnHold/TransactionsOnHold";
 import KYCProfileDetails from "../components/screens/KYCProfileDetails/KYCProfileDetails";
@@ -34,6 +37,7 @@ import AllTransactions from "../components/screens/AllTransactions/AllTransactio
 import GetCoinsLanding from "../components/screens/GetCoinsLanding/GetCoinsLanding";
 import GetCoinsEnterAmount from "../components/screens/GetCoinsEnterAmount/GetCoinsEnterAmount";
 import GetCoinsTransactionDetails from "../components/screens/GetCoinsTransactionDetails/GetCoinsTransactionDetails";
+import GetCoinsGem from "../components/screens/GetCoinsGem/GetCoinsGem";
 import MyCel from "../components/screens/MyCel/MyCel";
 import Simplex from "../components/screens/Simplex/SimplexScreen";
 import InterestCalculatorScreen from "../components/screens/InterestCalculatorScreen/InterestCalculatorScreen";
@@ -72,6 +76,7 @@ import NotificationsSettings from "../components/screens/NotificationsSettings/N
 import SecuritySettings from "../components/screens/SecuritySettings/SecuritySettings";
 import ActionsByUser from "../components/screens/ActionsByUser/ActionsByUser";
 import SecurityOverview from "../components/screens/SecurityOverview/SecurityOverview";
+import SecurityFixNow from "../components/screens/SecurityFixNow/SecurityFixNow";
 import WalletSettings from "../components/screens/WalletSettings/WalletSettings";
 import ApiAuthorization from "../components/screens/ApiAuthorization/ApiAuthorization";
 import ApiAuthorizationPermissions from "../components/screens/ApiAuthorizationPermissions/ApiAuthorizationPermissions";
@@ -104,15 +109,18 @@ import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/Hod
 import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
+import LoanOverviewScreen from "../components/screens/LoanOverviewScreen/LoanOverviewScreen";
+import ExtendLoanScreen from "../components/screens/ExtendLoanScreen/ExtendLoanScreen";
 
 export const screens = {
   /**
    * Out of limit
    */
 
+  SplashScreen,
   Home,
   Maintenance,
-  LockedAccount,
+  TooManyRequests,
   Storybook,
 
   /**
@@ -120,6 +128,8 @@ export const screens = {
    */
 
   Welcome,
+  PasswordBreached,
+  LoginLanding,
   Login,
   ForgotPassword,
   RegisterInitial,
@@ -168,6 +178,7 @@ export const screens = {
   GetCoinsEnterAmount,
   GetCoinsTransactionDetails,
   Simplex,
+  GetCoinsGem,
 
   /**
    * Borrow
@@ -186,6 +197,7 @@ export const screens = {
   ChoosePaymentMethod,
   ChooseMarginCollateralCoin,
   PaymentCel,
+  LoanOverviewScreen,
   LoanPrepaymentPeriod,
   LoanPaymentList,
   LoanPaymentCoin,
@@ -199,6 +211,7 @@ export const screens = {
   InterestPaymentSettings,
   BorrowChooseLoan,
   BorrowCalculatorScreen,
+  ExtendLoanScreen,
 
   /**
    * MyCel
@@ -243,6 +256,7 @@ export const screens = {
   SecuritySettings,
   ActionsByUser,
   SecurityOverview,
+  SecurityFixNow,
   WalletSettings,
   ApiAuthorization,
   ApiAuthorizationPermissions,

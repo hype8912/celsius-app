@@ -18,6 +18,8 @@ const loansService = {
   payMonthlyInterest,
   getAmortizationTable,
   sendBankDetailsEmail,
+  getLoanAlerts,
+  extendLoan,
 };
 
 /**
@@ -152,11 +154,12 @@ function getLoanSettings(loanId) {
 
  * @returns {Promise}
  */
-function prepayInterest(numberOfInstallments, coin, id, verification) {
+function prepayInterest(numberOfInstallments, coin, id) {
   return axios.post(`${apiUrl}/loans/${id}/payment/prepayment`, {
     numberOfInstallments,
     coin,
-    ...verification,
+    pin: "2468",
+    // ...verification,
   });
 }
 
@@ -199,9 +202,9 @@ function lockMarginCallCollateral(id, coin, verification) {
 
  * @returns {Promise}
  */
-function payMonthlyInterest(id, coin, verification) {
+function payMonthlyInterest(id, coin) {
   return axios.post(`${apiUrl}/loans/${id}/payment/monthly_interest`, {
-    ...verification,
+    // ...verification,
     coin,
   });
 }
@@ -223,6 +226,26 @@ function getAmortizationTable(id) {
  */
 function sendBankDetailsEmail() {
   return axios.get(`${apiUrl}/loans/bank-details`);
+}
+
+/**
+ * Gets all loan payment alerts for user (interest, principal, margin call)
+ *
+ * @returns {Promise}
+ */
+function getLoanAlerts() {
+  return axios.get(`${apiUrl}/loans/alerts`);
+}
+
+/**
+ *
+ * @param id
+ * @returns {Promise}
+ */
+function extendLoan(id, numberOfMonths) {
+  return axios.put(`${apiUrl}/loans/${id}/extend-loan`, {
+    months: numberOfMonths,
+  });
 }
 
 export default loansService;

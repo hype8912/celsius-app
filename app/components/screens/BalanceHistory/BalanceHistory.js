@@ -49,6 +49,11 @@ class BalanceHistory extends Component {
     };
   }
 
+  componentDidMount() {
+    const { actions } = this.props;
+    actions.changeWalletHeaderContent();
+  }
+
   render() {
     const { walletSummary } = this.props;
     const style = BalanceHistoryStyle();

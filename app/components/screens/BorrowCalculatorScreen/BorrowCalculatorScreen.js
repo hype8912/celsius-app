@@ -35,6 +35,8 @@ import loanUtil from "../../../utils/loan-util";
       loanCompliance: state.compliance.loan,
       minimumLoanAmount: state.generalData.minimumLoanAmount,
       walletSummary: state.wallet.summary,
+      loyaltyInfo: state.loyalty.loyaltyInfo,
+      activeScreen: state.nav.activeScreen,
       kycStatus: state.user.profile.kyc
         ? state.user.profile.kyc.status
         : KYC_STATUSES.collecting,
@@ -53,17 +55,10 @@ class BorrowCalculatorScreen extends Component {
     left: "back",
   });
 
-  static navigationOptions = () => ({
-    title: "Borrow",
-    right: "profile",
-    left: "back",
-  });
-
   constructor(props) {
     super(props);
 
-    const { currencies, loanCompliance, ltv, minimumLoanAmount } = props;
-
+    const { currencies, loanCompliance } = props;
     const coinSelectItems = currencies
       .filter(c => loanCompliance.collateral_coins.includes(c.short))
       .map(c => ({
@@ -83,18 +78,19 @@ class BorrowCalculatorScreen extends Component {
       { value: 48, label: <CelText>4Y</CelText> },
     ];
 
-    props.actions.initForm({
-      coin: "BTC",
-      termOfLoan: 6,
-      amount: minimumLoanAmount,
-      ltv: ltv[0],
-    });
-
+    this.initCalculator();
     this.style = BorrowCalculatorScreenStyle();
   }
 
   componentDidUpdate(prevProps) {
-    const { formData } = this.props;
+    const { formData, activeScreen } = this.props;
+
+    if (
+      activeScreen !== prevProps.activeScreen &&
+      activeScreen === "BorrowCalculatorScreen"
+    ) {
+      this.initCalculator();
+    }
 
     if (!_.isEqual(formData, prevProps.formData)) {
       this.sliderItems = [
@@ -154,6 +150,17 @@ class BorrowCalculatorScreen extends Component {
     }
   }
 
+  initCalculator = () => {
+    const { actions, ltv, minimumLoanAmount } = this.props;
+
+    actions.initForm({
+      coin: "BTC",
+      termOfLoan: 6,
+      amount: minimumLoanAmount,
+      ltv: ltv[0],
+    });
+  };
+
   getPurposeSpecificProps = loanParams => {
     const { purpose, actions } = this.props;
 
@@ -199,20 +206,6 @@ class BorrowCalculatorScreen extends Component {
             }),
         };
 
-      case EMPTY_STATES.NON_MEMBER_BORROW:
-        return {
-          ...defaultProps,
-          subtitle: "",
-          bottomHeading: "Borrow dollars for your crypto",
-          bottomParagraph:
-            "Calculate your loan interest before you deposit coins",
-          onPress: () =>
-            actions.navigateTo("Deposit", {
-              coin: "CEL",
-            }),
-          buttonCopy: "Deposit CEL",
-        };
-
       case EMPTY_STATES.COMPLIANCE:
         return {
           ...defaultProps,
@@ -245,7 +238,10 @@ class BorrowCalculatorScreen extends Component {
     if (Number(value) < minimumLoanAmount) {
       actions.showMessage(
         "warning",
-        `Minimum amount for a loan is ${formatter.usd(minimumLoanAmount)}`
+        `Minimum amount for a loan is ${formatter.fiat(
+          minimumLoanAmount,
+          "USD"
+        )}`
       );
     }
 
@@ -262,6 +258,7 @@ class BorrowCalculatorScreen extends Component {
       ltv,
       minimumLoanAmount,
       eligibleCoins,
+      loyaltyInfo,
     } = this.props;
 
     const loanParams = loanUtil.emitLoanParams(
@@ -269,7 +266,8 @@ class BorrowCalculatorScreen extends Component {
       currencies,
       ltv,
       minimumLoanAmount,
-      eligibleCoins
+      eligibleCoins,
+      loyaltyInfo
     );
 
     const purposeProps = this.getPurposeSpecificProps(loanParams);

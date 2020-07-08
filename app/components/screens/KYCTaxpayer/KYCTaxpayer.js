@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import CelButton from "../../atoms/CelButton/CelButton";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -33,7 +32,7 @@ class KYCTaxpayer extends Component {
 
   static navigationOptions = () => ({
     title: "Taxpayer ID",
-    customCenterComponent: <ProgressBar steps={7} currentStep={6} />,
+    customCenterComponent: { steps: 7, currentStep: 6, flowProgress: false },
     headerSameColor: true,
   });
 

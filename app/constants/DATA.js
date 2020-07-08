@@ -26,6 +26,7 @@ const BLOCKEXPLORERS_STAGING = {
   eth: "https://rinkeby.etherscan.io/tx/",
   eos: "https://jungle.bloks.io/transaction/",
   erc20: "https://rinkeby.etherscan.io/tx/",
+  bsv: "https://testnet.bitcoincloud.net/tx/",
 };
 const BLOCKEXPLORERS_PRODUCTION = {
   btc: "https://blockexplorer.com/tx/",
@@ -38,13 +39,15 @@ const BLOCKEXPLORERS_PRODUCTION = {
   btg: "https://btgexplorer.com/tx/",
   eth: "https://etherscan.io/tx/",
   eos: "https://bloks.io/transaction/",
+  etc: "https://explorer.bitquery.io/ethclassic/tx/", // TODO: add staging link
   erc20: "https://etherscan.io/tx/",
+  bsv: "https://blockchair.com/bitcoin-sv/transaction/",
 };
 
 const BLOCKEXPLORERS =
   ENV === "PRODUCTION" ? BLOCKEXPLORERS_PRODUCTION : BLOCKEXPLORERS_STAGING;
 
-const BRANCH_LINKS = {
+const DEEP_LINKS = {
   TRANSFER: "TRANSFER",
   INDIVIDUAL_REFERRAL: "INDIVIDUAL_REFERRAL",
   COMPANY_REFERRAL: "COMPANY_REFERRAL",
@@ -66,6 +69,8 @@ const TRANSACTION_TYPES = {
   WITHDRAWAL_CANCELED: "WITHDRAWAL_CANCELED",
   WITHDRAWAL_PENDING_VERIFICATION: "WITHDRAWAL_PENDING_VERIFICATION",
   WITHDRAWAL_PENDING_REVIEW: "WITHDRAWAL_PENDING_REVIEW",
+  WITHDRAWAL_FAILED: "WITHDRAWAL_FAILED",
+  WITHDRAWAL_UNCONFIRMED: "WITHDRAWAL_UNCONFIRMED",
 
   LOAN_INTEREST: "LOAN_INTEREST",
   LOAN_PRINCIPAL_PAYMENT: "LOAN_PRINCIPAL",
@@ -268,16 +273,22 @@ const LOAN_INTEREST_COINS = [
 ];
 
 const TOTAL_ASSETS_AMOUNT = {
-  DATE: "16 FEB 2020", // write in same format every week
-  TOTAL_AUM: 591590044,
-  TOTAL_COLLATERAL_AND_CASH: 236324417,
+  DATE: "22 JUNE 2020", // write in same format every week
+  TOTAL_AUM: 705201069,
+  TOTAL_COLLATERAL_AND_CASH: 433075931,
 };
 
-const SIMPLEX_PAYMENT_STATUSES = {
+const BUY_COINS_PAYMENT_STATUSES = {
   PENDING: "pending",
+
   APPROVED: "approved",
-  CANCELLED: "declined",
+  COMPLETED: "completed",
+
+  CANCELLED: "cancelled",
+  EXPIRED: "expired",
+  DECLINED: "declined",
   REFUNDED: "refunded",
+  FAILED: "failed",
 };
 
 const SIMPLEX_FIAT_CURRENCIES = [
@@ -379,10 +390,49 @@ const SECURITY_STRENGTH_LEVEL = {
 
 const NOTIFICATION_TOKEN = "notificationToken";
 
+const COMING_SOON_COINS = [
+  {
+    name: "Algorand",
+    short: "ALGO",
+    image_url: require("../../assets/images/coins/algorand.png"),
+    learn_more_link: "https://www.algorand.com/",
+  },
+  {
+    name: "Tron",
+    short: "TRX",
+    image_url: require("../../assets/images/coins/tron3x.png"),
+    learn_more_link: "https://tron.network/",
+  },
+  {
+    name: "PAX Gold",
+    short: "PAXG",
+    image_url: require("../../assets/images/coins/paxGoldFullColor3x.png"),
+    learn_more_link: "https://www.paxos.com/paxgold/",
+  },
+  {
+    name: "Binance USD",
+    short: "BUSD",
+    image_url: require("../../assets/images/coins/binanceusd.png"),
+    learn_more_link: "https://www.paxos.com/busd/",
+  },
+  {
+    name: "Binance Coin",
+    short: "BNB",
+    image_url: require("../../assets/images/coins/binance.png"),
+    learn_more_link: "https://www.binance.com/en/buy-Binance-Coin",
+  },
+  {
+    name: "IOTA",
+    short: "IOTA",
+    image_url: require("../../assets/images/coins/iota.png"),
+    learn_more_link: "https://www.iota.org/",
+  },
+];
+
 export {
   BLOCKEXPLORERS,
   KYC_STATUSES,
-  BRANCH_LINKS,
+  DEEP_LINKS,
   TRANSFER_STATUSES,
   TRANSACTION_TYPES,
   CONTACT_NETWORK,
@@ -395,9 +445,10 @@ export {
   PRIMETRUST_KYC_STATES,
   LOAN_INTEREST_COINS,
   TOTAL_ASSETS_AMOUNT,
-  SIMPLEX_PAYMENT_STATUSES,
+  BUY_COINS_PAYMENT_STATUSES,
   SIMPLEX_FIAT_CURRENCIES,
   SECURITY_STRENGTH_ITEMS,
   SECURITY_STRENGTH_LEVEL,
   NOTIFICATION_TOKEN,
+  COMING_SOON_COINS,
 };

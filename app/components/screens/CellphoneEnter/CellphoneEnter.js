@@ -5,7 +5,6 @@ import { countries } from "country-data";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -19,7 +18,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 )
 class CellphoneEnter extends Component {
   static navigationOptions = () => ({
-    customCenterComponent: <ProgressBar steps={5} currentStep={2} />,
+    customCenterComponent: { steps: 5, currentStep: 2, flowProgress: false },
   });
 
   componentDidMount() {
@@ -30,9 +29,7 @@ class CellphoneEnter extends Component {
   updateCellphoneNumber = async phone => {
     const { actions, formData, user } = this.props;
     let count = 0;
-    const charArray = `${phone.countryCallingCodes[0]}${
-      formData["cellphone.text"]
-    }`
+    const charArray = `${phone.countryCallingCodes[0]}${formData["cellphone.text"]}`
       .split("")
       .map(c => {
         if (["+", ",", ";", "*", "#"].includes(c)) count++;

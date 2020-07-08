@@ -8,7 +8,6 @@ import CelText from "../../atoms/CelText/CelText";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 
 @connect(
   state => ({
@@ -24,7 +23,7 @@ class CellphoneVerify extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    customCenterComponent: <ProgressBar steps={5} currentStep={3} />,
+    customCenterComponent: { steps: 5, currentStep: 3, flowProgress: false },
   });
 
   constructor(props) {

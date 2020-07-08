@@ -21,6 +21,7 @@ import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import InterestCard from "../../molecules/InterestCard/InterestCard";
 import interestUtil from "../../../utils/interest-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
+import Counter from "../../molecules/Counter/Counter";
 
 const { COLORS } = STYLES;
 
@@ -63,6 +64,7 @@ class CoinDetails extends Component {
 
     this.state = {
       currency,
+      refreshing: false,
     };
   }
 
@@ -121,11 +123,23 @@ class CoinDetails extends Component {
   goToBuyCoins = () => {
     const { currency } = this.state;
     const { actions } = this.props;
-    actions.navigateTo("GetCoinsLanding", { coin: currency.short });
+    actions.updateFormField("selectedCoin", currency.short);
+    actions.navigateTo("GetCoinsLanding");
+  };
+
+  refresh = async () => {
+    const { actions } = this.props;
+    this.setState({
+      refreshing: true,
+    });
+    await actions.getCurrencyRates();
+    this.setState({
+      refreshing: false,
+    });
   };
 
   render() {
-    const { currency } = this.state;
+    const { currency, refreshing } = this.state;
     const {
       actions,
       interestRates,
@@ -137,6 +151,7 @@ class CoinDetails extends Component {
       depositCompliance,
       simplexCompliance,
     } = this.props;
+
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
     const coinPrice = currencies
@@ -162,8 +177,20 @@ class CoinDetails extends Component {
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
+    const isBelowThreshold = interestUtil.isBelowThreshold(coinDetails.short);
+    const specialRate = isBelowThreshold
+      ? interestRate.specialApyRate
+      : interestRate.apyRate;
+    const isInCel = !interestRate.inCEL
+      ? interestRate.compound_rate
+      : specialRate;
+
     return (
-      <RegularLayout padding={"20 0 100 0"}>
+      <RegularLayout
+        padding={"20 0 100 0"}
+        refreshing={refreshing}
+        pullToRefresh={this.refresh}
+      >
         <View style={style.container}>
           <Card padding={"0 0 7 0"}>
             <View style={style.coinAmountWrapper}>
@@ -178,9 +205,14 @@ class CoinDetails extends Component {
                   <CelText weight="300" type="H6">
                     {currency.displayName}
                   </CelText>
-                  <CelText weight="600" type="H2" margin={"3 0 3 0"}>
-                    {formatter.usd(coinDetails.amount_usd)}
-                  </CelText>
+                  <Counter
+                    weight="600"
+                    type="H2"
+                    margin={"3 0 3 0"}
+                    number={coinDetails.amount_usd.toNumber()}
+                    speed={5}
+                    usd
+                  />
                   <CelText weight="300" type="H6">
                     {formatter.crypto(coinDetails.amount, coinDetails.short)}
                   </CelText>
@@ -328,7 +360,9 @@ class CoinDetails extends Component {
                           align="justify"
                           type="H5"
                           color="white"
-                        >{`${interestRate.display} APY`}</CelText>
+                        >{`${formatter.percentageDisplay(
+                          isInCel
+                        )} APY`}</CelText>
                       </Badge>
                     </View>
                   )}

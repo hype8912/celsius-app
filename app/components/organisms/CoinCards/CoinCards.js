@@ -10,6 +10,7 @@ import CoinGridCard from "../../molecules/CoinGridCard/CoinGridCard";
 import CoinListCard from "../../molecules/CoinListCard/CoinListCard";
 import Icon from "../../atoms/Icon/Icon";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
+import animationsUtil from "../../../utils/animations-util";
 
 class CoinCards extends Component {
   static propTypes = {
@@ -19,30 +20,10 @@ class CoinCards extends Component {
     currenciesGraphs: PropTypes.instanceOf(Object),
     navigateTo: PropTypes.func,
     depositCompliance: PropTypes.instanceOf(Object),
+    shouldAnimate: PropTypes.bool,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      coinsWithTransactions: [],
-      coinsWithoutTransactions: [],
-    };
-  }
-
-  componentDidMount() {
-    this.filterCoins();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.walletSummary.total_amount_usd !==
-      this.props.walletSummary.total_amount_usd
-    ) {
-      this.filterCoins();
-    }
-  }
-
-  filterCoins = async () => {
+  filterCoins = () => {
     const {
       walletSummary,
       currenciesRates,
@@ -50,6 +31,17 @@ class CoinCards extends Component {
       navigateTo,
       depositCompliance,
     } = this.props;
+
+    let coinsWithTransactions = [];
+    let coinsWithoutTransactions = [];
+
+    if (!walletSummary || !currenciesRates) {
+      return {
+        coinsWithTransactions,
+        coinsWithoutTransactions,
+      };
+    }
+
     const allowedCoins = [];
 
     if (walletSummary) {
@@ -60,25 +52,25 @@ class CoinCards extends Component {
 
         if (
           !depositCompliance.coins.includes(coin.short) &&
-          coin.amount_usd > 0
+          coin.amount_usd.isGreaterThan(0)
         ) {
           allowedCoins.push(coin);
         }
       });
     }
 
-    allowedCoins.sort((a, b) => b.amount_usd - a.amount_usd);
-
-    if (allowedCoins) {
+    allowedCoins.sort((a, b) => b.amount_usd.minus(a.amount_usd));
+    if (allowedCoins && currenciesRates) {
       const coins = [];
       allowedCoins.forEach(coin => {
         const tempCoin = coin;
         tempCoin.currency = currenciesRates.find(
           c => c.short === coin.short.toUpperCase()
         );
-        tempCoin.graphData = !_.isEmpty(currenciesGraphs[coin.short])
-          ? currenciesGraphs[coin.short]
-          : null;
+        tempCoin.graphData =
+          currenciesGraphs && !_.isEmpty(currenciesGraphs[coin.short])
+            ? currenciesGraphs[coin.short]
+            : null;
         tempCoin.navigate = Number(coin.has_transaction)
           ? () =>
               navigateTo("CoinDetails", {
@@ -90,31 +82,35 @@ class CoinCards extends Component {
         coins.push(coin);
       });
 
-      const coinsWithTransactions = _.remove(
+      coinsWithTransactions = _.remove(
         coins,
         c => Number(c.has_transaction) !== 0
       );
-      const coinsWithoutTransactions = _.remove(
+      coinsWithoutTransactions = _.remove(
         coins,
         c => Number(c.has_transaction) === 0
       );
 
-      await this.setState({
+      return {
         coinsWithTransactions,
         coinsWithoutTransactions,
-      });
+      };
     }
   };
 
   renderCoinCards = c => {
-    const { activeView } = this.props;
+    const { activeView, shouldAnimate } = this.props;
 
     const isGrid = activeView === WALLET_LANDING_VIEW_TYPES.GRID;
+    const processedGridItems = animationsUtil.applyOffset([...c], 2);
+    const processedListItems = animationsUtil.applyOffset([...c], 1);
 
     // Render grid item
     if (isGrid) {
-      return c.map(coin => (
+      return processedGridItems.map(coin => (
         <CoinGridCard
+          shouldAnimate={shouldAnimate}
+          offset={coin.offset}
           key={coin.short}
           coin={coin}
           displayName={coin.currency.displayName}
@@ -125,8 +121,10 @@ class CoinCards extends Component {
       ));
     }
     // Render list item
-    return c.map(coin => (
+    return processedListItems.map(coin => (
       <CoinListCard
+        shouldAnimate={shouldAnimate}
+        offset={coin.offset}
         key={coin.short}
         coin={coin}
         displayName={coin.currency.displayName}
@@ -155,9 +153,10 @@ class CoinCards extends Component {
 
   render() {
     const style = CoinCardsStyle();
-
-    const { coinsWithTransactions, coinsWithoutTransactions } = this.state;
-
+    const {
+      coinsWithTransactions,
+      coinsWithoutTransactions,
+    } = this.filterCoins();
     return (
       <View>
         <ExpandableItem

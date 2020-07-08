@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Image } from "react-native";
+import { View, Image, StatusBar } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -38,13 +38,15 @@ class Welcome extends Component {
   };
 
   async componentDidMount() {
+    StatusBar.setHidden(false);
+
     const appVersion = await appUtil.getRevisionId();
     this.setState({ revisionId: appVersion.revisionId });
   }
 
   onPressLogin = () => {
     const { actions } = this.props;
-    actions.navigateTo("Login");
+    actions.navigateTo("LoginLanding", { type: "login" });
   };
 
   render() {
@@ -68,14 +70,15 @@ class Welcome extends Component {
           </CelText>
           <CelButton
             style={style.button}
-            onPress={() => actions.navigateTo("RegisterInitial")}
+            onPress={() =>
+              actions.navigateTo("LoginLanding", { type: "register" })
+            }
           >
             Join Celsius
           </CelButton>
           <CelButton basic onPress={() => this.onPressLogin()}>
             Login
           </CelButton>
-
           <CelText
             margin="30 0 0 0"
             weight="light"

@@ -1,27 +1,31 @@
-// TODO(fj): init segment in app actions (removed from App.v2.js)
-// TODO(fj): move handle app state change to app action (removed logic from App.v2.js)
-// TODO(fj): move app loading assets to app action (removed logic from App.v2.js)
-// TODO(fj): merge App and MainLayout?
-
-// TODO(fj): create offline and no internet screens or a static screen with type?
-
 import React, { Component } from "react";
-// import { AppLoading } from "expo";
 import { Provider } from "react-redux";
-import { AppState, BackHandler, StyleSheet } from "react-native";
 import SplashScreen from "react-native-splash-screen";
+import { AppState, BackHandler, StyleSheet, StatusBar } from "react-native";
 import codePush from "react-native-code-push";
 import * as Font from "expo-font";
 
 import store from "./redux/store";
 import * as actions from "./redux/actions";
-import appUtil from "./utils/app-util";
 import AppNavigation from "./navigator/Navigator";
-import FabMenu from "./components/organisms/FabMenu/FabMenu";
 import Message from "./components/molecules/Message/Message";
-// import captureException from './utils/errorhandling-util'
+import DeepLinkController from "./components/molecules/DeepLinkController/DeepLinkController";
 import ErrorBoundary from "./ErrorBoundary";
 import { remotePushController } from "./utils/push-notifications-util";
+import FabIntersection from "./components/organisms/FabIntersection/FabIntersection";
+import apiUtil from "./utils/api-util";
+import appUtil from "./utils/app-util";
+import branchUtil from "./utils/branch-util";
+import { disableAccessibilityFontScaling } from "./utils/styles-util";
+import { getSecureStoreKey } from "./utils/expo-storage";
+import Constants from "../constants";
+import { STORYBOOK } from "../dev-settings";
+import StoryBook from "./components/screens/Storybook/Storybook";
+
+const { SECURITY_STORAGE_AUTH_KEY } = Constants;
+
+// eslint-disable-next-line no-console
+console.disableYellowBox = true;
 
 function getActiveRouteName(navigationState) {
   if (!navigationState) {
@@ -37,22 +41,52 @@ function getActiveRouteName(navigationState) {
 
 class App extends Component {
   async componentDidMount() {
-    await appUtil.initializeThirdPartyServices();
+    // Hide Splashscreen immediately when in STORYBOOK mode
+    if (STORYBOOK) {
+      SplashScreen.hide();
+      return;
+    }
+
+    StatusBar.setHidden(true);
+
+    appUtil.logoutOnEnvChange();
+    appUtil.initInternetConnectivityListener();
+    apiUtil.initInterceptors();
+    store.dispatch(branchUtil.initBranch());
+
+    await appUtil.updateCelsiusApp();
+
+    disableAccessibilityFontScaling();
+    store.dispatch(actions.isGoodForAnimations());
+    store.dispatch(actions.getGeolocation());
 
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       store.dispatch(actions.navigateBack());
       return true;
     });
+
     AppState.addEventListener("change", nextState => {
       store.dispatch(actions.handleAppStateChange(nextState));
     });
 
-    await this.initApp();
+    await store.dispatch(await actions.loadCelsiusAssets());
     StyleSheet.setStyleAttributePreprocessor(
       "fontFamily",
       Font.processFontFamily
     );
-    SplashScreen.hide();
+
+    appUtil.initializeThirdPartyServices();
+    appUtil.pollBackendStatus();
+
+    const token = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+    if (!token) {
+      return store.dispatch(actions.navigateTo("Welcome"));
+    }
+
+    await appUtil.checkAndRefreshAuthToken(token);
+
+    await store.dispatch(actions.getInitialCelsiusData());
+    store.dispatch(actions.navigateTo("Home"));
   }
 
   componentWillUnmount() {
@@ -62,9 +96,10 @@ class App extends Component {
     });
   }
 
-  initApp = async () => await store.dispatch(await actions.loadCelsiusAssets());
-
   render() {
+    // render StoryBook instead of regular app
+    if (STORYBOOK) return <StoryBook />;
+
     return (
       <ErrorBoundary>
         <CelsiusApplication />
@@ -88,8 +123,9 @@ const CelsiusApplication = () => (
         ref={navigatorRef => actions.setTopLevelNavigator(navigatorRef)}
       />
       <Message />
-      <FabMenu />
+      <FabIntersection />
     </React.Fragment>
+    <DeepLinkController />
     {remotePushController()}
   </Provider>
 );

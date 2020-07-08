@@ -43,14 +43,14 @@ const TxAddressSection = ({ transaction, text, address }) => {
           </TouchableOpacity>
         )}
       </Card>
-      {transaction.coin === "xrp" && (
+      {transaction.coin === "xrp" && address && (
         <Card margin={"10 0 20 0"}>
           <CelText weight="500" type="H4">
             Destination Tag: {address.split("=")[1]}
           </CelText>
         </Card>
       )}
-      {(transaction.coin === "xlm" || transaction.coin === "eos") && (
+      {(transaction.coin === "xlm" || transaction.coin === "eos") && address && (
         <Card margin={"10 0 20 0"}>
           <CelText weight="500" type="H4">
             Memo ID: {address.split("=")[1]}

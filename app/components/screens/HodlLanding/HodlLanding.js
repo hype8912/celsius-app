@@ -8,7 +8,6 @@ import * as appActions from "../../../redux/actions";
 // import HodlLandingStyle from "./HodlLanding.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { getPadding } from "../../../utils/styles-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
@@ -32,10 +31,18 @@ class HodlLanding extends Component {
       activeMode: false,
     };
   }
-  static navigationOptions = () => ({
-    title: "HODL Mode",
-    right: "profile",
-  });
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    return {
+      title: "HODL Mode",
+      right: "profile",
+      customCenterComponent: {
+        steps: params && params.deactivation ? 2 : 3,
+        currentStep: 1,
+        flowProgress: true,
+      },
+    };
+  };
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.activeHodlMode !== prevState.activeMode) {
@@ -68,7 +75,6 @@ class HodlLanding extends Component {
       <RegularLayout padding={padding}>
         {notInHodlMode ? (
           <View>
-            <HeadingProgressBar steps={3} currentStep={1} />
             <View
               style={[
                 { flex: 1, width: "100%", height: "100%" },

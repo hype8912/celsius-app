@@ -19,6 +19,7 @@ import { FAB_TYPE } from "../../../constants/UI";
 import KeyboardShift from "../../atoms/KeyboardShift/KeyboardShift";
 import OfflineMode from "../../atoms/OfflineMode/OfflineMode";
 import Spinner from "../../atoms/Spinner/Spinner";
+import animationsUtil from "../../../utils/animations-util";
 
 @connect(
   state => ({
@@ -82,6 +83,14 @@ class RegularLayout extends Component {
     const style = RegularLayoutStyle(theme);
     const paddings = getPadding(padding);
 
+    if (!internetConnected) {
+      return (
+        <SafeAreaView style={[style.container, style.noInternet]}>
+          <OfflineMode />
+        </SafeAreaView>
+      );
+    }
+
     return (
       <React.Fragment>
         {refreshing && (
@@ -95,6 +104,10 @@ class RegularLayout extends Component {
           scrollEnabled={enableParentScroll}
           style={style.container}
           contentContainerStyle={[{ flexGrow: 1 }, paddings]}
+          scrollEventThrottle={1}
+          onScroll={event =>
+            animationsUtil.scrollListener(event.nativeEvent.contentOffset.y)
+          }
           refreshControl={
             pullToRefresh && (
               <RefreshControl
@@ -108,13 +121,9 @@ class RegularLayout extends Component {
           }
         >
           <SafeAreaView style={{ flex: 1 }}>
-            {!internetConnected ? (
-              <OfflineMode />
-            ) : (
-              <KeyboardShift>
-                <>{children}</>
-              </KeyboardShift>
-            )}
+            <KeyboardShift>
+              <>{children}</>
+            </KeyboardShift>
           </SafeAreaView>
         </ScrollView>
       </React.Fragment>

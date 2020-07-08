@@ -5,7 +5,6 @@ import {
   Platform,
   TouchableOpacity,
   Animated,
-  Easing,
   Keyboard,
 } from "react-native";
 import { connect } from "react-redux";
@@ -28,7 +27,6 @@ import STYLES from "../../../constants/STYLES";
   state => ({
     fabMenuOpen: state.ui.fabMenuOpen,
     theme: state.user.appSettings.theme,
-    appInitialized: state.app.appInitialized,
     fabType: state.ui.fabType,
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
@@ -47,10 +45,6 @@ class FabMenu extends Component {
     this.state = {
       menuItems: [],
     };
-
-    this.springValue = new Animated.Value(1);
-    this.pulseValue = new Animated.Value(1);
-    this.opacityValue = new Animated.Value(1);
   }
 
   componentDidMount = () => {
@@ -59,19 +53,6 @@ class FabMenu extends Component {
       menuItems: this.getMenuItems(fabType),
     });
   };
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      (nextProps.appInitialized &&
-        nextProps.appInitialized !== this.props.appInitialized &&
-        nextProps.user.has_pin) ||
-      (nextProps.appInitialized &&
-        nextProps.user.has_pin &&
-        nextProps.user.has_pin !== this.props.user.has_pin)
-    ) {
-      this.doAnimate();
-    }
-  }
 
   componentDidUpdate = prevProps => {
     if (
@@ -151,7 +132,7 @@ class FabMenu extends Component {
       case THEMES.DARK:
       case THEMES.CELSIUS:
         return {
-          color: STYLES.COLORS.DARK_FAB_OUTSIDE_BACKGROUND_COLOR,
+          color: "dark",
           blur: 15,
         };
       case THEMES.LIGHT:
@@ -162,47 +143,6 @@ class FabMenu extends Component {
         };
     }
   };
-
-  doAnimate() {
-    setTimeout(() => {
-      this.spring();
-    }, 1000);
-    setTimeout(() => {
-      this.spring();
-    }, 2500);
-    setTimeout(() => {
-      this.spring();
-    }, 4000);
-  }
-
-  spring() {
-    this.springValue.setValue(1.1);
-    this.pulseValue.setValue(1);
-    this.opacityValue.setValue(0.8);
-    Animated.spring(this.springValue, {
-      toValue: 1,
-      friction: 2,
-      // damping: 6,
-      tension: 9,
-      // bounciness: 1,
-      // stiffness: 100,
-      // overshootClamping: true,
-      // speed: 0.01,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(this.pulseValue, {
-      toValue: 1.7,
-      duration: 1500,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(this.opacityValue, {
-      toValue: 0,
-      duration: 1500,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-  }
 
   fabAction = () => {
     const { fabType } = this.props;
@@ -354,21 +294,9 @@ class FabMenu extends Component {
     return (
       <Fragment>
         <Animated.View
-          style={[
-            style.fabButton,
-            style.opacityCircle,
-            {
-              transform: [{ scale: this.pulseValue }],
-              opacity: this.opacityValue,
-            },
-          ]}
+          style={[style.shadowStyle, style.fabButton, style.opacityCircle]}
         />
-        <Animated.View
-          style={[
-            style.fabButton,
-            { transform: [{ scale: this.springValue }] },
-          ]}
-        >
+        <Animated.View style={[style.fabButton]}>
           <Fab onPress={this.fabAction} type={fabType} />
         </Animated.View>
       </Fragment>
@@ -381,7 +309,6 @@ class FabMenu extends Component {
 
     if (isKYCRejectedForever()) return null;
 
-    // if (!appInitialized) return null; // Too many bugs with this one line of code :D
     if (fabType === "hide") return null;
 
     const FabMenuCmp = this.renderFabMenu;

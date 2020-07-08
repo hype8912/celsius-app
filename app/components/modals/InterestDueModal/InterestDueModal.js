@@ -9,7 +9,7 @@ import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import InterestDueModalStyle from "./InterestDueModal.styles";
-import CelButton from "../../atoms/CelButton/CelButton";
+import LoanCard from "../../molecules/LoanCard/LoanCard";
 
 class InterestDueModal extends Component {
   static propTypes = {
@@ -44,12 +44,19 @@ class InterestDueModal extends Component {
         </CelText>
 
         <CelText align="center" margin="10 0 10 0">
-          Your interest due is
+          Interest owed
           <CelText weight="bold">
             {" "}
             {formatter.usd(instalmentsToBePaid.total)}
           </CelText>
         </CelText>
+
+        <LoanCard
+          backgroundColor={style.installmentsWrapper.backgroundColor}
+          navigateTo={navigateTo}
+          loan={activeLoan}
+          closeModal={closeModal}
+        />
 
         <View style={style.installmentsWrapper}>
           <View
@@ -85,12 +92,6 @@ class InterestDueModal extends Component {
             </View>
           ))}
         </View>
-
-        {alert && (
-          <CelButton basic onPress={this.seeLoanDetails}>
-            See Loan Details
-          </CelButton>
-        )}
 
         <View
           style={{

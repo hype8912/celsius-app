@@ -8,6 +8,7 @@ import MessageStyle from "./Message.styles";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
+import animationsUtil from "../../../utils/animations-util";
 
 @connect(
   state => ({
@@ -21,19 +22,7 @@ class Message extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.message) {
-      Animated.timing(prevState.yOffset, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }).start(({ finished }) => {
-        if (finished)
-          Animated.timing(prevState.yOffset, {
-            delay: 4000,
-            toValue: 0,
-            duration: 500,
-            useNativeDriver: true,
-          }).start();
-      });
+      animationsUtil.openMessage(prevState.yOffset);
     }
     return null;
   }
@@ -60,13 +49,8 @@ class Message extends Component {
 
   closeMessage = () => {
     const { actions } = this.props;
-    Animated.timing(this.state.yOffset, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: true,
-    }).start(({ finished }) => {
-      if (finished) actions.clearMessage();
-    });
+    const { yOffset } = this.state;
+    animationsUtil.closeMessage(yOffset, () => actions.clearMessage());
   };
 
   render() {

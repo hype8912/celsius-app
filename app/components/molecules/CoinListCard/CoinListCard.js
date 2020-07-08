@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { View, Animated } from "react-native";
 
 import CoinListCardStyle from "./CoinListCard.styles";
 import CelText from "../../atoms/CelText/CelText";
@@ -10,6 +10,9 @@ import formatter from "../../../utils/formatter";
 import Card from "../../atoms/Card/Card";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import interestUtil from "../../../utils/interest-util";
+import { widthPercentageToDP } from "../../../utils/styles-util";
+import Counter from "../Counter/Counter";
+import animationsUtil from "../../../utils/animations-util";
 
 class CoinListCard extends Component {
   static propTypes = {
@@ -17,7 +20,11 @@ class CoinListCard extends Component {
     displayName: PropTypes.string.isRequired,
     currencyRates: PropTypes.instanceOf(Object).isRequired,
     onCardPress: PropTypes.func,
+    offset: PropTypes.number,
+    shouldAnimate: PropTypes.bool,
   };
+
+  opacityAnim = new Animated.Value(0);
 
   coinCardEmpty = () => (
     <View>
@@ -40,9 +47,13 @@ class CoinListCard extends Component {
 
   coinCardFull = coin => (
     <Fragment>
-      <CelText weight="600" type="H3" margin="3 0 3 0">
-        {formatter.usd(coin.amount_usd)}
-      </CelText>
+      <Counter
+        weight="600"
+        type="H3"
+        margin="3 0 3 0"
+        number={coin.amount_usd}
+        usd
+      />
       <CelText weight="300" type="H6">
         {formatter.crypto(coin.amount, coin.short)}
       </CelText>
@@ -59,9 +70,16 @@ class CoinListCard extends Component {
         color={STYLES.COLORS.GREEN}
         margin="0 0 0 3"
       >
-        {interestRate.display} APR
+        {interestRate.display} APY
       </CelText>
     );
+  };
+
+  animate = () => {
+    const { offset, shouldAnimate } = this.props;
+    if (!shouldAnimate) return { opacity: 1 };
+    animationsUtil.animateArrayOfObjects(this.opacityAnim, offset, 750);
+    return { opacity: this.opacityAnim };
   };
 
   render() {
@@ -70,28 +88,34 @@ class CoinListCard extends Component {
     const style = CoinListCardStyle();
 
     return (
-      <Card onPress={onCardPress}>
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ alignSelf: "center" }}>
-            <CoinIcon
-              customStyles={style.coinImage}
-              url={currencyRates.image_url}
-              coinShort={coin.short}
-            />
+      <Animated.View
+        style={[this.animate(), { width: widthPercentageToDP("90%") }]}
+      >
+        <Card onPress={onCardPress}>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ alignSelf: "center" }}>
+              <CoinIcon
+                customStyles={style.coinImage}
+                url={currencyRates.image_url}
+                coinShort={coin.short}
+              />
+            </View>
+            <View>
+              <CelText weight="300" type="H6">
+                {displayName}
+              </CelText>
+              {hasTransactions
+                ? this.coinCardFull(coin)
+                : this.coinCardEmpty(coin, currencyRates)}
+            </View>
+            <View
+              style={{ position: "absolute", right: 0, alignSelf: "center" }}
+            >
+              {this.renderInterestRate(coin)}
+            </View>
           </View>
-          <View>
-            <CelText weight="300" type="H6">
-              {displayName}
-            </CelText>
-            {hasTransactions
-              ? this.coinCardFull(coin)
-              : this.coinCardEmpty(coin, currencyRates)}
-          </View>
-          <View style={{ position: "absolute", right: 0, alignSelf: "center" }}>
-            {this.renderInterestRate(coin)}
-          </View>
-        </View>
-      </Card>
+        </Card>
+      </Animated.View>
     );
   }
 }

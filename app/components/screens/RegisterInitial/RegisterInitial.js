@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { View } from "react-native";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
-import SocialLogin from "../../organisms/SocialLogin/SocialLogin";
-import Separator from "../../atoms/Separator/Separator";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-// import STYLES from "../../../constants/STYLES";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
 import RegisterPromoCodeCard from "../../molecules/RegisterPromoCodeCard/RegisterPromoCodeCard";
@@ -19,10 +16,11 @@ import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
 import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import passwordUtil from "../../../utils/password-util";
+import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
-    user: state.user.profile,
+    // user: state.user.profile,
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
     callsInProgress: state.api.callsInProgress,
@@ -32,8 +30,7 @@ import passwordUtil from "../../../utils/password-util";
 )
 class RegisterInitial extends Component {
   static navigationOptions = () => ({
-    right: "login",
-    customCenterComponent: <ProgressBar steps={3} currentStep={1} />,
+    customCenterComponent: { steps: 3, currentStep: 1, flowProgress: false },
     headerSameColor: true,
   });
 
@@ -170,97 +167,116 @@ class RegisterInitial extends Component {
 
     return (
       <AuthLayout>
-        <CelText margin="0 0 30 0" align="center" type="H1">
-          Join Celsius
-        </CelText>
-        <SocialLogin type="register" actions={actions} />
+        <View style={{ justifyContent: "space-between", height: "100%" }}>
+          <View style={{ justifyContent: "flex-start" }}>
+            <CelText margin="0 0 10 0" align="center" type="H1">
+              Create Account
+            </CelText>
+            <CelText margin="0 0 30 0" weight="300" align="center">
+              Create a new account
+            </CelText>
 
-        <Separator allCaps text="Create your account" margin="20 0 20 0" />
+            <CelInput
+              disabled={registerLoading}
+              autoCapitalize="words"
+              type="text"
+              field="firstName"
+              value={formData.firstName}
+              error={formErrors.firstName}
+              placeholder="First name"
+              returnKeyType={"next"}
+              blurOnSubmiting={false}
+              onSubmitEditing={() => {
+                this.last.focus();
+              }}
+              refs={input => {
+                this.firstNameInput = input;
+              }}
+            />
+            <CelInput
+              disabled={registerLoading}
+              autoCapitalize="words"
+              type="text"
+              field="lastName"
+              value={formData.lastName}
+              error={formErrors.lastName}
+              placeholder="Last name"
+              returnKeyType={"next"}
+              blurOnSubmiting={false}
+              onSubmitEditing={() => {
+                this.email.focus();
+              }}
+              refs={input => {
+                this.last = input;
+              }}
+            />
 
-        <CelInput
-          disabled={registerLoading}
-          autoCapitalize="words"
-          type="text"
-          field="firstName"
-          value={formData.firstName}
-          error={formErrors.firstName}
-          placeholder="First name"
-          returnKeyType={"next"}
-          blurOnSubmiting={false}
-          onSubmitEditing={() => {
-            this.last.focus();
-          }}
-          refs={input => {
-            this.firstNameInput = input;
-          }}
-        />
-        <CelInput
-          disabled={registerLoading}
-          autoCapitalize="words"
-          type="text"
-          field="lastName"
-          value={formData.lastName}
-          error={formErrors.lastName}
-          placeholder="Last name"
-          returnKeyType={"next"}
-          blurOnSubmiting={false}
-          onSubmitEditing={() => {
-            this.email.focus();
-          }}
-          refs={input => {
-            this.last = input;
-          }}
-        />
+            <CelInput
+              disabled={!!isUsingSocial || registerLoading}
+              type="text"
+              value={formData.email}
+              error={formErrors.email}
+              field="email"
+              placeholder="E-mail"
+              keyboardType={KEYBOARD_TYPE.EMAIL}
+              returnKeyType={!isUsingSocial ? "next" : "done"}
+              blurOnSubmiting={false}
+              onSubmitEditing={() => {
+                if (!isUsingSocial) this.pass.focus();
+              }}
+              refs={input => {
+                this.email = input;
+              }}
+            />
 
-        <CelInput
-          disabled={!!isUsingSocial || registerLoading}
-          type="text"
-          value={formData.email}
-          error={formErrors.email}
-          field="email"
-          placeholder="E-mail"
-          keyboardType={KEYBOARD_TYPE.EMAIL}
-          returnKeyType={!isUsingSocial ? "next" : "done"}
-          blurOnSubmiting={false}
-          onSubmitEditing={() => {
-            if (!isUsingSocial) this.pass.focus();
-          }}
-          refs={input => {
-            this.email = input;
-          }}
-        />
+            {!isUsingSocial && (
+              <CelInput
+                disabled={registerLoading}
+                type="password"
+                field="password"
+                placeholder="Password"
+                value={formData.password}
+                error={formErrors.password}
+                refs={input => {
+                  this.pass = input;
+                }}
+                showPasswordTooltip
+                toolTipPositionTop
+                showPassMeter
+                margin={"0 0 30 0"}
+              />
+            )}
 
-        {!isUsingSocial && (
-          <CelInput
-            disabled={registerLoading}
-            type="password"
-            field="password"
-            placeholder="Password"
-            value={formData.password}
-            error={formErrors.password}
-            refs={input => {
-              this.pass = input;
-            }}
-            showPasswordTooltip
-            toolTipPositionTop
-            showPassMeter
-            margin={"0 0 30 0"}
-          />
-        )}
+            <RegisterToUCard
+              termsOfUse={formData.termsOfUse}
+              updateFormField={actions.updateFormField}
+            />
 
-        <RegisterToUCard
-          termsOfUse={formData.termsOfUse}
-          updateFormField={actions.updateFormField}
-        />
+            <RegisterPromoCodeCard
+              promoCode={promoCode}
+              openModal={actions.openModal}
+            />
 
-        <RegisterPromoCodeCard
-          promoCode={promoCode}
-          openModal={actions.openModal}
-        />
+            {this.renderCaptcha()}
 
-        {this.renderCaptcha()}
-
-        <RegisterPromoCodeModal type={"register"} />
+            <RegisterPromoCodeModal type={"register"} />
+          </View>
+          <View style={{ justifyContent: "flex-end" }}>
+            <CelText weight="300" align="center">
+              Already have an account?
+              <CelText
+                weight="300"
+                align="center"
+                color={STYLES.COLORS.CELSIUS_BLUE}
+                onPress={() =>
+                  actions.navigateTo("LoginLanding", { type: "login" })
+                }
+              >
+                {` Log in`}
+              </CelText>
+            </CelText>
+          </View>
+        </View>
       </AuthLayout>
     );
   }

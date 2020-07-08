@@ -25,6 +25,7 @@ import TransactionDetailsCelPay from "../TransactionDetailsCelPay/TransactionDet
     transaction: state.transactions.transactionDetails,
     callsInProgress: state.api.callsInProgress,
     totalInterestEarned: state.wallet.summary.total_interest_earned,
+    currencies: state.currencies.rates,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -62,6 +63,28 @@ class TransactionsIntersection extends Component {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
+  extendTransactionObj = () => {
+    const { transaction, currencies } = this.props;
+    const coinFull =
+      transaction &&
+      currencies.find(
+        c => c.short.toLowerCase() === transaction.coin.toLowerCase()
+      ).displayName;
+    const interestCoinFull =
+      transaction &&
+      currencies.find(
+        c => c.short.toLowerCase() === transaction.interest_coin.toLowerCase()
+      ).displayName;
+
+    const extendedTransactionObj = {
+      ...transaction,
+      coinFull,
+      interestCoinFull,
+    };
+
+    return extendedTransactionObj;
+  };
 
   render() {
     // const style = TransactionsIntersectionStyle();
@@ -137,6 +160,8 @@ class TransactionsIntersection extends Component {
           />
         );
       case TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED:
+      case TRANSACTION_TYPES.WITHDRAWAL_UNCONFIRMED:
+      case TRANSACTION_TYPES.WITHDRAWAL_FAILED:
       case TRANSACTION_TYPES.WITHDRAWAL_PENDING:
       case TRANSACTION_TYPES.WITHDRAWAL_CANCELED:
       case TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION:
@@ -153,7 +178,7 @@ class TransactionsIntersection extends Component {
         return (
           <TransactionDetailsInterest
             navigateTo={actions.navigateTo}
-            transaction={transaction}
+            transaction={this.extendTransactionObj()}
             totalInterest={totalInterestEarned}
           />
         );

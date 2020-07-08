@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import {
   View,
-  Modal,
   StyleSheet,
   TouchableOpacity,
   Keyboard,
-  Platform,
+  TouchableWithoutFeedback,
 } from "react-native";
+import Modal from "react-native-modal";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { BlurView } from "@react-native-community/blur";
@@ -19,6 +19,7 @@ import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import { getTheme } from "../../../utils/styles-util";
+import { isIos } from "../../../utils/ui-util";
 
 @connect(
   state => ({
@@ -87,19 +88,22 @@ class CelModal extends Component {
 
   getTintColor = () => {
     const { theme } = this.props;
+    const style = CelModalStyle();
 
     switch (theme) {
       case THEMES.DARK:
       case THEMES.CELSIUS:
         return {
-          color: STYLES.COLORS.DARK_MODAL_OUTSIDE_BACKGROUND_COLOR,
-          blur: 15,
+          color: "extraDark",
+          blur: 100,
+          androidColor: style.outsideCloseModal.backgroundColor,
         };
       case THEMES.LIGHT:
       default:
         return {
-          color: STYLES.COLORS.LIGHT_MODAL_OUTSIDE_BACKGROUND_COLOR,
-          blur: 12,
+          color: "dark",
+          blur: 70,
+          androidColor: style.outsideCloseModal.backgroundColor,
         };
     }
   };
@@ -155,15 +159,32 @@ class CelModal extends Component {
     );
   };
 
+  backdrop = () => {
+    const { actions } = this.props;
+    const tintColor = this.getTintColor();
+    return isIos() ? (
+      <TouchableWithoutFeedback
+        onPress={() => {
+          actions.closeModal();
+        }}
+      >
+        <BlurView
+          blurType={tintColor.color}
+          blurAmount={tintColor.blur}
+          style={[StyleSheet.absoluteFill]}
+        />
+      </TouchableWithoutFeedback>
+    ) : null;
+  };
+
   render() {
     const {
       openedModal,
       name,
-      actions,
       children,
       picture,
       hasCloseButton,
-      onClose,
+      actions,
     } = this.props;
     const { modalPosition } = this.state;
     const style = CelModalStyle();
@@ -171,10 +192,15 @@ class CelModal extends Component {
 
     return (
       <Modal
-        animationType="fade"
-        transparent
-        onRequestClose={() => actions.closeModal()}
-        visible={openedModal === name}
+        isVisible={openedModal === name}
+        hasBackdrop
+        avoidKeyboard
+        backdropColor={tintColor.androidColor}
+        customBackdrop={this.backdrop()}
+        backdropTransitionInTiming={500}
+        backdropTransitionOutTiming={500}
+        onBackdropPress={() => actions.closeModal()}
+        useNativeDriver={!isIos()}
       >
         <View style={[style.wrapper, modalPosition]}>
           <View style={style.modal}>
@@ -184,23 +210,6 @@ class CelModal extends Component {
             </View>
             {children}
           </View>
-          {Platform.OS === "ios" && (
-            <BlurView
-              blurType={tintColor.color}
-              blurAmount={tintColor.blur}
-              style={[StyleSheet.absoluteFill]}
-            />
-          )}
-          <TouchableOpacity
-            style={style.outsideCloseModal}
-            onPress={() => {
-              if (!hasCloseButton) return;
-              if (onClose) {
-                onClose();
-              }
-              actions.closeModal();
-            }}
-          />
         </View>
       </Modal>
     );

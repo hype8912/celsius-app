@@ -2,7 +2,6 @@ import { Linking } from "react-native";
 import axios from "axios/index";
 import Constants from "../../constants";
 import store from "../redux/store";
-import API_URL from "../services/api-url";
 import appUtil from "./app-util";
 import mixpanelAnalytics from "./mixpanel-analytics";
 import { navigateTo } from "../redux/nav/navActions";
@@ -67,6 +66,7 @@ function errorValidation(error) {
   const stringIgnore = [
     "Could not download from",
     "undefined is not an object (evaluating 't.dispatch')",
+    "JS Functions are not convertible to dynamic",
   ];
 
   for (let i = 0; i < stringIgnore.length; i++) {
@@ -111,9 +111,9 @@ async function err(e, isFatal = false) {
       app_version: revisionId,
       platform: Constants.platform,
       lastTenActions,
+      message: error.message,
     };
 
-    axios.post(`${API_URL}/graylog`, errorObject);
     mixpanelAnalytics.appCrushed(errorObject);
 
     store.dispatch(navigateTo(profile.id ? "WalletLanding" : "Welcome"));

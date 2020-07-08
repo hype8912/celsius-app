@@ -36,7 +36,7 @@ class WithdrawAddressOverview extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Withdrawal Addresses ",
+    title: "Withdrawal Addresses",
     right: "profile",
   });
 
@@ -62,6 +62,24 @@ class WithdrawAddressOverview extends Component {
     actions.navigateTo("WithdrawAddressLabel");
   };
 
+  renderFromFixNowFlow = () => {
+    const { securityOverview, actions } = this.props;
+    if (securityOverview.fromFixNow) {
+      return (
+        <CelText
+          margin="20 0 20 0"
+          type="H6"
+          weight="600"
+          align="center"
+          color={STYLES.COLORS.CELSIUS_BLUE}
+          onPress={() => actions.navigateTo("SecurityFixNow")}
+        >
+          Go back to Fix Now
+        </CelText>
+      );
+    }
+  };
+
   renderCoinDetails = key => {
     const { currencies } = this.props;
     const coin = currencies.find(c => c.short === key);
@@ -69,22 +87,29 @@ class WithdrawAddressOverview extends Component {
   };
 
   renderNoWithdrawalAddressCoins = () => {
-    const { hodlStatus, noWithdrawalAddresses, currenciesRates } = this.props;
+    const {
+      noWithdrawalAddresses,
+      currenciesRates,
+      withdrawalAddresses,
+      securityOverview,
+    } = this.props;
     if (noWithdrawalAddresses && noWithdrawalAddresses.length > 0) {
-      return noWithdrawalAddresses.map(coin => {
-        const imageUrl = currenciesRates.filter(
-          image => image.short === coin.short
-        )[0].image_url;
-        return (
-          <NoWithdrawalAddressCard
-            imageUrl={imageUrl}
-            coinName={formatter.capitalize(coin.name)}
-            coinShort={coin.short}
-            onPress={() => this.handlePress(coin.short)}
-            disabledPress={hodlStatus.isActive}
-          />
-        );
-      });
+      return noWithdrawalAddresses
+        .filter(coin => withdrawalAddresses[coin.short] === undefined)
+        .map(coin => {
+          const imageUrl = currenciesRates.filter(
+            image => image.short === coin.short
+          )[0].image_url;
+          return (
+            <NoWithdrawalAddressCard
+              imageUrl={imageUrl}
+              coinName={formatter.capitalize(coin.name)}
+              coinShort={coin.short}
+              onPress={() => this.handlePress(coin.short)}
+              disabledPress={securityOverview.hodl_mode_active}
+            />
+          );
+        });
     }
   };
 
@@ -189,6 +214,8 @@ class WithdrawAddressOverview extends Component {
               </View>
             </View>
           </Card>
+
+          {this.renderFromFixNowFlow()}
 
           {noWithdrawalAddresses && noWithdrawalAddresses.length > 0 && (
             <Separator text={"ACTION NEEDED"} />

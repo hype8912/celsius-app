@@ -8,13 +8,14 @@ import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import WalletDetailsCardStyle from "./WalletDetailsCard.styles";
-import formatter from "../../../utils/formatter";
 import STYLES from "../../../constants/STYLES";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import * as appActions from "../../../redux/actions";
+import Counter from "../../molecules/Counter/Counter";
 
 @connect(
   state => ({
+    currencies: state.currencies.rates,
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
@@ -28,12 +29,14 @@ class WalletDetailsCard extends PureComponent {
   };
 
   navigateToBalanceHistory = () => {
-    const { actions } = this.props;
+    const { actions, currencies } = this.props;
+    if (!currencies) return;
     actions.navigateTo("BalanceHistory");
   };
 
   navigateToDeposit = () => {
-    const { actions } = this.props;
+    const { actions, currencies } = this.props;
+    if (!currencies) return;
     actions.navigateTo("Deposit");
   };
 
@@ -49,9 +52,14 @@ class WalletDetailsCard extends PureComponent {
               <CelText weight="300" type="H6">
                 Total Wallet balance
               </CelText>
-              <CelText weight="600" type="H3" margin="3 0 3 0">
-                {formatter.usd(walletSummary.total_amount_usd)}
-              </CelText>
+              <Counter
+                weight="600"
+                type="H3"
+                margin="3 0 3 0"
+                number={walletSummary.total_amount_usd}
+                speed={5}
+                usd
+              />
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.navigateToDeposit}>
@@ -70,9 +78,14 @@ class WalletDetailsCard extends PureComponent {
               <CelText weight="300" type="H6">
                 Total Interest earned
               </CelText>
-              <CelText weight="600" type="H3" margin="3 0 3 0">
-                {formatter.usd(walletSummary.total_interest_earned)}
-              </CelText>
+              <Counter
+                weight="600"
+                type="H3"
+                margin="3 0 3 0"
+                number={walletSummary.total_interest_earned}
+                speed={5}
+                usd
+              />
             </TouchableOpacity>
 
             <TouchableOpacity

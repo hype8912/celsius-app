@@ -27,6 +27,8 @@ import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
 import STYLES from "../../../constants/STYLES";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
+import LoanAdvertiseModal from "../../modals/LoanAdvertiseModal/LoanAdvertiseModal";
+import Spinner from "../../atoms/Spinner/Spinner";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -62,6 +64,7 @@ const cardWidth = widthPercentageToDP("70%");
       maxAmount,
       loyaltyInfo: state.loyalty.loyaltyInfo,
       activeLoan: state.loans.activeLoan,
+      userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -88,6 +91,7 @@ class BorrowLanding extends Component {
   async componentDidMount() {
     const { actions, loanCompliance, formData } = this.props;
     actions.checkForLoanAlerts();
+    actions.openModal(MODALS.LOAN_ADVERTISE_MODAL);
 
     if (formData.prepayLoanId) {
       actions.openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL);
@@ -101,7 +105,6 @@ class BorrowLanding extends Component {
 
   getMinLtv = () => {
     const { ltv } = this.props;
-
     return Math.max(...ltv.map(x => x.percent));
   };
 
@@ -184,7 +187,7 @@ class BorrowLanding extends Component {
   };
 
   renderDefaultView() {
-    const { xOffset, filterItem } = this.state;
+    const { xOffset, filterItem, isLoading } = this.state;
     const { actions, allLoans, loyaltyInfo, activeLoan } = this.props;
     const style = BorrowLandingStyle();
     const filteredLoans = this.handleFilter();
@@ -198,90 +201,105 @@ class BorrowLanding extends Component {
         <View style={{ marginLeft: 20, marginRight: 20 }}>
           {this.renderCard()}
         </View>
-        <ScrollView
-          horizontal
-          style={style.tabs}
-          showsHorizontalScrollIndicator={false}
-        >
-          {LOAN_FILTER_ITEMS.map(item => (
-            <TouchableOpacity
-              key={item}
-              style={style.tab}
-              onPress={() =>
-                this.setState({
-                  filterItem: item !== "ALL" ? item : null,
-                })
-              }
-            >
-              <CelText
-                type={"H6"}
-                weight={item === filter ? "500" : "300"}
-                color={item === filter ? STYLES.COLORS.CELSIUS_BLUE : undefined}
-              >
-                {item}
-              </CelText>
-              {filter === item && <View style={style.activeFilterLine} />}
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-        {filteredLoans.length > 0 ? (
-          <View>
-            <Animated.ScrollView
-              horizontal
-              scrollEventThrottle={16}
-              onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { x: xOffset } } }],
-                { useNativeDriver: true }
-              )}
-              showsHorizontalScrollIndicator={false}
-              decelerationRate={0}
-              snapToInterval={cardWidth}
-              snapToAlignment={"right"}
-            >
-              {filteredLoans &&
-                filteredLoans.map((loan, index) => {
-                  const opacity = xOffset.interpolate({
-                    inputRange: [
-                      (index - 1) * cardWidth,
-                      index * cardWidth,
-                      (index + 1) * cardWidth,
-                    ],
-                    outputRange: [0.3, 1, 0.15],
-                    extrapolate: "clamp",
-                  });
-
-                  return (
-                    <Animated.View
-                      key={loan.id}
-                      style={[this.transitionAnimation(index), { opacity }]}
-                    >
-                      <LoanOverviewCard
-                        loan={loan}
-                        index={index}
-                        length={allLoans.length - 1}
-                        navigateTo={actions.navigateTo}
-                        actions={actions}
-                        celDiscount={loyaltyInfo.tier.loanInterestBonus}
-                      />
-                    </Animated.View>
-                  );
-                })}
-            </Animated.ScrollView>
-            <CancelLoanModal actions={actions} />
-            <InterestDueModal
-              closeModal={actions.closeModal}
-              activeLoan={activeLoan}
-              navigateTo={actions.navigateTo}
-            />
+        {isLoading ? (
+          <View
+            style={{
+              marginTop: 20,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Spinner />
           </View>
         ) : (
-          <View style={style.noSelectedItems}>
-            <CelText align={"center"} width={"300"}>
-              Sorry, there are no loans for the selected category.
-            </CelText>
+          <View>
+            <ScrollView
+              horizontal
+              style={style.tabs}
+              showsHorizontalScrollIndicator={false}
+            >
+              {LOAN_FILTER_ITEMS.map(item => (
+                <TouchableOpacity
+                  key={item}
+                  style={style.tab}
+                  onPress={() =>
+                    this.setState({
+                      filterItem: item !== "ALL" ? item : null,
+                    })
+                  }
+                >
+                  <CelText
+                    type={"H6"}
+                    weight={item === filter ? "500" : "300"}
+                    color={
+                      item === filter ? STYLES.COLORS.CELSIUS_BLUE : undefined
+                    }
+                  >
+                    {item}
+                  </CelText>
+                  {filter === item && <View style={style.activeFilterLine} />}
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+            {filteredLoans.length > 0 ? (
+              <View>
+                <Animated.ScrollView
+                  horizontal
+                  scrollEventThrottle={16}
+                  onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { x: xOffset } } }],
+                    { useNativeDriver: true }
+                  )}
+                  showsHorizontalScrollIndicator={false}
+                  decelerationRate={0}
+                  snapToInterval={cardWidth}
+                  snapToAlignment={"right"}
+                >
+                  {filteredLoans &&
+                    filteredLoans.map((loan, index) => {
+                      const opacity = xOffset.interpolate({
+                        inputRange: [
+                          (index - 1) * cardWidth,
+                          index * cardWidth,
+                          (index + 1) * cardWidth,
+                        ],
+                        outputRange: [0.3, 1, 0.15],
+                        extrapolate: "clamp",
+                      });
+
+                      return (
+                        <Animated.View
+                          key={loan.id}
+                          style={[this.transitionAnimation(index), { opacity }]}
+                        >
+                          <LoanOverviewCard
+                            loan={loan}
+                            index={index}
+                            length={allLoans.length - 1}
+                            navigateTo={actions.navigateTo}
+                            actions={actions}
+                            celDiscount={loyaltyInfo.tier.loanInterestBonus}
+                          />
+                        </Animated.View>
+                      );
+                    })}
+                </Animated.ScrollView>
+                <CancelLoanModal actions={actions} />
+                <InterestDueModal
+                  closeModal={actions.closeModal}
+                  activeLoan={activeLoan}
+                  navigateTo={actions.navigateTo}
+                />
+              </View>
+            ) : (
+              <View style={style.noSelectedItems}>
+                <CelText align={"center"} width={"300"}>
+                  Sorry, there are no loans for the selected category.
+                </CelText>
+              </View>
+            )}
           </View>
         )}
-
         <LoanAlertsModalWrapper />
       </RegularLayout>
     );
@@ -295,7 +313,7 @@ class BorrowLanding extends Component {
 
   // slavija intersection
   renderIntersection() {
-    const { user, kycStatus, loanCompliance, allLoans } = this.props;
+    const { kycStatus, loanCompliance, allLoans } = this.props;
 
     const hasLoans = !!allLoans.length;
 
@@ -303,12 +321,10 @@ class BorrowLanding extends Component {
       return (
         <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_VERIFIED_BORROW} />
       );
-    if (!user.celsius_member)
-      return (
-        <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_MEMBER_BORROW} />
-      );
     if (!loanCompliance.allowed)
       return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
+
+    if (hasLoans) return this.renderDefaultView();
 
     if (!hasLoans) return this.renderNoLoans();
 
@@ -316,10 +332,28 @@ class BorrowLanding extends Component {
   }
 
   render() {
-    const { walletSummary } = this.props;
+    const {
+      walletSummary,
+      actions,
+      formData,
+      userTriggeredActions,
+    } = this.props;
 
     if (!walletSummary) return null;
-    return this.renderIntersection();
+
+    return (
+      <>
+        {this.renderIntersection()}
+        {!userTriggeredActions.hide_loan_advertise_modal && (
+          <LoanAdvertiseModal
+            closeModal={actions.closeModal}
+            updateFormField={actions.updateFormField}
+            formData={formData}
+            setUserAppSettings={actions.setUserAppSettings}
+          />
+        )}
+      </>
+    );
   }
 }
 

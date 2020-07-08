@@ -40,12 +40,14 @@ class SelectCoin extends Component {
         "coinListFormatted"
       );
 
-      const allCoins = coinListFormatted.map(coin => {
-        return {
-          ...coin,
-          image: getImageForCrypto(coin, nextProps.currencies),
-        };
-      });
+      const allCoins =
+        coinListFormatted &&
+        coinListFormatted.map(coin => {
+          return {
+            ...coin,
+            image: getImageForCrypto(coin, nextProps.currencies),
+          };
+        });
 
       const text =
         (nextProps.formData &&
@@ -53,11 +55,13 @@ class SelectCoin extends Component {
           nextProps.formData.search.toLowerCase()) ||
         "";
 
-      newState.filteredCoins = allCoins.filter(
-        coin =>
-          coin.label.toLowerCase().includes(text) ||
-          coin.value.toLowerCase().includes(text)
-      );
+      newState.filteredCoins =
+        allCoins &&
+        allCoins.filter(
+          coin =>
+            coin.label.toLowerCase().includes(text) ||
+            coin.value.toLowerCase().includes(text)
+        );
 
       newState.search = nextProps.formData.search;
     }
@@ -77,12 +81,14 @@ class SelectCoin extends Component {
     const { currencies, navigation } = this.props;
     const coinListFormatted = navigation.getParam("coinListFormatted");
 
-    const allCoins = coinListFormatted.map(coin => {
-      return {
-        ...coin,
-        image: getImageForCrypto(coin, currencies),
-      };
-    });
+    const allCoins =
+      coinListFormatted &&
+      coinListFormatted.map(coin => {
+        return {
+          ...coin,
+          image: getImageForCrypto(coin, currencies),
+        };
+      });
     this.setState({
       filteredCoins: allCoins,
     });
@@ -194,9 +200,9 @@ class SelectCoin extends Component {
     const { filteredCoins } = this.state;
 
     return (
-      <RegularLayout fabType="hide">
+      <RegularLayout>
         <View>
-          {filteredCoins.length > 0 ? (
+          {filteredCoins && filteredCoins.length > 0 ? (
             <FlatList
               data={filteredCoins}
               renderItem={this.renderItem}

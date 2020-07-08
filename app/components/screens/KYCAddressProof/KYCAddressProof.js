@@ -12,7 +12,6 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
@@ -31,7 +30,7 @@ class KYCAddressProof extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    customCenterComponent: <ProgressBar steps={7} currentStep={5} />,
+    customCenterComponent: { steps: 7, currentStep: 5, flowProgress: false },
     headerSameColor: true,
     customBack: () => {
       store.dispatch(navigateTo("KYCVerifyIdentity"));

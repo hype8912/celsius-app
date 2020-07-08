@@ -8,7 +8,6 @@ import * as appActions from "../../../redux/actions";
 import { navigateTo } from "../../../redux/nav/navActions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import ProgressBar from "../../atoms/ProgressBar/ProgressBar";
 import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
@@ -28,7 +27,7 @@ class KYCCheckPhotos extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    customCenterComponent: <ProgressBar steps={7} currentStep={4} />,
+    customCenterComponent: { steps: 7, currentStep: 4, flowProgress: false },
     headerSameColor: true,
     customBack: () => {
       store.dispatch(navigateTo("KYCAddressInfo"));

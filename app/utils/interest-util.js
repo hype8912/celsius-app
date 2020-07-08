@@ -3,9 +3,11 @@ import store from "../redux/store";
 
 const interestUtil = {
   getUserInterestForCoin,
+  getLoyaltyRates,
   calculateAPY,
   calculateBonusRate,
   getBaseCelRate,
+  isBelowThreshold,
 };
 
 /**
@@ -22,6 +24,8 @@ const interestUtil = {
 function getUserInterestForCoin(coinShort) {
   const interestRates = store.getState().generalData.interestRates;
   const appSettings = store.getState().user.appSettings;
+  const celUtilityTiers = store.getState().generalData.celUtilityTiers;
+  const loyaltyInfo = store.getState().loyalty.loyaltyInfo;
 
   let interestRate = 0;
   let interestRateDisplay;
@@ -41,9 +45,11 @@ function getUserInterestForCoin(coinShort) {
         (appSettings.interest_in_cel &&
           appSettings.interest_in_cel_per_coin[coinShort] === null)) &&
       coinShort !== "CEL";
+
     interestRateDisplay = !inCEL
       ? formatter.percentageDisplay(interestRates[coinShort].compound_rate)
       : formatter.percentageDisplay(interestRates[coinShort].compound_cel_rate);
+
     interestRate = !inCEL
       ? interestRates[coinShort].compound_rate
       : interestRates[coinShort].compound_cel_rate;
@@ -62,6 +68,20 @@ function getUserInterestForCoin(coinShort) {
     );
   }
 
+  const apyRate = calculateAPY(
+    calculateBonusRate(
+      interestRates[coinShort] ? interestRates[coinShort].rate : 0,
+      celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
+    )
+  );
+
+  const specialApyRate = calculateAPY(
+    calculateBonusRate(
+      specialRate,
+      celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
+    )
+  );
+
   return {
     ...interestRates[coinShort],
     // Quickfix for ORBS and DAI crashes
@@ -74,7 +94,34 @@ function getUserInterestForCoin(coinShort) {
     specialRateDisplay,
     inCEL,
     eligible,
+    apyRate,
+    specialApyRate,
   };
+}
+
+/**
+ * Calculates APY from APR value
+ *
+ * param {Object} loyaltyInfo - loyaltyInfo response
+ */
+function getLoyaltyRates(loyaltyInfo) {
+  const interestRates = store.getState().generalData.interestRates;
+
+  Object.keys(interestRates).forEach(coinShort => {
+    const baseRate = interestUtil.getBaseCelRate(coinShort);
+    interestRates[coinShort].cel_rate = interestUtil.calculateBonusRate(
+      baseRate,
+      loyaltyInfo.earn_interest_bonus
+    );
+    interestRates[coinShort].compound_rate = interestUtil.calculateAPY(
+      interestRates[coinShort].rate
+    );
+    interestRates[coinShort].compound_cel_rate = interestUtil.calculateAPY(
+      interestRates[coinShort].cel_rate
+    );
+  });
+
+  return interestRates;
 }
 
 /**
@@ -111,14 +158,33 @@ function getBaseCelRate(coin) {
 
   if (interestRates[coin].threshold_on_first_n_coins && walletSummary) {
     const coinBalance = walletSummary.coins.find(c => c.short === coin).amount;
-    const shouldUseSpecialRate =
-      coinBalance < interestRates[coin].threshold_on_first_n_coins;
+
+    const shouldUseSpecialRate = coinBalance.isLessThan(
+      interestRates[coin].threshold_on_first_n_coins
+    );
     baseRate = shouldUseSpecialRate
       ? interestRates[coin].rate_on_first_n_coins
       : baseRate;
   }
 
   return baseRate;
+}
+
+function isBelowThreshold(coin) {
+  const interestRates = store.getState().generalData.interestRates;
+  const walletSummary = store.getState().wallet.summary;
+
+  if (
+    interestRates[coin] &&
+    interestRates[coin].threshold_on_first_n_coins &&
+    walletSummary
+  ) {
+    const coinBalance = walletSummary.coins.find(c => c.short === coin).amount;
+
+    return coinBalance.isLessThan(
+      interestRates[coin].threshold_on_first_n_coins
+    );
+  }
 }
 
 export default interestUtil;

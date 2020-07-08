@@ -1,1 +1,0 @@
-../../../../../node_modules/react-native-ux-cam/ios/UXCam.h

@@ -3,7 +3,19 @@ import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
   container: {
-    flex: 1,
+    justifyContent: "space-between",
+    height: "100%",
+  },
+  form: {
+    justifyContent: "flex-start",
+  },
+  bottom: {
+    justifyContent: "flex-end",
+  },
+  forgotPassword: {
+    justifyContent: "center",
+    alignItems: "flex-end",
+    marginBottom: 40,
   },
 };
 

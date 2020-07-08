@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import HeadingProgressBar from "../../atoms/HeadingProgressBar/HeadingProgressBar";
 import LoanInterestCard from "../../molecules/LoanInterestCard/LoanInterestCard";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
@@ -23,6 +22,7 @@ class BorrowLoanOption extends Component {
   static navigationOptions = () => ({
     title: "Choose Your Interest Rate",
     right: "info",
+    customCenterComponent: { steps: 8, currentStep: 4, flowProgress: true },
   });
 
   render() {
@@ -35,7 +35,6 @@ class BorrowLoanOption extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <HeadingProgressBar steps={6} currentStep={3} />
         <RegularLayout fabType="hide">
           <CelText weight={"300"} margin={"0 0 20 0"} align="center">
             Choose your interest rate:

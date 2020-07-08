@@ -17,7 +17,7 @@ import STYLES from "../../../constants/STYLES";
   state => ({
     formData: state.forms.formData,
     buyCoinsSettings: state.generalData.buyCoinsSettings,
-    simplexData: state.simplex.simplexData,
+    simplexData: state.buyCoins.simplexData,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -30,8 +30,8 @@ class GetCoinsConfirmModal extends Component {
 
     actions.navigateTo("VerifyProfile", {
       onSuccess: async () => {
-        await actions.simplexCreatePaymentRequest()
-        actions.navigateTo("Simplex")
+        await actions.createSimplexPayment();
+        actions.navigateTo("Simplex");
       },
     });
     actions.closeModal();
@@ -93,7 +93,7 @@ class GetCoinsConfirmModal extends Component {
                 Payment Method:
               </CelText>
               <CelText type={"H6"} align={"right"}>
-                {formData.simplexData.paymentMethod}
+                Credit Card
               </CelText>
             </View>
             <Separator />

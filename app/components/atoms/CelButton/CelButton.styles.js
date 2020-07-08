@@ -56,12 +56,16 @@ const base = {
   ghostredButton: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: STYLES.COLORS.WHITE,
+    borderColor: STYLES.COLORS.RED,
+    paddingHorizontal: 35,
   },
   ghostgreenButton: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: STYLES.COLORS.WHITE,
+    borderColor: STYLES.COLORS.GREEN,
+    paddingHorizontal: 35,
+    borderRadius: 60,
+    height: 35,
   },
   basicredButton: {
     backgroundColor: STYLES.COLORS.WHITE,
@@ -76,8 +80,18 @@ const base = {
   ghostTitle: {
     color: STYLES.COLORS.CELSIUS_BLUE,
   },
+  greenghostTitle: {
+    color: STYLES.COLORS.GREEN,
+  },
+  redghostTitle: {
+    color: STYLES.COLORS.RED,
+  },
   greenButton: {
     backgroundColor: STYLES.COLORS.GREEN,
+    borderRadius: 60,
+    paddingLeft: 35,
+    paddingRight: 35,
+    height: 35,
   },
   redButton: {
     backgroundColor: STYLES.COLORS.RED,

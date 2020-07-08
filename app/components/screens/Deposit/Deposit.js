@@ -18,7 +18,12 @@ import STYLES from "../../../constants/STYLES";
 import DepositStyle from "./Deposit.styles";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
-import { EMPTY_STATES, MODALS, THEMES } from "../../../constants/UI";
+import {
+  EMPTY_STATES,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+  THEMES,
+} from "../../../constants/UI";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import { KYC_STATUSES } from "../../../constants/DATA";
@@ -30,6 +35,7 @@ import { hasPassedKYC } from "../../../utils/user-util";
 import formatter from "../../../utils/formatter";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
+import AdditionalAmountCard from "../../molecules/AdditionalAmountCard/AdditionalAmountCard";
 
 @connect(
   state => ({
@@ -58,9 +64,14 @@ class Deposit extends Component {
 
     const { depositCompliance, currencies } = props;
 
-    const coinSelectItems = currencies
-      .filter(c => depositCompliance.coins.includes(c.short))
-      .map(c => ({ label: c.short, value: c.short }));
+    const coinSelectItems =
+      currencies &&
+      currencies
+        .filter(c => depositCompliance.coins.includes(c.short))
+        .map(c => ({
+          label: `${formatter.capitalize(c.name)} (${c.short})`,
+          value: c.short,
+        }));
 
     this.state = {
       isFetchingAddress: false,
@@ -71,7 +82,9 @@ class Deposit extends Component {
 
   componentDidMount() {
     const { actions } = this.props;
-    actions.openModal(MODALS.DEPOSIT_INFO_MODAL);
+    setTimeout(() => {
+      actions.openModal(MODALS.DEPOSIT_INFO_MODAL);
+    }, 1000);
   }
 
   getAddress = currency => {
@@ -195,44 +208,69 @@ class Deposit extends Component {
       navigation,
       currencyRatesShort,
     } = this.props;
-    const initialCollateral = navigation.getParam("coin");
+    const coin = navigation.getParam("coin");
     const loan = navigation.getParam("loan");
-    const collateralCoin = formData.selectedCoin || initialCollateral;
+    const amountUsd = navigation.getParam("amountUsd");
+    const additionalCryptoAmount = navigation.getParam(
+      "additionalCryptoAmount"
+    );
+    const reason = navigation.getParam("reason");
+    const collateralCoin = formData.selectedCoin || coin;
 
     let collateralMissing;
-    const collateralObj = walletSummary.coins.find(
-      c => c.short === formData.selectedCoin
-    );
+    let text;
+    let usd;
+    let crypto;
+    if (loan) {
+      const collateralObj =
+        walletSummary &&
+        walletSummary.coins.find(c => c.short === formData.selectedCoin);
 
-    if (collateralObj) {
-      collateralMissing = formatter.crypto(
-        loan.margin_call.margin_call_usd_amount /
-          currencyRatesShort[collateralCoin.toLowerCase()],
-        collateralCoin,
-        { precision: 4 }
-      );
+      if (collateralObj) {
+        collateralMissing = formatter.crypto(
+          loan.margin_call.margin_call_usd_amount /
+            currencyRatesShort[collateralCoin.toLowerCase()],
+          collateralCoin,
+          { precision: 4 }
+        );
+      }
     }
+
+    switch (reason) {
+      case LOAN_PAYMENT_REASONS.MANUAL_INTEREST:
+      case LOAN_PAYMENT_REASONS.INTEREST:
+      case LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT:
+        text = "required for the next interest payment.";
+        usd = amountUsd;
+        crypto = additionalCryptoAmount;
+        break;
+      case LOAN_PAYMENT_REASONS.PRINCIPAL:
+        text = "required for the principal payment.";
+        usd = amountUsd;
+        crypto = additionalCryptoAmount;
+        break;
+      case LOAN_PAYMENT_REASONS.MARGIN_CALL:
+        text = "required to cover the margin call";
+        usd = collateralMissing;
+        break;
+      default:
+        text = "required";
+        usd = 0;
+        crypto = 0;
+    }
+
+    const color =
+      reason !== "MARGIN_CALL" ? STYLES.COLORS.CELSIUS_BLUE : STYLES.COLORS.RED;
 
     return (
       <View style={{ alignSelf: "center" }}>
-        <Card color={STYLES.COLORS.CELSIUS_BLUE} size={"twoThirds"}>
-          <CelText
-            align={"center"}
-            weight={"300"}
-            type={"H6"}
-            color={STYLES.COLORS.WHITE}
-          >
-            {collateralMissing}{" "}
-          </CelText>
-          <CelText
-            weight={"300"}
-            align={"center"}
-            type={"H6"}
-            color={STYLES.COLORS.WHITE}
-          >
-            required to cover the margin call
-          </CelText>
-        </Card>
+        <AdditionalAmountCard
+          color={color}
+          additionalUsd={usd}
+          additionalCryptoAmount={crypto}
+          text={text}
+          coin={coin}
+        />
       </View>
     );
   };
@@ -325,6 +363,9 @@ class Deposit extends Component {
       memoId,
     } = this.getAddress(formData.selectedCoin);
     const coin = navigation.getParam("coin");
+    const isMarginCall = navigation.getParam("isMarginWarning");
+    const reason = navigation.getParam("reason");
+
     const {
       useAlternateAddress,
       isFetchingAddress,
@@ -382,7 +423,7 @@ class Deposit extends Component {
           navigateTo={actions.navigateTo}
         />
 
-        {navigation.getParam("isMarginWarning") ? this.renderPayCard() : null}
+        {isMarginCall ? this.renderPayCard() : null}
 
         {address && !isFetchingAddress ? (
           <View style={styles.container}>
@@ -505,11 +546,7 @@ class Deposit extends Component {
                 color={STYLES.COLORS.CELSIUS_BLUE}
                 type={"H4"}
                 weight={"300"}
-                onPress={() =>
-                  actions.navigateTo("GetCoinsLanding", {
-                    coin: formData.selectedCoin,
-                  })
-                }
+                onPress={() => actions.navigateTo("GetCoinsLanding")}
               >
                 {cryptoUtil.provideText(formData.selectedCoin)}
               </CelText>
@@ -531,6 +568,17 @@ class Deposit extends Component {
           interestCompliance={interestCompliance}
         />
 
+        {reason && (
+          <View>
+            {this.renderPayCard()}
+            <CelButton
+              onPress={() => actions.navigateTo("ChoosePaymentMethod")}
+            >
+              Continue
+            </CelButton>
+          </View>
+        )}
+
         {isFetchingAddress && this.renderLoader()}
 
         {formData.selectedCoin === "CEL" ? (
@@ -545,7 +593,9 @@ class Deposit extends Component {
           </View>
         ) : null}
         <DestinationInfoTagModal closeModal={actions.closeModal} />
-        <MemoIdModal coin={coinInfo} />
+        {coinInfo && coinInfo.short && (
+          <MemoIdModal closeModal={actions.closeModal} coin={coinInfo.short} />
+        )}
         <DepositInfoModal type={coin} />
       </RegularLayout>
     );
