@@ -36,7 +36,6 @@ class PerCoinCelInterestCard extends Component {
   constructor(props) {
     super(props);
     const { appSettings, actions, currencies } = props;
-
     const coinList = Object.keys(appSettings.interest_in_cel_per_coin).filter(
       coin => coin !== "CEL"
     );
@@ -47,7 +46,6 @@ class PerCoinCelInterestCard extends Component {
     const totalCoins = coinList.length;
     let countCoinsTrue = 0;
     let checked = false;
-
     Object.keys(appSettings.interest_in_cel_per_coin).forEach(key => {
       if (appSettings.interest_in_cel_per_coin[key] === true) countCoinsTrue++;
     });
@@ -196,9 +194,7 @@ class PerCoinCelInterestCard extends Component {
 
     const { formData, actions, interestCompliance, activeScreen } = this.props;
     const { coinList, isExpanded, coinNames, isLoading } = this.state;
-
     if (!formData.coinsInCel) return null;
-
     return (
       <Card>
         <CelCheckbox

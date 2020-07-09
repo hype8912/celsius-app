@@ -53,11 +53,9 @@ class RateInfoCard extends Component {
     const interestRate = interestUtil.getUserInterestForCoin(
       !coin ? "BTC" : coin.short
     );
-
     if (!interestRate.specialRate && !interestRate.coinThreshold) return null;
     if ((!interestCompliance && !interestCompliance.allowed) || isUSResident())
       return null;
-
     return (
       <View style={style}>
         {!interestRate.inCEL ? (
