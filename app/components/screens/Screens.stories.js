@@ -19,6 +19,7 @@ import GetCoinsEnterAmountStories from "./GetCoinsEnterAmount/GetCoinsEnterAmoun
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
 import BorrowLandingStories from "./BorrowLanding/BorrowLanding.stories";
+import BorrowEnterAmountStories from "./BorrowEnterAmount/BorrowEnterAmount.stories";
 
 import RegisterInitialStories from "./RegisterInitial/RegisterInitial.stories";
 import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
@@ -193,6 +194,11 @@ storiesOf("KYCAddressInfo", module).add(
   "Address Info",
   KYCAddressInfoStories.regular
 );
+
+storiesOf("BorrowEnterAmount", module)
+  .add("Crypto Loan", BorrowEnterAmountStories.crypto)
+  .add("USD", BorrowEnterAmountStories.usd)
+  .add("No Amount", BorrowEnterAmountStories.noAmount);
 
 storiesOf("SelectCountry", module)
   .add("Calling Codes", SelectCountryStories.noCodes)
