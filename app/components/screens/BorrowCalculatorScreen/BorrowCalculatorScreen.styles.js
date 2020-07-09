@@ -1,5 +1,7 @@
 import STYLES from "../../../constants/STYLES";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -10,9 +12,6 @@ const base = {
   },
   selectedCardStyle: {
     borderWidth: 1,
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-    borderColor: STYLES.COLORS.CELSIUS_BLUE,
-    color: STYLES.COLORS.WHITE,
   },
   percentageTextStyle: {
     color: STYLES.COLORS.DARK_GRAY,
@@ -44,6 +43,11 @@ const themed = {
     },
     interestCardText: {
       color: STYLES.COLORS.MEDIUM_GRAY,
+    },
+    selectedCardStyle: {
+      backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.LIGHT),
+      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.LIGHT),
+      color: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT),
     },
   },
   dark: {

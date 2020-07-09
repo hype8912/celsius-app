@@ -29,6 +29,7 @@ import STYLES from "../../../constants/STYLES";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 import LoanAdvertiseModal from "../../modals/LoanAdvertiseModal/LoanAdvertiseModal";
 import Spinner from "../../atoms/Spinner/Spinner";
+import { STORYBOOK } from "../../../../dev-settings.json";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -80,7 +81,7 @@ class BorrowLanding extends Component {
     const { ltv } = this.props;
 
     this.state = {
-      isLoading: true,
+      isLoading: !STORYBOOK,
       xOffset: new Animated.Value(0),
       filterItem: null,
     };
