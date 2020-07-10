@@ -44,6 +44,7 @@ class WithdrawCreateAddress extends Component {
     super(props);
 
     const { formData, walletSummary } = props;
+
     const coin = formData.coin;
     const coinData = walletSummary.coins.filter(
       c => c.short === coin.toUpperCase()
