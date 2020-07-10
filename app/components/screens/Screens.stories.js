@@ -31,6 +31,9 @@ import ConfirmCameraStories from "./ConfirmCamera/ConfirmCamera.stories";
 import KYCProfileDetailsStories from "./KYCProfileDetails/KYCProfileDetails.stories";
 import KYCAddressInfoStories from "./KYCAddressInfo/KYCAddressInfo.stories";
 import WalletSettingsStories from "./WalletSettings/WalletSettings.stories";
+import PersonalInformationStories from "./PersonalInformation/PersonalInformation.stories";
+import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
+import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -215,6 +218,18 @@ storiesOf("WalletSettings", module).add(
   "Wallet Settings",
   WalletSettingsStories.regular
 );
+
+storiesOf("PersonalInformation", module).add(
+  "Personal Information",
+  PersonalInformationStories.regular
+);
+
+storiesOf("TwoFactorSettings", module).add(
+  "TwoFactorSettings",
+  TwoFactorSettingsStories.regular
+);
+
+storiesOf("HodlLanding", module).add("HodlLanding", HodlLandingStories.regular);
 
 storiesOf("CameraScreen", module)
   .add("Profile", CameraScreenStories.profile)

@@ -14,6 +14,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Card from "../../atoms/Card/Card";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import Separator from "../../atoms/Separator/Separator";
+import { STORYBOOK } from "../../../../dev-settings.json";
 
 @connect(
   state => ({
@@ -34,9 +35,11 @@ class TwoFactorSettings extends Component {
   constructor(props) {
     super(props);
 
+    const secret = STORYBOOK && "NN5TSVC6MFIGGWS3LJCSYT3VNE2ESRSG";
+
     this.state = {
-      secretLoaded: false,
-      secret: null,
+      secretLoaded: !!secret,
+      secret: secret || null,
     };
   }
 

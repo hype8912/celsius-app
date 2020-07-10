@@ -6,6 +6,7 @@ import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore
 import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
 import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
+import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";
 
 const initialState = {
   user: {
@@ -21,35 +22,7 @@ const initialState = {
   loyalty: {
     loyaltyInfo: mockLoyaltyStore.loyalty.postman13.loyaltyInfo,
   },
-  compliance: {
-    interest: {
-      allowed: true,
-      coins: [
-        "ETH",
-        "BTC",
-        "DASH",
-        "BCH",
-        "LTC",
-        "ZEC",
-        "XRP",
-        "XLM",
-        "OMG",
-        "TUSD",
-        "GUSD",
-        "PAX",
-        "USDC",
-        "MCDAI",
-        "CEL",
-        "ZRX",
-        "USDT ERC20",
-        "EOS",
-        "SGA",
-        "XAUT",
-        "ETC",
-      ],
-      block_reason: null,
-    },
-  },
+  compliance: mockComplianceStore.allowedAll,
   forms: {
     formData: {
       coinsInCel: {

@@ -11,7 +11,8 @@ import CelInput from "../../atoms/CelInput/CelInputText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { isUSCitizen } from "../../../utils/user-util";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 let focused = 0;
 
@@ -49,7 +50,7 @@ class SocialSecurityNumber extends Component {
   render() {
     const { formData, formErrors, user, onPress, updatingTaxInfo } = this.props;
     const style = SocialSecurityNumberStyle();
-    const ssnArray = user.ssn ? user.ssn.split("-") : {};
+    const ssnArray = user.ssn ? user.ssn.split("-") : [];
 
     return (
       <View>
@@ -130,7 +131,7 @@ class SocialSecurityNumber extends Component {
               <CelText color="red">{formErrors.ssn}</CelText>
             </View>
 
-            <Card color={STYLES.COLORS.CELSIUS_BLUE} margin="0 0 20 0">
+            <Card color={getColor(COLOR_KEYS.LINK)} margin="0 0 20 0">
               <CelText color="white" weight="light">
                 <CelText color="white" weight="semi-bold">
                   Keep in mind!{" "}

@@ -16,7 +16,7 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
-import STORYBOOK from "../../../../dev-settings.json";
+import { STORYBOOK } from "../../../../dev-settings.json";
 
 @connect(
   state => ({

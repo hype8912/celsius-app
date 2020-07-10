@@ -1,7 +1,6 @@
 import React from "react";
-import _ from "lodash";
 
-import RegisterSetPin from "./RegisterSetPin";
+import TwoFactorSettings from "./TwoFactorSettings";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 
@@ -12,39 +11,23 @@ const initialState = {
     is2FAEnabled: mockUserStore.profile.postman13.two_factor_enabled,
   },
   forms: {
-    formData: {},
+    formData: {
+      pin: "2468",
+    },
+    formErrors: {},
   },
 };
 
-const createPin = () => {
-  const state = _.cloneDeep(initialState);
+const regular = () => {
   return (
     <ScreenStoryWrapper
-      screen={RegisterSetPin}
-      screenName="RegisterSetPin"
-      state={state}
-    />
-  );
-};
-
-const confirmPin = () => {
-  const state = _.cloneDeep(initialState);
-  state.forms = {
-    formData: {
-      pin: "1234",
-    },
-  };
-
-  return (
-    <ScreenStoryWrapper
-      screen={RegisterSetPin}
-      screenName="RegisterSetPin"
-      state={state}
+      screenName="TwoFactorSettings"
+      screen={TwoFactorSettings}
+      state={initialState}
     />
   );
 };
 
 export default {
-  createPin,
-  confirmPin,
+  regular,
 };
