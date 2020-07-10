@@ -177,8 +177,6 @@ class ConfirmCamera extends Component {
                   actions.navigateBack();
                   actions.retakePhoto();
                 }}
-                white
-                inverse
                 ghost
               >
                 Retake Photo

@@ -29,13 +29,17 @@ import {
   ALL_PERMISSIONS,
   requestForPermission,
 } from "../../../utils/device-permissions";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { height, width } = Dimensions.get("window");
 
 @connect(
   state => ({
     cameraType: state.camera.cameraType,
-    cameraRollLastPhoto: state.camera.cameraRollPhotos[0],
+    cameraRollLastPhoto: state.camera.cameraRollPhotos.length
+      ? state.camera.cameraRollPhotos[0]
+      : null,
     photo: state.camera.photo,
     cameraField: state.camera.cameraField,
     cameraHeading: state.camera.cameraHeading,
@@ -345,7 +349,7 @@ class CameraScreen extends Component {
             >
               <Icon
                 name="Shutter"
-                fill={STYLES.COLORS.CELSIUS_BLUE}
+                fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                 width="60"
                 height="60"
               />

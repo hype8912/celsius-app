@@ -69,7 +69,7 @@ class ScreenStoryWrapper extends React.Component {
   };
 
   render() {
-    const { screen, screenName, navigationProps } = this.props;
+    const { screen, screenName, navigationProps, screenTap } = this.props;
 
     const navigatorProps = {
       initialRouteName: screenName,
@@ -87,6 +87,19 @@ class ScreenStoryWrapper extends React.Component {
 
     const AppNavigator = createStackNavigator(screens, navigatorProps);
     const AppNavigation = createAppContainer(AppNavigator);
+
+    if (screenTap) {
+      return (
+        <Provider store={store}>
+          <TouchableOpacity
+            style={{ width, height }}
+            onPress={() => this.updateTheme()}
+          >
+            <AppNavigation />
+          </TouchableOpacity>
+        </Provider>
+      );
+    }
 
     return (
       <Provider store={store}>

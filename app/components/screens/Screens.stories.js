@@ -26,6 +26,8 @@ import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
 import CommunityStories from "./Community/Community.stories";
 import SelectCountryStories from "./SelectCountry/SelectCountry.stories";
 import SecuritySettingsStories from "./SecuritySettings/SecuritySettings.stories";
+import CameraScreenStories from "./CameraScreen/CameraScreen.stories";
+import ConfirmCameraStories from "./ConfirmCamera/ConfirmCamera.stories";
 import KYCProfileDetailsStories from "./KYCProfileDetails/KYCProfileDetails.stories";
 import KYCAddressInfoStories from "./KYCAddressInfo/KYCAddressInfo.stories";
 import WalletSettingsStories from "./WalletSettings/WalletSettings.stories";
@@ -213,3 +215,13 @@ storiesOf("WalletSettings", module).add(
   "Wallet Settings",
   WalletSettingsStories.regular
 );
+
+storiesOf("CameraScreen", module)
+  .add("Profile", CameraScreenStories.profile)
+  .add("Document", CameraScreenStories.document)
+  .add("Utility Bill", CameraScreenStories.utility);
+
+storiesOf("ConfirmCamera", module)
+  .add("Profile", ConfirmCameraStories.profile)
+  .add("Document", ConfirmCameraStories.document)
+  .add("Utility Bill", ConfirmCameraStories.utility);

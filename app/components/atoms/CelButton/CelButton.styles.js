@@ -79,9 +79,6 @@ const base = {
   ghostColorTitle: {
     color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
-  ghostTitle: {
-    color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
-  },
   greenButton: {
     backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE),
   },
@@ -122,6 +119,12 @@ const themed = {
     disabledTitleColor: {
       color: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.LIGHT),
     },
+    ghostButton: {
+      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.LIGHT),
+    },
+    ghostTitle: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.LIGHT),
+    },
   },
 
   dark: {
@@ -138,6 +141,12 @@ const themed = {
     disabledTitleColor: {
       color: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.DARK),
     },
+    ghostButton: {
+      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.DARK),
+    },
+    ghostTitle: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.DARK),
+    },
   },
 
   unicorn: {
@@ -152,6 +161,12 @@ const themed = {
       color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND, THEMES.UNICORN),
     },
     disabledTitleColor: {
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
+    },
+    ghostButton: {
+      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
+    },
+    ghostTitle: {
       color: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
     },
   },

@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from "react-native";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const { height, width } = Dimensions.get("window");
 const newWidth = height * (3 / 4);
@@ -50,7 +52,7 @@ const themed = {
       backgroundColor: "rgba(241,239,238,0.6)",
     },
     actionBar: {
-      backgroundColor: "white",
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT),
     },
   },
 
@@ -59,7 +61,7 @@ const themed = {
       backgroundColor: STYLES.COLORS.DARK_OVERLAY,
     },
     actionBar: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
     },
   },
 
@@ -68,7 +70,7 @@ const themed = {
       backgroundColor: "rgba(241,239,238,0.6)",
     },
     actionBar: {
-      backgroundColor: "white",
+      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
     },
   },
 };
