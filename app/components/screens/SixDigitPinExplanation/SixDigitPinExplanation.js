@@ -19,10 +19,21 @@ class SixDigitPinExplanation extends Component {
     hideBack: true,
   });
 
+  onPressContinue = () => {
+    const { actions, navigation } = this.props;
+    const onSuccess = navigation.getParam("onSuccess");
+
+    actions.updateFormField("upgradeToSixDigitPin", true); // Flag for navigation to ActivateSixDigitPin
+    actions.navigateTo("ChangePin", { onSuccess });
+  };
+
   render() {
     return (
       <StaticScreen
-        emptyState={{ purpose: EMPTY_STATES.SIX_DIGITS_PIN_UPGRADE }}
+        emptyState={{
+          purpose: EMPTY_STATES.SIX_DIGITS_PIN_UPGRADE,
+          onPress: this.onPressContinue,
+        }}
         type={"hide"}
       />
     );

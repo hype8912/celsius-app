@@ -37,10 +37,6 @@ function getProps(purpose, componentProps) {
           "This is more secure, with vastly more combinations to guess, and essentially prevents thieves from brute-forcing their way into your device.",
         ],
         button: "Generate 6-Digits PIN",
-        onPress: () => {
-          actions.updateFormField('upgradeToSixDigitPin', true)
-          actions.navigateTo("ChangePin");
-        },
       };
 
     case EMPTY_STATES.HODL_MODE_WARNING_CELPAY:

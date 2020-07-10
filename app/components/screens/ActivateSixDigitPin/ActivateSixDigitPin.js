@@ -34,10 +34,9 @@ class ActivateSixDigitPin extends Component {
   });
 
   onPressBtn = async () => {
-    const { actions } = this.props;
-    // TODO add failed endpoint continue handling
-    // await apiUtil.callFailedRequest()
-    actions.resetToScreen("WalletLanding");
+    const { navigation } = this.props;
+    const onSuccess = navigation.getParam("onSuccess");
+    onSuccess();
   };
 
   renderEmailAppCard = () => {

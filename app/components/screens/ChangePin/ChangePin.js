@@ -66,13 +66,16 @@ class ChangePin extends Component {
 
   handlePinFinish = async newValue => {
     const { pinCreated } = this.state;
-    const { actions, formData } = this.props;
+    const { actions, formData, navigation } = this.props;
+    const onSuccess = navigation.getParam("onSuccess");
 
     if (!pinCreated) {
       this.setState({ pinCreated: true });
     } else if (formData.newPin === newValue) {
       this.setState({ loading: true });
       const isSet = await actions.changePin();
+      actions.navigateTo("ActivateSixDigitPin", { onSuccess });
+
       if (!isSet) {
         this.setState({ pinCreated: false });
       }

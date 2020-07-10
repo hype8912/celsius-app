@@ -173,9 +173,11 @@ function changePin() {
     try {
       const { formData } = getState().forms;
       const { securityOverview } = getState().security;
+      const { profile } = getState().user
 
+      const securityTypeCode = profile.two_factor_enabled ? 'twoFactorCode' : 'pin'
       const pinData = {
-        pin: formData.pin,
+        [`${securityTypeCode}`]:profile.two_factor_enabled ? formData.code : formData.pin,
         new_pin: formData.newPin,
         new_pin_confirm: formData.newPinConfirm,
       };
@@ -188,7 +190,6 @@ function changePin() {
 
       mixpanelAnalytics.changePin();
       if (formData.upgradeToSixDigitPin) {
-        dispatch(navigateTo('ActivateSixDigitPin'))
         return true;
       }
 

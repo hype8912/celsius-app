@@ -14,6 +14,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Card from "../../atoms/Card/Card";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import Separator from "../../atoms/Separator/Separator";
+import loggerUtil from "../../../utils/logger-util";
 
 @connect(
   state => ({
@@ -42,12 +43,16 @@ class TwoFactorSettings extends Component {
 
   async componentDidMount() {
     const { actions, formData } = this.props;
-    const data = await actions.getTwoFactorSecret(formData.pin);
-    if (data.ok) {
-      this.setState({
-        secret: data.secret,
-        secretLoaded: true,
-      });
+    try {
+      const data = await actions.getTwoFactorSecret(formData.pin);
+      if (data.ok) {
+        this.setState({
+          secret: data.secret,
+          secretLoaded: true,
+        });
+      }
+    } catch (e) {
+      loggerUtil.log(e)
     }
   }
 
