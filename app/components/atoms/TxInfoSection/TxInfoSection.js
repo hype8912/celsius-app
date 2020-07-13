@@ -6,20 +6,25 @@ import InfoSectionStyle from "./TxInfoSection.styles";
 import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
 
 const TxInfoSection = ({ transaction, transactionProps }) => {
   const style = InfoSectionStyle();
+
   return (
     <View style={style.container}>
       <View style={style.statusText}>
         <View
-          style={[style.circle, { backgroundColor: transactionProps.color }]}
+          style={[
+            style.circle,
+            { backgroundColor: getColor(transactionProps.color) },
+          ]}
         >
           <CelText type={"H7"} color={STYLES.COLORS.WHITE}>
             {transactionProps.shortName}
           </CelText>
         </View>
-        <CelText color={transactionProps.color}>
+        <CelText color={getColor(transactionProps.color)}>
           {transactionProps.statusText}
         </CelText>
       </View>

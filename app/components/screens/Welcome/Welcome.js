@@ -49,7 +49,7 @@ class Welcome extends Component {
 
     const { revisionId } = this.state;
     return (
-      <RegularLayout fabType="hide">
+      <RegularLayout fabType="hide" enableParentScroll={false}>
         <View style={style.wrapper}>
           <Image
             source={require("../../../../assets/images/splashScreen-celsius-new.png")}

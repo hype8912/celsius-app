@@ -108,14 +108,19 @@ function getThemedStyle(
  */
 function setColors(baseStyle, theme) {
   const stylesWithColors = _.cloneDeep(baseStyle);
+  // gets all elements specified in base styles (eg. container)
   const elements = Object.keys(baseStyle);
+  // gets array of all color keys
   const colorKeys = Object.values(COLOR_KEYS);
 
   elements.forEach(el => {
+    // gets array of all style properties for specific element (eg. backgroundColor, borderWidth...)
     const styleProps = Object.keys(baseStyle[el]);
 
     styleProps.forEach(sp => {
+      // if style property value is in the colorKeys array
       if (colorKeys.includes(stylesWithColors[el][sp])) {
+        // replace it with the correct color for specific key and theme
         stylesWithColors[el][sp] = getColor(stylesWithColors[el][sp], theme);
       }
     });
