@@ -35,6 +35,7 @@ import PersonalInformationStories from "./PersonalInformation/PersonalInformatio
 import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
 import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
 import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
+import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -250,3 +251,8 @@ storiesOf("ConfirmCamera", module)
 storiesOf("KYCCheckPhotos", module)
   .add("Single Photo", KYCCheckPhotosStories.singlePhoto)
   .add("Multiple Photos", KYCCheckPhotosStories.multiplePhotos);
+
+storiesOf("WithdrawConfirm", module).add(
+  "Confirm",
+  WithdrawConfirmStories.regular
+);
