@@ -34,6 +34,7 @@ import WalletSettingsStories from "./WalletSettings/WalletSettings.stories";
 import PersonalInformationStories from "./PersonalInformation/PersonalInformation.stories";
 import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
 import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
+import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -240,3 +241,8 @@ storiesOf("ConfirmCamera", module)
   .add("Profile", ConfirmCameraStories.profile)
   .add("Document", ConfirmCameraStories.document)
   .add("Utility Bill", ConfirmCameraStories.utility);
+
+storiesOf("WithdrawConfirm", module).add(
+  "Confirm",
+  WithdrawConfirmStories.regular
+);
