@@ -35,6 +35,7 @@ import PersonalInformationStories from "./PersonalInformation/PersonalInformatio
 import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
 import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
 import WithdrawAddressOverviewStories from "./WithdrawAddressOverview/WithdrawAddressOverview.stories";
+import BorrowChooseLoanStories from "./BorrowChooseLoan/BorrowChooseLoan.stories";
 import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
 import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
 
@@ -262,3 +263,8 @@ storiesOf("WithdrawConfirm", module).add(
   "Confirm",
   WithdrawConfirmStories.regular
 );
+
+storiesOf("BorrowChooseLoan", module)
+  .add("Stable Coins", BorrowChooseLoanStories.stable)
+  .add("USD", BorrowChooseLoanStories.usd)
+  .add("Stable Coins and USD", BorrowChooseLoanStories.stableAndUsd);
