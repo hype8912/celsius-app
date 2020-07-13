@@ -34,6 +34,7 @@ import WalletSettingsStories from "./WalletSettings/WalletSettings.stories";
 import PersonalInformationStories from "./PersonalInformation/PersonalInformation.stories";
 import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
 import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
+import WithdrawAddressOverviewStories from "./WithdrawAddressOverview/WithdrawAddressOverview.stories";
 import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
 import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
 
@@ -247,6 +248,11 @@ storiesOf("ConfirmCamera", module)
   .add("Profile", ConfirmCameraStories.profile)
   .add("Document", ConfirmCameraStories.document)
   .add("Utility Bill", ConfirmCameraStories.utility);
+
+storiesOf("WithdrawAddressOverview", module).add(
+  "regular",
+  WithdrawAddressOverviewStories.regular
+);
 
 storiesOf("KYCCheckPhotos", module)
   .add("Single Photo", KYCCheckPhotosStories.singlePhoto)

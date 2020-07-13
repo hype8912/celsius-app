@@ -18,6 +18,8 @@ import API from "../../../constants/API";
 import { EMPTY_STATES } from "../../../constants/UI";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import Separator from "../../atoms/Separator/Separator";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -195,7 +197,7 @@ class WithdrawAddressOverview extends Component {
     return (
       <RegularLayout>
         <View>
-          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+          <Card color={getColor(COLOR_KEYS.BANNER_INFO)}>
             <View style={{ flexDirection: "row" }}>
               <View style={{ flex: 1, paddingRight: 5 }}>
                 <Icon
