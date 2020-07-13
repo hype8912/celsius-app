@@ -34,6 +34,8 @@ import WalletSettingsStories from "./WalletSettings/WalletSettings.stories";
 import PersonalInformationStories from "./PersonalInformation/PersonalInformation.stories";
 import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
 import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
+import WithdrawAddressOverviewStories from "./WithdrawAddressOverview/WithdrawAddressOverview.stories";
+import BorrowChooseLoanStories from "./BorrowChooseLoan/BorrowChooseLoan.stories";
 import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
 import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
 import WithdrawCreateAddress from "./WithdrawCreateAddress/WithdrawCreateAddress.stories";
@@ -249,6 +251,11 @@ storiesOf("ConfirmCamera", module)
   .add("Document", ConfirmCameraStories.document)
   .add("Utility Bill", ConfirmCameraStories.utility);
 
+storiesOf("WithdrawAddressOverview", module).add(
+  "regular",
+  WithdrawAddressOverviewStories.regular
+);
+
 storiesOf("KYCCheckPhotos", module)
   .add("Single Photo", KYCCheckPhotosStories.singlePhoto)
   .add("Multiple Photos", KYCCheckPhotosStories.multiplePhotos);
@@ -263,3 +270,8 @@ storiesOf("WithdrawCreateAddress", module)
   .add("XRP", WithdrawCreateAddress.xrp)
   .add("XLM", WithdrawCreateAddress.xlm)
   .add("EOS", WithdrawCreateAddress.eos);
+
+storiesOf("BorrowChooseLoan", module)
+  .add("Stable Coins", BorrowChooseLoanStories.stable)
+  .add("USD", BorrowChooseLoanStories.usd)
+  .add("Stable Coins and USD", BorrowChooseLoanStories.stableAndUsd);
