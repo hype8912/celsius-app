@@ -1,8 +1,7 @@
 import { Platform } from "react-native";
-import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -28,6 +27,11 @@ const base = {
   text: {
     marginTop: 10,
   },
+  viewmenu: { backgroundColor: COLOR_KEYS.CARDS },
+  textmenu: { color: COLOR_KEYS.PARAGRAPH },
+  viewcoin: { backgroundColor: COLOR_KEYS.CARDS },
+  textcoin: { color: COLOR_KEYS.HEADLINE },
+  fillColor: { color: COLOR_KEYS.HEADLINE },
 };
 
 const themed = {
@@ -42,13 +46,6 @@ const themed = {
         },
       }),
     },
-    viewmenu: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT) },
-    textmenu: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-    viewcoin: { backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.LIGHT) },
-    textcoin: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
-    fillColor: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
   },
 
   dark: {
@@ -63,24 +60,9 @@ const themed = {
         },
       }),
     },
-    viewmenu: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK) },
-    textmenu: {
-      color: STYLES.COLORS.WHITE,
-    },
-    viewcoin: { backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.DARK) },
-    textcoin: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
-    fillColor: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
   },
 
-  unicorn: {
-    viewmenu: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN) },
-    textmenu: {
-      color: STYLES.COLORS.WHITE,
-    },
-    viewcoin: { backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.UNICORN) },
-    textcoin: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
-    fillColor: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
-  },
+  unicorn: {},
 };
 
 const CircleButtonStyle = theme =>

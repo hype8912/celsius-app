@@ -1,12 +1,10 @@
 import {
-  getColor,
   getThemedStyle,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const currencyImageSize = widthPercentageToDP("10.67%");
 
@@ -53,12 +51,12 @@ const base = {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: STYLES.COLORS.GREEN,
     borderRadius: 8,
     paddingVertical: 6,
     paddingHorizontal: 10,
     width: widthPercentageToDP("37%"),
     height: heightPercentageToDP("5%"),
+    backgroundColor: COLOR_KEYS.POSITIVE_STATE,
   },
   regularRateWrapper: {
     flexDirection: "row",
@@ -91,33 +89,15 @@ const base = {
   rateInfoCard: {
     marginTop: 20,
   },
+  inKindColor: {
+    backgroundColor: COLOR_KEYS.BACKGROUND,
+  },
 };
 
 const themed = {
-  light: {
-    celRateWrapper: {
-      backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE, THEMES.LIGHT),
-    },
-    inKindColor: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT),
-    },
-  },
-  dark: {
-    celRateWrapper: {
-      backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE, THEMES.DARK),
-    },
-    inKindColor: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK),
-    },
-  },
-  unicorn: {
-    celRateWrapper: {
-      backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE, THEMES.UNICORN),
-    },
-    inKindColor: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const InterestRateInfoStyle = () => getThemedStyle(base, themed);

@@ -1,7 +1,6 @@
 import React from "react";
-import _ from "lodash";
 
-import WalletSettings from "./WalletSettings";
+import WithdrawConfirm from "./WithdrawConfirm";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
@@ -19,73 +18,57 @@ const initialState = {
   generalData: {
     celUtilityTiers: mockGeneralDataStore.celUtilityTiers,
     interestRates: mockGeneralDataStore.interestRates,
+    withdrawalSettings: mockGeneralDataStore.withdrawalSettings,
   },
   loyalty: {
     loyaltyInfo: mockLoyaltyStore.loyalty.postman13.loyaltyInfo,
   },
   compliance: mockComplianceStore.allowedAll,
   forms: {
-    formData: {},
+    formData: {
+      coinsInCel: {
+        BCH: false,
+        BSV: false,
+        BTC: true,
+        CEL: false,
+        DAI: false,
+        DASH: false,
+        EOS: false,
+        ETC: false,
+        ETH: false,
+        GUSD: false,
+        LTC: false,
+        MCDAI: false,
+        OMG: false,
+        ORBS: false,
+        PAX: false,
+        SGA: false,
+        TAUD: false,
+        TCAD: false,
+        TGBP: false,
+        THKD: false,
+        TUSD: false,
+        USDC: false,
+        "USDT ERC20": false,
+        XAUT: false,
+        XLM: false,
+        XRP: false,
+        ZEC: false,
+        ZRX: false,
+      },
+    },
   },
 };
-
-const state = _.cloneDeep(initialState);
-const eligibleForInterestInCEL = () => {
-  state.forms.formData = {
-    coinsInCel: {
-      BCH: false,
-      BSV: false,
-      BTC: true,
-      CEL: false,
-      DAI: false,
-      DASH: false,
-      EOS: false,
-      ETC: false,
-      ETH: false,
-      GUSD: false,
-      LTC: false,
-      MCDAI: false,
-      OMG: false,
-      ORBS: false,
-      PAX: false,
-      SGA: false,
-      TAUD: false,
-      TCAD: false,
-      TGBP: false,
-      THKD: false,
-      TUSD: false,
-      USDC: false,
-      "USDT ERC20": false,
-      XAUT: false,
-      XLM: false,
-      XRP: false,
-      ZEC: false,
-      ZRX: false,
-    },
-  };
-
+const regular = () => {
   return (
     <ScreenStoryWrapper
-      screenName="WalletSettings"
-      screen={WalletSettings}
-      state={state}
-    />
-  );
-};
-
-const notEligibleForInterestInCEL = () => {
-  state.forms.formData = { coinsInCel: null };
-
-  return (
-    <ScreenStoryWrapper
-      screenName="WalletSettings"
-      screen={WalletSettings}
+      screenName="WithdrawConfirm"
+      screen={WithdrawConfirm}
       state={initialState}
     />
   );
 };
 
 export default {
-  eligibleForInterestInCEL,
-  notEligibleForInterestInCEL,
+  regular,
 };

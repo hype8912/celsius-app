@@ -7,10 +7,12 @@ import {
   Platform,
 } from "react-native";
 import React from "react";
+import _ from "lodash";
+
 import formatter from "./formatter";
 import store from "../redux/store";
 import appUtil from "./app-util";
-import { COLORS } from "../constants/COLORS";
+import { COLOR_KEYS, COLORS } from "../constants/COLORS";
 import { THEMES } from "../constants/UI";
 import FONTS from "../constants/FONTS";
 
@@ -90,9 +92,36 @@ function getThemedStyle(
   themed,
   theme = store.getState().user.appSettings.theme
 ) {
-  return StyleSheet.create(
-    formatter.deepmerge(base, themed[theme] || themed.light)
+  const combinedStyles = formatter.deepmerge(
+    setColors(base, theme),
+    themed[theme] || themed.light
   );
+  return StyleSheet.create(combinedStyles);
+}
+
+/**
+ * Sets colors for specific COLOR_KEY
+ *
+ * @param {Object} baseStyle - base styles for component
+ * @param {string} theme - one of THEMES
+ * @returns {Object} stylesWithColors
+ */
+function setColors(baseStyle, theme) {
+  const stylesWithColors = _.cloneDeep(baseStyle);
+  const elements = Object.keys(baseStyle);
+  const colorKeys = Object.values(COLOR_KEYS);
+
+  elements.forEach(el => {
+    const styleProps = Object.keys(baseStyle[el]);
+
+    styleProps.forEach(sp => {
+      if (colorKeys.includes(stylesWithColors[el][sp])) {
+        stylesWithColors[el][sp] = getColor(stylesWithColors[el][sp], theme);
+      }
+    });
+  });
+
+  return stylesWithColors;
 }
 
 /**
@@ -202,11 +231,12 @@ function getThemeFontFamily() {
 
   switch (theme) {
     case THEMES.UNICORN:
+    case THEMES.HORSE:
+    default:
       return "Pangram";
 
     case THEMES.LIGHT:
     case THEMES.DARK:
-    default:
       return "Barlow";
   }
 }

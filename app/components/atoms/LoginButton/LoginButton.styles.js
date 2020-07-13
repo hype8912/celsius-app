@@ -1,12 +1,7 @@
 import { Platform } from "react-native";
-import {
-  getFontSize,
-  getThemedStyle,
-  getColor,
-} from "../../../utils/styles-util";
+import { getFontSize, getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -16,7 +11,7 @@ const base = {
     width: "100%",
     marginVertical: 10,
     height: 50,
-    backgroundColor: getColor(COLOR_KEYS.CARDS),
+    backgroundColor: COLOR_KEYS.CARDS,
     ...Platform.select({
       android: {
         ...STYLES.ANDROID_BORDER_STYLES,
@@ -46,25 +41,14 @@ const base = {
     width: "100%",
   },
   textColor: {
-    color: getColor(COLOR_KEYS.PARAGRAPH),
+    color: COLOR_KEYS.PARAGRAPH,
   },
 };
 
 const themed = {
-  light: {
-    container: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT) },
-    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
-  },
-
-  dark: {
-    container: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK) },
-    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
-  },
-
-  unicorn: {
-    container: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN) },
-    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const LoginButtonStyle = () => getThemedStyle(base, themed);

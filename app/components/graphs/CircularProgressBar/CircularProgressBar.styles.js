@@ -1,10 +1,8 @@
 import {
-  getColor,
   getThemedStyle,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -28,26 +26,15 @@ const base = {
     height: heightPercentageToDP("12.1%"),
     borderRadius: heightPercentageToDP("12.1%") / 2,
   },
+  progressBackground: {
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
 };
 
 const themed = {
-  light: {
-    progressBackground: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT),
-    },
-  },
-
-  dark: {
-    progressBackground: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
-    },
-  },
-
-  unicorn: {
-    progressBackground: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const CircularProgressBarStyle = () => getThemedStyle(base, themed);
