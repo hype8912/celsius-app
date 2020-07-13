@@ -2,11 +2,9 @@ import { Platform } from "react-native";
 import {
   getThemedStyle,
   heightPercentageToDP,
-  getColor,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const headerHeight = 60;
 
@@ -51,7 +49,7 @@ const base = {
   },
 
   headingBackground: {
-    backgroundColor: getColor(COLOR_KEYS.HEADER),
+    backgroundColor: COLOR_KEYS.HEADER,
     ...Platform.select({
       android: {
         borderColor: "#E9E9E9",
@@ -94,38 +92,18 @@ const base = {
     borderColor: "black",
   },
   sameBackground: {
-    backgroundColor: getColor(COLOR_KEYS.BACKGROUND),
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
 };
 
 const themed = {
-  light: {
-    headingBackground: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.LIGHT),
-    },
-    sameBackground: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT),
-    },
-  },
-
+  light: {},
   dark: {
     headingBackground: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.DARK),
       borderColor: "transparent",
     },
-    sameBackground: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK),
-    },
   },
-
-  unicorn: {
-    headingBackground: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.UNICORN),
-    },
-    sameBackground: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
-    },
-  },
+  unicorn: {},
 };
 
 const CelHeadingStyle = () => getThemedStyle(base, themed);

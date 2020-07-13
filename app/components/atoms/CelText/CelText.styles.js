@@ -1,31 +1,18 @@
-import { getThemedStyle, getColor } from "../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
-const base = {};
+const base = {
+  text: { color: COLOR_KEYS.PARAGRAPH },
+  H1: { color: COLOR_KEYS.HEADLINE },
+  H2: { color: COLOR_KEYS.HEADLINE },
+  H3: { color: COLOR_KEYS.HEADLINE },
+  link: { color: COLOR_KEYS.LINK },
+};
 
 const themed = {
-  light: {
-    text: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
-    H1: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
-    H2: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
-    H3: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT) },
-    link: { color: getColor(COLOR_KEYS.LINK, THEMES.LIGHT) },
-  },
-  dark: {
-    text: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
-    H1: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
-    H2: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
-    H3: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK) },
-    link: { color: getColor(COLOR_KEYS.LINK, THEMES.DARK) },
-  },
-  unicorn: {
-    text: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
-    H1: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
-    H2: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
-    H3: { color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN) },
-    link: { color: getColor(COLOR_KEYS.LINK, THEMES.UNICORN) },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const CelTextStyle = theme =>

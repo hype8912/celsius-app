@@ -1,11 +1,6 @@
 import { StyleSheet } from "react-native";
-import {
-  getThemedStyle,
-  getPadding,
-  getColor,
-} from "../../../utils/styles-util";
+import { getThemedStyle, getPadding } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -14,72 +9,25 @@ const base = {
   earningCard: {
     flex: 1,
     borderWidth: 1,
+    backgroundColor: COLOR_KEYS.HEADER,
+    borderColor: COLOR_KEYS.PARAGRAPH,
   },
   amounts: {
     ...StyleSheet.flatten(getPadding("20 20 20 20")),
   },
+  selectedCard: {
+    backgroundColor: COLOR_KEYS.LINK,
+    borderColor: COLOR_KEYS.LINK,
+  },
+  showInterestWrapper: {
+    backgroundColor: COLOR_KEYS.HEADER,
+  },
 };
 
 const themed = {
-  light: {
-    earningCard: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.LIGHT),
-      borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT),
-    },
-    selectedCard: {
-      backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.LIGHT),
-      borderColor: getColor(COLOR_KEYS.LINK, THEMES.LIGHT),
-    },
-    // amounts: {
-    //   backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    // },
-    // calculatorInfo: {
-    //   color: STYLES.COLORS.MEDIUM_GRAY,
-    // },
-    showInterestWrapper: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.LIGHT),
-    },
-  },
-
-  dark: {
-    earningCard: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.DARK),
-      borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK),
-    },
-    selectedCard: {
-      backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.DARK),
-      borderColor: getColor(COLOR_KEYS.LINK, THEMES.DARK),
-    },
-    // amounts: {
-    //   backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    // },
-    // calculatorInfo: {
-    //   color: STYLES.COLORS.MEDIUM_GRAY,
-    // },
-    showInterestWrapper: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.DARK),
-    },
-  },
-
-  unicorn: {
-    earningCard: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.UNICORN),
-      borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN),
-    },
-    selectedCard: {
-      backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.UNICORN),
-      borderColor: getColor(COLOR_KEYS.LINK, THEMES.UNICORN),
-    },
-    // amounts: {
-    //   backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    // },
-    // calculatorInfo: {
-    //   color: STYLES.COLORS.MEDIUM_GRAY,
-    // },
-    showInterestWrapper: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.UNICORN),
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const InterestCalculatorModalStyle = theme =>

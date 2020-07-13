@@ -1,11 +1,9 @@
 import {
-  getColor,
   getThemedStyle,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   periods: {
@@ -19,23 +17,15 @@ const base = {
   active: {
     marginTop: 5,
     width: widthPercentageToDP("3.5%"),
-    borderTopColor: "rgba(65,86,166,1)",
+    borderTopColor: COLOR_KEYS.LINK,
     borderTopWidth: 1,
   },
 };
 
 const themed = {
-  light: {
-    active: { borderTopColor: getColor(COLOR_KEYS.LINK, THEMES.LIGHT) },
-  },
-
-  dark: {
-    active: { borderTopColor: getColor(COLOR_KEYS.LINK, THEMES.DARK) },
-  },
-
-  unicorn: {
-    active: { borderTopColor: getColor(COLOR_KEYS.LINK, THEMES.UNICORN) },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const PeriodGraphViewStyle = () => getThemedStyle(base, themed);

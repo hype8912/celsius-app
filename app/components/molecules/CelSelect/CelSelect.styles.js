@@ -1,13 +1,8 @@
 import { StyleSheet, Platform } from "react-native";
 
 import STYLES from "../../../constants/STYLES";
-import {
-  getPadding,
-  getThemedStyle,
-  getColor,
-} from "../../../utils/styles-util";
+import { getPadding, getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -26,6 +21,7 @@ const base = {
         ...STYLES.SHADOW_STYLES,
       },
     }),
+    backgroundColor: COLOR_KEYS.CARDS,
   },
   disabledInput: {
     opacity: 0.6,
@@ -35,49 +31,26 @@ const base = {
     height: 30,
     borderRadius: 15,
   },
+  iconColor: {
+    color: COLOR_KEYS.HEADLINE,
+  },
+  textColor: {
+    color: COLOR_KEYS.HEADLINE,
+  },
 };
 
 const themed = {
-  light: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT),
-    },
-    iconColor: {
-      color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT),
-    },
-    textColor: {
-      color: getColor(COLOR_KEYS.HEADLINE, THEMES.LIGHT),
-    },
-  },
-
+  light: {},
   dark: {
     container: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
       ...Platform.select({
         android: {
           borderColor: "transparent",
         },
       }),
     },
-    iconColor: {
-      color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK),
-    },
-    textColor: {
-      color: getColor(COLOR_KEYS.HEADLINE, THEMES.DARK),
-    },
   },
-
-  unicorn: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
-    },
-    iconColor: {
-      color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN),
-    },
-    textColor: {
-      color: getColor(COLOR_KEYS.HEADLINE, THEMES.UNICORN),
-    },
-  },
+  unicorn: {},
 };
 
 const CelSelectStyle = () => getThemedStyle(base, themed);

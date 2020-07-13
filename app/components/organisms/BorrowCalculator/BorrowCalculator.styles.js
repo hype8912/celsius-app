@@ -1,7 +1,6 @@
 import STYLES from "../../../constants/STYLES";
-import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -9,12 +8,17 @@ const base = {
   },
   cardStyle: {
     borderWidth: 1,
+    backgroundColor: COLOR_KEYS.HEADER,
+    borderColor: COLOR_KEYS.PARAGRAPH,
   },
   selectedCardStyle: {
     borderWidth: 1,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
+    borderColor: COLOR_KEYS.PRIMARY_BUTTON,
+    color: COLOR_KEYS.CARDS,
   },
   percentageTextStyle: {
-    color: STYLES.COLORS.DARK_GRAY,
+    color: COLOR_KEYS.PARAGRAPH,
   },
   selectWrapper: {
     paddingTop: 10,
@@ -48,66 +52,18 @@ const base = {
     justifyContent: "space-evenly",
     marginVertical: 5,
   },
-  interestCardItem: {},
+  separator: {
+    color: COLOR_KEYS.SEPARATORS,
+  },
+  interestCardText: {
+    color: COLOR_KEYS.LINK,
+  },
 };
 
 const themed = {
-  light: {
-    separator: {
-      color: getColor(COLOR_KEYS.SEPARATORS, THEMES.LIGHT),
-    },
-    cardStyle: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.LIGHT),
-      borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT),
-    },
-    percentageTextStyle: {
-      color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT),
-    },
-    interestCardText: {
-      color: getColor(COLOR_KEYS.LINK, THEMES.LIGHT),
-    },
-  },
-  dark: {
-    separator: {
-      color: getColor(COLOR_KEYS.SEPARATORS, THEMES.DARK),
-    },
-    cardStyle: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.DARK),
-      borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK),
-    },
-    percentageTextStyle: {
-      color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK),
-    },
-    interestCardText: {
-      color: getColor(COLOR_KEYS.LINK, THEMES.DARK),
-    },
-    selectedCardStyle: {
-      backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.DARK),
-      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.DARK),
-      color: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
-    },
-  },
-
-  unicorn: {
-    separator: {
-      color: getColor(COLOR_KEYS.SEPARATORS, THEMES.UNICORN),
-    },
-    cardStyle: {
-      backgroundColor: getColor(COLOR_KEYS.HEADER, THEMES.UNICORN),
-      borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN),
-    },
-    percentageTextStyle: {
-      color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN),
-    },
-    interestCardText: {
-      color: getColor(COLOR_KEYS.LINK, THEMES.UNICORN),
-    },
-    selectedCardStyle: {
-      backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
-      borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
-      color: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const LoanCalculatorStyle = theme =>
