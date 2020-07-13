@@ -25,8 +25,14 @@ const getData = item => {
       action: "Withdraw Request",
     };
   }
-
-  if (item.action === "successful-login") {
+  const successfulLoginActionTypes = [
+    "successful-login",
+    "successful-login-email-and-password",
+    "successful-login-google",
+    "successful-login-facebook",
+    "successful-login-twitter",
+  ];
+  if (successfulLoginActionTypes.includes(item.action)) {
     return {
       name: "Checked",
       color: STYLES.COLORS.GREEN,
@@ -210,21 +216,19 @@ const UserActionsLog = props => {
                 </CelText>
               </View>
               <View style={{ marginBottom: 0 }}>
-                {logData[ logData.length - 1] !== item ? (
-                  <Separator />
-                ) : null}
+                {logData[logData.length - 1] !== item ? <Separator /> : null}
               </View>
             </View>
           );
         }
-        return null
+        return null;
       })}
     </>
-  )
+  );
 };
 
 UserActionsLog.propTypes = {
-  logData: PropTypes.instanceOf(Array).isRequired
+  logData: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default UserActionsLog;
