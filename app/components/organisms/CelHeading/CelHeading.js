@@ -295,7 +295,7 @@ class CelHeading extends Component {
           <View style={style.customCenterComponent}>
             <Loader
               barColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
-              backgroundColor={getColor(COLOR_KEYS.HEADER)}
+              backgroundColor={getColor(COLOR_KEYS.CARDS)}
               progress={
                 customCenterComponent.currentStep / customCenterComponent.steps
               }

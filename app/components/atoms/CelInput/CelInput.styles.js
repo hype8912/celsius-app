@@ -2,13 +2,12 @@ import { Platform, StyleSheet } from "react-native";
 import {
   getPadding,
   getThemedStyle,
-  getScaledFont,
   getFontFamily,
+  getFontSize,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
-const fontSize = getScaledFont(STYLES.FONTSIZE.H4);
 const base = {
   container: {
     borderRadius: 8,
@@ -36,7 +35,6 @@ const base = {
   },
   input: {
     height: 50,
-    fontSize,
     fontFamily: getFontFamily("light"),
     color: COLOR_KEYS.HEADLINE,
   },
@@ -71,18 +69,28 @@ const themed = {
   light: {
     input: {
       fontFamily: getFontFamily("light", "Barlow"),
+      fontSize: getFontSize("H4"),
     },
   },
 
   dark: {
     input: {
       fontFamily: getFontFamily("light", "Barlow"),
+      fontSize: getFontSize("H4"),
     },
   },
 
   unicorn: {
     input: {
       fontFamily: getFontFamily("light", "Pangram"),
+      fontSize: getFontSize("H4"),
+    },
+  },
+
+  horse: {
+    input: {
+      fontFamily: getFontFamily("light", "Pangram"),
+      fontSize: getFontSize("H4"),
     },
   },
 };

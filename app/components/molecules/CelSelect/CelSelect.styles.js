@@ -1,6 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
 
-import STYLES from "../../../constants/STYLES";
 import { getPadding, getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -9,18 +8,18 @@ const base = {
     height: 50,
     ...StyleSheet.flatten(getPadding("10 16 13 16")),
     borderRadius: 8,
-    ...Platform.select({
-      android: {
-        borderColor: "#E9E9E9",
-        borderTopWidth: 0.2,
-        borderLeftWidth: 0.2,
-        borderRightWidth: 0.5,
-        borderBottomWidth: 2,
-      },
-      ios: {
-        ...STYLES.SHADOW_STYLES,
-      },
-    }),
+    // ...Platform.select({
+    //   android: {
+    //     borderColor: "#E9E9E9",
+    //     borderTopWidth: 0.2,
+    //     borderLeftWidth: 0.2,
+    //     borderRightWidth: 0.5,
+    //     borderBottomWidth: 2,
+    //   },
+    //   ios: {
+    //     ...STYLES.SHADOW_STYLES,
+    //   },
+    // }),
     backgroundColor: COLOR_KEYS.CARDS,
   },
   disabledInput: {
@@ -32,7 +31,7 @@ const base = {
     borderRadius: 15,
   },
   iconColor: {
-    color: COLOR_KEYS.HEADLINE,
+    color: COLOR_KEYS.PARAGRAPH,
   },
   textColor: {
     color: COLOR_KEYS.HEADLINE,

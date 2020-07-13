@@ -13,6 +13,8 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { STORYBOOK } from "../../../../dev-settings.json";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -224,7 +226,11 @@ class KYCProfileDetails extends Component {
           />
         </View>
         {formErrors.dateOfBirth && (
-          <CelText margin="5 0 0 0" color="red">
+          <CelText
+            margin="5 0 0 0"
+            color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+            type="H6"
+          >
             {formErrors.dateOfBirth}
           </CelText>
         )}

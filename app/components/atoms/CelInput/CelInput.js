@@ -5,11 +5,12 @@ import PropTypes from "prop-types";
 import CelInputStyle from "./CelInput.styles";
 import CelInputPassword from "./CelInputPassword";
 import CelInputText from "./CelInputText";
-import { getMargins } from "../../../utils/styles-util";
+import { getColor, getMargins } from "../../../utils/styles-util";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
 import CelTextArea from "../CelTextArea/CelTextArea";
 import CelText from "../CelText/CelText";
 import { THEMES } from "../../../constants/UI";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CelInput extends Component {
   static propTypes = {
@@ -219,7 +220,7 @@ class CelInput extends Component {
         {!!error && (
           <CelText
             margin="5 0 0 0"
-            color="red"
+            color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
             align={"left"}
             type={"H6"}
             style={{
