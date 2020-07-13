@@ -34,6 +34,7 @@ import WalletSettingsStories from "./WalletSettings/WalletSettings.stories";
 import PersonalInformationStories from "./PersonalInformation/PersonalInformation.stories";
 import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
 import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
+import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -214,10 +215,15 @@ storiesOf("SecuritySettings", module).add(
   SecuritySettingsStories.regular
 );
 
-storiesOf("WalletSettings", module).add(
-  "Wallet Settings",
-  WalletSettingsStories.regular
-);
+storiesOf("WalletSettings", module)
+  .add(
+    "Eligible for interest in CEL",
+    WalletSettingsStories.eligibleForInterestInCEL
+  )
+  .add(
+    "Not eligible for interest in CEL",
+    WalletSettingsStories.notEligibleForInterestInCEL
+  );
 
 storiesOf("PersonalInformation", module).add(
   "Personal Information",
@@ -240,3 +246,7 @@ storiesOf("ConfirmCamera", module)
   .add("Profile", ConfirmCameraStories.profile)
   .add("Document", ConfirmCameraStories.document)
   .add("Utility Bill", ConfirmCameraStories.utility);
+
+storiesOf("KYCCheckPhotos", module)
+  .add("Single Photo", KYCCheckPhotosStories.singlePhoto)
+  .add("Multiple Photos", KYCCheckPhotosStories.multiplePhotos);

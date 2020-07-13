@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import WalletSettings from "./WalletSettings";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -24,41 +25,57 @@ const initialState = {
   },
   compliance: mockComplianceStore.allowedAll,
   forms: {
-    formData: {
-      coinsInCel: {
-        BCH: false,
-        BSV: false,
-        BTC: true,
-        CEL: false,
-        DAI: false,
-        DASH: false,
-        EOS: false,
-        ETC: false,
-        ETH: false,
-        GUSD: false,
-        LTC: false,
-        MCDAI: false,
-        OMG: false,
-        ORBS: false,
-        PAX: false,
-        SGA: false,
-        TAUD: false,
-        TCAD: false,
-        TGBP: false,
-        THKD: false,
-        TUSD: false,
-        USDC: false,
-        "USDT ERC20": false,
-        XAUT: false,
-        XLM: false,
-        XRP: false,
-        ZEC: false,
-        ZRX: false,
-      },
-    },
+    formData: {},
   },
 };
-const regular = () => {
+
+const state = _.cloneDeep(initialState);
+const eligibleForInterestInCEL = () => {
+  state.forms.formData = {
+    coinsInCel: {
+      BCH: false,
+      BSV: false,
+      BTC: true,
+      CEL: false,
+      DAI: false,
+      DASH: false,
+      EOS: false,
+      ETC: false,
+      ETH: false,
+      GUSD: false,
+      LTC: false,
+      MCDAI: false,
+      OMG: false,
+      ORBS: false,
+      PAX: false,
+      SGA: false,
+      TAUD: false,
+      TCAD: false,
+      TGBP: false,
+      THKD: false,
+      TUSD: false,
+      USDC: false,
+      "USDT ERC20": false,
+      XAUT: false,
+      XLM: false,
+      XRP: false,
+      ZEC: false,
+      ZRX: false,
+    },
+  };
+
+  return (
+    <ScreenStoryWrapper
+      screenName="WalletSettings"
+      screen={WalletSettings}
+      state={state}
+    />
+  );
+};
+
+const notEligibleForInterestInCEL = () => {
+  state.forms.formData = { coinsInCel: null };
+
   return (
     <ScreenStoryWrapper
       screenName="WalletSettings"
@@ -69,5 +86,6 @@ const regular = () => {
 };
 
 export default {
-  regular,
+  eligibleForInterestInCEL,
+  notEligibleForInterestInCEL,
 };
