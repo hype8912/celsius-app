@@ -104,6 +104,11 @@ const themed = {
     },
   },
   unicorn: {},
+  horse: {
+    headingBackground: {
+      borderColor: "transparent",
+    },
+  },
 };
 
 const CelHeadingStyle = () => getThemedStyle(base, themed);

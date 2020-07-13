@@ -29,7 +29,7 @@ const base = {
   },
   viewmenu: { backgroundColor: COLOR_KEYS.CARDS },
   textmenu: { color: COLOR_KEYS.PARAGRAPH },
-  viewcoin: { backgroundColor: COLOR_KEYS.HEADER },
+  viewcoin: { backgroundColor: COLOR_KEYS.CARDS },
   textcoin: { color: COLOR_KEYS.HEADLINE },
   fillColor: { color: COLOR_KEYS.HEADLINE },
 };

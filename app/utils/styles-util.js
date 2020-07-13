@@ -231,11 +231,12 @@ function getThemeFontFamily() {
 
   switch (theme) {
     case THEMES.UNICORN:
+    case THEMES.HORSE:
+    default:
       return "Pangram";
 
     case THEMES.LIGHT:
     case THEMES.DARK:
-    default:
       return "Barlow";
   }
 }
