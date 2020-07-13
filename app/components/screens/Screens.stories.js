@@ -38,6 +38,7 @@ import WithdrawAddressOverviewStories from "./WithdrawAddressOverview/WithdrawAd
 import BorrowChooseLoanStories from "./BorrowChooseLoan/BorrowChooseLoan.stories";
 import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
 import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
+import WithdrawCreateAddress from "./WithdrawCreateAddress/WithdrawCreateAddress.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -263,6 +264,12 @@ storiesOf("WithdrawConfirm", module).add(
   "Confirm",
   WithdrawConfirmStories.regular
 );
+
+storiesOf("WithdrawCreateAddress", module)
+  .add("Regular ", WithdrawCreateAddress.regular)
+  .add("XRP", WithdrawCreateAddress.xrp)
+  .add("XLM", WithdrawCreateAddress.xlm)
+  .add("EOS", WithdrawCreateAddress.eos);
 
 storiesOf("BorrowChooseLoan", module)
   .add("Stable Coins", BorrowChooseLoanStories.stable)
