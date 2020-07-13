@@ -1,8 +1,7 @@
 import { Platform } from "react-native";
-import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -52,14 +51,17 @@ const base = {
         borderLeftWidth: 0.2,
         borderRightWidth: 0.5,
         borderBottomWidth: 2,
+        borderColor: COLOR_KEYS.PARAGRAPH,
       },
       ios: {
         ...STYLES.SHADOW_STYLES,
       },
     }),
+    backgroundColor: COLOR_KEYS.CARDS,
     paddingHorizontal: 10,
     marginBottom: 5,
   },
+  iconColor: { color: COLOR_KEYS.PARAGRAPH },
 };
 
 const themed = {
@@ -67,54 +69,27 @@ const themed = {
     circleWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
     },
-    selectWrapper: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT),
-      ...Platform.select({
-        android: {
-          borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT),
-        },
-      }),
-    },
     iconWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
     },
-    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
   },
 
   dark: {
     circleWrapper: {
       backgroundColor: STYLES.COLORS.DARK_HEADER,
     },
-    selectWrapper: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
-      ...Platform.select({
-        android: {
-          borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK),
-        },
-      }),
-    },
     iconWrapper: {
       backgroundColor: STYLES.COLORS.DARK_HEADER,
     },
-    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
   },
 
   unicorn: {
     circleWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
     },
-    selectWrapper: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
-      ...Platform.select({
-        android: {
-          borderColor: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN),
-        },
-      }),
-    },
     iconWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
     },
-    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
   },
 };
 

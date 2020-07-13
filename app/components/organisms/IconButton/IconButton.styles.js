@@ -1,8 +1,7 @@
 import { Platform } from "react-native";
 import STYLES from "../../../constants/STYLES";
-import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -12,6 +11,7 @@ const base = {
     borderRadius: 8,
     marginVertical: 20,
     minHeight: 50,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
   leftWrapper: {
     flexDirection: "row",
@@ -26,18 +26,14 @@ const base = {
     alignItems: "center",
     flex: 0.3,
   },
+  textColor: { color: COLOR_KEYS.PARAGRAPH },
+  iconColor: { color: COLOR_KEYS.PARAGRAPH },
 };
 
 const themed = {
-  light: {
-    container: { backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT) },
-    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
-    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.LIGHT) },
-  },
-
+  light: {},
   dark: {
     container: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
       ...Platform.select({
         android: {
           ...STYLES.ANDROID_BORDER_STYLES,
@@ -47,13 +43,10 @@ const themed = {
         },
       }),
     },
-    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
-    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.DARK) },
   },
 
   unicorn: {
     container: {
-      backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.UNICORN),
       ...Platform.select({
         android: {
           ...STYLES.ANDROID_SHADOW_STYLES,
@@ -64,8 +57,6 @@ const themed = {
         },
       }),
     },
-    textColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
-    iconColor: { color: getColor(COLOR_KEYS.PARAGRAPH, THEMES.UNICORN) },
   },
 };
 

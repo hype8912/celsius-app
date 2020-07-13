@@ -33,6 +33,9 @@ class ScreenStoryWrapper extends React.Component {
         nextTheme = THEMES.UNICORN;
         break;
       case THEMES.UNICORN:
+        nextTheme = THEMES.HORSE;
+        break;
+      case THEMES.HORSE:
         nextTheme = THEMES.LIGHT;
         break;
     }

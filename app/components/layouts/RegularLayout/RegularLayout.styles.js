@@ -1,11 +1,10 @@
-import { getThemedStyle, getColor } from "../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
     flex: 1,
-    backgroundColor: getColor(COLOR_KEYS.BACKGROUND),
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   loaderView: {
     backgroundColor: "transparent",
@@ -26,23 +25,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT),
-    },
-  },
-
-  dark: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK),
-    },
-  },
-
-  unicorn: {
-    container: {
-      backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const RegularLayoutStyle = theme =>

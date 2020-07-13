@@ -1,10 +1,8 @@
 import {
-  getColor,
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -38,20 +36,15 @@ const base = {
   progress: {
     justifyContent: "center",
   },
+  card: {
+    color: COLOR_KEYS.BACKGROUND,
+  },
 };
 
 const themed = {
-  light: {
-    card: { color: getColor(COLOR_KEYS.BACKGROUND, THEMES.LIGHT) },
-  },
-
-  dark: {
-    card: { color: getColor(COLOR_KEYS.BACKGROUND, THEMES.DARK) },
-  },
-
-  unicorn: {
-    card: { color: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN) },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const LoanOverviewCardStyle = () => getThemedStyle(base, themed);
