@@ -25,6 +25,7 @@ let deviceModel;
 let osVersion;
 let buildVersion;
 const decodedPublicKey = Base64.decode(PUBLIC_KEY);
+let reqConfig;
 
 export default {
   initInterceptors,
@@ -234,10 +235,20 @@ async function errorInterceptor(serverError) {
     url: serverError.config && serverError.config.url,
     method: serverError.config && serverError.config.method,
   });
+
+  reqConfig = serverError.config;
+
   if (err.status === 401) handle401(err);
-  if (err.status === 403) handle403(err);
+  if (err.status === 403) {
+    if (err.slug === "SIX_DIGIT_PIN_REQUIRED") {
+      await handleSixDigitPinChange(serverError.config);
+      return;
+    }
+    await handle403(err);
+  }
   if (err.status === 426) {
-    const res = await handle426(err, serverError.config);
+    // console.log('426 error je: ', err)
+    const res = await handle426(err);
     return Promise.resolve(res);
   }
   if (err.status === 429) handle429();
@@ -274,25 +285,36 @@ async function handle403(err) {
   if (err.slug === "Token Expired") {
     store.dispatch(actions.logoutFormDevice());
   }
-  // TODO complete with Filip and Lazar
-  if (err.slug === "SIX_DIGIT_PIN_REQUIRED") {
+}
+
+// TODO continue with this
+async function handleSixDigitPinChange(rConfig) {
+  return new Promise((resolve, reject) => {
+    const { activeScreen } = store.getState().nav;
+
     store.dispatch(
-      actions.navigateTo("VerifyProfile", {
-        hideBack: true,
-        // SIX_DIGIT_PIN_MISSING
-        verificationType: err.show,
+      actions.navigateTo("SixDigitPinExplanation", {
         onSuccess: async () => {
-          actions.navigateTo("SixDigitPinExplanation");
+          try {
+            // fetch failed request again after verification successful
+            const res = await axios(rConfig);
+
+            store.dispatch(actions.resetToScreen(activeScreen));
+            return resolve(res);
+          } catch (e) {
+            return reject(e);
+          }
         },
       })
     );
-  }
+  });
 }
 
-async function handle426(err, reqConfig) {
+async function handle426(err) {
   return new Promise((resolve, reject) => {
     // get active screen before rerouting
     const { activeScreen } = store.getState().nav;
+
     if (activeScreen !== "VerifyProfile") {
       store.dispatch(
         actions.navigateTo("VerifyProfile", {
@@ -300,6 +322,7 @@ async function handle426(err, reqConfig) {
           showLogOutBtn: true,
           // PIN || 2FA
           verificationType: err.show,
+          hasSixDigitPin: err.has_six_digit_pin,
           onSuccess: async () => {
             try {
               // fetch failed request again after verification successful
