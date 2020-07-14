@@ -39,6 +39,7 @@ import BorrowChooseLoanStories from "./BorrowChooseLoan/BorrowChooseLoan.stories
 import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
 import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
 import WithdrawCreateAddress from "./WithdrawCreateAddress/WithdrawCreateAddress.stories";
+import KYCVerifyIdentityStories from "./KYCVerifyIdentity/KYCVerifyIdentity.stories";
 import WithdrawConfirmAddressStories from "./WithdrawConfirmAddress/WithdrawConfirmAddress.stories";
 import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
 
@@ -277,6 +278,14 @@ storiesOf("BorrowChooseLoan", module)
   .add("Stable Coins", BorrowChooseLoanStories.stable)
   .add("USD", BorrowChooseLoanStories.usd)
   .add("Stable Coins and USD", BorrowChooseLoanStories.stableAndUsd);
+
+storiesOf("KYCVerifyIdentity", module)
+  .add("Passport", KYCVerifyIdentityStories.passport)
+  .add(
+    "Passport and Driving Licence",
+    KYCVerifyIdentityStories.passportAndDrivingLicence
+  )
+  .add("All", KYCVerifyIdentityStories.all);
 
 storiesOf("WithdrawConfirmAddress", module).add(
   "WithdrawConfirmAddress",

@@ -70,7 +70,6 @@ class KYCVerifyIdentity extends Component {
 
   saveFrontPhoto = frontPhoto => {
     const { actions, formData } = this.props;
-
     actions.updateFormField("front", frontPhoto);
 
     if (formData.documentType !== "passport") {
@@ -121,7 +120,6 @@ class KYCVerifyIdentity extends Component {
     ) {
       return <KYCCheckPhotos />;
     }
-
     const availableDocs = mapDocs(kycDocTypes[user.citizenship]);
 
     return (
