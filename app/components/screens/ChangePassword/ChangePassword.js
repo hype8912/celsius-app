@@ -8,7 +8,7 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import passwordUtil from "../../../utils/password-util";
+import securityUtil from "../../../utils/security-util";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 
@@ -86,7 +86,7 @@ class ChangePassword extends Component {
           loading={changingPassword}
           margin={"30 0 0 0"}
           disabled={
-            passwordUtil.calculatePasswordScore(formData.newPassword).result
+            securityUtil.calculatePasswordScore(formData.newPassword).result
               .score < 80
           }
         >

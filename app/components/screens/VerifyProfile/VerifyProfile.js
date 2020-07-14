@@ -32,7 +32,6 @@ import { DEEP_LINKS } from "../../../constants/DATA";
 )
 class VerifyProfile extends Component {
   static propTypes = {};
-  static defaultProps = {};
 
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
@@ -51,6 +50,7 @@ class VerifyProfile extends Component {
       loading: false,
       verificationError: false,
       showLogOutBtn: false,
+      hasSixDigitPin: false,
     };
   }
 
@@ -62,11 +62,13 @@ class VerifyProfile extends Component {
   }
 
   componentDidMount = () => {
-    const { navigation, actions } = this.props;
+    const { navigation, actions, user } = this.props;
     const activeScreen = navigation.getParam("activeScreen");
-    // actions.logoutUser()
-    actions.getPreviousPinScreen(activeScreen);
+    const hasSixDigitPin = navigation.getParam("hasSixDigitPin");
 
+    actions.getPreviousPinScreen(activeScreen);
+    if (hasSixDigitPin || user.has_six_digit_pin)
+      this.setState({ hasSixDigitPin: true });
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
   };
 
@@ -161,13 +163,15 @@ class VerifyProfile extends Component {
 
   handlePINChange = newValue => {
     const { actions } = this.props;
+    const { hasSixDigitPin } = this.state;
+    const pinLength = hasSixDigitPin ? 6 : 4;
 
-    if (newValue.length > 4) return;
+    if (newValue.length > pinLength) return;
 
     actions.updateFormField("pin", newValue);
     this.setState({ value: newValue });
 
-    if (newValue.length === 4) {
+    if (newValue.length === pinLength) {
       this.setState({ loading: true });
       actions.checkPIN(this.onCheckSuccess, this.onCheckError);
     }
@@ -204,8 +208,24 @@ class VerifyProfile extends Component {
     }
   };
 
+  renderDots = length => {
+    const { actions } = this.props;
+    const { verificationError, value } = this.state;
+
+    const pinLength = length || 6;
+    return (
+      <TouchableOpacity onPress={actions.toggleKeypad}>
+        <HiddenField
+          value={value}
+          error={verificationError}
+          length={pinLength}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   render2FA() {
-    const { loading, value, verificationError } = this.state;
+    const { loading } = this.state;
     const { actions } = this.props;
     const style = VerifyProfileStyle();
 
@@ -223,9 +243,8 @@ class VerifyProfile extends Component {
           Please enter your 2FA code to proceed
         </CelText>
 
-        <TouchableOpacity onPress={actions.toggleKeypad}>
-          <HiddenField value={value} length={6} error={verificationError} />
-        </TouchableOpacity>
+        {this.renderDots()}
+
         {loading ? (
           <View
             style={{
@@ -249,8 +268,7 @@ class VerifyProfile extends Component {
   }
 
   renderPIN() {
-    const { loading, value, verificationError } = this.state;
-    const { actions } = this.props;
+    const { loading, hasSixDigitPin } = this.state;
     const style = VerifyProfileStyle();
 
     return (
@@ -262,9 +280,7 @@ class VerifyProfile extends Component {
           Please enter your PIN to proceed
         </CelText>
 
-        <TouchableOpacity onPress={actions.toggleKeypad}>
-          <HiddenField value={value} error={verificationError} />
-        </TouchableOpacity>
+        {this.renderDots(hasSixDigitPin ? 6 : 4)}
         <View>
           <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
         </View>

@@ -28,6 +28,17 @@ function getProps(purpose, componentProps) {
   }
 
   switch (purpose) {
+    case EMPTY_STATES.SIX_DIGITS_PIN_UPGRADE:
+      return {
+        ...props,
+        image: require("../../assets/images/upgradeToSixDigit.png"),
+        heading: "Upgrade PIN to 6 digits",
+        paragraphs: [
+          "This is more secure, with vastly more combinations to guess, and essentially prevents thieves from brute-forcing their way into your device.",
+        ],
+        button: "Generate 6-Digits PIN",
+      };
+
     case EMPTY_STATES.HODL_MODE_WARNING_CELPAY:
       return {
         ...props,

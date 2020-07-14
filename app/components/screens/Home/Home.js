@@ -25,6 +25,7 @@ class Home extends Component {
   static navigationOptions = () => ({
     header: null,
     gesturesEnabled: false,
+    hideBack: true,
   });
 
   async componentDidMount() {
@@ -72,7 +73,6 @@ class Home extends Component {
       if (hasAlreadyVerified) {
         return this.goToWalletLanding();
       }
-
       return actions.resetToScreen("VerifyProfile", {
         hideBack: true,
         onSuccess: this.goToWalletLanding,
@@ -82,7 +82,6 @@ class Home extends Component {
 
   goToWalletLanding = () => {
     const { actions, bannerProps, appSettings } = this.props;
-
     if (appSettings && !appSettings.accepted_terms_of_use) {
       return actions.navigateTo("TermsOfUse", {
         purpose: "accept",
@@ -93,6 +92,7 @@ class Home extends Component {
     actions.setBannerProps({
       sessionCount: bannerProps.sessionCount + 1,
     });
+
     actions.resetToScreen("WalletLanding");
     actions.handleDeepLink();
   };

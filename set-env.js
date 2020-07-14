@@ -24,7 +24,6 @@ const ENV_FILES = {
   // Key for codePush
   INFO_PLIST: "info.plist",
   ANDROID_STRINGS: "strings.xml",
-  BUILD_GRADLE: "build.gradle",
 
   GOOGLE_SERVICES: "google-services.json",
   GOOGLE_INFO_PLIST: "GoogleService-Info.plist",
