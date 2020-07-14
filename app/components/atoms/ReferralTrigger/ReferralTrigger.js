@@ -24,7 +24,7 @@ class ReferralTrigger extends Component {
 
     const content =
       "\n" +
-      "Earn even more when others sign up for Celsius with your referral code!" +
+      "Celsius now pays you and your friends $20 every time a new Celsian deposits $200 for 30 days." +
       "\n";
 
     return (
@@ -48,7 +48,7 @@ class ReferralTrigger extends Component {
           });
           actions.closeBanner();
         }}
-        title={"Refer & Earn!"}
+        title={"Earn $20 with each referral!"}
         content={content}
         close={() => actions.closeBanner()}
       />
