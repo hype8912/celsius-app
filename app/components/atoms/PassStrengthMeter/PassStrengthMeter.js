@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 import PassStrengthMeterStyle from "./PassStrengthMeter.styles";
 import CelText from "../CelText/CelText";
-import passwordUtil from "../../../utils/password-util";
+import securityUtil from "../../../utils/security-util";
 import STYLES from "../../../constants/STYLES";
 import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
 
@@ -17,7 +17,7 @@ class PassStrengthMeter extends Component {
 
   handlePassStatus = () => {
     const { password } = this.props;
-    const status = passwordUtil.calculatePasswordScore(password).customStatus;
+    const status = securityUtil.calculatePasswordScore(password).customStatus;
     switch (status) {
       case SECURITY_STRENGTH_LEVEL.WEAK:
         return {
@@ -44,7 +44,7 @@ class PassStrengthMeter extends Component {
 
   handleMeterLength = () => {
     const { password } = this.props;
-    const result = passwordUtil.calculatePasswordScore(password).result;
+    const result = securityUtil.calculatePasswordScore(password).result;
     if (result.status === "needs requirement(s)") {
       return "15%";
     }

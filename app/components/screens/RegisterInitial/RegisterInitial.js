@@ -15,7 +15,7 @@ import RegisterPromoCodeCard from "../../molecules/RegisterPromoCodeCard/Registe
 import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
 import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
-import passwordUtil from "../../../utils/password-util";
+import securityUtil from "../../../utils/security-util";
 import STYLES from "../../../constants/STYLES";
 
 @connect(
@@ -103,7 +103,7 @@ class RegisterInitial extends Component {
       !!formData.firstName,
       !!formData.lastName,
       !!formData.email,
-      passwordUtil.calculatePasswordScore(formData.password).result.score > 80,
+      securityUtil.calculatePasswordScore(formData.password).result.score > 80,
     ];
     const fieldsFilledOut = fields.every(x => x);
 
