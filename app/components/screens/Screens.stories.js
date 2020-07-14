@@ -34,12 +34,13 @@ import WalletSettingsStories from "./WalletSettings/WalletSettings.stories";
 import PersonalInformationStories from "./PersonalInformation/PersonalInformation.stories";
 import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
 import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
-import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
 import WithdrawAddressOverviewStories from "./WithdrawAddressOverview/WithdrawAddressOverview.stories";
 import BorrowChooseLoanStories from "./BorrowChooseLoan/BorrowChooseLoan.stories";
 import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
 import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
 import WithdrawCreateAddress from "./WithdrawCreateAddress/WithdrawCreateAddress.stories";
+import WithdrawConfirmAddressStories from "./WithdrawConfirmAddress/WithdrawConfirmAddress.stories";
+import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -276,6 +277,11 @@ storiesOf("BorrowChooseLoan", module)
   .add("Stable Coins", BorrowChooseLoanStories.stable)
   .add("USD", BorrowChooseLoanStories.usd)
   .add("Stable Coins and USD", BorrowChooseLoanStories.stableAndUsd);
+
+storiesOf("WithdrawConfirmAddress", module).add(
+  "WithdrawConfirmAddress",
+  WithdrawConfirmAddressStories.regular
+);
 
 storiesOf("CelPayLanding", module).add(
   "CelPayLanding",
