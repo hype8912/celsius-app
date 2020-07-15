@@ -68,7 +68,6 @@ const base = {
     borderColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   basicredButton: {
-    // backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
     margin: 20,
   },
   basicgreenButton: {
