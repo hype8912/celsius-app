@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import SecuritySettings from "./SecuritySettings";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -26,16 +27,65 @@ const initialState = {
     formErrors: {},
   },
 };
-const regular = () => {
+// "weak", "fair", "good", "strong"
+
+const weak = () => {
+  const state = _.cloneDeep(initialState);
+  state.security.securityOverview.overall_score_strength = "weak";
+
   return (
     <ScreenStoryWrapper
       screenName="VerifyProfile"
       screen={SecuritySettings}
-      state={initialState}
+      state={state}
+    />
+  );
+};
+
+const fair = () => {
+  const state = _.cloneDeep(initialState);
+  state.security.securityOverview.overall_score_strength = "fair";
+
+  return (
+    <ScreenStoryWrapper
+      screenName="VerifyProfile"
+      screen={SecuritySettings}
+      state={state}
+    />
+  );
+};
+
+const good = () => {
+  const state = _.cloneDeep(initialState);
+  state.security.securityOverview.overall_score_strength = "good";
+  state.security.securityOverview.is_2fa_set = true;
+
+  return (
+    <ScreenStoryWrapper
+      screenName="VerifyProfile"
+      screen={SecuritySettings}
+      state={state}
+    />
+  );
+};
+
+const strong = () => {
+  const state = _.cloneDeep(initialState);
+  state.security.securityOverview.overall_score_strength = "strong";
+  state.security.securityOverview.is_2fa_set = true;
+
+  return (
+    <ScreenStoryWrapper
+      screenName="VerifyProfile"
+      screen={SecuritySettings}
+      state={state}
     />
   );
 };
 
 export default {
-  regular,
+  weak,
+  fair,
+  good,
+  strong,
 };
