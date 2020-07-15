@@ -5,17 +5,17 @@ import {
 } from "../../../utils/styles-util";
 
 const base = {
-  container: {
-    flex: 1,
-  },
   wrapper: {
+    flex: 1,
     alignItems: "center",
+    justifyContent: "center",
+    height: heightPercentageToDP("100%"),
+    marginTop: -60,
   },
   celImage: {
     resizeMode: "contain",
     width: widthPercentageToDP("35%"),
     height: heightPercentageToDP("20%"),
-    marginTop: heightPercentageToDP("20%"),
   },
   title: {
     marginTop: heightPercentageToDP("2%"),
