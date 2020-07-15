@@ -3,7 +3,7 @@ import {
   getThemedStyle,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width } = Dimensions.get("window");
 
@@ -25,7 +25,7 @@ const base = {
     marginBottom: 10,
   },
   tagText: {
-    color: STYLES.COLORS.CELSIUS_BLUE,
+    color: COLOR_KEYS.LINK,
     textAlign: "left",
   },
   button: {

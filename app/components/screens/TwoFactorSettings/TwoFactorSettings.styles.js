@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -9,7 +9,7 @@ const base = {
     marginTop: 15,
     marginBottom: 10,
     padding: 10,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.CARDS,
     borderRadius: 6,
   },
   separatorWrapper: {
@@ -17,7 +17,7 @@ const base = {
     width: "100%",
   },
   secretText: {
-    color: STYLES.COLORS.CELSIUS,
+    color: COLOR_KEYS.BANNER_INFO,
     textDecorationLine: "underline",
     marginTop: 15,
     maxWidth: "70%",

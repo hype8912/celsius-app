@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import WithdrawConfirmAddress from "./WithdrawConfirmAddress";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -33,40 +34,12 @@ const initialState = {
   compliance: mockComplianceStore.allowedAll,
   forms: {
     formData: {
-      coinsInCel: {
-        BCH: false,
-        BSV: false,
-        BTC: true,
-        CEL: false,
-        DAI: false,
-        DASH: false,
-        EOS: false,
-        ETC: false,
-        ETH: false,
-        GUSD: false,
-        LTC: false,
-        MCDAI: false,
-        OMG: false,
-        ORBS: false,
-        PAX: false,
-        SGA: false,
-        TAUD: false,
-        TCAD: false,
-        TGBP: false,
-        THKD: false,
-        TUSD: false,
-        USDC: false,
-        "USDT ERC20": false,
-        XAUT: false,
-        XLM: false,
-        XRP: false,
-        ZEC: false,
-        ZRX: false,
-      },
+      coinsInCel: {},
       coin: "USDC",
     },
   },
 };
+
 const regular = () => {
   return (
     <ScreenStoryWrapper
@@ -77,6 +50,19 @@ const regular = () => {
   );
 };
 
+const withTag = () => {
+  const state = _.cloneDeep(initialState);
+  state.forms.formData = { coin: "XRP" };
+  return (
+    <ScreenStoryWrapper
+      screenName="WithdrawConfirmAddress"
+      screen={WithdrawConfirmAddress}
+      state={state}
+    />
+  );
+};
+
 export default {
   regular,
+  withTag,
 };

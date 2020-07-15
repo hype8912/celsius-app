@@ -42,6 +42,8 @@ import WithdrawCreateAddress from "./WithdrawCreateAddress/WithdrawCreateAddress
 import KYCVerifyIdentityStories from "./KYCVerifyIdentity/KYCVerifyIdentity.stories";
 import WithdrawConfirmAddressStories from "./WithdrawConfirmAddress/WithdrawConfirmAddress.stories";
 import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
+import TwoFaAuthAppConfirmationCodeStories from "./TwoFaAuthAppConfirmationCode/TwoFaAuthAppConfirmationCode.stories";
+import KYCTaxpayerStories from "./KYCTaxpayer/KYCTaxpayer.stories";
 import BorrowCollateralStories from "./BorrowCollateral/BorrowCollateral.stories";
 
 // Link to screens spreadsheet
@@ -288,15 +290,23 @@ storiesOf("KYCVerifyIdentity", module)
   )
   .add("All", KYCVerifyIdentityStories.all);
 
-storiesOf("WithdrawConfirmAddress", module).add(
-  "WithdrawConfirmAddress",
-  WithdrawConfirmAddressStories.regular
-);
+storiesOf("WithdrawConfirmAddress", module)
+  .add("Regular", WithdrawConfirmAddressStories.regular)
+  .add("With Destination Tag / Memo ID", WithdrawConfirmAddressStories.withTag);
 
 storiesOf("CelPayLanding", module).add(
-  "CelPayLanding",
+  "Cel Pay Landing",
   CelPayLandingStories.regular
 );
+
+storiesOf("TwoFaAuthAppConfirmationCode", module).add(
+  "Two FA Auth Confirmation Code",
+  TwoFaAuthAppConfirmationCodeStories.regular
+);
+
+storiesOf("KYCTaxpayer", module)
+  .add("SSN", KYCTaxpayerStories.ssn)
+  .add("Tax payer", KYCTaxpayerStories.taxPayer);
 
 storiesOf("BorrowCollateral", module).add(
   "Borrow Collateral",
