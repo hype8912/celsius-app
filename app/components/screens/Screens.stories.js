@@ -44,6 +44,8 @@ import WithdrawConfirmAddressStories from "./WithdrawConfirmAddress/WithdrawConf
 import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
 import TwoFaAuthAppConfirmationCodeStories from "./TwoFaAuthAppConfirmationCode/TwoFaAuthAppConfirmationCode.stories";
 import KYCTaxpayerStories from "./KYCTaxpayer/KYCTaxpayer.stories";
+import AppearanceStories from "./Appearance/Appearance.stories";
+import TooManyRequestsStories from "./TooManyRequests/TooManyRequests.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -306,3 +308,9 @@ storiesOf("TwoFaAuthAppConfirmationCode", module).add(
 storiesOf("KYCTaxpayer", module)
   .add("SSN", KYCTaxpayerStories.ssn)
   .add("Tax payer", KYCTaxpayerStories.taxPayer);
+
+storiesOf("Appearance", module).add("Apearance", AppearanceStories.regular);
+storiesOf("TooManyRequests", module).add(
+  "Too Many Requests",
+  TooManyRequestsStories.regular
+);
