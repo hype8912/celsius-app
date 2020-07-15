@@ -13,6 +13,7 @@ import { THEMES } from "../../../constants/UI";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import { getTheme } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -116,35 +117,14 @@ class SelectCoin extends Component {
     }
 
     if (theme === THEMES.DARK && item.image) {
-      return (
-        <Icon
-          name={`Icon${item.value}`}
-          fill={STYLES.COLORS.WHITE}
-          height={30}
-          width={30}
-        />
-      );
+      return <Icon name={`Icon${item.value}`} height={30} width={30} />;
     }
 
     return (
-      <View
-        style={[
-          {
-            backgroundColor:
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.MEDIUM_GRAY1
-                : STYLES.COLORS.DARK_HEADER,
-          },
-          style.iconCircle,
-        ]}
-      >
+      <View style={style.iconCircle}>
         <Icon
           name={`Icon${item.value}`}
-          fill={
-            theme === THEMES.LIGHT
-              ? STYLES.COLORS.DARK_GRAY
-              : STYLES.COLORS.WHITE
-          }
+          fill={COLOR_KEYS.BACKGROUND}
           height={30}
           width={30}
         />

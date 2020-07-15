@@ -6,10 +6,14 @@ import CoinSwitchStyle from "./CoinSwitch.styles";
 import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Icon from "../Icon/Icon";
-import STYLES from "../../../constants/STYLES";
-import { getScaledFont, getTheme } from "../../../utils/styles-util";
-import { THEMES } from "../../../constants/UI";
+import {
+  getColor,
+  getScaledFont,
+  getFontSize,
+  getTheme,
+} from "../../../utils/styles-util";
 import Spinner from "../Spinner/Spinner";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const CoinSwitch = props => {
   const {
@@ -42,11 +46,7 @@ const CoinSwitch = props => {
           name={`Icon${coin}`}
           width="40"
           height="40"
-          fill={
-            theme !== THEMES.DARK
-              ? STYLES.COLORS.DARK_GRAY3
-              : STYLES.COLORS.WHITE_OPACITY3
-          }
+          fill={COLOR_KEYS.HEADLINE}
           style={{ marginBottom: 28 }}
         />
       ) : (
@@ -57,7 +57,7 @@ const CoinSwitch = props => {
           <TouchableOpacity disabled={!coin} onPress={props.onAmountPress}>
             <View
               style={{
-                height: getScaledFont(STYLES.FONTSIZE.H1),
+                height: getScaledFont(getFontSize("H1")),
                 justifyContent: "center",
                 marginVertical: 10,
               }}
@@ -66,7 +66,7 @@ const CoinSwitch = props => {
                 align="center"
                 type="H1"
                 weight="regular"
-                size={STYLES.FONTSIZE.H1 - upperValue.length}
+                size={getFontSize("H1") - upperValue.length}
                 color={amountColor}
               >
                 {upperValue}
@@ -75,7 +75,7 @@ const CoinSwitch = props => {
           </TouchableOpacity>
           <View
             style={{
-              height: getScaledFont(STYLES.FONTSIZE.H2),
+              height: getScaledFont(getFontSize("H2")),
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -86,8 +86,8 @@ const CoinSwitch = props => {
               <CelText
                 align="center"
                 type="H2"
-                color={STYLES.COLORS.MEDIUM_GRAY}
-                size={STYLES.FONTSIZE.H2 - lowerValue.length / 2}
+                color={getColor(COLOR_KEYS.PARAGRAPH)}
+                size={getFontSize("H2") - lowerValue.length / 2}
               >
                 {doubleTilde && "≈"} {lowerValue}
               </CelText>
@@ -98,15 +98,15 @@ const CoinSwitch = props => {
         <View>
           <View
             style={{
-              height: getScaledFont(STYLES.FONTSIZE.H1),
+              height: getScaledFont(getFontSize("H1")),
               justifyContent: "center",
             }}
           >
             <CelText
               align="center"
               type="H1"
-              style={{ height: getScaledFont(STYLES.FONTSIZE.H1) }}
-              size={STYLES.FONTSIZE.H1 - upperValue.length}
+              style={{ height: getScaledFont(getFontSize("H1")) }}
+              size={getFontSize("H1") - upperValue.length}
               margin="10 0 10 0"
               weight="regular"
               color={amountColor}
@@ -116,16 +116,16 @@ const CoinSwitch = props => {
           </View>
           <View
             style={{
-              height: getScaledFont(STYLES.FONTSIZE.H2),
+              height: getScaledFont(getFontSize("H2")),
               justifyContent: "center",
             }}
           >
             <CelText
               align="center"
               type="H2"
-              color={STYLES.COLORS.MEDIUM_GRAY}
-              style={{ height: getScaledFont(STYLES.FONTSIZE.H2) }}
-              size={STYLES.FONTSIZE.H2 - lowerValue.length / 2}
+              color={getColor(COLOR_KEYS.PARAGRAPH)}
+              style={{ height: getScaledFont(getFontSize("H2")) }}
+              size={getFontSize("H2") - lowerValue.length / 2}
             >
               {doubleTilde && "≈"} {lowerValue}
             </CelText>
@@ -138,7 +138,7 @@ const CoinSwitch = props => {
             name="Switch"
             width="25"
             height="25"
-            fill={STYLES.COLORS.MEDIUM_GRAY}
+            fill={COLOR_KEYS.HEADLINE}
           />
         </TouchableOpacity>
       </View>

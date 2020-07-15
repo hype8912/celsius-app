@@ -109,9 +109,4 @@ export default {
   withoutAmount,
   notInRange,
   inFiat,
-  // notCompliant,
-  // pendingVerification,
-  // notVerified,
-  // hodlModeActive,
-  // lockedAddress,
 };

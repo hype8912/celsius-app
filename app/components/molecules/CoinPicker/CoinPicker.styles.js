@@ -46,13 +46,6 @@ const base = {
     alignItems: "center",
     borderRadius: 8,
     ...Platform.select({
-      android: {
-        borderTopWidth: 0.2,
-        borderLeftWidth: 0.2,
-        borderRightWidth: 0.5,
-        borderBottomWidth: 2,
-        borderColor: COLOR_KEYS.PARAGRAPH,
-      },
       ios: {
         ...STYLES.SHADOW_STYLES,
       },

@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -18,27 +18,14 @@ const base = {
     height: 40,
     width: 40,
     borderRadius: 20,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
 };
 
 const themed = {
-  light: {
-    switchButton: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
-
-  dark: {
-    switchButton: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
-
-  unicorn: {
-    switchButton: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const CoinSwitchStyle = theme =>

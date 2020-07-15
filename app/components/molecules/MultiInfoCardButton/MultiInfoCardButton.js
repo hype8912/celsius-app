@@ -15,6 +15,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import { THEMES } from "../../../constants/UI";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class MultiInfoCardButton extends Component {
   static propTypes = {
@@ -64,31 +65,19 @@ class MultiInfoCardButton extends Component {
               <CelText
                 weight={"500"}
                 type={"H3"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
                 margin={"0 0 0 0"}
                 style={disabled ? { opacity: 0.3 } : null}
               >
                 {textButton}
               </CelText>
-              <View
-                style={{
-                  height: heightPercentageToDP("2.5%"),
-                  width: widthPercentageToDP("4.5%"),
-                  marginTop: 10,
-                }}
-              >
-                <Icon
-                  name={"IconChevronRight"}
-                  fill={
-                    disabled
-                      ? STYLES.COLORS.DARK_GRAY3
-                      : STYLES.COLORS.DARK_GRAY5
-                  }
-                  height={heightPercentageToDP("2.5%")}
-                  width={widthPercentageToDP("2.5%")}
-                  style={style.chevronStyle}
-                />
-              </View>
+              <Icon
+                name={"IconChevronRight"}
+                fill={COLOR_KEYS.LINK}
+                height={heightPercentageToDP("2.5%")}
+                width={widthPercentageToDP("3%")}
+                style={style.chevronStyle}
+              />
             </View>
             {label ? (
               <View style={style.active}>

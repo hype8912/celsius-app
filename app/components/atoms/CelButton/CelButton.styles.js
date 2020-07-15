@@ -60,7 +60,7 @@ const base = {
   ghostredButton: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+    borderColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   ghostgreenButton: {
     backgroundColor: "transparent",
@@ -68,7 +68,7 @@ const base = {
     borderColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   basicredButton: {
-    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+    // backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
     margin: 20,
   },
   basicgreenButton: {
@@ -89,6 +89,7 @@ const base = {
   basicredTitleButton: {
     paddingHorizontal: 10,
     paddingVertical: 5,
+    color: COLOR_KEYS.NEGATIVE_STATE,
   },
   basicgreenTitleButton: {
     paddingHorizontal: 10,

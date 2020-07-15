@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import * as appActions from "../../../redux/actions";
 import MyCelLoansTabStyle from "./MyCelLoansTab.styles";
 import CelText from "../../atoms/CelText/CelText";
-// import STYLES from "../../../constants/STYLES";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(

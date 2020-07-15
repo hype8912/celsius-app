@@ -7,6 +7,7 @@ import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import STYLES from "../../../constants/STYLES";
 import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const TxInfoSection = ({ transaction, transactionProps }) => {
   const style = InfoSectionStyle();
@@ -34,7 +35,7 @@ const TxInfoSection = ({ transaction, transactionProps }) => {
           precision: 5,
         })}
       </CelText>
-      <CelText color={STYLES.COLORS.MEDIUM_GRAY} type="H3" align="center">
+      <CelText color={getColor(COLOR_KEYS.PARAGRAPH)} type="H3" align="center">
         {transaction.amount_usd
           ? formatter.usd(transaction.amount_usd)
           : `${formatter.fiat(

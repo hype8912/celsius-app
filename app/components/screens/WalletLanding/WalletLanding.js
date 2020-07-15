@@ -252,6 +252,8 @@ class WalletLanding extends Component {
                 margin="10 0 2 0"
                 size="small"
                 iconRight="IconArrowRight"
+                iconRightWidth={18}
+                iconRightHeight={18}
               >
                 Buy Coins
               </CelButton>
@@ -262,11 +264,11 @@ class WalletLanding extends Component {
                 onPress={() => this.toggleView(WALLET_LANDING_VIEW_TYPES.GRID)}
               >
                 <Icon
-                  style={{
-                    opacity:
-                      activeView === WALLET_LANDING_VIEW_TYPES.GRID ? 1 : 0.5,
-                  }}
-                  fill="primary"
+                  fill={
+                    activeView === WALLET_LANDING_VIEW_TYPES.GRID
+                      ? "active"
+                      : "inactive"
+                  }
                   name="GridView"
                   width="18"
                 />
@@ -276,11 +278,11 @@ class WalletLanding extends Component {
                 onPress={() => this.toggleView(WALLET_LANDING_VIEW_TYPES.LIST)}
               >
                 <Icon
-                  style={{
-                    opacity:
-                      activeView === WALLET_LANDING_VIEW_TYPES.LIST ? 1 : 0.5,
-                  }}
-                  fill="primary"
+                  fill={
+                    activeView === WALLET_LANDING_VIEW_TYPES.LIST
+                      ? "active"
+                      : "inactive"
+                  }
                   name="ListView"
                   width="18"
                 />

@@ -16,9 +16,9 @@ const base = {
     alignItems: "center",
     padding: 10,
     marginBottom: 20,
-    backgroundColor: COLOR_KEYS.HEADLINE,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
-  text: { color: COLOR_KEYS.CARDS },
+  text: { color: COLOR_KEYS.HEADLINE },
 };
 
 const themed = {

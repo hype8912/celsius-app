@@ -102,7 +102,7 @@ class InterestRateInfo extends Component {
             )}
           </View>
 
-          <CelText margin="8 0 2 0" type={"H7"} style={styles.regularRateText}>
+          <CelText margin="8 0 2 0" type={"H7"}>
             Earn in:
           </CelText>
 

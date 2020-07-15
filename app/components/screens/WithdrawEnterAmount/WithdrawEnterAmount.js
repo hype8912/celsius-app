@@ -20,7 +20,6 @@ import store from "../../../redux/store";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import STYLES from "../../../constants/STYLES";
 import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
@@ -30,6 +29,8 @@ import Card from "../../atoms/Card/Card";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import { renderHodlEmptyState } from "../../../utils/hodl-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -364,8 +365,8 @@ class WithdrawEnterAmount extends Component {
                   coin={coin}
                   amountColor={
                     keypadOpen
-                      ? STYLES.COLORS.CELSIUS_BLUE
-                      : STYLES.COLORS.DARK_GRAY
+                      ? getColor(COLOR_KEYS.HEADLINE)
+                      : getColor(COLOR_KEYS.PARAGRAPH)
                   }
                 />
               )}
