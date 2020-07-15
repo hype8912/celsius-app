@@ -237,8 +237,7 @@ class GetCoinsEnterAmount extends Component {
       return { color: STYLES.COLORS.WHITE };
     }
 
-    const style = GetCoinsEnterAmountStyle();
-    return style.text;
+    return null;
   };
 
   handleAmountBackColor = type => {
@@ -277,7 +276,7 @@ class GetCoinsEnterAmount extends Component {
             <CelText
               align={"center"}
               margin={"0 0 10 0"}
-              style={formData.isFiat ? activeTextStyle : style.text}
+              style={formData.isFiat ? activeTextStyle : null}
             >
               PAY WITH
             </CelText>
@@ -319,7 +318,7 @@ class GetCoinsEnterAmount extends Component {
             <CelText
               align={"center"}
               margin={"0 0 10 0"}
-              style={!formData.isFiat ? activeTextStyle : style.text}
+              style={!formData.isFiat ? activeTextStyle : null}
             >
               RECEIVE
             </CelText>
