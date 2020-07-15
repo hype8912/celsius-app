@@ -45,6 +45,7 @@ import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
 import TwoFaAuthAppConfirmationCodeStories from "./TwoFaAuthAppConfirmationCode/TwoFaAuthAppConfirmationCode.stories";
 import KYCTaxpayerStories from "./KYCTaxpayer/KYCTaxpayer.stories";
 import BorrowCollateralStories from "./BorrowCollateral/BorrowCollateral.stories";
+import SupportStories from "./Support/Support.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -312,3 +313,5 @@ storiesOf("BorrowCollateral", module).add(
   "Borrow Collateral",
   BorrowCollateralStories.regular
 );
+
+storiesOf("Support", module).add("Support", SupportStories.regular);
