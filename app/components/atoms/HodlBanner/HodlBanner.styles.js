@@ -1,10 +1,10 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
     borderRadius: 15,
-    backgroundColor: STYLES.COLORS.RED,
+    backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
     paddingHorizontal: 10,
     paddingVertical: 5,
     justifyContent: "center",

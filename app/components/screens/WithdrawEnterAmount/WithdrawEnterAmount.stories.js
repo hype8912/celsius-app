@@ -18,7 +18,7 @@ const initialState = {
       walletUtil.mapWalletSummary(mockWalletStore.summary.postman13)
     ),
     addresses: mockWalletStore.addresses,
-    withdrawalAddresses: mockWalletStore.withdrawalAddresses.postman13,
+    withdrawalAddresses: mockWalletStore.withdrawalAddresses.unlocked,
   },
   user: {
     profile: _.cloneDeep(mockUserStore.profile.postman13),
