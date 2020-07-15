@@ -8,7 +8,6 @@ const initialState = {
   user: {
     profile: mockUserStore.profile.testcelsiusapp,
     appSettings: mockUserStore.appSettings.testcelsiusapp,
-    email: mockUserStore.profile.postman13.email,
   },
 };
 
