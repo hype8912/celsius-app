@@ -16,7 +16,6 @@ import LoadingState from "../../atoms/LoadingState/LoadingState";
 import EmptyState from "../../atoms/EmptyState/EmptyState";
 import * as appActions from "../../../redux/actions";
 import transactionsFilterUtil from "../../../utils/transactions-filter-util";
-import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
 import TransactionFilterModal from "../../modals/TransactionFilterModal/TransactionFilterModal";
 import Card from "../../atoms/Card/Card";
@@ -130,7 +129,7 @@ class TransactionsHistory extends Component {
           onPress={() => this.sendCsvRequest()}
           disabled={disabled}
         >
-          <Icon name="Mail" fill={STYLES.COLORS.GRAY} width={30} height={30} />
+          <Icon name="Mail" width={30} height={30} />
           <CelText align={"center"}>Send CSV to Email</CelText>
         </TouchableOpacity>
       </Card>
@@ -149,12 +148,7 @@ class TransactionsHistory extends Component {
           alignItems: "flex-end",
         }}
       >
-        <Icon
-          name="Filter"
-          width="16"
-          height="16"
-          fill={STYLES.COLORS.DARK_GRAY}
-        />
+        <Icon name="Filter" width="16" height="16" />
       </TouchableOpacity>
     );
   };
