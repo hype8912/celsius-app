@@ -511,6 +511,7 @@ class Icon extends Component {
       fillColor = getColor(COLOR_KEYS.TAB_UNSELECTED);
     if (["active"].includes(fill))
       fillColor = getColor(COLOR_KEYS.TAB_SELECTED);
+    if (Object.values(COLOR_KEYS).includes(fill)) fillColor = getColor(fill);
 
     const viewBox = svgIcons[`${name}ViewBox`] || this.props.viewBox;
 

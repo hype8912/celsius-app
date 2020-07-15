@@ -5,6 +5,7 @@ import CelText from "../../atoms/CelText/CelText";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPickerStyle from "./CoinPicker.styles";
 import Icon from "../../atoms/Icon/Icon";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CoinPicker extends Component {
   static propTypes = {
@@ -106,7 +107,12 @@ class CoinPicker extends Component {
                   {label}
                 </CelText>
                 {coin !== "USD" && (
-                  <Icon width="13" height="13" name="CaretDown" />
+                  <Icon
+                    width="13"
+                    height="13"
+                    name="CaretDown"
+                    fill={COLOR_KEYS.HEADLINE}
+                  />
                 )}
               </View>
             </TouchableOpacity>
