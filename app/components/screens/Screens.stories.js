@@ -19,34 +19,33 @@ import GetCoinsEnterAmountStories from "./GetCoinsEnterAmount/GetCoinsEnterAmoun
 import SecuritySettingsStories from "./SecuritySettings/SecuritySettings.stories";
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
-import BorrowLandingStories from "./BorrowLanding/BorrowLanding.stories";
-import BorrowEnterAmountStories from "./BorrowEnterAmount/BorrowEnterAmount.stories";
-
-import RegisterInitialStories from "./RegisterInitial/RegisterInitial.stories";
-import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
-import CommunityStories from "./Community/Community.stories";
-import SelectCountryStories from "./SelectCountry/SelectCountry.stories";
-import CameraScreenStories from "./CameraScreen/CameraScreen.stories";
-import ConfirmCameraStories from "./ConfirmCamera/ConfirmCamera.stories";
-import KYCProfileDetailsStories from "./KYCProfileDetails/KYCProfileDetails.stories";
-import KYCAddressInfoStories from "./KYCAddressInfo/KYCAddressInfo.stories";
 import WalletSettingsStories from "./WalletSettings/WalletSettings.stories";
-import PersonalInformationStories from "./PersonalInformation/PersonalInformation.stories";
-import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
-import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
-import WithdrawAddressOverviewStories from "./WithdrawAddressOverview/WithdrawAddressOverview.stories";
+import BorrowLandingStories from "./BorrowLanding/BorrowLanding.stories";
+import ConfirmCameraStories from "./ConfirmCamera/ConfirmCamera.stories";
+import RegisterInitialStories from "./RegisterInitial/RegisterInitial.stories";
+import CameraScreenStories from "./CameraScreen/CameraScreen.stories";
+import KYCProfileDetailsStories from "./KYCProfileDetails/KYCProfileDetails.stories";
+import CommunityStories from "./Community/Community.stories";
+import KYCAddressInfoStories from "./KYCAddressInfo/KYCAddressInfo.stories";
+import SelectCountryStories from "./SelectCountry/SelectCountry.stories";
+import BorrowEnterAmountStories from "./BorrowEnterAmount/BorrowEnterAmount.stories";
 import BorrowChooseLoanStories from "./BorrowChooseLoan/BorrowChooseLoan.stories";
-import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
-import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
-import WithdrawCreateAddress from "./WithdrawCreateAddress/WithdrawCreateAddress.stories";
-import KYCVerifyIdentityStories from "./KYCVerifyIdentity/KYCVerifyIdentity.stories";
-import WithdrawConfirmAddressStories from "./WithdrawConfirmAddress/WithdrawConfirmAddress.stories";
+import WithdrawAddressOverviewStories from "./WithdrawAddressOverview/WithdrawAddressOverview.stories";
 import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
+import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
+import WithdrawConfirmAddressStories from "./WithdrawConfirmAddress/WithdrawConfirmAddress.stories";
+import KYCVerifyIdentityStories from "./KYCVerifyIdentity/KYCVerifyIdentity.stories";
+import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
+import PersonalInformationStories from "./PersonalInformation/PersonalInformation.stories";
+import WithdrawCreateAddressStories from "./WithdrawCreateAddress/WithdrawCreateAddress.stories";
+import KYCCheckPhotosStories from "./KYCCheckPhotos/KYCCheckPhotos.stories";
+import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
+import HodlLandingStories from "./HodlLanding/HodlLanding.stories";
 import TwoFaAuthAppConfirmationCodeStories from "./TwoFaAuthAppConfirmationCode/TwoFaAuthAppConfirmationCode.stories";
 import KYCTaxpayerStories from "./KYCTaxpayer/KYCTaxpayer.stories";
+import BorrowCollateralStories from "./BorrowCollateral/BorrowCollateral.stories";
 import AppearanceStories from "./Appearance/Appearance.stories";
 import TooManyRequestsStories from "./TooManyRequests/TooManyRequests.stories";
-import BorrowCollateralStories from "./BorrowCollateral/BorrowCollateral.stories";
 import SupportStories from "./Support/Support.stories";
 
 // Link to screens spreadsheet
@@ -192,43 +191,6 @@ storiesOf("BalanceHistory", module).add(
   BalanceHistoryStories.regular
 );
 
-storiesOf("BorrowLanding", module)
-  .add("With Loans", BorrowLandingStories.withLoans)
-  .add("No Loans", BorrowLandingStories.noLoans)
-  .add("Not Compliant", BorrowLandingStories.notCompliant)
-  .add("Not Verified", BorrowLandingStories.notVerified);
-
-storiesOf("Community", module).add("Regular", CommunityStories.regular);
-
-storiesOf("RegisterInitial", module)
-  .add("Empty", RegisterInitialStories.empty)
-  .add("Filled", RegisterInitialStories.filled)
-  .add("With Errors", RegisterInitialStories.withErrors)
-  .add("With Referral", RegisterInitialStories.withReferral);
-
-storiesOf("RegisterSetPin", module)
-  .add("Create PIN", RegisterSetPinStories.createPin)
-  .add("Confirm PIN", RegisterSetPinStories.confirmPin);
-
-storiesOf("KYCProfileDetails", module)
-  .add("Empty", KYCProfileDetailsStories.empty)
-  .add("Prefilled", KYCProfileDetailsStories.prefilled)
-  .add("With Errors", KYCProfileDetailsStories.withErrors);
-
-storiesOf("KYCAddressInfo", module).add(
-  "Address Info",
-  KYCAddressInfoStories.regular
-);
-
-storiesOf("BorrowEnterAmount", module)
-  .add("Crypto Loan", BorrowEnterAmountStories.crypto)
-  .add("USD", BorrowEnterAmountStories.usd)
-  .add("No Amount", BorrowEnterAmountStories.noAmount);
-
-storiesOf("SelectCountry", module)
-  .add("Calling Codes", SelectCountryStories.noCodes)
-  .add("No Calling Codes", SelectCountryStories.withCodes);
-
 storiesOf("WalletSettings", module)
   .add(
     "Eligible for interest in CEL",
@@ -239,69 +201,106 @@ storiesOf("WalletSettings", module)
     WalletSettingsStories.notEligibleForInterestInCEL
   );
 
-storiesOf("PersonalInformation", module).add(
-  "Personal Information",
-  PersonalInformationStories.regular
-);
-
-storiesOf("TwoFactorSettings", module).add(
-  "TwoFactorSettings",
-  TwoFactorSettingsStories.regular
-);
-
-storiesOf("HodlLanding", module).add("HodlLanding", HodlLandingStories.regular);
-
-storiesOf("CameraScreen", module)
-  .add("Profile", CameraScreenStories.profile)
-  .add("Document", CameraScreenStories.document)
-  .add("Utility Bill", CameraScreenStories.utility);
+storiesOf("BorrowLanding", module)
+  .add("With Loans", BorrowLandingStories.withLoans)
+  .add("No Loans", BorrowLandingStories.noLoans)
+  .add("Not Compliant", BorrowLandingStories.notCompliant)
+  .add("Not Verified", BorrowLandingStories.notVerified);
 
 storiesOf("ConfirmCamera", module)
   .add("Profile", ConfirmCameraStories.profile)
   .add("Document", ConfirmCameraStories.document)
   .add("Utility Bill", ConfirmCameraStories.utility);
 
+storiesOf("RegisterInitial", module)
+  .add("Empty", RegisterInitialStories.empty)
+  .add("Filled", RegisterInitialStories.filled)
+  .add("With Errors", RegisterInitialStories.withErrors)
+  .add("With Referral", RegisterInitialStories.withReferral);
+
+storiesOf("CameraScreen", module)
+  .add("Profile", CameraScreenStories.profile)
+  .add("Document", CameraScreenStories.document)
+  .add("Utility Bill", CameraScreenStories.utility);
+
+storiesOf("KYCProfileDetails", module)
+  .add("Empty", KYCProfileDetailsStories.empty)
+  .add("Prefilled", KYCProfileDetailsStories.prefilled)
+  .add("With Errors", KYCProfileDetailsStories.withErrors);
+
+storiesOf("Community", module).add("Regular", CommunityStories.regular);
+
+storiesOf("KYCAddressInfo", module).add(
+  "Address Info",
+  KYCAddressInfoStories.regular
+);
+
+storiesOf("SelectCountry", module)
+  .add("Calling Codes", SelectCountryStories.noCodes)
+  .add("No Calling Codes", SelectCountryStories.withCodes);
+
+storiesOf("BorrowEnterAmount", module)
+  .add("Crypto Loan", BorrowEnterAmountStories.crypto)
+  .add("USD", BorrowEnterAmountStories.usd)
+  .add("No Amount", BorrowEnterAmountStories.noAmount);
+
+storiesOf("BorrowChooseLoan", module)
+  .add("Stable Coins and USD", BorrowChooseLoanStories.stableAndUsd)
+  .add("Stable Coins", BorrowChooseLoanStories.stable)
+  .add("USD", BorrowChooseLoanStories.usd);
+
 storiesOf("WithdrawAddressOverview", module).add(
   "regular",
   WithdrawAddressOverviewStories.regular
 );
 
-storiesOf("KYCCheckPhotos", module)
-  .add("Single Photo", KYCCheckPhotosStories.singlePhoto)
-  .add("Multiple Photos", KYCCheckPhotosStories.multiplePhotos);
+storiesOf("CelPayLanding", module).add(
+  "Cel Pay Landing",
+  CelPayLandingStories.regular
+);
 
 storiesOf("WithdrawConfirm", module).add(
   "Confirm",
   WithdrawConfirmStories.regular
 );
 
-storiesOf("WithdrawCreateAddress", module)
-  .add("Regular ", WithdrawCreateAddress.regular)
-  .add("XRP", WithdrawCreateAddress.xrp)
-  .add("XLM", WithdrawCreateAddress.xlm)
-  .add("EOS", WithdrawCreateAddress.eos);
-
-storiesOf("BorrowChooseLoan", module)
-  .add("Stable Coins", BorrowChooseLoanStories.stable)
-  .add("USD", BorrowChooseLoanStories.usd)
-  .add("Stable Coins and USD", BorrowChooseLoanStories.stableAndUsd);
-
-storiesOf("KYCVerifyIdentity", module)
-  .add("Passport", KYCVerifyIdentityStories.passport)
-  .add(
-    "Passport and Driving Licence",
-    KYCVerifyIdentityStories.passportAndDrivingLicence
-  )
-  .add("All", KYCVerifyIdentityStories.all);
-
 storiesOf("WithdrawConfirmAddress", module)
   .add("Regular", WithdrawConfirmAddressStories.regular)
   .add("With Destination Tag / Memo ID", WithdrawConfirmAddressStories.withTag);
 
-storiesOf("CelPayLanding", module).add(
-  "Cel Pay Landing",
-  CelPayLandingStories.regular
+storiesOf("KYCVerifyIdentity", module)
+  .add("All", KYCVerifyIdentityStories.all)
+  .add("Passport", KYCVerifyIdentityStories.passport)
+  .add(
+    "Passport and Driving Licence",
+    KYCVerifyIdentityStories.passportAndDrivingLicence
+  );
+
+storiesOf("TwoFactorSettings", module).add(
+  "TwoFactorSettings",
+  TwoFactorSettingsStories.regular
 );
+
+storiesOf("PersonalInformation", module).add(
+  "Personal Information",
+  PersonalInformationStories.regular
+);
+
+storiesOf("WithdrawCreateAddress", module)
+  .add("Regular ", WithdrawCreateAddressStories.regular)
+  .add("XRP", WithdrawCreateAddressStories.xrp)
+  .add("XLM", WithdrawCreateAddressStories.xlm)
+  .add("EOS", WithdrawCreateAddressStories.eos);
+
+storiesOf("KYCCheckPhotos", module)
+  .add("Single Photo", KYCCheckPhotosStories.singlePhoto)
+  .add("Multiple Photos", KYCCheckPhotosStories.multiplePhotos);
+
+storiesOf("RegisterSetPin", module)
+  .add("Create PIN", RegisterSetPinStories.createPin)
+  .add("Confirm PIN", RegisterSetPinStories.confirmPin);
+
+storiesOf("HodlLanding", module).add("HodlLanding", HodlLandingStories.regular);
 
 storiesOf("TwoFaAuthAppConfirmationCode", module).add(
   "Two FA Auth Confirmation Code",
@@ -312,15 +311,16 @@ storiesOf("KYCTaxpayer", module)
   .add("SSN", KYCTaxpayerStories.ssn)
   .add("Tax payer", KYCTaxpayerStories.taxPayer);
 
-storiesOf("Appearance", module).add("Apearance", AppearanceStories.regular);
-storiesOf("TooManyRequests", module).add(
-  "Too Many Requests",
-  TooManyRequestsStories.regular
-);
-
 storiesOf("BorrowCollateral", module).add(
   "Borrow Collateral",
   BorrowCollateralStories.regular
+);
+
+storiesOf("Appearance", module).add("Apearance", AppearanceStories.regular);
+
+storiesOf("TooManyRequests", module).add(
+  "Too Many Requests",
+  TooManyRequestsStories.regular
 );
 
 storiesOf("Support", module).add("Support", SupportStories.regular);
