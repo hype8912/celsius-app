@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import CelHeadingStyle from "./CelHeading.styles";
-import { getPadding, getTheme, getColor } from "../../../utils/styles-util";
+import { getPadding, getColor } from "../../../utils/styles-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { THEMES } from "../../../constants/UI";
 import CelInput from "../../atoms/CelInput/CelInput";
@@ -122,7 +122,6 @@ class CelHeading extends Component {
     const scene = this.props.scene.descriptor;
 
     const style = CelHeadingStyle();
-    const theme = getTheme();
 
     return {
       action: (
@@ -152,30 +151,10 @@ class CelHeading extends Component {
       ),
       info: onInfo && (
         <TouchableOpacity basic onPress={onInfo}>
-          <Icon
-            name={"Info"}
-            height={30}
-            width={30}
-            fill={
-              theme === THEMES.LIGHT
-                ? getColor(COLOR_KEYS.INFO)
-                : getColor(COLOR_KEYS.SECTION_TITLE)
-            }
-          />
+          <Icon name={"Info"} height={30} width={30} />
         </TouchableOpacity>
       ),
-      search: (
-        <Icon
-          name={"Search"}
-          height={30}
-          width={30}
-          fill={
-            theme === THEMES.LIGHT
-              ? getColor(COLOR_KEYS.INFO)
-              : getColor(COLOR_KEYS.NEUTRAL_LIGHT)
-          }
-        />
-      ),
+      search: <Icon name={"Search"} height={30} width={30} />,
       profile: (
         <TouchableOpacity
           onPress={() => {
@@ -237,12 +216,9 @@ class CelHeading extends Component {
     }
     switch (theme) {
       case THEMES.LIGHT:
+      default:
         return StatusBar.setBarStyle("dark-content");
       case THEMES.DARK:
-        return StatusBar.setBarStyle("light-content");
-      case THEMES.CELSIUS:
-        return StatusBar.setBarStyle("light-content");
-      default:
         return StatusBar.setBarStyle("light-content");
     }
   };

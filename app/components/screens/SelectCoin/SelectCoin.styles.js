@@ -1,4 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -29,6 +30,7 @@ const base = {
   },
   iconCircle: {
     borderRadius: 15,
+    backgroundColor: COLOR_KEYS.HEADLINE,
   },
 };
 
