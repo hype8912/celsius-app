@@ -48,6 +48,7 @@ const regular = () => {
 const nonCompliant = () => {
   const state = _.cloneDeep(initialState);
   state.compliance = mockComplianceStore.interestBlocked;
+  state.compliance.interest.allowed = false;
   state.forms = {
     formData: {
       coin: "ETH",

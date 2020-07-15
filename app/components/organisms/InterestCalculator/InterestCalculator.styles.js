@@ -9,7 +9,7 @@ const base = {
   earningCard: {
     flex: 1,
     borderWidth: 1,
-    backgroundColor: COLOR_KEYS.HEADER,
+    backgroundColor: COLOR_KEYS.CARDS,
     borderColor: COLOR_KEYS.PARAGRAPH,
   },
   amounts: {
@@ -20,7 +20,7 @@ const base = {
     borderColor: COLOR_KEYS.LINK,
   },
   showInterestWrapper: {
-    backgroundColor: COLOR_KEYS.HEADER,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
 };
 
