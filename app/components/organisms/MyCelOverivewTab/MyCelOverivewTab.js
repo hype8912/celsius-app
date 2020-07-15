@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import * as appActions from "../../../redux/actions";
 import MyCelOverivewTabStyle from "./MyCelOverivewTab.styles";
 import CelText from "../../atoms/CelText/CelText";
-// import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import { widthPercentageToDP } from "../../../utils/styles-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";

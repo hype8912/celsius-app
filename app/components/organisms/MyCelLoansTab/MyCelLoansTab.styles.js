@@ -4,6 +4,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -26,7 +27,7 @@ const base = {
     paddingHorizontal: widthPercentageToDP("5%"),
     paddingVertical: heightPercentageToDP("3%"),
     marginVertical: heightPercentageToDP("1.5%"),
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     borderRadius: 8,
   },
   circle: {
@@ -56,18 +57,8 @@ const base = {
 };
 
 const themed = {
-  light: {
-    wrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
-
-  dark: {
-    wrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
-
+  light: {},
+  dark: {},
   unicorn: {},
 };
 
