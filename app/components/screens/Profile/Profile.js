@@ -21,7 +21,6 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import { hasPassedKYC } from "../../../utils/user-util";
 import ProfileStyle from "./Profile.styles";
 import Icon from "../../atoms/Icon/Icon";
-import { getColor } from "../../../utils/styles-util";
 import Constants from "../../../../constants";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
@@ -256,7 +255,7 @@ class Profile extends Component {
                 name={"Twitter"}
                 width={35}
                 height={35}
-                fill={getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)}
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Twitter
@@ -271,7 +270,7 @@ class Profile extends Component {
                 name={"Facebook"}
                 width={35}
                 height={35}
-                fill={getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)}
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Facebook
@@ -286,7 +285,7 @@ class Profile extends Component {
                 name={"Reddit"}
                 width={35}
                 height={35}
-                fill={getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)}
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Reddit
@@ -299,7 +298,7 @@ class Profile extends Component {
                 name={"Telegram"}
                 width={35}
                 height={35}
-                fill={getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)}
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Telegram
