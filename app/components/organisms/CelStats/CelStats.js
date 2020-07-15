@@ -4,10 +4,8 @@ import { View } from "react-native";
 import CelsiusStatsStyle from "./CelStats.styles";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
-import { THEMES } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
-import { getColor, getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CelStats extends Component {
@@ -31,7 +29,6 @@ class CelStats extends Component {
 
   render() {
     const style = CelsiusStatsStyle();
-    const theme = getTheme();
     const { celTierStats, totalCelUsers } = this.props;
 
     if (!celTierStats || !totalCelUsers) {
@@ -94,7 +91,7 @@ class CelStats extends Component {
                   }}
                 >
                   <CelText
-                    color={getColor(COLOR_KEYS.CARDS)}
+                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                     allCaps
                     weight={"600"}
                     type={"H7"}
@@ -116,12 +113,7 @@ class CelStats extends Component {
                 })}$`}
               </CelText>
             </View>
-            <Separator
-              vertical
-              height={"50%"}
-              margin={"20 0 0 0"}
-              color={theme === THEMES.DARK ? STYLES.COLORS.LIGHT_GRAY : null}
-            />
+            <Separator vertical height={"50%"} margin={"20 0 0 0"} />
             <View style={style.celTierItem}>
               <CelText
                 weight={"600"}
@@ -132,12 +124,7 @@ class CelStats extends Component {
                 {formatter.percentageDisplay(i.percentageOfUsers / 100)}
               </CelText>
             </View>
-            <Separator
-              vertical
-              height={"50%"}
-              margin={"20 0 0 0"}
-              color={theme === THEMES.DARK ? STYLES.COLORS.LIGHT_GRAY : null}
-            />
+            <Separator vertical height={"50%"} margin={"20 0 0 0"} />
             <View style={style.celTierItem}>
               <CelText
                 weight={"600"}
