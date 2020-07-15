@@ -103,7 +103,7 @@ class Login extends Component {
             {this.renderCaptcha()}
 
             <CelButton
-              margin="35 0 0 0"
+              margin="35 0 25 0"
               basic
               onPress={() => actions.navigateTo("ForgotPassword")}
             >
@@ -111,7 +111,11 @@ class Login extends Component {
             </CelButton>
 
             {ENV === "STAGING" ? (
-              <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
+              <CelButton
+                basic
+                margin="0 0 25 0"
+                onPress={() => actions.navigateTo("Storybook")}
+              >
                 Open Storybook
               </CelButton>
             ) : null}
