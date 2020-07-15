@@ -16,6 +16,7 @@ import TransactionsIntersectionStories from "./TransactionsIntersection/Transact
 import InterestRatesStories from "./InterestRates/InterestRates.stories";
 import WalletInterestStories from "./WalletInterest/WalletInterest.stories";
 import GetCoinsEnterAmountStories from "./GetCoinsEnterAmount/GetCoinsEnterAmount.stories";
+import SecuritySettingsStories from "./SecuritySettings/SecuritySettings.stories";
 import AllTransactionsStories from "./AllTransactions/AllTransactions.stories";
 import BalanceHistoryStories from "./BalanceHistory/BalanceHistory.stories";
 import BorrowLandingStories from "./BorrowLanding/BorrowLanding.stories";
@@ -25,7 +26,6 @@ import RegisterInitialStories from "./RegisterInitial/RegisterInitial.stories";
 import RegisterSetPinStories from "./RegisterSetPin/RegisterSetPin.stories";
 import CommunityStories from "./Community/Community.stories";
 import SelectCountryStories from "./SelectCountry/SelectCountry.stories";
-import SecuritySettingsStories from "./SecuritySettings/SecuritySettings.stories";
 import CameraScreenStories from "./CameraScreen/CameraScreen.stories";
 import ConfirmCameraStories from "./ConfirmCamera/ConfirmCamera.stories";
 import KYCProfileDetailsStories from "./KYCProfileDetails/KYCProfileDetails.stories";
@@ -171,6 +171,12 @@ storiesOf("GetCoinsEnterAmount", module)
   .add("No Amount", GetCoinsEnterAmountStories.withoutAmount)
   .add("In Fiat", GetCoinsEnterAmountStories.inFiat);
 
+storiesOf("SecuritySettings", module)
+  .add("Weak", SecuritySettingsStories.weak)
+  .add("Fair", SecuritySettingsStories.fair)
+  .add("Good", SecuritySettingsStories.good)
+  .add("Strong", SecuritySettingsStories.strong);
+
 storiesOf("AllTransactions", module)
   .add("Regular", AllTransactionsStories.regular)
   .add("Non Transactions", AllTransactionsStories.noTransactions);
@@ -216,11 +222,6 @@ storiesOf("BorrowEnterAmount", module)
 storiesOf("SelectCountry", module)
   .add("Calling Codes", SelectCountryStories.noCodes)
   .add("No Calling Codes", SelectCountryStories.withCodes);
-
-storiesOf("SecuritySettings", module).add(
-  "Security Settings",
-  SecuritySettingsStories.regular
-);
 
 storiesOf("WalletSettings", module)
   .add(
