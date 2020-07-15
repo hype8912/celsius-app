@@ -29,7 +29,7 @@ class ActivateSixDigitPin extends Component {
   static navigationOptions = () => ({
     headerSameColor: false,
     transparent: true,
-    hideBack: false,
+    hideBack: true,
     gesturesEnabled: false,
   });
 

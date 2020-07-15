@@ -44,16 +44,16 @@ class ChangePin extends Component {
     actions.updateFormFields({
       newPin: "",
       newPinConfirm: "",
+      pinCreated: false,
     });
   }
 
   handlePINChange = newValue => {
-    const { pinCreated } = this.state;
     const { actions, user } = this.props;
 
     if (newValue.length > 6) return;
 
-    const field = pinCreated ? "newPinConfirm" : "newPin";
+    const field = this.props.formData.pinCreated ? "newPinConfirm" : "newPin";
     actions.updateFormField(field, newValue);
     // Check PIN strength
     const pinScoreNotPassed = !!securityUtil
@@ -66,23 +66,14 @@ class ChangePin extends Component {
   };
 
   handlePinFinish = async newValue => {
-    const { pinCreated } = this.state;
-    const { actions, formData, navigation } = this.props;
+    const { actions, navigation } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
 
-    if (!pinCreated) {
-      this.setState({ pinCreated: true });
-    } else if (formData.newPin === newValue) {
-      this.setState({ loading: true });
-
-      const isSet = await actions.changePin();
-
-      if (isSet && formData.upgradeToSixDigitPin) {
-        actions.navigateTo("ActivateSixDigitPin", { onSuccess });
-      }
-      if (!isSet) {
-        this.setState({ pinCreated: false });
-      }
+    if (!this.props.formData.pinCreated) {
+      actions.updateFormField("pinCreated", true);
+    } else if (this.props.formData.newPin === newValue) {
+      actions.updateFormField("pinCreated", false);
+      await actions.changePin(onSuccess);
     } else {
       actions.showMessage("error", "Both PIN numbers should be the same.");
       actions.updateFormField("newPinConfirm", "");
@@ -96,22 +87,19 @@ class ChangePin extends Component {
     actions.updateFormFields({
       newPin: "",
       newPinConfirm: "",
-    });
-
-    this.setState({
       pinCreated: false,
     });
   };
 
   render() {
-    const { loading, pinCreated } = this.state;
-    const { actions, formData, user } = this.props;
+    const { loading } = this.state;
+    const { actions, user } = this.props;
 
-    const field = !pinCreated ? "newPin" : "newPinConfirm";
-    const headingText = !pinCreated
+    const field = !this.props.formData.pinCreated ? "newPin" : "newPinConfirm";
+    const headingText = !this.props.formData.pinCreated
       ? "Enter your 6-digits PIN"
       : "Repeat your 6-digits PIN";
-    const subheadingText = !pinCreated
+    const subheadingText = !this.props.formData.pinCreated
       ? "Please enter your new PIN to proceed."
       : "Please repeat your new PIN.";
 
@@ -134,10 +122,10 @@ class ChangePin extends Component {
             </CelText>
 
             <TouchableOpacity onPress={actions.toggleKeypad}>
-              <HiddenField value={formData[field]} length={6} />
+              <HiddenField value={this.props.formData[field]} length={6} />
             </TouchableOpacity>
 
-            {pinCreated && !loading && (
+            {this.props.formData.pinCreated && !loading && (
               <CelButton basic onPress={this.handleBack}>
                 Back
               </CelButton>
@@ -158,7 +146,7 @@ class ChangePin extends Component {
 
           <CelNumpad
             field={field}
-            value={formData[field]}
+            value={this.props.formData[field]}
             updateFormField={actions.updateFormField}
             setKeypadInput={actions.setKeypadInput}
             toggleKeypad={actions.toggleKeypad}
@@ -166,7 +154,7 @@ class ChangePin extends Component {
             purpose={KEYPAD_PURPOSES.VERIFICATION}
           />
 
-          <PinTooltip pin={formData[field]} user={user} />
+          <PinTooltip pin={this.props.formData[field]} user={user} />
         </View>
       </RegularLayout>
     );

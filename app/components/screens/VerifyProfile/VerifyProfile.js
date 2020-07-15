@@ -177,17 +177,14 @@ class VerifyProfile extends Component {
     }
   };
 
-  handle2FAChange = newValue => {
+  handle2FAChange = async newValue => {
     const { actions } = this.props;
-
     if (newValue.length > 6) {
       this.setState({ loading: false });
       return;
     }
-
+    await this.setState({ value: newValue });
     actions.updateFormField("code", newValue);
-    this.setState({ value: newValue });
-
     if (newValue.length === 6) {
       actions.toggleKeypad();
 
@@ -201,7 +198,7 @@ class VerifyProfile extends Component {
     const code = await Clipboard.getString();
 
     if (code) {
-      this.handle2FAChange(code);
+      await this.handle2FAChange(code);
     } else {
       actions.showMessage("warning", "Nothing to paste, please try again!");
       this.setState({ loading: false });

@@ -2,7 +2,7 @@ import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage, toggleKeypad } from "../ui/uiActions";
-import { updateFormField } from "../forms/formsActions";
+import { updateFormField, updateFormFields } from "../forms/formsActions";
 import { navigateTo, navigateBack } from "../nav/navActions";
 import userSecurityService from "../../services/user-security-service";
 import userAuthService from "../../services/user-auth-service";
@@ -168,47 +168,77 @@ function setPin() {
 /**
  * Changes PIN for user
  */
-function changePin() {
+function changePin(onSuccess) {
   return async (dispatch, getState) => {
-    try {
-      const { formData } = getState().forms;
-      const { securityOverview } = getState().security;
-      const { profile } = getState().user;
+    const { formData } = getState().forms;
+    const { profile } = getState().user;
 
-      const securityTypeCode = profile.two_factor_enabled
-        ? "twoFactorCode"
-        : "pin";
-      const pinData = {
-        [`${securityTypeCode}`]: profile.two_factor_enabled
-          ? formData.code
-          : formData.pin,
-        new_pin: formData.newPin,
-        new_pin_confirm: formData.newPinConfirm,
-      };
-      dispatch(toggleKeypad());
-      dispatch(startApiCall(API.CHANGE_PIN));
+    const securityTypeCode = profile.two_factor_enabled
+      ? "twoFactorCode"
+      : "pin";
+    let pinData = {
+      [`${securityTypeCode}`]: profile.two_factor_enabled
+        ? formData.code
+        : formData.pin,
+      new_pin: formData.newPin,
+      new_pin_confirm: formData.newPinConfirm,
+    };
+    dispatch(toggleKeypad());
+    dispatch(startApiCall(API.CHANGE_PIN));
+
+    if (profile.two_factor_enabled) {
+      await dispatch(
+        navigateTo("VerifyProfile", {
+          onSuccess: async () => {
+            pinData = {
+              ...pinData,
+              twoFactorCode: getState().forms.formData.code,
+            };
+            await dispatch(completePinChange(pinData, onSuccess));
+          },
+        })
+      );
+    } else {
+      dispatch(completePinChange(pinData));
+    }
+  };
+}
+
+function completePinChange(pinData, onSuccess) {
+  return async (dispatch, getState) => {
+    const { formData } = getState().forms;
+    const { securityOverview } = getState().security;
+
+    try {
       await userSecurityService.changePin(pinData);
 
       dispatch({ type: ACTIONS.CHANGE_PIN_SUCCESS });
       dispatch({ type: ACTIONS.CLEAR_FORM });
 
       mixpanelAnalytics.changePin();
-      if (formData.upgradeToSixDigitPin) {
-        return true;
-      }
 
+      if (formData.upgradeToSixDigitPin) {
+        dispatch(navigateTo("ActivateSixDigitPin", { onSuccess }));
+        return;
+      }
       dispatch(showMessage("success", "Successfully changed PIN number"));
       if (securityOverview.fromFixNow) {
         dispatch(toFixNow());
-      } else {
-        dispatch(navigateTo("SecuritySettings"));
+        return;
       }
-      return true;
+
+      dispatch(navigateTo("SecuritySettings"));
+      return;
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CHANGE_PIN, err));
-      dispatch(updateFormField("newPinConfirm", ""));
-      dispatch(updateFormField("newPin", ""));
+      dispatch(
+        updateFormFields({
+          pinCreated: false,
+          newPinConfirm: "",
+          newPin: "",
+        })
+      );
       return false;
     }
   };
