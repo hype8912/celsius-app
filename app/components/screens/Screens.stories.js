@@ -42,6 +42,7 @@ import WithdrawCreateAddress from "./WithdrawCreateAddress/WithdrawCreateAddress
 import KYCVerifyIdentityStories from "./KYCVerifyIdentity/KYCVerifyIdentity.stories";
 import WithdrawConfirmAddressStories from "./WithdrawConfirmAddress/WithdrawConfirmAddress.stories";
 import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
+import BorrowCollateralStories from "./BorrowCollateral/BorrowCollateral.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -295,4 +296,9 @@ storiesOf("WithdrawConfirmAddress", module).add(
 storiesOf("CelPayLanding", module).add(
   "CelPayLanding",
   CelPayLandingStories.regular
+);
+
+storiesOf("BorrowCollateral", module).add(
+  "Borrow Collateral",
+  BorrowCollateralStories.regular
 );
