@@ -44,6 +44,8 @@ import WithdrawConfirmAddressStories from "./WithdrawConfirmAddress/WithdrawConf
 import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
 import TwoFaAuthAppConfirmationCodeStories from "./TwoFaAuthAppConfirmationCode/TwoFaAuthAppConfirmationCode.stories";
 import KYCTaxpayerStories from "./KYCTaxpayer/KYCTaxpayer.stories";
+import AppearanceStories from "./Appearance/Appearance.stories";
+import TooManyRequestsStories from "./TooManyRequests/TooManyRequests.stories";
 import BorrowCollateralStories from "./BorrowCollateral/BorrowCollateral.stories";
 import SupportStories from "./Support/Support.stories";
 
@@ -308,6 +310,12 @@ storiesOf("TwoFaAuthAppConfirmationCode", module).add(
 storiesOf("KYCTaxpayer", module)
   .add("SSN", KYCTaxpayerStories.ssn)
   .add("Tax payer", KYCTaxpayerStories.taxPayer);
+
+storiesOf("Appearance", module).add("Apearance", AppearanceStories.regular);
+storiesOf("TooManyRequests", module).add(
+  "Too Many Requests",
+  TooManyRequestsStories.regular
+);
 
 storiesOf("BorrowCollateral", module).add(
   "Borrow Collateral",
