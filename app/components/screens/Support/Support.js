@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Linking } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-// import SupportStyle from "./Support.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 
@@ -23,8 +21,6 @@ class Support extends Component {
   });
 
   render() {
-    // const style = SupportStyle();
-
     return (
       <RegularLayout>
         <MultiInfoCardButton

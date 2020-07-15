@@ -1,13 +1,12 @@
 import React from "react";
-import _ from "lodash";
 
-import WithdrawConfirmAddress from "./WithdrawConfirmAddress";
+import BorrowCollateral from "./BorrowCollateral";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
+import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
 import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
-import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";
 import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
 
 import walletUtil from "../../../utils/wallet-util";
@@ -34,7 +33,36 @@ const initialState = {
   compliance: mockComplianceStore.allowedAll,
   forms: {
     formData: {
-      coinsInCel: {},
+      coinsInCel: {
+        BCH: false,
+        BSV: false,
+        BTC: true,
+        CEL: false,
+        DAI: false,
+        DASH: false,
+        EOS: false,
+        ETC: false,
+        ETH: false,
+        GUSD: false,
+        LTC: false,
+        MCDAI: false,
+        OMG: false,
+        ORBS: false,
+        PAX: false,
+        SGA: false,
+        TAUD: false,
+        TCAD: false,
+        TGBP: false,
+        THKD: false,
+        TUSD: false,
+        USDC: false,
+        "USDT ERC20": false,
+        XAUT: false,
+        XLM: false,
+        XRP: false,
+        ZEC: false,
+        ZRX: false,
+      },
       coin: "USDC",
     },
   },
@@ -43,26 +71,13 @@ const initialState = {
 const regular = () => {
   return (
     <ScreenStoryWrapper
-      screenName="WithdrawConfirmAddress"
-      screen={WithdrawConfirmAddress}
+      screenName="BorrowCollateral"
+      screen={BorrowCollateral}
       state={initialState}
-    />
-  );
-};
-
-const withTag = () => {
-  const state = _.cloneDeep(initialState);
-  state.forms.formData = { coin: "XRP" };
-  return (
-    <ScreenStoryWrapper
-      screenName="WithdrawConfirmAddress"
-      screen={WithdrawConfirmAddress}
-      state={state}
     />
   );
 };
 
 export default {
   regular,
-  withTag,
 };

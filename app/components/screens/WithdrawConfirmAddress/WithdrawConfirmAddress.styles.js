@@ -3,7 +3,7 @@ import {
   getThemedStyle,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width } = Dimensions.get("window");
 
@@ -27,22 +27,15 @@ const base = {
   button: {
     marginTop: heightPercentageToDP("3.26%"),
   },
+  tagText: {
+    color: COLOR_KEYS.LINK,
+    textAlign: "left",
+  },
 };
 
 const themed = {
-  light: {
-    tagText: {
-      color: STYLES.COLORS.DARK_GRAY,
-      textAlign: "left",
-    },
-  },
-  dark: {
-    tagText: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-      textAlign: "left",
-    },
-  },
-
+  light: {},
+  dark: {},
   unicorn: {},
 };
 
