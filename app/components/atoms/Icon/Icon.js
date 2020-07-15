@@ -5,18 +5,10 @@ import { View, Image } from "react-native";
 
 import Svgs from "../../../constants/SVGS";
 import CommonSvgs from "../../../constants/UnicornSvgs/CommonSvgs";
-import { getTheme } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
-import { THEMES } from "../../../constants/UI";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import { UNICORN_ICONS } from "../../../constants/DATA";
 import IconStyle from "./Icon.styles";
-
-const iconColors = {
-  primary: {
-    [THEMES.LIGHT]: STYLES.COLORS.MEDIUM_GRAY,
-    [THEMES.DARK]: STYLES.COLORS.WHITE_OPACITY5,
-  },
-};
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class Icon extends Component {
   static propTypes = {
@@ -28,7 +20,7 @@ class Icon extends Component {
     iconOpacity: PropTypes.number,
   };
   static defaultProps = {
-    fill: "#000",
+    fill: "primary",
     width: 40,
     height: 40,
     iconOpacity: 1,
@@ -500,7 +492,6 @@ class Icon extends Component {
 
   render() {
     const { name, fill, iconOpacity, style } = this.props;
-    const theme = getTheme();
     let fillColor = fill;
     let svgIcons = Svgs;
 
@@ -516,7 +507,11 @@ class Icon extends Component {
       }
     }
 
-    if (["primary"].includes(fill)) fillColor = iconColors[fill][theme];
+    if (["primary", "inactive"].includes(fill))
+      fillColor = getColor(COLOR_KEYS.TAB_UNSELECTED);
+    if (["active"].includes(fill))
+      fillColor = getColor(COLOR_KEYS.TAB_SELECTED);
+
     const viewBox = svgIcons[`${name}ViewBox`] || this.props.viewBox;
 
     return (
