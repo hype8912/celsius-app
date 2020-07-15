@@ -47,7 +47,7 @@ const noCodes = () => (
 const withCodes = () => (
   <ScreenStoryWrapper
     screen={SelectCountry}
-    screenName="Select Country"
+    screenName="SelectCountry"
     state={initialState}
     navigationProps={{
       field: "country",
