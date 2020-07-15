@@ -11,6 +11,7 @@ import formatter from "../../../utils/formatter";
 import {
   getColor,
   getFontFamily,
+  getFontSize,
   getTheme,
   heightPercentageToDP,
   widthPercentageToDP,
@@ -359,7 +360,9 @@ class Graph extends React.Component {
               ref={this.cursor.labelText}
               style={{
                 fontFamily: getFontFamily("regular"),
-                color: "white",
+                color: getColor(COLOR_KEYS.PARAGRAPH),
+                fontSize: getFontSize("H8"),
+                padding: 0,
               }}
               editable={false}
             />
@@ -367,7 +370,9 @@ class Graph extends React.Component {
               ref={this.cursor.dateText}
               style={{
                 fontFamily: getFontFamily("regular"),
-                color: "white",
+                color: getColor(COLOR_KEYS.PARAGRAPH),
+                fontSize: getFontSize("H8"),
+                padding: 0,
               }}
               editable={false}
             />
