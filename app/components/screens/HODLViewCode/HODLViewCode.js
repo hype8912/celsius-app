@@ -9,7 +9,7 @@ import HODLViewCodeStyles from "./HODLViewCode.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { getPadding } from "../../../utils/styles-util";
-import { EMPTY_STATES, THEMES } from "../../../constants/UI";
+import { EMPTY_STATES } from "../../../constants/UI";
 import STYLES from "../../../constants/STYLES";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import Card from "../../atoms/Card/Card";
@@ -72,7 +72,7 @@ class HODLViewCode extends Component {
   render() {
     const style = HODLViewCodeStyles();
     const { emptyState, showHodlCode } = this.state;
-    const { formData, theme, actions, callsInProgress, hodlCode } = this.props;
+    const { formData, actions, callsInProgress, hodlCode } = this.props;
 
     if (emptyState)
       return (
@@ -132,15 +132,7 @@ class HODLViewCode extends Component {
             </Card>
           )}
 
-          <Card
-            color={
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.WHITE
-                : STYLES.COLORS.SEMI_GRAY
-            }
-            margin={"20 0 20 0"}
-            padding={"15 15 0 15"}
-          >
+          <Card margin={"20 0 20 0"} padding={"15 15 0 15"}>
             <CelCheckbox
               onChange={(field, value) => actions.updateFormField(field, value)}
               field={`agreeHodlMode`}

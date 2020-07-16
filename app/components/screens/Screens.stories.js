@@ -53,6 +53,7 @@ import SimplexScreenStories from "./Simplex/SimplexScreen.stories";
 import ApiAuthorizationStories from "./ApiAuthorization/ApiAuthorization.stories";
 import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
 import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
+import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -316,6 +317,11 @@ storiesOf("TwoFaAuthAppConfirmationCode", module).add(
 storiesOf("KYCTaxpayer", module)
   .add("SSN", KYCTaxpayerStories.ssn)
   .add("Tax payer", KYCTaxpayerStories.taxPayer);
+
+storiesOf("HODLViewCode", module).add(
+  "HODL View Code",
+  HODLViewCodeStories.regular
+);
 
 storiesOf("SecurityOverview", module)
   .add("Weak", SecurityOverviewStories.weak)
