@@ -5,11 +5,15 @@ import BorrowChooseLoan from "./BorrowChooseLoan";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";
+import { THEMES } from "../../../constants/UI";
 
 const initialState = {
   user: {
     profile: mockUserStore.profile.testcelsiusapp,
-    appSettings: mockUserStore.appSettings.testcelsiusapp,
+    appSettings: {
+      ...mockUserStore.appSettings.testcelsiusapp,
+      theme: THEMES.HORSE,
+    },
   },
   forms: {
     formData: {},

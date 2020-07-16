@@ -11,11 +11,15 @@ import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockCom
 import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
 
 import walletUtil from "../../../utils/wallet-util";
+import { THEMES } from "../../../constants/UI";
 
 const initialState = {
   user: {
     profile: mockUserStore.profile.testcelsiusapp,
-    appSettings: mockUserStore.appSettings.testcelsiusapp,
+    appSettings: {
+      ...mockUserStore.appSettings.testcelsiusapp,
+      theme: THEMES.HORSE,
+    },
     email: mockUserStore.profile.postman13.email,
   },
   currencies: mockCurrenciesStore,
@@ -34,8 +38,9 @@ const initialState = {
   compliance: mockComplianceStore.allowedAll,
   forms: {
     formData: {
-      coinsInCel: {},
       coin: "USDC",
+      amountUsd: 1000,
+      amountCrypto: 1000,
     },
   },
 };

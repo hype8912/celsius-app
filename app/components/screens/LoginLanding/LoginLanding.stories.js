@@ -6,7 +6,7 @@ import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore
 
 const initialState = {
   user: {
-    user: mockUserStore.profile.postman13,
+    profile: mockUserStore.profile.postman13,
     appSettings: mockUserStore.appSettings.postman13,
   },
 };

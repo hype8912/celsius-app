@@ -30,18 +30,8 @@ const ScrollMore = props => {
           }}
         />
       ))}
-      <Icon
-        name="IconChevronDown"
-        width={10}
-        height={10}
-        fill={style.iconFill.color}
-      />
-      <Icon
-        name="IconChevronDown"
-        width={10}
-        height={10}
-        fill={style.iconFill.color}
-      />
+      <Icon name="IconChevronDown" width={10} height={10} />
+      <Icon name="IconChevronDown" width={10} height={10} />
     </View>
   );
 };

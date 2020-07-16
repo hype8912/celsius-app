@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   caretWrapper: {
@@ -8,35 +8,15 @@ const base = {
     position: "absolute",
     width: "100%",
   },
+  gradientColor: {
+    color: COLOR_KEYS.CARDS,
+  },
 };
 
 const themed = {
-  light: {
-    gradientColor: {
-      color: STYLES.COLORS.WHITE,
-    },
-    iconFill: {
-      color: "#e2e4e6",
-    },
-  },
-
-  dark: {
-    gradientColor: {
-      color: STYLES.COLORS.DARK_HEADER,
-    },
-    iconFill: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
-  },
-
-  unicorn: {
-    gradientColor: {
-      color: STYLES.COLORS.DARK_HEADER,
-    },
-    iconFill: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const ScrollMoreStyle = () => getThemedStyle(base, themed);

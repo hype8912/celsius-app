@@ -57,7 +57,7 @@ class Community extends Component {
               weight={"400"}
               align={"center"}
               type={"H6"}
-              color={getColor(COLOR_KEYS.CARDS)}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
             >
               Celsius Network counts
             </CelText>
@@ -65,7 +65,7 @@ class Community extends Component {
               weight={"600"}
               align={"center"}
               type={"H1"}
-              color={getColor(COLOR_KEYS.CARDS)}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
               speed={10}
               number={usersNum}
             />
@@ -73,7 +73,7 @@ class Community extends Component {
               weight={"400"}
               align={"center"}
               type={"H6"}
-              color={getColor(COLOR_KEYS.CARDS)}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
             >
               members
             </CelText>
