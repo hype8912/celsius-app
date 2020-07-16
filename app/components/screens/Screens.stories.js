@@ -54,6 +54,7 @@ import ApiAuthorizationStories from "./ApiAuthorization/ApiAuthorization.stories
 import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
 import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
+import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalculatorScreen.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -366,3 +367,6 @@ storiesOf("ChangeAvatar", module).add(
   "Change Avatar",
   ChangeAvatarStories.regular
 );
+
+storiesOf("BorrowCalculatorScreen", module) // TODO: add empty state cases
+  .add("Borrow Calculator", BorrowCalculatorScreenStories.regular);
