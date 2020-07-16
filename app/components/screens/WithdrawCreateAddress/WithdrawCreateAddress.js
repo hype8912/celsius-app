@@ -132,13 +132,14 @@ class WithdrawCreateAddress extends Component {
             crypto={balanceCrypto}
             usd={balanceUsd}
           />
+
           <View style={style.wrapper}>
             <View style={style.coinAmountContainer}>
               <CelText type={"H2"}>{formData.coin}</CelText>
               <CelText type={"H1"} weight={"semi-bold"}>
                 {formatter.getEllipsisAmount(formData.amountCrypto, -5)}
               </CelText>
-              <CelText color={"gray"} type={"H3"}>
+              <CelText color={getColor(COLOR_KEYS.PARAGRAPH)} type={"H3"}>
                 {formatter.usd(formData.amountUsd)}
               </CelText>
             </View>

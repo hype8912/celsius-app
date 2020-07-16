@@ -360,12 +360,7 @@ class CameraScreen extends Component {
                 this.setState({ ratio: "4:3" }, actions.flipCamera);
               }}
             >
-              <Icon
-                style={{ alignSelf: "flex-end" }}
-                name="Swap"
-                width="35"
-                fill={"#3D4853"}
-              />
+              <Icon style={{ alignSelf: "flex-end" }} name="Swap" width="35" />
             </TouchableOpacity>
           </View>
         </SafeAreaView>

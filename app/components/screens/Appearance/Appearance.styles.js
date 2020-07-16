@@ -1,5 +1,6 @@
 import { getThemedStyle, getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   coinContainer: {
@@ -20,13 +21,13 @@ const base = {
     borderBottomWidth: 0,
   },
   lightThemeButton: {
-    backgroundColor: getColor(COLOR_KEYS.NEUTRAL),
+    backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.LIGHT),
   },
   darkThemeButton: {
-    backgroundColor: getColor(COLOR_KEYS.HEADER),
+    backgroundColor: getColor(COLOR_KEYS.CARDS, THEMES.DARK),
   },
   unicornThemeButton: {
-    backgroundColor: "#ac35b6",
+    backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
   },
 };
 

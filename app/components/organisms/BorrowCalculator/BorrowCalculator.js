@@ -170,7 +170,7 @@ class BorrowCalculator extends Component {
         color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
       },
     ];
-    const textType = numberOfDigits > 8 ? "H7" : "H6";
+    const textType = numberOfDigits > 8 ? "H6" : "H5";
 
     return INTEREST_DATA.map(num => (
       <View

@@ -149,10 +149,10 @@ class WithdrawAddressOverview extends Component {
                 hodlStatus={hodlStatus}
               />
               {withdrawalAddresses[key].locked && hours && minutes && (
-                <Card margin="0 0 10 0">
+                <View>
                   <CelText align="center" type="H6">
-                    Due to our security protocols, your address will be active
-                    in
+                    Due to our security protocols, your {key} address will be
+                    active in
                   </CelText>
 
                   <CelText
@@ -163,7 +163,7 @@ class WithdrawAddressOverview extends Component {
                   >
                     {`${hours}h ${minutes}m.`}
                   </CelText>
-                </Card>
+                </View>
               )}
             </View>
           ) : null;

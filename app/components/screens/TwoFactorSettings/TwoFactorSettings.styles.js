@@ -9,7 +9,7 @@ const base = {
     marginTop: 15,
     marginBottom: 10,
     padding: 10,
-    backgroundColor: COLOR_KEYS.CARDS,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     borderRadius: 6,
   },
   separatorWrapper: {
@@ -18,7 +18,6 @@ const base = {
   },
   secretText: {
     color: COLOR_KEYS.BANNER_INFO,
-    textDecorationLine: "underline",
     marginTop: 15,
     maxWidth: "70%",
   },

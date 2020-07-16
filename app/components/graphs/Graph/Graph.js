@@ -12,13 +12,11 @@ import {
   getColor,
   getFontFamily,
   getFontSize,
-  getTheme,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import GraphStyle from "./Graph.styles";
 import { THEMES } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 // const { Path, Defs, LinearGradient, Stop } = Svg;
@@ -99,7 +97,7 @@ class Graph extends React.Component {
     const areaColors = this.getGraphBackgroundColor();
 
     let color = {
-      line: getColor(COLOR_KEYS.LINK),
+      line: getColor(COLOR_KEYS.POSITIVE_STATE),
       area: getColor(COLOR_KEYS.LINK),
       back: getColor(COLOR_KEYS.CARDS),
     };
@@ -249,7 +247,6 @@ class Graph extends React.Component {
     const { width, height, showCursor, type } = this.props;
     const { loading } = this.state;
     const color = this.getColor();
-    const theme = getTheme();
 
     const strokeWidth = type === "coin-interest" ? 3 : 2;
 
@@ -281,25 +278,13 @@ class Graph extends React.Component {
           ) : null}
 
           {type === "total-interest" ? (
-            <LinearGradient
-              x1={"50%"}
-              y1={"0%"}
-              x2={"50%"}
-              y2={"100%"}
-              id={"gradient"}
-            >
+            <LinearGradient x1={"50%"} x2={"50%"} id={"gradient"}>
               <Stop
-                stopColor={theme === THEMES.DARK ? "#404d81" : "#d9e0f9"}
+                stopColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                stopOpacity={0.3}
                 offset={"50%"}
               />
-              <Stop
-                stopColor={
-                  theme === THEMES.DARK
-                    ? STYLES.COLORS.DARK_BACKGROUND
-                    : STYLES.COLORS.LIGHT_GRAY
-                }
-                offset={"80%"}
-              />
+              <Stop stopColor={"black"} offset={"80%"} />
             </LinearGradient>
           ) : null}
 

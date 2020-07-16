@@ -99,7 +99,7 @@ class WalletInterest extends Component {
               <View style={style.amountWrapper}>
                 <Counter
                   weight="600"
-                  type="H3"
+                  type="H2"
                   number={walletSummary.total_interest_earned}
                   speed={5}
                   usd

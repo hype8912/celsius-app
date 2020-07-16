@@ -353,12 +353,11 @@ class CelHeading extends Component {
           <Loader
             flowProgress={sceneOptions.customCenterComponent.flowProgress}
             barColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
-            backgroundColor={getColor(COLOR_KEYS.BACKGROUND)}
+            backgroundColor={getColor(COLOR_KEYS.SEPARATORS)}
             progress={
               sceneOptions.customCenterComponent.currentStep /
               sceneOptions.customCenterComponent.steps
             }
-            borderColor={getColor(COLOR_KEYS.HEADLINE)}
             width={100}
           />
         ) : null}

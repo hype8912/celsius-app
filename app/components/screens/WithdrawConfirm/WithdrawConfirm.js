@@ -16,6 +16,8 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import addressUtil from "../../../utils/address-util";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -143,7 +145,12 @@ class WithdrawConfirm extends Component {
             <Separator />
             <View style={styles.address}>
               <CelText type="H6">New wallet balance:</CelText>
-              <CelText style={styles.lineHeight} type="H6" weight="bold">
+              <CelText
+                style={styles.lineHeight}
+                type="H4"
+                weight="bold"
+                color={getColor(COLOR_KEYS.HEADLINE)}
+              >
                 {formatter.crypto(newBalanceCrypto, formData.coin)} |{" "}
                 {formatter.usd(newBalanceUsd)}
               </CelText>
@@ -154,9 +161,10 @@ class WithdrawConfirm extends Component {
               <View>
                 <CelText
                   style={[styles.lineHeight]}
-                  type="H6"
+                  type="H4"
                   weight="bold"
                   margin={"0 5 0 5"}
+                  color={getColor(COLOR_KEYS.HEADLINE)}
                 >
                   {address}
                 </CelText>
@@ -171,7 +179,7 @@ class WithdrawConfirm extends Component {
           >
             Send email verification
           </CelButton>
-          <CelText align="center" margin="20 0 20 0" color="gray">
+          <CelText align="center" margin="20 0 20 0">
             {disclaimerText}
           </CelText>
         </Card>

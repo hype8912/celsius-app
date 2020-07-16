@@ -165,7 +165,7 @@ class SocialSecurityNumber extends Component {
                 margin="20 0 20 0"
                 type="text"
                 field="itin"
-                placeholder="E-International Tax ID Number (optional)"
+                placeholder="E-International Tax ID Number"
                 value={user.itin ? user.itin : formData.itin}
                 error={formErrors.itin}
                 disabled={!!user.itin}
@@ -176,7 +176,7 @@ class SocialSecurityNumber extends Component {
                 margin="20 0 20 0"
                 type="text"
                 field="national_id"
-                placeholder="E-National ID Number (optional)"
+                placeholder="E-National ID Number"
                 value={
                   user.national_id ? user.national_id : formData.national_id
                 }

@@ -8,7 +8,7 @@ const base = {
   },
   cardStyle: {
     borderWidth: 1,
-    backgroundColor: COLOR_KEYS.HEADER,
+    backgroundColor: "transparent",
     borderColor: COLOR_KEYS.PARAGRAPH,
   },
   selectedCardStyle: {

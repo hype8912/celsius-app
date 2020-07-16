@@ -11,9 +11,10 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import KYCCheckPhotos from "../KYCCheckPhotos/KYCCheckPhotos";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -143,9 +144,17 @@ class KYCVerifyIdentity extends Component {
               justifyContent: "flex-start",
             }}
           >
-            <Icon height="30" fill={STYLES.COLORS.CELSIUS_BLUE} name={d.icon} />
-            <CelText color={STYLES.COLORS.CELSIUS_BLUE} margin="0 0 0 15">
-              {d.label} >
+            <Icon
+              height="30"
+              fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+              name={d.icon}
+            />
+            <CelText
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+              margin="0 0 0 15"
+              type="H3"
+            >
+              {d.label}
             </CelText>
           </Card>
         ))}

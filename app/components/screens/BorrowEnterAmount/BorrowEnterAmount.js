@@ -176,7 +176,14 @@ class BorrowEnterAmount extends Component {
           $
         </CelText>
       );
-    return <Icon name={`Icon${formData.coin}`} width="40" height="40" />;
+    return (
+      <Icon
+        name={`Icon${formData.coin}`}
+        width="40"
+        height="40"
+        fill="active"
+      />
+    );
   };
 
   render() {
@@ -206,12 +213,11 @@ class BorrowEnterAmount extends Component {
           ]}
         >
           <View style={{ alignItems: "center" }}>
-            <CelText align="center" type="H4" weight={"300"} margin="0 0 10 0">
+            <CelText align="center" type="H4" weight={"300"} margin="0 0 50 0">
               How much would you like to borrow?
             </CelText>
 
             <CoinPicker
-              type={"withIcon"}
               onChange={(field, value) =>
                 actions.updateFormFields({
                   [field]: value,
@@ -224,7 +230,7 @@ class BorrowEnterAmount extends Component {
               navigateTo={actions.navigateTo}
             />
 
-            <View style={{ width: "100%" }}>
+            <View style={{ width: "100%", marginTop: 20 }}>
               <TouchableOpacity
                 onPress={actions.toggleKeypad}
                 style={{ width: "100%" }}

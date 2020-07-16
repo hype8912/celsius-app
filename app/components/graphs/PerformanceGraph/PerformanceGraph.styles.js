@@ -5,7 +5,7 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const height = heightPercentageToDP("25%");
 const { width } = Dimensions.get("window");
@@ -54,21 +54,14 @@ const base = {
     marginTop: -20,
     alignItems: "flex-start",
   },
+  labelBackground: {
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
 };
 
 const themed = {
-  light: {
-    labelBackground: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY,
-    },
-  },
-
-  dark: {
-    labelBackground: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
-
+  light: {},
+  dark: {},
   unicorn: {},
 };
 

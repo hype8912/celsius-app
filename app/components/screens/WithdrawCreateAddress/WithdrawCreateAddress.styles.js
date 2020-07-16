@@ -16,17 +16,16 @@ const base = {
     paddingHorizontal: 20,
   },
   coinAmountContainer: {
-    marginTop: heightPercentageToDP("5.56%"),
+    marginTop: heightPercentageToDP("4%"),
     marginBottom: heightPercentageToDP("5.56%"),
     alignItems: "center",
   },
   containerWithMargin: {
-    alignSelf: "flex-start",
-    marginBottom: 10,
+    marginBottom: 30,
   },
   tagText: {
     color: COLOR_KEYS.LINK,
-    textAlign: "left",
+    textAlign: "center",
   },
   button: {
     marginBottom: heightPercentageToDP("7%"),

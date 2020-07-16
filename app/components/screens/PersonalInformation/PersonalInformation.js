@@ -125,8 +125,6 @@ class PersonalInformation extends Component {
               <View>
                 <Separator
                   margin={"10 0 20 0"}
-                  opacity={0.2}
-                  textOpacity={0.4}
                   text={"SOCIAL SECURITY NUMBER"}
                 />
 
@@ -155,12 +153,7 @@ class PersonalInformation extends Component {
           <View>
             {userSetCountry && (
               <View>
-                <Separator
-                  margin={"10 0 20 0"}
-                  opacity={0.2}
-                  textOpacity={0.4}
-                  text={"Taxpayer ID"}
-                />
+                <Separator margin={"10 0 20 0"} text={"Taxpayer ID"} />
 
                 <SocialSecurityNumber
                   onPress={() => this.submitTaxpayerInfo()}
@@ -171,12 +164,7 @@ class PersonalInformation extends Component {
           </View>
         )}
 
-        <Separator
-          margin={"10 0 20 0"}
-          opacity={0.2}
-          textOpacity={0.4}
-          text={"PROFILE DETAILS"}
-        />
+        <Separator margin={"10 0 20 0"} text={"PROFILE DETAILS"} />
 
         {!!user.first_name && (
           <View>
@@ -273,12 +261,7 @@ class PersonalInformation extends Component {
           </CelButton>
         )}
 
-        <Separator
-          margin={"10 0 20 0"}
-          opacity={0.2}
-          textOpacity={0.4}
-          text={"ADDRESS INFO"}
-        />
+        <Separator margin={"10 0 20 0"} text={"ADDRESS INFO"} />
 
         {!!user.street && (
           <View>

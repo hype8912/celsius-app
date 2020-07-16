@@ -20,6 +20,7 @@ class CoinPicker extends Component {
   };
 
   static defaultProps = {
+    type: "basic",
     coin: "",
     defaultSelected: "",
   };
@@ -144,7 +145,7 @@ class CoinPicker extends Component {
                   width="13"
                   height="13"
                   name="CaretDown"
-                  fill={iconColor}
+                  fill={COLOR_KEYS.HEADLINE}
                 />
               </View>
             </TouchableOpacity>

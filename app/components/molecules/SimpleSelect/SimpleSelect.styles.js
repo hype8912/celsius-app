@@ -3,7 +3,7 @@ import {
   getFontSize,
   getThemedStyle,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   inputAndroidContainer: {
@@ -20,11 +20,11 @@ const base = {
   },
   inputAndroid: {
     fontSize: getFontSize("H2"),
-    fontFamily: getFontFamily("regular"),
+    color: COLOR_KEYS.PARAGRAPH,
   },
   inputIOS: {
     fontSize: getFontSize("H2"),
-    fontFamily: getFontFamily("regular"),
+    color: COLOR_KEYS.PARAGRAPH,
   },
   iconContainer: {
     position: "relative",
@@ -35,28 +35,28 @@ const base = {
 const themed = {
   light: {
     inputAndroid: {
-      color: STYLES.COLORS.DARK_GRAY,
+      fontFamily: getFontFamily("regular", "Barlow"),
     },
     inputIOS: {
-      color: STYLES.COLORS.DARK_GRAY,
+      fontFamily: getFontFamily("regular", "Barlow"),
     },
   },
 
   dark: {
     inputAndroid: {
-      color: STYLES.COLORS.WHITE,
+      fontFamily: getFontFamily("regular", "Barlow"),
     },
     inputIOS: {
-      color: STYLES.COLORS.WHITE,
+      fontFamily: getFontFamily("regular", "Barlow"),
     },
   },
 
   unicorn: {
     inputAndroid: {
-      color: STYLES.COLORS.DARK_GRAY,
+      fontFamily: getFontFamily("regular", "Pangram"),
     },
     inputIOS: {
-      color: STYLES.COLORS.DARK_GRAY,
+      fontFamily: getFontFamily("regular", "Pangram"),
     },
   },
 };

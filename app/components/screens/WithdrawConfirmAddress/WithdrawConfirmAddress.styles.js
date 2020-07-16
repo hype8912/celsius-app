@@ -16,7 +16,7 @@ const base = {
     paddingHorizontal: 20,
   },
   coinAmountContainer: {
-    marginTop: heightPercentageToDP("5.56%"),
+    marginTop: heightPercentageToDP("4%"),
     marginBottom: heightPercentageToDP("5.56%"),
     alignItems: "center",
   },

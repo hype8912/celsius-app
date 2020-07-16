@@ -212,7 +212,7 @@ class PerformanceGraph extends React.Component {
                 <TextInput
                   ref={this.cursor.labelText}
                   style={{
-                    color: "white",
+                    color: getColor(COLOR_KEYS.PARAGRAPH),
                     height: heightPercentageToDP("5.7%"),
                     fontSize: getFontSize("H7"),
                     width: widthPercentageToDP("25.73%"),

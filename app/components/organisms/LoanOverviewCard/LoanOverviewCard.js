@@ -16,6 +16,7 @@ import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import PaymentListItem from "../../atoms/PaymentListItem/PaymentListItem";
 import STYLES from "../../../constants/STYLES";
 import CircularProgressBar from "../../graphs/CircularProgressBar/CircularProgressBar";
+import Badge from "../../atoms/Badge/Badge";
 
 class LoanOverviewCard extends Component {
   static propTypes = {
@@ -264,7 +265,7 @@ class LoanOverviewCard extends Component {
 
           {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(loan.status) && (
             <View styles={{ flex: 1 }}>
-              <Separator size={2} margin={"0 0 0 0"} />
+              <Separator margin={"0 0 0 0"} />
               <View style={{ flexDirection: "row" }}>
                 <View>
                   <View style={style.interests}>
@@ -296,22 +297,16 @@ class LoanOverviewCard extends Component {
               </View>
               <Separator margin={"0 0 20 0"} />
               <View styles={{ flex: 1 }}>
-                <Card
-                  color={style.card.color}
-                  padding={"5 5 5 5"}
-                  margin={"0 0 20 0"}
-                  size={"half"}
-                  styles={{ alignSelf: "center" }}
-                >
+                <Badge color={style.card.color} margin={"0 0 20 0"}>
                   <CelText type={"H7"} weight={"300"} align={"center"}>
                     -{formatter.percentageDisplay(celDiscount)} if paid in CEL
                   </CelText>
-                </Card>
+                </Badge>
               </View>
             </View>
           )}
 
-          <Separator size={2} margin={"0 0 0 0"} />
+          <Separator margin={"0 0 0 0"} />
 
           <View style={style.buttonContainer}>
             <CelButton
@@ -341,7 +336,7 @@ class LoanOverviewCard extends Component {
 
           {loan.can_pay_principal && (
             <View>
-              <Separator size={2} margin={"0 0 0 0"} />
+              <Separator margin={"0 0 0 0"} />
               <CelButton
                 onPress={this.payPrincipal}
                 margin={"15 0 15 0"}
@@ -355,7 +350,7 @@ class LoanOverviewCard extends Component {
           )}
           {loan.can_pay_interest && (
             <View>
-              <Separator size={2} margin={"0 0 0 0"} />
+              <Separator margin={"0 0 0 0"} />
               <CelButton
                 onPress={this.payInterest}
                 margin={"15 0 15 0"}
