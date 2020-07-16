@@ -48,6 +48,8 @@ import AppearanceStories from "./Appearance/Appearance.stories";
 import TooManyRequestsStories from "./TooManyRequests/TooManyRequests.stories";
 import SupportStories from "./Support/Support.stories";
 import ForgotPasswordStories from "./ForgotPassword/ForgotPassword.stories";
+import SimplexScreenStories from "./Simplex/SimplexScreen.stories";
+import ApiAuthorizationStories from "./ApiAuthorization/ApiAuthorization.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -329,4 +331,11 @@ storiesOf("Support", module).add("Support", SupportStories.regular);
 storiesOf("ForgotPassword", module).add(
   "Forgot Password",
   ForgotPasswordStories.regular
+);
+
+storiesOf("SimplexScreen", module).add("Regular", SimplexScreenStories.regular);
+
+storiesOf("ApiAuthorization", module).add(
+  "Regular",
+  ApiAuthorizationStories.regular
 );

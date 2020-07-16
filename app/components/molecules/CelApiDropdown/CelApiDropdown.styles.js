@@ -1,8 +1,8 @@
-import STYLES from "../../../constants/STYLES";
 import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -15,7 +15,7 @@ const base = {
     height: 48,
     paddingTop: 12,
     paddingLeft: 12,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.CARDS,
   },
   valueIcon: {
     flexDirection: "row",
@@ -24,7 +24,6 @@ const base = {
     marginTop: 6,
     marginRight: 6,
   },
-  separator: { paddingHorizontal: 10, backgroundColor: "white" },
   largeButton: {
     flexDirection: "row",
     borderRadius: 8,
@@ -57,7 +56,7 @@ const base = {
     marginTop: 5,
   },
   expand: {
-    backgroundColor: "#fff",
+    backgroundColor: COLOR_KEYS.CARDS,
     padding: 14,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
@@ -65,35 +64,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    expand: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    normalButton: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
-
-  dark: {
-    expand: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    normalButton: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    separator: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
-
-  unicorn: {
-    expand: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    normalButton: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const CelApiDropdownStyle = () => getThemedStyle(base, themed);
