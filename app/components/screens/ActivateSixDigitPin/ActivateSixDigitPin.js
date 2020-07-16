@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { BackHandler, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { NavigationEvents } from "react-navigation";
 // eslint-disable-next-line import/no-unresolved
 import { openInbox } from "react-native-email-link";
 import * as appActions from "../../../redux/actions";
@@ -32,6 +33,23 @@ class ActivateSixDigitPin extends Component {
     hideBack: true,
     gesturesEnabled: false,
   });
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      return true;
+    });
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", () => {
+      return true;
+    });
+  }
+
+  onScreenFocus = () => {
+    const { actions } = this.props;
+    actions.getUserStatus();
+  };
 
   onPressBtn = async () => {
     const { navigation } = this.props;
@@ -78,6 +96,7 @@ class ActivateSixDigitPin extends Component {
     const style = ActivateSixDigitPinStyle();
     return (
       <RegularLayout fabType="hide">
+        <NavigationEvents onDidFocus={this.onScreenFocus} />
         <View style={style.container}>
           <View style={style.contentWrapper}>
             <CelText

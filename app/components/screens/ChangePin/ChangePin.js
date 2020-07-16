@@ -93,13 +93,13 @@ class ChangePin extends Component {
 
   render() {
     const { loading } = this.state;
-    const { actions, user } = this.props;
+    const { actions, user, formData } = this.props;
 
-    const field = !this.props.formData.pinCreated ? "newPin" : "newPinConfirm";
-    const headingText = !this.props.formData.pinCreated
+    const field = !formData.pinCreated ? "newPin" : "newPinConfirm";
+    const headingText = !formData.pinCreated
       ? "Enter your 6-digits PIN"
       : "Repeat your 6-digits PIN";
-    const subheadingText = !this.props.formData.pinCreated
+    const subheadingText = !formData.pinCreated
       ? "Please enter your new PIN to proceed."
       : "Please repeat your new PIN.";
 
@@ -122,10 +122,10 @@ class ChangePin extends Component {
             </CelText>
 
             <TouchableOpacity onPress={actions.toggleKeypad}>
-              <HiddenField value={this.props.formData[field]} length={6} />
+              <HiddenField value={formData[field]} length={6} />
             </TouchableOpacity>
 
-            {this.props.formData.pinCreated && !loading && (
+            {formData.pinCreated && !loading && (
               <CelButton basic onPress={this.handleBack}>
                 Back
               </CelButton>
@@ -154,7 +154,7 @@ class ChangePin extends Component {
             purpose={KEYPAD_PURPOSES.VERIFICATION}
           />
 
-          <PinTooltip pin={this.props.formData[field]} user={user} />
+          <PinTooltip pin={formData[field]} user={user} />
         </View>
       </RegularLayout>
     );
