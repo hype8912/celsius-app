@@ -149,7 +149,7 @@ class SelectCountry extends Component {
                 <CelText
                   type="H4"
                   align="left"
-                  style={{ marginLeft: 5, width: 50 }}
+                  style={{ marginLeft: 5, width: 60 }}
                 >
                   {country.countryCallingCodes
                     ? country.countryCallingCodes[0]

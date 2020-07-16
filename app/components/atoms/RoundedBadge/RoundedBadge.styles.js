@@ -1,5 +1,5 @@
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -8,26 +8,15 @@ const base = {
     justifyContent: "center",
     alignItems: "center",
     elevation: 1,
+    borderWidth: 0.5,
+    backgroundColor: COLOR_KEYS.BACKGROUND,
+    borderColor: COLOR_KEYS.BACKGROUND,
   },
 };
 
 const themed = {
-  light: {
-    container: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-      borderWidth: 0.5,
-      borderColor: STYLES.COLORS.MEDIUM_GRAY3,
-    },
-  },
-
-  dark: {
-    container: {
-      backgroundColor: STYLES.COLORS.BLUE_GRAY,
-      borderWidth: 0.5,
-      borderColor: STYLES.COLORS.MEDIUM_GRAY3,
-    },
-  },
-
+  light: {},
+  dark: {},
   unicorn: {},
 };
 

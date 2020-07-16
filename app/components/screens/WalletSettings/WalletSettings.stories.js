@@ -8,11 +8,15 @@ import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCur
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
 import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
 import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";
+import { THEMES } from "../../../constants/UI";
 
 const initialState = {
   user: {
     profile: mockUserStore.profile.testcelsiusapp,
-    appSettings: mockUserStore.appSettings.testcelsiusapp,
+    appSettings: {
+      ...mockUserStore.appSettings.testcelsiusapp,
+      theme: THEMES.HORSE,
+    },
     email: mockUserStore.profile.postman13.email,
   },
   currencies: mockCurrenciesStore,

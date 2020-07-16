@@ -13,7 +13,6 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
 import formatter from "../../../utils/formatter";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import CelInput from "../../atoms/CelInput/CelInput";
@@ -25,6 +24,8 @@ import {
   ALL_PERMISSIONS,
   requestForPermission,
 } from "../../../utils/device-permissions";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -198,7 +199,7 @@ class WithdrawCreateAddress extends Component {
             cryptoUtil.isERC20(formData.coin.toLowerCase()) ? (
               <InfoBox
                 color={"white"}
-                backgroundColor={STYLES.COLORS.ORANGE}
+                backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
                 titleText={
                   is2FAEnabled
                     ? "Note: we use a smart-contract to send ERC20 tokens, some wallets do not support such transactions."
@@ -210,7 +211,7 @@ class WithdrawCreateAddress extends Component {
             ) : (
               <InfoBox
                 color={"white"}
-                backgroundColor={STYLES.COLORS.ORANGE}
+                backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
                 titleText={
                   is2FAEnabled
                     ? "Changing your withdrawal address will make a withdrawal of your coin unavailable for 24 hours."

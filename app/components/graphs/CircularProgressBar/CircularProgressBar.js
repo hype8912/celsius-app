@@ -45,23 +45,24 @@ class CircularProgressBar extends Component {
       <View>
         {amountLoaned !== 0 && (
           <View>
+            <View
+              style={[
+                style.innerCircle,
+                { backgroundColor: getColor(COLOR_KEYS.BACKGROUND) },
+              ]}
+            />
+
             <Surface width={height} height={height}>
               <Group x={height / 2} y={height / 2}>
                 <Shape
                   d={path(section)}
-                  stroke={getColor(COLOR_KEYS.POSITIVE_STATE)}
                   fill={getColor(COLOR_KEYS.POSITIVE_STATE)}
-                  strokeWidth={4}
+                  stroke={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                  strokeWidth={5}
                 />
               </Group>
             </Surface>
 
-            <View
-              style={[
-                style.innerCircle,
-                { backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE) },
-              ]}
-            />
             <View style={[style.contentCircle, style.progressBackground]}>
               <CelText type={"H6"} weight={"300"}>
                 Amount
