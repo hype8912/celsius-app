@@ -48,8 +48,6 @@ const base = {
   button: {
     paddingTop: 30,
   },
-
-  text: {},
 };
 
 const themed = {

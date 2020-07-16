@@ -51,6 +51,7 @@ import ForgotPasswordStories from "./ForgotPassword/ForgotPassword.stories";
 import SimplexScreenStories from "./Simplex/SimplexScreen.stories";
 import ApiAuthorizationStories from "./ApiAuthorization/ApiAuthorization.stories";
 import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
+import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -344,4 +345,9 @@ storiesOf("ApiAuthorization", module).add(
 storiesOf("ChangePassword", module).add(
   "Change Password",
   ChangePasswordStories.regular
+);
+
+storiesOf("ChangeAvatar", module).add(
+  "Change Avatar",
+  ChangeAvatarStories.regular
 );
