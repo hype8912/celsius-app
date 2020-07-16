@@ -20,9 +20,7 @@ import STYLES from "../../../constants/STYLES";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class ChangePassword extends Component {
-  static propTypes = {
-    // text: PropTypes.string
-  };
+  static propTypes = {};
   static defaultProps = {};
 
   static navigationOptions = () => ({

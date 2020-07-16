@@ -55,9 +55,9 @@ const FONT_WEIGHTS_PANGRAM = {
   "800": "-ExtraBold",
   "900": "-Black",
 
-  thin: "-ExtraLight",
-  "extra-light": "-ExtraLight",
-  light: "-Light",
+  thin: "-Regular",
+  "extra-light": "-Regular",
+  light: "-Regular",
   regular: "-Regular",
   medium: "-Medium",
   "semi-bold": "-Bold",
