@@ -48,6 +48,7 @@ import AppearanceStories from "./Appearance/Appearance.stories";
 import TooManyRequestsStories from "./TooManyRequests/TooManyRequests.stories";
 import SupportStories from "./Support/Support.stories";
 import ForgotPasswordStories from "./ForgotPassword/ForgotPassword.stories";
+import SecurityOverviewStories from "./SecurityOverview/SecurityOverview.stories";
 import SimplexScreenStories from "./Simplex/SimplexScreen.stories";
 import ApiAuthorizationStories from "./ApiAuthorization/ApiAuthorization.stories";
 import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
@@ -315,6 +316,14 @@ storiesOf("TwoFaAuthAppConfirmationCode", module).add(
 storiesOf("KYCTaxpayer", module)
   .add("SSN", KYCTaxpayerStories.ssn)
   .add("Tax payer", KYCTaxpayerStories.taxPayer);
+
+storiesOf("SecurityOverview", module)
+  .add("Weak", SecurityOverviewStories.weak)
+  .add("Fair", SecurityOverviewStories.fair)
+  .add("Good", SecurityOverviewStories.good)
+  .add("Strong", SecurityOverviewStories.strong)
+  .add("Disabled Cards", SecurityOverviewStories.disabledCards)
+  .add("Enabled Cards", SecurityOverviewStories.enabledCards);
 
 storiesOf("BorrowCollateral", module).add(
   "Borrow Collateral",

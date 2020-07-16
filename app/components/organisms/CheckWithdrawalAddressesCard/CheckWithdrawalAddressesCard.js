@@ -8,11 +8,11 @@ import { connect } from "react-redux";
 import * as appActions from "../../../redux/actions";
 import CheckWithdrawalAddressesCardStyle from "./CheckWithdrawalAddressesCard.styles";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
 import ToggleInfoCard from "../../molecules/ToggleInfoCard/ToggleInfoCard";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -36,7 +36,6 @@ class CheckWithdrawalAddressesCard extends Component {
 
   render() {
     const style = CheckWithdrawalAddressesCardStyle();
-    const theme = getTheme();
     const { securityOverview, withdrawalAddresses } = this.props;
 
     if (_.isEmpty(securityOverview)) return;
@@ -64,17 +63,12 @@ class CheckWithdrawalAddressesCard extends Component {
           <View
             style={[
               style.circle,
-              {
-                backgroundColor:
-                  theme === "light"
-                    ? STYLES.COLORS.DARK_GRAY1
-                    : STYLES.COLORS.WHITE_OPACITY1,
-              },
+              { backgroundColor: getColor(COLOR_KEYS.TOGGLE_OFF_BACKGROUND) },
             ]}
           >
             <Icon
               name={"Shield"}
-              fill={STYLES.COLORS.CELSIUS_BLUE}
+              fill={getColor(COLOR_KEYS.LINK)}
               width={35}
               height={35}
             />
@@ -93,7 +87,7 @@ class CheckWithdrawalAddressesCard extends Component {
           <CelText
             type="H6"
             weight={"600"}
-            color={STYLES.COLORS.CELSIUS_BLUE}
+            color={getColor(COLOR_KEYS.LINK)}
             onPress={this.onPress}
             margin={"4 0 0 0"}
           >
