@@ -203,7 +203,7 @@ class LoanOverviewCard extends Component {
 
           <View style={style.loanInfoAdditional}>
             <CelText type={"H6"}>Loan Maturity: </CelText>
-            <CelText type={"H6"}>
+            <CelText margin={"0 0 10 0"} type={"H6"}>
               {moment(loan.maturity_date).format("MMM DD, YYYY")}
             </CelText>
           </View>
@@ -256,7 +256,7 @@ class LoanOverviewCard extends Component {
 
           <View style={style.loanInfoAdditional}>
             <CelText type={"H6"}>Contract LTV: </CelText>
-            <CelText type={"H6"}>
+            <CelText margin={"0 0 10 0"} type={"H6"}>
               {`${formatter.percentage(loan.ltv)}%`}
             </CelText>
           </View>

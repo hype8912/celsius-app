@@ -297,9 +297,11 @@ class PaymentCard extends Component {
       options,
     } = this.state;
 
+    let time;
     const style = PaymentCardStyle();
     const theme = getTheme();
-    const time = presentTime(loan.margin_call.margin_call_detected, true);
+    if (loan && loan.margin_call)
+      time = presentTime(loan.margin_call.margin_call_detected, true);
 
     if (
       currency &&
