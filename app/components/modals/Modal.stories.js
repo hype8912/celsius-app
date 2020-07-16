@@ -8,7 +8,6 @@ import { MODALS } from "../../constants/UI";
 import CelButton from "../atoms/CelButton/CelButton";
 import CenterView from "../../../storybook/stories/CenterView";
 import LoanAlertsPayoutPrincipalModal from "./LoanAlertsModals/LoanAlertsPayoutPrincipalModal/LoanAlertsPayoutPrincipalModal";
-import LoanAlertsMarginCallDepositCoinsModal from "./LoanAlertsModals/LoanAlertsMarginCallDepositCoinsModal/LoanAlertsMarginCallDepositCoinsModal";
 import LoanAlertsDepositCoinsModal from "./LoanAlertsModals/LoanAlertsDepositCoinsModal/LoanAlertsDepositCoinsModal";
 import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsModals/LoanAlertsMarginCallLockCoinModal/LoanAlertsMarginCallLockCoinModal";
 
@@ -93,16 +92,6 @@ storiesOf("Modals", module)
         Open LoanAlertsDepositCoinsModal
       </CelButton>
       <LoanAlertsDepositCoinsModal />
-    </View>
-  ))
-  .add("LoanAlertsMarginCallDepositCoinsModal", () => (
-    <View style={{ marginBottom: 30 }}>
-      <CelButton
-        onPress={() => store.dispatch(openModal(MODALS.LOAN_ALERT_MODAL))}
-      >
-        Open LoanAlertsMarginCallDepositCoinsModal
-      </CelButton>
-      <LoanAlertsMarginCallDepositCoinsModal yesCopy={"Deposit coins"} />
     </View>
   ))
   .add("LoanAlertsMarginCallLockCoinModal", () => (

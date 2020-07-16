@@ -7,11 +7,10 @@ import { LOAN_ALERTS } from "../../../constants/UI";
 import * as appActions from "../../../redux/actions";
 import LoanAlertsPayoutPrincipalModal from "./LoanAlertsPayoutPrincipalModal/LoanAlertsPayoutPrincipalModal";
 import LoanAlertsDepositCoinsModal from "./LoanAlertsDepositCoinsModal/LoanAlertsDepositCoinsModal";
-import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsMarginCallLockCoinModal/LoanAlertsMarginCallLockCoinModal";
-import LoanAlertsMarginCallDepositCoinsModal from "./LoanAlertsMarginCallDepositCoinsModal/LoanAlertsMarginCallDepositCoinsModal";
 import InterestDueModal from "../InterestDueModal/InterestDueModal";
 import InterestReminderModal from "../InterestReminderModal/InterestReminderModal";
 import loanPaymentUtil from "../../../utils/loanPayment-util";
+import MarginCallModal from "../MarginCallModal/MarginCallModal";
 
 @connect(
   state => ({
@@ -27,17 +26,15 @@ class LoanAlertsModalWrapper extends Component {
 
     if (nextProps.loanAlerts && nextProps.loanAlerts.length) {
       activeAlert = nextProps.loanAlerts.find(
-        la => la.type === LOAN_ALERTS.INTEREST_ALERT
+        la => la.type === LOAN_ALERTS.MARGIN_CALL_ALERT
       );
+      activeAlert =
+        activeAlert ||
+        nextProps.loanAlerts.find(la => la.type === LOAN_ALERTS.INTEREST_ALERT);
       activeAlert =
         activeAlert ||
         nextProps.loanAlerts.find(
           la => la.type === LOAN_ALERTS.PRINCIPAL_ALERT
-        );
-      activeAlert =
-        activeAlert ||
-        nextProps.loanAlerts.find(
-          la => la.type === LOAN_ALERTS.MARGIN_CALL_ALERT
         );
     } else {
       activeAlert = null;
@@ -58,6 +55,7 @@ class LoanAlertsModalWrapper extends Component {
       );
       return { activeAlert, loan, principalCoinWallet, collateralCoinWallet };
     }
+
     return { activeAlert, loan };
   }
 
@@ -127,21 +125,10 @@ class LoanAlertsModalWrapper extends Component {
   };
 
   renderMarginCallModal = loan => {
-    const { collateralCoinWallet } = this.state;
     const activatedMarginCall = loan.margin_call_activated;
-    const couldCoverMarginCallInCollateralCoin =
-      loan.margin_call_amount <= collateralCoinWallet.amount;
 
     if (activatedMarginCall) {
-      if (couldCoverMarginCallInCollateralCoin) {
-        return <LoanAlertsMarginCallLockCoinModal loan={loan} />;
-      }
-      return (
-        <LoanAlertsMarginCallDepositCoinsModal
-          loan={loan}
-          yesCopy={"Deposit coins"}
-        />
-      );
+      return <MarginCallModal />;
     }
     return null;
   };

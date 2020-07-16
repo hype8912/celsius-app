@@ -29,11 +29,15 @@ function calculateAdditionalPayment(
   let collateralAmount;
   let cryptoAmount;
   let color;
-  let marginCallAmountNeededInCoin;
+  let coin;
 
   if (!additionalCoin) {
-    const coin =
-      loan.coin_loan_asset !== "USD" ? loan.coin_loan_asset : loan.coin;
+    if (cardType === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD) {
+      coin = loan.coin;
+    } else {
+      coin = loan.coin_loan_asset !== "USD" ? loan.coin_loan_asset : loan.coin;
+    }
+
     loanCoin = walletSummary.coins.find(c => c.short === coin);
     currency = currencies.filter(
       c => c.short === loanCoin.short.toUpperCase()
@@ -54,43 +58,26 @@ function calculateAdditionalPayment(
     if (cardType === COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD) {
       hasEnough = loanCoin.amount_usd.isGreaterThan(loan.loan_amount_usd);
       color = !hasEnough ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
-      value =
+      additionalCryptoAmount =
         (loan.loan_amount_usd - loanCoin.amount_usd.toNumber()) /
         currencyRatesShort[loanCoin.short.toLowerCase()];
-      additionalCryptoAmount = formatter.crypto(value, loanCoin.short, {
-        precision: 2,
-      });
-      additionalCryptoAmount = value;
       additionalUsdAmount =
         loan.loan_amount_usd - loanCoin.amount_usd.toNumber();
     }
 
     if (cardType === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD) {
-      marginCallAmountNeededInCoin =
+      collateralAmount =
         Number(loan.margin_call.margin_call_usd_amount) /
         currencyRatesShort[loanCoin.short.toLowerCase()];
-      isAllowed = loanCoin.amount >= marginCallAmountNeededInCoin;
-      color = !isAllowed ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
-      hasEnough = loanCoin.amount_usd.isGreaterThan(
+      hasEnough = loanCoin.amount_usd.isGreaterThanOrEqualTo(
         loan.margin_call.margin_call_usd_amount
       );
-      // additionalCryptoAmount - margin call value
-      // let marginCallValue;
-
-      if (
-        loan.margin_call_activated &&
-        marginCallAmountNeededInCoin > Number(loanCoin.amount)
-      ) {
-        // marginCallValue = formatter.crypto(
-        //   amountNeededInCoin - Number(coin.amount),
-        //   coin.short,
-        //   { precision: 4 }
-        // );
-      } else {
-        // marginCallValue = formatter.crypto(amountNeededInCoin, coin.short, {
-        //   precision: 4,
-        // });
-      }
+      additionalCryptoAmount = collateralAmount - loanCoin.amount.toNumber();
+      additionalUsdAmount =
+        Number(loan.margin_call.margin_call_usd_amount) -
+        loanCoin.amount_usd.toNumber();
+      amountUsd = Number(loan.margin_call.margin_call_usd_amount);
+      color = !hasEnough ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
     }
   }
 
@@ -150,7 +137,6 @@ function calculateAdditionalPayment(
     isAllowed,
     cryptoAmount: cryptoAmount || 0,
     color: color || STYLES.COLORS.CELSIUS_BLUE,
-    marginCallAmountNeededInCoin: marginCallAmountNeededInCoin || 0,
   };
 }
 export default loanPaymentUtil;

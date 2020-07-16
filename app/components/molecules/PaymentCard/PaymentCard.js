@@ -4,14 +4,17 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import * as appActions from "../../../redux/actions";
-import { COIN_CARD_TYPE, LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import {
+  COIN_CARD_TYPE,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+} from "../../../constants/UI";
 
 import { getTheme } from "../../../utils/styles-util";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
-// import Icon from "../../atoms/Icon/Icon";
 
 import PaymentCardStyle from "./PaymentCard.styles";
 import Separator from "../../atoms/Separator/Separator";
@@ -19,6 +22,9 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import CollateralCoinCard from "../CollateralCoinCard/CollateralCoinCard";
 import AdditionalAmountCard from "../AdditionalAmountCard/AdditionalAmountCard";
 import loanPaymentUtil from "../../../utils/loanPayment-util";
+import STYLES from "../../../constants/STYLES";
+import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
+import { presentTime } from "../../../utils/ui-util";
 
 @connect(
   state => ({
@@ -61,6 +67,7 @@ class PaymentCard extends Component {
       additionalCryptoAmount: null,
       isAllowed: false,
       additionalInfoExplanation: null,
+      options: false,
     };
   }
 
@@ -75,7 +82,7 @@ class PaymentCard extends Component {
     const currency = currencies.filter(
       c => c.short === coin.short.toUpperCase()
     )[0];
-    await this.setState({ name, currency });
+    this.setState({ name, currency });
 
     if (type === COIN_CARD_TYPE.COLLATERAL_COIN_CARD) {
       const collateralPayment = loanPaymentUtil.calculateAdditionalPayment(
@@ -83,7 +90,7 @@ class PaymentCard extends Component {
         COIN_CARD_TYPE.COLLATERAL_COIN_CARD,
         coin
       );
-      await this.setState({
+      this.setState({
         additionalInfoExplanation: "required.",
         cryptoAmount: collateralPayment.cryptoAmount,
         amountUsd: collateralPayment.amountUsd,
@@ -97,7 +104,7 @@ class PaymentCard extends Component {
         loan,
         COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD
       );
-      await this.setState({
+      this.setState({
         additionalInfoExplanation: "required for a principal payout.",
         cryptoAmount: principalPayment.cryptoAmount,
         amountUsd: principalPayment.amountUsd,
@@ -112,7 +119,7 @@ class PaymentCard extends Component {
         COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD,
         coin
       );
-      await this.setState({
+      this.setState({
         additionalInfoExplanation:
           "required for a first month of loan interest payment.",
         cryptoAmount: loanPayment.cryptoAmount,
@@ -129,14 +136,16 @@ class PaymentCard extends Component {
         loan,
         COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD
       );
-      await this.setState({
-        additionalInfoExplanation: "required.",
+      this.setState({
+        additionalInfoExplanation: "additionally required.",
         cryptoAmount: marginCallPayment.cryptoAmount,
         amountUsd: marginCallPayment.amountUsd,
         isAllowed: marginCallPayment.isAllowed,
         additionalCryptoAmount: marginCallPayment.additionalCryptoAmount,
         color: marginCallPayment.color,
         hasEnough: marginCallPayment.hasEnough,
+        collateralAmount: marginCallPayment.collateralAmount,
+        additionalUsdAmount: marginCallPayment.additionalUsdAmount,
       });
     }
   };
@@ -155,20 +164,6 @@ class PaymentCard extends Component {
         text={"additionally required"}
         coin={coin.short}
       />
-    );
-  };
-
-  renderMarginCallNote = () => {
-    const { color } = this.state;
-
-    const style = PaymentCardStyle();
-    return (
-      <Card color={style.background.backgroundColor}>
-        <CelText style={{ color }} weight={"300"}>
-          Note: Amounts are estimates, may change based on value at time of
-          locking.
-        </CelText>
-      </Card>
     );
   };
 
@@ -216,11 +211,72 @@ class PaymentCard extends Component {
     }
   };
 
+  showOptions = () => {
+    this.setState({
+      options: true,
+    });
+  };
+
+  marginCallOptions = () => {
+    const style = PaymentCardStyle();
+    const { handleSelectCoin, coin, loan, actions } = this.props;
+    const {
+      additionalCryptoAmount,
+      hasEnough,
+      additionalUsdAmount,
+    } = this.state;
+    return (
+      <View>
+        <Card margin={"10 0 10 0"} color={style.card.color}>
+          <CelText weight={"300"}>
+            Note: These are current estimates. Final values fixed when Margin
+            Call is resolved.
+          </CelText>
+        </Card>
+        {hasEnough ? (
+          <CelButton
+            onPress={() => {
+              handleSelectCoin(loan);
+              actions.openModal(MODALS.MARGIN_CALL_CONFIRM);
+            }}
+            margin={"10 0 10 0"}
+          >
+            Add Collateral From Wallet
+          </CelButton>
+        ) : (
+          <CelButton
+            onPress={() => {
+              actions.navigateTo("Deposit", {
+                reason: LOAN_PAYMENT_REASONS.MARGIN_CALL,
+                coin: coin.short,
+                amountUsd: additionalUsdAmount,
+                additionalCryptoAmount,
+                marginCall: loan.margin_call.margin_call_activated,
+              });
+            }}
+            margin={"10 0 10 0"}
+          >
+            {`Deposit more ${coin.short}`}
+          </CelButton>
+        )}
+        <CelButton
+          margin={"0 0 10 0"}
+          onPress={() => {
+            actions.updateFormField("cryptoCoin", coin.short);
+            actions.navigateTo("GetCoinsEnterAmount");
+          }}
+          basic
+        >
+          {`Buy More ${coin.short}`}
+        </CelButton>
+      </View>
+    );
+  };
+
   render = () => {
     const {
       handleSelectCoin,
       coin,
-      marginCall,
       isLoading,
       reason,
       loan,
@@ -236,10 +292,14 @@ class PaymentCard extends Component {
       additionalCryptoAmount,
       additionalInfoExplanation,
       hasEnough,
+      collateralAmount,
+      additionalUsdAmount,
+      options,
     } = this.state;
 
     const style = PaymentCardStyle();
     const theme = getTheme();
+    const time = presentTime(loan.margin_call.margin_call_detected, true);
 
     if (
       currency &&
@@ -278,6 +338,18 @@ class PaymentCard extends Component {
           opacity={isLoading ? 0.7 : 1}
         >
           <View>
+            {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
+              <View>
+                <CelText
+                  weight={"500"}
+                  type={"H5"}
+                  color={STYLES.COLORS.CELSIUS_BLUE}
+                >
+                  {`Loan - #${loan.id}`}
+                </CelText>
+                <Separator margin={"10 0 10 0"} />
+              </View>
+            )}
             <CelText
               weight={"300"}
               type={"H6"}
@@ -299,39 +371,103 @@ class PaymentCard extends Component {
                     coinShort={currency.short}
                   />
                 </View>
-                <View>
-                  <CelText weight={"600"} align="left" type="H3">
-                    {`${formatter.crypto(
-                      Number(loan.monthly_payment) /
-                        currency.market_quotes_usd.price,
-                      currency.short
-                    )}`}
-                  </CelText>
-                  <CelText weight={"300"} align="left">
-                    {`$ ${loan.monthly_payment} USD`}
-                  </CelText>
-                </View>
+                {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
+                  <View>
+                    <CelText weight={"600"} align="left" type="H3">
+                      {`${formatter.crypto(
+                        Number(loan.monthly_payment) /
+                          currency.market_quotes_usd.price,
+                        currency.short
+                      )}`}
+                    </CelText>
+                    <CelText weight={"300"} align="left">
+                      {`$ ${loan.monthly_payment} USD`}
+                    </CelText>
+                  </View>
+                ) : (
+                  <View>
+                    <CelText weight={"600"} align="left" type="H3">
+                      {formatter.fiat(amountUsd, "USD")}
+                    </CelText>
+                    <CelText weight={"300"} align="left" type="H5">
+                      {formatter.crypto(collateralAmount, coin.short, {
+                        precision: 2,
+                      })}
+                    </CelText>
+                  </View>
+                )}
               </View>
 
               <Separator margin={"10 0 10 0"} />
-              <View style={style.textContainer}>
-                <CelText weight={"300"} align="left">
-                  In wallet:{" "}
-                </CelText>
-                <View>
-                  <CelText weight={"300"} align="right" style={{ color }}>
-                    {formatter.crypto(cryptoAmount, coin.short, {
-                      precision: 2,
-                    })}
+
+              {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
+                <View style={style.textContainer}>
+                  <CelText weight={"300"} align="left">
+                    In wallet:{" "}
+                  </CelText>
+                  <View>
                     <CelText weight={"300"} align="right" style={{ color }}>
-                      {" | "}
+                      {formatter.crypto(cryptoAmount, coin.short, {
+                        precision: 2,
+                      })}
                       <CelText weight={"300"} align="right" style={{ color }}>
-                        {formatter.fiat(amountUsd, "USD")}
+                        {" | "}
+                        <CelText weight={"300"} align="right" style={{ color }}>
+                          {formatter.fiat(amountUsd, "USD")}
+                        </CelText>
                       </CelText>
                     </CelText>
-                  </CelText>
+                  </View>
                 </View>
-              </View>
+              ) : (
+                <View>
+                  {!hasEnough && (
+                    <View>
+                      <CelText weight={"300"} type={"H6"}>
+                        Current available balance in wallet:
+                      </CelText>
+                      <CelText color={color} margin={"5 0 0 0"} type={"H6"}>
+                        {formatter.crypto(cryptoAmount, coin.short, {
+                          precision: 2,
+                        })}
+                      </CelText>
+                      <AdditionalAmountCard
+                        margin={"10 0 10 0"}
+                        additionalCryptoAmount={additionalCryptoAmount}
+                        color={color}
+                        additionalUsd={additionalUsdAmount}
+                        text={additionalInfoExplanation}
+                        coin={coin.short}
+                      />
+                    </View>
+                  )}
+
+                  {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
+                    <Card
+                      margin={!options ? "10 0 60 0" : "10 0 10 0"}
+                      color={style.card.color}
+                    >
+                      <CelText align={"left"} type={"H6"}>
+                        Time remaining to resolve Margin Call
+                      </CelText>
+                      <CelText align={"left"} weight={"500"} type={"H3"}>
+                        {time.days >= 1
+                          ? `00h 00m`
+                          : `${time.hours}h ${time.minutes}m`}
+                      </CelText>
+                      {time.days >= 1 && (
+                        <Card color={STYLES.COLORS.RED}>
+                          <CelText weight={"300"} type={"H6"} color={"white"}>
+                            Your loan is now in default and you are at risk of
+                            collateral liquidation. We advise you to contact
+                            your loan manager now.
+                          </CelText>
+                        </Card>
+                      )}
+                    </Card>
+                  )}
+                </View>
+              )}
 
               {amountUsd < loan.monthly_payment ? (
                 <View>
@@ -339,11 +475,22 @@ class PaymentCard extends Component {
                   {this.renderDepositMore()}
                 </View>
               ) : null}
-              {marginCall && isAllowed
-                ? this.renderAdditionalAmountRequired()
-                : null}
             </View>
           </View>
+
+          {!options ? (
+            <View style={style.buttonsWrapper}>
+              <CelModalButton
+                buttonStyle={"secondary"}
+                position={"single"}
+                onPress={() => this.showOptions()}
+              >
+                Resolve Margin Call
+              </CelModalButton>
+            </View>
+          ) : (
+            this.marginCallOptions()
+          )}
         </Card>
       );
     }

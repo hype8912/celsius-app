@@ -37,10 +37,18 @@ const base = {
     borderRadius: 5,
     backgroundColor: STYLES.COLORS.RED,
   },
+  buttonsWrapper: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 50,
+  },
 };
 
 const themed = {
   light: {
+    card: { color: "#F3F3F3" },
     cardStyle: {
       color: STYLES.COLORS.WHITE_OPACITY7,
     },
@@ -50,6 +58,7 @@ const themed = {
   },
 
   dark: {
+    card: { color: STYLES.COLORS.MEDIUM_GRAY },
     cardStyle: {
       color: STYLES.COLORS.DARK_GRAY_OPACITY,
     },

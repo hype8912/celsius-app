@@ -32,14 +32,11 @@ class InterestReminderModal extends Component {
   };
   static defaultProps = {};
 
-  // const { closeModal } = props;
-  // const style = InterestReminderModalStyle();
-  // const noPaymentSelected = false;
-
   handleRequest = (hasEnough, coin, additionalCrypto, additionalUsd) => {
     const { navigateTo, activeLoan, loanAlerts } = this.props;
     if (hasEnough) {
-      if (loanAlerts.length > 1) return navigateTo("LoanOverviewScreen");
+      if (loanAlerts.length > 1)
+        return navigateTo("InterestPaymentOverviewScreen");
 
       return navigateTo("ChoosePaymentMethod", {
         reason: LOAN_PAYMENT_REASONS.INTEREST,

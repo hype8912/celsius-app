@@ -38,6 +38,20 @@ const base = {
   progress: {
     justifyContent: "center",
   },
+  loanTitle: { flex: 1, alignItems: "center" },
+  loanInfo: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+  },
+  loanInfoAdditional: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+    marginTop: 10,
+  },
+  additionalInterestStyle: { marginBottom: 8 },
+  choose: { opacity: 0.7 },
 };
 
 const themed = {

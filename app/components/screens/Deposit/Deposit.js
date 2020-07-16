@@ -202,39 +202,17 @@ class Deposit extends Component {
   };
 
   renderPayCard = () => {
-    const {
-      formData,
-      walletSummary,
-      navigation,
-      currencyRatesShort,
-    } = this.props;
+    const { navigation } = this.props;
     const coin = navigation.getParam("coin");
-    const loan = navigation.getParam("loan");
     const amountUsd = navigation.getParam("amountUsd");
     const additionalCryptoAmount = navigation.getParam(
       "additionalCryptoAmount"
     );
     const reason = navigation.getParam("reason");
-    const collateralCoin = formData.selectedCoin || coin;
 
-    let collateralMissing;
     let text;
     let usd;
     let crypto;
-    if (loan) {
-      const collateralObj =
-        walletSummary &&
-        walletSummary.coins.find(c => c.short === formData.selectedCoin);
-
-      if (collateralObj) {
-        collateralMissing = formatter.crypto(
-          loan.margin_call.margin_call_usd_amount /
-            currencyRatesShort[collateralCoin.toLowerCase()],
-          collateralCoin,
-          { precision: 4 }
-        );
-      }
-    }
 
     switch (reason) {
       case LOAN_PAYMENT_REASONS.MANUAL_INTEREST:
@@ -250,8 +228,9 @@ class Deposit extends Component {
         crypto = additionalCryptoAmount;
         break;
       case LOAN_PAYMENT_REASONS.MARGIN_CALL:
-        text = "required to cover the margin call";
-        usd = collateralMissing;
+        text = "required to close the Margin Call";
+        usd = amountUsd;
+        crypto = additionalCryptoAmount;
         break;
       default:
         text = "required";
@@ -263,7 +242,7 @@ class Deposit extends Component {
       reason !== "MARGIN_CALL" ? STYLES.COLORS.CELSIUS_BLUE : STYLES.COLORS.RED;
 
     return (
-      <View style={{ alignSelf: "center" }}>
+      <View style={{ marginHorizontal: 20 }}>
         <AdditionalAmountCard
           color={color}
           additionalUsd={usd}
@@ -363,7 +342,7 @@ class Deposit extends Component {
       memoId,
     } = this.getAddress(formData.selectedCoin);
     const coin = navigation.getParam("coin");
-    const isMarginCall = navigation.getParam("isMarginWarning");
+    const isMarginCall = navigation.getParam("marginCall");
     const reason = navigation.getParam("reason");
 
     const {
@@ -570,9 +549,10 @@ class Deposit extends Component {
 
         {reason && (
           <View>
-            {this.renderPayCard()}
+            {!isMarginCall && this.renderPayCard()}
             <CelButton
               onPress={() => actions.navigateTo("ChoosePaymentMethod")}
+              margin={"20 0 0 0"}
             >
               Continue
             </CelButton>

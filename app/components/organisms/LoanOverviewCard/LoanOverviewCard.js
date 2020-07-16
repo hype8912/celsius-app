@@ -79,15 +79,6 @@ class LoanOverviewCard extends Component {
     this.setState({ isLoading: false });
   };
 
-  depositCoin = () => {
-    const { actions, loan } = this.props;
-    actions.navigateTo("Deposit", {
-      coin: loan.margin_call.collateral_coin,
-      loan,
-      isMarginWarning: true,
-    });
-  };
-
   render() {
     const { loan, navigateTo, index, length, celDiscount } = this.props;
     const { isLoading } = this.state;
@@ -139,7 +130,7 @@ class LoanOverviewCard extends Component {
           </Card>
         )}
         <Card padding={"0 0 0 0"}>
-          <View style={{ flex: 1, alignItems: "center" }}>
+          <View style={style.loanTitle}>
             <View style={style.status}>
               <Icon
                 name={"TransactionLoan"}
@@ -163,13 +154,7 @@ class LoanOverviewCard extends Component {
 
           <Separator />
 
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginHorizontal: 10,
-            }}
-          >
+          <View style={style.loanInfo}>
             <CelText type={"H6"} margin={"10 5 10 0"}>
               Loan ID:
             </CelText>
@@ -180,13 +165,7 @@ class LoanOverviewCard extends Component {
           <Separator />
 
           {loan.status === LOAN_STATUS.COMPLETED && (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginHorizontal: 10,
-              }}
-            >
+            <View style={style.loanInfo}>
               <CelText type={"H6"}>Loan Completed:</CelText>
               <CelText type={"H6"}>
                 {moment(loan.maturity_date).format("MMM DD, YYYY")}
@@ -195,13 +174,7 @@ class LoanOverviewCard extends Component {
           )}
 
           {[LOAN_STATUS.CANCELED].includes(loan.status) && (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginHorizontal: 10,
-              }}
-            >
+            <View style={style.loanInfo}>
               <CelText type={"H6"}>{"Request Canceled: "}</CelText>
               <CelText type={"H6"}>
                 {moment(loan.canceled_at).format("MMM DD, YYYY")}
@@ -211,13 +184,7 @@ class LoanOverviewCard extends Component {
 
           {[LOAN_STATUS.REFINANCED].includes(loan.status) &&
             loan.refinanced_at && (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginHorizontal: 10,
-                }}
-              >
+              <View style={style.loanInfo}>
                 <CelText type={"H6"}>{"Loan Refinanced: "}</CelText>
                 <CelText type={"H6"}>
                   {moment(loan.refinanced_at).format("MMM DD, YYYY")}
@@ -226,15 +193,7 @@ class LoanOverviewCard extends Component {
             )}
 
           {[LOAN_STATUS.APPROVED, LOAN_STATUS.ACTIVE].includes(loan.status) && (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginHorizontal: 10,
-                marginTop: 10,
-              }}
-            >
+            <View style={style.loanInfoAdditional}>
               <CelText type={"H6"}>Loan Originated: </CelText>
               <CelText type={"H6"}>
                 {moment(loan.approved_at).format("MMM DD, YYYY")}
@@ -242,19 +201,14 @@ class LoanOverviewCard extends Component {
             </View>
           )}
 
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 10,
-              margin: 10,
-            }}
-          >
+          <View style={style.loanInfoAdditional}>
             <CelText type={"H6"}>Loan Maturity: </CelText>
             <CelText type={"H6"}>
               {moment(loan.maturity_date).format("MMM DD, YYYY")}
             </CelText>
           </View>
+
+          <Separator margin={"0 0 0 0"} />
 
           {loan.status === LOAN_STATUS.PENDING && (
             <Card color={style.card.color} margin={"30 0 0 0"}>
@@ -275,49 +229,47 @@ class LoanOverviewCard extends Component {
                 Margin Call Warning
               </CelText>
               <CelText
+                margin={"5 0 5 0"}
                 weight={"300"}
-                type={"H6"}
+                type={"H5"}
                 color={STYLES.COLORS.WHITE}
-                margin={"10 0 0 0"}
-              >{`The value of your collateral has dropped significantly. To match the value with the current market prices, we will need to lock an additional ${formatter.crypto(
-                loan.margin_call.margin_call_amount,
-                loan.margin_call.collateral_coin
-              )} from your wallet balance. You can also deposit more funds from your wallet.`}</CelText>
-              {loan.margin_call && loan.margin_call.hasEnoughOriginalCoin && (
-                <View>
-                  <CelButton
-                    onPress={this.lockMarginCollateral}
-                    size={"small"}
-                    margin={"10 0 10 0"}
-                    textColor={STYLES.COLORS.RED}
-                    basic
-                    color={"red"}
-                  >{`Approve ${loan.margin_call.collateral_coin} Lock`}</CelButton>
-                </View>
-              )}
-              {loan.margin_call &&
-                !loan.margin_call.hasEnoughOriginalCoin &&
-                loan.margin_call.hasEnoughOtherCoins && (
-                  <CelButton
-                    onPress={this.depositCoin}
-                    size={"small"}
-                    textColor={STYLES.COLORS.WHITE}
-                    ghost
-                    color={"red"}
-                  >
-                    Deposit coins
-                  </CelButton>
-                )}
+              >
+                {`LTV: ${Math.round(loan.current_ltv)}%`}
+              </CelText>
+              <CelButton
+                size={"small"}
+                basic
+                textSize={"H6"}
+                color={"red"}
+                textColor={"red"}
+                onPress={() => navigateTo("MarginCallOverviewScreen")}
+              >
+                Respond to Margin Call
+              </CelButton>
             </Card>
           )}
 
+          <View style={style.loanInfoAdditional}>
+            <CelText type={"H6"}>Current LTV: </CelText>
+            <CelText type={"H6"}>{`${Math.round(loan.current_ltv)}%`}</CelText>
+          </View>
+
+          <View style={style.loanInfoAdditional}>
+            <CelText type={"H6"}>Contract LTV: </CelText>
+            <CelText type={"H6"}>
+              {`${formatter.percentage(loan.ltv)}%`}
+            </CelText>
+          </View>
+
           {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(loan.status) && (
-            <View styles={{ flex: 1 }}>
+            <View>
               <Separator margin={"0 0 0 0"} />
               <View style={{ flexDirection: "row" }}>
                 <View>
                   <View style={style.interests}>
-                    <View style={[style.interest, { marginBottom: 8 }]}>
+                    <View
+                      style={[style.interest, style.additionalInterestStyle]}
+                    >
                       <CelText align={"left"} type={"H6"} weight={"300"}>
                         Monthly interest
                       </CelText>
@@ -343,7 +295,7 @@ class LoanOverviewCard extends Component {
                   />
                 </View>
               </View>
-              <View styles={{ flex: 1 }}>
+              <View>
                 <Card
                   color={style.card.color}
                   padding={"5 5 5 5"}
@@ -438,7 +390,7 @@ class LoanOverviewCard extends Component {
               Did you know you can prepay loan interest?
             </CelText>
 
-            <CelText type="H6" style={{ opacity: 0.7 }}>
+            <CelText type="H6" style={style.choose}>
               Choose a period of six months or more to prepay your interest. You
               will get notified as soon as your interest payment is due again.
             </CelText>

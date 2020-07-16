@@ -109,8 +109,9 @@ import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/Hod
 import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
-import LoanOverviewScreen from "../components/screens/LoanOverviewScreen/LoanOverviewScreen";
+import InterestPaymentOverviewScreen from "../components/screens/InterestPaymentOverviewScreen/InterestPaymentOverviewScreen";
 import ExtendLoanScreen from "../components/screens/ExtendLoanScreen/ExtendLoanScreen";
+import MarginCallOverviewScreen from "../components/screens/MarginCallOverviewScreen/MarginCallOverviewScreen";
 
 export const screens = {
   /**
@@ -197,7 +198,6 @@ export const screens = {
   ChoosePaymentMethod,
   ChooseMarginCollateralCoin,
   PaymentCel,
-  LoanOverviewScreen,
   LoanPrepaymentPeriod,
   LoanPaymentList,
   LoanPaymentCoin,
@@ -212,6 +212,8 @@ export const screens = {
   BorrowChooseLoan,
   BorrowCalculatorScreen,
   ExtendLoanScreen,
+  InterestPaymentOverviewScreen,
+  MarginCallOverviewScreen,
 
   /**
    * MyCel

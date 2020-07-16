@@ -41,14 +41,12 @@ class LoanRequestDetails extends Component {
     };
   };
 
-  constructor(props) {
-    super(props);
-
-    const { navigation, actions } = props;
+  componentDidMount = async () => {
+    const { navigation, actions } = this.props;
     const loanId = navigation.getParam("id");
-    actions.setActiveLoan(loanId);
-    actions.getLoanById(loanId);
-  }
+    await actions.setActiveLoan(loanId);
+    await actions.getLoanById(loanId);
+  };
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.activeLoan, this.props.activeLoan)) {
@@ -57,17 +55,6 @@ class LoanRequestDetails extends Component {
       });
     }
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const { navigation, activeLoan, actions } = this.props
-  //   const loanId = nextProps.navigation.getParam("id");
-  //
-  //   if (activeLoan) {}
-  //
-  //   actions.setActiveLoan(loanId)
-  //
-  //
-  // }
 
   renderSection = sectionType => {
     const { activeLoan } = this.props;
@@ -202,10 +189,6 @@ class LoanRequestDetails extends Component {
             />
           )
         );
-      // case "firstInterest":
-      //   return  <TxBasicSection key={sectionType} label={"First Interest Payment Due"} value={moment(transaction.loan_data.first_interest).format("D MMM YYYY")}/>;
-      // case "nextInterest":
-      //   return  <TxBasicSection key={sectionType} label={"Next Interest Payment Due"} value={moment(transaction.loan_data.next_interest).format("D MMM YYYY")}/>;
       case "maturity":
         return (
           <TxBasicSection

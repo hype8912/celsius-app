@@ -406,6 +406,7 @@ function lockMarginCallCollateral(id, coin) {
         verification
       );
 
+      dispatch(closeModal());
       const transactionId = res.data.transaction_id;
       dispatch(navigateTo("TransactionsIntersection", { id: transactionId }));
 

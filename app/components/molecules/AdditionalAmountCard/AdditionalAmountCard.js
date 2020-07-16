@@ -15,9 +15,10 @@ class AdditionalAmountCard extends Component {
       PropTypes.instanceOf(Object),
       PropTypes.number,
     ]),
+    margin: PropTypes.string,
   };
   static defaultProps = {
-    coin: "USDC",
+    margin: "0 0 0 0",
   };
 
   constructor(props) {
@@ -33,10 +34,11 @@ class AdditionalAmountCard extends Component {
       text,
       coin,
       style,
+      margin,
     } = this.props;
 
     return (
-      <Card styles={style} color={color}>
+      <Card margin={margin} styles={style} color={color}>
         <CelText
           color={"white"}
           align={"left"}
