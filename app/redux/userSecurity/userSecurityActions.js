@@ -199,7 +199,7 @@ function changePin(onSuccess) {
         })
       );
     } else {
-      dispatch(completePinChange(pinData));
+      dispatch(completePinChange(pinData, onSuccess));
     }
   };
 }

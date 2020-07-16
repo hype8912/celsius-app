@@ -34,6 +34,13 @@ class ActivateSixDigitPin extends Component {
     gesturesEnabled: false,
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+    };
+  }
+
   componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", () => {
       return true;
@@ -44,6 +51,9 @@ class ActivateSixDigitPin extends Component {
     BackHandler.removeEventListener("hardwareBackPress", () => {
       return true;
     });
+    this.setState({
+      loading: false,
+    });
   }
 
   onScreenFocus = () => {
@@ -53,6 +63,9 @@ class ActivateSixDigitPin extends Component {
 
   onPressBtn = async () => {
     const { navigation } = this.props;
+    this.setState({
+      loading: true,
+    });
     const onSuccess = navigation.getParam("onSuccess");
     onSuccess();
   };
@@ -92,6 +105,7 @@ class ActivateSixDigitPin extends Component {
   };
 
   render() {
+    const { loading } = this.state;
     const { hasSixDigitPin } = this.props;
     const style = ActivateSixDigitPinStyle();
     return (
@@ -125,6 +139,7 @@ class ActivateSixDigitPin extends Component {
             <CelButton
               disabled={!hasSixDigitPin}
               style={style.button}
+              loading={loading}
               onPress={this.onPressBtn}
             >
               Continue
