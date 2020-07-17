@@ -63,6 +63,7 @@ import LoyaltyProgramStories from "./LoyaltyProgram/LoyaltyProgram.stories";
 import SelectStateStories from "./SelectState/SelectState.stories";
 import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
 import BorrowLoanTermStories from "./BorrowLoanTerm/BorrowLoanTerm.stories";
+import WithdrawAddressLabelStories from "./WithdrawAddressLabel/WithdrawAddressLabel.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -415,3 +416,8 @@ storiesOf("LoanPaymentList", module).add(
 storiesOf("BorrowLoanTerm", module)
   .add("Stable coin", BorrowLoanTermStories.stable)
   .add("USD", BorrowLoanTermStories.usd);
+
+storiesOf("WithdrawAddressLabel", module).add(
+  "Withdraw Address Label",
+  WithdrawAddressLabelStories.regular
+);

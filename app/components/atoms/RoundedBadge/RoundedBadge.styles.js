@@ -9,8 +9,8 @@ const base = {
     alignItems: "center",
     elevation: 1,
     borderWidth: 0.5,
-    backgroundColor: COLOR_KEYS.BACKGROUND,
-    borderColor: COLOR_KEYS.BACKGROUND,
+    backgroundColor: COLOR_KEYS.CARDS,
+    borderColor: COLOR_KEYS.CARDS,
   },
 };
 
