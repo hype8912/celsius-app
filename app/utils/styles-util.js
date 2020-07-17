@@ -136,7 +136,7 @@ function setColors(baseStyle, theme) {
  * @param {string} theme - current active theme
  * @returns {Object} themed styles
  */
-function getColor(colorKey, theme = store.getState().user.appSettings.theme) {
+function getColor(colorKey, theme = getTheme()) {
   return COLORS[theme][colorKey];
 }
 

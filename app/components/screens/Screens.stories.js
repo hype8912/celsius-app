@@ -70,6 +70,7 @@ import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPa
 import BorrowLoanOptionStories from "./BorrowLoanOption/BorrowLoanOption.stories";
 import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
 import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
+import GetCoinsTransactionDetailsStories from "./GetCoinsTransactionDetails/GetCoinsTransactionDetails.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -447,3 +448,11 @@ storiesOf("BorrowLoanOption", module).add(
 storiesOf("Cellphone ", module)
   .add("Cellphone Enter", CellphoneEnterStories.regular)
   .add("Cellphone Verify", CellphoneVerifyStories.regular);
+
+storiesOf("GetCoinsTransactionDetails", module)
+  .add("Wire Pending", GetCoinsTransactionDetailsStories.wirePending)
+  .add("Wire Confirmed", GetCoinsTransactionDetailsStories.wireConfirmed)
+  .add("Wire Cancelled", GetCoinsTransactionDetailsStories.wireCancelled)
+  .add("Card Pending", GetCoinsTransactionDetailsStories.cardPending)
+  .add("Card Confirmed", GetCoinsTransactionDetailsStories.cardConfirmed)
+  .add("Card Cancelled", GetCoinsTransactionDetailsStories.cardCancelled);

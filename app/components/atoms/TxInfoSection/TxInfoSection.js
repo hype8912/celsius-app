@@ -5,13 +5,11 @@ import { View } from "react-native";
 import InfoSectionStyle from "./TxInfoSection.styles";
 import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
-import STYLES from "../../../constants/STYLES";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const TxInfoSection = ({ transaction, transactionProps }) => {
   const style = InfoSectionStyle();
-
   return (
     <View style={style.container}>
       <View style={style.statusText}>
@@ -21,7 +19,10 @@ const TxInfoSection = ({ transaction, transactionProps }) => {
             { backgroundColor: getColor(transactionProps.color) },
           ]}
         >
-          <CelText type={"H7"} color={STYLES.COLORS.WHITE}>
+          <CelText
+            type={"H7"}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+          >
             {transactionProps.shortName}
           </CelText>
         </View>
