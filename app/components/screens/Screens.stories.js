@@ -61,6 +61,7 @@ import HODLInfoCheckboxesStories from "./HODLInfoCheckboxes/HODLInfoCheckboxes.s
 import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stories";
 import LoyaltyProgramStories from "./LoyaltyProgram/LoyaltyProgram.stories";
 import SelectStateStories from "./SelectState/SelectState.stories";
+import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -403,4 +404,9 @@ storiesOf("ChoosePaymentMethod", module)
 storiesOf("SelectState", module).add(
   "Select State",
   SelectStateStories.regular
+);
+
+storiesOf("LoanPaymentList", module).add(
+  "Regular",
+  LoanPaymentListStories.regular
 );
