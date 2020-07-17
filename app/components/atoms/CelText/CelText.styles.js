@@ -12,7 +12,12 @@ const base = {
 const themed = {
   light: {},
   dark: {},
-  unicorn: {},
+  unicorn: {
+    link: { textDecorationLine: "underline" },
+  },
+  horse: {
+    link: { textDecorationLine: "underline" },
+  },
 };
 
 const CelTextStyle = theme =>

@@ -16,7 +16,6 @@ import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
 import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import securityUtil from "../../../utils/security-util";
-import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -263,16 +262,16 @@ class RegisterInitial extends Component {
           </View>
           <View style={{ justifyContent: "flex-end" }}>
             <CelText weight="300" align="center">
-              Already have an account?
+              Already have an account?{" "}
               <CelText
                 weight="300"
                 align="center"
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
                 onPress={() =>
                   actions.navigateTo("LoginLanding", { type: "login" })
                 }
               >
-                {` Log in`}
+                Log in
               </CelText>
             </CelText>
           </View>

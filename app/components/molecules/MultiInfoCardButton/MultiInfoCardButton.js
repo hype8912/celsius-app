@@ -62,7 +62,7 @@ class MultiInfoCardButton extends Component {
               <CelText
                 weight={"500"}
                 type={"H3"}
-                link
+                color={getColor(COLOR_KEYS.LINK)}
                 margin={"0 0 0 0"}
                 style={disabled ? { opacity: 0.3 } : null}
               >

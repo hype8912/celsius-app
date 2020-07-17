@@ -10,9 +10,10 @@ import formatter from "../../../utils/formatter";
 import Card from "../../atoms/Card/Card";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import interestUtil from "../../../utils/interest-util";
-import { widthPercentageToDP } from "../../../utils/styles-util";
+import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CoinListCard extends Component {
   static propTypes = {
@@ -33,7 +34,7 @@ class CoinListCard extends Component {
       </CelText>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
-          fill={STYLES.COLORS.CELSIUS_BLUE}
+          fill={getColor(COLOR_KEYS.LINK)}
           width="13"
           height="13"
           name="CirclePlus"

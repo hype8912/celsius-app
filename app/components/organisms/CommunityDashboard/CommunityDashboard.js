@@ -12,6 +12,8 @@ import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import Icon from "../../atoms/Icon/Icon";
 import { TOTAL_ASSETS_AMOUNT } from "../../../constants/DATA";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -162,7 +164,11 @@ class CommunityDashboard extends Component {
                     type={"H7"}
                     weight={"500"}
                     align={"center"}
-                    link={activeButton === button.buttonType}
+                    color={
+                      activeButton === button.buttonType
+                        ? getColor(COLOR_KEYS.TAB_SELECTED)
+                        : getColor(COLOR_KEYS.TAB_UNSELECTED)
+                    }
                   >
                     {button.buttonType.toUpperCase()}
                   </CelText>

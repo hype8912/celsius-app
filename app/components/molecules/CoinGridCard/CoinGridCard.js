@@ -6,7 +6,6 @@ import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
 import Graph from "../../graphs/Graph/Graph";
-import STYLES from "../../../constants/STYLES";
 import { getColor, heightPercentageToDP } from "../../../utils/styles-util";
 import CoinGridCardStyle from "./CoinGridCard.styles";
 import { THEMES } from "../../../constants/UI";
@@ -53,7 +52,7 @@ class CoinGridCard extends Component {
       </CelText>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
-          fill={STYLES.COLORS.CELSIUS_BLUE}
+          fill={getColor(COLOR_KEYS.LINK)}
           width="13"
           height="13"
           name="CirclePlus"

@@ -108,7 +108,16 @@ const base = {
 const themed = {
   light: {},
   dark: {},
-  unicorn: {},
+  unicorn: {
+    basicTitle: {
+      textDecorationLine: "underline",
+    },
+  },
+  horse: {
+    basicTitle: {
+      textDecorationLine: "underline",
+    },
+  },
 };
 
 const CelButtonStyle = () => getThemedStyle(base, themed);

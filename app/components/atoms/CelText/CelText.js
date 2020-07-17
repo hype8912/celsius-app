@@ -111,13 +111,14 @@ class CelText extends Component {
   };
 
   getFontStyle = () => {
-    const { margin, align, strikethrough, theme } = this.props;
+    const { margin, align, strikethrough, theme, link } = this.props;
     const cmpStyle = CelTextStyle(theme);
     const fontSize = this.getFontSize();
     const fontFamily = { fontFamily: this.getFontFamily() };
     const colorStyle = this.getTextColor();
     const marginStyle = getMargins(margin);
     const alignStyle = { textAlign: align };
+    const linkStyle = link ? cmpStyle.link : null;
     const decorationStyle = strikethrough
       ? { textDecorationLine: "line-through", textDecorationStyle: "solid" }
       : null;
@@ -130,6 +131,7 @@ class CelText extends Component {
       marginStyle,
       alignStyle,
       decorationStyle,
+      linkStyle,
     ];
   };
 

@@ -8,6 +8,7 @@ import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 class TxSentSection extends Component {
   static propTypes = {
@@ -48,7 +49,11 @@ class TxSentSection extends Component {
                 <CelText weight="600" type="H4">
                   {participant.first_name} {participant.last_name}
                 </CelText>
-                <CelText style={{ paddingTop: 5 }} link type="H6">
+                <CelText
+                  style={{ paddingTop: 5 }}
+                  color={getColor(COLOR_KEYS.LINK)}
+                  type="H6"
+                >
                   {participant.email ? participant.email : " "}
                 </CelText>
               </View>

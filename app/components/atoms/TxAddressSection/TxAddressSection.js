@@ -30,9 +30,7 @@ const TxAddressSection = ({ transaction, text, address }) => {
             style={style.button}
             onPress={() => Linking.openURL(link.link)}
           >
-            <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-              View on {link.text}
-            </CelText>
+            <CelText link>View on {link.text}</CelText>
             <Icon
               name="NewWindowIcon"
               height="16"
