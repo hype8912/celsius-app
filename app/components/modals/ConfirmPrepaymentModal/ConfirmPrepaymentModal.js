@@ -49,11 +49,11 @@ class ConfirmPrepaymentModal extends Component {
 
   render() {
     const { modalData } = this.props;
-    const { loan, isLoading } = this.state;
+    const { isLoading } = this.state;
     const style = ConfirmPrepaymentModalStyle();
 
+    if (!modalData) return null;
     const content = this.renderContent(modalData.loanId);
-    if (!loan) return null;
 
     return (
       <CelModal

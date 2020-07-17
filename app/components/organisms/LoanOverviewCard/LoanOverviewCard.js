@@ -211,7 +211,11 @@ class LoanOverviewCard extends Component {
           <Separator margin={"0 0 0 0"} />
 
           {loan.status === LOAN_STATUS.PENDING && (
-            <Card color={style.card.color} margin={"30 0 0 0"}>
+            <Card
+              size={"twoThirds"}
+              color={style.card.color}
+              margin={"20 20 0 20"}
+            >
               <CelText type={"H7"}>
                 Someone from our team is already reviewing your request. You
                 will be notified when your request is approved.

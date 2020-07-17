@@ -242,7 +242,7 @@ class Deposit extends Component {
       reason !== "MARGIN_CALL" ? STYLES.COLORS.CELSIUS_BLUE : STYLES.COLORS.RED;
 
     return (
-      <View style={{ marginHorizontal: 20 }}>
+      <View style={{ marginHorizontal: 20, marginTop: 20 }}>
         <AdditionalAmountCard
           color={color}
           additionalUsd={usd}
@@ -518,6 +518,26 @@ class Deposit extends Component {
               </CelText>
             )}
 
+            {alternateAddress &&
+              this.renderSwitchAddressBlock(
+                alternateAddress,
+                formData.selectedCoin
+              )}
+          </View>
+        ) : null}
+
+        {reason ? (
+          <View>
+            {!isMarginCall && this.renderPayCard()}
+            <CelButton
+              onPress={() => actions.navigateTo("ChoosePaymentMethod")}
+              margin={"20 0 0 0"}
+            >
+              Continue
+            </CelButton>
+          </View>
+        ) : (
+          <View>
             {cryptoUtil.buyInApp(formData.selectedCoin) && (
               <CelText
                 margin={"20 0 20 0"}
@@ -530,32 +550,13 @@ class Deposit extends Component {
                 {cryptoUtil.provideText(formData.selectedCoin)}
               </CelText>
             )}
-
-            {alternateAddress &&
-              this.renderSwitchAddressBlock(
-                alternateAddress,
-                formData.selectedCoin
-              )}
-          </View>
-        ) : null}
-
-        <RateInfoCard
-          style={styles.rateInfoCard}
-          coin={coinInfo}
-          navigateTo={actions.navigateTo}
-          celInterestButton
-          interestCompliance={interestCompliance}
-        />
-
-        {reason && (
-          <View>
-            {!isMarginCall && this.renderPayCard()}
-            <CelButton
-              onPress={() => actions.navigateTo("ChoosePaymentMethod")}
-              margin={"20 0 0 0"}
-            >
-              Continue
-            </CelButton>
+            <RateInfoCard
+              style={styles.rateInfoCard}
+              coin={coinInfo}
+              navigateTo={actions.navigateTo}
+              celInterestButton
+              interestCompliance={interestCompliance}
+            />
           </View>
         )}
 
