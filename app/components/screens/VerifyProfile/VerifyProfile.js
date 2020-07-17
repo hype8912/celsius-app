@@ -198,7 +198,7 @@ class VerifyProfile extends Component {
     const code = await Clipboard.getString();
 
     if (code) {
-      await this.handle2FAChange(code);
+      this.handle2FAChange(code);
     } else {
       actions.showMessage("warning", "Nothing to paste, please try again!");
       this.setState({ loading: false });
