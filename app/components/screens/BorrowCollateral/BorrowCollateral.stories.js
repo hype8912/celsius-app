@@ -13,8 +13,8 @@ import walletUtil from "../../../utils/wallet-util";
 
 const initialState = {
   user: {
-    profile: mockUserStore.profile.testcelsiusapp,
-    appSettings: mockUserStore.appSettings.testcelsiusapp,
+    profile: mockUserStore.profile.postman13,
+    appSettings: mockUserStore.appSettings.postman13,
     email: mockUserStore.profile.postman13.email,
   },
   currencies: mockCurrenciesStore,

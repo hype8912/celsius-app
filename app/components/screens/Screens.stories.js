@@ -68,6 +68,8 @@ import InterestCalculatorScreenStories from "./InterestCalculatorScreen/Interest
 import LoanSettingsStories from "./LoanSettings/LoanSettings.stories";
 import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
 import BorrowLoanOptionStories from "./BorrowLoanOption/BorrowLoanOption.stories";
+import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
+import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -441,3 +443,7 @@ storiesOf("BorrowLoanOption", module).add(
   "Borrow Loan Option",
   BorrowLoanOptionStories.regular
 );
+
+storiesOf("Cellphone ", module)
+  .add("Cellphone Enter", CellphoneEnterStories.regular)
+  .add("Cellphone Verify", CellphoneVerifyStories.regular);
