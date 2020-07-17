@@ -60,6 +60,7 @@ import QRScannerStories from "./QRScanner/QRScanner.stories";
 import HODLInfoCheckboxesStories from "./HODLInfoCheckboxes/HODLInfoCheckboxes.stories";
 import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stories";
 import LoyaltyProgramStories from "./LoyaltyProgram/LoyaltyProgram.stories";
+import SelectStateStories from "./SelectState/SelectState.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -398,3 +399,8 @@ storiesOf("ChoosePaymentMethod", module)
   .add("Prepayment", ChoosePaymentMethodStories.prepayment)
   .add("Interest CEL", ChoosePaymentMethodStories.interestCEL)
   .add("Interest Crypto", ChoosePaymentMethodStories.interestCrytpo);
+
+storiesOf("SelectState", module).add(
+  "Select State",
+  SelectStateStories.regular
+);
