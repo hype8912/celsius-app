@@ -55,6 +55,7 @@ import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
 import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
 import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalculatorScreen.stories";
+import HODLInfoCheckboxesStories from "./HODLInfoCheckboxes/HODLInfoCheckboxes.stories";
 import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stories";
 
 // Link to screens spreadsheet
@@ -371,6 +372,11 @@ storiesOf("ChangeAvatar", module).add(
 
 storiesOf("BorrowCalculatorScreen", module) // TODO: add empty state cases
   .add("Borrow Calculator", BorrowCalculatorScreenStories.regular);
+
+storiesOf("HODLInfoCheckboxes", module).add(
+  "HODL Info Checkboxes",
+  HODLInfoCheckboxesStories.regular
+);
 
 storiesOf("CelPayEnterAmount", module)
   .add("No Amount", CelPayEnterAmountStories.noAmount)
