@@ -371,9 +371,9 @@ const SIMPLEX_FIAT_CURRENCIES = [
 ];
 
 const PIN_STRENGTH_ITEMS = [
-  { copy: "No birthday pin" },
-  { copy: "No 6 digits in a row" },
-  { copy: "4 unique numbers" },
+  { copy: "Don't use your birthday" },
+  { copy: "No 6 digits in ascending/descending order" },
+  { copy: "Minimum 4 unique digits" },
 ];
 
 const PASSWORD_STRENGTH_ITEMS = [

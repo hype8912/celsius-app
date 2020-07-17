@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { BackHandler, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { NavigationEvents } from "react-navigation";
 // eslint-disable-next-line import/no-unresolved
 import { openInbox } from "react-native-email-link";
 import * as appActions from "../../../redux/actions";
@@ -29,12 +30,42 @@ class ActivateSixDigitPin extends Component {
   static navigationOptions = () => ({
     headerSameColor: false,
     transparent: true,
-    hideBack: false,
+    hideBack: true,
     gesturesEnabled: false,
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+    };
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      return true;
+    });
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", () => {
+      return true;
+    });
+    this.setState({
+      loading: false,
+    });
+  }
+
+  onScreenFocus = () => {
+    const { actions } = this.props;
+    actions.getUserStatus();
+  };
+
   onPressBtn = async () => {
     const { navigation } = this.props;
+    this.setState({
+      loading: true,
+    });
     const onSuccess = navigation.getParam("onSuccess");
     onSuccess();
   };
@@ -74,10 +105,12 @@ class ActivateSixDigitPin extends Component {
   };
 
   render() {
+    const { loading } = this.state;
     const { hasSixDigitPin } = this.props;
     const style = ActivateSixDigitPinStyle();
     return (
       <RegularLayout fabType="hide">
+        <NavigationEvents onDidFocus={this.onScreenFocus} />
         <View style={style.container}>
           <View style={style.contentWrapper}>
             <CelText
@@ -106,6 +139,7 @@ class ActivateSixDigitPin extends Component {
             <CelButton
               disabled={!hasSixDigitPin}
               style={style.button}
+              loading={loading}
               onPress={this.onPressBtn}
             >
               Continue
