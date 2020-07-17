@@ -6,15 +6,13 @@ import MultiInfoCardStyle from "./MultiInfoCardButton.styles";
 import CelText from "../../atoms/CelText/CelText";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import Badge from "../../atoms/Badge/Badge";
 import Icon from "../../atoms/Icon/Icon";
 import {
-  getTheme,
+  getColor,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import { THEMES } from "../../../constants/UI";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class MultiInfoCardButton extends Component {
@@ -49,7 +47,6 @@ class MultiInfoCardButton extends Component {
     } = this.props;
 
     const style = MultiInfoCardStyle();
-    const theme = getTheme();
     return (
       <Card onPress={onPress} padding={"20 20 20 10"} disabled={disabled}>
         <View style={style.cardWrapper}>
@@ -82,11 +79,7 @@ class MultiInfoCardButton extends Component {
             {label ? (
               <View style={style.active}>
                 <Badge
-                  color={
-                    theme === THEMES.LIGHT
-                      ? STYLES.COLORS.GREEN
-                      : STYLES.COLORS.MEDIUM_GRAY3
-                  }
+                  color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                   style={{ alignItems: "flex-start", opacity: 1, zIndex: 100 }}
                 >
                   <CelText type="H6" color="white">

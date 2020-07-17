@@ -55,6 +55,7 @@ import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
 import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
 import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalculatorScreen.stories";
+import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
 import QRScannerStories from "./QRScanner/QRScanner.stories";
 import HODLInfoCheckboxesStories from "./HODLInfoCheckboxes/HODLInfoCheckboxes.stories";
 import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stories";
@@ -392,3 +393,8 @@ storiesOf("LoyaltyProgram", module)
   .add("Silver", LoyaltyProgramStories.silver)
   .add("Gold", LoyaltyProgramStories.gold)
   .add("Platinum", LoyaltyProgramStories.platinum);
+
+storiesOf("ChoosePaymentMethod", module)
+  .add("Prepayment", ChoosePaymentMethodStories.prepayment)
+  .add("Interest CEL", ChoosePaymentMethodStories.interestCEL)
+  .add("Interest Crypto", ChoosePaymentMethodStories.interestCrytpo);
