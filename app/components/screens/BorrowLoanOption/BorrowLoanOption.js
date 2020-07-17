@@ -26,11 +26,12 @@ class BorrowLoanOption extends Component {
   });
 
   render() {
-    const { ltv } = this.props;
+    const { ltv, formData } = this.props;
     if (!ltv) return <LoadingScreen />;
 
     const ltvCards = ltv
       .sort((a, b) => a.interest > b.interest)
+      .filter(c => c.coin === formData.collateralCoin)
       .map(item => <LoanInterestCard key={item.interest} ltv={item} />);
 
     return (
