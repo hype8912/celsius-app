@@ -1,6 +1,7 @@
 import React from "react";
+import _ from "lodash";
 
-import CelPayLanding from "./CelPayLanding";
+import CelPayEnterAmount from "./CelPayEnterAmount";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
@@ -26,20 +27,60 @@ const initialState = {
   },
   generalData: mockGeneralDataStore,
   forms: {
-    formData: {},
+    formData: {
+      coin: "BTC",
+      isUsd: false,
+      amountCrypto: "",
+    },
     formErrors: {},
   },
 };
-const regular = () => {
+
+const state = _.cloneDeep(initialState);
+const noAmount = () => {
   return (
     <ScreenStoryWrapper
-      screenName="CelPayLanding"
-      screen={CelPayLanding}
+      screenName="CelPayEnterAmount"
+      screen={CelPayEnterAmount}
       state={initialState}
     />
   );
 };
 
+const cryptoAmount = () => {
+  state.forms.formData = {
+    coin: "BTC",
+    isUsd: false,
+    amountCrypto: 0.01033,
+    amountUsd: 94.51,
+  };
+  return (
+    <ScreenStoryWrapper
+      screenName="CelPayEnterAmount"
+      screen={CelPayEnterAmount}
+      state={state}
+    />
+  );
+};
+
+const usdAmount = () => {
+  state.forms.formData = {
+    coin: "BTC",
+    isUsd: true,
+    amountUsd: 94.51,
+    amountCrypto: 0.01033,
+  };
+  return (
+    <ScreenStoryWrapper
+      screenName="CelPayEnterAmount"
+      screen={CelPayEnterAmount}
+      state={state}
+    />
+  );
+};
+
 export default {
-  regular,
+  noAmount,
+  cryptoAmount,
+  usdAmount,
 };
