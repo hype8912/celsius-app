@@ -20,7 +20,7 @@ function getInitialCelsiusData() {
         type: ACTIONS.GET_INITIAL_CELSIUS_DATA_SUCCESS,
         ...res.data,
         interestRates: res.data.interest_rates,
-        ltvs: res.data.borrow_ltvs,
+        ltvs: res.data.borrow_coin_apr_ltvs,
         minimumLoanAmount: res.data.minimum_usd_amount,
         automaticLoanLimit: res.data.auto_maximum_threshold,
         celUtilityTiers: res.data.cel_utility_tiers,

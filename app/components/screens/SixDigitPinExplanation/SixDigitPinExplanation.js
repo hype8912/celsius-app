@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BackHandler } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
@@ -18,6 +19,18 @@ class SixDigitPinExplanation extends Component {
     gesturesEnabled: false,
     hideBack: true,
   });
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      return true;
+    });
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", () => {
+      return true;
+    });
+  }
 
   onPressContinue = () => {
     const { actions, navigation } = this.props;
