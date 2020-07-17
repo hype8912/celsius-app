@@ -237,8 +237,15 @@ async function errorInterceptor(serverError) {
     url: serverError.config && serverError.config.url,
     method: serverError.config && serverError.config.method,
   });
+
   if (err.status === 401) handle401(err);
-  if (err.status === 403) handle403(err);
+  if (err.status === 403) {
+    if (err.slug === "SIX_DIGIT_PIN_REQUIRED") {
+      await handleSixDigitPinChange(serverError.config);
+      return;
+    }
+    await handle403(err);
+  }
   if (err.status === 426) {
     const res = await handle426(err, serverError.config);
     return Promise.resolve(res);
@@ -279,10 +286,33 @@ async function handle403(err) {
   }
 }
 
+async function handleSixDigitPinChange(reqConfig) {
+  return new Promise((resolve, reject) => {
+    const { activeScreen } = store.getState().nav;
+
+    store.dispatch(
+      actions.navigateTo("SixDigitPinExplanation", {
+        onSuccess: async () => {
+          try {
+            // fetch failed request again after verification successful
+            const res = await axios(reqConfig);
+
+            store.dispatch(actions.resetToScreen(activeScreen));
+            return resolve(res);
+          } catch (e) {
+            return reject(e);
+          }
+        },
+      })
+    );
+  });
+}
+
 async function handle426(err, reqConfig) {
   return new Promise((resolve, reject) => {
     // get active screen before rerouting
     const { activeScreen } = store.getState().nav;
+
     if (activeScreen !== "VerifyProfile") {
       store.dispatch(
         actions.navigateTo("VerifyProfile", {
@@ -290,6 +320,7 @@ async function handle426(err, reqConfig) {
           showLogOutBtn: true,
           // PIN || 2FA
           verificationType: err.show,
+          hasSixDigitPin: err.has_six_digit_pin,
           onSuccess: async () => {
             try {
               // fetch failed request again after verification successful

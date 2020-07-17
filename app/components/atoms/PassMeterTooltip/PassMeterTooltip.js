@@ -6,20 +6,22 @@ import PassMeterTooltipStyle from "./PassMeterTooltip.styles";
 import Icon from "../Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import CelText from "../CelText/CelText";
-import { SECURITY_STRENGTH_ITEMS } from "../../../constants/DATA";
-import passwordUtil from "../../../utils/password-util";
+import { PASSWORD_STRENGTH_ITEMS } from "../../../constants/DATA";
+import securityUtil from "../../../utils/security-util";
 
 class PassMeterTooltip extends Component {
   static propTypes = {
     customStyle: PropTypes.instanceOf(Object),
     password: PropTypes.string,
+    type: PropTypes.string,
   };
 
   handleSecurityItems = () => {
     const { password } = this.props;
-    const score = passwordUtil.calculatePasswordScore(password).result.errors;
-    const items = SECURITY_STRENGTH_ITEMS.map(i => {
-      let status;
+    let status;
+
+    const score = securityUtil.calculatePasswordScore(password).result.errors;
+    const items = PASSWORD_STRENGTH_ITEMS.map(i => {
       if (!score.includes(i.copy)) {
         status = true;
       } else {
@@ -37,7 +39,6 @@ class PassMeterTooltip extends Component {
     const { customStyle } = this.props;
     const style = PassMeterTooltipStyle();
 
-    this.handleSecurityItems();
     return (
       <View style={[style.container, customStyle]}>
         {this.handleSecurityItems().map((i, k) => (

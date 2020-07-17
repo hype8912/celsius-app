@@ -148,7 +148,7 @@ class CelInputPassword extends Component {
                 paddingRight: 15,
               }}
             />
-            {!!value && showPassMeter &&  (
+            {!!value && showPassMeter && (
               <PassStrengthMeter
                 password={value}
                 customStyle={{
