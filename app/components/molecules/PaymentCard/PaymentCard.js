@@ -211,6 +211,26 @@ class PaymentCard extends Component {
     }
   };
 
+  marginResolve = () => {
+    const { options } = this.state;
+    const style = PaymentCardStyle();
+
+    if (!options)
+      return (
+        <View style={style.buttonsWrapper}>
+          <CelModalButton
+            buttonStyle={"secondary"}
+            position={"single"}
+            onPress={() => this.showOptions()}
+          >
+            Resolve Margin Call
+          </CelModalButton>
+        </View>
+      );
+
+    return this.marginCallOptions();
+  };
+
   showOptions = () => {
     this.setState({
       options: true,
@@ -480,19 +500,8 @@ class PaymentCard extends Component {
             </View>
           </View>
 
-          {!options ? (
-            <View style={style.buttonsWrapper}>
-              <CelModalButton
-                buttonStyle={"secondary"}
-                position={"single"}
-                onPress={() => this.showOptions()}
-              >
-                Resolve Margin Call
-              </CelModalButton>
-            </View>
-          ) : (
-            this.marginCallOptions()
-          )}
+          {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD &&
+            this.marginResolve()}
         </Card>
       );
     }

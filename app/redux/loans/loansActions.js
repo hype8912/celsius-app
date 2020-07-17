@@ -322,16 +322,11 @@ function prepayInterest(id) {
 
     try {
       const { formData } = getState().forms;
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-      };
 
       const res = await loansService.prepayInterest(
         formData.prepaidPeriod,
         formData.coin,
-        id,
-        verification
+        id
       );
       const transactionId = res.data.transaction_id;
 
@@ -360,17 +355,11 @@ function prepayInterest(id) {
  */
 
 function payPrincipal(id) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     startApiCall(API.PAY_LOAN_PRINCIPAL);
 
     try {
-      const { formData } = getState().forms;
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-      };
-
-      const res = await loansService.payPrincipal(id, verification);
+      const res = await loansService.payPrincipal(id);
 
       const transactionId = res.data.transaction_id;
       dispatch(showMessage("success", "Payment successful"));
@@ -388,23 +377,12 @@ function payPrincipal(id) {
 }
 
 function lockMarginCallCollateral(id, coin) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     let apiCallName;
     try {
-      const { formData } = getState().forms;
-
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-      };
-
       apiCallName = API.PAY_MARGIN_CALL;
       startApiCall(apiCallName);
-      const res = await loansService.lockMarginCallCollateral(
-        id,
-        coin,
-        verification
-      );
+      const res = await loansService.lockMarginCallCollateral(id, coin);
 
       dispatch(closeModal());
       const transactionId = res.data.transaction_id;
@@ -433,16 +411,11 @@ function lockMarginCallCollateral(id, coin) {
  * @param {string} coin - BTC|ETH coin in which interest should be paid
  */
 function payMonthlyInterest(id, coin) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     startApiCall(API.PAY_LOAN_INTEREST);
 
     try {
-      const { formData } = getState().forms;
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-      };
-      const res = await loansService.payMonthlyInterest(id, coin, verification);
+      const res = await loansService.payMonthlyInterest(id, coin);
       const transactionId = res.data.transaction_id;
       dispatch({ type: ACTIONS.PAY_LOAN_INTEREST_SUCCESS });
       dispatch(showMessage("success", "Payment successful"));
