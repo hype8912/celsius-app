@@ -286,25 +286,42 @@ async function handle403(err) {
   }
 }
 
+function navigateToSixDigitFlow(reqConfig, resolve, reject) {
+  const { activeScreen } = store.getState().nav;
+  store.dispatch(
+    actions.navigateTo("SixDigitPinExplanation", {
+      onSuccess: async () => {
+        try {
+          // fetch failed request again after verification successful
+          const res = await axios(reqConfig);
+
+          store.dispatch(actions.resetToScreen(activeScreen));
+          return resolve(res);
+        } catch (e) {
+          return reject(e);
+        }
+      },
+    })
+  );
+}
+
 async function handleSixDigitPinChange(reqConfig) {
   return new Promise((resolve, reject) => {
-    const { activeScreen } = store.getState().nav;
+    const { formData } = store.getState().forms;
 
-    store.dispatch(
-      actions.navigateTo("SixDigitPinExplanation", {
-        onSuccess: async () => {
-          try {
-            // fetch failed request again after verification successful
-            const res = await axios(reqConfig);
-
-            store.dispatch(actions.resetToScreen(activeScreen));
-            return resolve(res);
-          } catch (e) {
-            return reject(e);
-          }
-        },
-      })
-    );
+    if (formData.pin || formData.code) {
+      navigateToSixDigitFlow(reqConfig, resolve, reject);
+    } else {
+      store.dispatch(
+        actions.navigateTo("VerifyProfile", {
+          hideBack: true,
+          showLogOutBtn: true,
+          onSuccess: () => {
+            navigateToSixDigitFlow(reqConfig, resolve, reject);
+          },
+        })
+      );
+    }
   });
 }
 
