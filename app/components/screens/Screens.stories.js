@@ -65,6 +65,8 @@ import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
 import BorrowLoanTermStories from "./BorrowLoanTerm/BorrowLoanTerm.stories";
 import WithdrawAddressLabelStories from "./WithdrawAddressLabel/WithdrawAddressLabel.stories";
 import InterestCalculatorScreenStories from "./InterestCalculatorScreen/InterestCalculatorScreen.stories";
+import LoanSettingsStories from "./LoanSettings/LoanSettings.stories";
+import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -427,3 +429,9 @@ storiesOf("InterestCalculatorScreen", module).add(
   "Interest Calculator Screen",
   InterestCalculatorScreenStories.regular
 );
+
+storiesOf("LoanSettings", module).add("Regular", LoanSettingsStories.regular);
+
+storiesOf("InterestPaymentSettings", module)
+  .add("Manual", InterestPaymentSettingsStories.manualInterest)
+  .add("Automatic", InterestPaymentSettingsStories.automaticInterest);
