@@ -10,13 +10,13 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
 import PieProgressBar from "../../graphs/PieProgressBar/PieProgressBar";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import { widthPercentageToDP } from "../../../utils/styles-util";
+import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import CelButton from "../../atoms/CelButton/CelButton";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import CelsiusMembershipTable from "../../organisms/CelsiusMembershipTable/CelsiusMembershipTable";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -52,10 +52,11 @@ class LoyaltyProgram extends Component {
       coin => coin.short === "CEL"
     )[0];
     let color;
-    if (loyaltyInfo.tier_level === 1) color = STYLES.COLORS.GRAY;
-    if (loyaltyInfo.tier_level === 2) color = STYLES.COLORS.ORANGE;
-    if (loyaltyInfo.tier_level === 3) color = STYLES.COLORS.CELSIUS_BLUE;
-
+    if (loyaltyInfo.tier_level === 1)
+      color = getColor(COLOR_KEYS.SECTION_TITLE);
+    if (loyaltyInfo.tier_level === 2) color = getColor(COLOR_KEYS.ALERT_STATE);
+    if (loyaltyInfo.tier_level === 3)
+      color = getColor(COLOR_KEYS.PRIMARY_BUTTON);
     return (
       <View>
         <View style={[style.progressView, { backgroundColor: color }]}>

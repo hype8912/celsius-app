@@ -58,6 +58,7 @@ import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalcul
 import QRScannerStories from "./QRScanner/QRScanner.stories";
 import HODLInfoCheckboxesStories from "./HODLInfoCheckboxes/HODLInfoCheckboxes.stories";
 import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stories";
+import LoyaltyProgramStories from "./LoyaltyProgram/LoyaltyProgram.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -385,3 +386,9 @@ storiesOf("CelPayEnterAmount", module)
   .add("USD amount", CelPayEnterAmountStories.usdAmount);
 
 storiesOf("QRScanner", module).add("QR Scanner", QRScannerStories.regular);
+
+storiesOf("LoyaltyProgram", module)
+  .add("None", LoyaltyProgramStories.none)
+  .add("Silver", LoyaltyProgramStories.silver)
+  .add("Gold", LoyaltyProgramStories.gold)
+  .add("Platinum", LoyaltyProgramStories.platinum);

@@ -10,7 +10,6 @@ import formatter from "../../../utils/formatter";
 import CelText from "../../atoms/CelText/CelText";
 import CelsiusMembershipTableStyle from "./CelsiusMembershipTable.styles";
 import { addThemeToComponents } from "../../../utils/styles-util";
-import { THEMES } from "../../../constants/UI";
 import STYLES from "../../../constants/STYLES";
 
 @connect(
@@ -27,7 +26,7 @@ class CelsiusMembershipTable extends Component {
 
   render() {
     const { celUtilityTiers } = this.props;
-    const style = CelsiusMembershipTableStyle(THEMES.LIGHT);
+    const style = CelsiusMembershipTableStyle();
 
     const Table = (
       <View style={style.wrapper}>
@@ -56,17 +55,27 @@ class CelsiusMembershipTable extends Component {
           <View style={style.minPercentage}>
             <View style={style.tierData}>
               <CelText type="H7" weight="500">
-                {formatter.percentage(celUtilityTiers.SILVER.minimum_cel_percentage)}
+                {formatter.percentage(
+                  celUtilityTiers.SILVER.minimum_cel_percentage
+                )}
                 -
-                {formatter.percentage(celUtilityTiers.SILVER.maximum_cel_percentage)}%
+                {formatter.percentage(
+                  celUtilityTiers.SILVER.maximum_cel_percentage
+                )}
+                %
               </CelText>
             </View>
             <Separator vertical height={"60%"} margin="7 0 0 5" />
             <View style={style.tierData}>
               <CelText type="H7" weight="500">
-                {formatter.percentage(celUtilityTiers.GOLD.minimum_cel_percentage)}
+                {formatter.percentage(
+                  celUtilityTiers.GOLD.minimum_cel_percentage
+                )}
                 -
-                {formatter.percentage(celUtilityTiers.GOLD.maximum_cel_percentage)}%
+                {formatter.percentage(
+                  celUtilityTiers.GOLD.maximum_cel_percentage
+                )}
+                %
               </CelText>
             </View>
             <Separator vertical height={"60%"} margin="7 0 0 2" />
@@ -147,11 +156,9 @@ class CelsiusMembershipTable extends Component {
       </View>
     );
 
-    const childrenWithProps = addThemeToComponents(
-      Table,
-      [CelText.displayName],
-      THEMES.LIGHT
-    );
+    const childrenWithProps = addThemeToComponents(Table, [
+      CelText.displayName,
+    ]);
 
     return childrenWithProps;
   }

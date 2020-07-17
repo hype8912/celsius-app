@@ -1,9 +1,9 @@
-import STYLES from "../../../constants/STYLES";
 import {
   getThemedStyle,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -95,11 +95,6 @@ const base = {
     backgroundColor: "white",
     justifyContent: "space-evenly",
   },
-  separator: {
-    alignItems: "center",
-    backgroundColor: STYLES.COLORS.DARK_GRAY3,
-    paddingVertical: 5,
-  },
   tierCommon: {
     flex: 0.3,
     flexGrow: 1,
@@ -107,14 +102,14 @@ const base = {
     alignItems: "center",
   },
   tierSilver: {
-    backgroundColor: STYLES.COLORS.MEDIUM_GRAY,
+    backgroundColor: COLOR_KEYS.SECTION_TITLE,
     borderTopLeftRadius: 3,
   },
   tierGold: {
-    backgroundColor: STYLES.COLORS.ORANGE,
+    backgroundColor: COLOR_KEYS.ALERT_STATE,
   },
   tierPlatinum: {
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
     borderTopRightRadius: 3,
   },
   tierData: {
@@ -128,52 +123,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    minPercentage: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    bonus: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    loan: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    separator: {
-      backgroundColor: STYLES.COLORS.MEDIUM_GRAY3,
-    },
-    tierSilver: {
-      backgroundColor: STYLES.COLORS.MEDIUM_GRAY,
-    },
-  },
+  light: {},
 
-  dark: {
-    minPercentage: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    bonus: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    loan: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    separator: {
-      backgroundColor: "rgb(95,105,122)",
-    },
-    tierSilver: {
-      borderColor: "#000",
-      borderRightWidth: 2,
-    },
-    tierGold: {
-      borderColor: "#000",
-      borderRightWidth: 2,
-    },
-    tierPlatinum: {
-      borderColor: "#000",
-    },
-    tierWrapper: {
-      borderBottomColor: "#000",
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };

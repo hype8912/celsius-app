@@ -1,5 +1,6 @@
 import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -23,14 +24,14 @@ const base = {
     justifyContent: "space-evenly",
   },
   tierSilver: {
-    backgroundColor: STYLES.COLORS.MEDIUM_GRAY,
+    backgroundColor: COLOR_KEYS.SECTION_TITLE,
     borderTopLeftRadius: 3,
   },
   tierGold: {
-    backgroundColor: STYLES.COLORS.ORANGE,
+    backgroundColor: COLOR_KEYS.ALERT_STATE,
   },
   tierPlatinum: {
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
     borderTopRightRadius: 3,
   },
   tierCommon: {
