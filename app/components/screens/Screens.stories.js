@@ -62,6 +62,7 @@ import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stor
 import LoyaltyProgramStories from "./LoyaltyProgram/LoyaltyProgram.stories";
 import SelectStateStories from "./SelectState/SelectState.stories";
 import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
+import BorrowLoanTermStories from "./BorrowLoanTerm/BorrowLoanTerm.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -410,3 +411,7 @@ storiesOf("LoanPaymentList", module).add(
   "Regular",
   LoanPaymentListStories.regular
 );
+
+storiesOf("BorrowLoanTerm", module)
+  .add("Stable coin", BorrowLoanTermStories.stable)
+  .add("USD", BorrowLoanTermStories.usd);

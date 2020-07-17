@@ -9,14 +9,14 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
-import STYLES from "../../../constants/STYLES";
 import { LOAN_TYPES } from "../../../constants/DATA";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
     formData: state.forms.formData,
-    loanCompliance: state.compliance.loan,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -46,9 +46,7 @@ class BorrowLoanTerm extends Component {
           <CelText
             type="H6"
             weight="semi-bold"
-            color={
-              formData.termOfLoan === m ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
+            color={formData.termOfLoan === m ? getColor(COLOR_KEYS.LINK) : null}
           >
             {m} MONTHS
           </CelText>
