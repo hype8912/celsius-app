@@ -55,6 +55,7 @@ import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
 import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
 import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalculatorScreen.stories";
+import QRScannerStories from "./QRScanner/QRScanner.stories";
 import HODLInfoCheckboxesStories from "./HODLInfoCheckboxes/HODLInfoCheckboxes.stories";
 import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stories";
 
@@ -382,3 +383,5 @@ storiesOf("CelPayEnterAmount", module)
   .add("No Amount", CelPayEnterAmountStories.noAmount)
   .add("Crypto Amount", CelPayEnterAmountStories.cryptoAmount)
   .add("USD amount", CelPayEnterAmountStories.usdAmount);
+
+storiesOf("QRScanner", module).add("QR Scanner", QRScannerStories.regular);
