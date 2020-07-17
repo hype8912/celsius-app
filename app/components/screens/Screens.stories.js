@@ -64,6 +64,7 @@ import SelectStateStories from "./SelectState/SelectState.stories";
 import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
 import BorrowLoanTermStories from "./BorrowLoanTerm/BorrowLoanTerm.stories";
 import WithdrawAddressLabelStories from "./WithdrawAddressLabel/WithdrawAddressLabel.stories";
+import InterestCalculatorScreenStories from "./InterestCalculatorScreen/InterestCalculatorScreen.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -420,4 +421,9 @@ storiesOf("BorrowLoanTerm", module)
 storiesOf("WithdrawAddressLabel", module).add(
   "Withdraw Address Label",
   WithdrawAddressLabelStories.regular
+);
+
+storiesOf("InterestCalculatorScreen", module).add(
+  "Interest Calculator Screen",
+  InterestCalculatorScreenStories.regular
 );
