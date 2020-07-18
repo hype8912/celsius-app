@@ -4,41 +4,54 @@ import _ from "lodash";
 import CelPayChooseFriend from "./CelPayChooseFriend";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
-import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
-import walletUtil from "../../../utils/wallet-util";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
-import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";
-import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
+import mockContactsStore from "../../../../celsius-app-creds/mock-data/mockContactsStore";
 
 const initialState = {
   user: {
     profile: mockUserStore.profile.postman13,
     appSettings: mockUserStore.appSettings.postman13,
   },
-  wallet: {
-    summary: walletUtil.mapWalletSummary(mockWalletStore.summary.postman13),
-  },
-  compliance: {
-    celpay: mockComplianceStore.allowedAll.celpay,
-    deposit: mockComplianceStore.allowedAll.deposit,
-  },
-  currencies: {
-    rates: mockCurrenciesStore.rates,
-  },
+  contacts: mockContactsStore,
   generalData: mockGeneralDataStore,
   forms: {
     formData: {
-      coin: "BTC",
-      isUsd: false,
-      amountCrypto: "",
+      search: "",
     },
-    formErrors: {},
   },
 };
 
-const state = _.cloneDeep(initialState);
-
 const regular = () => {
+  const state = _.cloneDeep(initialState);
+
+  state.contacts = [];
+
+  return (
+    <ScreenStoryWrapper
+      screenName="CelPayChooseFriend"
+      screen={CelPayChooseFriend}
+      state={state}
+    />
+  );
+};
+
+const hasContacts = () => {
+  const state = _.cloneDeep(initialState);
+
+  return (
+    <ScreenStoryWrapper
+      screenName="CelPayChooseFriend"
+      screen={CelPayChooseFriend}
+      state={state}
+    />
+  );
+};
+
+const noContacts = () => {
+  const state = _.cloneDeep(initialState);
+
+  state.forms.formData.search = "test";
+
   return (
     <ScreenStoryWrapper
       screenName="CelPayChooseFriend"
@@ -50,4 +63,6 @@ const regular = () => {
 
 export default {
   regular,
+  hasContacts,
+  noContacts,
 };

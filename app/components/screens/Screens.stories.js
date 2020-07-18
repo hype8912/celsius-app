@@ -458,7 +458,7 @@ storiesOf("GetCoinsTransactionDetails", module)
   .add("Card Confirmed", GetCoinsTransactionDetailsStories.cardConfirmed)
   .add("Card Cancelled", GetCoinsTransactionDetailsStories.cardCancelled);
 
-storiesOf("CelPayChooseFriend ", module).add(
-  "Choose Friend",
-  CelPayChooseFriendStories.regular
-);
+storiesOf("CelPayChooseFriend ", module)
+  .add("Initial", CelPayChooseFriendStories.regular)
+  .add("Has Contacts", CelPayChooseFriendStories.hasContacts)
+  .add("No Contacts", CelPayChooseFriendStories.noContacts);
