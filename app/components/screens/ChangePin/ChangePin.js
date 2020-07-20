@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
@@ -10,10 +11,10 @@ import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { KEYPAD_PURPOSES } from "../../../constants/UI";
 import ChangePinStyle from "./ChangePin.styles";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
-import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import PinTooltip from "../../molecules/PinTooltip/PinTooltip";
 import securityUtil from "../../../utils/security-util";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 @connect(
   state => ({
@@ -31,20 +32,13 @@ class ChangePin extends Component {
     gesturesEnabled: false,
   });
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      pinCreated: false,
-      loading: false,
-    };
-  }
-
   componentDidMount() {
     const { actions } = this.props;
     actions.updateFormFields({
       newPin: "",
       newPinConfirm: "",
       pinCreated: false,
+      loading: false,
     });
   }
 
@@ -72,13 +66,18 @@ class ChangePin extends Component {
     if (!this.props.formData.pinCreated) {
       actions.updateFormField("pinCreated", true);
     } else if (this.props.formData.newPin === newValue) {
-      actions.updateFormField("pinCreated", false);
+      actions.updateFormFields({
+        pinCreated: false,
+        loading: true,
+      });
       await actions.changePin(onSuccess);
     } else {
       actions.showMessage("error", "Both PIN numbers should be the same.");
-      actions.updateFormField("newPinConfirm", "");
+      actions.updateFormFields({
+        newPinConfirm: "",
+        loading: false,
+      });
     }
-    this.setState({ loading: false });
   };
 
   handleBack = () => {
@@ -92,9 +91,7 @@ class ChangePin extends Component {
   };
 
   render() {
-    const { loading } = this.state;
     const { actions, user, formData } = this.props;
-
     const field = !formData.pinCreated ? "newPin" : "newPinConfirm";
     const headingText = !formData.pinCreated
       ? "Enter your 6-digits PIN"
@@ -108,6 +105,7 @@ class ChangePin extends Component {
 
     return (
       <RegularLayout padding="0 0 0 0" fabType={"hide"}>
+        {(_.isEmpty(formData) || formData.loading) && <LoadingScreen />}
         <View style={style.container}>
           <View style={style.wrapper}>
             <CelText weight="bold" type="H1" align="center" margin="0 20 0 20">
@@ -125,22 +123,10 @@ class ChangePin extends Component {
               <HiddenField value={formData[field]} length={6} />
             </TouchableOpacity>
 
-            {formData.pinCreated && !loading && (
+            {formData.pinCreated && !formData.loading && (
               <CelButton basic onPress={this.handleBack}>
                 Back
               </CelButton>
-            )}
-
-            {loading && (
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: 15,
-                }}
-              >
-                <Spinner />
-              </View>
             )}
           </View>
 
