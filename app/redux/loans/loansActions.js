@@ -337,6 +337,7 @@ function prepayInterest(id) {
         navigateTo("TransactionsIntersection", {
           id: transactionId,
           loanPayment: true,
+          hideBack: true,
         })
       );
       dispatch(openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL));
@@ -367,6 +368,7 @@ function payPrincipal(id) {
         navigateTo("TransactionsIntersection", {
           id: transactionId,
           loanPayment: true,
+          hideBack: true,
         })
       );
     } catch (err) {
@@ -386,7 +388,12 @@ function lockMarginCallCollateral(id, coin) {
 
       dispatch(closeModal());
       const transactionId = res.data.transaction_id;
-      dispatch(navigateTo("TransactionsIntersection", { id: transactionId }));
+      dispatch(
+        navigateTo("TransactionsIntersection", {
+          id: transactionId,
+          hideBack: true,
+        })
+      );
 
       apiCallName = API.GET_ALL_LOANS;
       startApiCall(API.GET_ALL_LOANS);
@@ -423,6 +430,7 @@ function payMonthlyInterest(id, coin) {
         navigateTo("TransactionsIntersection", {
           id: transactionId,
           loanPayment: true,
+          hideBack: true,
         })
       );
     } catch (err) {

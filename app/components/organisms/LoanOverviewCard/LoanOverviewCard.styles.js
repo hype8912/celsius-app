@@ -38,7 +38,11 @@ const base = {
   progress: {
     justifyContent: "center",
   },
-  loanTitle: { flex: 1, alignItems: "center" },
+  loanTitle: {
+    flex: 1,
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
   loanInfo: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -143,7 +143,7 @@ class LoanOverviewCard extends Component {
                 color={loan.uiProps.color}
                 margin={"0 5 0 0"}
               >
-                {loan.uiProps.displayText} #{loan.id}
+                {loan.uiProps.displayText}
               </CelText>
             </View>
 
@@ -154,15 +154,19 @@ class LoanOverviewCard extends Component {
 
           <Separator />
 
-          <View style={style.loanInfo}>
-            <CelText type={"H6"} margin={"10 5 10 0"}>
-              Loan ID:
-            </CelText>
-            <CelText type={"H6"} margin={"10 0 10 0"}>
-              #{loan.id}
-            </CelText>
-          </View>
-          <Separator />
+          {[LOAN_STATUS.APPROVED, LOAN_STATUS.ACTIVE].includes(loan.status) && (
+            <View>
+              <View style={style.loanInfo}>
+                <CelText type={"H6"} margin={"10 5 10 0"}>
+                  Loan ID:
+                </CelText>
+                <CelText type={"H6"} margin={"10 0 10 0"}>
+                  #{loan.id}
+                </CelText>
+              </View>
+              <Separator />
+            </View>
+          )}
 
           {loan.status === LOAN_STATUS.COMPLETED && (
             <View style={style.loanInfo}>
@@ -175,8 +179,10 @@ class LoanOverviewCard extends Component {
 
           {[LOAN_STATUS.CANCELED].includes(loan.status) && (
             <View style={style.loanInfo}>
-              <CelText type={"H6"}>{"Request Canceled: "}</CelText>
-              <CelText type={"H6"}>
+              <CelText margin={"10 0 0 0"} type={"H6"}>
+                {"Request Canceled: "}
+              </CelText>
+              <CelText margin={"10 0 0 0"} type={"H6"}>
                 {moment(loan.canceled_at).format("MMM DD, YYYY")}
               </CelText>
             </View>
@@ -201,14 +207,17 @@ class LoanOverviewCard extends Component {
             </View>
           )}
 
-          <View style={style.loanInfoAdditional}>
-            <CelText type={"H6"}>Loan Maturity: </CelText>
-            <CelText margin={"0 0 10 0"} type={"H6"}>
-              {moment(loan.maturity_date).format("MMM DD, YYYY")}
-            </CelText>
-          </View>
-
-          <Separator margin={"0 0 0 0"} />
+          {[LOAN_STATUS.APPROVED, LOAN_STATUS.ACTIVE].includes(loan.status) && (
+            <View>
+              <View style={style.loanInfoAdditional}>
+                <CelText type={"H6"}>Loan Maturity: </CelText>
+                <CelText margin={"0 0 10 0"} type={"H6"}>
+                  {moment(loan.maturity_date).format("MMM DD, YYYY")}
+                </CelText>
+              </View>
+              <Separator margin={"0 0 0 0"} />
+            </View>
+          )}
 
           {loan.status === LOAN_STATUS.PENDING && (
             <Card
@@ -253,17 +262,23 @@ class LoanOverviewCard extends Component {
             </Card>
           )}
 
-          <View style={style.loanInfoAdditional}>
-            <CelText type={"H6"}>Current LTV: </CelText>
-            <CelText type={"H6"}>{`${Math.round(loan.current_ltv)}%`}</CelText>
-          </View>
+          {[LOAN_STATUS.APPROVED, LOAN_STATUS.ACTIVE].includes(loan.status) && (
+            <View>
+              <View style={style.loanInfoAdditional}>
+                <CelText type={"H6"}>Current LTV: </CelText>
+                <CelText type={"H6"}>{`${Math.round(
+                  loan.current_ltv
+                )}%`}</CelText>
+              </View>
 
-          <View style={style.loanInfoAdditional}>
-            <CelText type={"H6"}>Contract LTV: </CelText>
-            <CelText margin={"0 0 10 0"} type={"H6"}>
-              {`${formatter.percentage(loan.ltv)}%`}
-            </CelText>
-          </View>
+              <View style={style.loanInfoAdditional}>
+                <CelText type={"H6"}>Contract LTV: </CelText>
+                <CelText margin={"0 0 10 0"} type={"H6"}>
+                  {`${formatter.percentage(loan.ltv)}%`}
+                </CelText>
+              </View>
+            </View>
+          )}
 
           {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(loan.status) && (
             <View>
@@ -445,8 +460,8 @@ class LoanOverviewCard extends Component {
         {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(loan.status) &&
           (!loan.hasInterestPaymentFinished || !loan.isPrincipalPaid) && (
             <View>
-              <Separator margin="10 0 20 0" />
               <CelButton
+                margin={"10 0 20 0"}
                 onPress={() => navigateTo("LoanPaymentList", { id: loan.id })}
               >
                 Upcoming Payments

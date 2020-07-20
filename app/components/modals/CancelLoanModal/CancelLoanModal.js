@@ -23,7 +23,9 @@ class CancelLoanModal extends React.Component {
     });
     actions.closeModal();
   };
+
   render() {
+    const { isLoading } = this.state;
     return (
       <InfoModal
         name={MODALS.LOAN_CANCEL_MODAL}
@@ -34,6 +36,7 @@ class CancelLoanModal extends React.Component {
         yesButtonStyle={"red"}
         yesCopy={"Cancel Loan Request"}
         onYes={this.cancelLoan}
+        loading={isLoading}
       />
     );
   }

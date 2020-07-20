@@ -39,7 +39,8 @@ class MarginCallModal extends Component {
       )
     );
 
-    const multipleAlerts = loansOverview.length > 0;
+    const multipleAlerts = loansOverview.length > 1;
+
     return (
       <CelModal
         style={style.container}
@@ -79,7 +80,7 @@ class MarginCallModal extends Component {
                 </View>
                 <Separator margin={"5 0 0 0"} />
 
-                {multipleAlerts && time.days < 1 && (
+                {!multipleAlerts && time.days < 1 && (
                   <Card color={style.background.backgroundColor}>
                     <CelText align={"left"} weight={"500"} type={"H6"}>
                       Time remaining to resolve

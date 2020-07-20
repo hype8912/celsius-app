@@ -12,6 +12,7 @@ import STYLES from "../../../constants/STYLES";
 import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
 import CelButton from "../../atoms/CelButton/CelButton";
 import formatter from "../../../utils/formatter";
+import { heightPercentageToDP } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -85,6 +86,7 @@ class ExtendLoanScreen extends Component {
         field="extendPeriod"
         value={formData.extendPeriod}
         updateFormField={actions.updateFormField}
+        marginTop={heightPercentageToDP("2%")}
       />
     );
   };
