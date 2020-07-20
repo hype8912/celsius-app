@@ -10,7 +10,11 @@ import Separator from "../../atoms/Separator/Separator";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Icon from "../../atoms/Icon/Icon";
 import formatter from "../../../utils/formatter";
-import { getMargins, widthPercentageToDP } from "../../../utils/styles-util";
+import {
+  getColor,
+  getMargins,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import { LOAN_STATUS } from "../../../constants/DATA";
 import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import PaymentListItem from "../../atoms/PaymentListItem/PaymentListItem";
@@ -119,7 +123,7 @@ class LoanOverviewCard extends Component {
               />
               <CelText
                 type={"H5"}
-                color={loan.uiProps.color}
+                color={getColor(loan.uiProps.color)}
                 margin={"0 5 0 0"}
               >
                 {loan.uiProps.displayText} #{loan.id}

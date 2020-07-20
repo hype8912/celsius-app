@@ -73,6 +73,7 @@ import GetCoinsTransactionDetailsStories from "./GetCoinsTransactionDetails/GetC
 import CelPayChooseFriendStories from "./CelPayChooseFriend/CelPayChooseFriend.stories";
 import QRScannerStories from "./QRScanner/QRScanner.stories";
 import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
+import LoanRequestDetailsStories from "./LoanRequestDetails/LoanRequestDetails.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -468,3 +469,12 @@ storiesOf("CelPayChooseFriend ", module)
   .add("Initial", CelPayChooseFriendStories.regular)
   .add("Has Contacts", CelPayChooseFriendStories.hasContacts)
   .add("No Contacts", CelPayChooseFriendStories.noContacts);
+
+storiesOf("LoanRequestDetails", module)
+  .add("Pending", LoanRequestDetailsStories.pending)
+  .add("Approved", LoanRequestDetailsStories.approved)
+  .add("Active", LoanRequestDetailsStories.active)
+  .add("Completed", LoanRequestDetailsStories.completed)
+  .add("Rejected", LoanRequestDetailsStories.rejected)
+  .add("Canceled", LoanRequestDetailsStories.canceled)
+  .add("Refinanced", LoanRequestDetailsStories.refinanced);

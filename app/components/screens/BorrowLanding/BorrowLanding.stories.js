@@ -9,9 +9,15 @@ import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCur
 import mockLoansStore from "../../../../celsius-app-creds/mock-data/mockLoansStore";
 import walletUtil from "../../../utils/wallet-util";
 import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
-import { KYC_STATUSES } from "../../../constants/DATA";
+import { KYC_STATUSES, LOAN_STATUS } from "../../../constants/DATA";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
 import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
+
+const allLoans = [];
+Object.values(LOAN_STATUS).forEach(ls => {
+  const loan = mockLoansStore.allLoans.postman13.find(l => l.status === ls);
+  allLoans.push(loan);
+});
 
 const initialState = {
   wallet: {
@@ -27,7 +33,7 @@ const initialState = {
     currencyRatesShort: mockCurrenciesStore.currencyRatesShort,
   },
   loans: {
-    allLoans: mockLoansStore.allLoans.enimalnowlt3,
+    allLoans,
     ltvs: mockLoansStore.ltvs,
     activeLoan: mockLoansStore.allLoans.enimalnowlt3[0],
   },
