@@ -55,10 +55,9 @@ import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
 import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
 import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalculatorScreen.stories";
-import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
-import QRScannerStories from "./QRScanner/QRScanner.stories";
 import HODLInfoCheckboxesStories from "./HODLInfoCheckboxes/HODLInfoCheckboxes.stories";
 import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stories";
+import ActionsByUserStories from "./ActionsByUser/ActionsByUser.stories";
 import LoyaltyProgramStories from "./LoyaltyProgram/LoyaltyProgram.stories";
 import SelectStateStories from "./SelectState/SelectState.stories";
 import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
@@ -72,6 +71,8 @@ import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
 import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
 import GetCoinsTransactionDetailsStories from "./GetCoinsTransactionDetails/GetCoinsTransactionDetails.stories";
 import CelPayChooseFriendStories from "./CelPayChooseFriend/CelPayChooseFriend.stories";
+import QRScannerStories from "./QRScanner/QRScanner.stories";
+import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -444,6 +445,11 @@ storiesOf("InterestPaymentSettings", module)
 storiesOf("BorrowLoanOption", module).add(
   "Borrow Loan Option",
   BorrowLoanOptionStories.regular
+);
+
+storiesOf("ActionsByUser", module).add(
+  "Actions By User",
+  ActionsByUserStories.regular
 );
 
 storiesOf("Cellphone ", module)
