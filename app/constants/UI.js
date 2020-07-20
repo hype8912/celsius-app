@@ -49,7 +49,6 @@ const THEMES = {
   LIGHT: "light",
   DARK: "dark",
   UNICORN: "unicorn",
-  HORSE: "horse",
 };
 
 const EMPTY_STATES = {

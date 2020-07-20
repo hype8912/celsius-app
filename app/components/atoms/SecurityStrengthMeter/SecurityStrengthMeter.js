@@ -25,19 +25,19 @@ class SecurityStrengthMeter extends Component {
     const theme = getTheme();
     const images = {
       lightWeak: require("../../../../assets/images/security-meter/01-pass-strength-weak-light.png"),
-      horseWeak: require("../../../../assets/images/security-meter/01-pass-strength-weak-light.png"),
+      unicornWeak: require("../../../../assets/images/security-meter/01-pass-strength-weak-light.png"),
       darkWeak: require("../../../../assets/images/security-meter/01-pass-strength-weak-dark.png"),
 
       lightFair: require("../../../../assets/images/security-meter/02-pass-strength-fair-light.png"),
-      horseFair: require("../../../../assets/images/security-meter/02-pass-strength-fair-light.png"),
+      unicornFair: require("../../../../assets/images/security-meter/02-pass-strength-fair-light.png"),
       darkFair: require("../../../../assets/images/security-meter/02-pass-strength-fair-dark.png"),
 
       lightGood: require("../../../../assets/images/security-meter/03-pass-strength-good-light.png"),
-      horseGood: require("../../../../assets/images/security-meter/03-pass-strength-good-light.png"),
+      unicornGood: require("../../../../assets/images/security-meter/03-pass-strength-good-light.png"),
       darkGood: require("../../../../assets/images/security-meter/03-pass-strength-good-dark.png"),
 
       lightStrong: require("../../../../assets/images/security-meter/04-pass-strength-strong.png"),
-      horseStrong: require("../../../../assets/images/security-meter/04-pass-strength-strong.png"),
+      unicornStrong: require("../../../../assets/images/security-meter/04-pass-strength-strong.png"),
       darkStrong: require("../../../../assets/images/security-meter/04-pass-strength-strong.png"),
     };
     return images[`${theme}${description}`];

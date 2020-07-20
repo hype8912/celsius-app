@@ -15,7 +15,7 @@ const initialState = {
     profile: mockUserStore.profile.testcelsiusapp,
     appSettings: {
       ...mockUserStore.appSettings.testcelsiusapp,
-      theme: THEMES.HORSE,
+      theme: THEMES.UNICORN,
     },
     email: mockUserStore.profile.postman13.email,
   },

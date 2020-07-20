@@ -15,9 +15,6 @@ const themed = {
   unicorn: {
     link: { textDecorationLine: "underline" },
   },
-  horse: {
-    link: { textDecorationLine: "underline" },
-  },
 };
 
 const CelTextStyle = theme =>

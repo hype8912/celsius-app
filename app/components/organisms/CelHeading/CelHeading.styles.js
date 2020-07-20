@@ -103,8 +103,7 @@ const themed = {
       borderColor: "transparent",
     },
   },
-  unicorn: {},
-  horse: {
+  unicorn: {
     headingBackground: {
       borderColor: "transparent",
     },

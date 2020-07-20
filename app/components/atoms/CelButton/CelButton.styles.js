@@ -113,11 +113,6 @@ const themed = {
       textDecorationLine: "underline",
     },
   },
-  horse: {
-    basicTitle: {
-      textDecorationLine: "underline",
-    },
-  },
 };
 
 const CelButtonStyle = () => getThemedStyle(base, themed);

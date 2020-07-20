@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import { View, Image } from "react-native";
 
 import Svgs from "../../../constants/SVGS";
-import CommonSvgs from "../../../constants/UnicornSvgs/CommonSvgs";
-import { getColor, getTheme } from "../../../utils/styles-util";
-import { UNICORN_ICONS } from "../../../constants/DATA";
+// import CommonSvgs from "../../../constants/UnicornSvgs/CommonSvgs";
+import { getColor } from "../../../utils/styles-util";
+// import { UNICORN_ICONS } from "../../../constants/DATA";
 import IconStyle from "./Icon.styles";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -493,19 +493,19 @@ class Icon extends Component {
   render() {
     const { name, fill, iconOpacity, style } = this.props;
     let fillColor = fill;
-    let svgIcons = Svgs;
+    const svgIcons = Svgs;
 
-    if (getTheme() === "unicorn") {
-      svgIcons = { ...Svgs, ...CommonSvgs };
-
-      if (UNICORN_ICONS.includes(name)) {
-        return (
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            {this.renderPngIcon(name)}
-          </View>
-        );
-      }
-    }
+    // if (getTheme() === "unicorn") {
+    //   svgIcons = { ...Svgs, ...CommonSvgs };
+    //
+    //   if (UNICORN_ICONS.includes(name)) {
+    //     return (
+    //       <View style={{ justifyContent: "center", alignItems: "center" }}>
+    //         {this.renderPngIcon(name)}
+    //       </View>
+    //     );
+    //   }
+    // }
 
     if (["primary", "inactive"].includes(fill))
       fillColor = getColor(COLOR_KEYS.TAB_UNSELECTED);

@@ -236,7 +236,6 @@ function getThemeFontFamily() {
 
   switch (theme) {
     case THEMES.UNICORN:
-    case THEMES.HORSE:
     default:
       return "Pangram";
 

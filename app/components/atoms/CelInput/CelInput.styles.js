@@ -86,13 +86,6 @@ const themed = {
       fontSize: getFontSize("H4"),
     },
   },
-
-  horse: {
-    input: {
-      fontFamily: getFontFamily("light", "Pangram"),
-      fontSize: getFontSize("H4"),
-    },
-  },
 };
 
 const CelInputStyle = theme =>

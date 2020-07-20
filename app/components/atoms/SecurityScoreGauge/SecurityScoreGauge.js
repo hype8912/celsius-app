@@ -23,19 +23,19 @@ class SecurityScoreGauge extends Component {
     const theme = getTheme();
     const images = {
       lightWeak: require("../../../../assets/images/security-overview/01_gauge-weak.png"),
-      horseWeak: require("../../../../assets/images/security-overview/01_gauge-weak.png"),
+      unicornWeak: require("../../../../assets/images/security-overview/01_gauge-weak.png"),
       darkWeak: require("../../../../assets/images/security-overview/01_gauge-dark-weak.png"),
 
       lightFair: require("../../../../assets/images/security-overview/02_gauge-fair.png"),
-      horseFair: require("../../../../assets/images/security-overview/02_gauge-fair.png"),
+      unicornFair: require("../../../../assets/images/security-overview/02_gauge-fair.png"),
       darkFair: require("../../../../assets/images/security-overview/02_gauge-dark-fair.png"),
 
       lightGood: require("../../../../assets/images/security-overview/03_gauge-good.png"),
-      horseGood: require("../../../../assets/images/security-overview/03_gauge-good.png"),
+      unicornGood: require("../../../../assets/images/security-overview/03_gauge-good.png"),
       darkGood: require("../../../../assets/images/security-overview/03_gauge-dark-good.png"),
 
       lightStrong: require("../../../../assets/images/security-overview/04_gauge-strong.png"),
-      horseStrong: require("../../../../assets/images/security-overview/04_gauge-strong.png"),
+      unicornStrong: require("../../../../assets/images/security-overview/04_gauge-strong.png"),
       darkStrong: require("../../../../assets/images/security-overview/04_gauge-dark-strong.png"),
     };
     return images[`${theme}${description}`];
