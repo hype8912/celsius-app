@@ -55,22 +55,9 @@ import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
 import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
 import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalculatorScreen.stories";
-import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
-import QRScannerStories from "./QRScanner/QRScanner.stories";
 import HODLInfoCheckboxesStories from "./HODLInfoCheckboxes/HODLInfoCheckboxes.stories";
 import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stories";
-import LoyaltyProgramStories from "./LoyaltyProgram/LoyaltyProgram.stories";
-import SelectStateStories from "./SelectState/SelectState.stories";
-import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
-import BorrowLoanTermStories from "./BorrowLoanTerm/BorrowLoanTerm.stories";
-import WithdrawAddressLabelStories from "./WithdrawAddressLabel/WithdrawAddressLabel.stories";
-import InterestCalculatorScreenStories from "./InterestCalculatorScreen/InterestCalculatorScreen.stories";
-import LoanSettingsStories from "./LoanSettings/LoanSettings.stories";
-import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
-import BorrowLoanOptionStories from "./BorrowLoanOption/BorrowLoanOption.stories";
-import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
-import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
-import GetCoinsTransactionDetailsStories from "./GetCoinsTransactionDetails/GetCoinsTransactionDetails.stories";
+import ActionsByUserStories from "./ActionsByUser/ActionsByUser.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -397,62 +384,7 @@ storiesOf("CelPayEnterAmount", module)
   .add("Crypto Amount", CelPayEnterAmountStories.cryptoAmount)
   .add("USD amount", CelPayEnterAmountStories.usdAmount);
 
-storiesOf("QRScanner", module).add("QR Scanner", QRScannerStories.regular);
-
-storiesOf("LoyaltyProgram", module)
-  .add("None", LoyaltyProgramStories.none)
-  .add("Silver", LoyaltyProgramStories.silver)
-  .add("Gold", LoyaltyProgramStories.gold)
-  .add("Platinum", LoyaltyProgramStories.platinum);
-
-storiesOf("ChoosePaymentMethod", module)
-  .add("Prepayment", ChoosePaymentMethodStories.prepayment)
-  .add("Interest CEL", ChoosePaymentMethodStories.interestCEL)
-  .add("Interest Crypto", ChoosePaymentMethodStories.interestCrytpo);
-
-storiesOf("SelectState", module).add(
-  "Select State",
-  SelectStateStories.regular
+storiesOf("ActionsByUser", module).add(
+  "Actions By User",
+  ActionsByUserStories.regular
 );
-
-storiesOf("LoanPaymentList", module).add(
-  "Regular",
-  LoanPaymentListStories.regular
-);
-
-storiesOf("BorrowLoanTerm", module)
-  .add("Stable coin", BorrowLoanTermStories.stable)
-  .add("USD", BorrowLoanTermStories.usd);
-
-storiesOf("WithdrawAddressLabel", module).add(
-  "Withdraw Address Label",
-  WithdrawAddressLabelStories.regular
-);
-
-storiesOf("InterestCalculatorScreen", module).add(
-  "Interest Calculator Screen",
-  InterestCalculatorScreenStories.regular
-);
-
-storiesOf("LoanSettings", module).add("Regular", LoanSettingsStories.regular);
-
-storiesOf("InterestPaymentSettings", module)
-  .add("Manual", InterestPaymentSettingsStories.manualInterest)
-  .add("Automatic", InterestPaymentSettingsStories.automaticInterest);
-
-storiesOf("BorrowLoanOption", module).add(
-  "Borrow Loan Option",
-  BorrowLoanOptionStories.regular
-);
-
-storiesOf("Cellphone ", module)
-  .add("Cellphone Enter", CellphoneEnterStories.regular)
-  .add("Cellphone Verify", CellphoneVerifyStories.regular);
-
-storiesOf("GetCoinsTransactionDetails", module)
-  .add("Wire Pending", GetCoinsTransactionDetailsStories.wirePending)
-  .add("Wire Confirmed", GetCoinsTransactionDetailsStories.wireConfirmed)
-  .add("Wire Cancelled", GetCoinsTransactionDetailsStories.wireCancelled)
-  .add("Card Pending", GetCoinsTransactionDetailsStories.cardPending)
-  .add("Card Confirmed", GetCoinsTransactionDetailsStories.cardConfirmed)
-  .add("Card Cancelled", GetCoinsTransactionDetailsStories.cardCancelled);
