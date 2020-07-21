@@ -9,7 +9,6 @@ import WithdrawalNewAddressSetupStyle from "./WithdrawNewAddressSetup.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelInput from "../../atoms/CelInput/CelInput";
-// import UI from "../../../constants/STYLES";
 import addressUtil from "../../../utils/address-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ConfirmWithdrawalAddressModal from "../../modals/ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";

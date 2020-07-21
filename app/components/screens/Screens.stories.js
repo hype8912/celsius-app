@@ -51,7 +51,7 @@ import SupportStories from "./Support/Support.stories";
 import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
 import ForgotPasswordStories from "./ForgotPassword/ForgotPassword.stories";
 import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalculatorScreen.stories";
-
+import WithdrawNewAddressSetupStories from "./WithdrawNewAddressSetup/WithdrawNewAddressSetup.stories";
 import BorrowLoanOptionStories from "./BorrowLoanOption/BorrowLoanOption.stories";
 import SimplexScreenStories from "./Simplex/SimplexScreen.stories";
 import ApiAuthorizationStories from "./ApiAuthorization/ApiAuthorization.stories";
@@ -374,6 +374,11 @@ storiesOf("ForgotPassword", module).add(
 
 storiesOf("BorrowCalculatorScreen", module) // TODO: add empty state cases
   .add("Borrow Calculator", BorrowCalculatorScreenStories.regular);
+
+storiesOf("WithdrawNewAddressSetup", module).add(
+  "Withdraw New Address Setup",
+  WithdrawNewAddressSetupStories.regular
+);
 
 storiesOf("BorrowLoanOption", module).add(
   "Borrow Loan Option",
