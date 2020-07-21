@@ -216,18 +216,20 @@ function completePinChange(pinData, onSuccess) {
       dispatch({ type: ACTIONS.CLEAR_FORM });
 
       mixpanelAnalytics.changePin();
-
+      dispatch(showMessage("success", "Successfully changed PIN number"));
       if (formData.upgradeToSixDigitPin) {
-        dispatch(navigateTo("ActivateSixDigitPin", { onSuccess }));
+        onSuccess();
         return;
       }
-      dispatch(showMessage("success", "Successfully changed PIN number"));
+
       if (securityOverview.fromFixNow) {
         dispatch(toFixNow());
+        dispatch(updateFormField("loading", false));
         return;
       }
 
       dispatch(navigateTo("SecuritySettings"));
+      dispatch(updateFormField("loading", false));
       return;
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -237,6 +239,7 @@ function completePinChange(pinData, onSuccess) {
           pinCreated: false,
           newPinConfirm: "",
           newPin: "",
+          loading: false,
         })
       );
       return false;

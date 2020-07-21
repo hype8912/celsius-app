@@ -132,7 +132,6 @@ export default (state = initialState, action) => {
         profile: {
           ...state.profile,
           kyc: action.kyc,
-          hasSixDigitPin: action.hasSixDigitPin,
         },
       };
 
