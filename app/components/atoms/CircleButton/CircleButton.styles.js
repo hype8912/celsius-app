@@ -1,4 +1,3 @@
-import { Platform } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -26,7 +25,7 @@ const base = {
   text: {
     marginTop: 10,
   },
-  viewmenu: { backgroundColor: COLOR_KEYS.CARDS },
+  viewmenu: { backgroundColor: COLOR_KEYS.PRIMARY_BUTTON },
   textmenu: { color: COLOR_KEYS.PARAGRAPH },
   viewcoin: { backgroundColor: COLOR_KEYS.CARDS },
   textcoin: { color: COLOR_KEYS.HEADLINE },
@@ -34,32 +33,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    container: {
-      ...Platform.select({
-        android: {
-          ...STYLES.ANDROID_SHADOW_STYLES,
-        },
-        ios: {
-          ...STYLES.SHADOW_STYLES,
-        },
-      }),
-    },
-  },
+  light: {},
 
-  dark: {
-    container: {
-      ...Platform.select({
-        android: {
-          ...STYLES.ANDROID_SHADOW_STYLES,
-          borderColor: "transparent",
-        },
-        ios: {
-          ...STYLES.SHADOW_STYLES,
-        },
-      }),
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };

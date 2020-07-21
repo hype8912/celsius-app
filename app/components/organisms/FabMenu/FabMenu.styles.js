@@ -40,24 +40,19 @@ const base = {
     opacity: 0.95,
     backgroundColor: "white",
   },
+  shadowStyle: {
+    shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW,
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+  },
 };
 
 const themed = {
-  light: {
-    background: {
-      opacity: 0.97,
-      backgroundColor: "white",
-    },
-    shadowStyle: {
-      shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW,
-      shadowOffset: { width: 0, height: 12 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      width: 60,
-      height: 60,
-      borderRadius: 30,
-    },
-  },
+  light: {},
 
   dark: {
     background: {

@@ -92,7 +92,7 @@ class CircleButton extends Component {
                     (iconSize ? (
                       <Icon name={icon} fill={fillColor} width={iconSize} />
                     ) : (
-                      <Icon name={icon} fill={fillColor} />
+                      <Icon name={icon} fill={"white"} />
                     ))}
                 </View>
               </ImageBackground>
@@ -102,7 +102,7 @@ class CircleButton extends Component {
                   (iconSize ? (
                     <Icon name={icon} fill={fillColor} width={iconSize} />
                   ) : (
-                    <Icon name={icon} fill={fillColor} />
+                    <Icon name={icon} fill={"white"} />
                   ))}
               </View>
             )}
