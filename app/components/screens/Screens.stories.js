@@ -46,35 +46,36 @@ import KYCTaxpayerStories from "./KYCTaxpayer/KYCTaxpayer.stories";
 import BorrowCollateralStories from "./BorrowCollateral/BorrowCollateral.stories";
 import AppearanceStories from "./Appearance/Appearance.stories";
 import TooManyRequestsStories from "./TooManyRequests/TooManyRequests.stories";
-import SupportStories from "./Support/Support.stories";
-import ForgotPasswordStories from "./ForgotPassword/ForgotPassword.stories";
 import SecurityOverviewStories from "./SecurityOverview/SecurityOverview.stories";
+import SupportStories from "./Support/Support.stories";
+import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
+import ForgotPasswordStories from "./ForgotPassword/ForgotPassword.stories";
+import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalculatorScreen.stories";
+
+import BorrowLoanOptionStories from "./BorrowLoanOption/BorrowLoanOption.stories";
 import SimplexScreenStories from "./Simplex/SimplexScreen.stories";
 import ApiAuthorizationStories from "./ApiAuthorization/ApiAuthorization.stories";
-import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
-import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
-import HODLViewCodeStories from "./HODLViewCode/HODLViewCode.stories";
-import BorrowCalculatorScreenStories from "./BorrowCalculatorScreen/BorrowCalculatorScreen.stories";
+import GetCoinsTransactionDetailsStories from "./GetCoinsTransactionDetails/GetCoinsTransactionDetails.stories";
+import InterestCalculatorScreenStories from "./InterestCalculatorScreen/InterestCalculatorScreen.stories";
+import WithdrawAddressLabelStories from "./WithdrawAddressLabel/WithdrawAddressLabel.stories";
+import LoyaltyProgramStories from "./LoyaltyProgram/LoyaltyProgram.stories";
 import HODLInfoCheckboxesStories from "./HODLInfoCheckboxes/HODLInfoCheckboxes.stories";
 import CelPayEnterAmountStories from "./CelPayEnterAmount/CelPayEnterAmount.stories";
-import ActionsByUserStories from "./ActionsByUser/ActionsByUser.stories";
-import LoyaltyProgramStories from "./LoyaltyProgram/LoyaltyProgram.stories";
+import QRScannerStories from "./QRScanner/QRScanner.stories";
 import SelectStateStories from "./SelectState/SelectState.stories";
-import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
-import BorrowLoanTermStories from "./BorrowLoanTerm/BorrowLoanTerm.stories";
-import WithdrawAddressLabelStories from "./WithdrawAddressLabel/WithdrawAddressLabel.stories";
-import InterestCalculatorScreenStories from "./InterestCalculatorScreen/InterestCalculatorScreen.stories";
+import LoanRequestDetailsStories from "./LoanRequestDetails/LoanRequestDetails.stories";
 import LoanSettingsStories from "./LoanSettings/LoanSettings.stories";
-import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
-import BorrowLoanOptionStories from "./BorrowLoanOption/BorrowLoanOption.stories";
+import BorrowLoanTermStories from "./BorrowLoanTerm/BorrowLoanTerm.stories";
+import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
+import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
+import ActionsByUserStories from "./ActionsByUser/ActionsByUser.stories";
+import CelPayChooseFriendStories from "./CelPayChooseFriend/CelPayChooseFriend.stories";
 import ConfirmYourLoanStories from "./ConfirmYourLoan/ConfirmYourLoan.stories";
 import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
 import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
-import GetCoinsTransactionDetailsStories from "./GetCoinsTransactionDetails/GetCoinsTransactionDetails.stories";
-import CelPayChooseFriendStories from "./CelPayChooseFriend/CelPayChooseFriend.stories";
-import QRScannerStories from "./QRScanner/QRScanner.stories";
-import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
-import LoanRequestDetailsStories from "./LoanRequestDetails/LoanRequestDetails.stories";
+import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
+import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
+import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -339,19 +340,6 @@ storiesOf("KYCTaxpayer", module)
   .add("SSN", KYCTaxpayerStories.ssn)
   .add("Tax payer", KYCTaxpayerStories.taxPayer);
 
-storiesOf("HODLViewCode", module).add(
-  "HODL View Code",
-  HODLViewCodeStories.regular
-);
-
-storiesOf("SecurityOverview", module)
-  .add("Weak", SecurityOverviewStories.weak)
-  .add("Fair", SecurityOverviewStories.fair)
-  .add("Good", SecurityOverviewStories.good)
-  .add("Strong", SecurityOverviewStories.strong)
-  .add("Disabled Cards", SecurityOverviewStories.disabledCards)
-  .add("Enabled Cards", SecurityOverviewStories.enabledCards);
-
 storiesOf("BorrowCollateral", module).add(
   "Borrow Collateral",
   BorrowCollateralStories.regular
@@ -364,11 +352,32 @@ storiesOf("TooManyRequests", module).add(
   TooManyRequestsStories.regular
 );
 
+storiesOf("SecurityOverview", module)
+  .add("Weak", SecurityOverviewStories.weak)
+  .add("Fair", SecurityOverviewStories.fair)
+  .add("Good", SecurityOverviewStories.good)
+  .add("Strong", SecurityOverviewStories.strong)
+  .add("Disabled Cards", SecurityOverviewStories.disabledCards)
+  .add("Enabled Cards", SecurityOverviewStories.enabledCards);
+
 storiesOf("Support", module).add("Support", SupportStories.regular);
+
+storiesOf("HODLViewCode", module).add(
+  "HODL View Code",
+  HODLViewCodeStories.regular
+);
 
 storiesOf("ForgotPassword", module).add(
   "Forgot Password",
   ForgotPasswordStories.regular
+);
+
+storiesOf("BorrowCalculatorScreen", module) // TODO: add empty state cases
+  .add("Borrow Calculator", BorrowCalculatorScreenStories.regular);
+
+storiesOf("BorrowLoanOption", module).add(
+  "Borrow Loan Option",
+  BorrowLoanOptionStories.regular
 );
 
 storiesOf("SimplexScreen", module).add("Regular", SimplexScreenStories.regular);
@@ -378,18 +387,29 @@ storiesOf("ApiAuthorization", module).add(
   ApiAuthorizationStories.regular
 );
 
-storiesOf("ChangePassword", module).add(
-  "Change Password",
-  ChangePasswordStories.regular
+storiesOf("GetCoinsTransactionDetails", module)
+  .add("Wire Pending", GetCoinsTransactionDetailsStories.wirePending)
+  .add("Wire Confirmed", GetCoinsTransactionDetailsStories.wireConfirmed)
+  .add("Wire Cancelled", GetCoinsTransactionDetailsStories.wireCancelled)
+  .add("Card Pending", GetCoinsTransactionDetailsStories.cardPending)
+  .add("Card Confirmed", GetCoinsTransactionDetailsStories.cardConfirmed)
+  .add("Card Cancelled", GetCoinsTransactionDetailsStories.cardCancelled);
+
+storiesOf("InterestCalculatorScreen", module).add(
+  "Interest Calculator Screen",
+  InterestCalculatorScreenStories.regular
 );
 
-storiesOf("ChangeAvatar", module).add(
-  "Change Avatar",
-  ChangeAvatarStories.regular
+storiesOf("WithdrawAddressLabel", module).add(
+  "Withdraw Address Label",
+  WithdrawAddressLabelStories.regular
 );
 
-storiesOf("BorrowCalculatorScreen", module) // TODO: add empty state cases
-  .add("Borrow Calculator", BorrowCalculatorScreenStories.regular);
+storiesOf("LoyaltyProgram", module)
+  .add("None", LoyaltyProgramStories.none)
+  .add("Silver", LoyaltyProgramStories.silver)
+  .add("Gold", LoyaltyProgramStories.gold)
+  .add("Platinum", LoyaltyProgramStories.platinum);
 
 storiesOf("HODLInfoCheckboxes", module).add(
   "HODL Info Checkboxes",
@@ -403,78 +423,10 @@ storiesOf("CelPayEnterAmount", module)
 
 storiesOf("QRScanner", module).add("QR Scanner", QRScannerStories.regular);
 
-storiesOf("LoyaltyProgram", module)
-  .add("None", LoyaltyProgramStories.none)
-  .add("Silver", LoyaltyProgramStories.silver)
-  .add("Gold", LoyaltyProgramStories.gold)
-  .add("Platinum", LoyaltyProgramStories.platinum);
-
-storiesOf("ChoosePaymentMethod", module)
-  .add("Prepayment", ChoosePaymentMethodStories.prepayment)
-  .add("Interest CEL", ChoosePaymentMethodStories.interestCEL)
-  .add("Interest Crypto", ChoosePaymentMethodStories.interestCrytpo);
-
 storiesOf("SelectState", module).add(
   "Select State",
   SelectStateStories.regular
 );
-
-storiesOf("LoanPaymentList", module).add(
-  "Regular",
-  LoanPaymentListStories.regular
-);
-
-storiesOf("BorrowLoanTerm", module)
-  .add("Stable coin", BorrowLoanTermStories.stable)
-  .add("USD", BorrowLoanTermStories.usd);
-
-storiesOf("WithdrawAddressLabel", module).add(
-  "Withdraw Address Label",
-  WithdrawAddressLabelStories.regular
-);
-
-storiesOf("InterestCalculatorScreen", module).add(
-  "Interest Calculator Screen",
-  InterestCalculatorScreenStories.regular
-);
-
-storiesOf("LoanSettings", module).add("Regular", LoanSettingsStories.regular);
-
-storiesOf("InterestPaymentSettings", module)
-  .add("Manual", InterestPaymentSettingsStories.manualInterest)
-  .add("Automatic", InterestPaymentSettingsStories.automaticInterest);
-
-storiesOf("BorrowLoanOption", module).add(
-  "Borrow Loan Option",
-  BorrowLoanOptionStories.regular
-);
-
-storiesOf("ActionsByUser", module).add(
-  "Actions By User",
-  ActionsByUserStories.regular
-);
-
-storiesOf("ConfirmYourLoan", module)
-  .add("Stable coin", ConfirmYourLoanStories.stableCoin)
-  .add("USD - US Bank", ConfirmYourLoanStories.usdUS)
-  .add("USD - non-US Bank", ConfirmYourLoanStories.usdNonUS);
-
-storiesOf("Cellphone ", module)
-  .add("Cellphone Enter", CellphoneEnterStories.regular)
-  .add("Cellphone Verify", CellphoneVerifyStories.regular);
-
-storiesOf("GetCoinsTransactionDetails", module)
-  .add("Wire Pending", GetCoinsTransactionDetailsStories.wirePending)
-  .add("Wire Confirmed", GetCoinsTransactionDetailsStories.wireConfirmed)
-  .add("Wire Cancelled", GetCoinsTransactionDetailsStories.wireCancelled)
-  .add("Card Pending", GetCoinsTransactionDetailsStories.cardPending)
-  .add("Card Confirmed", GetCoinsTransactionDetailsStories.cardConfirmed)
-  .add("Card Cancelled", GetCoinsTransactionDetailsStories.cardCancelled);
-
-storiesOf("CelPayChooseFriend ", module)
-  .add("Initial", CelPayChooseFriendStories.regular)
-  .add("Has Contacts", CelPayChooseFriendStories.hasContacts)
-  .add("No Contacts", CelPayChooseFriendStories.noContacts);
 
 storiesOf("LoanRequestDetails", module)
   .add("Pending", LoanRequestDetailsStories.pending)
@@ -484,3 +436,58 @@ storiesOf("LoanRequestDetails", module)
   .add("Rejected", LoanRequestDetailsStories.rejected)
   .add("Canceled", LoanRequestDetailsStories.canceled)
   .add("Refinanced", LoanRequestDetailsStories.refinanced);
+
+storiesOf("LoanSettings", module).add("Regular", LoanSettingsStories.regular);
+
+storiesOf("BorrowLoanTerm", module)
+  .add("Stable coin", BorrowLoanTermStories.stable)
+  .add("USD", BorrowLoanTermStories.usd);
+
+storiesOf("ChangeAvatar", module).add(
+  "Change Avatar",
+  ChangeAvatarStories.regular
+);
+
+storiesOf("ChoosePaymentMethod", module)
+  .add("Prepayment", ChoosePaymentMethodStories.prepayment)
+  .add("Interest CEL", ChoosePaymentMethodStories.interestCEL)
+  .add("Interest Crypto", ChoosePaymentMethodStories.interestCrytpo);
+
+storiesOf("ActionsByUser", module).add(
+  "Actions By User",
+  ActionsByUserStories.regular
+);
+
+storiesOf("CelPayChooseFriend", module)
+  .add("Initial", CelPayChooseFriendStories.regular)
+  .add("Has Contacts", CelPayChooseFriendStories.hasContacts)
+  .add("No Contacts", CelPayChooseFriendStories.noContacts);
+
+storiesOf("ConfirmYourLoan", module)
+  .add("Stable coin", ConfirmYourLoanStories.stableCoin)
+  .add("USD - US Bank", ConfirmYourLoanStories.usdUS)
+  .add("USD - non-US Bank", ConfirmYourLoanStories.usdNonUS);
+
+storiesOf("CellphoneEnter", module).add(
+  "Regular",
+  CellphoneEnterStories.regular
+);
+
+storiesOf("CellphoneVerify", module).add(
+  "Regular",
+  CellphoneVerifyStories.regular
+);
+
+storiesOf("InterestPaymentSettings", module)
+  .add("Manual", InterestPaymentSettingsStories.manualInterest)
+  .add("Automatic", InterestPaymentSettingsStories.automaticInterest);
+
+storiesOf("LoanPaymentList", module).add(
+  "Regular",
+  LoanPaymentListStories.regular
+);
+
+storiesOf("ChangePassword", module).add(
+  "Change Password",
+  ChangePasswordStories.regular
+);
