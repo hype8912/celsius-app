@@ -10,6 +10,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const buttonSizes = ["small", "medium"];
+const backButtonSize = 20;
 
 class CelButton extends Component {
   static propTypes = {
@@ -109,8 +110,8 @@ class CelButton extends Component {
       >
         <Icon
           name={iconRight}
-          height={iconRightHeight}
-          width={iconRightWidth}
+          height={this.props.backButton ? backButtonSize : iconRightHeight}
+          width={this.props.backButton ? backButtonSize : iconRightWidth}
           fill={color}
         />
       </View>

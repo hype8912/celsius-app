@@ -64,6 +64,7 @@ class Appearance extends Component {
           <Separator text="COLOR THEME" margin="0 0 20 0" />
           <View style={style.buttonsContainer}>
             <CircleButton
+              backgroundImage={require("../../../../assets/images/light.png")}
               icon={theme === THEMES.LIGHT ? "Checked" : false}
               iconSize={15}
               type="theme"
@@ -74,16 +75,18 @@ class Appearance extends Component {
               }}
             />
             <CircleButton
+              backgroundImage={require("../../../../assets/images/sunset.png")}
               icon={theme === THEMES.UNICORN ? "Checked" : false}
               iconSize={15}
               type="theme"
-              text="Unicorn"
+              text="Sunset"
               style={[style.unicornThemeButton, style.themeBtn]} // TODO: change to appropriate color and move to constants
               onPress={() => {
                 actions.setUserAppSettings({ theme: THEMES.UNICORN });
               }}
             />
             <CircleButton
+              backgroundImage={require("../../../../assets/images/dark.png")}
               icon={theme === THEMES.DARK ? "Checked" : false}
               iconSize={15}
               type="theme"

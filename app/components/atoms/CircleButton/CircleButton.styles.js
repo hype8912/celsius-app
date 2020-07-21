@@ -22,7 +22,6 @@ const base = {
     shadowColor: STYLES.COLORS.DARK_GRAY,
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 5,
-    zIndex: -1,
   },
   text: {
     marginTop: 10,
