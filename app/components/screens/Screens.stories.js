@@ -67,6 +67,7 @@ import InterestCalculatorScreenStories from "./InterestCalculatorScreen/Interest
 import LoanSettingsStories from "./LoanSettings/LoanSettings.stories";
 import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
 import BorrowLoanOptionStories from "./BorrowLoanOption/BorrowLoanOption.stories";
+import ConfirmYourLoanStories from "./ConfirmYourLoan/ConfirmYourLoan.stories";
 import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
 import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
 import GetCoinsTransactionDetailsStories from "./GetCoinsTransactionDetails/GetCoinsTransactionDetails.stories";
@@ -452,6 +453,11 @@ storiesOf("ActionsByUser", module).add(
   "Actions By User",
   ActionsByUserStories.regular
 );
+
+storiesOf("ConfirmYourLoan", module)
+  .add("Stable coin", ConfirmYourLoanStories.stableCoin)
+  .add("USD - US Bank", ConfirmYourLoanStories.usdUS)
+  .add("USD - non-US Bank", ConfirmYourLoanStories.usdNonUS);
 
 storiesOf("Cellphone ", module)
   .add("Cellphone Enter", CellphoneEnterStories.regular)

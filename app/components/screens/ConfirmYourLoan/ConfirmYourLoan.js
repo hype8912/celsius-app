@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Image } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { countries } from "country-data";
@@ -18,14 +17,13 @@ import { LOAN_TYPES } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 // TODO rename to BorrowLoanConfirm
 @connect(
   state => ({
     formData: state.forms.formData,
-    currencyRates: state.currencies.currencyRatesShort,
-    bankAccountInfo: state.user.bankAccountInfo,
-    loanInfo: state.loans.loanInfo,
     loan: state.loans.loan,
     callsInProgress: state.api.callsInProgress,
   }),
@@ -210,7 +208,7 @@ class ConfirmYourLoan extends Component {
               <CelText type="H3" weight="700" align="center" margin="5 0 10 0">
                 {formatter.crypto(loan.amount_collateral_crypto, loan.coin)}
               </CelText>
-              <Card color={style.grayCard.color}>
+              <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
                 <CelText type="H6" weight="300">
                   The exact amount of collateral needed will be determined upon
                   approval. Coins used for collateral will be locked and
@@ -292,12 +290,13 @@ class ConfirmYourLoan extends Component {
               </CelText>
             </Card>
 
-            <Card color={style.blueCard.color}>
+            <Card color={getColor(COLOR_KEYS.LINK)}>
               <CelText
                 type="H6"
                 weight="300"
                 align="center"
-                color={style.blueCardText.color}
+                style={style.textOpacity}
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
               >
                 Reduce your interest rate by
               </CelText>
@@ -305,7 +304,7 @@ class ConfirmYourLoan extends Component {
                 type="H3"
                 weight="600"
                 align="center"
-                color={style.blueCardBoldText.color}
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
               >
                 {formatter.percentage(loan.loan_interest_bonus)} %
               </CelText>
@@ -313,14 +312,15 @@ class ConfirmYourLoan extends Component {
                 type="H6"
                 weight="300"
                 align="center"
-                color={style.blueCardText.color}
+                style={style.textOpacity}
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
               >
                 By paying out in
                 <CelText
                   type="H5"
                   weight="300"
                   align="center"
-                  color={style.blueCardBoldText.color}
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                 >
                   {" "}
                   CEL
@@ -329,7 +329,8 @@ class ConfirmYourLoan extends Component {
 
               <Separator
                 margin={"10 0 10 0"}
-                color={style.blueCardText.color}
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                opacity={0.6}
               />
 
               <View style={style.horizontalCardContainer}>
@@ -338,7 +339,8 @@ class ConfirmYourLoan extends Component {
                     type="H6"
                     weight="300"
                     align="center"
-                    color={style.blueCardText.color}
+                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                    style={style.textOpacity}
                   >
                     {" "}
                     Monthly Interest
@@ -347,7 +349,7 @@ class ConfirmYourLoan extends Component {
                     type="H3"
                     weight="600"
                     align="center"
-                    color={style.blueCardBoldText.color}
+                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                   >
                     {formatter.crypto(loan.monthly_payment_in_cel, "CEL", {
                       precision: 2,
@@ -356,7 +358,11 @@ class ConfirmYourLoan extends Component {
                 </View>
 
                 <View style={style.separatorContainer}>
-                  <Separator vertical height={"60%"} />
+                  <Separator
+                    vertical
+                    height={"60%"}
+                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                  />
                 </View>
 
                 <View style={style.horizontalCardItem}>
@@ -364,7 +370,8 @@ class ConfirmYourLoan extends Component {
                     type="H6"
                     weight="300"
                     align="center"
-                    color={style.blueCardText.color}
+                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                    style={style.textOpacity}
                   >
                     Total Interest
                   </CelText>
@@ -372,7 +379,7 @@ class ConfirmYourLoan extends Component {
                     type="H3"
                     weight="600"
                     align="center"
-                    color={style.blueCardBoldText.color}
+                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                   >
                     {formatter.crypto(loan.total_interest_in_cel, "CEL", {
                       precision: 2,
@@ -388,7 +395,8 @@ class ConfirmYourLoan extends Component {
                       type="H6"
                       weight="300"
                       align="center"
-                      color={style.blueCardText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                      style={style.textOpacity}
                     >
                       {" "}
                       Original Monthly Interest
@@ -397,7 +405,7 @@ class ConfirmYourLoan extends Component {
                       type="H3"
                       weight="600"
                       align="center"
-                      color={style.blueCardBoldText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                       strikethrough
                     >
                       {formatter.usd(
@@ -410,7 +418,8 @@ class ConfirmYourLoan extends Component {
                     <Separator
                       vertical
                       height={"60%"}
-                      color={style.blueCardText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                      style={style.textOpacity}
                     />
                   </View>
 
@@ -419,7 +428,8 @@ class ConfirmYourLoan extends Component {
                       type="H6"
                       weight="300"
                       align="center"
-                      color={style.blueCardText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                      style={style.textOpacity}
                     >
                       Discounted Monthly Interest
                     </CelText>
@@ -427,7 +437,7 @@ class ConfirmYourLoan extends Component {
                       type="H3"
                       weight="600"
                       align="center"
-                      color={style.blueCardBoldText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                     >
                       {formatter.usd(
                         loan.discounted_monthly_interest_payment_in_usd
@@ -444,7 +454,8 @@ class ConfirmYourLoan extends Component {
                       type="H6"
                       weight="300"
                       align="center"
-                      color={style.blueCardText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                      style={style.textOpacity}
                     >
                       {" "}
                       Original Total Interest
@@ -453,7 +464,7 @@ class ConfirmYourLoan extends Component {
                       type="H3"
                       weight="600"
                       align="center"
-                      color={style.blueCardBoldText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                       strikethrough
                     >
                       {formatter.usd(loan.original_total_interest_in_usd)}
@@ -464,7 +475,8 @@ class ConfirmYourLoan extends Component {
                     <Separator
                       vertical
                       height={"60%"}
-                      color={style.blueCardText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                      style={style.textOpacity}
                     />
                   </View>
 
@@ -473,7 +485,8 @@ class ConfirmYourLoan extends Component {
                       type="H6"
                       weight="300"
                       align="center"
-                      color={style.blueCardText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                      style={style.textOpacity}
                     >
                       Discounted Total Interest
                     </CelText>
@@ -481,7 +494,7 @@ class ConfirmYourLoan extends Component {
                       type="H3"
                       weight="600"
                       align="center"
-                      color={style.blueCardBoldText.color}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                     >
                       {formatter.usd(loan.discounted_total_interest_in_usd)}
                     </CelText>
@@ -495,7 +508,8 @@ class ConfirmYourLoan extends Component {
                 italic
                 align="center"
                 margin=" 0 0 5 0"
-                color={style.blueCardText.color}
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                style={style.textOpacity}
               >
                 {" "}
                 This rate is subject to change based on your loyalty level and
@@ -516,7 +530,7 @@ class ConfirmYourLoan extends Component {
               <CelText type="H3" weight="700" align="center" margin="5 0 10 0">
                 {formatter.usd(loan.margin_call_price)}
               </CelText>
-              <Card color={style.grayCard.color}>
+              <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
                 <CelText type="H6" weight="300">{`If ${
                   loan.coin
                 } drops below ${formatter.usd(
@@ -532,7 +546,7 @@ class ConfirmYourLoan extends Component {
               <CelText type="H3" weight="700" align="center" margin="5 0 10 0">
                 {formatter.usd(loan.liquidation_call_price)}
               </CelText>
-              <Card color={style.grayCard.color}>
+              <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
                 <CelText type="H6" weight="300">{`If ${
                   loan.coin
                 } drops below ${formatter.usd(
