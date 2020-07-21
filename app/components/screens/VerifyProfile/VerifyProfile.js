@@ -179,15 +179,12 @@ class VerifyProfile extends Component {
 
   handle2FAChange = newValue => {
     const { actions } = this.props;
-
     if (newValue.length > 6) {
       this.setState({ loading: false });
       return;
     }
-
-    actions.updateFormField("code", newValue);
     this.setState({ value: newValue });
-
+    actions.updateFormField("code", newValue);
     if (newValue.length === 6) {
       actions.toggleKeypad();
 

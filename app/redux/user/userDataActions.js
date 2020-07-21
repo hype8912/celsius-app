@@ -268,7 +268,6 @@ function getUserStatus() {
     if (!isLoggedIn) return;
 
     dispatch(startApiCall(API.POLL_USER_DATA));
-
     try {
       const res = await userDataService.getUserStatus();
       const hodlStatus = res.data.hodlModeStatus;
