@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  TouchableOpacity,
-  BackHandler,
-  AsyncStorage,
-} from "react-native";
+import { View, TouchableOpacity, BackHandler } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withNavigationFocus } from "react-navigation";
@@ -31,7 +26,6 @@ import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
 import MultiAddressModal from "../../modals/MultiAddressModal/MultiAddressModal";
 import animationsUtil from "../../../utils/animations-util";
 import { COMING_SOON_COINS } from "../../../constants/DATA";
-import BankToTheFutureModal from "../../modals/BankToTheFutureModal/BankToTheFutureModal";
 
 @connect(
   state => {
@@ -100,26 +94,20 @@ class WalletLanding extends Component {
       userTriggeredActions,
     } = this.props;
     actions.changeWalletHeaderContent();
-
-    const dontShowBankModal = await AsyncStorage.getItem("DONT_SHOW_BNK");
     setTimeout(() => {
-      if (dontShowBankModal === "DONT_SHOW") {
-        if (
-          !previouslyOpenedModals.HODL_MODE_MODAL &&
-          hodlStatus.created_by === "backoffice"
-        )
-          actions.openModal(MODALS.HODL_MODE_MODAL);
+      if (
+        !previouslyOpenedModals.HODL_MODE_MODAL &&
+        hodlStatus.created_by === "backoffice"
+      )
+        actions.openModal(MODALS.HODL_MODE_MODAL);
 
-        if (
-          this.pendingAddresses().length &&
-          !userTriggeredActions.permanently_dismiss_deposit_address_changes
-        )
-          actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
+      if (
+        this.pendingAddresses().length &&
+        !userTriggeredActions.permanently_dismiss_deposit_address_changes
+      )
+        actions.openModal(MODALS.MULTI_ADDRESS_MODAL);
 
-        actions.getLoanAlerts();
-      } else {
-        actions.openModal(MODALS.BANK_TO_THE_FUTURE_MODAL);
-      }
+      actions.getLoanAlerts();
     }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -315,7 +303,6 @@ class WalletLanding extends Component {
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
-        <BankToTheFutureModal />
         {currenciesRates && <MultiAddressModal actions={actions} />}
       </RegularLayout>
     );
