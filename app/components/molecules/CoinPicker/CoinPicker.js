@@ -96,6 +96,7 @@ class CoinPicker extends Component {
                     type="coin"
                     icon={icon}
                     disabled
+                    iconColor={COLOR_KEYS.HEADLINE}
                   />
                 )}
               </View>

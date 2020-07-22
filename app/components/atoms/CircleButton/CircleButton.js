@@ -25,6 +25,7 @@ class CircleButton extends Component {
     disabled: PropTypes.bool,
     isSelected: PropTypes.bool,
     selectable: PropTypes.bool,
+    iconColor: PropTypes.string,
     type: PropTypes.oneOf(["menu", "theme", "coin"]).isRequired,
   };
 
@@ -58,11 +59,16 @@ class CircleButton extends Component {
       selectable,
       iconSize,
       backgroundImage,
+      iconColor,
     } = this.props;
 
     const styleCmp = CircleButtonStyle();
 
-    const fillColor = styleCmp.iconColor.color;
+    let fillColor = styleCmp.iconColor.color;
+    if (iconColor) {
+      fillColor = iconColor;
+    }
+
     const textStyle = [styleCmp.text, styleCmp[`text${type}`]];
 
     return (
