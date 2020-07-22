@@ -12,7 +12,7 @@ const initialState = {
 
   // TODO move to userDataReducer
   appSettings: {
-    theme: THEMES.LIGHT,
+    theme: THEMES.UNICORN,
     activeHodlMode: undefined,
   },
 

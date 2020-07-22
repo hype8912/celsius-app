@@ -25,6 +25,7 @@ class Welcome extends Component {
 
   static navigationOptions = () => ({
     headerSameColor: true,
+    hideBack: true,
   });
 
   state = {
