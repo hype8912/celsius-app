@@ -184,11 +184,10 @@ class FabMenu extends Component {
   };
 
   renderMenuItem = item => {
-    const { theme, actions } = this.props;
+    const { actions } = this.props;
     return (
       <CircleButton
         key={item.label}
-        theme={theme}
         onPress={() => {
           actions.resetToScreen(item.screen);
           actions.closeFabMenu();

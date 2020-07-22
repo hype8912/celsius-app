@@ -112,6 +112,7 @@ class CelHeading extends Component {
         basic
         onPress={() => this.navigateBack(customBack, backScreenName)}
         iconRight="IconChevronLeft"
+        backButton
       />
     );
   };
