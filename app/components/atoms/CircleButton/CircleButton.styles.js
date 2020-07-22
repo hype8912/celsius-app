@@ -30,6 +30,7 @@ const base = {
   viewcoin: { backgroundColor: COLOR_KEYS.CARDS },
   textcoin: { color: COLOR_KEYS.HEADLINE },
   fillColor: { color: COLOR_KEYS.HEADLINE },
+  iconColor: { color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND },
 };
 
 const themed = {

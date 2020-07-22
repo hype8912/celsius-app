@@ -61,11 +61,9 @@ class CircleButton extends Component {
       backgroundImage,
     } = this.props;
 
-    let fillColor = "";
     const styleCmp = CircleButtonStyle(theme);
-    if (icon) {
-      fillColor = this.getFillColor(styleCmp);
-    }
+
+    const fillColor = styleCmp.iconColor.color;
     const textStyle = [styleCmp.text, styleCmp[`text${type}`]];
 
     return (
@@ -92,7 +90,7 @@ class CircleButton extends Component {
                     (iconSize ? (
                       <Icon name={icon} fill={fillColor} width={iconSize} />
                     ) : (
-                      <Icon name={icon} fill={"white"} />
+                      <Icon name={icon} fill={fillColor} />
                     ))}
                 </View>
               </ImageBackground>
@@ -102,7 +100,7 @@ class CircleButton extends Component {
                   (iconSize ? (
                     <Icon name={icon} fill={fillColor} width={iconSize} />
                   ) : (
-                    <Icon name={icon} fill={"white"} />
+                    <Icon name={icon} fill={fillColor} />
                   ))}
               </View>
             )}

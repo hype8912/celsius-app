@@ -11,6 +11,8 @@ import WalletDetailsCardStyle from "./WalletDetailsCard.styles";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import * as appActions from "../../../redux/actions";
 import Counter from "../../molecules/Counter/Counter";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -44,7 +46,7 @@ class WalletDetailsCard extends PureComponent {
     const walletDetailsCardStyle = WalletDetailsCardStyle();
 
     return (
-      <Card padding="12 12 12 12">
+      <Card padding="12 12 12 12" color={getColor(COLOR_KEYS.CARDS)}>
         <View style={walletDetailsCardStyle.container}>
           <View>
             <TouchableOpacity onPress={this.navigateToBalanceHistory}>

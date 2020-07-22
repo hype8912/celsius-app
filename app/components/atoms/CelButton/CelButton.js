@@ -97,7 +97,7 @@ class CelButton extends Component {
     if (iconRightColor) {
       color = iconRightColor;
     } else if (basic) {
-      color = getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND);
+      color = getColor(COLOR_KEYS.HEADLINE);
     } else {
       color = disabled
         ? getColor(COLOR_KEYS.PARAGRAPH)
