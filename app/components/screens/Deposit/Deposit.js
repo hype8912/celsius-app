@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Linking, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
@@ -363,7 +363,6 @@ class Deposit extends Component {
       return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }} />;
     }
 
-    const link = cryptoUtil.provideLink(formData.selectedCoin);
     return (
       <RegularLayout padding={"20 0 100 0"}>
         <CelText align="center" weight="regular" type="H4">
@@ -481,19 +480,6 @@ class Deposit extends Component {
                 </View>
               </View>
             </Card>
-
-            {cryptoUtil.hasLinkToBuy(formData.selectedCoin) && (
-              <CelText
-                margin={"20 0 10 0"}
-                align={"center"}
-                link
-                type={"H4"}
-                weight={"300"}
-                onPress={() => Linking.openURL(link)}
-              >
-                {cryptoUtil.provideText(formData.selectedCoin)}
-              </CelText>
-            )}
 
             {cryptoUtil.buyInApp(formData.selectedCoin) && (
               <CelText

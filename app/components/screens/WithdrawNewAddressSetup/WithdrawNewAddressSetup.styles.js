@@ -1,12 +1,12 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
     flex: 1,
   },
   scanText: {
-    color: STYLES.COLORS.CELSIUS_BLUE,
+    color: COLOR_KEYS.PRIMARY_BUTTON,
     textAlign: "left",
   },
 };

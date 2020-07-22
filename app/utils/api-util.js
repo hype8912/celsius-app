@@ -314,8 +314,8 @@ function navigateToSixDigitFlow(reqConfig, resolve, reject) {
         try {
           // fetch failed request again after verification successful
           const res = await axios(reqConfig);
-
           store.dispatch(actions.resetToScreen(activeScreen));
+          store.dispatch(actions.updateFormField("loading", false));
           return resolve(res);
         } catch (e) {
           return reject(e);
