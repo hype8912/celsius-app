@@ -49,7 +49,6 @@ class CircleButton extends Component {
   render() {
     const {
       disabled,
-      theme,
       style,
       onPress,
       text,
@@ -61,7 +60,7 @@ class CircleButton extends Component {
       backgroundImage,
     } = this.props;
 
-    const styleCmp = CircleButtonStyle(theme);
+    const styleCmp = CircleButtonStyle();
 
     const fillColor = styleCmp.iconColor.color;
     const textStyle = [styleCmp.text, styleCmp[`text${type}`]];
