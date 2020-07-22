@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width, height } = Dimensions.get("window");
 
@@ -11,7 +11,7 @@ const base = {
     height,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   spinContainer: {
     position: "absolute",

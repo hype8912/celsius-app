@@ -130,12 +130,12 @@ class FabMenu extends Component {
 
     switch (theme) {
       case THEMES.DARK:
-      case THEMES.CELSIUS:
         return {
           color: "dark",
           blur: 15,
         };
       case THEMES.LIGHT:
+      case THEMES.UNICORN:
       default:
         return {
           color: "light",
