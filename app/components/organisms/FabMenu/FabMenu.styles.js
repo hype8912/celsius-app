@@ -4,6 +4,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {},
@@ -38,7 +39,7 @@ const base = {
   },
   background: {
     opacity: 0.95,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   shadowStyle: {
     shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW,
@@ -53,12 +54,7 @@ const base = {
 
 const themed = {
   light: {},
-
   dark: {
-    background: {
-      opacity: 0.99,
-      backgroundColor: "rgb(21, 30, 39)",
-    },
     shadowStyle: {
       shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW,
       shadowOffset: { width: 0, height: 10 },
@@ -69,7 +65,6 @@ const themed = {
       borderRadius: 30,
     },
   },
-
   unicorn: {},
 };
 

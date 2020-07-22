@@ -22,7 +22,6 @@ import { hasPassedKYC, isKYCRejectedForever } from "../../../utils/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import {
   heightPercentageToDP,
   widthPercentageToDP,
@@ -159,12 +158,13 @@ class FabMenuAnimated extends Component {
 
     switch (theme) {
       case THEMES.DARK:
-      case THEMES.CELSIUS:
         return {
           color: "dark",
           blur: 15,
         };
+
       case THEMES.LIGHT:
+      case THEMES.UNICORN:
       default:
         return {
           color: "light",
@@ -377,7 +377,7 @@ class FabMenuAnimated extends Component {
   };
 
   renderHelpButton = () => {
-    const { actions, theme } = this.props;
+    const { actions } = this.props;
     const { helpButtonOffset } = this.state;
     const style = FabMenuAnimatedStyle();
 
@@ -408,16 +408,7 @@ class FabMenuAnimated extends Component {
             this.fabAction();
           }}
         >
-          <Icon
-            name={"QuestionCircle"}
-            width={25}
-            height={25}
-            fill={
-              theme === "dark"
-                ? STYLES.COLORS.WHITE_OPACITY5
-                : STYLES.COLORS.DARK_GRAY
-            }
-          />
+          <Icon name={"QuestionCircle"} width={25} height={25} />
           <CelText weight={"300"} type={"H5"}>
             Need help?
           </CelText>

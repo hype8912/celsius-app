@@ -21,7 +21,6 @@ import { hasPassedKYC, isKYCRejectedForever } from "../../../utils/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -212,7 +211,7 @@ class FabMenu extends Component {
   renderFabMenu = () => {
     const style = FabMenuStyle();
     const { menuItems } = this.state;
-    const { actions, theme } = this.props;
+    const { actions } = this.props;
     const tintColor = this.getTintColor();
 
     if (Platform.OS !== "android") {
@@ -233,16 +232,7 @@ class FabMenu extends Component {
               actions.closeFabMenu();
             }}
           >
-            <Icon
-              name={"QuestionCircle"}
-              width={25}
-              height={25}
-              fill={
-                theme === "dark"
-                  ? STYLES.COLORS.WHITE_OPACITY5
-                  : STYLES.COLORS.DARK_GRAY
-              }
-            />
+            <Icon name={"QuestionCircle"} width={25} height={25} />
             <CelText weight={"300"} type={"H5"}>
               Need help?
             </CelText>
@@ -266,16 +256,7 @@ class FabMenu extends Component {
             actions.closeFabMenu();
           }}
         >
-          <Icon
-            name={"QuestionCircle"}
-            width={25}
-            height={25}
-            fill={
-              theme === "dark"
-                ? STYLES.COLORS.WHITE_OPACITY5
-                : STYLES.COLORS.DARK_GRAY
-            }
-          />
+          <Icon name={"QuestionCircle"} width={25} height={25} />
           <CelText weight={"300"} type={"H5"}>
             Need help?
           </CelText>
