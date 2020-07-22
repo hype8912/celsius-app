@@ -7,15 +7,15 @@ import { getTheme } from "../../../utils/styles-util";
 import { THEMES } from "../../../constants/UI";
 
 function getThemeImage(props) {
-  const { lightSource, darkSource, celSource } = props;
+  const { lightSource, darkSource, unicornSource } = props;
   const theme = getTheme();
 
   switch (theme) {
     case THEMES.DARK:
       return darkSource;
 
-    case THEMES.CELSIUS:
-      return celSource;
+    case THEMES.UNICORN:
+      return unicornSource || lightSource;
 
     case THEMES.LIGHT:
     default:
@@ -34,7 +34,7 @@ const ThemedImage = props => (
 ThemedImage.propTypes = {
   lightSource: PropTypes.number,
   darkSource: PropTypes.number,
-  celSource: PropTypes.number,
+  unicornSource: PropTypes.number,
   style: PropTypes.instanceOf(Object),
 };
 

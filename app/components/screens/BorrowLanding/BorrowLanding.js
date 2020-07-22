@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  Animated,
-  View,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from "react-native";
+import { Animated, View, TouchableOpacity, ScrollView } from "react-native";
 
 import * as appActions from "../../../redux/actions";
 import BorrowLandingStyle from "./BorrowLanding.styles";
@@ -30,6 +24,7 @@ import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModa
 import LoanAdvertiseModal from "../../modals/LoanAdvertiseModal/LoanAdvertiseModal";
 import Spinner from "../../atoms/Spinner/Spinner";
 import { STORYBOOK } from "../../../../dev-settings.json";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -159,9 +154,11 @@ class BorrowLanding extends Component {
               onPress={() => actions.navigateTo("BorrowChooseLoan")}
             >
               <View style={style.buttonItself}>
-                <Image
+                <ThemedImage
                   style={style.buttonIconHand}
-                  source={require("../../../../assets/images/icon-apply-for-a-new-loan.png")}
+                  lightSource={require("../../../../assets/images/icon-apply-for-a-new-loan.png")}
+                  darkSource={require("../../../../assets/images/icon-apply-for-a-new-loan.png")}
+                  unicornSource={require("../../../../assets/images/icon-apply-for-a-new-loan-unicorn.png")}
                 />
                 <CelText align="center">Apply for a loan</CelText>
               </View>
@@ -174,9 +171,11 @@ class BorrowLanding extends Component {
               }}
             >
               <View style={style.buttonItself}>
-                <Image
+                <ThemedImage
                   style={style.buttonIconCalc}
-                  source={require("../../../../assets/images/calculator.png")}
+                  lightSource={require("../../../../assets/images/calculator.png")}
+                  darkSource={require("../../../../assets/images/calculator.png")}
+                  unicornSource={require("../../../../assets/images/calculator-unicorn.png")}
                 />
                 <CelText align="center">Calculator</CelText>
               </View>

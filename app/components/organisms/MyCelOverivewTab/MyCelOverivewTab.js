@@ -56,6 +56,7 @@ class MyCelOverivewTab extends Component {
                 style={[style.starIcon, { marginTop: 6 }]}
                 lightSource={require("../../../../assets/images/loyaltyIcons/reward-icon3x.png")}
                 darkSource={require("../../../../assets/images/loyaltyIcons/reward-dark-icon3x.png")}
+                unicornSource={require("../../../../assets/images/loyaltyIcons/reward-unicorn-icon3x.png")}
               />
             </View>
             <View style={{ marginTop: 40, paddingHorizontal: 10 }}>
