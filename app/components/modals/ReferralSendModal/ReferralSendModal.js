@@ -14,6 +14,8 @@ import Separator from "../../atoms/Separator/Separator";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import CelButton from "../../atoms/CelButton/CelButton";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -57,11 +59,11 @@ class ReferralSendModal extends Component {
     const { actions, user } = this.props;
 
     const style = ReferralSendModalStyle();
+    const link = user.individual_referral_link;
+    if (!link) return null;
 
-    if (!user.individual_referral_link) return null;
-
-    const slug = this.getSlug(user.individual_referral_link);
-    const shareLink = this.getShare(user.individual_referral_link);
+    const slug = this.getSlug(link);
+    const shareLink = this.getShare(link);
     return (
       <CelModal style={style.container} name={MODALS.REFERRAL_SEND_MODAL}>
         <CelText type="H2" weight="bold" align={"center"} margin={"0 0 25 0"}>
@@ -75,11 +77,19 @@ class ReferralSendModal extends Component {
 
         <View style={style.copyShareWrapper}>
           <View>
-            <CelText align={"center"} weight={"400"} type={"H4"}>
+            <CelText
+              align={"center"}
+              weight={"bold"}
+              type={"H4"}
+              color={getColor(COLOR_KEYS.HEADLINE)}
+            >
               {slug}
             </CelText>
           </View>
-          <Separator margin={"20 0 0 0"} />
+          <Separator
+            margin={"20 0 0 0"}
+            color={getColor(COLOR_KEYS.PARAGRAPH)}
+          />
           <View style={style.copyShareButtonsWrapper}>
             <CopyButton
               copyText={slug}

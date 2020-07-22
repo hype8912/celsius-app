@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -11,8 +11,9 @@ const base = {
     padding: 10,
     marginHorizontal: "10%",
     marginRight: 25,
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 8,
+    borderColor: COLOR_KEYS.PARAGRAPH,
   },
 
   copyShareButtonsWrapper: {
@@ -35,18 +36,8 @@ const base = {
 };
 
 const themed = {
-  light: {
-    copyShareWrapper: {
-      borderColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
-
-  dark: {
-    copyShareWrapper: {
-      borderColor: STYLES.COLORS.WHITE_OPACITY5,
-    },
-  },
-
+  light: {},
+  dark: {},
   unicorn: {},
 };
 
