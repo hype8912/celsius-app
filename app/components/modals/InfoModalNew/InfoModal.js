@@ -24,6 +24,7 @@ const InfoModal = props => {
     onNo,
     noCopy,
     coin,
+    loading,
   } = props;
 
   const style = InfoModalStyle();
@@ -61,6 +62,7 @@ const InfoModal = props => {
               buttonStyle={yesButtonStyle}
               onPress={onYes}
               position={yesButtonPosition}
+              loading={loading}
             >
               {yesCopy}
             </CelModalButton>
@@ -71,6 +73,7 @@ const InfoModal = props => {
               buttonStyle={noButtonStyle}
               onPress={onNo}
               position={noButtonPosition}
+              loading={loading}
             >
               {noCopy}
             </CelModalButton>

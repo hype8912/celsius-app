@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
@@ -10,10 +11,10 @@ import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { KEYPAD_PURPOSES } from "../../../constants/UI";
 import ChangePinStyle from "./ChangePin.styles";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
-import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import PinTooltip from "../../molecules/PinTooltip/PinTooltip";
 import securityUtil from "../../../utils/security-util";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 @connect(
   state => ({
@@ -31,20 +32,13 @@ class ChangePin extends Component {
     gesturesEnabled: false,
   });
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      pinCreated: false,
-      loading: false,
-    };
-  }
-
   componentDidMount() {
     const { actions } = this.props;
     actions.updateFormFields({
       newPin: "",
       newPinConfirm: "",
       pinCreated: false,
+      loading: false,
     });
   }
 
@@ -76,9 +70,11 @@ class ChangePin extends Component {
       await actions.changePin(onSuccess);
     } else {
       actions.showMessage("error", "Both PIN numbers should be the same.");
-      actions.updateFormField("newPinConfirm", "");
+      actions.updateFormFields({
+        newPinConfirm: "",
+        loading: false,
+      });
     }
-    this.setState({ loading: false });
   };
 
   handleBack = () => {
@@ -92,9 +88,7 @@ class ChangePin extends Component {
   };
 
   render() {
-    const { loading } = this.state;
     const { actions, user, formData } = this.props;
-
     const field = !formData.pinCreated ? "newPin" : "newPinConfirm";
     const headingText = !formData.pinCreated
       ? "Enter your 6-digits PIN"
@@ -106,56 +100,55 @@ class ChangePin extends Component {
     const onPressFunc = this.handlePINChange;
     const style = ChangePinStyle();
 
+    const isLoading = _.isEmpty(formData) || formData.loading;
+
     return (
       <RegularLayout padding="0 0 0 0" fabType={"hide"}>
-        <View style={style.container}>
-          <View style={style.wrapper}>
-            <CelText weight="bold" type="H1" align="center" margin="0 20 0 20">
-              {headingText}
-            </CelText>
-            <CelText
-              color="rgba(61,72,83,0.7)"
-              align="center"
-              margin="10 0 30 0"
-            >
-              {subheadingText}
-            </CelText>
-
-            <TouchableOpacity onPress={actions.toggleKeypad}>
-              <HiddenField value={formData[field]} length={6} />
-            </TouchableOpacity>
-
-            {formData.pinCreated && !loading && (
-              <CelButton basic onPress={this.handleBack}>
-                Back
-              </CelButton>
-            )}
-
-            {loading && (
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: 15,
-                }}
+        {isLoading ? (
+          <LoadingScreen />
+        ) : (
+          <View style={style.container}>
+            <View style={style.wrapper}>
+              <CelText
+                weight="bold"
+                type="H1"
+                align="center"
+                margin="0 20 0 20"
               >
-                <Spinner />
-              </View>
-            )}
+                {headingText}
+              </CelText>
+              <CelText
+                color="rgba(61,72,83,0.7)"
+                align="center"
+                margin="10 0 30 0"
+              >
+                {subheadingText}
+              </CelText>
+
+              <TouchableOpacity onPress={actions.toggleKeypad}>
+                <HiddenField value={formData[field]} length={6} />
+              </TouchableOpacity>
+
+              {formData.pinCreated && !formData.loading && (
+                <CelButton basic onPress={this.handleBack}>
+                  Back
+                </CelButton>
+              )}
+            </View>
+
+            <CelNumpad
+              field={field}
+              value={this.props.formData[field]}
+              updateFormField={actions.updateFormField}
+              setKeypadInput={actions.setKeypadInput}
+              toggleKeypad={actions.toggleKeypad}
+              onPress={onPressFunc}
+              purpose={KEYPAD_PURPOSES.VERIFICATION}
+            />
+
+            <PinTooltip pin={formData[field]} user={user} />
           </View>
-
-          <CelNumpad
-            field={field}
-            value={this.props.formData[field]}
-            updateFormField={actions.updateFormField}
-            setKeypadInput={actions.setKeypadInput}
-            toggleKeypad={actions.toggleKeypad}
-            onPress={onPressFunc}
-            purpose={KEYPAD_PURPOSES.VERIFICATION}
-          />
-
-          <PinTooltip pin={formData[field]} user={user} />
-        </View>
+        )}
       </RegularLayout>
     );
   }
