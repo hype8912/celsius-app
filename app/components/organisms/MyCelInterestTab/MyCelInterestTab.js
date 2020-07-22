@@ -28,6 +28,7 @@ class MyCelInterestTab extends Component {
                 style={[style.starIcon, { marginTop: 6 }]}
                 lightSource={require("../../../../assets/images/loyaltyIcons/interestCircleIcon3x.png")}
                 darkSource={require("../../../../assets/images/loyaltyIcons/interestCircleIconDark3x.png")}
+                unicornSource={require("../../../../assets/images/loyaltyIcons/interestCircleIconUnicorn3x.png")}
               />
             </View>
             <View style={{ marginTop: 30 }}>

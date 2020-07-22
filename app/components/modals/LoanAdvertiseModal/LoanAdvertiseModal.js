@@ -8,7 +8,8 @@ import { MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class LoanAdvertiseModal extends Component {
   static propTypes = {
@@ -60,8 +61,8 @@ class LoanAdvertiseModal extends Component {
             field="hideLoanAdvertiseModal"
             updateFormField={updateFormField}
             value={formData.hideLoanAdvertiseModal}
-            uncheckedCheckBoxColor={STYLES.COLORS.GRAY}
-            checkedCheckBoxColor={STYLES.COLORS.GREEN}
+            uncheckedCheckBoxColor={getColor(COLOR_KEYS.PARAGRAPH)}
+            checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
             rightText={"Don't show this again"}
           />
         </View>

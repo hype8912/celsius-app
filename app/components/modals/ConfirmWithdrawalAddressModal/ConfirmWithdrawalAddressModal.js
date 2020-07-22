@@ -5,12 +5,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-import ConfirmWithdrawalAddressModalStyle from "./ConfirmWithdrawalAddressModal.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelModal from "../CelModal/CelModal";
 import { MODALS } from "../../../constants/UI";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import Card from "../../atoms/Card/Card";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -37,7 +38,6 @@ class ConfirmWithdrawalAddressModal extends Component {
       withdrawAddress,
       handleConfirmWithdrawal,
     } = this.props;
-    const style = ConfirmWithdrawalAddressModalStyle();
 
     return (
       <CelModal name={MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL}>
@@ -58,7 +58,7 @@ class ConfirmWithdrawalAddressModal extends Component {
           >
             {`Your new ${coin} withdrawal address`}
           </CelText>
-          <Card margin={"20 0 20 0"} color={style.card.backgroundColor}>
+          <Card margin={"20 0 20 0"} color={getColor(COLOR_KEYS.BACKGROUND)}>
             <CelText type={"H2"} weight={"500"} align={"center"}>
               {withdrawAddress}
             </CelText>

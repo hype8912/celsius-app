@@ -42,9 +42,9 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image:
-              theme === THEMES.DARK
-                ? require(`../../../../assets/images/deposit-icn-dark.png`)
-                : require(`../../../../assets/images/deposit-icn.png`),
+              theme !== THEMES.DARK
+                ? require(`../../../../assets/images/deposit-icn.png`)
+                : require(`../../../../assets/images/deposit-icn-dark.png`),
             darkImage: require("../../../../assets/images/deposit-icn.png"),
             title: "Only deposit same coin type as selected",
             description:
@@ -54,9 +54,9 @@ class DepositInfoModal extends Component {
           },
           {
             image:
-              theme === THEMES.DARK
-                ? require(`../../../../assets/images/deposit-icn-dark.png`)
-                : require(`../../../../assets/images/deposit-icn.png`),
+              theme !== THEMES.DARK
+                ? require(`../../../../assets/images/deposit-icn.png`)
+                : require(`../../../../assets/images/deposit-icn-dark.png`),
             title: "Review your transaction details carefully",
             description:
               "Depositing coins without all required data, such as Destination Tag (XRP) or MemoID (XLM), or incorrect data will result in permanent loss.",

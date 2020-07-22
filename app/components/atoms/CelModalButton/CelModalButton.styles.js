@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -18,60 +18,35 @@ const base = {
     height: 50,
   },
   secondaryButtonStyle: {
-    color: STYLES.COLORS.DARK_GRAY,
-    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    color: COLOR_KEYS.TOGGLE_OFF_FOREGROUND,
+    backgroundColor: COLOR_KEYS.TOGGLE_OFF_BACKGROUND,
   },
   redButtonStyle: {
-    color: STYLES.COLORS.WHITE,
-    backgroundColor: STYLES.COLORS.RED,
+    color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+    backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   disabledButtonStyle: {
-    color: STYLES.COLORS.WHITE,
-    backgroundColor: STYLES.COLORS.MEDIUM_GRAY5,
+    color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+    backgroundColor: COLOR_KEYS.TAB_UNSELECTED,
   },
   greenButtonStyle: {
-    color: STYLES.COLORS.WHITE,
-    backgroundColor: STYLES.COLORS.GREEN,
+    color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+    backgroundColor: COLOR_KEYS.POSITIVE_STATE,
   },
   whiteButtonStyle: {
-    color: STYLES.COLORS.DARK_GRAY,
-    backgroundColor: STYLES.COLORS.WHITE,
+    color: COLOR_KEYS.PRIMARY_BUTTON,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   defaultButtonStyle: {
-    color: STYLES.COLORS.WHITE,
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
 };
 
 const themed = {
   light: {},
 
-  dark: {
-    secondaryButtonStyle: {
-      color: STYLES.COLORS.WHITE,
-      backgroundColor: STYLES.COLORS.DARK_SECONDARY_BUTTON_GRAY,
-    },
-    redButtonStyle: {
-      color: STYLES.COLORS.RED,
-      backgroundColor: STYLES.COLORS.DARK_SECONDARY_BUTTON_GRAY,
-    },
-    disabledButtonStyle: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
-      backgroundColor: STYLES.COLORS.DARK_GRAY5,
-    },
-    greenButtonStyle: {
-      color: STYLES.COLORS.WHITE,
-      backgroundColor: STYLES.COLORS.GREEN,
-    },
-    whiteButtonStyle: {
-      color: STYLES.COLORS.WHITE,
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    defaultButtonStyle: {
-      color: STYLES.COLORS.WHITE,
-      backgroundColor: STYLES.COLORS.DARK_BUTTON_GRAY,
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };

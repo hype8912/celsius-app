@@ -70,7 +70,8 @@ function rootReducer(state, action) {
   if (action.type === ACTIONS.SET_WHOLE_STATE) newState = action.state;
 
   // ignore all actions when in Storybook mode
-  if (STORYBOOK && action.type !== ACTIONS.SET_WHOLE_STATE) {
+  const enabledActions = [ACTIONS.SET_WHOLE_STATE];
+  if (STORYBOOK && !enabledActions.includes(action.type)) {
     newAction.true = action.type;
     newAction.type = ACTIONS.BLOCKED_ACTION;
   }

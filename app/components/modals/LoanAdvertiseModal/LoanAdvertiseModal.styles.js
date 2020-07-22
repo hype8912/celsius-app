@@ -17,9 +17,7 @@ const base = {
 
 const themed = {
   light: {},
-
   dark: {},
-
   unicorn: {},
 };
 

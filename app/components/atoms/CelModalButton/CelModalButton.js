@@ -5,7 +5,8 @@ import { TouchableOpacity, View } from "react-native";
 import CelModalButtonStyle from "./CelModalButton.styles";
 import CelText from "../CelText/CelText";
 import Spinner from "../Spinner/Spinner";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CelModalButton extends Component {
   static propTypes = {
@@ -81,7 +82,7 @@ class CelModalButton extends Component {
           disabled={buttonStyle === "disabled"}
         >
           {loading ? (
-            <Spinner size={25} color={STYLES.COLORS.WHITE} />
+            <Spinner size={25} color={getColor(COLOR_KEYS.CARDS)} />
           ) : (
             <CelText color={buttonColor.color} type={"H4"} weight={"500"}>
               {children}

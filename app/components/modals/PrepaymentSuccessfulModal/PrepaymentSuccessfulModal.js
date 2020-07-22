@@ -10,7 +10,6 @@ import { MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelButton from "../../atoms/CelButton/CelButton";
-import STYLES from "../../../constants/STYLES";
 import * as appActions from "../../../redux/actions";
 
 @connect(
@@ -49,8 +48,7 @@ class PrepaymentSuccessfulModal extends Component {
           We will let you know when your interest payment resumes.`}
         </CelText>
         <CelButton
-          color={"white"}
-          textColor={STYLES.COLORS.CELSIUS_BLUE}
+          basic
           onPress={() => {
             actions.updateFormField("prepayLoanId", null);
             actions.navigateTo("BorrowLanding");

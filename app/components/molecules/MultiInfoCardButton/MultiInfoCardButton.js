@@ -18,6 +18,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 class MultiInfoCardButton extends Component {
   static propTypes = {
     darkImage: PropTypes.number,
+    unicornImage: PropTypes.number,
     lightImage: PropTypes.number,
     textButton: PropTypes.string,
     explanation: PropTypes.string,
@@ -39,6 +40,7 @@ class MultiInfoCardButton extends Component {
     const {
       darkImage,
       lightImage,
+      unicornImage,
       textButton,
       explanation,
       onPress,
@@ -55,6 +57,7 @@ class MultiInfoCardButton extends Component {
               style={[style.image, disabled ? { opacity: 0.3 } : null]}
               darkSource={darkImage}
               lightSource={lightImage}
+              unicornSource={unicornImage}
             />
           </View>
           <View style={style.explanationWrapper}>

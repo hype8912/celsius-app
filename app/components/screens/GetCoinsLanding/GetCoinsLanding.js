@@ -107,6 +107,7 @@ class GetCoinsLanding extends Component {
             explanation={"Buy crypto easily using your credit card."}
             darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
             lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
+            unicornImage={require("../../../../assets/images/icons/credit-card-unicorn.png")}
             onPress={this.pressCreditCard}
           />
         )}
@@ -117,6 +118,7 @@ class GetCoinsLanding extends Component {
             explanation={"Buy crypto easily through your bank account."}
             darkImage={require("../../../../assets/images/icons/bank-wire-dark.png")}
             lightImage={require("../../../../assets/images/icons/bank-wire-light.png")}
+            unicornImage={require("../../../../assets/images/icons/bank-wire-unicorn.png")}
             onPress={this.pressBankWire}
           />
         )}

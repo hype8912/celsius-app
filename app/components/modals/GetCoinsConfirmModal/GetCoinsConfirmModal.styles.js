@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -11,6 +11,7 @@ const base = {
     marginBottom: 40,
     borderRadius: 8,
     padding: 10,
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   transferData: {
     marginHorizontal: 20,
@@ -29,18 +30,8 @@ const base = {
 };
 
 const themed = {
-  light: {
-    infoBlock: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
-
-  dark: {
-    infoBlock: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY,
-    },
-  },
-
+  light: {},
+  dark: {},
   unicorn: {},
 };
 

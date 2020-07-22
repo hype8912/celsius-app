@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -17,6 +17,7 @@ import InterestCalculatorScreen from "../InterestCalculatorScreen/InterestCalcul
 import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util";
 import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 import Counter from "../../molecules/Counter/Counter";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(
   state => ({
@@ -117,7 +118,7 @@ class WalletInterest extends Component {
                 }}
                 style={{ marginTop: 10 }}
               >
-                <Image
+                <ThemedImage
                   style={{
                     alignSelf: "center",
                     width: 25,
@@ -125,7 +126,9 @@ class WalletInterest extends Component {
                     marginBottom: 5,
                     marginTop: 6,
                   }}
-                  source={require("../../../../assets/images/calculator.png")}
+                  lightSource={require("../../../../assets/images/calculator.png")}
+                  darkSource={require("../../../../assets/images/calculator.png")}
+                  unicornSource={require("../../../../assets/images/calculator-unicorn.png")}
                 />
                 <CelText align="center" link>
                   Calculator
