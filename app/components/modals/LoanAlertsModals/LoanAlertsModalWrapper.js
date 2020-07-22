@@ -112,7 +112,7 @@ class LoanAlertsModalWrapper extends Component {
     const { principalCoinWallet } = this.state;
     const canPayPrincipal = loan.can_pay_principal;
     if (canPayPrincipal) {
-      if (loan.loan_amount <= principalCoinWallet.amount) {
+      if (Number(loan.loan_amount) <= principalCoinWallet.amount.toNumber()) {
         return <LoanAlertsPayoutPrincipalModal loan={loan} />;
       }
       return <LoanAlertsDepositCoinsModal loan={loan} />;
