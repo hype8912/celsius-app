@@ -9,7 +9,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
-import EnterAmount from "../../organisms/EnterAmount/EnterAmount";
 
 @connect(
   state => ({
@@ -105,8 +104,6 @@ class TransactionLandingScreen extends Component {
 
     return (
       <RegularLayout>
-        <EnterAmount />
-
         <CelText margin={"15 0 10 0"} type={"H3"} weight={"500"}>
           I want to
         </CelText>
