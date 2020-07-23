@@ -15,7 +15,18 @@ import SELECT_VALUES from "../../../constants/SELECT_VALUES";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 
-const { PERSON_TITLE, GENDER, STATE, DAYS, YEARS, MONTHS } = SELECT_VALUES;
+const {
+  PERSON_TITLE,
+  GENDER,
+  STATE,
+  DAYS,
+  YEARS,
+  MONTHS,
+  TRANSACTIONS,
+  CELPAY,
+  BUYCOINS,
+  WITHDRAW,
+} = SELECT_VALUES;
 
 @connect(
   () => ({}),
@@ -33,6 +44,11 @@ class CelSelect extends Component {
       "month",
       "year",
       "phone",
+      "transactions",
+      "celpay",
+      "withdraw",
+      "buy",
+      "swap",
     ]),
     items: PropTypes.instanceOf(Array),
     value: PropTypes.oneOfType([
@@ -109,6 +125,14 @@ class CelSelect extends Component {
         return YEARS;
       case "month":
         return MONTHS;
+      case "transactions":
+        return TRANSACTIONS;
+      case "celpay":
+        return CELPAY;
+      case "withdraw":
+        return WITHDRAW;
+      case "buy":
+        return BUYCOINS;
       default:
         return items;
     }
