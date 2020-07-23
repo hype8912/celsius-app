@@ -14,11 +14,7 @@ import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConfirmModal";
-import apiUtil from "../../../utils/api-util";
-import API from "../../../constants/API";
-import Spinner from "../../atoms/Spinner/Spinner";
 import getCoinsUtil from "../../../utils/get-coins-util";
-import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -27,9 +23,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
     formData: state.forms.formData,
     keypadOpen: state.ui.isKeypadOpen,
     currencyRatesShort: state.currencies.currencyRatesShort,
-    buyCoinsSettings: state.generalData.buyCoinsSettings,
     depositCompliance: state.compliance.deposit,
-    simplexCompliance: state.compliance.simplex,
     currencies: state.currencies.rates,
     simplexData: state.buyCoins.simplexData,
     callsInProgress: state.api.callsInProgress,
@@ -47,12 +41,12 @@ class SwapCoinsEnterAmount extends Component {
 
   constructor(props) {
     super(props);
-    const { currencies, simplexCompliance, actions, formData } = this.props;
+    const { currencies, depositCompliance, actions, formData } = this.props;
 
-    const availableCryptoCoins = simplexCompliance
+    const availableCryptoCoins = depositCompliance
       ? currencies &&
         currencies
-          .filter(c => simplexCompliance.coins.includes(c.short))
+          .filter(c => depositCompliance.coins.includes(c.short))
           .map(c => ({
             label: `${formatter.capitalize(c.name)} (${c.short})`,
             value: c.short,
@@ -63,8 +57,8 @@ class SwapCoinsEnterAmount extends Component {
       fromAmount: "",
       toAmount: "",
       isFrom: false,
-      fromCoin: formData.fromCoin || "BTC",
-      toCoin: formData.toCoin || simplexCompliance.coins[0],
+      fromCoin: formData.fromCoin || "ETH",
+      toCoin: formData.toCoin || "BTC",
     });
 
     this.state = {
@@ -73,21 +67,15 @@ class SwapCoinsEnterAmount extends Component {
   }
 
   handleNextStep = () => {
-    const { actions, formData, currencyRatesShort } = this.props;
-
-    const cryptoProp = formData.toCoin.toLowerCase();
-    const amountFromCoin =
-      currencyRatesShort[cryptoProp] * Number(formData.toAmount);
-
-    actions.updateFormField("fromAmount", amountFromCoin);
-    actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL);
+    const { actions } = this.props;
+    actions.openModal(MODALS.SWAP_COINS_CONFIRM_MODAL);
   };
 
   setCryptoAmount = simplexCryptoAmount =>
     Math.max(simplexCryptoAmount, 0).toString();
 
   handleAmountChange = async newValue => {
-    const { formData, actions } = this.props;
+    const { formData, actions, currencyRatesShort } = this.props;
     const splitedValue = newValue.toString().split(".");
 
     if (splitedValue && splitedValue.length > 2) return;
@@ -115,42 +103,22 @@ class SwapCoinsEnterAmount extends Component {
       toAmount = toAmount[1];
     }
 
+    if (formData.isFrom) {
+      toAmount =
+        (Number(fromAmount) *
+          Number(currencyRatesShort[formData.fromCoin.toLowerCase()])) /
+        Number(currencyRatesShort[formData.toCoin.toLowerCase()]);
+    } else {
+      fromAmount =
+        (Number(toAmount) *
+          Number(currencyRatesShort[formData.toCoin.toLowerCase()])) /
+        Number(currencyRatesShort[formData.fromCoin.toLowerCase()]);
+    }
+
     actions.updateFormFields({
       fromAmount: fromAmount.toString(),
       toAmount: toAmount.toString(),
     });
-
-    if (getCoinsUtil.isAmountInScope()) {
-      await actions.getSimplexQuote();
-
-      const { simplexData } = this.props;
-
-      if (formData.isFrom) {
-        actions.updateFormField(
-          "toAmount",
-          this.setCryptoAmount(
-            simplexData &&
-              simplexData.digital_money &&
-              simplexData.digital_money.amount
-          )
-        );
-      } else {
-        actions.updateFormField(
-          "fromAmount",
-          simplexData &&
-            simplexData.digital_money &&
-            simplexData.digital_money.total_amount.toString()
-        );
-      }
-    } else {
-      this.handleEnterAmountErrors();
-
-      if (formData.isFrom) {
-        actions.updateFormField("toAmount", "0");
-      } else {
-        actions.updateFormField("fromAmount", "0");
-      }
-    }
   };
 
   handleFromCoinSelect = async (field, value) => {
@@ -233,19 +201,12 @@ class SwapCoinsEnterAmount extends Component {
   };
 
   render() {
-    const { actions, formData, callInProgress, buyCoinsSettings } = this.props;
+    const { actions, formData } = this.props;
     const style = SwapCoinsEnterAmountStyle();
     const { availableCryptoCoins } = this.state;
-    const isFetchingQuotes = apiUtil.areCallsInProgress(
-      [API.GET_SIMPLEX_QUOTE],
-      callInProgress
-    );
 
     const activeTextStyle = [style.text, { color: STYLES.COLORS.WHITE }];
 
-    if (!buyCoinsSettings.limit_per_crypto_currency) {
-      return <LoadingScreen />;
-    }
     return (
       <RegularLayout fabType={"hide"} padding={"0 0 0 0"}>
         <View style={[style.fiatSection, this.handleAmountBackColor("from")]}>
@@ -268,26 +229,20 @@ class SwapCoinsEnterAmount extends Component {
               navigateTo={actions.navigateTo}
             />
           </View>
-          {isFetchingQuotes && !formData.isFrom ? (
-            <View style={{ marginVertical: 15 }}>
-              <Spinner size={30} color={style.text.color} />
-            </View>
-          ) : (
-            <TouchableOpacity
-              style={{ marginVertical: 10 }}
-              onPress={() => {
-                actions.updateFormFields({
-                  isFrom: true,
-                });
-                actions.toggleKeypad(true);
-              }}
-            >
-              <CelText style={this.handleAmountTextStyle("from")} type={"H2"}>
-                {" "}
-                {formatter.crypto(formData.fromAmount, formData.fromCoin)}
-              </CelText>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            style={{ marginVertical: 10 }}
+            onPress={() => {
+              actions.updateFormFields({
+                isFrom: true,
+              });
+              actions.toggleKeypad(true);
+            }}
+          >
+            <CelText style={this.handleAmountTextStyle("from")} type={"H2"}>
+              {" "}
+              {formatter.crypto(formData.fromAmount, formData.fromCoin)}
+            </CelText>
+          </TouchableOpacity>
         </View>
         <View style={[style.cryptoSection, this.handleAmountBackColor("to")]}>
           <View style={style.amounts}>
@@ -309,26 +264,20 @@ class SwapCoinsEnterAmount extends Component {
               navigateTo={actions.navigateTo}
             />
           </View>
-          {isFetchingQuotes && formData.isFrom ? (
-            <View style={{ marginVertical: 15 }}>
-              <Spinner size={30} color={style.text.color} />
-            </View>
-          ) : (
-            <TouchableOpacity
-              style={{ marginVertical: 10 }}
-              onPress={() => {
-                actions.updateFormFields({
-                  isFrom: false,
-                });
-                actions.toggleKeypad(true);
-              }}
-            >
-              <CelText style={this.handleAmountTextStyle("to")} type={"H2"}>
-                {" "}
-                {formatter.crypto(formData.toAmount, formData.toCoin)}
-              </CelText>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            style={{ marginVertical: 10 }}
+            onPress={() => {
+              actions.updateFormFields({
+                isFrom: false,
+              });
+              actions.toggleKeypad(true);
+            }}
+          >
+            <CelText style={this.handleAmountTextStyle("to")} type={"H2"}>
+              {" "}
+              {formatter.crypto(formData.toAmount, formData.toCoin)}
+            </CelText>
+          </TouchableOpacity>
         </View>
         <CelButton
           margin="30 0 0 0"
