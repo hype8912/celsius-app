@@ -13,7 +13,7 @@ import { KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
-import GetCoinsConfirmModal from "../../modals/GetCoinsConfirmModal/GetCoinsConfirmModal";
+import SwapCoinsConfirmModal from "../../modals/SwapCoinsConfirmModal/SwapCoinsConfirmModal";
 import getCoinsUtil from "../../../utils/get-coins-util";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -302,7 +302,7 @@ class SwapCoinsEnterAmount extends Component {
           purpose={KEYPAD_PURPOSES.BUY_COINS}
           autofocus
         />
-        <GetCoinsConfirmModal />
+        <SwapCoinsConfirmModal />
       </RegularLayout>
     );
   }
