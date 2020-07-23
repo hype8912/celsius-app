@@ -416,12 +416,6 @@ const COMING_SOON_COINS = [
     learn_more_link: "https://www.paxos.com/paxgold/",
   },
   {
-    name: "Binance USD",
-    short: "BUSD",
-    image_url: require("../../assets/images/coins/binanceusd.png"),
-    learn_more_link: "https://www.paxos.com/busd/",
-  },
-  {
     name: "Binance Coin",
     short: "BNB",
     image_url: require("../../assets/images/coins/binance.png"),
