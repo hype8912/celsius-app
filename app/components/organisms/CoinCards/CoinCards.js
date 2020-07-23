@@ -63,23 +63,25 @@ class CoinCards extends Component {
     if (allowedCoins && currenciesRates) {
       const coins = [];
       allowedCoins.forEach(coin => {
-        const tempCoin = coin;
-        tempCoin.currency = currenciesRates.find(
-          c => c.short === coin.short.toUpperCase()
-        );
-        tempCoin.graphData =
-          currenciesGraphs && !_.isEmpty(currenciesGraphs[coin.short])
-            ? currenciesGraphs[coin.short]
-            : null;
-        tempCoin.navigate = Number(coin.has_transaction)
-          ? () =>
-              navigateTo("CoinDetails", {
-                coin: coin.short,
-                title: tempCoin.currency.displayName,
-              })
-          : () => navigateTo("Deposit", { coin: coin.short });
+        if (coin.short) {
+          const tempCoin = coin;
+          tempCoin.currency = currenciesRates.find(
+            c => c.short === coin.short.toUpperCase()
+          );
+          tempCoin.graphData =
+            currenciesGraphs && !_.isEmpty(currenciesGraphs[coin.short])
+              ? currenciesGraphs[coin.short]
+              : null;
+          tempCoin.navigate = Number(coin.has_transaction)
+            ? () =>
+                navigateTo("CoinDetails", {
+                  coin: coin.short,
+                  title: tempCoin.currency.displayName,
+                })
+            : () => navigateTo("Deposit", { coin: coin.short });
 
-        coins.push(coin);
+          coins.push(coin);
+        }
       });
 
       coinsWithTransactions = _.remove(

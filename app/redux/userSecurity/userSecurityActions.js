@@ -184,12 +184,13 @@ function changePin(onSuccess) {
       new_pin_confirm: formData.newPinConfirm,
     };
     dispatch(toggleKeypad());
-    dispatch(startApiCall(API.CHANGE_PIN));
 
     if (profile.two_factor_enabled) {
       await dispatch(
         navigateTo("VerifyProfile", {
+          hideBack: true,
           onSuccess: async () => {
+            dispatch(updateFormField("loading", true));
             pinData = {
               ...pinData,
               twoFactorCode: getState().forms.formData.code,
@@ -199,6 +200,7 @@ function changePin(onSuccess) {
         })
       );
     } else {
+      dispatch(updateFormField("loading", true));
       dispatch(completePinChange(pinData, onSuccess));
     }
   };
@@ -210,6 +212,7 @@ function completePinChange(pinData, onSuccess) {
     const { securityOverview } = getState().security;
 
     try {
+      dispatch(startApiCall(API.CHANGE_PIN));
       await userSecurityService.changePin(pinData);
 
       dispatch({ type: ACTIONS.CHANGE_PIN_SUCCESS });

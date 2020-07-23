@@ -237,7 +237,7 @@ class WalletLanding extends Component {
           <View style={style.depositWrapper}>
             <View>
               <CelButton
-                onPress={() => actions.navigateTo("GetCoinsLanding")}
+                onPress={() => actions.navigateTo("TransactionLandingScreen")}
                 style={{ alignSelf: "flex-start" }}
                 margin="10 0 2 0"
                 size="small"

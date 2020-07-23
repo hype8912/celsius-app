@@ -131,6 +131,33 @@ const STATE = [
   { label: "Wyoming", value: "Wyoming" },
 ];
 
+const TRANSACTIONS = [
+  { label: "CelPay", value: "celpay" },
+  { label: "Withdraw", value: "withdraw" },
+  { label: "Buy Coins", value: "buy" },
+  { label: "Swap Coins", value: "swap" },
+];
+
+const CELPAY = [
+  { label: "contacts", value: "contacts" },
+  { label: "direct link", value: "directLink" },
+];
+
+const BUYCOINS = [
+  { label: "Credit Card", value: "creditCard" },
+  { label: "Bank Transfer", value: "bankTransfer" },
+];
+
+const WITHDRAW = [
+  { label: "new address", value: "newAddress" },
+  { label: "my current address", value: "currentAddress" },
+];
+
+const SWAPCOINS = [
+  { label: "Buy Coins", value: "buyCoin" },
+  { label: "Swap Coins", value: "swapCoin" },
+];
+
 export default {
   GENDER,
   PERSON_TITLE,
@@ -138,4 +165,9 @@ export default {
   MONTHS,
   YEARS,
   STATE,
+  TRANSACTIONS,
+  CELPAY,
+  SWAPCOINS,
+  WITHDRAW,
+  BUYCOINS,
 };
