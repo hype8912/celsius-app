@@ -85,7 +85,7 @@ function createGemPayment(payment) {
  * @returns {Promise}
  */
 function createChangellyPayment(payment) {
-  return axios.post(`${apiUrl}/buy_coins/payment/changelly`, payment);
+  return axios.post(`${apiUrl}/changelly/transactions`, payment);
 }
 
 /**

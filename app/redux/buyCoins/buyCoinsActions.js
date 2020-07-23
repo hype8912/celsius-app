@@ -179,9 +179,9 @@ function createChangellyPayment() {
       const { formData } = getState().forms;
       dispatch(startApiCall(API.CREATE_CHANGELLY_PAYMENT));
 
-      await buyCoinsService.createGemPayment({
+      await buyCoinsService.createChangellyPayment({
         from: formData.fromCoin,
-        fromAmount: formData.fromAmount,
+        amount: formData.fromAmount,
         to: formData.toCoin,
       });
 

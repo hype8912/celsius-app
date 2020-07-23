@@ -30,7 +30,7 @@ class SwapCoinsConfirmModal extends Component {
 
     actions.navigateTo("VerifyProfile", {
       onSuccess: async () => {
-        // await actions.createChangellyPayment();
+        await actions.createChangellyPayment();
         actions.showMessage("success", "Great Swap my friend!");
         actions.navigateTo("GetCoinsLanding");
       },
