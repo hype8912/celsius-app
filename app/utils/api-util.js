@@ -74,7 +74,7 @@ async function requestInterceptor(req) {
   }
 
   /* eslint-disable no-underscore-dangle */
-  // console.log({ [req.method.toUpperCase()]: newRequest })
+  // console.log({ [req.method.toUpperCase()]: newRequest.url })
   /* eslint-enable no-underscore-dangle */
 
   return newRequest;
