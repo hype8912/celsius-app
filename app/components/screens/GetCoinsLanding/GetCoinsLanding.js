@@ -67,6 +67,11 @@ class GetCoinsLanding extends Component {
     mixpanelAnalytics.choseBuyCoinsType("WIRE");
   };
 
+  pressBuyWithCrypto = () => {
+    const { actions } = this.props;
+    actions.navigateTo("SwapCoinsEnterAmount");
+  };
+
   render() {
     const { actions, kycStatus, simplexCompliance, gemCompliance } = this.props;
 
@@ -122,6 +127,15 @@ class GetCoinsLanding extends Component {
             onPress={this.pressBankWire}
           />
         )}
+
+        <MultiInfoCardButton
+          textButton={"Buy with Crypto"}
+          explanation={"Buy with crypto easily."}
+          darkImage={require("../../../../assets/images/icons/crypto-dark.png")}
+          lightImage={require("../../../../assets/images/icons/crypto.png")}
+          unicornImage={require("../../../../assets/images/icons/crypto-unicorn.png")}
+          onPress={this.pressBuyWithCrypto}
+        />
 
         <BuyCoinsPaymentsHistory />
 

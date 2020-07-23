@@ -38,6 +38,7 @@ import CoinDetails from "../components/screens/CoinDetails/CoinDetails";
 import AllTransactions from "../components/screens/AllTransactions/AllTransactions";
 import GetCoinsLanding from "../components/screens/GetCoinsLanding/GetCoinsLanding";
 import GetCoinsEnterAmount from "../components/screens/GetCoinsEnterAmount/GetCoinsEnterAmount";
+import SwapCoinsEnterAmount from "../components/screens/SwapCoinsEnterAmount/SwapCoinsEnterAmount";
 import GetCoinsTransactionDetails from "../components/screens/GetCoinsTransactionDetails/GetCoinsTransactionDetails";
 import GetCoinsGem from "../components/screens/GetCoinsGem/GetCoinsGem";
 import MyCel from "../components/screens/MyCel/MyCel";
@@ -178,6 +179,7 @@ export const screens = {
 
   GetCoinsLanding,
   GetCoinsEnterAmount,
+  SwapCoinsEnterAmount,
   GetCoinsTransactionDetails,
   Simplex,
   GetCoinsGem,
