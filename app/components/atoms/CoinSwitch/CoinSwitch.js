@@ -8,8 +8,8 @@ import formatter from "../../../utils/formatter";
 import Icon from "../Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import { getScaledFont, getTheme } from "../../../utils/styles-util";
-import { THEMES } from "../../../constants/UI";
-import Spinner from "../Spinner/Spinner";
+import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
+import Separator from "../Separator/Separator";
 
 const CoinSwitch = props => {
   const {
@@ -20,16 +20,19 @@ const CoinSwitch = props => {
     coin,
     amountColor,
     doubleTilde,
-    lowerSpinner,
     theme: inheritTheme,
+    navigateTo,
+    availableCoins,
+    onChange,
+    balance,
   } = props;
 
   // `$ ${amountUsd || '0.00'}` format a number to $ 21.32 or set default value as 0.00
   const upperValue = isUsd
-    ? `$ ${amountUsd || "0.00"}`
+    ? `${amountUsd || "0.00"}`
     : `${formatter.getEllipsisAmount(amountCrypto || "0.00", -5)}`;
   const lowerValue = !isUsd
-    ? `$ ${amountUsd || "0.00"} USD`
+    ? `${amountUsd || "0.00"}`
     : `${formatter.getEllipsisAmount(amountCrypto || "0.00", -5)} ${coin}`;
 
   const theme = inheritTheme || getTheme();
@@ -37,28 +40,15 @@ const CoinSwitch = props => {
 
   return (
     <View style={style.container}>
-      {!isUsd ? (
-        <Icon
-          name={`Icon${coin}`}
-          width="40"
-          height="40"
-          fill={
-            theme !== THEMES.DARK
-              ? STYLES.COLORS.DARK_GRAY3
-              : STYLES.COLORS.WHITE_OPACITY3
-          }
-          style={{ marginBottom: 28 }}
-        />
-      ) : (
-        <View style={{ width: 40 }} />
-      )}
       {props.onAmountPress ? (
         <View>
           <TouchableOpacity disabled={!coin} onPress={props.onAmountPress}>
             <View
               style={{
                 height: getScaledFont(STYLES.FONTSIZE.H1),
-                justifyContent: "center",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                alignItems: "center",
                 marginVertical: 10,
               }}
             >
@@ -71,28 +61,47 @@ const CoinSwitch = props => {
               >
                 {upperValue}
               </CelText>
+              <CoinPicker
+                type={"basic"}
+                onChange={onChange}
+                updateFormField={updateFormField}
+                coin={"BTC"}
+                field="coin"
+                availableCoins={availableCoins}
+                navigateTo={navigateTo}
+              />
             </View>
           </TouchableOpacity>
-          <View
-            style={{
-              height: getScaledFont(STYLES.FONTSIZE.H2),
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {lowerSpinner ? (
-              <Spinner size={30} />
-            ) : (
+          <Separator margin={"30 0 30 0"} size={4} />
+          <TouchableOpacity disabled={!coin} onPress={props.onAmountPress}>
+            <View
+              style={{
+                height: getScaledFont(STYLES.FONTSIZE.H1),
+                flexDirection: "row",
+                justifyContent: "space-around",
+                alignItems: "center",
+              }}
+            >
               <CelText
                 align="center"
-                type="H2"
-                color={STYLES.COLORS.MEDIUM_GRAY}
-                size={STYLES.FONTSIZE.H2 - lowerValue.length / 2}
+                type="H1"
+                weight="regular"
+                size={STYLES.FONTSIZE.H1 - upperValue.length}
+                color={amountColor}
               >
-                {doubleTilde && "≈"} {lowerValue}
+                {lowerValue}
               </CelText>
-            )}
-          </View>
+              <CoinPicker
+                type={"basic2"}
+                onChange={onChange}
+                updateFormField={updateFormField}
+                coin={"USD"}
+                field="coin"
+                availableCoins={availableCoins}
+                navigateTo={navigateTo}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       ) : (
         <View>
@@ -141,6 +150,12 @@ const CoinSwitch = props => {
             fill={STYLES.COLORS.MEDIUM_GRAY}
           />
         </TouchableOpacity>
+      </View>
+      <View style={style.balance}>
+        <CelText
+          color={"white"}
+          type={"H7"}
+        >{`Balance: ${balance} BTC`}</CelText>
       </View>
     </View>
   );

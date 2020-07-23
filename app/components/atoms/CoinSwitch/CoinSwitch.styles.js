@@ -1,17 +1,21 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from "../../../utils/styles-util";
+import {
+  getThemedStyle,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
 const base = {
-  container: {
-    marginBottom: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
+  // container: {
+  //   marginBottom: 10,
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   alignItems: "center",
+  // },
   switchButton: {
     zIndex: 1,
-    right: 0,
+    left: 20,
+    top: 77,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
@@ -19,6 +23,20 @@ const base = {
     height: 40,
     width: 40,
     borderRadius: 20,
+    position: "absolute",
+  },
+  balance: {
+    width: widthPercentageToDP("65%"),
+    height: 35,
+    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    position: "absolute",
+    right: -68,
+    top: 82,
+    borderTopLeftRadius: 35,
+    borderBottomLeftRadius: 35,
+    paddingLeft: 30,
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
 };
 
