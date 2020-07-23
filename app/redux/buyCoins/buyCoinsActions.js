@@ -19,6 +19,7 @@ export {
   getSimplexQuote,
   createSimplexPayment,
   createGemPayment,
+  createChangellyPayment,
   getGemCoinAddress,
 };
 
@@ -165,6 +166,34 @@ function createGemPayment(userId, transactionId = null) {
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CREATE_GEM_PAYMENT, err));
+    }
+  };
+}
+
+/**
+ * Creates Changelly payment request
+ */
+function createChangellyPayment() {
+  return async (dispatch, getState) => {
+    try {
+      const { formData } = getState().forms;
+      dispatch(startApiCall(API.CREATE_CHANGELLY_PAYMENT));
+
+      await buyCoinsService.createGemPayment({
+        from: formData.fromCoin,
+        fromAmount: formData.fromAmount,
+        to: formData.toCoin,
+      });
+
+      dispatch({
+        type: ACTIONS.CREATE_CHANGELLY_PAYMENT_SUCCESS,
+      });
+
+      // TODO add analytics
+      // mixpanelAnalytics.initiatedBuyCoinsRequest();
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.CREATE_CHANGELLY_PAYMENT, err));
     }
   };
 }

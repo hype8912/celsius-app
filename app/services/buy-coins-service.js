@@ -6,6 +6,7 @@ const buyCoinsService = {
   getSimplexQuote,
   createSimplexPayment,
   createGemPayment,
+  createChangellyPayment,
   getGemCoinAddresses,
 };
 
@@ -71,6 +72,20 @@ function createSimplexPayment(payment, verification) {
  */
 function createGemPayment(payment) {
   return axios.post(`${apiUrl}/buy_coins/payment/gem`, payment);
+}
+
+/**
+ * Creates Payment Request for Changelly
+ *
+ * @param {object} payment
+ * @param {string} payment.from - BTC|ETH
+ * @param {string} payment.to - ETH|BTC
+ * @param {string} payment.amount - crypto amount
+ *
+ * @returns {Promise}
+ */
+function createChangellyPayment(payment) {
+  return axios.post(`${apiUrl}/buy_coins/payment/changelly`, payment);
 }
 
 /**
