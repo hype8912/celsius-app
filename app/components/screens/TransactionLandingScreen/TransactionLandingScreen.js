@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Clipboard, Dimensions, FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Clipboard,
+  Dimensions,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -30,13 +38,6 @@ import VerifyProfile from "../VerifyProfile/VerifyProfile";
   state => ({
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
-    appState: state.app.appState,
-    twoFAStatus: state.security.twoFAStatus,
-    deepLinkData: state.deepLink.deepLinkData,
-    user: state.user.profile,
-    previousScreen: state.nav.previousScreen,
-    activeScreen: state.nav.activeScreen,
-    theme: state.user.appSettings.theme,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -54,59 +55,63 @@ class TransactionLandingScreen extends Component {
     this.state = {
       value: "",
       data: [
-        {   text: "prva strana",
-          type: 'celpay',
-          option: 'link',
+        {
+          text: "prva strana",
+          type: "celpay",
+          option: "link",
           step: 1,
-          onPressBack: ()=> console.log('onPressBack'),
+          onPressBack: () => console.log("onPressBack"),
           title: "Your`re about to send",
           cryptoAmount: 0.56851,
-          crypto: 'BTC',
+          crypto: "BTC",
           usdAmount: 4550,
-          date: '23 July 2020',
-          time: '11:23 AM',
-          boxMessage: 'After you confirm the transaction via email you will be able to share your CelPay link.',
-          buttonText: 'Share CeplPay link'},
+          date: "23 July 2020",
+          time: "11:23 AM",
+          boxMessage:
+            "After you confirm the transaction via email you will be able to share your CelPay link.",
+          buttonText: "Share CeplPay link",
+        },
         {
           text: "druga strana",
-          type: 'celpay',
-          option: 'link',
+          type: "celpay",
+          option: "link",
           step: 2,
-          onPressBack: ()=> console.log('onPressBack'),
+          onPressBack: () => console.log("onPressBack"),
           title: "Your`re about to send",
           cryptoAmount: 0.56851,
-          crypto: 'BTC',
+          crypto: "BTC",
           usdAmount: 4550,
-          date: '23 July 2020',
-          time: '11:23 AM',
-          boxMessage: 'After you confirm the transaction via email you will be able to share your CelPay link.',
-          buttonText: 'Share CeplPay link'
+          date: "23 July 2020",
+          time: "11:23 AM",
+          boxMessage:
+            "After you confirm the transaction via email you will be able to share your CelPay link.",
+          buttonText: "Share CeplPay link",
         },
         {
           text: "treca strana",
-          type: 'celpay',
-          option: 'link',
+          type: "celpay",
+          option: "link",
           step: 3,
-          onPressBack: () => console.log('onPressBack'),
+          onPressBack: () => console.log("onPressBack"),
           title: "Your`re about to send",
           cryptoAmount: 0.56851,
-          crypto: 'BTC',
+          crypto: "BTC",
           usdAmount: 4550,
-          date: '23 July 2020',
-          time: '11:23 AM',
-          boxMessage: 'After you confirm the transaction via email you will be able to share your CelPay link.',
-          buttonText: 'Share CeplPay link'
-        }
-      ]
-    }
+          date: "23 July 2020",
+          time: "11:23 AM",
+          boxMessage:
+            "After you confirm the transaction via email you will be able to share your CelPay link.",
+          buttonText: "Share CeplPay link",
+        },
+      ],
+    };
   }
 
   componentDidMount() {
-    const timeout = setTimeout(()=>{
-      this.refRBSheet.open()
-    },2000)
+    const timeout = setTimeout(() => {
+      this.refRBSheet.open();
+    }, 2000);
   }
-
 
   chooseTypeOfTransaction = data => {
     switch (data) {
@@ -135,106 +140,150 @@ class TransactionLandingScreen extends Component {
     }
   };
 
-
   renderCelPayFlow = (item, index) => {
-    if (item.option === 'link') {
+    if (item.option === "link") {
       if (index === 0) {
         return (
-          <View style={{width: widthPercentageToDP('100%'), backgroundColor: 'yellow'}}>
-            <View style={{flex:1, margin: 25}}>
-              <CelText type="H2" weight="600" margin={'0 100 0 0'}>You’re about to send</CelText>
+          <View
+            style={{
+              width: widthPercentageToDP("100%"),
+              backgroundColor: "yellow",
+            }}
+          >
+            <View style={{ flex: 1, margin: 25 }}>
+              <CelText type="H2" weight="600" margin={"0 100 0 0"}>
+                You’re about to send
+              </CelText>
               <CelText type="H1" weight="200">
-                {formatter.crypto(
-                  0.56851,
-                  'btc'.toUpperCase(),
-                  { precision: 5 }
-                )}
+                {formatter.crypto(0.56851, "btc".toUpperCase(), {
+                  precision: 5,
+                })}
               </CelText>
-              <CelText
-                type="H4" weight="400" margin={"0 0 40 0"}
-              > $ 4.550,00
+              <CelText type="H4" weight="400" margin={"0 0 40 0"}>
+                {" "}
+                $ 4.550,00
               </CelText>
-              <CelText type="H4" weight="200"> Date: 23. July 2020</CelText>
-              <CelText type="H4" weight="200" margin={"0 0 40 0"}> Time: 11:23 AM</CelText>
-              <Card size={"full"} color={STYLE.COLORS.CELSIUS_BLUE} margin={"0 0 100 0"}>
+              <CelText type="H4" weight="200">
+                {" "}
+                Date: 23. July 2020
+              </CelText>
+              <CelText type="H4" weight="200" margin={"0 0 40 0"}>
+                {" "}
+                Time: 11:23 AM
+              </CelText>
+              <Card
+                size={"full"}
+                color={STYLE.COLORS.CELSIUS_BLUE}
+                margin={"0 0 100 0"}
+              >
                 <CelText color={STYLE.COLORS.WHITE}>
-                  After you confirm the transaction via email you will be able to share your CelPay link.
+                  After you confirm the transaction via email you will be able
+                  to share your CelPay link.
                 </CelText>
               </Card>
-              <View style={{alignSelf: 'flex-end'}}>
-                <CelButton onPress={()=>{this.onPressNext(index)}}>Share CelPay link</CelButton>
+              <View style={{ alignSelf: "flex-end" }}>
+                <CelButton
+                  onPress={() => {
+                    this.onPressNext(index);
+                  }}
+                >
+                  Share CelPay link
+                </CelButton>
               </View>
             </View>
           </View>
-        )
+        );
       }
       if (index === 1) {
         return (
-          <View style={{width: widthPercentageToDP('100%'), backgroundColor: 'orange'}}>
-            <View style={{flex:1, margin: 25}}>
-              <CelText type="H2" weight="600" margin={'0 100 0 0'}>You’re about to send</CelText>
+          <View
+            style={{
+              width: widthPercentageToDP("100%"),
+              backgroundColor: "orange",
+            }}
+          >
+            <View style={{ flex: 1, margin: 25 }}>
+              <CelText type="H2" weight="600" margin={"0 100 0 0"}>
+                You’re about to send
+              </CelText>
               <CelText type="H1" weight="200">
-                {formatter.crypto(
-                  0.56851,
-                  'btc'.toUpperCase(),
-                  { precision: 5 }
-                )}
+                {formatter.crypto(0.56851, "btc".toUpperCase(), {
+                  precision: 5,
+                })}
               </CelText>
-              <CelText
-                type="H4" weight="400" margin={"0 0 40 0"}
-              > $ 4.550,00
+              <CelText type="H4" weight="400" margin={"0 0 40 0"}>
+                {" "}
+                $ 4.550,00
               </CelText>
-              <CelText type="H4" weight="200"> Date: 23. July 2020</CelText>
-              <CelText type="H4" weight="200" margin={"0 0 40 0"}> Time: 11:23 AM</CelText>
-              <Card size={"full"} color={STYLE.COLORS.CELSIUS_BLUE} margin={"0 0 100 0"}>
+              <CelText type="H4" weight="200">
+                {" "}
+                Date: 23. July 2020
+              </CelText>
+              <CelText type="H4" weight="200" margin={"0 0 40 0"}>
+                {" "}
+                Time: 11:23 AM
+              </CelText>
+              <Card
+                size={"full"}
+                color={STYLE.COLORS.CELSIUS_BLUE}
+                margin={"0 0 100 0"}
+              >
                 <CelText color={STYLE.COLORS.WHITE}>
-                  After you confirm the transaction via email you will be able to share your CelPay link.
+                  After you confirm the transaction via email you will be able
+                  to share your CelPay link.
                 </CelText>
               </Card>
-              <View style={{alignSelf: 'flex-end'}}>
-                <CelButton onPress={()=>{console.log('ShareCel pay pressed')}}>Share CelPay link</CelButton>
+              <View style={{ alignSelf: "flex-end" }}>
+                <CelButton
+                  onPress={() => {
+                    console.log("ShareCel pay pressed");
+                  }}
+                >
+                  Share CelPay link
+                </CelButton>
               </View>
             </View>
           </View>
-        )
+        );
       }
       if (index === 2) {
-        return <VerifyProfile modalOption navigation={this.props.navigation}/>
+        return <VerifyProfile modalOption navigation={this.props.navigation} />;
       }
     }
-  }
+  };
 
-  onPressNext = (index) => {
-    const { data } = this.state
-    console.log('index je: ', index)
-    if (index === data.length -1) {
-      this.refRBSheet.close()
+  onPressNext = index => {
+    const { data } = this.state;
+    console.log("index je: ", index);
+    if (index === data.length - 1) {
+      this.refRBSheet.close();
     } else {
       this.list.scrollToIndex({ index: index + 1 });
     }
-  }
+  };
 
   renderItem = ({ item, index }) => {
-    console.log('value u renderItemu')
-    console.log('item: ', item)
-    if (item.type === 'celpay') {
+    console.log("value u renderItemu");
+    console.log("item: ", item);
+    if (item.type === "celpay") {
       return (
         <TouchableWithoutFeedback
-          onPress={()=> {this.onPressNext(index)}}
+          onPress={() => {
+            this.onPressNext(index);
+          }}
         >
           {this.renderCelPayFlow(item, index)}
         </TouchableWithoutFeedback>
-      )
+      );
     }
-  }
-
+  };
 
   render() {
     // const style = TransactionLandingScreenStyle();
     const { formData, formErrors } = this.props;
-    const { data } = this.state
+    const { data } = this.state;
     let type;
-    console.log('value u renderu: ', this.state.value)
+    console.log("value u renderu: ", this.state.value);
     // return (
     //
     //   <View style={{flex: 1}}>
@@ -305,7 +354,7 @@ class TransactionLandingScreen extends Component {
           />
         )}
         <RBSheet
-          ref={r=>this.refRBSheet=r}
+          ref={r => (this.refRBSheet = r)}
           closeOnDragDown={true}
           closeOnPressMask={true}
           openDuration={200}
@@ -317,24 +366,23 @@ class TransactionLandingScreen extends Component {
             },
             wrapper: {
               borderRadius: 20,
-              backgroundColor: "transparent"
+              backgroundColor: "transparent",
             },
             draggableIcon: {
-              backgroundColor: "orange"
-            }
+              backgroundColor: "orange",
+            },
           }}
         >
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <Text>Ugurati</Text>
             <FlatList
-              ref={fl=>this.list=fl}
+              ref={fl => (this.list = fl)}
               data={data}
               pagingEnabled
               horizontal
               renderItem={this.renderItem}
             />
           </View>
-
         </RBSheet>
       </RegularLayout>
     );
