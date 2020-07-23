@@ -106,7 +106,14 @@ class CelButton extends Component {
 
     return (
       <View
-        style={{ paddingLeft: children ? 10 : 0, opacity: disabled ? 0.3 : 1 }}
+        style={{
+          paddingLeft: children ? 10 : 0,
+          opacity: disabled ? 0.3 : 1,
+          width: 40,
+          height: 40,
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
       >
         <Icon
           name={iconRight}

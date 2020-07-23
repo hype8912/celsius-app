@@ -107,7 +107,7 @@ class CelHeading extends Component {
     // By default if scene prop hideBack is true or it's first screen in the stack, hide back arrow
     return this.props.scene.index === 0 || hideBack === true ? null : (
       <CelButton
-        margin={this.isSearchHeader() ? "8 0 0 4" : null}
+        margin={this.isSearchHeader() ? "11 0 0 4" : null}
         iconRightColor={getColor(COLOR_KEYS.SUBHEADING_LIGHT_TEXT)}
         basic
         onPress={() => this.navigateBack(customBack, backScreenName)}
@@ -329,7 +329,7 @@ class CelHeading extends Component {
                     justifyContent: "center",
                     paddingTop: 5,
                     alignSelf: "center",
-                    marginLeft: 12,
+                    marginLeft: -4,
                   },
                 ]}
               >
