@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Clipboard, Dimensions, FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -15,11 +15,28 @@ import STYLE from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { widthPercentageToDP } from "../../../utils/styles-util";
+import HiddenField from "../../atoms/HiddenField/HiddenField";
+import VerifyProfileStyle from "../VerifyProfile/VerifyProfile.styles";
+import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
+import Spinner from "../../atoms/Spinner/Spinner";
+import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
+import { KEYPAD_PURPOSES } from "../../../constants/UI";
+import _ from "lodash";
+import { DEEP_LINKS } from "../../../constants/DATA";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import VerifyProfile from "../VerifyProfile/VerifyProfile";
 
 @connect(
   state => ({
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
+    appState: state.app.appState,
+    twoFAStatus: state.security.twoFAStatus,
+    deepLinkData: state.deepLink.deepLinkData,
+    user: state.user.profile,
+    previousScreen: state.nav.previousScreen,
+    activeScreen: state.nav.activeScreen,
+    theme: state.user.appSettings.theme,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -28,13 +45,14 @@ class TransactionLandingScreen extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "TransactionLandingScreen Screen",
+    title: "TransactionLandingScreen",
     right: "profile",
   });
 
   constructor(props) {
     super(props);
     this.state = {
+      value: "",
       data: [
         {   text: "prva strana",
           type: 'celpay',
@@ -144,7 +162,7 @@ class TransactionLandingScreen extends Component {
                 </CelText>
               </Card>
               <View style={{alignSelf: 'flex-end'}}>
-                <CelButton onPress={()=>{console.log('ShareCel pay pressed')}}>Share CelPay link</CelButton>
+                <CelButton onPress={()=>{this.onPressNext(index)}}>Share CelPay link</CelButton>
               </View>
             </View>
           </View>
@@ -181,34 +199,7 @@ class TransactionLandingScreen extends Component {
         )
       }
       if (index === 2) {
-        return (
-          <View style={{width: widthPercentageToDP('100%'), backgroundColor: 'green'}}>
-            <View style={{flex:1, margin: 25}}>
-              <CelText type="H2" weight="600" margin={'0 100 0 0'}>You’re about to send</CelText>
-              <CelText type="H1" weight="200">
-                {formatter.crypto(
-                  0.56851,
-                  'btc'.toUpperCase(),
-                  { precision: 5 }
-                )}
-              </CelText>
-              <CelText
-                type="H4" weight="400" margin={"0 0 40 0"}
-              > $ 4.550,00
-              </CelText>
-              <CelText type="H4" weight="200"> Date: 23. July 2020</CelText>
-              <CelText type="H4" weight="200" margin={"0 0 40 0"}> Time: 11:23 AM</CelText>
-              <Card size={"full"} color={STYLE.COLORS.CELSIUS_BLUE} margin={"0 0 100 0"}>
-                <CelText color={STYLE.COLORS.WHITE}>
-                  After you confirm the transaction via email you will be able to share your CelPay link.
-                </CelText>
-              </Card>
-              <View style={{alignSelf: 'flex-end'}}>
-                <CelButton onPress={()=>{console.log('ShareCel pay pressed')}}>Share CelPay link</CelButton>
-              </View>
-            </View>
-          </View>
-        )
+        return <VerifyProfile modalOption navigation={this.props.navigation}/>
       }
     }
   }
@@ -224,13 +215,14 @@ class TransactionLandingScreen extends Component {
   }
 
   renderItem = ({ item, index }) => {
+    console.log('value u renderItemu')
     console.log('item: ', item)
     if (item.type === 'celpay') {
       return (
         <TouchableWithoutFeedback
           onPress={()=> {this.onPressNext(index)}}
         >
-          { this.renderCelPayFlow(item, index) }
+          {this.renderCelPayFlow(item, index)}
         </TouchableWithoutFeedback>
       )
     }
@@ -242,7 +234,7 @@ class TransactionLandingScreen extends Component {
     const { formData, formErrors } = this.props;
     const { data } = this.state
     let type;
-
+    console.log('value u renderu: ', this.state.value)
     // return (
     //
     //   <View style={{flex: 1}}>
@@ -332,24 +324,17 @@ class TransactionLandingScreen extends Component {
             }
           }}
         >
-          <FlatList
-            ref={fl=>this.list=fl}
-            data={data}
-            pagingEnabled
-            horizontal
-            renderItem={this.renderItem}
-            // renderItem={({ item,index }  )=>{
-            //   return (
-            //     <TouchableOpacity
-            //       style={{backgroundColor: 'green', height: 450, width: 400}}
-            //       onPress={()=>this.list.scrollToIndex({ index: index+1})}
-            //     >
-            //       {this.renderItem(item)}
-            //       {/*<Text>{item.text}</Text>*/}
-            //     </TouchableOpacity>
-            //   )}
-            // }
-          />
+          <View style={{flex: 1}}>
+            <Text>Ugurati</Text>
+            <FlatList
+              ref={fl=>this.list=fl}
+              data={data}
+              pagingEnabled
+              horizontal
+              renderItem={this.renderItem}
+            />
+          </View>
+
         </RBSheet>
       </RegularLayout>
     );

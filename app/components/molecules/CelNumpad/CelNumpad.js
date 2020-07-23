@@ -108,7 +108,6 @@ class CelNumpad extends Component {
 
   changeInputText = text => {
     const { value, onPress, updateFormField, field } = this.props;
-
     let newValue;
     if (text.includes(".") && text.includes(",")) {
       newValue = value;
@@ -119,6 +118,8 @@ class CelNumpad extends Component {
     if (onPress) {
       onPress(newValue);
     } else {
+      console.log('field: ', field)
+      console.log('newValue: ', newValue)
       updateFormField(field, newValue);
     }
   };

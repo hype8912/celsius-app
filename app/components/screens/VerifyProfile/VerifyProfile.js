@@ -308,6 +308,32 @@ class VerifyProfile extends Component {
     );
   }
 
+  renderModalVerificationScreen = () => {
+    const { value } = this.state;
+    const { actions } = this.props;
+
+    const shouldShow2FA = this.shouldShow2FA();
+    const field = shouldShow2FA ? "code" : "pin";
+    const onPressFunc = shouldShow2FA
+      ? this.handle2FAChange
+      : this.handlePINChange;
+    const style = VerifyProfileStyle();
+    return (
+      <View style={[style.container, {paddingTop: 50, backgroundColor: 'red'}]}>
+        {shouldShow2FA ? this.render2FA() : this.renderPIN()}
+        <CelNumpad
+          field={field}
+          value={value}
+          updateFormField={actions.updateFormField}
+          setKeypadInput={actions.setKeypadInput}
+          toggleKeypad={actions.toggleKeypad}
+          onPress={onPressFunc}
+          purpose={KEYPAD_PURPOSES.VERIFICATION}
+        />
+      </View>
+    )
+  }
+
   render() {
     const { value } = this.state;
     const { actions, navigation, appState } = this.props;
@@ -319,6 +345,8 @@ class VerifyProfile extends Component {
       ? this.handle2FAChange
       : this.handlePINChange;
     const style = VerifyProfileStyle();
+
+    if (this.props.modalOption) return this.renderModalVerificationScreen()
 
     return (
       <RegularLayout
