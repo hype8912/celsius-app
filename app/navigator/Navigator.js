@@ -111,6 +111,7 @@ import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/Hod
 import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
+import TransactionLandingScreen from "../components/screens/TransactionLandingScreen/TransactionLandingScreen";
 
 export const screens = {
   /**
@@ -122,6 +123,11 @@ export const screens = {
   Maintenance,
   TooManyRequests,
   Storybook,
+
+  /**
+   * Transactions
+   */
+  TransactionLandingScreen,
 
   /**
    * Onboarding
