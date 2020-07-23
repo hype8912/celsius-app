@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ScrollView, View } from "react-native";
+import BigNumber from "bignumber.js";
 
 import SwapCoinsConfirmModalStyle from "./SwapCoinsConfirmModal.styles";
 import CelModal from "../CelModal/CelModal.js";
@@ -29,8 +30,9 @@ class SwapCoinsConfirmModal extends Component {
 
     actions.navigateTo("VerifyProfile", {
       onSuccess: async () => {
-        await actions.createChangellyPayment();
-        actions.navigateTo("GetCoinsLading");
+        // await actions.createChangellyPayment();
+        actions.showMessage("success", "Great Swap my friend!");
+        actions.navigateTo("GetCoinsLanding");
       },
     });
     actions.closeModal();
@@ -39,6 +41,9 @@ class SwapCoinsConfirmModal extends Component {
   render() {
     const { formData } = this.props;
     const style = SwapCoinsConfirmModalStyle();
+
+    const fee = new BigNumber(formData.fromAmount).multipliedBy(0.005);
+    const totalAmount = fee.plus(formData.fromAmount);
 
     return (
       <CelModal style={style.container} name={MODALS.SWAP_COINS_CONFIRM_MODAL}>
@@ -80,7 +85,7 @@ class SwapCoinsConfirmModal extends Component {
                 Price:
               </CelText>
               <CelText type={"H6"} align={"right"} weight="bold">
-                {formatter.fiat(formData.fromAmount, formData.fromCoin)}
+                {formatter.crypto(formData.fromAmount, formData.fromCoin)}
               </CelText>
             </View>
             <Separator />
@@ -94,7 +99,7 @@ class SwapCoinsConfirmModal extends Component {
                 </CelText>
               </View>
               <CelText type={"H6"} align={"right"} weight="bold">
-                {formatter.fiat(1, formData.fromCoin)}
+                {formatter.crypto(fee, formData.fromCoin)}
               </CelText>
             </View>
             <Separator />
@@ -103,7 +108,7 @@ class SwapCoinsConfirmModal extends Component {
                 Transfer Amount:
               </CelText>
               <CelText type={"H6"} align={"right"} weight="bold">
-                {formatter.fiat(20, formData.fiatCoin)}
+                {formatter.crypto(totalAmount, formData.fromCoin)}
               </CelText>
             </View>
           </View>
