@@ -13,6 +13,7 @@ import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
 import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import cryptoUtil from "../../../utils/crypto-util";
+import CelButton from "../../atoms/CelButton/CelButton";
 
 @connect(
   state => ({
@@ -189,6 +190,17 @@ class EnterAmount extends Component {
             onChange={this.handleCoinChange}
             balance={balanceCrypto.toNumber()}
           />
+        </View>
+        <View>
+          <CelButton
+            style={{ position: "absolute", right: 20, top: 20 }}
+            margin={"20 0 0 0"}
+            iconRight={"IconArrowRight"}
+            iconRightHeight={"20"}
+            iconRightColor={"white"}
+          >
+            Next
+          </CelButton>
         </View>
         <CelNumpad
           field={formData.isUsd ? "amountUsd" : "amountCrypto"}
