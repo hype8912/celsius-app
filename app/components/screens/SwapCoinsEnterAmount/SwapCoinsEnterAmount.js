@@ -79,7 +79,7 @@ class SwapCoinsEnterAmount extends Component {
     const amountFromCoin =
       currencyRatesShort[cryptoProp] * Number(formData.toAmount);
 
-    actions.updateFormField("amountFromCoin", amountFromCoin);
+    actions.updateFormField("fromAmount", amountFromCoin);
     actions.openModal(MODALS.GET_COINS_CONFIRM_MODAL);
   };
 
