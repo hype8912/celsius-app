@@ -95,6 +95,12 @@ class CelSelect extends Component {
     return null;
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.value) {
+      this.getItems({ type: this.props.type });
+    }
+  }
+
   constructor(props) {
     super(props);
 

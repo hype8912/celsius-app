@@ -15,9 +15,9 @@ const base = {
     marginTop: 20,
   },
   circleWrapper: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",

@@ -317,7 +317,6 @@ class WithdrawEnterAmount extends Component {
       );
     }
     const coin = formData.coin || "";
-
     const coinData = walletSummary.coins.find(
       c => c.short === coin.toUpperCase()
     ) || { amount: "", amount_usd: "" };

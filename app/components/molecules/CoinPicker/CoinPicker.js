@@ -26,19 +26,16 @@ class CoinPicker extends Component {
   constructor(props) {
     super(props);
 
-    const { type, coin, availableCoins } = props;
+    const { coin, availableCoins } = props;
 
-    let coinListFormatted = [];
-    if (type === "withIcon") {
-      if (coin !== "USD" && availableCoins)
-        availableCoins.forEach(c => {
-          if (c.value !== "USD") coinListFormatted.push(c);
-        });
-      if (coin === "USD")
-        coinListFormatted.push({ label: "Dollar (USD)", value: "USD" });
-    } else {
-      coinListFormatted = availableCoins;
-    }
+    const coinListFormatted = [];
+
+    if (coin !== "USD" && availableCoins)
+      availableCoins.forEach(c => {
+        if (c.value !== "USD") coinListFormatted.push(c);
+      });
+    if (coin === "USD")
+      coinListFormatted.push({ label: "Dollar (USD)", value: "USD" });
 
     this.state = {
       coinListFormatted,
@@ -65,8 +62,7 @@ class CoinPicker extends Component {
     const style = CoinPickerStyle();
     const icon = coin ? `Icon${coin}` : "StackedCoins";
     const label = coin
-      ? coinListFormatted.find(c => c.value === coin) &&
-        coinListFormatted.find(c => c.value === coin).label
+      ? coinListFormatted.find(c => c.value === coin).value
       : "Choose a coin";
 
     switch (type) {
@@ -121,33 +117,54 @@ class CoinPicker extends Component {
 
       case "basic":
         return (
-          <View style={style.selectWrapper}>
-            <TouchableOpacity
-              onPress={() =>
-                navigateTo("SelectCoin", { coinListFormatted, onChange, field })
-              }
+          <TouchableOpacity
+            onPress={() =>
+              navigateTo("SelectCoin", { coinListFormatted, onChange, field })
+            }
+          >
+            <View
+              style={{
+                alignContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                flexDirection: "row",
+                paddingHorizontal: 5,
+                paddingVertical: 5,
+              }}
             >
-              <View
-                style={{
-                  alignContent: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  flexDirection: "row",
-                  paddingHorizontal: 5,
-                  paddingVertical: 5,
-                }}
+              <Icon width="20" height="20" name={icon} fill={iconColor} />
+              <CelText
+                margin={"0 0 0 4"}
+                type="H3"
+                style={{ paddingRight: 10 }}
               >
-                <CelText type="H3" style={{ paddingRight: 10 }}>
-                  {label}
-                </CelText>
-                <Icon
-                  width="13"
-                  height="13"
-                  name="CaretDown"
-                  fill={iconColor}
-                />
-              </View>
-            </TouchableOpacity>
+                {label}
+              </CelText>
+              <Icon width="13" height="13" name="CaretDown" fill={iconColor} />
+            </View>
+          </TouchableOpacity>
+        );
+      case "basic2":
+        return (
+          <View
+            style={{
+              alignContent: "center",
+              alignItems: "center",
+              alignSelf: "center",
+              flexDirection: "row",
+              paddingHorizontal: 5,
+              paddingVertical: 5,
+            }}
+          >
+            <View style={[style.circleWrapper]}>
+              <CelText color={iconColor} weight={"300"} type={"H7"}>
+                $
+              </CelText>
+            </View>
+            <CelText margin={"0 0 0 4"} type="H3" style={{ paddingRight: 10 }}>
+              {label}
+            </CelText>
+            <Icon width="13" height="13" name="CaretDown" fill={iconColor} />
           </View>
         );
 
