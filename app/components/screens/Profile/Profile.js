@@ -2,7 +2,14 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import React, { Component } from "react";
 // import Constants from 'expo-constants';
-import { Image, Linking, TouchableOpacity, View, Text, FlatList } from "react-native";
+import {
+  Image,
+  Linking,
+  TouchableOpacity,
+  View,
+  Text,
+  FlatList,
+} from "react-native";
 import * as appActions from "../../../redux/actions";
 
 import CelText from "../../atoms/CelText/CelText";
@@ -26,12 +33,12 @@ import { getTheme } from "../../../utils/styles-util";
 import Constants from "../../../../constants";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import BottomSheet from 'reanimated-bottom-sheet'
+import BottomSheet from "reanimated-bottom-sheet";
 import RBSheet from "react-native-raw-bottom-sheet";
-import ViewPager from '@react-native-community/viewpager';
-
-
-
+import ViewPager from "@react-native-community/viewpager";
+import formatter from "../../../utils/formatter";
+import Card from "../../atoms/Card/Card";
+import STYLE from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -74,10 +81,9 @@ class Profile extends Component {
     const appVersion = await appUtil.getRevisionId();
     this.setState({ revisionId: appVersion.revisionId });
 
-    const timeout = setTimeout(()=>{
-      this.refRBSheet.open()
-
-    },2000)
+    const timeout = setTimeout(() => {
+      this.refRBSheet.open();
+    }, 2000);
   }
 
   componentDidUpdate(prevProps) {
@@ -114,6 +120,26 @@ class Profile extends Component {
     await actions.sendCsvEmail();
   };
 
+  renderCelPayFlow = (option, step) => {
+    if (option === "link") {
+      if (step === 1) {
+        return <View></View>;
+      }
+      if (step === 2) {
+        return <View></View>;
+      }
+      if (step === 3) {
+        return <View></View>;
+      }
+    }
+  };
+
+  renderItem = (type, option, step) => {
+    if (type === "celpay") {
+      this.renderCelPayFlow(option, step);
+    }
+  };
+
   render() {
     const {
       profilePicture,
@@ -133,17 +159,52 @@ class Profile extends Component {
     );
 
     const data = [
-      {text: "prva strana"},
-      {text: "druga strana"},
-      {text: "prva strana"},
-      {text: "druga strana"},
-    ]
+      { text: "prva strana" },
+      {
+        text: "druga strana",
+        type: "celpay",
+        option: "link",
+        step: 2,
+        onPressBack: () => console.log("onPressBack"),
+        title: "Your`re about to send",
+        cryptoAmount: 0.56851,
+        crypto: "BTC",
+        usdAmount: 4550,
+        date: "23 July 2020",
+        time: "11:23 AM",
+        boxMessage:
+          "After you confirm the transaction via email you will be able to share your CelPay link.",
+        buttonText: "Share CeplPay link",
+      },
+      { text: "treca strana" },
+    ];
 
     return (
-      <View style={{flex: 1, backgroundColor: 'yellow'}}>
-        <View style={{ height: 150 }}><Text>Ovo je neki tekst</Text></View>
+      <View style={{ flex: 1, backgroundColor: "yellow" }}>
+        <View style={{ flex: 1 }}>
+          <CelText type="H2">You’re about to send</CelText>
+          <CelText type="H6" weight="200">
+            {formatter.crypto(0.56851, "btc".toUpperCase(), { precision: 5 })}
+          </CelText>
+          <CelText> $ 4.550,00</CelText>
+          <CelText> Date: 23. July 2020</CelText>
+          <CelText> Time: 11:23 AM</CelText>
+          <Card size={"full"} color={STYLE.COLORS.CELSIUS_BLUE}>
+            <CelText color={STYLE.COLORS.WHITE}>
+              After you confirm the transaction via email you will be able to
+              share your CelPay link.
+            </CelText>
+          </Card>
+          <CelButton
+            onPress={() => {
+              console.log("ShareCel pay pressed");
+            }}
+          >
+            Share CelPay link
+          </CelButton>
+        </View>
         <RBSheet
-          ref={r=>this.refRBSheet=r}
+          ref={r => (this.refRBSheet = r)}
           closeOnDragDown={true}
           closeOnPressMask={true}
           openDuration={200}
@@ -155,39 +216,30 @@ class Profile extends Component {
             },
             wrapper: {
               borderRadius: 20,
-              backgroundColor: "transparent"
+              backgroundColor: "transparent",
             },
             draggableIcon: {
-              backgroundColor: "orange"
-            }
+              backgroundColor: "orange",
+            },
           }}
         >
-          {/*<ViewPager style={{flex:1}} initialPage={0}>*/}
-          {/*  <View key="1">*/}
-          {/*    <Text>First page</Text>*/}
-          {/*  </View>*/}
-          {/*  <View key="2">*/}
-          {/*    <Text>Second page</Text>*/}
-          {/*  </View>*/}
-          {/*</ViewPager>*/}
-
           <FlatList
-            ref={fl=>this.list=fl}
+            ref={fl => (this.list = fl)}
             data={data}
             pagingEnabled
             horizontal
-            renderItem={({ item,index }  )=> (
-              <TouchableOpacity style={{backgroundColor: 'green', height: 450, width: 400}}
-                onPress={()=>this.list.scrollToIndex({ index: index+1})}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                style={{ backgroundColor: "green", height: 450, width: 400 }}
+                onPress={() => this.list.scrollToIndex({ index: index + 1 })}
               >
                 <Text>{item.text}</Text>
               </TouchableOpacity>
-            )
-            }
+            )}
           />
         </RBSheet>
       </View>
-    )
+    );
 
     // return (
     //   <RegularLayout>
