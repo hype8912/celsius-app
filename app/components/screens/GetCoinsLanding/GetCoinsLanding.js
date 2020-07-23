@@ -130,7 +130,9 @@ class GetCoinsLanding extends Component {
 
         <MultiInfoCardButton
           textButton={"Buy with Crypto"}
-          explanation={"Buy with crypto easily."}
+          explanation={
+            "Buy with crypto easily and safely through our partner Changelly."
+          }
           darkImage={require("../../../../assets/images/icons/crypto-dark.png")}
           lightImage={require("../../../../assets/images/icons/crypto.png")}
           unicornImage={require("../../../../assets/images/icons/crypto-unicorn.png")}
