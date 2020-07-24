@@ -1,12 +1,19 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import React, { Component } from "react";
-import { Image, Linking, TouchableOpacity, View, Animated, Platform, Dimensions } from "react-native";
+import {
+  Image,
+  Linking,
+  TouchableOpacity,
+  View,
+  Animated,
+  Platform,
+} from "react-native";
 import { Extrapolate } from "react-native-reanimated";
 import * as appActions from "../../../redux/actions";
 
 import CelText from "../../atoms/CelText/CelText";
-import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
+// import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import Separator from "../../atoms/Separator/Separator";
 import IconButton from "../../organisms/IconButton/IconButton";
@@ -27,7 +34,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
-import Card from "../../atoms/Card/Card";
+// import Card from "../../atoms/Card/Card";
 
 @connect(
   state => ({
@@ -56,7 +63,7 @@ class Profile extends Component {
       updatingTaxInfo: false,
       revisionId: "",
       y: 0,
-      yOffset: new Animated.Value(0)
+      yOffset: new Animated.Value(0),
     };
   }
 
@@ -105,37 +112,32 @@ class Profile extends Component {
   };
 
   getHeader = () => {
-    const {yOffset} = this.state
+    const { yOffset } = this.state;
     const opacity = yOffset.interpolate({
       inputRange: [20, 150],
       outputRange: [0, 1],
-      extrapolate: Extrapolate.CLAMP
-    })
+      extrapolate: Extrapolate.CLAMP,
+    });
     return (
-      <Animated.View style={{
-        width: "100%",
-        paddingTop: 25,
-        paddingBottom: 15,
-        paddingHorizontal: 10,
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-        backgroundColor: getColor(COLOR_KEYS.CARDS),
-        opacity
-      }}>
-        <View style={{marginLeft: -25}}>
-          <Icon
-            name="IconChevronLeft"
-            height={"25"}
-            width={"25"}
-          />
+      <Animated.View
+        style={{
+          width: "100%",
+          paddingTop: 25,
+          paddingBottom: 15,
+          paddingHorizontal: 10,
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-around",
+          alignItems: "center",
+          backgroundColor: getColor(COLOR_KEYS.CARDS),
+          opacity,
+        }}
+      >
+        <View style={{ marginLeft: -25 }}>
+          <Icon name="IconChevronLeft" height={"25"} width={"25"} />
         </View>
         <View>
-          <CelText
-            type={"H2"}
-            weight={"600"}
-          >
+          <CelText type={"H2"} weight={"600"}>
             Title
           </CelText>
         </View>
@@ -154,47 +156,52 @@ class Profile extends Component {
                 ios: {
                   ...STYLES.SHADOW_STYLES,
                 },
-              }),}}
+              }),
+            }}
             source={require("../../../../assets/images/empty-profile/empty-profile.png")}
             resizeMethod="resize"
             resizeMode="cover"
           />
         </View>
       </Animated.View>
-
-    )
-  }
+    );
+  };
 
   renderExpandedHeader = () => {
     const {
       profilePicture,
       user,
       actions,
-      kycStatus,
-      callsInProgress,
+      // kycStatus,
+      // callsInProgress,
     } = this.props;
-    const {yOffset} = this.state
-    const headerHeight = yOffset.interpolate({
-      inputRange: [0, 370],
-      outputRange: [370, 0],
-      extrapolate: Extrapolate.CLAMP
-    })
+    const { yOffset } = this.state;
+    let headerHeight;
+    // console.log("yOffset", yOffset);
+    if (yOffset < 370) {
+      headerHeight = yOffset.interpolate({
+        inputRange: [0, 370],
+        outputRange: [370, 0],
+        extrapolate: Extrapolate.CLAMP,
+      });
+    }
     return (
       <Animated.View
         style={{
-
           height: headerHeight,
-          backgroundColor: getColor(COLOR_KEYS.BANNER_INFO)
+          backgroundColor: getColor(COLOR_KEYS.BANNER_INFO),
         }}
       >
-        <View style={{
-          marginTop: 50,
-          flex: 1,
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginLeft: 40,
-        }}>
-          <View style={{marginLeft: -25}}>
+        <View
+          style={{
+            marginTop: 50,
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginLeft: 40,
+          }}
+        >
+          <View style={{ marginLeft: -25 }}>
             <Icon
               name="IconChevronLeft"
               height={"25"}
@@ -203,22 +210,26 @@ class Profile extends Component {
             />
           </View>
           <View>
-            <CelText
-              type={"H2"}
-              weight={"600"}
-            >
+            <CelText type={"H2"} weight={"600"}>
               Title
             </CelText>
           </View>
           <View
             style={{
-              marginRight: 20
+              marginRight: 20,
             }}
           >
             <CelText>Log out</CelText>
           </View>
         </View>
-        <View style={{ flexDirection: "row", alignSelf: "flex-start", marginTop: 20, padding: 20 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignSelf: "flex-start",
+            marginTop: 20,
+            padding: 20,
+          }}
+        >
           {profilePicture ? (
             <Image
               style={{
@@ -258,7 +269,7 @@ class Profile extends Component {
             <TouchableOpacity
               onPress={() => actions.navigateTo("ChangeAvatar")}
             >
-              <CelText margin="10 0 0 0"  color={"white"}>
+              <CelText margin="10 0 0 0" color={"white"}>
                 Change photo
               </CelText>
             </TouchableOpacity>
@@ -267,7 +278,7 @@ class Profile extends Component {
         <View
           style={{
             marginHorizontal: 20,
-            marginBottom: 20
+            marginBottom: 20,
           }}
         >
           <View
@@ -290,15 +301,19 @@ class Profile extends Component {
                   justifyContent: "space-around",
                 }}
               >
-                <Icon
-                  name={"Present"}
-                  height={"25"}
-                  width={"25"}
-                />
-                <View style={{
-                  width: 110
-                }}>
-                  <CelText margin={"0 0 0 10"} type={"H6"} weight={"400"} color={getColor(COLOR_KEYS.CARDS)} align={"left"}>
+                <Icon name={"Present"} height={"25"} width={"25"} />
+                <View
+                  style={{
+                    width: 110,
+                  }}
+                >
+                  <CelText
+                    margin={"0 0 0 10"}
+                    type={"H6"}
+                    weight={"400"}
+                    color={getColor(COLOR_KEYS.CARDS)}
+                    align={"left"}
+                  >
                     Enter a promo code
                   </CelText>
                 </View>
@@ -312,15 +327,19 @@ class Profile extends Component {
                     justifyContent: "space-around",
                   }}
                 >
-                  <Icon
-                    name={"Refer"}
-                    height={"25"}
-                    width={"25"}
-                  />
-                  <View style={{
-                    width: 100
-                  }}>
-                    <CelText margin={"0 0 0 10"} type={"H6"} weight={"400"} color={getColor(COLOR_KEYS.CARDS)} align={"left"}>
+                  <Icon name={"Refer"} height={"25"} width={"25"} />
+                  <View
+                    style={{
+                      width: 100,
+                    }}
+                  >
+                    <CelText
+                      margin={"0 0 0 10"}
+                      type={"H6"}
+                      weight={"400"}
+                      color={getColor(COLOR_KEYS.CARDS)}
+                      align={"left"}
+                    >
                       Refer your friends
                     </CelText>
                   </View>
@@ -330,23 +349,18 @@ class Profile extends Component {
           </View>
         </View>
       </Animated.View>
-    )
-  }
-  handleScrollAnimation = (val) => {
-    console.log("val: ", val);
+    );
+  };
+  handleScrollAnimation = val => {
+    // console.log("val: ", val);
     this.setState({
       y: val,
-      yOffset: new Animated.Value(val)
-    })
-  }
+      yOffset: new Animated.Value(val),
+    });
+  };
   render() {
-    const {
-      user,
-      actions,
-      kycStatus,
-      callsInProgress,
-    } = this.props;
-    const { revisionId } = this.state;
+    const { user, actions, kycStatus, callsInProgress } = this.props;
+    const { revisionId, yOffset } = this.state;
     const style = ProfileStyle();
     const { ENV } = Constants;
 
@@ -361,21 +375,22 @@ class Profile extends Component {
         stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
-        onScroll={event => this.handleScrollAnimation(event.nativeEvent.contentOffset.y)}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: yOffset } } }],
+          { useNativeDriver: true }
+        )}
       >
-        <View style={{position: "absolute", top: 0, left: 0}}>
+        <View style={{ position: "absolute", top: 0, left: 0 }}>
           {this.getHeader()}
         </View>
-          {this.renderExpandedHeader()}
+        {this.renderExpandedHeader()}
         <KYCTrigger actions={actions} kycType={kycStatus} />
         <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
 
         <View>
-
-
           <View
             style={{
-              padding: 20
+              padding: 20,
             }}
           >
             <IconButton
@@ -529,8 +544,7 @@ class Profile extends Component {
 
           <ReferralSendModal />
           <RegisterPromoCodeModal type={"celsius"} />
-          </View>
-
+        </View>
       </Animated.ScrollView>
     );
   }

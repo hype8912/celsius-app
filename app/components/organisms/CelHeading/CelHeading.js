@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  Image,
-  View,
-  SafeAreaView,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
+import { Image, View, StatusBar, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -367,6 +361,7 @@ class CelHeading extends Component {
   };
 
   render() {
+    // eslint-disable-next-line no-unused-vars
     let containerStyle;
     const { internetConnected, scene } = this.props;
     const sceneOptions = scene.descriptor.options;
@@ -383,15 +378,15 @@ class CelHeading extends Component {
       containerStyle = style.headingBackground;
     }
 
-    const Content = this.getContent;
+    // const Content = this.getContent;
 
-    return null
-  //   return (
-  //     <SafeAreaView style={containerStyle}>
-  //        <StatusBar />
-  //        <Content />
-  //     </SafeAreaView>
-  //   );
+    return null;
+    //   return (
+    //     <SafeAreaView style={containerStyle}>
+    //        <StatusBar />
+    //        <Content />
+    //     </SafeAreaView>
+    //   );
   }
 }
 
