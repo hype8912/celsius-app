@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Animated,
-  Image,
-  Platform,
-  Dimensions,
-} from "react-native";
+import { View, TouchableOpacity, Animated, Image } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withNavigationFocus } from "react-navigation";
@@ -35,12 +28,6 @@ import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import Counter from "../../molecules/Counter/Counter";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import STYLES from "../../../constants/STYLES";
-
-const { height } = Dimensions.get("window");
-const ratio = (1 + Math.sqrt(5)) / 2;
-const MIN_HEADER_HEIGHT = 80 + 5;
-const MAX_HEADER_HEIGHT = height * (1 - 1 / ratio);
-const HEADER_DELTA = MAX_HEADER_HEIGHT - MIN_HEADER_HEIGHT;
 
 @connect(
   state => ({
@@ -158,6 +145,7 @@ class CoinDetails extends Component {
 
   getHeader = () => {
     const { yOffset } = this.state;
+    const coinDetails = this.getCoinDetails();
     const opacity = yOffset.interpolate({
       inputRange: [20, 150],
       outputRange: [0, 1],
@@ -178,51 +166,227 @@ class CoinDetails extends Component {
           opacity,
         }}
       >
-        <View style={{ marginLeft: -25 }}>
+        <View style={{ marginLeft: -25, flex: 0.2 }}>
           <Icon name="IconChevronLeft" height={"25"} width={"25"} />
         </View>
-        <View>
+
+        <View style={{ flex: 0.8, alignItems: "center" }}>
           <CelText type={"H2"} weight={"600"}>
-            Title
+            {formatter.crypto(coinDetails.amount, coinDetails.short)}
           </CelText>
         </View>
-        <View>
-          <Image
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: 18,
-
-              ...Platform.select({
-                android: {
-                  borderColor: "#E9E9E9",
-                  borderWidth: 1,
-                },
-                ios: {
-                  ...STYLES.SHADOW_STYLES,
-                },
-              }),
-            }}
-            source={require("../../../../assets/images/empty-profile/empty-profile.png")}
-            resizeMethod="resize"
-            resizeMode="cover"
-          />
-        </View>
+        <View style={{ flex: 0.2 }} />
       </Animated.View>
     );
   };
 
   getExpandedHeader = () => {
     const { currency, yOffset } = this.state;
+    const { currencies } = this.props;
+    const theme = getTheme();
+    const style = CoinDetailsStyle();
+
+    const coinDetails = this.getCoinDetails();
+    const coinPrice = currencies
+      ? currencies
+          .filter(c => c.short === coinDetails.short)
+          .map(m => m.market_quotes_usd)[0]
+      : {};
+    let headerHeight;
+    if (yOffset < 370) {
+      headerHeight = yOffset.interpolate({
+        inputRange: [0, 370],
+        outputRange: [370, 0],
+        extrapolate: Extrapolate.CLAMP,
+      });
+    }
+
+    return (
+      <Animated.View
+        style={[
+          {
+            backgroundColor: getColor(COLOR_KEYS.BANNER_INFO),
+            height: headerHeight,
+          },
+        ]}
+      >
+        <View
+          style={{
+            backgroundColor: getColor(COLOR_KEYS.BANNER_INFO),
+            paddingVertical: 20,
+            marginHorizontal: 20,
+            justifyContent: "center",
+            alignItems: "center",
+            // borderWidth: 2,
+            // borderColor: 'red'
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 0.5, alignItems: "flex-start" }}>
+              <Icon name="IconChevronLeft" height={"25"} width={"25"} />
+            </View>
+
+            <View style={{ flex: 0.5, alignItems: "flex-end" }}>
+              <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 50,
+                  borderWidth: 4,
+                  borderColor: STYLES.COLORS.WHITE,
+                }}
+                source={require("../../../../assets/images/empty-profile/empty-profile.png")}
+                resizeMethod="resize"
+              />
+            </View>
+          </View>
+
+          <View style={[{ width: "100%" }]}>
+            <View
+              style={[
+                style.amountFlexBox,
+                { flexDirection: "column", height: 100 },
+              ]}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginBottom: 5,
+                  alignSelf: "flex-start",
+                }}
+              >
+                <CoinIcon
+                  customStyles={[style.coinImage, { marginRight: 8 }]}
+                  theme={theme}
+                  url={currency.image_url}
+                  coinShort={currency.short}
+                />
+                <CelText
+                  weight="600"
+                  type="H2"
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                  style={{ marginTop: 5 }}
+                >
+                  {currency.displayName} ({currency.short})
+                </CelText>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Counter
+                  weight="600"
+                  type="H3"
+                  margin={"3 0 3 0"}
+                  number={coinDetails.amount_usd.toNumber()}
+                  speed={5}
+                  usd
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                />
+                <CelText
+                  weight="300"
+                  type="H5"
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                >
+                  {formatter.crypto(coinDetails.amount, coinDetails.short)}
+                </CelText>
+              </View>
+            </View>
+            <View>
+              <View
+                style={{
+                  backgroundColor: getColor(COLOR_KEYS.PARAGRAPH),
+                  paddingVertical: 20,
+                  borderRadius: 8,
+                  flex: 1,
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ flex: 0.45, alignItems: "center" }}>
+                  <CelText
+                    type={"H2"}
+                    weight={"600"}
+                    align={"center"}
+                    color={getColor(COLOR_KEYS.CARDS)}
+                  >
+                    {formatter.usd(coinPrice.price)}
+                  </CelText>
+                  <CelText
+                    type={"H6"}
+                    weight={"300"}
+                    align={"center"}
+                    margin={"10 0 0 0"}
+                    color={getColor(COLOR_KEYS.SEPARATORS)}
+                  >{`1 ${coinDetails.short} price`}</CelText>
+                </View>
+
+                <View style={{ flex: 0.1, alignItems: "center" }}>
+                  <Separator
+                    vertical
+                    color={getColor(COLOR_KEYS.SECTION_TITLE)}
+                  />
+                </View>
+
+                <View style={{ flex: 0.45, alignItems: "center" }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <Icon
+                      name={
+                        coinPrice.percent_change_24h < 0
+                          ? `ArrowDown`
+                          : `ArrowUp`
+                      }
+                      height={"10"}
+                      width={"10"}
+                    />
+                    <CelText
+                      type={"H2"}
+                      weight={"600"}
+                      align={"center"}
+                      color={getColor(COLOR_KEYS.CARDS)}
+                    >
+                      {formatter.round(coinPrice.percent_change_24h, {
+                        precision: 2,
+                      })}
+                      %
+                    </CelText>
+                  </View>
+                  <CelText
+                    type={"H6"}
+                    weight={"300"}
+                    align={"center"}
+                    margin={"10 0 0 0"}
+                    color={getColor(COLOR_KEYS.SEPARATORS)}
+                  >
+                    Last 24h change
+                  </CelText>
+                </View>
+              </View>
+            </View>
+            <Separator color={getColor(COLOR_KEYS.BANNER_INFO)} />
+          </View>
+          {this.getCoinActions()}
+        </View>
+      </Animated.View>
+    );
+  };
+
+  getCoinActions = () => {
+    const { currency } = this.state;
     const {
       hodlStatus,
       depositCompliance,
       simplexCompliance,
       celpayCompliance,
       actions,
-      currencies,
     } = this.props;
-    const theme = getTheme();
     const style = CoinDetailsStyle();
 
     const coinDetails = this.getCoinDetails();
@@ -238,287 +402,143 @@ class CoinDetails extends Component {
       depositCompliance && depositCompliance.coins.includes(currency.short);
 
     const isCoinEligibleForWithdraw = !hodlStatus.isActive;
-    const coinPrice = currencies
-      ? currencies
-          .filter(c => c.short === coinDetails.short)
-          .map(m => m.market_quotes_usd)[0]
-      : {};
-    let headerHeight;
-    if (yOffset < 370) {
-      headerHeight = yOffset.interpolate({
-        inputRange: [0, 370],
-        outputRange: [370, 0],
-        extrapolate: Extrapolate.CLAMP,
-      });
-    }
+
     return (
-      <Animated.View
+      <View
         style={[
-          style.container,
           {
-            backgroundColor: getColor(COLOR_KEYS.BANNER_INFO),
-            height: headerHeight,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
           },
         ]}
       >
-        <Card padding={"0 0 7 0"} color={getColor(COLOR_KEYS.BANNER_INFO)}>
-          <View style={style.coinAmountWrapper}>
-            <View
-              style={[
-                style.amountFlexBox,
-                { flexDirection: "column", height: 100 },
-              ]}
+        {isCoinEligibleForDeposit && (
+          <>
+            <TouchableOpacity
+              style={{
+                marginRight: widthPercentageToDP("3.3%"),
+              }}
+              onPress={() =>
+                actions.navigateTo("Deposit", {
+                  coin: coinDetails.short,
+                })
+              }
             >
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginBottom: 5,
-                  justifyContent: "flex-start",
-                  marginRight: 100,
-                }}
-              >
-                <CoinIcon
-                  customStyles={[style.coinImage, { marginRight: 8 }]}
-                  theme={theme}
-                  url={currency.image_url}
-                  coinShort={currency.short}
-                />
-                <CelText
-                  weight="300"
-                  type="H2"
-                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                  style={{ marginTop: 5 }}
-                >
-                  {currency.displayName} ({currency.short})
-                </CelText>
-              </View>
-              <View
-                style={{
-                  marginLeft: 6,
-                  marginTOp: 40,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Counter
-                  weight="600"
-                  type="H3"
-                  margin={"3 0 3 0"}
-                  number={coinDetails.amount_usd.toNumber()}
-                  speed={5}
-                  usd
-                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                />
-                <CelText
-                  weight="300"
-                  type="H4"
-                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                >
-                  {formatter.crypto(coinDetails.amount, coinDetails.short)}
-                </CelText>
-              </View>
-            </View>
-            <View style={style.priceIndicator}>
-              <Card color={getColor(COLOR_KEYS.PARAGRAPH)}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <View>
-                    <CelText
-                      type={"H2"}
-                      weight={"600"}
-                      align={"center"}
-                      color={getColor(COLOR_KEYS.CARDS)}
-                    >
-                      {formatter.usd(coinPrice.price)}
-                    </CelText>
-                    <CelText
-                      type={"H6"}
-                      weight={"300"}
-                      align={"center"}
-                      margin={"10 0 0 0"}
-                      color={getColor(COLOR_KEYS.SECTION_TITLE)}
-                    >{`1 ${coinDetails.short} price`}</CelText>
-                  </View>
-                  <Separator vertical />
-                  <View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-around",
-                      }}
-                    >
-                      <Icon
-                        name={
-                          coinPrice.percent_change_24h < 0
-                            ? `ArrowDown`
-                            : `ArrowUp`
-                        }
-                        height={"10"}
-                        width={"10"}
-                      />
-                      <CelText
-                        type={"H2"}
-                        weight={"600"}
-                        align={"center"}
-                        color={getColor(COLOR_KEYS.CARDS)}
-                      >
-                        {formatter.round(coinPrice.percent_change_24h, {
-                          precision: 2,
-                        })}
-                        %
-                      </CelText>
-                    </View>
-                    <CelText
-                      type={"H6"}
-                      weight={"300"}
-                      align={"center"}
-                      margin={"10 0 0 0"}
-                      color={getColor(COLOR_KEYS.SECTION_TITLE)}
-                    >
-                      Last 24h change
-                    </CelText>
-                  </View>
+              <View style={style.buttonItself}>
+                <View style={style.buttonIcon}>
+                  <Icon fill="primary" name="Deposit" width="25" />
                 </View>
-              </Card>
-            </View>
-            <Separator color={getColor(COLOR_KEYS.BANNER_INFO)} />
-          </View>
-          <View style={[style.buttonWrapper, {}]}>
+                <CelText
+                  type="H6"
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                >
+                  Deposit
+                </CelText>
+              </View>
+            </TouchableOpacity>
+          </>
+        )}
+        {isCoinEligibleForCelPay && (
+          <>
+            <Separator
+              vertical
+              height={"35%"}
+              top={20}
+              color={getColor(COLOR_KEYS.BANNER_INFO)}
+            />
+            <TouchableOpacity
+              onPress={this.goToCelPay}
+              style={{
+                marginLeft: widthPercentageToDP("6.9%"),
+                marginRight: widthPercentageToDP("6.9%"),
+              }}
+            >
+              <View style={style.buttonItself}>
+                <View style={style.buttonIcon}>
+                  <Icon fill="primary" name="CelPay" width="25" />
+                </View>
+
+                <CelText
+                  type="H6"
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                >
+                  CelPay
+                </CelText>
+              </View>
+            </TouchableOpacity>
+          </>
+        )}
+
+        {isCoinEligibleForBuying && (
+          <>
+            <Separator
+              vertical
+              height={"35%"}
+              top={20}
+              color={getColor(COLOR_KEYS.BANNER_INFO)}
+            />
+            <TouchableOpacity
+              onPress={this.goToBuyCoins}
+              style={{
+                marginLeft: widthPercentageToDP("6.9%"),
+                marginRight: widthPercentageToDP("6.9%"),
+              }}
+            >
+              <View style={style.buttonItself}>
+                <View
+                  style={[
+                    style.buttonIcon,
+                    { transform: [{ rotate: "180deg" }] },
+                  ]}
+                >
+                  <Icon fill="primary" name="CelPay" width="25" />
+                </View>
+
+                <CelText
+                  type="H6"
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                >
+                  Buy
+                </CelText>
+              </View>
+            </TouchableOpacity>
+          </>
+        )}
+
+        {isCoinEligibleForWithdraw && (
+          <>
             {isCoinEligibleForDeposit && (
-              <>
-                <TouchableOpacity
-                  style={{
-                    marginLeft: widthPercentageToDP("3.3%"),
-                    marginRight: widthPercentageToDP("3.3%"),
-                  }}
-                  onPress={() =>
-                    actions.navigateTo("Deposit", {
-                      coin: coinDetails.short,
-                    })
-                  }
-                >
-                  <View style={style.buttonItself}>
-                    <View style={style.buttonIcon}>
-                      <Icon fill="primary" name="Deposit" width="25" />
-                    </View>
-                    <CelText
-                      type="H6"
-                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                    >
-                      Deposit
-                    </CelText>
-                  </View>
-                </TouchableOpacity>
-              </>
+              <Separator
+                vertical
+                height={"35%"}
+                top={20}
+                color={getColor(COLOR_KEYS.BANNER_INFO)}
+              />
             )}
-            {isCoinEligibleForCelPay && (
-              <>
-                <Separator
-                  vertical
-                  height={"35%"}
-                  top={20}
-                  color={getColor(COLOR_KEYS.BANNER_INFO)}
-                />
-                <TouchableOpacity
-                  onPress={this.goToCelPay}
-                  style={{
-                    marginLeft: widthPercentageToDP("6.9%"),
-                    marginRight: widthPercentageToDP("6.9%"),
-                  }}
+            <TouchableOpacity
+              style={style.buttons}
+              onPress={() =>
+                actions.navigateTo("WithdrawEnterAmount", {
+                  coin: coinDetails.short,
+                })
+              }
+            >
+              <View style={style.buttonItself}>
+                <View style={style.buttonIcon}>
+                  <Icon fill="primary" name="Withdraw" width="25" />
+                </View>
+                <CelText
+                  type="H6"
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                 >
-                  <View style={style.buttonItself}>
-                    <View style={style.buttonIcon}>
-                      <Icon fill="primary" name="CelPay" width="25" />
-                    </View>
-
-                    <CelText
-                      type="H6"
-                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                    >
-                      CelPay
-                    </CelText>
-                  </View>
-                </TouchableOpacity>
-              </>
-            )}
-
-            {isCoinEligibleForBuying && (
-              <>
-                <Separator
-                  vertical
-                  height={"35%"}
-                  top={20}
-                  color={getColor(COLOR_KEYS.BANNER_INFO)}
-                />
-                <TouchableOpacity
-                  onPress={this.goToBuyCoins}
-                  style={{
-                    marginLeft: widthPercentageToDP("6.9%"),
-                    marginRight: widthPercentageToDP("6.9%"),
-                  }}
-                >
-                  <View style={style.buttonItself}>
-                    <View
-                      style={[
-                        style.buttonIcon,
-                        { transform: [{ rotate: "180deg" }] },
-                      ]}
-                    >
-                      <Icon fill="primary" name="CelPay" width="25" />
-                    </View>
-
-                    <CelText
-                      type="H6"
-                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                    >
-                      Buy
-                    </CelText>
-                  </View>
-                </TouchableOpacity>
-              </>
-            )}
-
-            {isCoinEligibleForWithdraw && (
-              <>
-                {isCoinEligibleForDeposit && (
-                  <Separator
-                    vertical
-                    height={"35%"}
-                    top={20}
-                    color={getColor(COLOR_KEYS.BANNER_INFO)}
-                  />
-                )}
-                <TouchableOpacity
-                  style={style.buttons}
-                  onPress={() =>
-                    actions.navigateTo("WithdrawEnterAmount", {
-                      coin: coinDetails.short,
-                    })
-                  }
-                >
-                  <View style={style.buttonItself}>
-                    <View style={style.buttonIcon}>
-                      <Icon fill="primary" name="Withdraw" width="25" />
-                    </View>
-                    <CelText
-                      type="H6"
-                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                    >
-                      Withdraw
-                    </CelText>
-                  </View>
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
-        </Card>
-      </Animated.View>
+                  Withdraw
+                </CelText>
+              </View>
+            </TouchableOpacity>
+          </>
+        )}
+      </View>
     );
   };
 
@@ -555,6 +575,7 @@ class CoinDetails extends Component {
 
     return (
       <Animated.ScrollView
+        style={{ backgroundColor: getColor(COLOR_KEYS.BACKGROUND) }}
         horizontal={false}
         stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={false}
@@ -574,6 +595,7 @@ class CoinDetails extends Component {
           showPeriods
           type={"coin-balance"}
           coin={currency.short}
+          backgroundColor={"#FFFFFF"}
         />
         <View style={style.container}>
           <Card margin="10 0 10 0">
@@ -627,7 +649,7 @@ class CoinDetails extends Component {
                   showPeriods
                   interest
                   backgroundColor={"#FFFFFF"}
-                  width={widthPercentageToDP("78%")}
+                  width={widthPercentageToDP("89%")}
                   type={"coin-interest"}
                   coin={currency.short}
                 />

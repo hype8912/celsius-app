@@ -10,11 +10,9 @@ const base = {
     flex: 1,
   },
   buttonWrapper: {
-    // flex: 1,
     flexDirection: "row",
-    paddingHorizontal: 12,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
   },
   buttons: {
     marginLeft: 10,
@@ -27,7 +25,6 @@ const base = {
   amountFlexBox: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 14,
   },
   coinImage: {
     width: 40,
