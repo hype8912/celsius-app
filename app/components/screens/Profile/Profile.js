@@ -293,7 +293,7 @@ class Profile extends Component {
             style={{
               backgroundColor: getColor(COLOR_KEYS.PARAGRAPH),
               paddingHorizontal: 20,
-              paddingVertical: 30,
+              paddingVertical: 15,
               borderRadius: 8,
             }}
           >
@@ -305,6 +305,7 @@ class Profile extends Component {
                   flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "space-around",
+                  marginVertical: 15,
                 }}
               >
                 <Icon name={"Present"} height={"25"} width={"25"} fill={getColor(COLOR_KEYS.CARDS)} />
@@ -317,7 +318,7 @@ class Profile extends Component {
                     margin={"0 0 0 10"}
                     type={"H6"}
                     weight={"400"}
-                    color={getColor(COLOR_KEYS.SEPARATORS)}
+                    color={getColor(COLOR_KEYS.CARDS)}
                     align={"left"}
                   >
                     Enter your promo code
@@ -326,7 +327,7 @@ class Profile extends Component {
               </View>
               <Separator
                 vertical
-                color={getColor(COLOR_KEYS.SEPARATORS)}
+                color={getColor(COLOR_KEYS.SECTION_TITLE)}
               />
               <View>
                 <View
@@ -334,6 +335,7 @@ class Profile extends Component {
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "space-around",
+                    marginVertical: 15,
                   }}
                 >
                   <Icon name={"Refer"} height={"25"} width={"25"}  fill={getColor(COLOR_KEYS.CARDS)}/>
@@ -346,7 +348,7 @@ class Profile extends Component {
                       margin={"0 0 0 10"}
                       type={"H6"}
                       weight={"400"}
-                      color={getColor(COLOR_KEYS.SEPARATORS)}
+                      color={getColor(COLOR_KEYS.CARDS)}
                       align={"left"}
                     >
                       Refer your friends
