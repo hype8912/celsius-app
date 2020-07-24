@@ -30,6 +30,7 @@ import HiddenField from "../../atoms/HiddenField/HiddenField";
 import VerifyProfileStyle from "../../organisms/VerifyProfileComponent/VerifyProfile.styles";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import Spinner from "../../atoms/Spinner/Spinner";
+import ViewPager from '@react-native-community/viewpager';
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { KEYPAD_PURPOSES } from "../../../constants/UI";
 
@@ -68,56 +69,6 @@ class TransactionLandingScreen extends Component {
       value: "",
       index: 0,
       showDots: false,
-      data: [
-        {
-          text: "prva strana",
-          type: "celpay",
-          option: "link",
-          step: 1,
-          onPressBack: () => console.log("onPressBack"),
-          title: "Your`re about to send",
-          cryptoAmount: 0.56851,
-          crypto: "BTC",
-          usdAmount: 4550,
-          date: "23 July 2020",
-          time: "11:23 AM",
-          boxMessage:
-            "After you confirm the transaction via email you will be able to share your CelPay link.",
-          buttonText: "Share CeplPay link",
-        },
-        {
-          text: "druga strana",
-          type: "celpay",
-          option: "link",
-          step: 2,
-          onPressBack: () => console.log("onPressBack"),
-          title: "Your`re about to send",
-          cryptoAmount: 0.56851,
-          crypto: "BTC",
-          usdAmount: 4550,
-          date: "23 July 2020",
-          time: "11:23 AM",
-          boxMessage:
-            "After you confirm the transaction via email you will be able to share your CelPay link.",
-          buttonText: "Share CeplPay link",
-        },
-        {
-          text: "treca strana",
-          type: "celpay",
-          option: "link",
-          step: 3,
-          onPressBack: () => console.log("onPressBack"),
-          title: "Your`re about to send",
-          cryptoAmount: 0.56851,
-          crypto: "BTC",
-          usdAmount: 4550,
-          date: "23 July 2020",
-          time: "11:23 AM",
-          boxMessage:
-            "After you confirm the transaction via email you will be able to share your CelPay link.",
-          buttonText: "Share CeplPay link",
-        },
-      ],
     };
   }
 
@@ -181,214 +132,95 @@ class TransactionLandingScreen extends Component {
     return values;
   };
 
-  renderCelPayFlow = (item, index) => {
-    console.log(this.state.showDots)
-    if (item.option === "link") {
-      if (index === 0) {
-        return (
-          <View
-            style={{
-              width: widthPercentageToDP("100%"),
-              backgroundColor: "yellow",
-            }}
-          >
-            <View style={{ flex: 1}}>
-              <EnterAmount/>
-            </View>
-
-            {/*<View style={{ flex: 1, margin: 25 }}>*/}
-            {/*  <CelText type="H2" weight="600" margin={"0 100 0 0"}>*/}
-            {/*    You’re about to send*/}
-            {/*  </CelText>*/}
-            {/*  <CelText type="H1" weight="200">*/}
-            {/*    {formatter.crypto(0.56851, "btc".toUpperCase(), {*/}
-            {/*      precision: 5,*/}
-            {/*    })}*/}
-            {/*  </CelText>*/}
-            {/*  <CelText type="H4" weight="400" margin={"0 0 40 0"}>*/}
-            {/*    $ 4.550,00*/}
-            {/*  </CelText>*/}
-            {/*  <CelText type="H4" weight="200">*/}
-            {/*    Date: 23. July 2020*/}
-            {/*  </CelText>*/}
-            {/*  <CelText type="H4" weight="200" margin={"0 0 40 0"}>*/}
-            {/*    Time: 11:23 AM*/}
-            {/*  </CelText>*/}
-            {/*  <Card*/}
-            {/*    size={"full"}*/}
-            {/*    color={STYLE.COLORS.CELSIUS_BLUE}*/}
-            {/*    margin={"0 0 100 0"}*/}
-            {/*  >*/}
-            {/*    <CelText color={STYLE.COLORS.WHITE}>*/}
-            {/*      After you confirm the transaction via email you will be able*/}
-            {/*      to share your CelPay link.*/}
-            {/*    </CelText>*/}
-            {/*  </Card>*/}
-            {/*  <View style={{ alignSelf: "flex-end" }}>*/}
-            {/*    <CelButton*/}
-            {/*      iconRight={"IconArrowRight"}*/}
-            {/*      onPress={() => {*/}
-            {/*        console.log("ShareCel pay pressed");*/}
-            {/*      }}*/}
-            {/*    >*/}
-            {/*      Share CelPay link*/}
-            {/*    </CelButton>*/}
-            {/*  </View>*/}
-            {/*</View>*/}
-
-          </View>
-        );
-      }
-      if (index === 1) {
-        return (
-          <View
-            style={{
-              width: widthPercentageToDP("100%"),
-              backgroundColor: "orange",
-            }}
-          >
-            <View style={{ flex: 1, margin: 25 }}>
-              <CelText type="H2" weight="600" margin={"0 100 0 0"}>
-                You’re about to send
-              </CelText>
-              <CelText type="H1" weight="200">
-                {formatter.crypto(0.56851, "btc".toUpperCase(), {
-                  precision: 5,
-                })}
-              </CelText>
-              <CelText type="H4" weight="400" margin={"0 0 40 0"}>
-                $ 4.550,00
-              </CelText>
-              <CelText type="H4" weight="200">
-                Date: 23. July 2020
-              </CelText>
-              <CelText type="H4" weight="200" margin={"0 0 40 0"}>
-                Time: 11:23 AM
-              </CelText>
-              <Card
-                size={"full"}
-                color={STYLE.COLORS.CELSIUS_BLUE}
-                margin={"0 0 100 0"}
-              >
-                <CelText color={STYLE.COLORS.WHITE}>
-                  After you confirm the transaction via email you will be able
-                  to share your CelPay link.
-                </CelText>
-              </Card>
-              <View style={{ alignSelf: "flex-end" }}>
-                <CelButton
-                  iconRight={"IconArrowRight"}
-                  onPress={() => {
-                    console.log("ShareCel pay pressed");
-                  }}
-                >
-                  Share CelPay link
-                </CelButton>
-              </View>
-            </View>
-          </View>
-        );
-      }
-      if (index === 2) {
-        const { formData, actions } = this.props
-        // return <VerifyProfileComponent modalOption navigation={this.props.navigation} />;
-        return (
-          <View
-            style={{
-              width: widthPercentageToDP("100%"),
-              backgroundColor: "orange",
-            }}
-          >
-            <View style={{ flex: 1, margin: 25 }}>
-              <View
-                style={[{ paddingTop: 50, backgroundColor: "red" }]}
-              >
-                { this.state.showDots && <VerifyProfileComponent modalOption navigation={this.props.navigation} />}
-                {/*{this.renderPIN()}*/}
-                {/*<CelNumpad*/}
-                {/*  field={'pin'}*/}
-                {/*  value={this.state.value}*/}
-                {/*  updateFormField={actions.updateFormField}*/}
-                {/*  setKeypadInput={actions.setKeypadInput}*/}
-                {/*  toggleKeypad={actions.toggleKeypad}*/}
-                {/*  onPress={this.handlePINChange}*/}
-                {/*  purpose={KEYPAD_PURPOSES.VERIFICATION}*/}
-                {/*/>*/}
-              </View>
-
-            </View>
-          </View>
-        );
-      }
-    }
-  };
-
-  handlePINChange = newValue => {
-    const { actions } = this.props;
-    const { hasSixDigitPin } = this.state;
-    const pinLength = hasSixDigitPin ? 6 : 4;
-
-    if (newValue.length > pinLength) return;
-
-    actions.updateFormField("pin", newValue);
-    this.setState({ value: newValue });
-
-    if (newValue.length === pinLength) {
-      this.setState({ loading: true });
-      actions.checkPIN(this.onCheckSuccess, this.onCheckError);
-    }
-  };
-
-  renderDots = length => {
-    const { actions } = this.props;
-    const { verificationError, value } = this.state;
-
-    const pinLength = length || 6;
+  renderEnterAmount = () => {
     return (
-      <TouchableOpacity onPress={actions.toggleKeypad}>
-        <HiddenField
-          value={value}
-          error={verificationError}
-          length={pinLength}
-        />
-      </TouchableOpacity>
-    );
-  };
-
-  renderPIN() {
-    const { loading } = this.state;
-    const style = VerifyProfileStyle();
-
-    return (
-      <View style={style.wrapper}>
-        <CelText type="H1" align="center">
-          Verification required
-        </CelText>
-        <CelText align="center" margin="10 0 10 0">
-          Please enter your PIN to proceed
-        </CelText>
-
-        {this.renderDots(6)}
-        <View>
-          <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
+      <View
+        style={{
+          width: widthPercentageToDP("100%"),
+          backgroundColor: "yellow",
+        }}
+      >
+        <View style={{ flex: 1}}>
+          <EnterAmount/>
         </View>
-
-        {loading && (
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 15,
-            }}
-          >
-            <Spinner />
-          </View>
-        )}
       </View>
     );
   }
 
+  renderInfo = () => {
+    return (
+      <View
+        style={{
+          width: widthPercentageToDP("100%"),
+          backgroundColor: "orange",
+        }}
+      >
+        <View style={{ flex: 1, margin: 25 }}>
+          <CelText type="H2" weight="600" margin={"0 100 0 0"}>
+            You’re about to send
+          </CelText>
+          <CelText type="H1" weight="200">
+            {formatter.crypto(0.56851, "btc".toUpperCase(), {
+              precision: 5,
+            })}
+          </CelText>
+          <CelText type="H4" weight="400" margin={"0 0 40 0"}>
+            $ 4.550,00
+          </CelText>
+          <CelText type="H4" weight="200">
+            Date: 23. July 2020
+          </CelText>
+          <CelText type="H4" weight="200" margin={"0 0 40 0"}>
+            Time: 11:23 AM
+          </CelText>
+          <Card
+            size={"full"}
+            color={STYLE.COLORS.CELSIUS_BLUE}
+            margin={"0 0 100 0"}
+          >
+            <CelText color={STYLE.COLORS.WHITE}>
+              After you confirm the transaction via email you will be able
+              to share your CelPay link.
+            </CelText>
+          </Card>
+          <View style={{ alignSelf: "flex-end" }}>
+            <CelButton
+              iconRight={"IconArrowRight"}
+              onPress={() => {
+                console.log("ShareCel pay pressed");
+              }}
+            >
+              Share CelPay link
+            </CelButton>
+          </View>
+        </View>
+      </View>
+    );
+  }
 
+  renderVerifyProfile = () => {
+    return (
+      <View
+        style={{
+          width: widthPercentageToDP("100%"),
+          backgroundColor: "orange",
+        }}
+      >
+        <View style={{ flex: 1, margin: 25 }}>
+          <View
+            style={[{ paddingTop: 50, backgroundColor: "red" }]}
+          >
+            { this.state.showDots && <VerifyProfileComponent modalOption navigation={this.props.navigation} />}
+          </View>
+
+        </View>
+      </View>
+    );
+  }
+
+  celPayFlow = [
+    this.renderEnterAmount, this.renderInfo, this.renderVerifyProfile
+  ]
 
   onPressNext = index => {
     const { data } = this.state;
@@ -413,21 +245,6 @@ class TransactionLandingScreen extends Component {
 
     }
   }
-
-  renderItem = ({ item, index }) => {
-    if (item.type === "celpay") {
-      console.log('index je: ', this.state.index)
-      return (
-        <TouchableWithoutFeedback
-          onPress={() => {
-            this.onPressNext(index);
-          }}
-        >
-          {this.renderCelPayFlow(item, index)}
-         </TouchableWithoutFeedback>
-      );
-    }
-  };
 
   render() {
     const { formData, formErrors } = this.props;
@@ -512,7 +329,8 @@ class TransactionLandingScreen extends Component {
         )}
         <RBSheet
           ref={r => (this.refRBSheet = r)}
-          closeOnDragDown={true}
+          closeOnDragDown={false}
+          closeOnPressMask={false}
           openDuration={200}
           height={600}
           customStyles={{
@@ -557,14 +375,11 @@ class TransactionLandingScreen extends Component {
             </View>
 
 
-            <FlatList
-              ref={fl => (this.list = fl)}
-              initialScrollIndex={0}
-              data={data}
-              pagingEnabled
-              horizontal
-              renderItem={rItem}
-            />
+            <ViewPager style={{flex: 1}} initialPage={0} orientation={'horizontal'}>
+              {this.celPayFlow.map((item) => {
+                return item()
+              })}
+            </ViewPager>
           </View>
         </RBSheet>
       </RegularLayout>
