@@ -75,9 +75,6 @@ class TransactionLandingScreen extends Component {
  componentDidMount() {
     const { actions } = this.props
     this.setState({index: 0})
-    setTimeout(()=>{
-      this.refRBSheet.open()
-    }, 2000)
  }
 
  componentDidUpdate(prevProps, prevState) {
@@ -246,8 +243,12 @@ class TransactionLandingScreen extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.actions.clearForm()
+  }
+
   render() {
-    const { formData, formErrors } = this.props;
+    const { formData, formErrors, actions } = this.props;
     const { data, opacity } = this.state;
     let type;
 
@@ -306,6 +307,10 @@ class TransactionLandingScreen extends Component {
               type={type.type}
               field={type.type}
               labelText={type.method}
+              onChange={(value) => {
+                actions.updateFormField(type.type, value)
+                this.refRBSheet.open()
+              }}
               hideCallingCodes
               value={formData[type.type]}
               error={formErrors[type.type]}
