@@ -113,11 +113,13 @@ class Profile extends Component {
 
   getHeader = () => {
     const { yOffset } = this.state;
+    const {user} = this.props
     const opacity = yOffset.interpolate({
       inputRange: [20, 150],
       outputRange: [0, 1],
       extrapolate: Extrapolate.CLAMP,
     });
+    console.log("user: ", user);
     return (
       <Animated.View
         style={{
@@ -138,7 +140,7 @@ class Profile extends Component {
         </View>
         <View>
           <CelText type={"H2"} weight={"600"}>
-            Title
+            {user.first_name}
           </CelText>
         </View>
         <View>
@@ -176,20 +178,24 @@ class Profile extends Component {
       // callsInProgress,
     } = this.props;
     const { yOffset } = this.state;
-    let headerHeight;
     // console.log("yOffset", yOffset);
-    if (yOffset < 370) {
-      headerHeight = yOffset.interpolate({
+      const headerHeight = yOffset.interpolate({
         inputRange: [0, 370],
         outputRange: [370, 0],
         extrapolate: Extrapolate.CLAMP,
       });
-    }
+    const opacity = yOffset.interpolate({
+      inputRange: [20, 150],
+      outputRange: [0, 1],
+      extrapolate: Extrapolate.CLAMP,
+    });
+    console.log("yOffset: ", headerHeight);
     return (
       <Animated.View
         style={{
-          height: headerHeight,
+          // height: headerHeight,
           backgroundColor: getColor(COLOR_KEYS.BANNER_INFO),
+          opacity,
         }}
       >
         <View

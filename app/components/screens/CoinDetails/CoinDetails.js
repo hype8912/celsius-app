@@ -159,7 +159,7 @@ class CoinDetails extends Component {
   getHeader = () => {
     const { yOffset } = this.state;
     const opacity = yOffset.interpolate({
-      inputRange: [HEADER_DELTA - 16, HEADER_DELTA],
+      inputRange: [20, 150],
       outputRange: [0, 1],
       extrapolate: Extrapolate.CLAMP,
     });
