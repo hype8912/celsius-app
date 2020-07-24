@@ -131,12 +131,12 @@ class Profile extends Component {
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "center",
-          backgroundColor: getColor(COLOR_KEYS.CARDS),
+          backgroundColor: getColor(COLOR_KEYS.BACKGROUND),
           opacity,
         }}
       >
         <View style={{ marginLeft: -25 }}>
-          <Icon name="IconChevronLeft" height={"25"} width={"25"} />
+          <Icon name="IconChevronLeft" height={"25"} width={"25"} fill={getColor(COLOR_KEYS.BACKGROUND)} />
         </View>
         <View>
           <CelText type={"H2"} weight={"600"}>
@@ -186,7 +186,7 @@ class Profile extends Component {
       });
     const opacity = yOffset.interpolate({
       inputRange: [20, 150],
-      outputRange: [0, 1],
+      outputRange: [1, 0],
       extrapolate: Extrapolate.CLAMP,
     });
     console.log("yOffset: ", headerHeight);
@@ -307,7 +307,7 @@ class Profile extends Component {
                   justifyContent: "space-around",
                 }}
               >
-                <Icon name={"Present"} height={"25"} width={"25"} />
+                <Icon name={"Present"} height={"25"} width={"25"} fill={getColor(COLOR_KEYS.CARDS)} />
                 <View
                   style={{
                     width: 110,
@@ -317,14 +317,17 @@ class Profile extends Component {
                     margin={"0 0 0 10"}
                     type={"H6"}
                     weight={"400"}
-                    color={getColor(COLOR_KEYS.CARDS)}
+                    color={getColor(COLOR_KEYS.SEPARATORS)}
                     align={"left"}
                   >
-                    Enter a promo code
+                    Enter your promo code
                   </CelText>
                 </View>
               </View>
-              <Separator vertical />
+              <Separator
+                vertical
+                color={getColor(COLOR_KEYS.SEPARATORS)}
+              />
               <View>
                 <View
                   style={{
@@ -333,7 +336,7 @@ class Profile extends Component {
                     justifyContent: "space-around",
                   }}
                 >
-                  <Icon name={"Refer"} height={"25"} width={"25"} />
+                  <Icon name={"Refer"} height={"25"} width={"25"}  fill={getColor(COLOR_KEYS.CARDS)}/>
                   <View
                     style={{
                       width: 100,
@@ -343,7 +346,7 @@ class Profile extends Component {
                       margin={"0 0 0 10"}
                       type={"H6"}
                       weight={"400"}
-                      color={getColor(COLOR_KEYS.CARDS)}
+                      color={getColor(COLOR_KEYS.SEPARATORS)}
                       align={"left"}
                     >
                       Refer your friends
@@ -385,6 +388,9 @@ class Profile extends Component {
           [{ nativeEvent: { contentOffset: { y: yOffset } } }],
           { useNativeDriver: true }
         )}
+        style={{
+          backgroundColor: getColor(COLOR_KEYS.BACKGROUND)
+        }}
       >
         <View style={{ position: "absolute", top: 0, left: 0 }}>
           {this.getHeader()}
@@ -394,6 +400,7 @@ class Profile extends Component {
         <MissingInfoCard user={user} navigateTo={actions.navigateTo} />
 
         <View>
+
           <View
             style={{
               padding: 20,
