@@ -12,6 +12,7 @@ import {
   BUY_COINS_PAYMENT_STATUSES,
   TRANSACTION_TYPES,
 } from "../../constants/DATA";
+import { navigateTo } from "../nav/navActions";
 import { COLOR_KEYS } from "../../constants/COLORS";
 
 export {
@@ -179,15 +180,21 @@ function createChangellyPayment() {
       const { formData } = getState().forms;
       dispatch(startApiCall(API.CREATE_CHANGELLY_PAYMENT));
 
-      await buyCoinsService.createChangellyPayment({
-        from: formData.fromCoin,
+      const response = await buyCoinsService.createChangellyPayment({
+        coin: formData.fromCoin,
         amount: formData.fromAmount,
-        to: formData.toCoin,
+        coin_to: formData.toCoin,
       });
 
       dispatch({
         type: ACTIONS.CREATE_CHANGELLY_PAYMENT_SUCCESS,
       });
+
+      dispatch(
+        navigateTo("TransactionsIntersection", {
+          id: response.data.transfer.id,
+        })
+      );
 
       // TODO add analytics
       // mixpanelAnalytics.initiatedBuyCoinsRequest();
