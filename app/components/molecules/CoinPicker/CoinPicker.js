@@ -61,6 +61,8 @@ class CoinPicker extends Component {
     const iconColor = this.getIconColor(CoinPickerStyle());
     const style = CoinPickerStyle();
     const icon = coin ? `Icon${coin}` : "StackedCoins";
+    if (!coinListFormatted) return null
+
     const label = coin
       ? coinListFormatted.find(c => c.value === coin).value
       : "Choose a coin";

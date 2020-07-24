@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import {
-  Clipboard,
-  Dimensions,
   FlatList,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Animated,
+  Animated, TouchableOpacity
 } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
@@ -24,17 +21,17 @@ import STYLE from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { widthPercentageToDP } from "../../../utils/styles-util";
+import EnterAmount from "../../organisms/EnterAmount/EnterAmount";
+import VerifyProfile from "../VerifyProfile/VerifyProfile";
+import STYLES from "../../../constants/STYLES";
+import Icon from "../../atoms/Icon/Icon";
+import VerifyProfileComponent from "../../organisms/VerifyProfileComponent/VerifyProfileComponent";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
-import VerifyProfileStyle from "../VerifyProfile/VerifyProfile.styles";
+import VerifyProfileStyle from "../../organisms/VerifyProfileComponent/VerifyProfile.styles";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { KEYPAD_PURPOSES } from "../../../constants/UI";
-import _ from "lodash";
-import { DEEP_LINKS } from "../../../constants/DATA";
-import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import VerifyProfile from "../VerifyProfile/VerifyProfile";
-import EnterAmount from "../../organisms/EnterAmount/EnterAmount";
 
 @connect(
   state => ({
@@ -69,6 +66,7 @@ class TransactionLandingScreen extends Component {
       opacity: new Animated.Value(0),
       values: {},
       value: "",
+      index: 0,
       data: [
         {
           text: "prva strana",
@@ -123,6 +121,8 @@ class TransactionLandingScreen extends Component {
   }
 
  componentDidMount() {
+    const { actions } = this.props
+    this.setState({index: 0})
     setTimeout(()=>{
       this.refRBSheet.open()
     }, 2000)
@@ -165,9 +165,6 @@ class TransactionLandingScreen extends Component {
         break;
     }
 
-    this.state = {
-      values,
-    };
     return values;
   };
 
@@ -178,11 +175,53 @@ class TransactionLandingScreen extends Component {
           <View
             style={{
               width: widthPercentageToDP("100%"),
+              backgroundColor: "yellow",
             }}
           >
             <View style={{ flex: 1}}>
               <EnterAmount/>
             </View>
+
+            {/*<View style={{ flex: 1, margin: 25 }}>*/}
+            {/*  <CelText type="H2" weight="600" margin={"0 100 0 0"}>*/}
+            {/*    You’re about to send*/}
+            {/*  </CelText>*/}
+            {/*  <CelText type="H1" weight="200">*/}
+            {/*    {formatter.crypto(0.56851, "btc".toUpperCase(), {*/}
+            {/*      precision: 5,*/}
+            {/*    })}*/}
+            {/*  </CelText>*/}
+            {/*  <CelText type="H4" weight="400" margin={"0 0 40 0"}>*/}
+            {/*    $ 4.550,00*/}
+            {/*  </CelText>*/}
+            {/*  <CelText type="H4" weight="200">*/}
+            {/*    Date: 23. July 2020*/}
+            {/*  </CelText>*/}
+            {/*  <CelText type="H4" weight="200" margin={"0 0 40 0"}>*/}
+            {/*    Time: 11:23 AM*/}
+            {/*  </CelText>*/}
+            {/*  <Card*/}
+            {/*    size={"full"}*/}
+            {/*    color={STYLE.COLORS.CELSIUS_BLUE}*/}
+            {/*    margin={"0 0 100 0"}*/}
+            {/*  >*/}
+            {/*    <CelText color={STYLE.COLORS.WHITE}>*/}
+            {/*      After you confirm the transaction via email you will be able*/}
+            {/*      to share your CelPay link.*/}
+            {/*    </CelText>*/}
+            {/*  </Card>*/}
+            {/*  <View style={{ alignSelf: "flex-end" }}>*/}
+            {/*    <CelButton*/}
+            {/*      iconRight={"IconArrowRight"}*/}
+            {/*      onPress={() => {*/}
+            {/*        console.log("ShareCel pay pressed");*/}
+            {/*      }}*/}
+            {/*    >*/}
+            {/*      Share CelPay link*/}
+            {/*    </CelButton>*/}
+            {/*  </View>*/}
+            {/*</View>*/}
+
           </View>
         );
       }
@@ -204,15 +243,12 @@ class TransactionLandingScreen extends Component {
                 })}
               </CelText>
               <CelText type="H4" weight="400" margin={"0 0 40 0"}>
-                {" "}
                 $ 4.550,00
               </CelText>
               <CelText type="H4" weight="200">
-                {" "}
                 Date: 23. July 2020
               </CelText>
               <CelText type="H4" weight="200" margin={"0 0 40 0"}>
-                {" "}
                 Time: 11:23 AM
               </CelText>
               <Card
@@ -227,6 +263,7 @@ class TransactionLandingScreen extends Component {
               </Card>
               <View style={{ alignSelf: "flex-end" }}>
                 <CelButton
+                  iconRight={"IconArrowRight"}
                   onPress={() => {
                     console.log("ShareCel pay pressed");
                   }}
@@ -239,20 +276,128 @@ class TransactionLandingScreen extends Component {
         );
       }
       if (index === 2) {
-        return <VerifyProfile modalOption navigation={this.props.navigation} />;
+        const { formData, actions } = this.props
+        // return <VerifyProfileComponent modalOption navigation={this.props.navigation} />;
+        return (
+          <View
+            style={{
+              width: widthPercentageToDP("100%"),
+              backgroundColor: "orange",
+            }}
+          >
+            <View style={{ flex: 1, margin: 25 }}>
+              <View
+                style={[{ paddingTop: 50, backgroundColor: "red" }]}
+              >
+                {<VerifyProfileComponent modalOption navigation={this.props.navigation} />}
+                {/*{this.renderPIN()}*/}
+                {/*<CelNumpad*/}
+                {/*  field={'pin'}*/}
+                {/*  value={this.state.value}*/}
+                {/*  updateFormField={actions.updateFormField}*/}
+                {/*  setKeypadInput={actions.setKeypadInput}*/}
+                {/*  toggleKeypad={actions.toggleKeypad}*/}
+                {/*  onPress={this.handlePINChange}*/}
+                {/*  purpose={KEYPAD_PURPOSES.VERIFICATION}*/}
+                {/*/>*/}
+              </View>
+
+            </View>
+          </View>
+        );
       }
     }
   };
+
+  handlePINChange = newValue => {
+    const { actions } = this.props;
+    const { hasSixDigitPin } = this.state;
+    const pinLength = hasSixDigitPin ? 6 : 4;
+
+    if (newValue.length > pinLength) return;
+
+    actions.updateFormField("pin", newValue);
+    this.setState({ value: newValue });
+
+    if (newValue.length === pinLength) {
+      this.setState({ loading: true });
+      actions.checkPIN(this.onCheckSuccess, this.onCheckError);
+    }
+  };
+
+  renderDots = length => {
+    const { actions } = this.props;
+    const { verificationError, value } = this.state;
+
+    const pinLength = length || 6;
+    return (
+      <TouchableOpacity onPress={actions.toggleKeypad}>
+        <HiddenField
+          value={value}
+          error={verificationError}
+          length={pinLength}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  renderPIN() {
+    const { loading } = this.state;
+    const style = VerifyProfileStyle();
+
+    return (
+      <View style={style.wrapper}>
+        <CelText type="H1" align="center">
+          Verification required
+        </CelText>
+        <CelText align="center" margin="10 0 10 0">
+          Please enter your PIN to proceed
+        </CelText>
+
+        {this.renderDots(6)}
+        <View>
+          <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
+        </View>
+
+        {loading && (
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 15,
+            }}
+          >
+            <Spinner />
+          </View>
+        )}
+      </View>
+    );
+  }
+
+
 
   onPressNext = index => {
     const { data } = this.state;
     console.log("index je: ", index);
     if (index === data.length - 1) {
+      this.setState({index: 0})
       this.refRBSheet.close();
     } else {
+      this.setState({index: this.state.index + 1})
       this.list.scrollToIndex({ index: index + 1 });
     }
   };
+
+  onPressBack = () => {
+    if (this.state.index === 0) {
+      this.refRBSheet.close();
+    } else {
+      this.setState({index: this.state.index -1}, ()=>{
+        this.list.scrollToIndex({ index: this.state.index });
+      })
+
+    }
+  }
 
   renderItem = ({ item, index }) => {
     if (item.type === "celpay") {
@@ -263,48 +408,18 @@ class TransactionLandingScreen extends Component {
           }}
         >
           {this.renderCelPayFlow(item, index)}
-        </TouchableWithoutFeedback>
+         </TouchableWithoutFeedback>
       );
     }
   };
 
   render() {
-    // const style = TransactionLandingScreenStyle();
     const { formData, formErrors } = this.props;
     const { data, opacity } = this.state;
     let type;
     console.log("value u renderu: ", this.state.value);
-    // return (
-    //
-    //   <View style={{flex: 1}}>
-    //
-    //     <View style={{flex:1, margin: 25}}>
-    //       <CelText type="H2" weight="600" margin={'0 100 0 0'}>You’re about to send</CelText>
-    //       <CelText type="H1" weight="200">
-    //         {formatter.crypto(
-    //           0.56851,
-    //           'btc'.toUpperCase(),
-    //           { precision: 5 }
-    //         )}
-    //       </CelText>
-    //       <CelText
-    //         type="H4" weight="400" margin={"0 0 40 0"}
-    //       > $ 4.550,00
-    //       </CelText>
-    //       <CelText type="H4" weight="200"> Date: 23. July 2020</CelText>
-    //       <CelText type="H4" weight="200" margin={"0 0 40 0"}> Time: 11:23 AM</CelText>
-    //       <Card size={"full"} color={STYLE.COLORS.CELSIUS_BLUE} margin={"0 0 140 0"}>
-    //         <CelText color={STYLE.COLORS.WHITE}>
-    //           After you confirm the transaction via email you will be able to share your CelPay link.
-    //         </CelText>
-    //       </Card>
-    //       <View style={{alignSelf: 'flex-end'}}>
-    //         <CelButton onPress={()=>{console.log('ShareCel pay pressed')}}>Share CelPay link</CelButton>
-    //       </View>
-    //     </View>
-    //   </View>
-    // )
-    //
+
+    const rItem = this.renderItem
 
     if (formData.transactions)
       type = this.chooseTypeOfTransaction(formData.transactions);
@@ -383,7 +498,6 @@ class TransactionLandingScreen extends Component {
         <RBSheet
           ref={r => (this.refRBSheet = r)}
           closeOnDragDown={true}
-          closeOnPressMask={true}
           openDuration={200}
           height={600}
           customStyles={{
@@ -401,13 +515,40 @@ class TransactionLandingScreen extends Component {
           }}
         >
           <View style={{ flex: 1 }}>
-            <Text>Ugurati</Text>
+            <View style={{flexDirection: 'row', marginHorizontal: 10}}>
+              <TouchableOpacity
+                style={{flex:0.5, alignItems: 'flex-start'}}
+                onPress={()=>this.onPressBack()}
+              >
+                <Icon
+                  name="IconChevronLeft"
+                  width="23"
+                  height="23"
+                  fill={STYLES.COLORS.GRAY}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{flex:0.5, alignItems: 'flex-end'}}
+                onPress={()=> this.refRBSheet.close()}
+              >
+                <Icon
+                  name="Close"
+                  width="25"
+                  height="25"
+                  fill={STYLES.COLORS.GRAY}
+
+                />
+              </TouchableOpacity>
+            </View>
+
+
             <FlatList
               ref={fl => (this.list = fl)}
+              initialScrollIndex={0}
               data={data}
               pagingEnabled
               horizontal
-              renderItem={this.renderItem}
+              renderItem={rItem}
             />
           </View>
         </RBSheet>
