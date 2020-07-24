@@ -271,7 +271,7 @@ class TransactionLandingScreen extends Component {
         />
 
         {!formData.transactions && (
-          <View style={{ opacity }}>
+          <View>
             <CelText margin={"40 0 0 0"} type={"H3"} weight={"500"}>
               Buy, Earn & Borrow on the Blockchain
             </CelText>
