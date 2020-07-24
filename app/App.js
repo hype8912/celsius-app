@@ -112,6 +112,7 @@ const CelsiusApplication = () => (
   <Provider store={store}>
     <React.Fragment>
       <AppNavigation
+        style={{height: 0 }}
         onNavigationStateChange={(prevState, currentState) => {
           const currentScreen = getActiveRouteName(currentState);
           const prevScreen = getActiveRouteName(prevState);

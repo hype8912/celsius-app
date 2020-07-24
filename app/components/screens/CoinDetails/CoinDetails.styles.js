@@ -7,9 +7,10 @@ const base = {
   container: {
     paddingHorizontal: 20,
     marginBottom: 10,
+    flex: 1,
   },
   buttonWrapper: {
-    flex: 1,
+    // flex: 1,
     flexDirection: "row",
     paddingHorizontal: 12,
     alignItems: "center",
@@ -53,7 +54,7 @@ const base = {
     paddingTop: 12,
   },
   buttonItself: {
-    flex: 1,
+    // flex: 1,
     paddingTop: 5,
     paddingBottom: 5,
   },

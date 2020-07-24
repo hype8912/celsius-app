@@ -385,12 +385,13 @@ class CelHeading extends Component {
 
     const Content = this.getContent;
 
-    return (
-      <SafeAreaView style={containerStyle}>
-        <StatusBar />
-        <Content />
-      </SafeAreaView>
-    );
+    return null
+  //   return (
+  //     <SafeAreaView style={containerStyle}>
+  //        <StatusBar />
+  //        <Content />
+  //     </SafeAreaView>
+  //   );
   }
 }
 
