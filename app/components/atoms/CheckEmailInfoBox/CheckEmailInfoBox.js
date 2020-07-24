@@ -1,13 +1,9 @@
 import React from "react";
 import { View } from "react-native";
-// eslint-disable-next-line import/no-unresolved
-import { openInbox } from "react-native-email-link";
 
 import CheckEmailInfoBoxStyle from "./CheckEmailInfoBox.styles";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../Icon/Icon";
 import CelText from "../CelText/CelText";
-import CelButton from "../CelButton/CelButton";
 import InfoBox from "../InfoBox/InfoBox";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
@@ -18,7 +14,7 @@ const CheckEmailInfoBox = props => {
   return (
     <View style={style.container}>
       <InfoBox
-        backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
+        backgroundColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
         padding={"20 30 20 10"}
       >
         <View style={style.direction}>
@@ -34,17 +30,6 @@ const CheckEmailInfoBox = props => {
             {props.infoText}
           </CelText>
         </View>
-
-        <CelButton
-          style={{ alignSelf: "flex-start" }}
-          margin={"20 0 0 35"}
-          color={"white"}
-          size={"small"}
-          textColor={STYLES.COLORS.ORANGE}
-          onPress={() => openInbox()}
-        >
-          Check your Email!
-        </CelButton>
       </InfoBox>
     </View>
   );

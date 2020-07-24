@@ -57,8 +57,8 @@ class SwapCoinsEnterAmount extends Component {
       fromAmount: "",
       toAmount: "",
       isFrom: false,
-      fromCoin: formData.fromCoin || "ETH",
-      toCoin: formData.toCoin || "BTC",
+      fromCoin: formData.fromCoin || "BTC",
+      toCoin: formData.toCoin || "CEL",
     });
 
     this.state = {
@@ -259,7 +259,7 @@ class SwapCoinsEnterAmount extends Component {
               onChange={this.handleToCoinSelect}
               coin={formData.toCoin}
               field="toCoin"
-              defaultSelected={formData.toCoin || "ETH"}
+              defaultSelected={formData.toCoin || "CEL"}
               availableCoins={availableCryptoCoins}
               navigateTo={actions.navigateTo}
             />

