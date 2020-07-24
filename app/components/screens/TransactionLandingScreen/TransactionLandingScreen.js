@@ -67,6 +67,7 @@ class TransactionLandingScreen extends Component {
       values: {},
       value: "",
       index: 0,
+      showDots: false,
       data: [
         {
           text: "prva strana",
@@ -128,6 +129,18 @@ class TransactionLandingScreen extends Component {
     }, 2000)
  }
 
+ componentDidUpdate(prevProps, prevState) {
+    if (prevState.index !== this.state.index) {
+      if (this.state.index === 2) {
+        this.setState({showDots: true})
+      } else {
+        this.setState({showDots: false})
+      }
+
+      console.log('novi state je: ', this.state)
+    }
+ }
+
   chooseTypeOfTransaction = data => {
     let values;
     switch (data) {
@@ -169,6 +182,7 @@ class TransactionLandingScreen extends Component {
   };
 
   renderCelPayFlow = (item, index) => {
+    console.log(this.state.showDots)
     if (item.option === "link") {
       if (index === 0) {
         return (
@@ -289,7 +303,7 @@ class TransactionLandingScreen extends Component {
               <View
                 style={[{ paddingTop: 50, backgroundColor: "red" }]}
               >
-                {<VerifyProfileComponent modalOption navigation={this.props.navigation} />}
+                { this.state.showDots && <VerifyProfileComponent modalOption navigation={this.props.navigation} />}
                 {/*{this.renderPIN()}*/}
                 {/*<CelNumpad*/}
                 {/*  field={'pin'}*/}
@@ -378,12 +392,13 @@ class TransactionLandingScreen extends Component {
 
   onPressNext = index => {
     const { data } = this.state;
-    console.log("index je: ", index);
     if (index === data.length - 1) {
       this.setState({index: 0})
       this.refRBSheet.close();
     } else {
-      this.setState({index: this.state.index + 1})
+      this.setState({index: this.state.index + 1}, ()=>{
+        console.log('index nakon podizanja: ', this.state.index)
+      })
       this.list.scrollToIndex({ index: index + 1 });
     }
   };
@@ -401,6 +416,7 @@ class TransactionLandingScreen extends Component {
 
   renderItem = ({ item, index }) => {
     if (item.type === "celpay") {
+      console.log('index je: ', this.state.index)
       return (
         <TouchableWithoutFeedback
           onPress={() => {
@@ -417,7 +433,6 @@ class TransactionLandingScreen extends Component {
     const { formData, formErrors } = this.props;
     const { data, opacity } = this.state;
     let type;
-    console.log("value u renderu: ", this.state.value);
 
     const rItem = this.renderItem
 
