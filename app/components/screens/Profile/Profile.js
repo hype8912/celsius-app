@@ -113,13 +113,11 @@ class Profile extends Component {
 
   getHeader = () => {
     const { yOffset } = this.state;
-    const {user} = this.props
     const opacity = yOffset.interpolate({
       inputRange: [20, 150],
       outputRange: [0, 1],
       extrapolate: Extrapolate.CLAMP,
     });
-    console.log("user: ", user);
     return (
       <Animated.View
         style={{
@@ -135,12 +133,12 @@ class Profile extends Component {
           opacity,
         }}
       >
-        <View style={{ marginLeft: -25 }}>
-          <Icon name="IconChevronLeft" height={"25"} width={"25"} fill={getColor(COLOR_KEYS.BACKGROUND)} />
+        <View style={{ marginLeft: -30 }}>
+          <Icon name="IconChevronLeft" height={"25"} width={"25"} fill={"red"} />
         </View>
         <View>
           <CelText type={"H2"} weight={"600"}>
-            {user.first_name}
+            Your Profile
           </CelText>
         </View>
         <View>
@@ -178,18 +176,12 @@ class Profile extends Component {
       // callsInProgress,
     } = this.props;
     const { yOffset } = this.state;
-    // console.log("yOffset", yOffset);
-      const headerHeight = yOffset.interpolate({
-        inputRange: [0, 370],
-        outputRange: [370, 0],
-        extrapolate: Extrapolate.CLAMP,
-      });
+    console.log("yOffset", yOffset);
     const opacity = yOffset.interpolate({
       inputRange: [20, 150],
       outputRange: [1, 0],
       extrapolate: Extrapolate.CLAMP,
     });
-    console.log("yOffset: ", headerHeight);
     return (
       <Animated.View
         style={{
@@ -225,7 +217,7 @@ class Profile extends Component {
               marginRight: 20,
             }}
           >
-            <CelText>Log out</CelText>
+            <CelText color={getColor(COLOR_KEYS.SEPARATORS)}>Log out</CelText>
           </View>
         </View>
         <View
@@ -298,7 +290,10 @@ class Profile extends Component {
             }}
           >
             <View
-              style={{ flexDirection: "row", justifyContent: "space-around" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around"
+              }}
             >
               <View
                 style={{
@@ -306,9 +301,10 @@ class Profile extends Component {
                   alignItems: "center",
                   justifyContent: "space-around",
                   marginVertical: 15,
+                  flex: 0.45
                 }}
               >
-                <Icon name={"Present"} height={"25"} width={"25"} fill={getColor(COLOR_KEYS.CARDS)} />
+                <Icon name={"Present"} height={"25"} width={"25"} fill={getColor(COLOR_KEYS.SEPARATORS)} />
                 <View
                   style={{
                     width: 110,
@@ -329,13 +325,13 @@ class Profile extends Component {
                 vertical
                 color={getColor(COLOR_KEYS.SECTION_TITLE)}
               />
-              <View>
                 <View
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "space-around",
                     marginVertical: 15,
+                    flex: 0.45,
                   }}
                 >
                   <Icon name={"Refer"} height={"25"} width={"25"}  fill={getColor(COLOR_KEYS.CARDS)}/>
@@ -355,7 +351,6 @@ class Profile extends Component {
                     </CelText>
                   </View>
                 </View>
-              </View>
             </View>
           </View>
         </View>
