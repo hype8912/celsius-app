@@ -46,7 +46,7 @@ class TransactionLandingScreen extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "TransactionLandingScreen",
+    title: "Transaction",
     right: "profile",
   });
 
