@@ -243,11 +243,14 @@ class CoinDetails extends Component {
           .filter(c => c.short === coinDetails.short)
           .map(m => m.market_quotes_usd)[0]
       : {};
-    const headerHeight = yOffset.interpolate({
-      inputRange: [-MAX_HEADER_HEIGHT, 0],
-      outputRange: [0, MAX_HEADER_HEIGHT],
-      extrapolate: Extrapolate.CLAMP,
-    });
+    let headerHeight;
+    if (yOffset < 370) {
+      headerHeight = yOffset.interpolate({
+        inputRange: [0, 370],
+        outputRange: [370, 0],
+        extrapolate: Extrapolate.CLAMP,
+      });
+    }
     return (
       <Animated.View
         style={[
@@ -519,15 +522,15 @@ class CoinDetails extends Component {
     );
   };
 
-  handleScrollAnimation = val => {
-    this.setState({
-      y: val,
-      yOffset: new Animated.Value(val),
-    });
-  };
+  // handleScrollAnimation = val => {
+  //   this.setState({
+  //     y: val,
+  //     yOffset: new Animated.Value(val),
+  //   });
+  // };
 
   render() {
-    const { currency } = this.state;
+    const { currency, yOffset } = this.state;
     const {
       actions,
       interestRates,
@@ -556,9 +559,10 @@ class CoinDetails extends Component {
         stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
-        onScroll={event =>
-          this.handleScrollAnimation(event.nativeEvent.contentOffset.y)
-        }
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: yOffset } } }],
+          { useNativeDriver: true }
+        )}
       >
         <View style={{ position: "absolute", top: 0, left: 0 }}>
           {this.getHeader()}
