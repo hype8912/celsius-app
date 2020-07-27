@@ -12,6 +12,7 @@ const base = {
     marginRight: -20,
     marginLeft: -20,
     marginTop: -20,
+    paddingHorizontal: 5,
   },
   circleWrapper: {
     flex: 0.2,
@@ -35,11 +36,13 @@ const base = {
   },
   textAlignment: {
     flex: 0.8,
+    flexWrap: "wrap",
     alignItems: "flex-start",
     marginTop: heightPercentageToDP("1.7%"),
   },
   buttonsWrapper: {
     flexDirection: "row",
+    marginTop: 10,
   },
 };
 

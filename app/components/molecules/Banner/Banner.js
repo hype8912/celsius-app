@@ -52,15 +52,15 @@ class Banner extends Component {
           <TouchableOpacity
             style={{
               position: "absolute",
-              right: 10,
-              top: 0,
+              right: 5,
+              top: 5,
               width: 40,
               height: 40,
               zIndex: 1,
             }}
             onPress={close}
           >
-            <Icon name="Close" fill={"white"} width="25" />
+            <Icon name="Close" fill={"white"} width="25" height={"25"} />
           </TouchableOpacity>
         )}
         <View style={style.circleWrapper}>
@@ -73,7 +73,7 @@ class Banner extends Component {
             color={"white"}
             type={"H4"}
             weight={"500"}
-            margin={"0 0 0 0"}
+            margin={"20 0 0 0"}
           >
             {title}
           </CelText>
@@ -82,7 +82,7 @@ class Banner extends Component {
               color={"white"}
               type={"H7"}
               weight={"300"}
-              margin={"8 0 0 0"}
+              margin={"15 0 0 0"}
             >
               {info}
             </CelText>
@@ -91,7 +91,7 @@ class Banner extends Component {
             color={"white"}
             type={"H6"}
             weight={"300"}
-            margin={"8 0 15 0"}
+            margin={"10 0 15 0"}
           >
             {content}
           </CelText>
