@@ -310,7 +310,15 @@ class CelHeading extends Component {
 
     const paddings = getPadding("0 15 0 15");
     const leftStyle = this.isSearchHeader()
-      ? [style.left, { flexDirection: "row", flex: 2 }]
+      ? [
+          style.left,
+          {
+            flexDirection: "row",
+            flex: 2,
+            alignItems: "center",
+            marginBottom: 7,
+          },
+        ]
       : style.left;
 
     return (
