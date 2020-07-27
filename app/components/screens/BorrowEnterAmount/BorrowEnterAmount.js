@@ -201,7 +201,6 @@ class BorrowEnterAmount extends Component {
         value: "max",
       },
     ];
-
     const CoinIcon = this.renderCoinIcon;
 
     return (
@@ -217,18 +216,20 @@ class BorrowEnterAmount extends Component {
               How much would you like to borrow?
             </CelText>
 
-            <CoinPicker
-              onChange={(field, value) =>
-                actions.updateFormFields({
-                  [field]: value,
-                })
-              }
-              updateFormField={actions.updateFormField}
-              coin={coin}
-              field="coin"
-              availableCoins={coinSelectItems}
-              navigateTo={actions.navigateTo}
-            />
+            {formData.loanType !== "USD_LOAN" && (
+              <CoinPicker
+                onChange={(field, value) =>
+                  actions.updateFormFields({
+                    [field]: value,
+                  })
+                }
+                updateFormField={actions.updateFormField}
+                coin={coin}
+                field="coin"
+                availableCoins={coinSelectItems}
+                navigateTo={actions.navigateTo}
+              />
+            )}
 
             <View style={{ width: "100%", marginTop: 20 }}>
               <TouchableOpacity
