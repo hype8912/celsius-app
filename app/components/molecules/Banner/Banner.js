@@ -7,6 +7,7 @@ import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
+import { widthPercentageToDP } from "../../../utils/styles-util";
 
 class Banner extends Component {
   static propTypes = {
@@ -45,7 +46,6 @@ class Banner extends Component {
       noClose,
     } = this.props;
     const style = BannerStyle();
-
     return (
       <View style={[style.container, { backgroundColor }]}>
         {!noClose && (
@@ -60,7 +60,12 @@ class Banner extends Component {
             }}
             onPress={close}
           >
-            <Icon name="Close" fill={"white"} width="25" height={"25"} />
+            <Icon
+              name="Close"
+              fill={"white"}
+              width={`${widthPercentageToDP("6%")}`}
+              height={`${widthPercentageToDP("6%")}`}
+            />
           </TouchableOpacity>
         )}
         <View style={style.circleWrapper}>

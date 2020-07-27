@@ -22,7 +22,7 @@ const base = {
     justifyContent: "center",
     alignItems: "flex-end",
     marginTop: heightPercentageToDP("2%"),
-    left: -heightPercentageToDP("13%"),
+    left: -heightPercentageToDP("14%"),
     height: heightPercentageToDP("22%"),
     width: heightPercentageToDP("22%"),
     borderRadius: heightPercentageToDP("11%"),
@@ -30,9 +30,9 @@ const base = {
   },
   image: {
     resizeMode: "contain",
-    marginRight: heightPercentageToDP("3%"),
-    width: 40,
-    height: 40,
+    marginRight: heightPercentageToDP("2%"),
+    width: heightPercentageToDP("6%"),
+    height: heightPercentageToDP("6%"),
   },
   textAlignment: {
     flex: 0.8,
