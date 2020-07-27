@@ -98,7 +98,7 @@ class Graph extends React.Component {
 
     let color = {
       line: getColor(COLOR_KEYS.POSITIVE_STATE),
-      area: getColor(COLOR_KEYS.LINK),
+      area: getColor(COLOR_KEYS.POSITIVE_STATE),
       back: getColor(COLOR_KEYS.CARDS),
     };
 
@@ -258,15 +258,9 @@ class Graph extends React.Component {
       <Svg width={width} height={height}>
         <Defs>
           {type === "coin-interest" ? (
-            <LinearGradient
-              x1={"50%"}
-              y1={"0%"}
-              x2={"50%"}
-              y2={"100%"}
-              id={"gradient"}
-            >
-              <Stop stopColor={color.area} offset={"40%"} spotOpacity={0.1} />
-              <Stop stopColor={color.back} offset={"90%"} spotOpacity={0.1} />
+            <LinearGradient x1={"100%"} x2={"100%"} id={"gradient"}>
+              <Stop stopColor={color.area} offset={"50%"} stopOpacity={0.4} />
+              <Stop stopColor={color.back} offset={"95%"} />
             </LinearGradient>
           ) : null}
 
