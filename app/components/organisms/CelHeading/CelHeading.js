@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import CelHeadingStyle from "./CelHeading.styles";
-import { getPadding, getColor } from "../../../utils/styles-util";
+import { getPadding, getColor, getTheme } from "../../../utils/styles-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { THEMES } from "../../../constants/UI";
 import CelInput from "../../atoms/CelInput/CelInput";
@@ -305,7 +305,9 @@ class CelHeading extends Component {
   getContent = () => {
     const { formData, hodlStatus, actions, activeScreen } = this.props;
     const sceneOptions = this.props.scene.descriptor.options;
-    const style = CelHeadingStyle();
+    const theme = getTheme();
+    const style = CelHeadingStyle(theme);
+
     const paddings = getPadding("0 15 0 15");
     const leftStyle = this.isSearchHeader()
       ? [style.left, { flexDirection: "row", flex: 2 }]
