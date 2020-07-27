@@ -260,25 +260,25 @@ class Graph extends React.Component {
           {type === "coin-interest" ? (
             <LinearGradient
               x1={"50%"}
-              y1={"0%"}
+              y1={"50%"}
               x2={"50%"}
               y2={"100%"}
               id={"gradient"}
             >
-              <Stop stopColor={color.area} offset={"40%"} spotOpacity={0.1} />
-              <Stop stopColor={color.back} offset={"90%"} spotOpacity={0.1} />
+              <Stop stopColor={color.area} offset={"95%"} spotOpacity={0.1} />
+              <Stop stopColor={color.back} offset={"95%"} spotOpacity={0.1} />
             </LinearGradient>
           ) : null}
 
           {type === "total-balance" || type === "coin-balance" ? (
             <LinearGradient
               x1={"50%"}
-              y1={"0%"}
+              y1={"50%"}
               x2={"50%"}
               y2={"100%"}
               id={"gradient"}
             >
-              <Stop stopColor={color.area} offset={"50%"} stopOpacity={0.4} />
+              <Stop stopColor={color.area} offset={"95%"} stopOpacity={0.4} />
               <Stop stopColor={color.back} offset={"95%"} />
             </LinearGradient>
           ) : null}
