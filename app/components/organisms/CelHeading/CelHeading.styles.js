@@ -105,7 +105,18 @@ const themed = {
   },
   unicorn: {
     headingBackground: {
-      borderColor: "transparent",
+      borderColor: null, // TODO: handle this better way when remove light theme
+      ...Platform.select({
+        android: {
+          borderColor: "transparent",
+          borderBottomWidth: 0,
+        },
+        ios: {
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0,
+          shadowRadius: 0,
+        },
+      }),
     },
   },
 };

@@ -7,8 +7,9 @@ import * as appActions from "../../../redux/actions";
 import MessageStyle from "./Message.styles";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import animationsUtil from "../../../utils/animations-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -80,7 +81,12 @@ class Message extends Component {
         ]}
       >
         <View style={style.circle}>
-          <Icon {...icon} height="29" width="29" fill={STYLES.COLORS.WHITE} />
+          <Icon
+            {...icon}
+            height="29"
+            width="29"
+            fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+          />
         </View>
 
         <View style={{ width: "65%" }}>
