@@ -20,10 +20,7 @@ class LoanTrigger extends Component {
 
   render() {
     const { actions } = this.props;
-    // const style = LoanTriggerStyle();
-
-    const content = `Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending money you need at the lowest rates in the industry!`;
-
+    const content = `Did you know you can get all the cash you need? Every Celsian is pre-approved.`;
     return (
       <Banner
         backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
@@ -45,7 +42,7 @@ class LoanTrigger extends Component {
           actions.closeBanner();
         }}
         textButtonText={"Don't show"}
-        title={"Did you know..."}
+        title={"Don’t sell coins, HODL and borrow like the 1%"}
         content={content}
         close={() => actions.closeBanner()}
       />

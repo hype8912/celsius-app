@@ -16,6 +16,7 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 @connect(
   state => ({
@@ -66,6 +67,7 @@ class VerifyProfile extends Component {
     const activeScreen = navigation.getParam("activeScreen");
     const hasSixDigitPin = navigation.getParam("hasSixDigitPin");
 
+    actions.updateFormField("loading", false);
     actions.getPreviousPinScreen(activeScreen);
     if (hasSixDigitPin || user.has_six_digit_pin)
       this.setState({ hasSixDigitPin: true });
@@ -102,6 +104,8 @@ class VerifyProfile extends Component {
     const onSuccess = navigation.getParam("onSuccess");
     const activeScreen = navigation.getParam("activeScreen");
 
+    actions.updateFormField("loading", true);
+
     // Check if app is opened from DeepLink
     if (!_.isEmpty(deepLinkData)) {
       if (deepLinkData.type === DEEP_LINKS.NAVIGATE_TO) {
@@ -113,15 +117,19 @@ class VerifyProfile extends Component {
     if (activeScreen) {
       if (activeScreen === "VerifyProfile") {
         this.setState({ loading: false });
+        actions.updateFormField("loading", false);
+
         actions.resetToScreen(previousScreen || "WalletLanding");
         return;
       }
 
       actions.navigateTo(activeScreen);
+      actions.updateFormField("loading", false);
+
       this.setState({ loading: false });
       return;
     }
-
+    actions.updateFormField("loading", false);
     this.setState({ loading: false });
     onSuccess();
   };
@@ -223,8 +231,11 @@ class VerifyProfile extends Component {
 
   render2FA() {
     const { loading } = this.state;
-    const { actions } = this.props;
+    const { actions, formData } = this.props;
     const style = VerifyProfileStyle();
+
+    const isLoading = _.isEmpty(formData) || formData.loading;
+    if (isLoading) return <LoadingScreen />;
 
     return (
       <View style={style.wrapper}>

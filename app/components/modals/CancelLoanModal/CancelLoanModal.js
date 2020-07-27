@@ -17,6 +17,7 @@ class CancelLoanModal extends React.Component {
       isLoading: true,
     });
     await actions.cancelLoan();
+    actions.closeModal();
     await actions.getAllLoans();
     this.setState({
       isLoading: false,
