@@ -8,11 +8,11 @@ import { Extrapolate } from "react-native-reanimated";
 import formatter from "../../../utils/formatter";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
-import Card from "../../atoms/Card/Card";
+// import Card from "../../atoms/Card/Card";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import CoinDetailsStyle from "./CoinDetails.styles";
 import Separator from "../../atoms/Separator/Separator";
-import Badge from "../../atoms/Badge/Badge";
+// import Badge from "../../atoms/Badge/Badge";
 
 import {
   getColor,
@@ -22,9 +22,9 @@ import {
 import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import Icon from "../../atoms/Icon/Icon";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
-import InterestCard from "../../molecules/InterestCard/InterestCard";
-import interestUtil from "../../../utils/interest-util";
-import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
+// import InterestCard from "../../molecules/InterestCard/InterestCard";
+// import interestUtil from "../../../utils/interest-util";
+// import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import Counter from "../../molecules/Counter/Counter";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import STYLES from "../../../constants/STYLES";
@@ -147,7 +147,7 @@ class CoinDetails extends Component {
     const { yOffset } = this.state;
     const coinDetails = this.getCoinDetails();
     const opacity = yOffset.interpolate({
-      inputRange: [20, 150],
+      inputRange: [100, 200],
       outputRange: [0, 1],
       extrapolate: Extrapolate.CLAMP,
     });
@@ -162,15 +162,15 @@ class CoinDetails extends Component {
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "center",
-          backgroundColor: getColor(COLOR_KEYS.CARDS),
+          backgroundColor: getColor(COLOR_KEYS.BACKGROUND),
           opacity,
         }}
       >
-        <View style={{ marginLeft: -25, flex: 0.2 }}>
+        <View style={{ marginLeft: -15, flex: 0.2 }}>
           <Icon name="IconChevronLeft" height={"25"} width={"25"} />
         </View>
 
-        <View style={{ flex: 0.8, alignItems: "center" }}>
+        <View style={{ flex: 0.8, alignItems: "center", marginRight: 50 }}>
           <CelText type={"H2"} weight={"600"}>
             {formatter.crypto(coinDetails.amount, coinDetails.short)}
           </CelText>
@@ -192,21 +192,19 @@ class CoinDetails extends Component {
           .filter(c => c.short === coinDetails.short)
           .map(m => m.market_quotes_usd)[0]
       : {};
-    let headerHeight;
-    if (yOffset < 370) {
-      headerHeight = yOffset.interpolate({
-        inputRange: [0, 370],
-        outputRange: [370, 0],
-        extrapolate: Extrapolate.CLAMP,
-      });
-    }
+    const opacity = yOffset.interpolate({
+      inputRange: [20, 150],
+      outputRange: [1, 0],
+      extrapolate: Extrapolate.CLAMP,
+    });
 
     return (
       <Animated.View
         style={[
           {
             backgroundColor: getColor(COLOR_KEYS.BANNER_INFO),
-            height: headerHeight,
+            opacity,
+            marginBottom: 15,
           },
         ]}
       >
@@ -274,6 +272,7 @@ class CoinDetails extends Component {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
+                  marginTop: 10,
                 }}
               >
                 <Counter
@@ -410,6 +409,7 @@ class CoinDetails extends Component {
             flexDirection: "row",
             justifyContent: "space-between",
             width: "100%",
+            marginTop: 10,
           },
         ]}
       >
@@ -551,27 +551,27 @@ class CoinDetails extends Component {
 
   render() {
     const { currency, yOffset } = this.state;
-    const {
-      actions,
-      interestRates,
-      celpayCompliance,
-      appSettings,
-      interestCompliance,
-    } = this.props;
+    // const {
+    // actions,
+    // interestRates,
+    // celpayCompliance,
+    // appSettings,
+    // interestCompliance,
+    // } = this.props;
 
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
 
-    const interestInCoins = appSettings.interest_in_cel_per_coin;
-    const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
-
-    const isBelowThreshold = interestUtil.isBelowThreshold(coinDetails.short);
-    const specialRate = isBelowThreshold
-      ? interestRate.specialApyRate
-      : interestRate.apyRate;
-    const isInCel = !interestRate.inCEL
-      ? interestRate.compound_rate
-      : specialRate;
+    // const interestInCoins = appSettings.interest_in_cel_per_coin;
+    // const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
+    //
+    // const isBelowThreshold = interestUtil.isBelowThreshold(coinDetails.short);
+    // const specialRate = isBelowThreshold
+    //   ? interestRate.specialApyRate
+    //   : interestRate.apyRate;
+    // const isInCel = !interestRate.inCEL
+    //   ? interestRate.compound_rate
+    //   : specialRate;
 
     return (
       <Animated.ScrollView
@@ -597,80 +597,80 @@ class CoinDetails extends Component {
           coin={currency.short}
           backgroundColor={"#FFFFFF"}
         />
-        <View style={style.container}>
-          <Card margin="10 0 10 0">
-            <View>
-              <View style={style.interestWrapper}>
-                <View style={style.interestCardWrapper}>
-                  <CelText type="H6" weight="300" margin={"3 0 3 0"}>
-                    Total interest earned
-                  </CelText>
-                  <CelText type="H3" weight="600" margin={"3 0 3 0"}>
-                    {formatter.usd(coinDetails.interest_earned_usd)}
-                  </CelText>
-                  <CelText type="H6" weight="300" margin={"3 0 3 0"}>
-                    {formatter.crypto(
-                      coinDetails.interest_earned,
-                      coinDetails.short
-                    )}
-                  </CelText>
-                  {coinDetails.interest_earned_cel &&
-                  coinDetails.short !== "CEL" ? (
-                    <CelText type="H6" weight="300" margin={"3 0 0 0"}>
-                      {formatter.crypto(coinDetails.interest_earned_cel, "CEL")}
-                    </CelText>
-                  ) : null}
-                </View>
-                {!!coinDetails &&
-                  !!interestRates &&
-                  !!interestRates[coinDetails.short] && (
-                    <View style={style.interestRateWrapper}>
-                      <Badge
-                        margin="0 10 10 12"
-                        style={{ alignContent: "center" }}
-                        color={getColor(COLOR_KEYS.POSITIVE_STATE)}
-                      >
-                        <CelText
-                          margin={"0 5 0 5"}
-                          align="justify"
-                          type="H5"
-                          color="white"
-                        >{`${formatter.percentageDisplay(
-                          isInCel
-                        )} APY`}</CelText>
-                      </Badge>
-                    </View>
-                  )}
-              </View>
-              <View style={style.graphContainer}>
-                <GraphContainer
-                  periods={["MONTH", "YEAR"]}
-                  showCursor
-                  showPeriods
-                  interest
-                  backgroundColor={"#FFFFFF"}
-                  width={widthPercentageToDP("89%")}
-                  type={"coin-interest"}
-                  coin={currency.short}
-                />
-              </View>
-            </View>
-            {celpayCompliance && (
-              <InterestCard
-                coin={coinDetails.short}
-                interestRate={interestRate}
-                interestInCoins={interestInCoins}
-                setUserAppSettings={actions.setUserAppSettings}
-              />
-            )}
-            <RateInfoCard
-              coin={coinDetails}
-              navigateTo={actions.navigateTo}
-              tierButton
-              interestCompliance={interestCompliance}
-            />
-          </Card>
-        </View>
+        {/* <View style={style.container}>*/}
+        {/*  <Card margin="10 0 10 0">*/}
+        {/*    <View>*/}
+        {/*      <View style={style.interestWrapper}>*/}
+        {/*        <View style={style.interestCardWrapper}>*/}
+        {/*          <CelText type="H6" weight="300" margin={"3 0 3 0"}>*/}
+        {/*            Total interest earned*/}
+        {/*          </CelText>*/}
+        {/*          <CelText type="H3" weight="600" margin={"3 0 3 0"}>*/}
+        {/*            {formatter.usd(coinDetails.interest_earned_usd)}*/}
+        {/*          </CelText>*/}
+        {/*          <CelText type="H6" weight="300" margin={"3 0 3 0"}>*/}
+        {/*            {formatter.crypto(*/}
+        {/*              coinDetails.interest_earned,*/}
+        {/*              coinDetails.short*/}
+        {/*            )}*/}
+        {/*          </CelText>*/}
+        {/*          {coinDetails.interest_earned_cel &&*/}
+        {/*          coinDetails.short !== "CEL" ? (*/}
+        {/*            <CelText type="H6" weight="300" margin={"3 0 0 0"}>*/}
+        {/*              {formatter.crypto(coinDetails.interest_earned_cel, "CEL")}*/}
+        {/*            </CelText>*/}
+        {/*          ) : null}*/}
+        {/*        </View>*/}
+        {/*        {!!coinDetails &&*/}
+        {/*          !!interestRates &&*/}
+        {/*          !!interestRates[coinDetails.short] && (*/}
+        {/*            <View style={style.interestRateWrapper}>*/}
+        {/*              <Badge*/}
+        {/*                margin="0 10 10 12"*/}
+        {/*                style={{ alignContent: "center" }}*/}
+        {/*                color={getColor(COLOR_KEYS.POSITIVE_STATE)}*/}
+        {/*              >*/}
+        {/*                <CelText*/}
+        {/*                  margin={"0 5 0 5"}*/}
+        {/*                  align="justify"*/}
+        {/*                  type="H5"*/}
+        {/*                  color="white"*/}
+        {/*                >{`${formatter.percentageDisplay(*/}
+        {/*                  isInCel*/}
+        {/*                )} APY`}</CelText>*/}
+        {/*              </Badge>*/}
+        {/*            </View>*/}
+        {/*          )}*/}
+        {/*      </View>*/}
+        {/*      <View style={style.graphContainer}>*/}
+        {/*        <GraphContainer*/}
+        {/*          periods={["MONTH", "YEAR"]}*/}
+        {/*          showCursor*/}
+        {/*          showPeriods*/}
+        {/*          interest*/}
+        {/*          backgroundColor={"#FFFFFF"}*/}
+        {/*          width={widthPercentageToDP("89%")}*/}
+        {/*          type={"coin-interest"}*/}
+        {/*          coin={currency.short}*/}
+        {/*        />*/}
+        {/*      </View>*/}
+        {/*    </View>*/}
+        {/*    {celpayCompliance && (*/}
+        {/*      <InterestCard*/}
+        {/*        coin={coinDetails.short}*/}
+        {/*        interestRate={interestRate}*/}
+        {/*        interestInCoins={interestInCoins}*/}
+        {/*        setUserAppSettings={actions.setUserAppSettings}*/}
+        {/*      />*/}
+        {/*    )}*/}
+        {/*    <RateInfoCard*/}
+        {/*      coin={coinDetails}*/}
+        {/*      navigateTo={actions.navigateTo}*/}
+        {/*      tierButton*/}
+        {/*      interestCompliance={interestCompliance}*/}
+        {/*    />*/}
+        {/*  </Card>*/}
+        {/* </View>*/}
 
         <View style={style.container}>
           <TransactionsHistory
