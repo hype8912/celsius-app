@@ -19,7 +19,7 @@ const base = {
   },
   secondaryButtonStyle: {
     color: COLOR_KEYS.TOGGLE_OFF_FOREGROUND,
-    backgroundColor: COLOR_KEYS.TOGGLE_OFF_BACKGROUND,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
   redButtonStyle: {
     color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,

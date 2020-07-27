@@ -113,7 +113,7 @@ class MultistepModal extends Component {
                 opacity,
                 height: 8,
                 width: 8,
-                backgroundColor: getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE),
+                backgroundColor: getColor(COLOR_KEYS.DOT_INDICATOR_ACTIVE),
                 margin: 5,
                 borderRadius: 4,
               }}
