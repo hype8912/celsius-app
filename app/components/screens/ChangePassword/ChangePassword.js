@@ -10,7 +10,6 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import securityUtil from "../../../utils/security-util";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -48,12 +47,7 @@ class ChangePassword extends Component {
 
     return (
       <RegularLayout fabType={"hide"}>
-        <CelText
-          align={"center"}
-          margin={"0 0 30 0"}
-          color={STYLES.COLORS.MEDIUM_GRAY}
-          type={"H4"}
-        >
+        <CelText align={"center"} margin={"0 0 30 0"} type={"H4"}>
           To change your password, please fill in the fields below:
         </CelText>
         <CelInput
