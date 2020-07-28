@@ -32,12 +32,14 @@ class MarginCallModal extends Component {
     const { allLoans, loanAlerts } = this.props;
     const style = MarginCallModalStyle();
 
-    const loansOverview = allLoans.filter(loan =>
-      loanAlerts.find(
-        alert =>
-          alert.id === loan.id && alert.type === LOAN_ALERTS.MARGIN_CALL_ALERT
+    const loansOverview = allLoans
+      .filter(loan =>
+        loanAlerts.find(
+          alert =>
+            alert.id === loan.id && alert.type === LOAN_ALERTS.MARGIN_CALL_ALERT
+        )
       )
-    );
+      .sort((a, b) => a.id - b.id);
 
     const multipleAlerts = loansOverview.length > 1;
 

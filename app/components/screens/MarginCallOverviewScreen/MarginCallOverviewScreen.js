@@ -47,12 +47,14 @@ class MarginCallOverviewScreen extends Component {
   render() {
     const { modalLoan } = this.state;
     const { allLoans, loanAlerts, currencyRates } = this.props;
-    const loansOverview = allLoans.filter(loan =>
-      loanAlerts.find(
-        alert =>
-          alert.id === loan.id && alert.type === LOAN_ALERTS.MARGIN_CALL_ALERT
+    const loansOverview = allLoans
+      .filter(loan =>
+        loanAlerts.find(
+          alert =>
+            alert.id === loan.id && alert.type === LOAN_ALERTS.MARGIN_CALL_ALERT
+        )
       )
-    );
+      .sort((a, b) => a.id - b.id);
     return (
       <RegularLayout>
         {loansOverview.map(loan => {

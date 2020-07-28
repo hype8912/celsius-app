@@ -73,9 +73,7 @@ class LoanOverviewCard extends Component {
   payPrincipal = async () => {
     const { actions, loan } = this.props;
     this.setState({ isLoading: true });
-    await actions.navigateTo("VerifyProfile", {
-      onSuccess: () => actions.payPrincipal(loan.id),
-    });
+    await actions.payPrincipal(loan.id);
     this.setState({ isLoading: false });
   };
 
