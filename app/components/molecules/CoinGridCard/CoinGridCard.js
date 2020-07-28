@@ -67,7 +67,7 @@ class CoinGridCard extends Component {
   coinCardFull = coin => (
     <Fragment>
       <Counter
-        color={CoinGridCardStyle.text}
+        color={getColor(COLOR_KEYS.HEADLINE)}
         weight="600"
         type="H3"
         margin="3 0 3 0"
