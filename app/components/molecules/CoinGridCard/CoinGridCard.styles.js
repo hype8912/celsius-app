@@ -7,9 +7,6 @@ const base = {
   balance: {
     flex: 1,
   },
-  text: {
-    color: "#FFFF",
-  },
   cardInnerView: {
     flexDirection: "row",
     marginHorizontal: 12,
