@@ -278,7 +278,7 @@ class CelSelect extends Component {
             flex: 1,
           }}
         >
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             {countryInput
               ? this.renderImage(
                   [cmpStyle.flagImage, { marginRight: 5 }],
