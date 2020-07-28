@@ -1,9 +1,9 @@
 {
-  "name": "appcenter-crashes",
+  "name": "appcenter-core",
   "version": "3.1.1",
-  "summary": "React Native plugin for AppCenter Crashes",
+  "summary": "Node module that contains common functionality needed to appcenter-* modules",
   "license": "MIT",
-  "homepage": "https://github.com/Microsoft/appcenter-sdk-react-native/blob/master/appcenter-crashes/README.md",
+  "homepage": "https://github.com/Microsoft/appcenter-sdk-react-native/blob/master/appcenter/README.md",
   "documentation_url": "https://docs.microsoft.com/en-us/appcenter/",
   "authors": {
     "Microsoft": "appcentersdk@microsoft.com"
@@ -11,7 +11,7 @@
   "source": {
     "git": "https://github.com/microsoft/appcenter-sdk-react-native.git"
   },
-  "source_files": "AppCenterReactNativeCrashes/**/*.{h,m}",
+  "source_files": "AppCenterReactNative/**/*.{h,m}",
   "platforms": {
     "ios": "9.0"
   },
@@ -19,7 +19,6 @@
   "vendored_frameworks": "AppCenterReactNativeShared/AppCenterReactNativeShared.framework",
   "dependencies": {
     "AppCenterReactNativeShared": [],
-    "AppCenter/Crashes": [],
     "React": []
   },
   "static_framework": true
