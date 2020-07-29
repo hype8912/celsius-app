@@ -97,7 +97,8 @@ function getTransactionDetails(id = "") {
 }
 
 /**
- * TODO add JSDoc
+ * cancels transaction by supplying transaction id
+ * @param {string} withdrawalId
  */
 function cancelWithdrawal(withdrawalId) {
   return async dispatch => {
@@ -123,8 +124,9 @@ function cancelWithdrawal(withdrawalId) {
 }
 
 /**
- * TODO add JSDoc
- */
+ * transaction details success actions
+ * @param {string} transaction
+ * */
 function getTransactionDetailsSuccess(transaction) {
   return {
     type: ACTIONS.GET_TRANSACTION_DETAILS_SUCCESS,

@@ -1,9 +1,6 @@
 import ACTIONS from "../../constants/ACTIONS";
 import { INITIAL_ROUTE } from "../../constants/UI";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 const initialState = {
   activeScreen: INITIAL_ROUTE,
   previousScreen: undefined, // NOTE: used in VerifyProfile.js
