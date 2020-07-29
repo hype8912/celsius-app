@@ -83,7 +83,9 @@ class App extends Component {
       return store.dispatch(actions.navigateTo("Welcome"));
     }
 
-    await appUtil.checkAndRefreshAuthToken(token);
+    const refreshTokenError = await appUtil.checkAndRefreshAuthToken(token);
+    // If token is expired go to LoginLanding screen and stop executing actions in App.js
+    if (refreshTokenError && refreshTokenError.slug === "Token Expired") return;
 
     await store.dispatch(actions.getInitialCelsiusData());
     store.dispatch(actions.navigateTo("Home"));
