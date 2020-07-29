@@ -42,7 +42,7 @@ function getCameraRollPhotos() {
 }
 
 /**
- * TODO add JSDoc
+ * Successful opening of Camera Roll
  */
 function getCameraRollPhotosSuccess(photos) {
   return {
