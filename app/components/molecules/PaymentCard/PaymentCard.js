@@ -316,6 +316,8 @@ class PaymentCard extends Component {
       additionalUsdAmount,
       options,
     } = this.state;
+    const style = PaymentCardStyle();
+    const theme = getTheme();
 
     if (
       currency &&
@@ -341,10 +343,7 @@ class PaymentCard extends Component {
     }
 
     if (!loan) return null;
-
     let time;
-    const style = PaymentCardStyle();
-    const theme = getTheme();
 
     if (
       loan &&

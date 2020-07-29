@@ -71,6 +71,8 @@ function applyForALoan() {
         allLoans,
       });
 
+      dispatch(setActiveLoan(res.data.loan.id));
+
       dispatch(
         navigateTo("LoanRequestDetails", {
           id: res.data.loan.id,

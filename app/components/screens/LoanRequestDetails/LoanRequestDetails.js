@@ -41,13 +41,6 @@ class LoanRequestDetails extends Component {
     };
   };
 
-  componentDidMount = async () => {
-    const { navigation, actions } = this.props;
-    const loanId = navigation.getParam("id");
-    await actions.setActiveLoan(loanId);
-    await actions.getLoanById(loanId);
-  };
-
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.activeLoan, this.props.activeLoan)) {
       this.props.navigation.setParams({
@@ -218,7 +211,6 @@ class LoanRequestDetails extends Component {
           });
 
     const sections = activeLoan.uiSections;
-
     return (
       <RegularLayout>
         <View style={style.container}>
