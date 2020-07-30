@@ -16,7 +16,6 @@ import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmoun
 import { PREDIFINED_AMOUNTS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
 import cryptoUtil from "../../../utils/crypto-util";
-import { isMalisaPusonja } from "../../../utils/user-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
@@ -246,7 +245,6 @@ class CelPayEnterAmount extends Component {
     }
 
     if (
-      !isMalisaPusonja() &&
       cryptoUtil.isGreaterThan(
         amountUsd,
         celPaySettings.maximum_transfer_amount

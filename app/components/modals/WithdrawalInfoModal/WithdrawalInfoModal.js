@@ -155,7 +155,6 @@ class WithdrawalInfoModal extends Component {
       : [picture, picture];
 
     if (["DASH", "DAI", "CEL"].includes(type)) {
-      // TODO(ns) We need to see, if buttons don't work on multistep to remove them...
       return (
         <MultistepModal
           style={style.container}

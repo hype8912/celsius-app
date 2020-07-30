@@ -132,7 +132,8 @@ async function checkAndRefreshAuthToken(token) {
     .isAfter(moment(expirationDate));
 
   if (isAboutToExpire) {
-    await store.dispatch(actions.refreshAuthToken());
+    const refreshTokenError = await store.dispatch(actions.refreshAuthToken());
+    return refreshTokenError;
   }
 }
 

@@ -39,6 +39,15 @@ export default (state = initialState, action) => {
         },
       };
 
+    case ACTIONS.SET_SIX_DIGIT_PIN:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          has_six_digit_pin: true,
+        },
+      };
+
     case ACTIONS.UPDATE_USER_ADDRESS_INFO_SUCCESS:
       return {
         ...state,
