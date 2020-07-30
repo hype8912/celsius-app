@@ -32,11 +32,11 @@ function getProps(purpose, componentProps) {
       return {
         ...props,
         image: require("../../assets/images/upgradeToSixDigit.png"),
-        heading: "Upgrade PIN to 6 digits",
+        heading: "Create a 6 digit PIN",
         paragraphs: [
-          "This is more secure, with vastly more combinations to guess, and essentially prevents thieves from brute-forcing their way into your device.",
+          "We now require users have a 6 digit PIN for enhanced security.",
         ],
-        button: "Generate 6-Digits PIN",
+        button: "Create New PIN",
       };
 
     case EMPTY_STATES.HODL_MODE_WARNING_CELPAY:
