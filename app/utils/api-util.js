@@ -282,7 +282,7 @@ async function handle403(err) {
     store.dispatch(actions.showMessage("error", err.msg));
   }
   if (err.slug === "Token Expired") {
-    store.dispatch(actions.logoutFormDevice());
+    store.dispatch(actions.logoutFormDevice("login", "inactiveUser", err.msg));
   }
 }
 

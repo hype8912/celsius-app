@@ -1,9 +1,6 @@
 import ACTIONS from "../../constants/ACTIONS";
 import walletUtil from "../../utils/wallet-util";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 function initialState() {
   return {
     summary: undefined,
