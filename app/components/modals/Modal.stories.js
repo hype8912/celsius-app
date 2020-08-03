@@ -39,7 +39,6 @@ import ReferralReceivedModalStories from "./ReferralReceivedModal/ReferralReceiv
 import CelPayInfoModalStories from "./CelPayInfoModal/CelPayInfoModal.stories";
 import ACTIONS from "../../constants/ACTIONS";
 import GetCoinsConfirmModalStories from "./GetCoinsConfirmModal/GetCoinsConfirmModal.stories";
-import LoanAdvertiseModalStories from "./LoanAdvertiseModal/LoanAdvertiseModal.stories";
 
 const changeTheme = () => {
   const currentState = _.cloneDeep(store.getState());
@@ -77,7 +76,6 @@ storiesOf("Modals", module)
     <View>
       <CelButton onPress={changeTheme}>Change Theme</CelButton>
 
-      <LoanAdvertiseModalStories />
       <GetCoinsConfirmModalStories />
       <InterestDueModalStories />
       <CelPayReceivedModalStories />
