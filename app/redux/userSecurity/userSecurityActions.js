@@ -218,6 +218,7 @@ function completePinChange(pinData, onSuccess) {
       dispatch({ type: ACTIONS.CHANGE_PIN_SUCCESS });
       dispatch({ type: ACTIONS.CLEAR_FORM });
 
+      dispatch({ type: ACTIONS.SET_SIX_DIGIT_PIN });
       mixpanelAnalytics.changePin();
       dispatch(showMessage("success", "Successfully changed PIN number"));
       if (formData.upgradeToSixDigitPin) {
