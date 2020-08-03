@@ -58,7 +58,12 @@ class InterestDueModal extends Component {
     } = this.props;
     let totalAmount;
     const style = InterestDueModalStyle();
-    if (!activeLoan || !activeLoan.installments_to_be_paid) return null;
+    if (
+      allLoans.length === 0 ||
+      !activeLoan ||
+      !activeLoan.installments_to_be_paid
+    )
+      return null;
     const instalmentsToBePaid = activeLoan.installments_to_be_paid;
     const modalName = alert
       ? MODALS.LOAN_ALERT_MODAL

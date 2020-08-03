@@ -128,27 +128,29 @@ class LoanOverviewCard extends Component {
           </Card>
         )}
         <Card padding={"0 0 0 0"}>
-          <View style={style.loanTitle}>
-            <View style={style.status}>
-              <Icon
-                name={"TransactionLoan"}
-                fill={loan.uiProps.color}
-                width={"25"}
-                height={"25"}
-              />
-              <CelText
-                type={"H5"}
-                color={loan.uiProps.color}
-                margin={"0 5 0 0"}
-              >
-                {loan.uiProps.displayText}
+          {loan && loan.uiProps && (
+            <View style={style.loanTitle}>
+              <View style={style.status}>
+                <Icon
+                  name={"TransactionLoan"}
+                  fill={loan.uiProps.color}
+                  width={"25"}
+                  height={"25"}
+                />
+                <CelText
+                  type={"H5"}
+                  color={loan.uiProps.color}
+                  margin={"0 5 0 0"}
+                >
+                  {loan.uiProps.displayText}
+                </CelText>
+              </View>
+
+              <CelText type={"H2"} weight={"600"} margin={"0 0 5 0"}>
+                {loan.uiProps.displayAmount}
               </CelText>
             </View>
-
-            <CelText type={"H2"} weight={"600"} margin={"0 0 5 0"}>
-              {loan.uiProps.displayAmount}
-            </CelText>
-          </View>
+          )}
 
           <Separator />
 
