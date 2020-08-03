@@ -7,6 +7,7 @@ import PaymentListItemStyle from "./PaymentListItem.styles";
 import CelText from "../CelText/CelText";
 import Separator from "../Separator/Separator";
 import formatter from "../../../utils/formatter";
+import STYLES from "../../../constants/STYLES";
 
 const PaymentListItem = ({ payment, upperText, type }) => {
   const style = PaymentListItemStyle();
@@ -22,6 +23,17 @@ const PaymentListItem = ({ payment, upperText, type }) => {
     ? formatter.crypto(amount, payment.coin)
     : formatter.usd(amount);
 
+  let paymentType;
+
+  if (payment.type === "monthly_interest")
+    paymentType = {
+      type: "Loan Interest",
+      color: STYLES.COLORS.RED,
+      sign: "-",
+    };
+  if (payment.type === "receiving_principal_back")
+    paymentType = { type: "Principal", color: STYLES.COLORS.GREEN, sign: " " };
+
   return (
     <View>
       {upperText ? (
@@ -34,14 +46,28 @@ const PaymentListItem = ({ payment, upperText, type }) => {
 
       <View style={wrapperStyles}>
         <View style={style.textWrapper}>
-          <CelText weight="600" color={textColor} type="H3">
-            {amountDisplay}
-          </CelText>
-          <CelText weight="300" color={textColor} type="H6">
-            {moment(payment.dueDate).format("MMM D, YYYY")}
+          <View style={{ alignItems: "center" }}>
+            <CelText weight="300" color={textColor} type="H7">
+              {moment(payment.dueDate).format("D")}
+            </CelText>
+            <CelText weight="300" color={textColor} type="H7">
+              {moment(payment.dueDate)
+                .format("MMM")
+                .toUpperCase()}
+            </CelText>
+          </View>
+          <View style={{ alignItems: "flex-start" }}>
+            <CelText weight="500" color={textColor} type="H5">
+              {paymentType.type}
+            </CelText>
+            <CelText weight="500" type="H7" color={paymentType.color}>
+              {formatter.capitalize(payment.status)}
+            </CelText>
+          </View>
+          <CelText weight="600" color={textColor} type="H4">
+            {`${paymentType.sign}${amountDisplay}`}
           </CelText>
         </View>
-
         <Separator />
       </View>
     </View>
