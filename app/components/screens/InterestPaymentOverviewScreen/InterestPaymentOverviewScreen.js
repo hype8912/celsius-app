@@ -36,12 +36,14 @@ class InterestPaymentOverviewScreen extends Component {
     const style = InterestPaymentOverviewScreenStyle();
     const { actions, allLoans, loanAlerts } = this.props;
 
-    const loansOverview = allLoans.filter(loan =>
-      loanAlerts.find(
-        alert =>
-          alert.id === loan.id && alert.type === LOAN_ALERTS.INTEREST_ALERT
+    const loansOverview = allLoans
+      .filter(loan =>
+        loanAlerts.find(
+          alert =>
+            alert.id === loan.id && alert.type === LOAN_ALERTS.INTEREST_ALERT
+        )
       )
-    );
+      .sort((a, b) => a.id - b.id);
 
     return (
       <RegularLayout>

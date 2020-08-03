@@ -63,13 +63,15 @@ class InterestDueModal extends Component {
     const modalName = alert
       ? MODALS.LOAN_ALERT_MODAL
       : MODALS.INTEREST_DUE_MODAL;
-    const loansOverview = allLoans.filter(loan =>
-      loanAlerts.find(
-        loanAlert =>
-          loanAlert.id === loan.id &&
-          loanAlert.type === LOAN_ALERTS.INTEREST_ALERT
+    const loansOverview = allLoans
+      .filter(loan =>
+        loanAlerts.find(
+          loanAlert =>
+            loanAlert.id === loan.id &&
+            loanAlert.type === LOAN_ALERTS.INTEREST_ALERT
+        )
       )
-    );
+      .sort((a, b) => a.id - b.id);
     const multipleAlerts = loansOverview.length > 1;
     if (multipleAlerts)
       totalAmount = loansOverview.reduce((a, b) => {

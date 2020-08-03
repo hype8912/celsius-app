@@ -31,7 +31,7 @@ class MarginCallModal extends Component {
   render() {
     const { allLoans, loanAlerts } = this.props;
     const style = MarginCallModalStyle();
-
+    let time;
     const loansOverview = allLoans
       .filter(loan =>
         loanAlerts.find(
@@ -59,10 +59,9 @@ class MarginCallModal extends Component {
           </CelText>
           <Separator margin={"10 0 0 0"} />
           {loansOverview.map(loan => {
-            const time = presentTime(
-              loan.margin_call.margin_call_detected,
-              true
-            );
+            if (loan && loan.margin_call) {
+              time = presentTime(loan.margin_call.margin_call_detected, true);
+            }
             return (
               <View>
                 <View style={style.loanToValue}>

@@ -102,18 +102,18 @@ class LoanOverviewCard extends Component {
         {loan.can_pay_principal && (
           <Card>
             <CelText>You have completed all of your interest payments</CelText>
-            <CelButton
-              margin={"10 0 0 0"}
-              size={"small"}
-              color={"green"}
-              onPress={() =>
-                navigateTo("ExtendLoanScreen", {
-                  id: loan.id,
-                })
-              }
-            >
-              Extend the Loan
-            </CelButton>
+            {/* <CelButton*/}
+            {/*  margin={"10 0 0 0"}*/}
+            {/*  size={"small"}*/}
+            {/*  color={"green"}*/}
+            {/*  onPress={() =>*/}
+            {/*    navigateTo("ExtendLoanScreen", {*/}
+            {/*      id: loan.id,*/}
+            {/*    })*/}
+            {/*  }*/}
+            {/* >*/}
+            {/*  Extend the Loan*/}
+            {/* </CelButton>*/}
             <CelButton
               margin={"10 0 0 0"}
               size={"small"}

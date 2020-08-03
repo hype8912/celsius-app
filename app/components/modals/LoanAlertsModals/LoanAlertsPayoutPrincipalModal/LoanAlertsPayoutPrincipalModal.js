@@ -23,11 +23,11 @@ import LoanAlertsPayoutPrincipalModalStyle from "../LoanAlertsPayoutPrincipalMod
 class LoanAlertsPayoutPrincipalModal extends Component {
   constructor(props) {
     super(props);
-    const { loanId, allLoans } = props;
+    const { loan, allLoans } = props;
     this.state = {
       isLoadingExtend: false,
       isLoadingClose: false,
-      loan: allLoans.find(l => l.id === loanId),
+      loan: allLoans.find(l => l.id === loan.id),
     };
   }
 
@@ -65,7 +65,7 @@ class LoanAlertsPayoutPrincipalModal extends Component {
   };
 
   render() {
-    const { loan, isLoadingClose, isLoadingExtend } = this.state;
+    const { loan, isLoadingClose } = this.state;
     const { walletSummary, currencyRates } = this.props;
     const style = LoanAlertsPayoutPrincipalModalStyle();
 
@@ -123,20 +123,20 @@ class LoanAlertsPayoutPrincipalModal extends Component {
         <View style={style.buttonsWrapper}>
           <CelModalButton
             buttonStyle={"red"}
-            position={"left"}
+            position={"single"}
             loading={isLoadingClose}
             onPress={content.onPress}
           >
             {content.buttonText}
           </CelModalButton>
-          <CelModalButton
-            buttonStyle={"green"}
-            position={"right"}
-            loading={isLoadingExtend}
-            onPress={content.onPressTwo}
-          >
-            {content.buttonTextTwo}
-          </CelModalButton>
+          {/* <CelModalButton*/}
+          {/*  buttonStyle={"green"}*/}
+          {/*  position={"right"}*/}
+          {/*  loading={isLoadingExtend}*/}
+          {/*  onPress={content.onPressTwo}*/}
+          {/* >*/}
+          {/*  {content.buttonTextTwo}*/}
+          {/* </CelModalButton>*/}
         </View>
       </CelModal>
     );
