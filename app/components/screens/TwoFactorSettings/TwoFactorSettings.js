@@ -46,9 +46,11 @@ class TwoFactorSettings extends Component {
     try {
       const data = await actions.getTwoFactorSecret(formData.pin);
       if (data.ok) {
+        const qrCodeUrl = this.getQRCode(data.secret);
         this.setState({
           secret: data.secret,
           secretLoaded: true,
+          qrCodeUrl,
         });
       }
     } catch (e) {
@@ -61,7 +63,7 @@ class TwoFactorSettings extends Component {
 
   render() {
     const { actions } = this.props;
-    const { secret, secretLoaded } = this.state;
+    const { secret, secretLoaded, qrCodeUrl } = this.state;
     const style = TwoFactorSettingsStyle();
 
     if (!secretLoaded) return <LoadingScreen />;
@@ -74,7 +76,7 @@ class TwoFactorSettings extends Component {
         <Card styles={{ alignItems: "center", marginTop: 25 }}>
           <View style={style.qrWrapper}>
             <QRCode
-              value={this.getQRCode(secret)}
+              value={qrCodeUrl}
               size={141}
               bgColor="#FFF"
               fgColor="#000"
@@ -83,7 +85,7 @@ class TwoFactorSettings extends Component {
           <CelText
             align="center"
             style={style.secretText}
-            onPress={() => Linking.openURL(this.getQRCode(secret))}
+            onPress={() => Linking.openURL(qrCodeUrl)}
           >
             {secret}
           </CelText>
