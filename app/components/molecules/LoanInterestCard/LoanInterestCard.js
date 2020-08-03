@@ -106,7 +106,7 @@ class LoanInterestCard extends Component {
               weight={"300"}
               type={"H6"}
               margin={"0 0 4 0"}
-            >{`$${formatter.round(this.monthlyPayment)} per month`}</CelText>
+            >{`${formatter.usd(this.monthlyPayment)} per month`}</CelText>
             <CelText
               weight={"600"}
               type={"H3"}

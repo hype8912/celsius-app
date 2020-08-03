@@ -53,7 +53,7 @@ class BorrowLoanTerm extends Component {
             {m} MONTHS
           </CelText>
           <CelText style={{ marginBottom: 10 }} type="H6">
-            Total interest: {formatter.usd(Number(formData.monthlyPayment * m))}{" "}
+            Total interest: {formatter.usd(Number(formData.monthlyPayment) * m)}{" "}
             USD
           </CelText>
         </>
