@@ -35,9 +35,7 @@ function configureStore(initialState) {
 }
 
 function standaloneLogger() {
-  return next => action =>
-    // TODO(fj) log something for testflight testing
-    next(action);
+  return next => action => next(action);
 }
 
 export default configureStore();

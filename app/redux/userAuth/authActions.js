@@ -161,10 +161,14 @@ function logoutUser() {
 /**
  *
  */
-function logoutFormDevice() {
+function logoutFormDevice(type, reason, msg) {
   return async dispatch => {
     try {
-      await dispatch(resetToScreen("Welcome"));
+      if (reason === "inactiveUser")
+        await dispatch(
+          resetToScreen("LoginLanding", { type, inactiveUser: reason, msg })
+        );
+      else await dispatch(resetToScreen("Welcome"));
 
       await logoutUserMixpanel();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
@@ -234,13 +238,8 @@ function refreshAuthToken() {
         type: ACTIONS.REFRESH_AUTH_TOKEN_SUCCESS,
       });
     } catch (err) {
-      if (
-        err.msg !==
-        "You've been inactive for a while, so we've logged you out to help protect your account. Please login again."
-      ) {
-        dispatch(showMessage("error", err.msg));
-      }
       dispatch(apiError(API.REFRESH_AUTH_TOKEN, err));
+      return err;
     }
   };
 }

@@ -262,7 +262,9 @@ class BorrowCalculator extends Component {
 
     const themeColors = this.getThemeColors();
 
-    const sortedLtv = ltv.sort((a, b) => a.interest > b.interest);
+    const sortedLtv = ltv
+      .sort((a, b) => a.interest > b.interest)
+      .filter(c => c.coin === formData.coin);
 
     return (
       <View style={style.container}>
@@ -326,8 +328,6 @@ class BorrowCalculator extends Component {
           >
             Collateral needed
           </CelText>
-
-          {this.renderInterestRatesCard()}
         </Card>
         <CelText
           align={"center"}

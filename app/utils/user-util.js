@@ -9,7 +9,6 @@ export {
   hasPassedKYC,
   isKYCRejectedForever,
   // TODO(ns) KYC: isRejecEted, isPending
-  isMalisaPusonja,
   hasSSN,
   hasAddress,
   getUserKYCStatus,
@@ -83,14 +82,6 @@ function hasPassedKYC() {
 function isKYCRejectedForever() {
   const status = getUserKYCStatus();
   return status === KYC_STATUSES.permanently_rejected;
-}
-
-function isMalisaPusonja() {
-  const { profile } = store.getState().user;
-  return (
-    profile.email === "malisa.pusonja@gmail.com" ||
-    profile.email === "lela.djokic@mvpworkshop.co"
-  );
 }
 
 /**

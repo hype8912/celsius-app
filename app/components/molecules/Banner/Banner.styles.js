@@ -12,6 +12,10 @@ const base = {
     marginLeft: -20,
     marginTop: -20,
     marginBottom: 20,
+    paddingHorizontal: 5,
+  },
+  circleWrapper: {
+    flex: 0.2,
   },
   halfCircle: {
     backgroundColor: STYLES.COLORS.WHITE_OPACITY2,
@@ -25,17 +29,19 @@ const base = {
   },
   image: {
     resizeMode: "contain",
-    marginRight: heightPercentageToDP("3%"),
+    marginRight: heightPercentageToDP("2%"),
     width: 40,
     height: 40,
   },
   textAlignment: {
     flex: 0.8,
+    flexWrap: "wrap",
     alignItems: "flex-start",
     marginTop: heightPercentageToDP("1.7%"),
   },
   buttonsWrapper: {
     flexDirection: "row",
+    marginTop: 10,
   },
 };
 

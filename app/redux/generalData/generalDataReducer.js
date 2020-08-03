@@ -1,8 +1,5 @@
 import ACTIONS from "../../constants/ACTIONS";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 function initialState() {
   return {
     interestRates: undefined,
@@ -11,7 +8,7 @@ function initialState() {
     celUtilityTiers: undefined,
     withdrawalSettings: undefined,
     buyCoinsSettings: undefined,
-    backendStatus: undefined, // TODO move to appReducer ?
+    backendStatus: undefined,
     loanTermsOfUse: undefined,
     pdf: undefined,
   };

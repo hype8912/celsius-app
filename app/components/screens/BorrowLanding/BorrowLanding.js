@@ -21,7 +21,6 @@ import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
 import STYLES from "../../../constants/STYLES";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
-import LoanAdvertiseModal from "../../modals/LoanAdvertiseModal/LoanAdvertiseModal";
 import Spinner from "../../atoms/Spinner/Spinner";
 import { STORYBOOK } from "../../../../dev-settings.json";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
@@ -87,7 +86,6 @@ class BorrowLanding extends Component {
   async componentDidMount() {
     const { actions, loanCompliance, formData } = this.props;
     actions.checkForLoanAlerts();
-    actions.openModal(MODALS.LOAN_ADVERTISE_MODAL);
 
     if (formData.prepayLoanId) {
       actions.openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL);
@@ -332,28 +330,11 @@ class BorrowLanding extends Component {
   }
 
   render() {
-    const {
-      walletSummary,
-      actions,
-      formData,
-      userTriggeredActions,
-    } = this.props;
+    const { walletSummary } = this.props;
 
     if (!walletSummary) return null;
 
-    return (
-      <>
-        {this.renderIntersection()}
-        {!userTriggeredActions.hide_loan_advertise_modal && (
-          <LoanAdvertiseModal
-            closeModal={actions.closeModal}
-            updateFormField={actions.updateFormField}
-            formData={formData}
-            setUserAppSettings={actions.setUserAppSettings}
-          />
-        )}
-      </>
-    );
+    return <>{this.renderIntersection()}</>;
   }
 }
 
