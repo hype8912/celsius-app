@@ -289,7 +289,6 @@ async function handle403(err) {
 async function handleSixDigitPinChange(reqConfig) {
   return new Promise((resolve, reject) => {
     const { formData } = store.getState().forms;
-
     if (formData.pin || formData.code) {
       navigateToSixDigitFlow(reqConfig, resolve, reject);
     } else {
@@ -307,14 +306,13 @@ async function handleSixDigitPinChange(reqConfig) {
 }
 
 function navigateToSixDigitFlow(reqConfig, resolve, reject) {
-  const { activeScreen } = store.getState().nav;
   store.dispatch(
     actions.navigateTo("SixDigitPinExplanation", {
       onSuccess: async () => {
         try {
           // fetch failed request again after verification successful
           const res = await axios(reqConfig);
-          store.dispatch(actions.resetToScreen(activeScreen));
+          store.dispatch(actions.resetToScreen("WalletLanding"));
           store.dispatch(actions.updateFormField("loading", false));
           return resolve(res);
         } catch (e) {

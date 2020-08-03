@@ -131,7 +131,7 @@ class VerifyProfile extends Component {
     }
     actions.updateFormField("loading", false);
     this.setState({ loading: false });
-    onSuccess();
+    if (onSuccess) onSuccess();
   };
 
   onCheckError = () => {
