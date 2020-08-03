@@ -4,24 +4,24 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
-  - appcenter (2.5.0):
-    - AppCenterReactNativeShared
-    - React
-  - appcenter-analytics (2.5.0):
+  - appcenter-analytics (3.1.1):
     - AppCenter/Analytics
     - AppCenterReactNativeShared
     - React
-  - appcenter-crashes (2.5.0):
+  - appcenter-core (3.1.1):
+    - AppCenterReactNativeShared
+    - React
+  - appcenter-crashes (3.1.1):
     - AppCenter/Crashes
     - AppCenterReactNativeShared
     - React
-  - AppCenter/Analytics (3.2.0):
+  - AppCenter/Analytics (3.3.2):
     - AppCenter/Core
-  - AppCenter/Core (3.2.0)
-  - AppCenter/Crashes (3.2.0):
+  - AppCenter/Core (3.3.2)
+  - AppCenter/Crashes (3.3.2):
     - AppCenter/Core
-  - AppCenterReactNativeShared (3.0.3):
-    - AppCenter/Core (= 3.2.0)
+  - AppCenterReactNativeShared (3.1.1):
+    - AppCenter/Core (= 3.3.2)
   - AppsFlyerFramework (4.10.4)
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
@@ -160,6 +160,10 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - Onfido (18.3.0)
+  - onfido-react-native-sdk (1.2.3):
+    - Onfido (= 18.3.0)
+    - React
   - Permission-Camera (2.0.10):
     - RNPermissions
   - Permission-Contacts (2.0.10):
@@ -470,8 +474,8 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
-  - appcenter (from `../node_modules/appcenter/ios`)
   - appcenter-analytics (from `../node_modules/appcenter-analytics/ios`)
+  - appcenter-core (from `../node_modules/appcenter/ios`)
   - appcenter-crashes (from `../node_modules/appcenter-crashes/ios`)
   - CodePush (from `../node_modules/react-native-code-push`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -480,6 +484,7 @@ DEPENDENCIES:
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - Mixpanel
+  - "onfido-react-native-sdk (from `../node_modules/@onfido/react-native-sdk`)"
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera.podspec`)
   - Permission-Contacts (from `../node_modules/react-native-permissions/ios/Contacts.podspec`)
   - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse.podspec`)
@@ -567,6 +572,7 @@ SPEC REPOS:
     - JWT
     - Mixpanel
     - nanopb
+    - Onfido
     - PromisesObjC
     - Protobuf
     - QBImagePickerController
@@ -574,10 +580,10 @@ SPEC REPOS:
     - SSZipArchive
 
 EXTERNAL SOURCES:
-  appcenter:
-    :path: "../node_modules/appcenter/ios"
   appcenter-analytics:
     :path: "../node_modules/appcenter-analytics/ios"
+  appcenter-core:
+    :path: "../node_modules/appcenter/ios"
   appcenter-crashes:
     :path: "../node_modules/appcenter-crashes/ios"
   CodePush:
@@ -592,6 +598,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  onfido-react-native-sdk:
+    :path: "../node_modules/@onfido/react-native-sdk"
   Permission-Camera:
     :path: "../node_modules/react-native-permissions/ios/Camera.podspec"
   Permission-Contacts:
@@ -701,11 +709,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
-  AppCenter: ca66175050d538b157959382dd43f1ab96cdab84
-  appcenter: bde9923b687332a25607fc1aa9577c9361cfed85
-  appcenter-analytics: 0ee7a35def715d4bce58ec435f54161770195166
-  appcenter-crashes: 9f9c5647dba19026ff09509576fb7233f69697ff
-  AppCenterReactNativeShared: d1218878427a69d4b76f73883256455ed20f12b3
+  AppCenter: aba7de06e4c2184f90dc84f7866bd07f82427d69
+  appcenter-analytics: bce201b504c8138d235e6f42de1f36d30d2cd7f5
+  appcenter-core: 086ab16077baef60368c6a119af6e9e127406286
+  appcenter-crashes: 10790bf670f79150f1654d79f76c10a8b4936688
+  AppCenterReactNativeShared: b9fa50d999e830e03f086f487b1aa0f9772088c1
   AppsFlyerFramework: aeb793095c1b33170ae30bef66652c0645f409be
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
@@ -737,6 +745,8 @@ SPEC CHECKSUMS:
   JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
   Mixpanel: 446b6e7713aa34a9a3516ff7648d56551384fc94
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  Onfido: 572cb9c1ab40277318528584363cac22cc1ada21
+  onfido-react-native-sdk: 4ab04228e18a80ca50f4cbb1453d1bce67731a7c
   Permission-Camera: a8f6007d17b02ed8a2d6bac1c37c2fd5df9b4e8a
   Permission-Contacts: ac39cd8b11b8931482bf68fc3fa08dbd7ece909d
   Permission-LocationWhenInUse: 4a2764d2efe09a1f6c7a00dfbbb863149240311a
@@ -798,4 +808,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a981a1ef5beaa61a94a8f3f0dfec42f28bcb4895
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3
