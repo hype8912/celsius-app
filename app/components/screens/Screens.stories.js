@@ -76,6 +76,9 @@ import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
 import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
 import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
 import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
+import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stories";
+import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
+import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -496,3 +499,15 @@ storiesOf("ChangePassword", module).add(
   "Change Password",
   ChangePasswordStories.regular
 );
+
+storiesOf("BorrowBankAccount", module).add(
+  "Borrow Bank Account",
+  BorrowBankAccountStories.regular
+);
+
+storiesOf("PaymentCel", module).add("Payment Cel", PaymentCelStories.regular);
+
+storiesOf("SecurityFixNow", module)
+  .add("2FA", SecurityFixNowStories.twoFA)
+  .add("PIN", SecurityFixNowStories.pin)
+  .add("Withdrawal Addresses", SecurityFixNowStories.withdrawalAddresses);
