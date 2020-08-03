@@ -43,7 +43,11 @@ function loadCelsiusAssets() {
  * Handles state change of the app
  * @param {string} nextAppState - one of active|inactive|background
  */
-const SCREENS_WITH_LATER_VERIFICATION = ["Simplex", "ActivateSixDigitPin"];
+const SCREENS_WITH_LATER_VERIFICATION = [
+  "Simplex",
+  "TwoFactorSettings",
+  "ActivateSixDigitPin",
+];
 const ASK_FOR_PIN_SHORT = 30 * 1000;
 const ASK_FOR_PIN_LONG = 10 * 60 * 1000;
 let pinTimeout;
