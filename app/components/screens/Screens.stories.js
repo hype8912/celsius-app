@@ -79,6 +79,9 @@ import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
 import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stories";
 import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
 import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
+import HodlDeactivationCodeStories from "./HodlDeactivationCode/HodlDeactivationCode.stories";
+import LoanTermsOfUseStories from "./LoanTermsOfUse/LoanTermsOfUse.stories";
+import LoanPaymentCoinStories from "./LoanPaymentCoin/LoanPaymentCoin.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -511,3 +514,18 @@ storiesOf("SecurityFixNow", module)
   .add("2FA", SecurityFixNowStories.twoFA)
   .add("PIN", SecurityFixNowStories.pin)
   .add("Withdrawal Addresses", SecurityFixNowStories.withdrawalAddresses);
+
+storiesOf("HodlDeactivationCode", module).add(
+  "HODL Deactivation Code",
+  HodlDeactivationCodeStories.regular
+);
+
+storiesOf("LoanTermsOfUse", module).add(
+  "Loan Terms Of Use",
+  LoanTermsOfUseStories.regular
+);
+
+storiesOf("LoanPaymentCoin", module).add(
+  "LoanPaymentCoin",
+  LoanPaymentCoinStories.regular
+);
