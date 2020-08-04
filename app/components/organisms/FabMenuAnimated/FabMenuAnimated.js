@@ -408,10 +408,12 @@ class FabMenuAnimated extends Component {
             this.fabAction();
           }}
         >
-          <Icon name={"QuestionCircle"} width={25} height={25} />
-          <CelText weight={"300"} type={"H5"}>
-            Need help?
-          </CelText>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon name={"QuestionCircle"} width={25} height={25} />
+            <CelText weight={"300"} type={"H5"} style={{ paddingLeft: 10 }}>
+              Need help?
+            </CelText>
+          </View>
         </Card>
       </Animated.View>
     );
