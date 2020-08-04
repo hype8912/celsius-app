@@ -45,19 +45,7 @@ const themed = {
     },
   },
 
-  unicorn: {
-    container: {
-      ...Platform.select({
-        android: {
-          ...STYLES.ANDROID_SHADOW_STYLES,
-          borderColor: "#E9E9E9",
-        },
-        ios: {
-          ...STYLES.SHADOW_STYLES,
-        },
-      }),
-    },
-  },
+  unicorn: {},
 };
 
 const IconButtonStyle = () => getThemedStyle(base, themed);

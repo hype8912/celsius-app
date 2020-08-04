@@ -238,6 +238,7 @@ class WithdrawCreateAddress extends Component {
             {!is2FAEnabled && (
               <View style={style.button}>
                 <CelButton
+                  disabled={!formData.withdrawAddress}
                   onPress={() => {
                     actions.navigateTo("VerifyProfile", {
                       onSuccess: () =>
