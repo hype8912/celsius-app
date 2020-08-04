@@ -24,6 +24,7 @@ const base = {
   },
   text: {
     marginTop: 10,
+    color: COLOR_KEYS.PARAGRAPH,
   },
   viewmenu: { backgroundColor: COLOR_KEYS.PRIMARY_BUTTON },
   textmenu: { color: COLOR_KEYS.PARAGRAPH },

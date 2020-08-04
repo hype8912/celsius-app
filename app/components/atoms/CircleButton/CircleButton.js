@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  ImageBackground,
-} from "react-native";
+import { TouchableOpacity, View, ImageBackground } from "react-native";
 
 import CircleButtonStyle from "./CircleButton.styles";
 import Icon from "../Icon/Icon";
@@ -44,8 +39,6 @@ class CircleButton extends Component {
       icon !== nextProps.icon
     );
   }
-
-  getFillColor = style => StyleSheet.flatten(style.fillColor).color; // get color from raw json depending on style theme
 
   render() {
     const {

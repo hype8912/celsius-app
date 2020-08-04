@@ -9,6 +9,9 @@ import Separator from "../../atoms/Separator/Separator";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import { THEMES } from "../../../constants/UI";
 import CoinGridCard from "../../molecules/CoinGridCard/CoinGridCard";
+import CelText from "../../atoms/CelText/CelText";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -63,39 +66,74 @@ class Appearance extends Component {
 
           <Separator text="COLOR THEME" margin="0 0 20 0" />
           <View style={style.buttonsContainer}>
-            <CircleButton
-              backgroundImage={require("../../../../assets/images/light.png")}
-              icon={theme === THEMES.LIGHT ? "Checked" : false}
-              iconSize={15}
-              type="theme"
-              text="Light"
-              style={[style.lightThemeButton, style.themeBtn]}
-              onPress={() => {
-                actions.setUserAppSettings({ theme: THEMES.LIGHT });
-              }}
-            />
-            <CircleButton
-              backgroundImage={require("../../../../assets/images/sunset.png")}
-              icon={theme === THEMES.UNICORN ? "Checked" : false}
-              iconSize={15}
-              type="theme"
-              text="Sunset"
-              style={[style.unicornThemeButton, style.themeBtn]} // TODO: change to appropriate color and move to constants
-              onPress={() => {
-                actions.setUserAppSettings({ theme: THEMES.UNICORN });
-              }}
-            />
-            <CircleButton
-              backgroundImage={require("../../../../assets/images/dark.png")}
-              icon={theme === THEMES.DARK ? "Checked" : false}
-              iconSize={15}
-              type="theme"
-              text="Dark"
-              style={[style.darkThemeButton, style.themeBtn]}
-              onPress={() => {
-                actions.setUserAppSettings({ theme: THEMES.DARK });
-              }}
-            />
+            <View>
+              <CircleButton
+                backgroundImage={require("../../../../assets/images/light.png")}
+                icon={theme === THEMES.LIGHT ? "Checked" : false}
+                iconSize={15}
+                type="theme"
+                style={[style.lightThemeButton, style.themeBtn]}
+                onPress={() => {
+                  actions.setUserAppSettings({ theme: THEMES.LIGHT });
+                }}
+              />
+              <CelText
+                align="center"
+                type="H7"
+                margin="10 0 0 0"
+                color={
+                  theme === THEMES.LIGHT ? getColor(COLOR_KEYS.HEADLINE) : null
+                }
+              >
+                Light
+              </CelText>
+            </View>
+            <View>
+              <CircleButton
+                backgroundImage={require("../../../../assets/images/sunset.png")}
+                icon={theme === THEMES.UNICORN ? "Checked" : false}
+                iconSize={15}
+                type="theme"
+                style={[style.unicornThemeButton, style.themeBtn]} // TODO: change to appropriate color and move to constants
+                onPress={() => {
+                  actions.setUserAppSettings({ theme: THEMES.UNICORN });
+                }}
+              />
+              <CelText
+                align="center"
+                type="H7"
+                margin="10 0 0 0"
+                color={
+                  theme === THEMES.UNICORN
+                    ? getColor(COLOR_KEYS.HEADLINE)
+                    : null
+                }
+              >
+                Sunset
+              </CelText>
+            </View>
+            <View>
+              <CircleButton
+                backgroundImage={require("../../../../assets/images/dark.png")}
+                icon={theme === THEMES.DARK ? "Checked" : false}
+                iconSize={15}
+                type="theme"
+                style={[style.darkThemeButton, style.themeBtn]}
+                onPress={() => {
+                  actions.setUserAppSettings({ theme: THEMES.DARK });
+                }}
+              />
+              <CelText
+                align="center"
+                type="H7"
+                margin="10 0 0 0"
+                color={
+                  theme === THEMES.DARK ? getColor(COLOR_KEYS.HEADLINE) : null
+                }
+              >
+                Dark
+              </CelText>
+            </View>
           </View>
         </View>
       </RegularLayout>
