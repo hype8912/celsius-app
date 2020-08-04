@@ -290,7 +290,6 @@ class Graph extends React.Component {
                 stopOpacity={0.3}
                 offset={"50%"}
               />
-              <Stop stopColor={"black"} offset={"80%"} />
             </LinearGradient>
           ) : null}
 
