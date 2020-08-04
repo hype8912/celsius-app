@@ -17,7 +17,11 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import Icon from "../../atoms/Icon/Icon";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { getColor, getFontSize } from "../../../utils/styles-util";
+import {
+  getColor,
+  getFontSize,
+  getFontFamily,
+} from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
@@ -110,8 +114,15 @@ class LoanTermsOfUse extends Component {
       formData.loansToU0 && formData.loansToU1 && formData.loansToU2;
 
     const markdownStyle = {
-      text: { fontSize: getFontSize("H5") },
-      link: { color: getColor(COLOR_KEYS.LINK) },
+      text: {
+        fontSize: getFontSize("H5"),
+        color: getColor(COLOR_KEYS.PARAGRAPH),
+        fontFamily: getFontFamily("regular"),
+      },
+      link: {
+        color: getColor(COLOR_KEYS.LINK),
+        textDecorationLine: "underline",
+      },
       listOrderedItemIcon: {
         marginLeft: 10,
         marginRight: 10,
@@ -130,7 +141,9 @@ class LoanTermsOfUse extends Component {
           <CelText weight="bold" type="H3" align="center">
             {introSection.heading}
           </CelText>
-          <Markdown style={markdownStyle}>{introSection.text}</Markdown>
+          <Markdown color={"red"} style={markdownStyle}>
+            {introSection.text}
+          </Markdown>
         </View>
 
         <View style={{ paddingTop: 20, paddingHorizontal: 20 }}>
