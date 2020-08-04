@@ -98,7 +98,7 @@ class Graph extends React.Component {
 
     let color = {
       line: getColor(COLOR_KEYS.POSITIVE_STATE),
-      area: getColor(COLOR_KEYS.BANNER_INFO),
+      area: getColor(COLOR_KEYS.POSITIVE_STATE),
       back: getColor(COLOR_KEYS.CARDS),
     };
 
@@ -265,8 +265,8 @@ class Graph extends React.Component {
               y2={"100%"}
               id={"gradient"}
             >
-              <Stop stopColor={color.area} offset={"95%"} spotOpacity={0.1} />
-              <Stop stopColor={color.back} offset={"95%"} spotOpacity={0.1} />
+              <Stop stopColor={color.area} offset={"95%"} stopOpacity={0.4} />
+              <Stop stopColor={color.back} offset={"95%"} />
             </LinearGradient>
           ) : null}
 
