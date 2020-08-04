@@ -21,7 +21,7 @@ class CircleButton extends Component {
     isSelected: PropTypes.bool,
     selectable: PropTypes.bool,
     iconColor: PropTypes.string,
-    type: PropTypes.oneOf(["menu", "theme", "coin"]).isRequired,
+    type: PropTypes.oneOf(["menu", "theme", "coin", "fab"]).isRequired,
   };
 
   static defaultProps = {

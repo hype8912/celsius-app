@@ -23,11 +23,13 @@ import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import {
+  getColor,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import CircleButtonStyle from "../../atoms/CircleButton/CircleButton.styles";
 import animationsUtil from "../../../utils/animations-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -425,12 +427,17 @@ class FabMenuAnimated extends Component {
     const { fabSpring, fabOpacity } = this.state;
     const buttonStyle =
       Platform.OS === "android" ? style.realFabButton : style.fabButton;
+
+    const backgroundColor = {
+      backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+    };
     return (
       <View>
         <Animated.View
           style={[
             style.fabButton,
             style.opacityCircle,
+            backgroundColor,
             {
               transform: [{ scale: fabSpring }],
               opacity: fabOpacity,
