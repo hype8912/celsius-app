@@ -152,9 +152,7 @@ async function setAppVersionHeaders() {
   const clientVersion = ENV === "PRODUCTION" ? CLIENT_VERSION : ENV;
   if (!buildVersion) {
     const metadata = await CodePush.getUpdateMetadata();
-    buildVersion = metadata
-      ? `${metadata.appVersion}@${metadata.label}`
-      : "local";
+    buildVersion = metadata ? `${clientVersion}@${metadata.label}` : "local";
   }
 
   return {
