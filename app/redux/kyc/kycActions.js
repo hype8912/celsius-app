@@ -73,7 +73,9 @@ function updateProfileAddressInfo(profileAddressInfo) {
       const updatedProfileData = await userKYCService.updateProfileAddressInfo(
         profileAddressInfo
       );
-      dispatch(updateProfileAddressInfoSuccess(updatedProfileData.data));
+      dispatch(
+        updateProfileAddressInfoSuccess(updatedProfileData.data.address)
+      );
 
       const compliance = await complianceService.getComplianceInfo();
       dispatch({
@@ -127,7 +129,9 @@ function updateTaxpayerInfo(profileTaxpayerInfoParam) {
       const updatedProfileData = await userKYCService.updateProfileTaxpayerInfo(
         profileTaxpayerInfoParam
       );
-      await dispatch(updateProfileTaxpayerInfoSuccess(updatedProfileData.data));
+      await dispatch(
+        updateProfileTaxpayerInfoSuccess(updatedProfileData.data.taxpayer_info)
+      );
       mixpanelAnalytics.kycTaxPayerInfo();
       return {
         success: true,
