@@ -1,34 +1,34 @@
 import React from "react";
 import _ from "lodash";
 
-import LoanTermsOfUse from "./LoanTermsOfUse";
+import ApiAuthorizationPermissions from "./ApiAuthorizationPermissions";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
-import mockLoansStore from "../../../../celsius-app-creds/mock-data/mockLoansStore";
-import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
+import mockApiKeysStore from "../../../../celsius-app-creds/mock-data/mockApiKeysStore";
 
 const initialState = {
   user: {
     profile: mockUserStore.profile.postman13,
     appSettings: mockUserStore.appSettings.postman13,
   },
-  generalData: {
-    pdf: mockGeneralDataStore.pdf,
-    loanTermsOfUse: mockGeneralDataStore.loanTermsOfUse,
+  apiKeys: {
+    keys: mockApiKeysStore.keys.postman13,
   },
-  loans: {
-    allLoans: mockLoansStore.allLoans.enimalnowlt3,
-    loanSettings: mockLoansStore.loanSettings.interestInCEL,
+  forms: {
+    formData: {
+      readWithdrawals: true,
+      readDeposits: true,
+    },
   },
 };
 
 const regular = () => {
   const state = _.cloneDeep(initialState);
-
+  // state.appSettings.postman13.
   return (
     <ScreenStoryWrapper
-      screenName="LoanTermsOfUse"
-      screen={LoanTermsOfUse}
+      screenName="ApiAuthorizationPermissions"
+      screen={ApiAuthorizationPermissions}
       state={state}
     />
   );

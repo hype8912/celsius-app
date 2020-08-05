@@ -76,12 +76,24 @@ import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
 import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
 import LoanPaymentListStories from "./LoanPaymentList/LoanPaymentList.stories";
 import ChangePasswordStories from "./ChangePassword/ChangePassword.stories";
-import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stories";
-import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
-import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
 import HodlDeactivationCodeStories from "./HodlDeactivationCode/HodlDeactivationCode.stories";
 import LoanTermsOfUseStories from "./LoanTermsOfUse/LoanTermsOfUse.stories";
 import LoanPaymentCoinStories from "./LoanPaymentCoin/LoanPaymentCoin.stories";
+import LoanPaymentHistoryStories from "./LoanPaymentHistory/LoanPaymentHistory.stories";
+import WiringBankInformationStories from "./WiringBankInformation/WiringBankInformation.stories";
+import LoanPrepaymentPeriodStories from "./LoanPrepaymentPeriod/LoanPrepaymentPeriod.stories";
+import KYCAddressProofStories from "./KYCAddressProof/KYCAddressProof.stories";
+import ChangePinStories from "./ChangePin/ChangePin.stories";
+import KYCPrimeTrustToUStories from "./KYCPrimeTrustToU/KYCPrimeTrustToU.stories";
+import ApiAuthorizationPermissionsStories from "./ApiAuthorizationPermissions/ApiAuthorizationPermissions.stories";
+import MaintenanceStories from "./Maintenance/Maintenance.stories";
+import CelPayMessageStories from "./CelPayMessage/CelPayMessage.stories";
+import KYCFinalRejectionStories from "./KYCFinalRejection/KYCFinalRejection.stories";
+import SixDigitPinExplanationStories from "./SixDigitPinExplanation/SixDigitPinExplanation.stories";
+import ActivateSixDigitPinStories from "./ActivateSixDigitPin/ActivateSixDigitPin.stories";
+import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stories";
+import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
+import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -528,4 +540,73 @@ storiesOf("LoanTermsOfUse", module).add(
 storiesOf("LoanPaymentCoin", module).add(
   "LoanPaymentCoin",
   LoanPaymentCoinStories.regular
+);
+
+storiesOf("HodlDeactivationCode", module).add(
+  "HODL Deactivation Code",
+  HodlDeactivationCodeStories.regular
+);
+
+storiesOf("LoanTermsOfUse", module).add(
+  "Loan Terms Of Use",
+  LoanTermsOfUseStories.regular
+);
+
+storiesOf("LoanPaymentCoin", module).add(
+  "LoanPaymentCoin",
+  LoanPaymentCoinStories.regular
+);
+
+storiesOf("ApiAuthorizationPermissions", module).add(
+  "Api Authorization Permissions",
+  ApiAuthorizationPermissionsStories.regular
+);
+
+storiesOf("Maintenance", module).add("Maintenance", MaintenanceStories.regular);
+
+storiesOf("CelPayMessage", module).add(
+  "CelPayMessage",
+  CelPayMessageStories.regular
+);
+
+storiesOf("KYCAddressProof", module).add(
+  "KYCAddressProof",
+  KYCAddressProofStories.regular
+);
+
+storiesOf("ChangePin", module).add("ChangePin", ChangePinStories.regular);
+
+storiesOf("KYCPrimeTrustToU", module).add(
+  "KYCPrimeTrustToU",
+  KYCPrimeTrustToUStories.regular
+);
+
+storiesOf("LoanPaymentHistory", module).add(
+  "LoanPaymentHistory",
+  LoanPaymentHistoryStories.regular
+);
+
+storiesOf("WiringBankInformation", module).add(
+  "WiringBankInformation",
+  WiringBankInformationStories.regular
+);
+
+storiesOf("LoanPrepaymentPeriod", module).add(
+  "LoanPrepaymentPeriod",
+  LoanPrepaymentPeriodStories.regular
+);
+
+storiesOf("KYCFinalRejection", module).add(
+  "KYCFinalRejection",
+  KYCFinalRejectionStories.regular
+);
+
+storiesOf("SixDigitPinExplanation", module).add(
+  "SixDigitPinExplanation",
+  SixDigitPinExplanationStories.regular
+);
+
+storiesOf("ActivateSixDigitPin", module).add(
+  "ActivateSixDigitPin",
+  ActivateSixDigitPinStories.regular
 );

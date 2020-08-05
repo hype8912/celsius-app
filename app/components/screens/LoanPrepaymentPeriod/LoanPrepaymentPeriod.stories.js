@@ -1,25 +1,32 @@
 import React from "react";
 import _ from "lodash";
 
-import LoanTermsOfUse from "./LoanTermsOfUse";
+import LoanPrepaymentPeriod from "./LoanPrepaymentPeriod";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockLoansStore from "../../../../celsius-app-creds/mock-data/mockLoansStore";
-import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
+import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
 
 const initialState = {
   user: {
     profile: mockUserStore.profile.postman13,
     appSettings: mockUserStore.appSettings.postman13,
   },
-  generalData: {
-    pdf: mockGeneralDataStore.pdf,
-    loanTermsOfUse: mockGeneralDataStore.loanTermsOfUse,
-  },
   loans: {
     allLoans: mockLoansStore.allLoans.enimalnowlt3,
-    loanSettings: mockLoansStore.loanSettings.interestInCEL,
   },
+  currencies: {
+    currencyRates: mockCurrenciesStore,
+  },
+  forms: {
+    formData: {
+      coin: "ETH",
+    },
+  },
+};
+
+const navigationProps = {
+  id: initialState.loans.allLoans[0].id,
 };
 
 const regular = () => {
@@ -27,9 +34,10 @@ const regular = () => {
 
   return (
     <ScreenStoryWrapper
-      screenName="LoanTermsOfUse"
-      screen={LoanTermsOfUse}
+      screenName="LoanPrepaymentPeriod"
+      screen={LoanPrepaymentPeriod}
       state={state}
+      navigationProps={navigationProps}
     />
   );
 };

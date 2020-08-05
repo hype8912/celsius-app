@@ -1,10 +1,9 @@
 import React from "react";
 import _ from "lodash";
 
-import LoanTermsOfUse from "./LoanTermsOfUse";
+import Maintenance from "./Maintenance";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
-import mockLoansStore from "../../../../celsius-app-creds/mock-data/mockLoansStore";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
 
 const initialState = {
@@ -13,22 +12,22 @@ const initialState = {
     appSettings: mockUserStore.appSettings.postman13,
   },
   generalData: {
-    pdf: mockGeneralDataStore.pdf,
-    loanTermsOfUse: mockGeneralDataStore.loanTermsOfUse,
-  },
-  loans: {
-    allLoans: mockLoansStore.allLoans.enimalnowlt3,
-    loanSettings: mockLoansStore.loanSettings.interestInCEL,
+    backendStatus: mockGeneralDataStore,
   },
 };
 
 const regular = () => {
   const state = _.cloneDeep(initialState);
-
+  state.generalData = {
+    backendStatus: {
+      title: "Title",
+      explanation: "Explanation",
+    },
+  };
   return (
     <ScreenStoryWrapper
-      screenName="LoanTermsOfUse"
-      screen={LoanTermsOfUse}
+      screenName="Maintenance"
+      screen={Maintenance}
       state={state}
     />
   );
