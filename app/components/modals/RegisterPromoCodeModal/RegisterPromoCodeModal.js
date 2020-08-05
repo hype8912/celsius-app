@@ -14,7 +14,8 @@ import { DEEP_LINKS } from "../../../constants/DATA";
 import Card from "../../atoms/Card/Card";
 import * as appActions from "../../../redux/actions";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const theme = getTheme();
 
@@ -167,7 +168,7 @@ class RegisterPromoCodeModal extends Component {
           {congratsText}
         </CelText>
         <View style={style.cardWrapper}>
-          <Card color={style.messageTextCard.color}>
+          <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
             <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
               1. Complete KYC (Identity Verification).
             </CelText>
@@ -285,7 +286,7 @@ class RegisterPromoCodeModal extends Component {
           {congratsText}
         </CelText>
         <View style={style.cardWrapper}>
-          <Card color={style.messageTextCard.color}>
+          <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
             <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
               {messageText}
             </CelText>
