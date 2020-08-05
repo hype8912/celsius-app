@@ -53,7 +53,6 @@ export default (state = initialState, action) => {
         ...state,
         profile: {
           ...state.profile,
-          country: action.addressInfo.address.country,
           ...action.addressInfo,
         },
       };
