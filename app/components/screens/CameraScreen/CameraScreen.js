@@ -86,6 +86,7 @@ class CameraScreen extends Component {
     this.state = {
       hasCameraPermission: false,
       hasCameraRollPermission: false,
+      takingPhoto: false,
       hasInitialPhoto: !!props.photo,
       size: {
         width,
@@ -245,6 +246,12 @@ class CameraScreen extends Component {
     }
   };
 
+  pressCircle = async () => {
+    this.setState({ takingPhoto: true });
+    await this.takePhoto(this.camera);
+    this.setState({ takingPhoto: false });
+  };
+
   renderMask = () => {
     const { mask, cameraHeading, cameraCopy } = this.props;
     const maskType = mask || "utility";
@@ -312,6 +319,7 @@ class CameraScreen extends Component {
 
   render() {
     const { cameraType, actions, cameraRollLastPhoto } = this.props;
+    const { takingPhoto } = this.state;
     const style = CameraScreenStyle();
     const Mask = this.renderMask;
     const isFocused = this.props.navigation.isFocused();
@@ -345,13 +353,15 @@ class CameraScreen extends Component {
 
             <TouchableOpacity
               style={{ flex: 1 }}
-              onPress={() => this.takePhoto(this.camera)}
+              onPress={this.pressCircle}
+              disabled={takingPhoto}
             >
               <Icon
                 name="Shutter"
                 fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                 width="60"
                 height="60"
+                iconOpacity={takingPhoto ? 0.5 : 1}
               />
             </TouchableOpacity>
             <TouchableOpacity
