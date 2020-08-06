@@ -6,7 +6,7 @@ import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage } from "../ui/uiActions";
 import { clearForm } from "../forms/formsActions";
 import walletService from "../../services/wallet-service";
-import { navigateTo } from "../nav/navActions";
+import { navigateBack, navigateTo } from "../nav/navActions";
 import addressUtil from "../../utils/address-util";
 
 export {
@@ -104,7 +104,7 @@ function getCoinAddressSuccess(address) {
 /**
  * Sets withdrawal address for user for coin
  *
- * @param {string} flow - one of withdrawal|change-address
+ * @param {string} flow - one of withdrawal|change-address|wallet
  */
 function setCoinWithdrawalAddress(flow = "withdrawal") {
   return async (dispatch, getState) => {
@@ -159,6 +159,10 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
     } catch (error) {
       dispatch(showMessage("error", error.msg));
       dispatch(apiError(API.SET_COIN_WITHDRAWAL_ADDRESS, error));
+
+      if (flow === "wallet") {
+        dispatch(navigateBack());
+      }
     }
   };
 }

@@ -3,7 +3,6 @@ import {
   getThemedStyle,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width } = Dimensions.get("window");
 
@@ -22,10 +21,6 @@ const base = {
   },
   containerWithMargin: {
     marginBottom: 30,
-  },
-  tagText: {
-    color: COLOR_KEYS.LINK,
-    textAlign: "center",
   },
   button: {
     marginBottom: heightPercentageToDP("7%"),
