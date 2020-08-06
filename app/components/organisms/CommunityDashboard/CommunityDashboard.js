@@ -11,7 +11,6 @@ import formatter from "../../../utils/formatter";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import Icon from "../../atoms/Icon/Icon";
-import { TOTAL_ASSETS_AMOUNT } from "../../../constants/DATA";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -54,14 +53,17 @@ class CommunityDashboard extends Component {
     if (name === "INTEREST") {
       this.setState({
         primaryNumber: formatter.usd(communityStats.total_interests_usd),
-        explanation: `ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}`,
+        explanation: `ASSETS AS OF ${communityStats.community_settings.date}`,
       });
     }
-    if (name === `ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}`) {
+    if (name === `ASSETS AS OF ${communityStats.community_settings.date}`) {
       this.setState({
-        primaryNumber: formatter.usd(TOTAL_ASSETS_AMOUNT.TOTAL_AUM, {
-          precision: 0,
-        }),
+        primaryNumber: formatter.usd(
+          communityStats.community_settings.total_aum,
+          {
+            precision: 0,
+          }
+        ),
         explanation: "Total Assets Under Management",
       });
     }
@@ -111,20 +113,25 @@ class CommunityDashboard extends Component {
       number = 31000;
     }
     if (
-      name === `ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}` &&
+      name === `ASSETS AS OF ${communityStats.community_settings.date}` &&
       button === "Total AUM"
     ) {
       explanationText = "Total Assets Under Management";
-      number = formatter.usd(TOTAL_ASSETS_AMOUNT.TOTAL_AUM, { precision: 0 });
+      number = formatter.usd(communityStats.community_settings.total_aum, {
+        precision: 0,
+      });
     }
     if (
-      name === `ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}` &&
+      name === `ASSETS AS OF ${communityStats.community_settings.date}` &&
       button === "Col. & Cash"
     ) {
       explanationText = "Collateral and Cash";
-      number = formatter.usd(TOTAL_ASSETS_AMOUNT.TOTAL_COLLATERAL_AND_CASH, {
-        precision: 0,
-      });
+      number = formatter.usd(
+        communityStats.community_settings.total_collateral_and_cash,
+        {
+          precision: 0,
+        }
+      );
     }
 
     this.setState({

@@ -17,7 +17,6 @@ import PerformanceGraph from "../../graphs/PerformanceGraph/PerformanceGraph";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelStats from "../../organisms/CelStats/CelStats";
-import { TOTAL_ASSETS_AMOUNT } from "../../../constants/DATA";
 import Counter from "../../molecules/Counter/Counter";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -272,7 +271,7 @@ class Community extends Component {
         {this.renderNetworkCounts()}
 
         <CommunityDashboard
-          name={`ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}`}
+          name={`ASSETS AS OF ${communityStats.community_settings.date}`}
           info
           buttonTypes={[
             {
