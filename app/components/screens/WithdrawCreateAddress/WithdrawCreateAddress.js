@@ -164,7 +164,7 @@ class WithdrawCreateAddress extends Component {
 
             <View style={style.containerWithMargin}>
               <TouchableOpacity onPress={this.handleScanClick}>
-                <CelText type={"H5"} style={style.tagText}>
+                <CelText type={"H5"} link align="center">
                   Scan QR Code
                 </CelText>
               </TouchableOpacity>
@@ -189,7 +189,7 @@ class WithdrawCreateAddress extends Component {
                         : actions.openModal(MODALS.MEMO_ID_MODAL)
                     }
                   >
-                    <CelText type={"H5"} style={style.tagText}>
+                    <CelText type={"H5"} link align="center">
                       {tagText}
                     </CelText>
                   </TouchableOpacity>
