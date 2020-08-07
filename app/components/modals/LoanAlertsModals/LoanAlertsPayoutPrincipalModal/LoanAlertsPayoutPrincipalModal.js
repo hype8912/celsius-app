@@ -124,7 +124,7 @@ class LoanAlertsPayoutPrincipalModal extends Component {
           <CelModalButton
             buttonStyle={"red"}
             position={"single"}
-            loading={isLoadingClose}
+            yesLoading={isLoadingClose}
             onPress={content.onPress}
           >
             {content.buttonText}
@@ -132,7 +132,7 @@ class LoanAlertsPayoutPrincipalModal extends Component {
           {/* <CelModalButton*/}
           {/*  buttonStyle={"green"}*/}
           {/*  position={"right"}*/}
-          {/*  loading={isLoadingExtend}*/}
+          {/*  noLoading={isLoadingExtend}*/}
           {/*  onPress={content.onPressTwo}*/}
           {/* >*/}
           {/*  {content.buttonTextTwo}*/}

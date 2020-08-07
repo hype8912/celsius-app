@@ -12,6 +12,7 @@ import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import formatter from "../../../utils/formatter";
+import STYLES from "../../../constants/STYLES";
 
 @connect(
   () => ({}),
@@ -55,6 +56,12 @@ class ConfirmPrepaymentModal extends Component {
     if (!modalData) return null;
     const content = this.renderContent(modalData.loanId);
 
+    const buttonStyle =
+      modalData.newBalanceUsd.isLessThan(0) ||
+      modalData.newBalanceUsd.isLessThan(0)
+        ? { color: STYLES.COLORS.RED, style: "disabled" }
+        : { color: " ", style: "basic" };
+
     return (
       <CelModal
         style={style.container}
@@ -74,10 +81,10 @@ class ConfirmPrepaymentModal extends Component {
             <CelText align={"center"} margin={"20 0 0 0"} type={"H5"}>
               You are about to pay
             </CelText>
-            <CelText align={"center"} type={"H1"}>
+            <CelText color={buttonStyle.color} align={"center"} type={"H1"}>
               {formatter.crypto(modalData.cryptoAmountToPay, modalData.coin)}
             </CelText>
-            <CelText align={"center"}>
+            <CelText color={buttonStyle.color} align={"center"}>
               {formatter.fiat(modalData.sumToPay, "USD")}
             </CelText>
             <View>
@@ -98,7 +105,11 @@ class ConfirmPrepaymentModal extends Component {
         </View>
 
         <View style={style.buttonsWrapper}>
-          <CelModalButton loading={isLoading} onPress={content.onPress}>
+          <CelModalButton
+            buttonStyle={buttonStyle.style}
+            loading={isLoading}
+            onPress={content.onPress}
+          >
             {content.buttonText}
           </CelModalButton>
         </View>

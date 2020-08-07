@@ -7,7 +7,12 @@ import * as appActions from "../../../redux/actions";
 import ChoosePaymentMethodStyle from "./ChoosePaymentMethod.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PrepayDollarInterestModal from "../../modals/PrepayDollarInterestModal/PrepayDollarInterestModal";
-import { LOAN_PAYMENT_REASONS, THEMES, MODALS } from "../../../constants/UI";
+import {
+  LOAN_PAYMENT_REASONS,
+  THEMES,
+  MODALS,
+  COIN_CARD_TYPE,
+} from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
@@ -18,12 +23,15 @@ import { getTheme } from "../../../utils/styles-util";
 import Separator from "../../atoms/Separator/Separator";
 import Spinner from "../../atoms/Spinner/Spinner";
 import DollarPaymentModal from "../../modals/DollarPaymentModal/DollarPaymentModal";
+import loanPaymentUtil from "../../../utils/loanPayment-util";
 
 @connect(
   state => ({
     formData: state.forms.formData,
     loanSettings: state.loans.loanSettings,
     loyaltyInfo: state.loyalty.loyaltyInfo,
+    allLoans: state.loans.allLoans,
+    walletSummary: state.wallet.summary,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -34,9 +42,13 @@ class ChoosePaymentMethod extends Component {
   constructor(props) {
     super(props);
 
+    const { navigation } = props;
+    const id = navigation.getParam("id");
+
     this.state = {
       isAutomaticInterestPaymentEnabled: undefined,
       loading: false,
+      loan: props.allLoans.find(l => l.id === id),
     };
   }
 
@@ -94,15 +106,35 @@ class ChoosePaymentMethod extends Component {
     };
   };
 
+  resolve = (reason, id, payment, cel, loan) => {
+    const { actions } = this.props;
+    if (Number(loan.monthly_payment) > cel.amount_usd.toNumber()) {
+      return actions.navigateTo("Deposit", {
+        coin: cel.short,
+        reason: LOAN_PAYMENT_REASONS.PRINCIPAL,
+        amountUsd: payment.additionalUsdAmount,
+        additionalCryptoAmount: payment.additionalCryptoAmount,
+      });
+    }
+    return actions.navigateTo("PaymentCel", { reason, id });
+  };
+
   getCardProps = () => {
-    const { actions, navigation, loyaltyInfo } = this.props;
+    const { actions, navigation, loyaltyInfo, walletSummary } = this.props;
+    const { loan } = this.state;
     const celDiscount = formatter.percentageDisplay(
       loyaltyInfo.tier.loanInterestBonus
     );
+
     const id = navigation.getParam("id");
     const reason = navigation.getParam("reason");
     const activeCards = this.getActiveCards();
-
+    const cel = walletSummary.coins.find(c => c.short === "CEL");
+    const payment = loanPaymentUtil.calculateAdditionalPayment(
+      loan,
+      COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD,
+      cel
+    );
     const pay =
       reason !== LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT ? `pay` : `prepay`;
 
@@ -110,7 +142,7 @@ class ChoosePaymentMethod extends Component {
       {
         textButton: `${formatter.capitalize(pay)} with CEL`,
         explanation: `Pay up to ${celDiscount} less interest when you choose to ${pay} your monthly payment in CEL.`,
-        onPress: () => actions.navigateTo("PaymentCel", { reason, id }),
+        onPress: () => this.resolve(reason, id, payment, cel, loan),
         lightImage: require("../../../../assets/images/icons/cel.png"),
         darkImage: require("../../.././../assets/images/icons/cel-dark.png"),
         label: activeCards.cel ? "Currently active" : null,
@@ -207,6 +239,9 @@ class ChoosePaymentMethod extends Component {
     const id = navigation.getParam("id");
 
     const cardProps = this.getCardProps();
+
+    if (!cardProps) return <Spinner />;
+
     return (
       <View style={style.container}>
         <RegularLayout>
