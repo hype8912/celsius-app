@@ -7,6 +7,7 @@ const initialState = {
   kycDocuments: undefined,
   utilityBill: undefined,
   kycDocTypes: undefined,
+  applicantId: undefined,
 };
 
 export default function kycReducer(state = initialState, action) {
@@ -34,6 +35,12 @@ export default function kycReducer(state = initialState, action) {
       return {
         ...state,
         kycDocTypes: action.kycDocTypes,
+      };
+
+    case ACTIONS.CREATE_KYC_APPLICANT_SUCCESS:
+      return {
+        ...state,
+        applicantId: action.applicantId,
       };
 
     default:

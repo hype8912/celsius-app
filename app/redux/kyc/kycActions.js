@@ -26,6 +26,7 @@ export {
   getPrimeTrustToULink,
   profileTaxpayerInfo,
   getKYCDocTypes,
+  createKYCApplicant,
 };
 
 /**
@@ -511,5 +512,25 @@ function getKYCDocTypesSuccess(kycDocTypes) {
     type: ACTIONS.GET_KYC_DOC_TYPES_SUCCESS,
     callName: API.GET_KYC_DOC_TYPES,
     kycDocTypes,
+  };
+}
+
+/**
+ * Creates/Fetches onfido applicant id
+ */
+function createKYCApplicant() {
+  return async dispatch => {
+    dispatch(startApiCall(API.CREATE_KYC_APPLICANT));
+
+    try {
+      const res = await userKYCService.ensureApplicant();
+      dispatch({
+        type: ACTIONS.CREATE_KYC_APPLICANT_SUCCESS,
+        applicantId: res.data.applicant_id,
+      });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.CREATE_KYC_APPLICANT, err));
+    }
   };
 }
