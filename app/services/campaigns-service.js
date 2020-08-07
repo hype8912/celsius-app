@@ -6,6 +6,7 @@ const campaignsService = {
   getByUrl,
   submitProfileCode,
   submitRegistrationCode,
+  submitPromoCode,
 };
 
 /**
@@ -52,6 +53,16 @@ function submitRegistrationCode(promoCode) {
   return axios.post(`${apiUrl}/branch/check_code/registration`, {
     slug: promoCode,
   });
+}
+
+/**
+ * Submit promo code
+ * @param {string} promoCode
+ * @returns {Promise}
+ */
+
+function submitPromoCode(promoCode) {
+  return axios.get(`${apiUrl}/promo-codes/apply?code=${promoCode}`);
 }
 
 export default campaignsService;
