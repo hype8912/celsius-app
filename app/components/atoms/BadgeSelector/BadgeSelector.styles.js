@@ -12,7 +12,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const BadgeSelectorStyle = () => getThemedStyle(base, themed);

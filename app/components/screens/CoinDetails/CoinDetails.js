@@ -12,9 +12,12 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import CoinDetailsStyle from "./CoinDetails.styles";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import Badge from "../../atoms/Badge/Badge";
-import { getTheme, widthPercentageToDP } from "../../../utils/styles-util";
+import {
+  getColor,
+  getTheme,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import Icon from "../../atoms/Icon/Icon";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
@@ -22,14 +25,12 @@ import InterestCard from "../../molecules/InterestCard/InterestCard";
 import interestUtil from "../../../utils/interest-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import Counter from "../../molecules/Counter/Counter";
-
-const { COLORS } = STYLES;
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
     currencies: state.currencies.rates,
     walletSummary: state.wallet.summary,
-    currencyRatesShort: state.currencies.currencyRatesShort,
     interestRates: state.generalData.interestRates,
     celpayCompliance: state.compliance.celpay,
     coinAmount: state.graph.coinLastValue,
@@ -353,7 +354,7 @@ class CoinDetails extends Component {
                       <Badge
                         margin="0 10 10 12"
                         style={{ alignContent: "center" }}
-                        color={COLORS.GREEN}
+                        color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                       >
                         <CelText
                           margin={"0 5 0 5"}

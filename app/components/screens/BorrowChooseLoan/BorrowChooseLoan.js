@@ -52,6 +52,7 @@ class BorrowChooseLoan extends Component {
         explanation: "Take out a cash loan against your crypto.",
         lightImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
         darkImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
+        unicornImage: require("../../../../assets/images/illustration-borrow-dollars-unicorn.png"),
         onPress: () => {
           actions.navigateTo("BorrowEnterAmount");
           actions.updateFormFields({
@@ -68,6 +69,7 @@ class BorrowChooseLoan extends Component {
         explanation: "Take out a loan in one of our supported stable coins.",
         lightImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
         darkImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
+        unicornImage: require("../../../../assets/images/illustration-borrow-stablecoins-unicorn.png"),
         onPress: () => {
           actions.navigateTo("BorrowEnterAmount");
           actions.updateFormFields({

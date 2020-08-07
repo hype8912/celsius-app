@@ -110,6 +110,7 @@ class CelPayLanding extends Component {
           textButton={"Share as a link"}
           explanation={"Send a direct link with your preferred apps."}
           darkImage={require("../../../../assets/images/hands-in-the-air-dark.png")}
+          unicornImage={require("../../../../assets/images/hands-in-the-air-unicorn.png")}
           lightImage={require("../../../../assets/images/hands-in-the-air.png")}
           onPress={this.sendAsLink}
         />
@@ -117,6 +118,7 @@ class CelPayLanding extends Component {
           textButton={"Send to contacts"}
           explanation={`Send crypto to other Celsians on the network.`}
           darkImage={require("../../../../assets/images/money-currency-union-dark.png")}
+          unicornImage={require("../../../../assets/images/money-currency-union-unicorn.png")}
           lightImage={require("../../../../assets/images/money-currency-union.png")}
           onPress={this.sendToFriend}
         />

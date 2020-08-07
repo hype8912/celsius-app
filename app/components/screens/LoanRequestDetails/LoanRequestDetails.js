@@ -19,6 +19,7 @@ import LoanApplicationSuccessModal from "../../modals/LoanApplicationSuccessModa
 import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 import TxBasicCardSection from "../../atoms/TxBasicCardSection/TxBasicCardSection";
 import TxCardSection from "../../atoms/TxCardSection/TxCardSection";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -248,7 +249,7 @@ class LoanRequestDetails extends Component {
             />
             <CelText
               type={"H5"}
-              color={activeLoan.uiProps.color}
+              color={getColor(activeLoan.uiProps.color)}
               margin={"0 5 0 0"}
             >
               {activeLoan.uiProps.displayText}

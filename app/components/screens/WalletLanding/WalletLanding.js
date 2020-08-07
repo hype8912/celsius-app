@@ -47,7 +47,6 @@ import { COMING_SOON_COINS } from "../../../constants/DATA";
         : [],
       previouslyOpenedModals: state.ui.previouslyOpenedModals,
       hodlStatus: state.hodl.hodlStatus,
-      walletAddresses: state.wallet.addresses,
       userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
       shouldAnimate: state.ui.shouldAnimate,
     };
@@ -125,15 +124,6 @@ class WalletLanding extends Component {
     ) {
       this.toggleView(appSettings.default_wallet_view);
     }
-
-    // if (
-    //   (prevProps.user && prevProps.user.first_name) !==
-    //   (this.props.user && this.props.user.first_name)
-    // ) {
-    //   navigation.setParams({
-    //     title: `Welcome ${this.props.user.first_name}!`
-    //   })
-    // }
 
     if (isFocused === false && this.walletFetchingInterval) {
       clearInterval(this.walletFetchingInterval);
@@ -242,6 +232,8 @@ class WalletLanding extends Component {
                 margin="10 0 2 0"
                 size="small"
                 iconRight="IconArrowRight"
+                iconRightWidth={18}
+                iconRightHeight={18}
               >
                 Buy Coins
               </CelButton>
@@ -252,11 +244,11 @@ class WalletLanding extends Component {
                 onPress={() => this.toggleView(WALLET_LANDING_VIEW_TYPES.GRID)}
               >
                 <Icon
-                  style={{
-                    opacity:
-                      activeView === WALLET_LANDING_VIEW_TYPES.GRID ? 1 : 0.5,
-                  }}
-                  fill="primary"
+                  fill={
+                    activeView === WALLET_LANDING_VIEW_TYPES.GRID
+                      ? "active"
+                      : "inactive"
+                  }
                   name="GridView"
                   width="18"
                 />
@@ -266,11 +258,11 @@ class WalletLanding extends Component {
                 onPress={() => this.toggleView(WALLET_LANDING_VIEW_TYPES.LIST)}
               >
                 <Icon
-                  style={{
-                    opacity:
-                      activeView === WALLET_LANDING_VIEW_TYPES.LIST ? 1 : 0.5,
-                  }}
-                  fill="primary"
+                  fill={
+                    activeView === WALLET_LANDING_VIEW_TYPES.LIST
+                      ? "active"
+                      : "inactive"
+                  }
                   name="ListView"
                   width="18"
                 />

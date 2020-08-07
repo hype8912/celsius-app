@@ -17,12 +17,11 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { STORYBOOK } from "../../../../dev-settings.json";
 
 @connect(
   state => ({
     appState: state.app.appState,
-    formData: state.forms.formData,
-    twoFAStatus: state.security.twoFAStatus,
     deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
     previousScreen: state.nav.previousScreen,
@@ -94,7 +93,7 @@ class VerifyProfile extends Component {
 
   openKeypad = () => {
     const { actions } = this.props;
-    actions.toggleKeypad(true);
+    actions.toggleKeypad(!STORYBOOK);
   };
 
   onCheckSuccess = async () => {
@@ -234,7 +233,7 @@ class VerifyProfile extends Component {
     const { actions, formData } = this.props;
     const style = VerifyProfileStyle();
 
-    const isLoading = _.isEmpty(formData) || formData.loading;
+    const isLoading = formData && (_.isEmpty(formData) || formData.loading);
     if (isLoading) return <LoadingScreen />;
 
     return (

@@ -11,20 +11,23 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import CelHeadingStyle from "./CelHeading.styles";
-import { getPadding, getTheme } from "../../../utils/styles-util";
+import { getPadding, getColor, getTheme } from "../../../utils/styles-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { THEMES } from "../../../constants/UI";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import HodlBanner from "../../atoms/HodlBanner/HodlBanner";
 import Icon from "../../atoms/Icon/Icon";
 import Loader from "../../atoms/Loader/Loader";
 import fromatter from "../../../utils/formatter";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { STORYBOOK } from "../../../../dev-settings.json";
 
 @connect(
   state => ({
-    profilePicture: state.user.profile.profile_picture,
+    profilePicture: state.user.profile
+      ? state.user.profile.profile_picture
+      : "",
     message: state.ui.message,
     formData: state.forms.formData,
     theme: state.user.appSettings.theme,
@@ -105,10 +108,11 @@ class CelHeading extends Component {
     return this.props.scene.index === 0 || hideBack === true ? null : (
       <CelButton
         margin={this.isSearchHeader() ? "8 0 0 4" : null}
-        iconRightColor={STYLES.COLORS.GRAY}
+        iconRightColor={getColor(COLOR_KEYS.SUBHEADING_LIGHT_TEXT)}
         basic
         onPress={() => this.navigateBack(customBack, backScreenName)}
         iconRight="IconChevronLeft"
+        backButton
       />
     );
   };
@@ -119,7 +123,6 @@ class CelHeading extends Component {
     const scene = this.props.scene.descriptor;
 
     const style = CelHeadingStyle();
-    const theme = getTheme();
 
     return {
       action: (
@@ -149,30 +152,10 @@ class CelHeading extends Component {
       ),
       info: onInfo && (
         <TouchableOpacity basic onPress={onInfo}>
-          <Icon
-            name={"Info"}
-            height={30}
-            width={30}
-            fill={
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.DARK_GRAY3
-                : STYLES.COLORS.WHITE_OPACITY5
-            }
-          />
+          <Icon name={"Info"} height={30} width={30} />
         </TouchableOpacity>
       ),
-      search: (
-        <Icon
-          name={"Search"}
-          height={30}
-          width={30}
-          fill={
-            theme === THEMES.LIGHT
-              ? STYLES.COLORS.DARK_GRAY3
-              : STYLES.COLORS.WHITE_OPACITY5
-          }
-        />
-      ),
+      search: <Icon name={"Search"} height={30} width={30} />,
       profile: (
         <TouchableOpacity
           onPress={() => {
@@ -234,12 +217,9 @@ class CelHeading extends Component {
     }
     switch (theme) {
       case THEMES.LIGHT:
+      default:
         return StatusBar.setBarStyle("dark-content");
       case THEMES.DARK:
-        return StatusBar.setBarStyle("light-content");
-      case THEMES.CELSIUS:
-        return StatusBar.setBarStyle("light-content");
-      default:
         return StatusBar.setBarStyle("light-content");
     }
   };
@@ -291,12 +271,12 @@ class CelHeading extends Component {
         {customCenterComponent && !customCenterComponent.flowProgress ? (
           <View style={style.customCenterComponent}>
             <Loader
-              barColor={STYLES.COLORS.GREEN}
-              backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+              barColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+              backgroundColor={getColor(COLOR_KEYS.CARDS)}
               progress={
                 customCenterComponent.currentStep / customCenterComponent.steps
               }
-              borderColor={STYLES.COLORS.LIGHT_GRAY}
+              borderColor={getColor(COLOR_KEYS.HEADER)}
               width={40}
             />
           </View>
@@ -325,10 +305,20 @@ class CelHeading extends Component {
   getContent = () => {
     const { formData, hodlStatus, actions, activeScreen } = this.props;
     const sceneOptions = this.props.scene.descriptor.options;
-    const style = CelHeadingStyle();
+    const theme = getTheme();
+    const style = CelHeadingStyle(theme);
+
     const paddings = getPadding("0 15 0 15");
     const leftStyle = this.isSearchHeader()
-      ? [style.left, { flexDirection: "row", flex: 2 }]
+      ? [
+          style.left,
+          {
+            flexDirection: "row",
+            flex: 2,
+            alignItems: "center",
+            marginBottom: 7,
+          },
+        ]
       : style.left;
 
     return (
@@ -355,7 +345,7 @@ class CelHeading extends Component {
               >
                 <CelInput
                   debounce
-                  autoFocus
+                  autoFocus={!STORYBOOK}
                   basic
                   margin="0 0 0 0"
                   field="search"
@@ -373,13 +363,12 @@ class CelHeading extends Component {
         sceneOptions.customCenterComponent.flowProgress ? (
           <Loader
             flowProgress={sceneOptions.customCenterComponent.flowProgress}
-            barColor={STYLES.COLORS.GREEN}
-            backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+            barColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+            backgroundColor={getColor(COLOR_KEYS.SEPARATORS)}
             progress={
               sceneOptions.customCenterComponent.currentStep /
               sceneOptions.customCenterComponent.steps
             }
-            borderColor={STYLES.COLORS.LIGHT_GRAY}
             width={100}
           />
         ) : null}

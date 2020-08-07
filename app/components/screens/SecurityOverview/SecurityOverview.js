@@ -73,7 +73,6 @@ class SecurityOverview extends Component {
 
   getFixNowParams = () => {
     const { securityOverview, twoFAStatus } = this.props;
-
     let scoreParams = securityOverview.score_parameters;
     const scoreParamsCount = securityOverview.score_parameters_count;
     let scoreParamsFixableCount =
@@ -137,7 +136,6 @@ class SecurityOverview extends Component {
     const { actions, securityOverview, twoFAStatus } = this.props;
     const style = SecurityOverviewStyle();
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
-
     const fixNowParams = this.getFixNowParams();
     return (
       <RegularLayout>

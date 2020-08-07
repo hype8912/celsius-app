@@ -11,7 +11,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const RegisterInitialStyle = () => getThemedStyle(base, themed);

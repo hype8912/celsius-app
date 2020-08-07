@@ -101,7 +101,7 @@ class ComingSoonCoins extends Component {
                   </CelText>
                   {!isGrid && (
                     <CelText
-                      color={STYLES.COLORS.CELSIUS_BLUE}
+                      link
                       onPress={() => Linking.openURL(coin.learn_more_link)}
                     >
                       Learn more
@@ -118,7 +118,7 @@ class ComingSoonCoins extends Component {
           {isGrid && (
             <CelText
               margin="5 0 0 0"
-              color={STYLES.COLORS.CELSIUS_BLUE}
+              link
               onPress={() => Linking.openURL(coin.learn_more_link)}
             >
               Learn more

@@ -13,6 +13,8 @@ import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { isUSResident } from "../../../utils/user-util";
 import * as appActions from "../../../redux/actions";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -51,15 +53,13 @@ class RateInfoCard extends Component {
     const interestRate = interestUtil.getUserInterestForCoin(
       !coin ? "BTC" : coin.short
     );
-
     if (!interestRate.specialRate && !interestRate.coinThreshold) return null;
     if ((!interestCompliance && !interestCompliance.allowed) || isUSResident())
       return null;
-
     return (
       <View style={style}>
         {!interestRate.inCEL ? (
-          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+          <Card color={getColor(COLOR_KEYS.LINK)}>
             <CelText color={"white"}>
               Upgrade your interest settings to earn in CEL and you could get up
               to {formatter.percentageDisplay(interestRate.specialApyRate)} APY

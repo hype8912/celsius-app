@@ -6,6 +6,8 @@ import Card from "../Card/Card";
 import STYLES from "../../../constants/STYLES";
 import { hasSSN, hasAddress, hasPassedKYC } from "../../../utils/user-util";
 import CelText from "../CelText/CelText";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const MissingInfoCard = props => {
   const { user, navigateTo } = props;
@@ -42,7 +44,7 @@ const MissingInfoCard = props => {
   }
 
   return (
-    <Card color={STYLES.COLORS.CELSIUS_BLUE} close>
+    <Card color={getColor(COLOR_KEYS.LINK)} close>
       <CelText
         color={STYLES.COLORS.WHITE}
         type="H6"

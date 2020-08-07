@@ -1,6 +1,7 @@
 import { Dimensions } from "react-native";
-import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const { width, height } = Dimensions.get("window");
 
@@ -11,9 +12,10 @@ const base = {
     height,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
   },
   blueStaticContainer: {
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
     width,
     height,
     flex: 1,
@@ -21,7 +23,7 @@ const base = {
     alignItems: "center",
   },
   blueContainer: {
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON, THEMES.UNICORN),
     zIndex: 1,
     borderRadius: 10,
     width,
@@ -61,10 +63,8 @@ const base = {
 
 const themed = {
   light: {},
-
   dark: {},
-
-  celsius: {},
+  unicorn: {},
 };
 
 const SplashScreenStyle = () => getThemedStyle(base, themed);

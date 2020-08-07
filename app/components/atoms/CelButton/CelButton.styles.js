@@ -1,6 +1,9 @@
-// import STYLES from '../../../constants/STYLES';
-import { getThemedStyle, getScaledFont } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import {
+  getThemedStyle,
+  getScaledFont,
+  getFontSize,
+} from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -8,6 +11,8 @@ const base = {
     alignItems: "center",
     flexDirection: "row",
     opacity: 1,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
+    borderColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
   mediumContainer: {
     borderRadius: 60,
@@ -39,99 +44,73 @@ const base = {
   },
   baseTitle: {
     textAlign: "center",
-    color: "white",
-    // margin: 'auto',
+    color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   mediumTitle: {
-    fontSize: getScaledFont(18),
+    fontSize: getScaledFont(getFontSize("H4")),
   },
   smallTitle: {
-    fontSize: getScaledFont(14),
+    fontSize: getScaledFont(getFontSize("H6")),
   },
   ghostButton: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: STYLES.COLORS.CELSIUS_BLUE,
+    borderColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
   ghostredButton: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: STYLES.COLORS.WHITE,
+    borderColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   ghostgreenButton: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: STYLES.COLORS.WHITE,
+    borderColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   basicredButton: {
-    backgroundColor: STYLES.COLORS.WHITE,
     margin: 20,
   },
   basicgreenButton: {
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   ghostColorTitle: {
-    color: STYLES.COLORS.WHITE,
-  },
-  ghostTitle: {
-    color: STYLES.COLORS.CELSIUS_BLUE,
+    color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   greenButton: {
-    backgroundColor: STYLES.COLORS.GREEN,
+    backgroundColor: COLOR_KEYS.POSITIVE_STATE,
   },
   redButton: {
-    backgroundColor: STYLES.COLORS.RED,
+    backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   whiteButton: {
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   basicredTitleButton: {
     paddingHorizontal: 10,
     paddingVertical: 5,
+    color: COLOR_KEYS.NEGATIVE_STATE,
   },
   basicgreenTitleButton: {
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
+  basicTitle: {
+    color: COLOR_KEYS.PRIMARY_BUTTON,
+  },
+  disabledTitleColor: {
+    color: COLOR_KEYS.PRIMARY_BUTTON,
+  },
+  ghostTitle: {
+    color: COLOR_KEYS.PRIMARY_BUTTON,
+  },
 };
 
 const themed = {
-  light: {
-    container: {
-      backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-      borderColor: STYLES.COLORS.CELSIUS_BLUE,
-    },
+  light: {},
+  dark: {},
+  unicorn: {
     basicTitle: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
-    },
-    disabledTitleColor: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
-    },
-  },
-
-  dark: {
-    container: {
-      backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-      borderColor: STYLES.COLORS.CELSIUS_BLUE,
-    },
-    basicTitle: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
-    },
-    disabledTitleColor: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
-    },
-  },
-
-  celsius: {
-    container: {
-      backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-      borderColor: STYLES.COLORS.CELSIUS_BLUE,
-    },
-    basicTitle: {
-      color: STYLES.COLORS.WHITE,
-    },
-    disabledTitleColor: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
+      textDecorationLine: "underline",
     },
   },
 };

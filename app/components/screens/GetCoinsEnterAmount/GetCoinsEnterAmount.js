@@ -21,6 +21,8 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import getCoinsUtil from "../../../utils/get-coins-util";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -224,7 +226,7 @@ class GetCoinsEnterAmount extends Component {
 
     if (!isZero && !getCoinsUtil.isAmountInScope()) {
       return {
-        color: STYLES.COLORS.RED,
+        color: getColor(COLOR_KEYS.NEGATIVE_STATE),
       };
     }
 
@@ -235,8 +237,7 @@ class GetCoinsEnterAmount extends Component {
       return { color: STYLES.COLORS.WHITE };
     }
 
-    const style = GetCoinsEnterAmountStyle();
-    return style.text;
+    return null;
   };
 
   handleAmountBackColor = type => {
@@ -247,7 +248,7 @@ class GetCoinsEnterAmount extends Component {
       (formData.isFiat && type === "fiat")
     ) {
       return {
-        backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+        backgroundColor: getColor(COLOR_KEYS.LINK),
       };
     }
 
@@ -275,7 +276,7 @@ class GetCoinsEnterAmount extends Component {
             <CelText
               align={"center"}
               margin={"0 0 10 0"}
-              style={formData.isFiat ? activeTextStyle : style.text}
+              style={formData.isFiat ? activeTextStyle : null}
             >
               PAY WITH
             </CelText>
@@ -317,7 +318,7 @@ class GetCoinsEnterAmount extends Component {
             <CelText
               align={"center"}
               margin={"0 0 10 0"}
-              style={!formData.isFiat ? activeTextStyle : style.text}
+              style={!formData.isFiat ? activeTextStyle : null}
             >
               RECEIVE
             </CelText>

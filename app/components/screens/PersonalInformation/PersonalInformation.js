@@ -8,7 +8,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { isUSCitizen } from "../../../utils/user-util";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import CelInput from "../../atoms/CelInput/CelInput";
@@ -112,9 +111,9 @@ class PersonalInformation extends Component {
         >
           To make changes on your personal information
           <CelText
+            link
             weight={"300"}
             type={"H4"}
-            color={STYLES.COLORS.CELSIUS_BLUE}
             onPress={() => Linking.openURL("mailto:app@celsius.network")}
           >
             {" contact our support."}
@@ -126,9 +125,6 @@ class PersonalInformation extends Component {
               <View>
                 <Separator
                   margin={"10 0 20 0"}
-                  color={STYLES.COLORS.DARK_GRAY}
-                  opacity={0.2}
-                  textOpacity={0.4}
                   text={"SOCIAL SECURITY NUMBER"}
                 />
 
@@ -157,13 +153,7 @@ class PersonalInformation extends Component {
           <View>
             {userSetCountry && (
               <View>
-                <Separator
-                  margin={"10 0 20 0"}
-                  color={STYLES.COLORS.DARK_GRAY}
-                  opacity={0.2}
-                  textOpacity={0.4}
-                  text={"Taxpayer ID"}
-                />
+                <Separator margin={"10 0 20 0"} text={"Taxpayer ID"} />
 
                 <SocialSecurityNumber
                   onPress={() => this.submitTaxpayerInfo()}
@@ -174,13 +164,7 @@ class PersonalInformation extends Component {
           </View>
         )}
 
-        <Separator
-          margin={"10 0 20 0"}
-          color={STYLES.COLORS.DARK_GRAY}
-          opacity={0.2}
-          textOpacity={0.4}
-          text={"PROFILE DETAILS"}
-        />
+        <Separator margin={"10 0 20 0"} text={"PROFILE DETAILS"} />
 
         {!!user.first_name && (
           <View>
@@ -277,13 +261,7 @@ class PersonalInformation extends Component {
           </CelButton>
         )}
 
-        <Separator
-          margin={"10 0 20 0"}
-          color={STYLES.COLORS.DARK_GRAY}
-          opacity={0.2}
-          textOpacity={0.4}
-          text={"ADDRESS INFO"}
-        />
+        <Separator margin={"10 0 20 0"} text={"ADDRESS INFO"} />
 
         {!!user.street && (
           <View>

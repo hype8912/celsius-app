@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Image, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 
 import TransactionsFilterItemStyle from "./TransactionsFilterItem.styles";
 import STYLES from "../../../constants/STYLES";
-import { THEMES } from "../../../constants/UI";
 import Icon from "../Icon/Icon";
 import CelText from "../CelText/CelText";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { COLORS } = STYLES;
 
@@ -23,28 +23,29 @@ class TransactionsFilterItem extends Component {
     const { isActive, item } = this.props;
 
     if (!isActive) {
-      return { backgroundColor: "transparent" };
+      return { backgroundColor: COLORS.TRANSPARENT };
     }
 
     if (isActive && !item.image_url) {
-      return { backgroundColor: COLORS.GREEN };
+      return { backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE) };
     }
 
     if (isActive && !!item.image_url) {
-      return { backgroundColor: COLORS.transparent };
+      return { backgroundColor: COLORS.TRANSPARENT };
     }
   };
 
   renderIcon = () => {
     const { isActive, item } = this.props;
-    const style = TransactionsFilterItemStyle();
 
     // Date icon
     if (!item.icon && !item.image_url) {
       return (
         <Icon
           name={item.icon || "CheckboxChecked"}
-          fill={isActive ? COLORS.WHITE : COLORS.TRANSPARENT}
+          fill={
+            isActive ? COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND : COLORS.TRANSPARENT
+          }
           height={item.image_url ? "26" : "12"}
           width={item.image_url ? "26" : "12"}
         />
@@ -56,7 +57,9 @@ class TransactionsFilterItem extends Component {
       return (
         <Icon
           name={item.icon || "CheckboxChecked"}
-          fill={isActive ? COLORS.WHITE : COLORS.TRANSPARENT}
+          fill={
+            isActive ? COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND : COLORS.TRANSPARENT
+          }
           height={item.image_url ? "26" : "12"}
           width={item.image_url ? "26" : "12"}
         />
@@ -66,18 +69,10 @@ class TransactionsFilterItem extends Component {
     // Coin icon
     if (item.image_url) {
       if (isActive) {
-        const theme = getTheme();
-
-        if (theme === THEMES.LIGHT) {
-          return (
-            <Image source={{ uri: item.image_url }} style={style.iconWrapper} />
-          );
-        }
-
         return (
           <Icon
-            name={item.icon || "CheckboxChecked"}
-            fill={COLORS.WHITE}
+            name={item.icon}
+            fill={COLOR_KEYS.HEADLINE}
             height={item.image_url ? "26" : "12"}
             width={item.image_url ? "26" : "12"}
           />
@@ -85,10 +80,11 @@ class TransactionsFilterItem extends Component {
       }
       return (
         <Icon
-          name={item.icon || "CheckboxChecked"}
-          fill={COLORS.DARK_GRAY3}
+          name={item.icon}
+          fill={COLOR_KEYS.PARAGRAPH}
           height={item.image_url ? "26" : "12"}
           width={item.image_url ? "26" : "12"}
+          iconOpacity={0.2}
         />
       );
     }
@@ -97,19 +93,13 @@ class TransactionsFilterItem extends Component {
   renderClearSelect = () => {
     const style = TransactionsFilterItemStyle();
     const { isActive, item } = this.props;
-    const theme = getTheme();
-
     if (!isActive || !item.value || !item.icon) return null;
 
     return (
       <View style={style.clearSelectWrapper}>
         <Icon
           name={"Close"}
-          fill={
-            theme === THEMES.LIGHT
-              ? COLORS.DARK_GRAY7
-              : STYLES.COLORS.WHITE_OPACITY5
-          }
+          fill={COLOR_KEYS.PARAGRAPH}
           height={"16"}
           width={"16"}
         />

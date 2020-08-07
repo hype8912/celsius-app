@@ -5,7 +5,8 @@ import { View } from "react-native";
 import InfoSectionStyle from "./TxInfoSection.styles";
 import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const TxInfoSection = ({ transaction, transactionProps }) => {
   const style = InfoSectionStyle();
@@ -13,13 +14,19 @@ const TxInfoSection = ({ transaction, transactionProps }) => {
     <View style={style.container}>
       <View style={style.statusText}>
         <View
-          style={[style.circle, { backgroundColor: transactionProps.color }]}
+          style={[
+            style.circle,
+            { backgroundColor: getColor(transactionProps.color) },
+          ]}
         >
-          <CelText type={"H7"} color={STYLES.COLORS.WHITE}>
+          <CelText
+            type={"H7"}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+          >
             {transactionProps.shortName}
           </CelText>
         </View>
-        <CelText color={transactionProps.color}>
+        <CelText color={getColor(transactionProps.color)}>
           {transactionProps.statusText}
         </CelText>
       </View>
@@ -29,7 +36,7 @@ const TxInfoSection = ({ transaction, transactionProps }) => {
           precision: 5,
         })}
       </CelText>
-      <CelText color={STYLES.COLORS.MEDIUM_GRAY} type="H3" align="center">
+      <CelText color={getColor(COLOR_KEYS.PARAGRAPH)} type="H3" align="center">
         {transaction.amount_usd
           ? formatter.usd(transaction.amount_usd)
           : `${formatter.fiat(

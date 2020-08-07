@@ -45,7 +45,7 @@ const INITIAL_ROUTE = "SplashScreen";
 const THEMES = {
   LIGHT: "light",
   DARK: "dark",
-  CELSIUS: "celsius",
+  UNICORN: "unicorn",
 };
 
 const EMPTY_STATES = {

@@ -18,7 +18,7 @@ import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
     formData: state.forms.formData,
     allLoans: state.loans.allLoans,
     loanSettings: state.loans.loanSettings,
-    currencyRates: state.currencies.currencyRatesShort,
+    currencyRates: state.currencies,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )

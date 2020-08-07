@@ -1,7 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
-
-// import { FONT_SCALE } from "../../../config/constants/style";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -29,24 +27,19 @@ const base = {
     paddingVertical: 2,
     paddingHorizontal: 5,
     borderRadius: 5,
-    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
+  cardStyle: {
+    color: COLOR_KEYS.CARDS,
   },
 };
 
 const themed = {
-  light: {
-    cardStyle: {
-      color: STYLES.COLORS.WHITE_OPACITY7,
-    },
-  },
+  light: {},
 
-  dark: {
-    cardStyle: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
-    },
-  },
+  dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CoinCardStyle = () => getThemedStyle(base, themed);

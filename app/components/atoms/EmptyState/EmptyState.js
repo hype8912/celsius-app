@@ -12,6 +12,8 @@ import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import ContactSupport from "../ContactSupport/ContactSupport";
 import emptyStateUtil from "../../../utils/empty-state-util";
 import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -72,7 +74,7 @@ class EmptyState extends Component {
             align="center"
             type="H3"
             weight={"500"}
-            color={STYLES.COLORS.ORANGE}
+            color={getColor(COLOR_KEYS.ALERT_STATE)}
           >
             Identity Confirmation in Progress
           </CelText>

@@ -1,7 +1,4 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
-
-// import { FONT_SCALE } from "../../../config/constants/style";
 
 const base = {
   container: {
@@ -27,19 +24,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    cardStyle: {
-      color: STYLES.COLORS.WHITE_OPACITY7,
-    },
-  },
-
-  dark: {
-    cardStyle: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const LoanInterestCardStyle = () => getThemedStyle(base, themed);

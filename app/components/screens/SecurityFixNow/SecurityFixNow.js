@@ -29,6 +29,7 @@ import Icon from "../../atoms/Icon/Icon";
 class SecurityFixNow extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
+
     return {
       title: params.title || `Fix Now (1/${params.fixNowContentLength})`,
       customCenterComponent: {

@@ -17,8 +17,9 @@ import PerformanceGraph from "../../graphs/PerformanceGraph/PerformanceGraph";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CelStats from "../../organisms/CelStats/CelStats";
-import STYLES from "../../../constants/STYLES";
 import Counter from "../../molecules/Counter/Counter";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -48,14 +49,14 @@ class Community extends Component {
     const style = CommunityStyle();
     const usersNum = communityStats.users_num;
     return (
-      <Card padding={"0 0 0 0"} color={STYLES.COLORS.CELSIUS_BLUE}>
+      <Card padding={"0 0 0 0"} color={getColor(COLOR_KEYS.BANNER_INFO)}>
         <View style={style.imageView}>
           <View>
             <CelText
-              weight={"300"}
+              weight={"400"}
               align={"center"}
               type={"H6"}
-              color={STYLES.COLORS.WHITE_OPACITY5}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
             >
               Celsius Network counts
             </CelText>
@@ -63,15 +64,15 @@ class Community extends Component {
               weight={"600"}
               align={"center"}
               type={"H1"}
-              color={STYLES.COLORS.WHITE}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
               speed={10}
               number={usersNum}
             />
             <CelText
-              weight={"300"}
+              weight={"400"}
               align={"center"}
               type={"H6"}
-              color={STYLES.COLORS.WHITE_OPACITY5}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
             >
               members
             </CelText>

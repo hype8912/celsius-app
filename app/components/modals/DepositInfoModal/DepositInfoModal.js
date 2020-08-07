@@ -42,7 +42,7 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image:
-              theme === THEMES.LIGHT
+              theme !== THEMES.DARK
                 ? require(`../../../../assets/images/deposit-icn.png`)
                 : require(`../../../../assets/images/deposit-icn-dark.png`),
             darkImage: require("../../../../assets/images/deposit-icn.png"),
@@ -54,7 +54,7 @@ class DepositInfoModal extends Component {
           },
           {
             image:
-              theme === THEMES.LIGHT
+              theme !== THEMES.DARK
                 ? require(`../../../../assets/images/deposit-icn.png`)
                 : require(`../../../../assets/images/deposit-icn-dark.png`),
             title: "Review your transaction details carefully",

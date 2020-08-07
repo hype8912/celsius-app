@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import * as appActions from "../../../redux/actions";
 import MyCelInterestTabStyle from "./MyCelInterestTab.styles";
 import CelText from "../../atoms/CelText/CelText";
-// import STYLES from "../../../constants/STYLES";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import PerCoinCellInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 
@@ -29,6 +28,7 @@ class MyCelInterestTab extends Component {
                 style={[style.starIcon, { marginTop: 6 }]}
                 lightSource={require("../../../../assets/images/loyaltyIcons/interestCircleIcon3x.png")}
                 darkSource={require("../../../../assets/images/loyaltyIcons/interestCircleIconDark3x.png")}
+                unicornSource={require("../../../../assets/images/loyaltyIcons/interestCircleIconUnicorn3x.png")}
               />
             </View>
             <View style={{ marginTop: 30 }}>

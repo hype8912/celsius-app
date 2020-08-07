@@ -12,7 +12,6 @@ import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { CEL_PAY_TYPES, KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
-import STYLES from "../../../constants/STYLES";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { PREDIFINED_AMOUNTS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
@@ -21,6 +20,8 @@ import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -56,7 +57,6 @@ class CelPayEnterAmount extends Component {
       walletSummary,
       actions,
     } = this.props;
-
     const coinSelectItems =
       currencies &&
       currencies
@@ -362,8 +362,8 @@ class CelPayEnterAmount extends Component {
                 coin={formData.coin}
                 amountColor={
                   keypadOpen
-                    ? STYLES.COLORS.CELSIUS_BLUE
-                    : STYLES.COLORS.DARK_GRAY
+                    ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                    : getColor(COLOR_KEYS.HEADLINE)
                 }
               />
             </View>

@@ -11,6 +11,8 @@ import CoinListCard from "../../molecules/CoinListCard/CoinListCard";
 import Icon from "../../atoms/Icon/Icon";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import animationsUtil from "../../../utils/animations-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CoinCards extends Component {
   static propTypes = {
@@ -145,8 +147,13 @@ class CoinCards extends Component {
 
     return (
       <TouchableOpacity style={gridStyle} onPress={() => navigateTo("Deposit")}>
-        <Icon fill={"gray"} width="17" height="17" name="CirclePlus" />
-        <CelText type="H5" margin={isGrid ? "5 0 0 0" : "0 0 0 5"}>
+        <Icon
+          fill={getColor(COLOR_KEYS.LINK)}
+          width="17"
+          height="17"
+          name="CirclePlus"
+        />
+        <CelText type="H5" margin={isGrid ? "5 0 0 0" : "0 0 0 5"} link>
           Deposit coins
         </CelText>
       </TouchableOpacity>

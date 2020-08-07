@@ -8,12 +8,13 @@ import * as appActions from "../../../redux/actions";
 import { MODALS } from "../../../constants/UI";
 import MultistepModalStyles from "./MultistepModal.styles";
 import {
+  getColor,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 import CelModal from "../CelModal/CelModal";
 import multiStepUtil from "../../../utils/multistep-modal-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const cardWidth = widthPercentageToDP("80%");
 const { width } = Dimensions.get("window");
@@ -112,7 +113,7 @@ class MultistepModal extends Component {
                 opacity,
                 height: 8,
                 width: 8,
-                backgroundColor: STYLES.COLORS.MEDIUM_GRAY,
+                backgroundColor: getColor(COLOR_KEYS.DOT_INDICATOR_ACTIVE),
                 margin: 5,
                 borderRadius: 4,
               }}

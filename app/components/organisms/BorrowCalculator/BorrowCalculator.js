@@ -15,9 +15,9 @@ import HorizontalSlider from "../../atoms/HorizontalSlider/HorizontalSlider";
 import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { THEMES } from "../../../constants/UI";
 import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 let timeout;
 
@@ -93,21 +93,10 @@ class BorrowCalculator extends Component {
   }
 
   getThemeColors = () => {
-    const { theme, themeModal } = this.props;
-
     return {
-      loanCard:
-        themeModal || theme !== THEMES.DARK
-          ? STYLES.COLORS.LIGHT_GRAY
-          : STYLES.COLORS.SEMI_GRAY,
-      amountCard:
-        themeModal || theme !== THEMES.DARK
-          ? STYLES.COLORS.WHITE
-          : STYLES.COLORS.DARK_HEADER,
-      iconColor:
-        themeModal || theme !== THEMES.DARK
-          ? STYLES.COLORS.DARK_HEADER
-          : STYLES.COLORS.LIGHT_GRAY,
+      loanCard: getColor(COLOR_KEYS.HEADER),
+      amountCard: getColor(COLOR_KEYS.CARDS),
+      iconColor: getColor(COLOR_KEYS.HEADLINE),
     };
   };
 
@@ -156,7 +145,6 @@ class BorrowCalculator extends Component {
     const style = BorrowCalculatorStyle();
     const { loanParams, formData } = this.props;
 
-    const theme = getTheme();
     let numberOfDigits;
 
     if (loanParams.monthlyInterest && loanParams.totalInterest) {
@@ -172,20 +160,17 @@ class BorrowCalculator extends Component {
         monthly: formatter.fiat(loanParams.monthlyInterest, "USD"),
         total: formatter.fiat(loanParams.totalInterest, "USD"),
         type: "USD",
-        color:
-          theme === THEMES.DARK
-            ? STYLES.COLORS.SEMI_GRAY
-            : STYLES.COLORS.LIGHT_GRAY,
+        color: getColor(COLOR_KEYS.BACKGROUND),
       },
       {
         apr: formatter.percentageDisplay(loanParams.loyaltyApr),
         monthly: formatter.fiat(loanParams.monthlyInCEL, "USD"),
         total: formatter.fiat(loanParams.totalInCEL, "USD"),
         type: "CEL",
-        color: STYLES.COLORS.CELSIUS_BLUE,
+        color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
       },
     ];
-    const textType = numberOfDigits > 8 ? "H7" : "H6";
+    const textType = numberOfDigits > 8 ? "H6" : "H5";
 
     return INTEREST_DATA.map(num => (
       <View

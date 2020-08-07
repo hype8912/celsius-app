@@ -1,13 +1,11 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   content: {
     width: "100%",
     alignItems: "center",
     flexDirection: "row",
-    // height: 60,
   },
   separator: {
     width: "100%",
@@ -29,26 +27,15 @@ const base = {
     marginLeft: 10,
     alignItems: "flex-end",
   },
+  separatorColor: {
+    color: COLOR_KEYS.SEPARATORS,
+  },
 };
 
 const themed = {
-  light: {
-    separatorColor: {
-      color: STYLES.COLORS.DARK_GRAY1,
-    },
-  },
-
-  dark: {
-    separatorColor: {
-      color: STYLES.COLORS.WHITE_OPACITY3,
-    },
-  },
-
-  celsius: {
-    separatorColor: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const SeparatorStyle = () => getThemedStyle(base, themed);

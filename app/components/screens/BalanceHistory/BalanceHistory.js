@@ -72,7 +72,7 @@ class BalanceHistory extends Component {
               <CelText weight="300" type="H6">
                 Total wallet balance
               </CelText>
-              <CelText weight="600" type="H3">
+              <CelText weight="600" type="H2">
                 {walletSummary && formatter.usd(walletSummary.total_amount_usd)}
               </CelText>
             </Card>

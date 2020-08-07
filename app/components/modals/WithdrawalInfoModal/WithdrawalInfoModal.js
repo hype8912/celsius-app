@@ -144,7 +144,7 @@ class WithdrawalInfoModal extends Component {
 
     let picture;
     const theme = getTheme();
-    if (theme === THEMES.LIGHT) {
+    if (theme !== THEMES.DARK) {
       picture = require(`../../../../assets/images/modal-withdraw.png`);
     } else {
       picture = require(`../../../../assets/images/modal-withdraw-dark.png`);

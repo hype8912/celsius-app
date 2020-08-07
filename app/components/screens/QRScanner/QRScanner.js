@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, SafeAreaView } from "react-native";
-// TODO(sb): RN update dependencies fixes
-// import { BarCodeScanner } from "expo-barcode-scanner";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { RESULTS } from "react-native-permissions";

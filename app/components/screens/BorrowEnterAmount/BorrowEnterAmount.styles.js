@@ -32,7 +32,7 @@ const themed = {
       }),
     },
   },
-  celsius: {},
+  unicorn: {},
 };
 
 const BorrowEnterAmountStyle = () => getThemedStyle(base, themed);

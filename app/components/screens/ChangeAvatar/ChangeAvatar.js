@@ -137,11 +137,6 @@ class ChangeAvatar extends Component {
     }
   }
 
-  // event hanlders
-  // setActiveImage = (imgSrc) => {
-  //   this.setState({ activeImage: imgSrc.url });
-  // }
-
   updateProfilePicture = imgSrc => {
     const { actions, callsInProgress } = this.props;
 

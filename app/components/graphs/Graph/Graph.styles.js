@@ -4,6 +4,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const cursorRadius = heightPercentageToDP("1.06%");
 
@@ -32,10 +33,11 @@ const base = {
   label: {
     borderRadius: 8,
     width: widthPercentageToDP("21.33%"),
-    height: heightPercentageToDP("6.2%"),
+    height: heightPercentageToDP("4%"),
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "rgba(61,72,83,1)",
+    backgroundColor: COLOR_KEYS.CARDS,
+    padding: 2,
   },
   triangle: {
     width: 0,
@@ -47,7 +49,7 @@ const base = {
     borderBottomWidth: widthPercentageToDP("1.5%"),
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
-    borderBottomColor: "rgba(61,72,83,1)",
+    borderBottomColor: COLOR_KEYS.CARDS,
     transform: [{ rotate: "180deg" }],
   },
   scrollPointer: {
@@ -67,9 +69,6 @@ const themed = {
     labelBoxBackgroundColor: {
       backgroundColor: STYLES.COLORS.DARK_GRAY,
     },
-    triangleBackgroundColor: {
-      borderBottomColor: STYLES.COLORS.DARK_GRAY,
-    },
   },
 
   dark: {
@@ -79,20 +78,14 @@ const themed = {
     labelBoxBackgroundColor: {
       backgroundColor: STYLES.COLORS.DARK_LABEL,
     },
-    triangleBackgroundColor: {
-      borderBottomColor: STYLES.COLORS.DARK_LABEL,
-    },
   },
 
-  celsius: {
+  unicorn: {
     cursorBackgroundColor: {
       backgroundColor: "white",
     },
     labelBoxBackgroundColor: {
       backgroundColor: STYLES.COLORS.DARK_GRAY,
-    },
-    triangleBackgroundColor: {
-      borderBottomColor: STYLES.COLORS.DARK_GRAY,
     },
   },
 };

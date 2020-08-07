@@ -13,7 +13,6 @@ import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -104,7 +103,7 @@ class Login extends Component {
             {this.renderCaptcha()}
 
             <CelButton
-              margin="35 0 0 0"
+              margin="35 0 25 0"
               basic
               onPress={() => actions.navigateTo("ForgotPassword")}
             >
@@ -112,7 +111,11 @@ class Login extends Component {
             </CelButton>
 
             {ENV === "STAGING" ? (
-              <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
+              <CelButton
+                basic
+                margin="0 0 25 0"
+                onPress={() => actions.navigateTo("Storybook")}
+              >
                 Open Storybook
               </CelButton>
             ) : null}
@@ -123,7 +126,7 @@ class Login extends Component {
               <CelText
                 weight="300"
                 align="center"
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
                 onPress={() =>
                   actions.navigateTo("LoginLanding", { type: "register" })
                 }

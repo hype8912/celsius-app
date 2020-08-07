@@ -18,6 +18,8 @@ import API from "../../../constants/API";
 import { EMPTY_STATES } from "../../../constants/UI";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import Separator from "../../atoms/Separator/Separator";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -147,10 +149,10 @@ class WithdrawAddressOverview extends Component {
                 hodlStatus={hodlStatus}
               />
               {withdrawalAddresses[key].locked && hours && minutes && (
-                <Card margin="0 0 10 0">
+                <View>
                   <CelText align="center" type="H6">
-                    Due to our security protocols, your address will be active
-                    in
+                    Due to our security protocols, your {key} address will be
+                    active in
                   </CelText>
 
                   <CelText
@@ -161,7 +163,7 @@ class WithdrawAddressOverview extends Component {
                   >
                     {`${hours}h ${minutes}m.`}
                   </CelText>
-                </Card>
+                </View>
               )}
             </View>
           ) : null;
@@ -195,7 +197,7 @@ class WithdrawAddressOverview extends Component {
     return (
       <RegularLayout>
         <View>
-          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+          <Card color={getColor(COLOR_KEYS.BANNER_INFO)}>
             <View style={{ flexDirection: "row" }}>
               <View style={{ flex: 1, paddingRight: 5 }}>
                 <Icon

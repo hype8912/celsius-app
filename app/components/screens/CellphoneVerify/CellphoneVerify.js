@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -17,9 +16,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class CellphoneVerify extends Component {
-  static propTypes = {
-    // text: PropTypes.string
-  };
+  static propTypes = {};
   static defaultProps = {};
 
   static navigationOptions = () => ({

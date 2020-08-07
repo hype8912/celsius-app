@@ -1,9 +1,8 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -24,11 +23,10 @@ const base = {
     flex: 1,
     flexDirection: "row",
     borderRadius: 8,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     marginTop: 10,
   },
   celTierIndentation: {
-    // flex: 0.07,
     width: 22,
     borderBottomLeftRadius: 8,
     borderTopLeftRadius: 8,
@@ -43,19 +41,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    celTierWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
-
-  dark: {
-    celTierWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const CelsiusStatsStyle = () => getThemedStyle(base, themed);

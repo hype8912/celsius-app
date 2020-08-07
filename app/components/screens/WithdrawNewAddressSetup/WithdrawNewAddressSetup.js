@@ -5,11 +5,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { RESULTS } from "react-native-permissions";
 import * as appActions from "../../../redux/actions";
-import WithdrawalNewAddressSetupStyle from "./WithdrawNewAddressSetup.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelInput from "../../atoms/CelInput/CelInput";
-// import UI from "../../../constants/STYLES";
 import addressUtil from "../../../utils/address-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ConfirmWithdrawalAddressModal from "../../modals/ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal";
@@ -73,7 +71,6 @@ class WithdrawNewAddressSetup extends Component {
 
   render() {
     const { formData, actions } = this.props;
-    const style = WithdrawalNewAddressSetupStyle();
 
     return (
       <RegularLayout>
@@ -107,7 +104,7 @@ class WithdrawNewAddressSetup extends Component {
           style={{ marginVertical: 20 }}
           onPress={this.handleScanClick}
         >
-          <CelText type={"H5"} style={style.scanText}>
+          <CelText type={"H5"} link align="center">
             Scan QR Code
           </CelText>
         </TouchableOpacity>

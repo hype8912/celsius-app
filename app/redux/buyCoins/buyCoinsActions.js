@@ -12,7 +12,7 @@ import {
   BUY_COINS_PAYMENT_STATUSES,
   TRANSACTION_TYPES,
 } from "../../constants/DATA";
-import STYLES from "../../constants/STYLES";
+import { COLOR_KEYS } from "../../constants/COLORS";
 
 export {
   getPaymentRequests,
@@ -235,15 +235,15 @@ function mapPayment(payment) {
 
   switch (paymentType) {
     case TRANSACTION_TYPES.DEPOSIT_PENDING:
-      uiProps.color = STYLES.COLORS.ORANGE;
+      uiProps.color = COLOR_KEYS.ALERT_STATE;
       uiProps.statusText = "Pending";
       break;
     case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
-      uiProps.color = STYLES.COLORS.GREEN;
+      uiProps.color = COLOR_KEYS.POSITIVE_STATE;
       uiProps.statusText = "Confirmed";
       break;
     case TRANSACTION_TYPES.CANCELED:
-      uiProps.color = STYLES.COLORS.RED;
+      uiProps.color = COLOR_KEYS.NEGATIVE_STATE;
       uiProps.statusText = "Cancelled";
       break;
   }

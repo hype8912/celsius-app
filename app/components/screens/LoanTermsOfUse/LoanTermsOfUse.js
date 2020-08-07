@@ -10,7 +10,6 @@ import LoanTermsOfUseStyle from "./LoanTermsOfUse.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { THEMES } from "../../../constants/UI";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import STYLES from "../../../constants/STYLES";
 import Card from "../../atoms/Card/Card";
@@ -18,6 +17,12 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import Icon from "../../atoms/Icon/Icon";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import {
+  getColor,
+  getFontSize,
+  getFontFamily,
+} from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -93,7 +98,7 @@ class LoanTermsOfUse extends Component {
   };
 
   render() {
-    const { formData, theme, pdf, actions, loanTermsOfUse } = this.props;
+    const { formData, pdf, actions, loanTermsOfUse } = this.props;
     const styles = LoanTermsOfUseStyle();
 
     if (!loanTermsOfUse || !pdf) return <LoadingScreen />;
@@ -107,20 +112,23 @@ class LoanTermsOfUse extends Component {
 
     const canContinue =
       formData.loansToU0 && formData.loansToU1 && formData.loansToU2;
-    const textColor =
-      theme === THEMES.LIGHT ? STYLES.COLORS.MEDIUM_GRAY : "white";
 
     const markdownStyle = {
-      text: { color: textColor, fontSize: 16 },
-      link: { color: STYLES.COLORS.CELSIUS_BLUE },
+      text: {
+        fontSize: getFontSize("H5"),
+        color: getColor(COLOR_KEYS.PARAGRAPH),
+        fontFamily: getFontFamily("regular"),
+      },
+      link: {
+        color: getColor(COLOR_KEYS.LINK),
+        textDecorationLine: "underline",
+      },
       listOrderedItemIcon: {
-        color: textColor,
         marginLeft: 10,
         marginRight: 10,
         lineHeight: 40,
       },
       listUnorderedItemIcon: {
-        color: textColor,
         marginLeft: 10,
         marginRight: 10,
         lineHeight: 40,
@@ -130,10 +138,12 @@ class LoanTermsOfUse extends Component {
     return (
       <RegularLayout fabType={"hide"} padding="0 0 100 0">
         <View style={{ padding: 20 }}>
-          <CelText color={textColor} weight="bold" type="H3" align="center">
+          <CelText weight="bold" type="H3" align="center">
             {introSection.heading}
           </CelText>
-          <Markdown style={markdownStyle}>{introSection.text}</Markdown>
+          <Markdown color={"red"} style={markdownStyle}>
+            {introSection.text}
+          </Markdown>
         </View>
 
         <View style={{ paddingTop: 20, paddingHorizontal: 20 }}>
@@ -147,15 +157,7 @@ class LoanTermsOfUse extends Component {
               </ExpandableItem>
 
               {checkboxes.includes(i) && (
-                <Card
-                  color={
-                    theme === THEMES.LIGHT
-                      ? STYLES.COLORS.WHITE
-                      : STYLES.COLORS.SEMI_GRAY
-                  }
-                  margin={"20 0 20 0"}
-                  padding={"15 15 0 15"}
-                >
+                <Card margin={"20 0 20 0"} padding={"15 15 0 15"}>
                   <CelCheckbox
                     onChange={(field, value) =>
                       actions.updateFormField(field, value)
@@ -173,14 +175,7 @@ class LoanTermsOfUse extends Component {
         </View>
 
         <View style={{ padding: 20 }}>
-          <Card
-            color={
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.WHITE
-                : STYLES.COLORS.SEMI_GRAY
-            }
-            padding={"20 0 20 0"}
-          >
+          <Card padding={"20 0 20 0"}>
             <View style={styles.shareCard}>
               <TouchableOpacity
                 onPress={() => Linking.openURL(pdf)}

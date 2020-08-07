@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Image, StatusBar } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
@@ -11,8 +10,6 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import appUtil from "../../../utils/app-util";
 import ReferralReceivedModal from "../../modals/ReferralReceivedModal/ReferralReceivedModal";
-
-// import STYLES from '../../../constants/STYLES';
 
 @connect(
   state => ({
@@ -27,10 +24,8 @@ class Welcome extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    headerSameColor: false,
-    transparent: true,
+    headerSameColor: true,
     hideBack: true,
-    gesturesEnabled: false,
   });
 
   state = {
@@ -55,7 +50,11 @@ class Welcome extends Component {
 
     const { revisionId } = this.state;
     return (
-      <RegularLayout fabType="hide">
+      <RegularLayout
+        padding="0 20 0 20"
+        fabType="hide"
+        enableParentScroll={false}
+      >
         <View style={style.wrapper}>
           <Image
             source={require("../../../../assets/images/splashScreen-celsius-new.png")}

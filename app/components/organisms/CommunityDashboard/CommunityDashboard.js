@@ -10,10 +10,9 @@ import CommunityDashboardStyle from "./CommunityDashboard.styles";
 import formatter from "../../../utils/formatter";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
-import { THEMES } from "../../../constants/UI";
 import Icon from "../../atoms/Icon/Icon";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -146,13 +145,10 @@ class CommunityDashboard extends Component {
     const { name, buttonTypes, info, children } = this.props;
     const { activeButton, primaryNumber, explanation } = this.state;
     const style = CommunityDashboardStyle();
-    const theme = getTheme();
-    const separatorColor =
-      THEMES.LIGHT === theme ? STYLES.COLORS.DARK_GRAY1 : null;
 
     return (
       <View style={style.container}>
-        <Separator margin={"30 0 20 0"} color={separatorColor} text={name} />
+        <Separator margin={"30 0 20 0"} text={name} />
         {buttonTypes && buttonTypes.length > 0 && (
           <View style={style.buttonWrapper}>
             {buttonTypes.map(button => (
@@ -167,9 +163,7 @@ class CommunityDashboard extends Component {
                     height={18}
                     width={18}
                     fill={
-                      activeButton === button.buttonType
-                        ? STYLES.COLORS.CELSIUS_BLUE
-                        : STYLES.COLORS.MEDIUM_GRAY
+                      activeButton === button.buttonType ? "active" : "inactive"
                     }
                     strokeWidth={0.5}
                   />
@@ -179,8 +173,8 @@ class CommunityDashboard extends Component {
                     align={"center"}
                     color={
                       activeButton === button.buttonType
-                        ? STYLES.COLORS.CELSIUS_BLUE
-                        : STYLES.COLORS.MEDIUM_GRAY
+                        ? getColor(COLOR_KEYS.TAB_SELECTED)
+                        : getColor(COLOR_KEYS.TAB_UNSELECTED)
                     }
                   >
                     {button.buttonType.toUpperCase()}

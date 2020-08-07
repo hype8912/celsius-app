@@ -6,10 +6,11 @@ import { MODALS } from "../../../constants/UI";
 import WithdrawWarningModalStyle from "./WithdrawWarningModal.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelModal from "../CelModal/CelModal";
-import STYLES from "../../../constants/STYLES";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import Separator from "../../atoms/Separator/Separator";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 class WithdrawWarningModal extends Component {
   static propTypes = {
@@ -48,7 +49,11 @@ class WithdrawWarningModal extends Component {
               {" permanent loss "}
             </CelText>
             of your funds, please check if your address has a{" "}
-            <CelText type="H4" weight="400" color={STYLES.COLORS.CELSIUS_BLUE}>
+            <CelText
+              type="H4"
+              weight="400"
+              color={getColor(COLOR_KEYS.HEADLINE)}
+            >
               {tag}
             </CelText>
           </CelText>
@@ -57,8 +62,8 @@ class WithdrawWarningModal extends Component {
             <CelCheckbox
               field="hasNotTag"
               margin={"0 20 0 0"}
-              uncheckedCheckBoxColor={STYLES.COLORS.GRAY}
-              checkedCheckBoxColor={STYLES.COLORS.GREEN}
+              uncheckedCheckBoxColor={getColor(COLOR_KEYS.PARAGRAPH)}
+              checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
               value={this.state.isChecked}
               onChange={(field, value) => this.setState({ isChecked: value })}
               rightText={`My address doesn't have a\n${tag}`}

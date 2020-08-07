@@ -25,7 +25,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const EmptyStateStyle = () => getThemedStyle(base, themed);

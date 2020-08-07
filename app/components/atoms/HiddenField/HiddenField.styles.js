@@ -1,6 +1,5 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   wrapper: {
@@ -12,27 +11,25 @@ const base = {
   basicCircle: {
     width: 18,
     height: 18,
-    backgroundColor: STYLES.COLORS.MEDIUM_GRAY,
     borderRadius: 10,
     margin: 10,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
   activeCircle: {
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
   lastCircle: {
-    backgroundColor: STYLES.COLORS.GREEN,
+    backgroundColor: COLOR_KEYS.POSITIVE_STATE,
   },
   errorCircle: {
-    backgroundColor: STYLES.COLORS.RED,
+    backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
   },
 };
 
 const themed = {
   light: {},
-
   dark: {},
-
-  celsius: {},
+  unicorn: {},
 };
 
 const HiddenPinStyle = () => getThemedStyle(base, themed);

@@ -5,6 +5,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   wrapper: {
@@ -12,7 +13,7 @@ const base = {
     flex: 1,
   },
   modal: {
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.CARDS,
     width: widthPercentageToDP("90%"),
     marginBottom: heightPercentageToDP("4%"),
     maxHeight: heightPercentageToDP("90%"),
@@ -31,7 +32,7 @@ const base = {
     height: 80,
     width: 80,
     borderRadius: 40,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
@@ -64,23 +65,23 @@ const base = {
 const themed = {
   light: {
     outsideCloseModal: {
-      backgroundColor: Platform.OS === "android" ? STYLES.COLORS.LIGHT_MODAL_ANDROID__OUTSIDE_BACKGROUND_COLOR : null
-    }
+      backgroundColor:
+        Platform.OS === "android"
+          ? STYLES.COLORS.LIGHT_MODAL_ANDROID__OUTSIDE_BACKGROUND_COLOR // TODO: Get rid of this, and find different way to handle modal overlay on Android platform
+          : null,
+    },
   },
 
   dark: {
-    modal: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    pictureWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
     outsideCloseModal: {
-     backgroundColor: Platform.OS === "android" ? STYLES.COLORS.DARK_MODAL_ANDROID_OUTSIDE_BACKGROUND_COLOR : null
-    }
+      backgroundColor:
+        Platform.OS === "android"
+          ? STYLES.COLORS.DARK_MODAL_ANDROID_OUTSIDE_BACKGROUND_COLOR
+          : null,
+    },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelModalStyle = () => getThemedStyle(base, themed);

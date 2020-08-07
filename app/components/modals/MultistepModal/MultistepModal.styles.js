@@ -3,6 +3,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   modalContent: {
@@ -12,7 +13,7 @@ const base = {
     height: 80,
     width: 80,
     borderRadius: 40,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     alignSelf: "center",
     zIndex: -5,
     marginTop: -50,
@@ -30,7 +31,7 @@ const base = {
     flex: 1,
     width: widthPercentageToDP("90%"),
     borderRadius: 25,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     marginTop: 40,
   },
   dots: {
@@ -49,19 +50,9 @@ const base = {
 const themed = {
   light: {},
 
-  dark: {
-    modal: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    screen: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    pictureWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
+  dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const MultistepModalStyle = () => getThemedStyle(base, themed);

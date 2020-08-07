@@ -10,7 +10,10 @@ function getCircleStyle(props, style, index) {
   if (props.value[index - 1]) circleStyle.push(style.activeCircle);
   if (index === props.length && props.value[index - 1])
     circleStyle.push(style.lastCircle);
-  if (!props.value && !props.error) circleStyle.push({ opacity: 0.3 });
+
+  if (!props.value[index - 1] && !props.error)
+    circleStyle.push({ opacity: 0.3 });
+
   if (props.error) {
     circleStyle.push(style.errorCircle);
   }

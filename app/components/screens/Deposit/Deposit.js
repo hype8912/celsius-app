@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
 
 import cryptoUtil from "../../../utils/crypto-util";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import * as appActions from "../../../redux/actions";
 import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
@@ -18,7 +18,7 @@ import STYLES from "../../../constants/STYLES";
 import DepositStyle from "./Deposit.styles";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
-import { EMPTY_STATES, MODALS, THEMES } from "../../../constants/UI";
+import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import { KYC_STATUSES } from "../../../constants/DATA";
@@ -30,6 +30,7 @@ import { hasPassedKYC } from "../../../utils/user-util";
 import formatter from "../../../utils/formatter";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -267,7 +268,7 @@ class Deposit extends Component {
     }
 
     return (
-      <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+      <Card color={getColor(COLOR_KEYS.LINK)}>
         <CelText
           style={style.infoBubble}
           weight="300"
@@ -338,16 +339,6 @@ class Deposit extends Component {
       coinSelectItems,
     } = this.state;
     const styles = DepositStyle();
-    const theme = getTheme();
-    let infoColor;
-    switch (theme) {
-      case THEMES.LIGHT:
-        infoColor = STYLES.COLORS.DARK_GRAY;
-        break;
-      default:
-      case THEMES.DARK:
-        infoColor = STYLES.COLORS.WHITE;
-    }
     const coinInfo = walletSummary.coins.find(
       c => c.short === formData.selectedCoin
     );
@@ -400,7 +391,7 @@ class Deposit extends Component {
                     justifyContent: "space-between",
                   }}
                 >
-                  <CelText style={{ opacity: 0.7 }}>
+                  <CelText>
                     {destinationTag ? "Destination Tag:" : "Memo Id"}
                   </CelText>
                   <View
@@ -420,8 +411,7 @@ class Deposit extends Component {
                         name="Info"
                         height="20"
                         width="20"
-                        fill={infoColor}
-                        stroke="rgba(61,72,83, 1)"
+                        fill={COLOR_KEYS.HEADLINE}
                         style={{ marginLeft: 10, marginTop: 2 }}
                       />
                     </TouchableOpacity>
@@ -495,7 +485,7 @@ class Deposit extends Component {
               <CelText
                 margin={"20 0 20 0"}
                 align={"center"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
                 type={"H4"}
                 weight={"300"}
                 onPress={() => actions.navigateTo("GetCoinsLanding")}

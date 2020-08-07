@@ -1,9 +1,15 @@
 import React from "react";
+import _ from "lodash";
 
 import RegisterInitial from "./RegisterInitial";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
+import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 
 const initialState = {
+  user: {
+    profile: mockUserStore.profile.postman13,
+    appSettings: mockUserStore.appSettings.postman13,
+  },
   forms: {
     formData: {},
     formErrors: {},
@@ -11,28 +17,25 @@ const initialState = {
 };
 
 const empty = () => {
+  const state = _.cloneDeep(initialState);
+
   return (
     <ScreenStoryWrapper
       screen={RegisterInitial}
       screenName="RegisterInitial"
-      state={initialState}
+      state={state}
     />
   );
 };
 
 const filled = () => {
-  const state = {
-    ...initialState,
-    forms: {
-      ...initialState.forms,
-      formData: {
-        firstName: "Dzej",
-        lastName: "Ramadanovski",
-        email: "dzej@crypto.dzej",
-        password: "99Zena",
-        termsOfUse: true,
-      },
-    },
+  const state = _.cloneDeep(initialState);
+  state.forms.formData = {
+    firstName: "Dzej",
+    lastName: "Ramadanovski",
+    email: "dzej@crypto.dzej",
+    password: "99Zena",
+    termsOfUse: true,
   };
 
   return (
@@ -45,17 +48,12 @@ const filled = () => {
 };
 
 const withErrors = () => {
-  const state = {
-    ...initialState,
-    forms: {
-      ...initialState.forms,
-      formErrors: {
-        firstName: "First name is Required!",
-        lastName: "Last name is Required!",
-        email: "Please enter a valid email!",
-        password: "This is a very very long error with some explanations.",
-      },
-    },
+  const state = _.cloneDeep(initialState);
+  state.forms.formErrors = {
+    firstName: "First name is Required!",
+    lastName: "Last name is Required!",
+    email: "Please enter a valid email!",
+    password: "This is a very very long error with some explanations.",
   };
 
   return (
@@ -68,10 +66,8 @@ const withErrors = () => {
 };
 
 const withReferral = () => {
-  const state = {
-    ...initialState,
-    branch: { registeredLink: "YOMAMA" },
-  };
+  const state = _.cloneDeep(initialState);
+  state.branch = { registeredLink: "YOMAMA" };
 
   return (
     <ScreenStoryWrapper

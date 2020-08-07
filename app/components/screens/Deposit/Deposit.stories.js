@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import Deposit from "./Deposit";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -29,13 +30,10 @@ const initialState = {
 };
 
 const depositCoin = coinShort => {
-  initialState.forms = { formData: { selectedCoin: coinShort } };
+  const state = _.cloneDeep(initialState);
+  state.forms = { formData: { selectedCoin: coinShort } };
   return (
-    <ScreenStoryWrapper
-      screen={Deposit}
-      screenName="Deposit"
-      state={initialState}
-    />
+    <ScreenStoryWrapper screen={Deposit} screenName="Deposit" state={state} />
   );
 };
 

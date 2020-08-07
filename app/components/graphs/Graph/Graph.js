@@ -9,13 +9,15 @@ import { scaleLinear, scalePoint, scaleTime } from "d3-scale";
 
 import formatter from "../../../utils/formatter";
 import {
-  getTheme,
+  getColor,
+  getFontFamily,
+  getFontSize,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import GraphStyle from "./Graph.styles";
 import { THEMES } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 // const { Path, Defs, LinearGradient, Stop } = Svg;
 const d3 = { shape };
@@ -93,27 +95,23 @@ class Graph extends React.Component {
   getColor = () => {
     const { interest, rate } = this.props;
     const areaColors = this.getGraphBackgroundColor();
-    const theme = getTheme();
 
     let color = {
-      line: STYLES.COLORS.CELSIUS_BLUE,
-      area:
-        theme === THEMES.DARK
-          ? STYLES.COLORS.DARK_BACKGROUND
-          : STYLES.COLORS.LIGHT_GRAY,
-      back: STYLES.COLORS.CELSIUS_BLUE,
+      line: getColor(COLOR_KEYS.POSITIVE_STATE),
+      area: getColor(COLOR_KEYS.POSITIVE_STATE),
+      back: getColor(COLOR_KEYS.CARDS),
     };
 
     if (!interest) {
       color =
         rate >= 0
           ? {
-              line: "#4FB895",
+              line: areaColors.green,
               area: areaColors.green,
               back: areaColors.back,
             }
           : {
-              line: "#EF461A",
+              line: areaColors.red,
               area: areaColors.red,
               back: areaColors.back,
             };
@@ -123,29 +121,11 @@ class Graph extends React.Component {
   };
 
   getGraphBackgroundColor = () => {
-    const theme = getTheme();
-
-    switch (theme) {
-      case THEMES.DARK:
-        return {
-          green: "#25454b",
-          red: "#423439",
-          back: STYLES.COLORS.DARK_BACKGROUND,
-        };
-      case THEMES.LIGHT:
-        return {
-          green: "#E5F5EF",
-          red: "#FDE4DD",
-          back: STYLES.COLORS.LIGHT_GRAY,
-        };
-
-      default:
-        return {
-          green: "#E5F5EF",
-          red: "#FDE4DD",
-          back: STYLES.COLORS.LIGHT_GRAY,
-        };
-    }
+    return {
+      green: getColor(COLOR_KEYS.POSITIVE_STATE),
+      red: getColor(COLOR_KEYS.NEGATIVE_STATE),
+      back: getColor(COLOR_KEYS.BACKGROUND),
+    };
   };
 
   calculateLine() {
@@ -267,7 +247,6 @@ class Graph extends React.Component {
     const { width, height, showCursor, type } = this.props;
     const { loading } = this.state;
     const color = this.getColor();
-    const theme = getTheme();
 
     const strokeWidth = type === "coin-interest" ? 3 : 2;
 
@@ -281,52 +260,35 @@ class Graph extends React.Component {
           {type === "coin-interest" ? (
             <LinearGradient
               x1={"50%"}
-              y1={"0%"}
+              y1={"50%"}
               x2={"50%"}
               y2={"100%"}
               id={"gradient"}
             >
-              <Stop
-                stopColor={
-                  theme === THEMES.DARK ? STYLES.COLORS.DARK_HEADER : "white"
-                }
-                offset={"100%"}
-              />
+              <Stop stopColor={color.area} offset={"95%"} stopOpacity={0.4} />
+              <Stop stopColor={color.back} offset={"95%"} />
             </LinearGradient>
           ) : null}
 
           {type === "total-balance" || type === "coin-balance" ? (
             <LinearGradient
               x1={"50%"}
-              y1={"0%"}
+              y1={"50%"}
               x2={"50%"}
               y2={"100%"}
               id={"gradient"}
             >
-              <Stop stopColor={color.area} offset={"50%"} />
-              <Stop stopColor={color.back} offset={"80%"} />
+              <Stop stopColor={color.area} offset={"95%"} stopOpacity={0.4} />
+              <Stop stopColor={color.back} offset={"95%"} />
             </LinearGradient>
           ) : null}
 
           {type === "total-interest" ? (
-            <LinearGradient
-              x1={"50%"}
-              y1={"0%"}
-              x2={"50%"}
-              y2={"100%"}
-              id={"gradient"}
-            >
+            <LinearGradient x1={"50%"} x2={"50%"} id={"gradient"}>
               <Stop
-                stopColor={theme === THEMES.DARK ? "#404d81" : "#d9e0f9"}
+                stopColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                stopOpacity={0.3}
                 offset={"50%"}
-              />
-              <Stop
-                stopColor={
-                  theme === THEMES.DARK
-                    ? STYLES.COLORS.DARK_BACKGROUND
-                    : STYLES.COLORS.LIGHT_GRAY
-                }
-                offset={"80%"}
               />
             </LinearGradient>
           ) : null}
@@ -339,7 +301,7 @@ class Graph extends React.Component {
               y2={"100%"}
               id={"gradient"}
             >
-              <Stop stopColor={color.area} offset={"100%"} />
+              <Stop stopColor={color.area} stopOpacity={0.4} offset={"100%"} />
             </LinearGradient>
           ) : null}
         </Defs>
@@ -381,16 +343,20 @@ class Graph extends React.Component {
             <TextInput
               ref={this.cursor.labelText}
               style={{
-                fontFamily: "Barlow-Regular",
-                color: "white",
+                fontFamily: getFontFamily("regular"),
+                color: getColor(COLOR_KEYS.PARAGRAPH),
+                fontSize: getFontSize("H8"),
+                padding: 0,
               }}
               editable={false}
             />
             <TextInput
               ref={this.cursor.dateText}
               style={{
-                fontFamily: "Barlow-Regular",
-                color: "white",
+                fontFamily: getFontFamily("regular"),
+                color: getColor(COLOR_KEYS.PARAGRAPH),
+                fontSize: getFontSize("H8"),
+                padding: 0,
               }}
               editable={false}
             />

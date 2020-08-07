@@ -9,6 +9,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../../components/atoms/CelButton/CelButton";
 import CelInput from "../../atoms/CelInput/CelInput";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { STORYBOOK } from "../../../../dev-settings.json";
 
 @connect(
   state => ({
@@ -71,7 +72,7 @@ class CelPayMessage extends Component {
             field="message"
             value={formData.message}
             numberOfLines={5}
-            autoFocus
+            autoFocus={!STORYBOOK}
           />
 
           <CelButton

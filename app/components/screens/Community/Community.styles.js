@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { Platform } from "react-native";
 
 import {
@@ -72,7 +71,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CommunityStyle = () => getThemedStyle(base, themed);

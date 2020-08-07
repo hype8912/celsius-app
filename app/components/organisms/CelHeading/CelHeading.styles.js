@@ -1,14 +1,11 @@
 import { Platform } from "react-native";
-// import DeviceInfo from "react-native-device-info";
 import {
   getThemedStyle,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
-// const hasNotch = DeviceInfo.hasNotch();
-// const isAndroidWithNotch = Platform.OS === "android" && hasNotch
-// const paddingTop = Platform.OS === "android" && !isAndroidWithNotch ? StatusBar.currentHeight : 0
 const headerHeight = 60;
 
 const base = {
@@ -52,6 +49,7 @@ const base = {
   },
 
   headingBackground: {
+    backgroundColor: COLOR_KEYS.HEADER,
     ...Platform.select({
       android: {
         borderColor: "#E9E9E9",
@@ -93,34 +91,32 @@ const base = {
     overflow: "hidden",
     borderColor: "black",
   },
+  sameBackground: {
+    backgroundColor: COLOR_KEYS.BACKGROUND,
+  },
 };
 
 const themed = {
-  light: {
-    headingBackground: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    sameBackground: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
-
+  light: {},
   dark: {
     headingBackground: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
       borderColor: "transparent",
     },
-    sameBackground: {
-      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    },
   },
-
-  celsius: {
+  unicorn: {
     headingBackground: {
-      backgroundColor: STYLES.COLORS.CELSIUS,
-    },
-    sameBackground: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+      borderColor: null, // TODO: handle this better way when remove light theme
+      ...Platform.select({
+        android: {
+          borderColor: "transparent",
+          borderBottomWidth: 0,
+        },
+        ios: {
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0,
+          shadowRadius: 0,
+        },
+      }),
     },
   },
 };

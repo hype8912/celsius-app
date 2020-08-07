@@ -10,10 +10,10 @@ import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
 
-import STYLES from "../../../constants/STYLES";
 import LoanInterestCardStyle from "./LoanInterestCard.styles";
 import Separator from "../../atoms/Separator/Separator";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -95,10 +95,9 @@ class LoanInterestCard extends Component {
                 )
             : null
         }
-        color={this.isAllowed ? null : style.cardStyle.color}
         padding="15 15 15 15"
         margin="5 0 5 0"
-        // opacity={isAllowed ? 1 : 0.4}
+        opacity={this.isAllowed ? 1 : 0.4}
       >
         <View style={style.textContainer}>
           <View style={{ opacity: this.isAllowed ? 1 : 0.4 }}>
@@ -146,15 +145,12 @@ class LoanInterestCard extends Component {
                     }}
                   >
                     <Icon
-                      fill={STYLES.COLORS.CELSIUS_BLUE}
+                      fill={COLOR_KEYS.PRIMARY_BUTTON}
                       width="13"
                       height="13"
                       name="CirclePlus"
                     />
-                    <CelText
-                      margin={"0 0 0 5"}
-                      color={STYLES.COLORS.CELSIUS_BLUE}
-                    >
+                    <CelText link margin={"0 0 0 5"}>
                       Deposit more
                     </CelText>
                   </View>

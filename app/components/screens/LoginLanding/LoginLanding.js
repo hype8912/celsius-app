@@ -7,7 +7,6 @@ import { View } from "react-native";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import LoginLandingStyle from "./LoginLanding.styles";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Constants from "../../../../constants";
 import LoginButton from "../../atoms/LoginButton/LoginButton";
@@ -194,9 +193,9 @@ class LoginLanding extends Component {
                 ? "Don't have an account?"
                 : "Already have an account?"}
               <CelText
+                link
                 weight="300"
                 align="center"
-                color={STYLES.COLORS.CELSIUS_BLUE}
                 onPress={() =>
                   actions.navigateTo("LoginLanding", {
                     type: type === "login" ? "register" : "login",

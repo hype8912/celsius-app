@@ -8,7 +8,6 @@ import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import WalletDetailsCardStyle from "./WalletDetailsCard.styles";
-import STYLES from "../../../constants/STYLES";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import * as appActions from "../../../redux/actions";
 import Counter from "../../molecules/Counter/Counter";
@@ -63,9 +62,7 @@ class WalletDetailsCard extends PureComponent {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.navigateToDeposit}>
-              <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-                Deposit coins
-              </CelText>
+              <CelText link>Deposit coins</CelText>
             </TouchableOpacity>
           </View>
 
@@ -91,9 +88,7 @@ class WalletDetailsCard extends PureComponent {
             <TouchableOpacity
               onPress={() => actions.navigateTo("InterestRates")}
             >
-              <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-                Rates this week
-              </CelText>
+              <CelText link>Rates this week</CelText>
             </TouchableOpacity>
           </View>
         </View>
