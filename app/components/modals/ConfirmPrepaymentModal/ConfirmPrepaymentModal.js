@@ -57,8 +57,8 @@ class ConfirmPrepaymentModal extends Component {
     const content = this.renderContent(modalData.loanId);
 
     const buttonStyle =
-      modalData.newBalanceUsd.isLessThan(0) ||
-      modalData.newBalanceUsd.isLessThan(0)
+      modalData.newBalanceUsd.isLessThanOrEqualTo(0) ||
+      modalData.newBalanceCrypto.isLessThanOrEqualTo(0)
         ? { color: STYLES.COLORS.RED, style: "disabled" }
         : { color: " ", style: "basic" };
 
