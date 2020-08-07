@@ -6,7 +6,7 @@ import { MODALS } from "../../constants/UI";
 import ACTIONS from "../../constants/ACTIONS";
 import * as transfersActions from "../transfers/transfersActions";
 import * as uiActions from "../ui/uiActions";
-import { setFormErrors, updateFormField } from "../forms/formsActions";
+import { setFormErrors } from "../forms/formsActions";
 
 export {
   registerBranchLink,
@@ -195,7 +195,7 @@ function submitPromoCode(onSuccess, onError) {
         if (onSuccess) onSuccess();
       }
     } catch (e) {
-      dispatch(updateFormField("promoCodeError", e));
+      dispatch(setFormErrors({ promoCodeError: e }));
       if (onError) onError();
     }
   };

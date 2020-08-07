@@ -43,7 +43,21 @@ class RegisterPromoCodeModal extends Component {
 
   componentDidMount() {
     const { actions } = this.props;
-    actions.updateFormFields({ promoCode: null });
+    actions.updateFormFields({
+      promoCode: null,
+      code: null,
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.hasError !== this.state.hasError) {
+      if (this.state.hasError) {
+        const timeout = setTimeout(() => {
+          this.closeModal();
+          clearTimeout(timeout);
+        }, 4500);
+      }
+    }
   }
 
   proceed = () => {
@@ -65,7 +79,6 @@ class RegisterPromoCodeModal extends Component {
       confirmed: false,
       hasError: false,
     });
-    actions.updateFormField("promoCodeError", null);
     actions.closeModal();
   };
 
@@ -259,14 +272,13 @@ class RegisterPromoCodeModal extends Component {
   };
 
   renderConfirmedPromoCode = () => {
-    const { formData, code } = this.props;
+    const { formErrors, code } = this.props;
     const { hasError } = this.state;
     const style = RegisterPromoCodeModalStyle();
-
     const title = !hasError ? "Congrats!" : "Ooops,";
     const subtitle = !hasError
       ? "You’ve successfully activated your promo code!"
-      : formData.promoCodeError.msg;
+      : formErrors.promoCodeError.msg;
     const description = !hasError ? code.description : "";
 
     return (
@@ -327,6 +339,7 @@ class RegisterPromoCodeModal extends Component {
 
   render() {
     const style = RegisterPromoCodeModalStyle();
+
     return (
       <CelModal
         style={style.container}
