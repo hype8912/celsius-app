@@ -111,6 +111,7 @@ import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/Hod
 import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
+import BitWala from "../components/screens/BitWala/BitWala";
 
 export const screens = {
   /**
@@ -148,6 +149,7 @@ export const screens = {
   KYCCheckPhotos,
   KYCPrimeTrustToU,
   KYCFinalRejection,
+  BitWala,
 
   VerifyProfile,
   SixDigitPinExplanation,
