@@ -49,27 +49,9 @@ class RegisterPromoCodeModal extends Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.hasError !== this.state.hasError) {
-      if (this.state.hasError) {
-        const timeout = setTimeout(() => {
-          this.closeModal();
-          clearTimeout(timeout);
-        }, 4500);
-      }
-    }
-  }
-
   proceed = () => {
     this.setState({
       confirmed: true,
-    });
-  };
-
-  hasError = () => {
-    this.setState({
-      confirmed: true,
-      hasError: true,
     });
   };
 
@@ -249,7 +231,7 @@ class RegisterPromoCodeModal extends Component {
             placeholder="Enter Promo Code"
             returnKeyType={"send"}
             value={formData.promoCode}
-            error={formErrors.promoCode}
+            error={formErrors.promoCodeError && formErrors.promoCodeError.msg}
             border={theme !== THEMES.DARK}
             onSubmitEditing={() => this.confirm()}
             basic={theme === THEMES.LIGHT ? true : null}
@@ -272,14 +254,12 @@ class RegisterPromoCodeModal extends Component {
   };
 
   renderConfirmedPromoCode = () => {
-    const { formErrors, code } = this.props;
+    const { code } = this.props;
     const { hasError } = this.state;
     const style = RegisterPromoCodeModalStyle();
-    const title = !hasError ? "Congrats!" : "Ooops,";
-    const subtitle = !hasError
-      ? "You’ve successfully activated your promo code!"
-      : formErrors.promoCodeError.msg;
-    const description = !hasError ? code.description : "";
+    const title = "Hooray!";
+    const subtitle = "Promo code has been added to your profile!";
+    const description = code.description;
 
     return (
       <View>
