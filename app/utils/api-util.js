@@ -219,6 +219,7 @@ async function responseInterceptor(res) {
 async function errorInterceptor(serverError) {
   const defaultMsg = "Oops, it looks like something went wrong!";
   const defaultError = {
+    slug: "UNKNOWN_SERVER_ERROR",
     type: "Unknown Server Error",
     msg: defaultMsg,
     raw_error: serverError,
@@ -229,6 +230,16 @@ async function errorInterceptor(serverError) {
   if (!err.msg) err.msg = defaultMsg;
   if (!err.status)
     err.status = serverError.response ? serverError.response.status : null;
+
+  if (!err.slug) {
+    err.slug = "NO_SLUG";
+
+    // 426 doesn't return a slug, we have a lot of false ooops errors on mixpanel
+    if (err.status === 426) {
+      err.slug = "VERIFICATION_REQUIRED";
+      err.msg = null;
+    }
+  }
 
   mixpanelAnalytics.apiError({
     ...err,
@@ -268,6 +279,11 @@ async function handle401(err) {
   }
   if (err.slug === "TWO_FACTOR_INVALID_CODE") {
     store.dispatch(actions.showMessage("error", err.msg));
+  }
+  if (err.slug === "COMPLIANCE_ERROR") {
+    if (err.type === "BitWala") {
+      store.dispatch(actions.navigateTo("BitWala"));
+    }
   }
 }
 
