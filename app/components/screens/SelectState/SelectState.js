@@ -13,6 +13,7 @@ import SELECT_VALUES from "../../../constants/SELECT_VALUES";
 @connect(
   state => ({
     formData: state.forms.formData,
+    activeScreen: state.nav.activeScreen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -51,12 +52,14 @@ class SelectState extends Component {
   }
 
   onSelectState = async (field, state) => {
-    const { actions } = this.props;
+    const { actions, activeScreen } = this.props;
     await actions.updateFormFields({
       [field]: state.value,
       search: "",
     });
-    actions.navigateBack();
+    if (activeScreen === "SelectState") {
+      actions.navigateBack();
+    }
   };
 
   getSelectStyle = (style, isActive = false) => {
