@@ -12,7 +12,7 @@ const userKYCService = {
   startKYC,
   createKYCDocuments,
   getKYCDocuments,
-  pollKYCStatus,
+  ensureApplicant,
 };
 
 /**
@@ -144,18 +144,13 @@ function getKYCDocuments() {
   return axios.get(`${apiUrl}/me/documents`);
 }
 
-// Docs: https://documenter.getpostman.com/view/4207695/celsius/RW1aHzQg#10e4b34c-ebc6-4b0f-a0d0-c2fcf97d74c4
-
 /**
- * Gets KYC status for user
- * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#f346333f-db08-4e97-ab03-df9410b03809
+ * Creates/ensures applicant on Onfido
  *
  * @returns {Promise}
  */
-function pollKYCStatus() {
-  return axios.get(`${apiUrl}/me/poll`);
+function ensureApplicant() {
+  return axios.get(`${apiUrl}/me/kyc/ensure_applicant`);
 }
-
-// Docs: https://documenter.getpostman.com/view/4207695/celsius/RW1aHzQg#9dfb9269-c3af-4723-8ec9-f62b380b3892
 
 export default userKYCService;
