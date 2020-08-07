@@ -226,6 +226,11 @@ export function getBlockExplorerLink(transaction) {
     case "usdc":
     case "cel":
     case "omg":
+    case "link":
+    case "lpt":
+    case "snx":
+    case "kcn":
+    case "matic":
       return {
         link: BLOCKEXPLORERS.eth && `${BLOCKEXPLORERS.eth}${tId}`,
         text: "etherscan",
