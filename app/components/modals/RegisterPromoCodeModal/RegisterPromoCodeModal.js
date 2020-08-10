@@ -37,7 +37,7 @@ class RegisterPromoCodeModal extends Component {
     super(props);
     this.state = {
       confirmed: false,
-      hasError: false,
+      loading: false,
     };
   }
 
@@ -52,20 +52,26 @@ class RegisterPromoCodeModal extends Component {
   proceed = () => {
     this.setState({
       confirmed: true,
+      loading: false,
     });
+  };
+
+  hasError = () => {
+    this.setState({ loading: false });
   };
 
   closeModal = () => {
     const { actions } = this.props;
     this.setState({
       confirmed: false,
-      hasError: false,
+      loading: false,
     });
     actions.closeModal();
   };
 
   confirm = () => {
     const { actions, type } = this.props;
+    this.setState({ loading: true });
     if (type === "celsius") {
       // actions.submitProfileCode(this.proceed);
       actions.submitPromoCode(this.proceed, this.hasError);
@@ -78,6 +84,7 @@ class RegisterPromoCodeModal extends Component {
 
   renderUnconfirmedReferralCode = () => {
     const { formData, formErrors } = this.props;
+    const { loading } = this.state;
     const style = RegisterPromoCodeModalStyle();
 
     return (
@@ -115,6 +122,7 @@ class RegisterPromoCodeModal extends Component {
         <View style={style.buttonWrapper}>
           <CelModalButton
             onPress={() => this.confirm()}
+            loading={loading}
             buttonStyle={
               formData.promoCode === null || formData.promoCode === ""
                 ? "disabled"
@@ -203,6 +211,7 @@ class RegisterPromoCodeModal extends Component {
 
   renderUnconfirmedPromoCode = () => {
     const { formData, formErrors } = this.props;
+    const { loading } = this.state;
     const style = RegisterPromoCodeModalStyle();
 
     return (
@@ -240,6 +249,7 @@ class RegisterPromoCodeModal extends Component {
         <View style={style.buttonWrapper}>
           <CelModalButton
             onPress={() => this.confirm()}
+            loading={loading}
             buttonStyle={
               formData.promoCode === null || formData.promoCode === ""
                 ? "disabled"
@@ -255,7 +265,6 @@ class RegisterPromoCodeModal extends Component {
 
   renderConfirmedPromoCode = () => {
     const { code } = this.props;
-    const { hasError } = this.state;
     const style = RegisterPromoCodeModalStyle();
     const title = "Hooray!";
     const subtitle = "Promo code has been added to your profile!";
@@ -279,15 +288,14 @@ class RegisterPromoCodeModal extends Component {
         >
           {subtitle}
         </CelText>
-        {!hasError && (
-          <View style={style.cardWrapper}>
-            <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
-              <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
-                {description}
-              </CelText>
-            </Card>
-          </View>
-        )}
+
+        <View style={style.cardWrapper}>
+          <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
+            <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
+              {description}
+            </CelText>
+          </Card>
+        </View>
 
         <View style={style.buttonWrapper}>
           <CelModalButton
@@ -324,9 +332,7 @@ class RegisterPromoCodeModal extends Component {
       <CelModal
         style={style.container}
         name={MODALS.REGISTER_PROMO_CODE_MODAL}
-        onClose={() => {
-          this.setState({ confirmed: false });
-        }}
+        onClose={this.closeModal}
       >
         {this.renderModal()}
       </CelModal>
