@@ -150,7 +150,7 @@ class CelPayEnterAmount extends Component {
     const { formData } = this.props;
 
     if (formData.amountCrypto && formData.amountCrypto > 0) {
-      return formData.friend ? "Add a note" : "Send";
+      return "Send";
     }
     return "Enter amount above";
   };
@@ -252,9 +252,9 @@ class CelPayEnterAmount extends Component {
     ) {
       return actions.showMessage(
         "warning",
-        `You have surpassed the daily limit. Please enter an amount below ${formatter.usd(
+        `You have surpassed the daily limit of ${formatter.usd(
           celPaySettings.maximum_transfer_amount
-        )} to continue.`
+        )}. Please enter different amount to continue.`
       );
     }
 

@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
 
 import cryptoUtil from "../../../utils/crypto-util";
-import {
-  getColor,
-  heightPercentageToDP,
-  widthPercentageToDP,
-} from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import * as appActions from "../../../redux/actions";
 import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
@@ -320,29 +316,6 @@ class Deposit extends Component {
     </View>
   );
 
-  renderETCCard = () => (
-    <View style={DepositStyle().container}>
-      <Card padding="20 20 20 20">
-        <Image
-          style={{
-            alignSelf: "center",
-            width: widthPercentageToDP("10%"),
-            height: heightPercentageToDP("10%"),
-            resizeMode: "contain",
-          }}
-          source={require("../../../../assets/images/error.png")}
-        />
-        <CelText type="H3" align="center" weight="bold" margin="0 0 20 0">
-          Transfers Not Accepted
-        </CelText>
-        <CelText align="center">
-          We are not accepting transfers of this coin at this time. Please check
-          back as the situation should be resolved soon.
-        </CelText>
-      </Card>
-    </View>
-  );
-
   render() {
     const {
       actions,
@@ -390,8 +363,6 @@ class Deposit extends Component {
       return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }} />;
     }
 
-    const isETC = formData.selectedCoin === "ETC";
-
     return (
       <RegularLayout padding={"20 0 100 0"}>
         <CelText align="center" weight="regular" type="H4">
@@ -410,8 +381,7 @@ class Deposit extends Component {
 
         {navigation.getParam("isMarginWarning") ? this.renderPayCard() : null}
 
-        {isETC && this.renderETCCard()}
-        {address && !isFetchingAddress && !isETC ? (
+        {address && !isFetchingAddress ? (
           <View style={styles.container}>
             {destinationTag || memoId ? (
               <Card>
