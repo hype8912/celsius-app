@@ -34,10 +34,12 @@ class TransactionsIntersection extends Component {
   static defaultProps = {};
   constructor(props) {
     super(props);
-    const { actions, navigation } = this.props;
+    const { actions, navigation, transaction } = this.props;
     const id = navigation.getParam("id");
 
-    actions.getTransactionDetails(id);
+    if (id || transaction.id) {
+      actions.getTransactionDetails(id || transaction.id);
+    }
     this.interval = null;
   }
 
@@ -51,12 +53,15 @@ class TransactionsIntersection extends Component {
   };
 
   componentDidMount = async () => {
-    const { actions, navigation } = this.props;
+    const { actions, navigation, transaction } = this.props;
     const loanPayment = navigation.getParam("loanPayment");
     const id = navigation.getParam("id");
+    actions.getAllTransactions();
     if (loanPayment) await actions.getAllLoans();
     this.interval = setInterval(() => {
-      actions.getTransactionDetails(id);
+      if (id || transaction.id) {
+        actions.getTransactionDetails(id || transaction.id);
+      }
     }, 15000);
   };
 
