@@ -280,6 +280,11 @@ async function handle401(err) {
   if (err.slug === "TWO_FACTOR_INVALID_CODE") {
     store.dispatch(actions.showMessage("error", err.msg));
   }
+  if (err.slug === "COMPLIANCE_ERROR") {
+    if (err.type === "BitWala") {
+      store.dispatch(actions.navigateTo("BitWala"));
+    }
+  }
 }
 
 async function handle403(err) {

@@ -107,12 +107,13 @@ function registerUser() {
 
       dispatch(navigateTo("RegisterSetPin"));
     } catch (err) {
-      if (err.type === "Validation error") {
-        dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
-      } else {
-        dispatch(showMessage("error", err.msg));
-      }
       dispatch(apiError(API.REGISTER_USER, err));
+      if (err.type === "Validation error") {
+        return dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
+      }
+      // Don't show message if BitWala
+      if (err.type === "BitWala") return;
+      dispatch(showMessage("error", err.msg));
     }
   };
 }
