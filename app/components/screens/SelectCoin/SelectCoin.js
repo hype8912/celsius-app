@@ -19,6 +19,7 @@ import { getTheme } from "../../../utils/styles-util";
     formData: state.forms.formData,
     walletSummary: state.wallet.summary,
     currencies: state.currencies.rates,
+    activeScreen: state.nav.activeScreen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -154,7 +155,7 @@ class SelectCoin extends Component {
   };
 
   renderItem = ({ item }) => {
-    const { actions, formData, navigation } = this.props;
+    const { actions, formData, navigation, activeScreen } = this.props;
     const selectedCoin = formData.selectedCoin;
     const coin = formData.coin;
     const isActive = selectedCoin
@@ -176,7 +177,9 @@ class SelectCoin extends Component {
               [field]: item.value,
               search: "",
             });
-            actions.navigateBack();
+            if (activeScreen === "SelectCoin") {
+              actions.navigateBack();
+            }
           }}
         >
           <View style={itemStyle}>

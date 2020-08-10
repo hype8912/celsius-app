@@ -46,6 +46,8 @@ function loadCelsiusAssets() {
 const SCREENS_WITH_LATER_VERIFICATION = [
   "Simplex",
   "TwoFactorSettings",
+  "RegisterSetPin",
+  "ChangePin",
   "ActivateSixDigitPin",
 ];
 const ASK_FOR_PIN_SHORT = 30 * 1000;
