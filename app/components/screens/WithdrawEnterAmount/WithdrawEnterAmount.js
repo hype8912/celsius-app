@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import BigNumber from "bignumber.js";
@@ -30,10 +30,6 @@ import Card from "../../atoms/Card/Card";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import { renderHodlEmptyState } from "../../../utils/hodl-util";
-import {
-  heightPercentageToDP,
-  widthPercentageToDP,
-} from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -269,29 +265,6 @@ class WithdrawEnterAmount extends Component {
     if (modal) actions.closeModal();
   };
 
-  renderETCCard = () => (
-    <View style={WithdrawEnterAmountStyle().wrapper}>
-      <Card padding="20 20 20 20">
-        <Image
-          style={{
-            alignSelf: "center",
-            width: widthPercentageToDP("10%"),
-            height: heightPercentageToDP("10%"),
-            resizeMode: "contain",
-          }}
-          source={require("../../../../assets/images/error.png")}
-        />
-        <CelText type="H3" align="center" weight="bold" margin="0 0 20 0">
-          You Cannot Withdraw at This Time
-        </CelText>
-        <CelText align="center">
-          Withdrawals of this coin are currently not allowed. Please check back
-          as the situation should be resolved soon.
-        </CelText>
-      </Card>
-    </View>
-  );
-
   render() {
     const { coinSelectItems, activePeriod } = this.state;
     const {
@@ -365,8 +338,6 @@ class WithdrawEnterAmount extends Component {
       hours = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[0];
       minutes = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[1];
     }
-
-    const isETC = formData.coin === "ETC";
     return (
       <RegularLayout padding="0 0 0 0">
         <View style={style.container}>
@@ -388,7 +359,7 @@ class WithdrawEnterAmount extends Component {
                 navigateTo={actions.navigateTo}
               />
 
-              {!isAddressLocked && !isETC && (
+              {!isAddressLocked && (
                 <CoinSwitch
                   updateFormField={actions.updateFormField}
                   onAmountPress={actions.toggleKeypad}
@@ -405,7 +376,7 @@ class WithdrawEnterAmount extends Component {
               )}
             </View>
 
-            {!isAddressLocked && !isETC && (
+            {!isAddressLocked ? (
               <View>
                 <PredefinedAmounts
                   data={PREDIFINED_AMOUNTS}
@@ -430,9 +401,7 @@ class WithdrawEnterAmount extends Component {
                     : "Enter amount above"}
                 </CelButton>
               </View>
-            )}
-
-            {isAddressLocked && (
+            ) : (
               <View>
                 <CircleButton
                   style={{ marginTop: 50 }}
@@ -472,11 +441,9 @@ class WithdrawEnterAmount extends Component {
                 )}
               </View>
             )}
-
-            {isETC && this.renderETCCard()}
           </View>
         </View>
-        {!isAddressLocked && !isETC && (
+        {!isAddressLocked && (
           <CelNumpad
             field={formData.isUsd ? "amountUsd" : "amountCrypto"}
             value={
