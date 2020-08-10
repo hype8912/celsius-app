@@ -26,8 +26,8 @@ const base = {
     backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   disabledButtonStyle: {
-    color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
-    backgroundColor: COLOR_KEYS.TAB_UNSELECTED,
+    color: COLOR_KEYS.CIRCLE_ICON_FOREGROUND,
+    backgroundColor: COLOR_KEYS.TOGGLE_OFF_BACKGROUND,
   },
   greenButtonStyle: {
     color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
