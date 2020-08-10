@@ -52,7 +52,7 @@ class Banner extends Component {
           <TouchableOpacity
             style={{
               position: "absolute",
-              right: 5,
+              right: 0,
               top: 5,
               width: 40,
               height: 40,
