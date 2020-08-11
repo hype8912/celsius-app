@@ -39,7 +39,7 @@ const BLOCKEXPLORERS_PRODUCTION = {
   btg: "https://btgexplorer.com/tx/",
   eth: "https://etherscan.io/tx/",
   eos: "https://bloks.io/transaction/",
-  etc: "https://explorer.bitquery.io/ethclassic/tx/", // TODO: add staging link
+  etc: "https://explorer.bitquery.io/ethclassic/tx/",
   erc20: "https://etherscan.io/tx/",
   bsv: "https://blockchair.com/bitcoin-sv/transaction/",
 };
@@ -261,7 +261,6 @@ const LOAN_PAYMENT_TYPES = {
 
 const PRIMETRUST_KYC_STATES = ["New York", "Washington"];
 
-// TODO: should be returned from BE and set in BO, hadrcoded for now
 const LOAN_INTEREST_COINS = [
   "BTC",
   "ETH",

@@ -13,7 +13,6 @@ import appUtil from "./app-util";
 
 const { width, height } = Dimensions.get("window");
 
-// TODO: should be export default
 export {
   getMargins,
   getPadding,

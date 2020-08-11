@@ -4,8 +4,6 @@ import store from "../redux/store";
 
 /**
  * Checks if coin is ERC20
- * @todo: add missing ERC20 coins
- *
  * @param {string} currency - eg. eth
  * @returns {boolean}
  */
@@ -242,8 +240,8 @@ export function getBlockExplorerLink(transaction) {
 }
 
 export default {
-  isERC20, // TODO move to BE or something
-  isGreaterThan, // TODO maybe move to formatter? add JSDoc
+  isERC20,
+  isGreaterThan,
   hasLinkToBuy,
   provideLink,
   provideText,

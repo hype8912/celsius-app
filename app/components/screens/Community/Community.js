@@ -113,7 +113,7 @@ class Community extends Component {
         <CelText align={"center"} weight={"600"} type={"H2"} margin={"5 0 0 0"}>
           {highestDeposit.name.charAt(0).toUpperCase() +
             highestDeposit.name.slice(1)}{" "}
-          ({highestDeposit.coin /* TODO: update */})
+          ({highestDeposit.coin})
         </CelText>
         <CelText
           margin={"20 0 0 0"}
@@ -128,12 +128,12 @@ class Community extends Component {
             bestCoinDepositCoin - bestCoinWithdrawalCoin,
             "",
             { noPrecision: true }
-          )} ${highestDeposit.coin}` /* TODO: update */}
+          )} ${highestDeposit.coin}`}
         </CelText>
         <CelText weight={"300"} align={"center"} type={"H5"}>
           {formatter.usd(bestCoinDepositUsd - bestCoinWithdrawalUsd, {
             symbol: "",
-          }) /* TODO: update */}{" "}
+          })}{" "}
           USD
         </CelText>
         <Card margin={"20 0 0 0"}>
@@ -150,13 +150,13 @@ class Community extends Component {
               >
                 {formatter.usd(bestCoinDepositCoin, {
                   symbol: "",
-                }) /* TODO: update */}{" "}
+                })}{" "}
                 {highestDeposit.coin}
               </CelText>
               <CelText weight={"300"} align={"center"} type={"H6"}>
                 {formatter.usd(bestCoinDepositUsd, {
                   symbol: "",
-                }) /* TODO: update */}{" "}
+                })}{" "}
                 USD
               </CelText>
             </View>
@@ -173,13 +173,13 @@ class Community extends Component {
               >
                 {formatter.usd(bestCoinWithdrawalCoin, {
                   symbol: "",
-                }) /* TODO: update */}{" "}
+                })}{" "}
                 {highestDeposit.coin}
               </CelText>
               <CelText weight={"300"} align={"center"} type={"H6"}>
                 {formatter.usd(bestCoinWithdrawalUsd, {
                   symbol: "",
-                }) /* TODO: update */}{" "}
+                })}{" "}
                 USD
               </CelText>
             </View>

@@ -10,11 +10,11 @@ import { showMessage } from "../redux/ui/uiActions";
 const { ENV } = Constants;
 
 export default {
-  logme, // TODO check better way to log stuff from app
+  logme,
   log,
-  warn, // TODO remove
-  info, // TODO remove
-  err, // TODO add JSDoc
+  warn,
+  info,
+  err,
 };
 
 /**

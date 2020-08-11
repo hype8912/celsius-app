@@ -1,12 +1,11 @@
-// TODO(sb): RN update dependencies fixes
-import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
-import { Platform } from "react-native"
+import { check, PERMISSIONS, RESULTS, request } from "react-native-permissions";
+import { Platform } from "react-native";
 
 export {
   ALL_PERMISSIONS,
   getPermissionStatus,
   hasPermission,
-  requestForPermission
+  requestForPermission,
 };
 
 // All permissions with platform specific enums
@@ -15,31 +14,31 @@ const ALL_PERMISSIONS = {
     name: "CAMERA",
     platforms: {
       android: PERMISSIONS.ANDROID.CAMERA,
-      ios: PERMISSIONS.IOS.CAMERA
-    }
+      ios: PERMISSIONS.IOS.CAMERA,
+    },
   },
   CONTACTS: {
     name: "CONTACTS",
     platforms: {
       android: PERMISSIONS.ANDROID.READ_CONTACTS,
-      ios: PERMISSIONS.IOS.CONTACTS
-    }
+      ios: PERMISSIONS.IOS.CONTACTS,
+    },
   },
   LOCATION: {
     name: "LOCATION",
     platforms: {
       android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-      ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-    }
+      ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+    },
   },
   LIBRARY: {
     name: "LIBRARY",
     platforms: {
       android: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-      ios: PERMISSIONS.IOS.PHOTO_LIBRARY
-    }
-  }
-}
+      ios: PERMISSIONS.IOS.PHOTO_LIBRARY,
+    },
+  },
+};
 
 /**
  * Get platform specific permission name
@@ -48,8 +47,10 @@ const ALL_PERMISSIONS = {
  * @returns {string} - PERMISSIONS platform specific name
  */
 function getPermissionName(permission) {
-  const platformPermission = Platform.select(ALL_PERMISSIONS[permission].platforms)
-  return platformPermission
+  const platformPermission = Platform.select(
+    ALL_PERMISSIONS[permission].platforms
+  );
+  return platformPermission;
 }
 
 /**
@@ -60,9 +61,9 @@ function getPermissionName(permission) {
  * @returns {string} - one of RESULTS
  */
 async function getPermissionStatus({ name }) {
-  const platformPermission = getPermissionName(name)
-  const result = await check(platformPermission)
-  return result
+  const platformPermission = getPermissionName(name);
+  const result = await check(platformPermission);
+  return result;
 }
 
 /**
@@ -73,9 +74,9 @@ async function getPermissionStatus({ name }) {
  * @returns {boolean}
  */
 async function hasPermission({ name }) {
-  const platformPermission = getPermissionName(name)
-  const result = await check(platformPermission)
-  return result === RESULTS.GRANTED
+  const platformPermission = getPermissionName(name);
+  const result = await check(platformPermission);
+  return result === RESULTS.GRANTED;
 }
 
 /**
@@ -85,13 +86,13 @@ async function hasPermission({ name }) {
  * @returns {boolean}
  */
 async function requestForPermission(permission) {
-  const perm = await getPermissionStatus(permission)
+  const perm = await getPermissionStatus(permission);
 
   if (perm !== RESULTS.GRANTED) {
-    const platformPermission = getPermissionName(permission.name)
-    const result = await request(platformPermission)
-    return result
+    const platformPermission = getPermissionName(permission.name);
+    const result = await request(platformPermission);
+    return result;
   }
 
-  return perm
+  return perm;
 }

@@ -45,9 +45,6 @@ function getContacts() {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function getConnectedContactsSuccess(contacts) {
   return {
     type: ACTIONS.GET_CONNECTED_CONTACTS_SUCCESS,
