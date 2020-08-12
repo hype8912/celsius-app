@@ -46,6 +46,7 @@ class RateInfoCard extends Component {
       interestCompliance,
     } = this.props;
 
+    if (!coin) return null;
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
 
     if (
