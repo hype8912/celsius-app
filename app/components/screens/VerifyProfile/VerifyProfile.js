@@ -15,16 +15,16 @@ import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
-import store from "../../../redux/store";
+import { DEEP_LINKS } from "../../../constants/DATA";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { STORYBOOK } from "../../../../dev-settings.json";
 // import { askUserToProvideBiometrics } from "../../../utils/biometrics-util";
 
 @connect(
   state => ({
-    formData: state.forms.formData,
-    twoFAStatus: state.security.twoFAStatus,
+    appState: state.app.appState,
     deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
-    is2FAEnabled: state.user.profile.two_factor_enabled,
     previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
     theme: state.user.appSettings.theme,
@@ -33,7 +33,6 @@ import store from "../../../redux/store";
 )
 class VerifyProfile extends Component {
   static propTypes = {};
-  static defaultProps = {};
 
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
@@ -52,6 +51,7 @@ class VerifyProfile extends Component {
       loading: false,
       verificationError: false,
       showLogOutBtn: false,
+      hasSixDigitPin: false,
     };
   }
 
@@ -63,11 +63,14 @@ class VerifyProfile extends Component {
   }
 
   componentDidMount = async () => {
-    const { navigation, actions } = this.props;
+    const { navigation, actions, user } = this.props;
     const activeScreen = navigation.getParam("activeScreen");
-    // actions.logoutUser()
-    actions.getPreviousPinScreen(activeScreen);
+    const hasSixDigitPin = navigation.getParam("hasSixDigitPin");
 
+    actions.updateFormField("loading", false);
+    actions.getPreviousPinScreen(activeScreen);
+    if (hasSixDigitPin || user.has_six_digit_pin)
+      this.setState({ hasSixDigitPin: true });
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
 
     // TODO - This is where I used biometrics to check
@@ -95,67 +98,58 @@ class VerifyProfile extends Component {
 
   openKeypad = () => {
     const { actions } = this.props;
-    actions.toggleKeypad(true);
+    actions.toggleKeypad(!STORYBOOK);
   };
 
   onCheckSuccess = async () => {
     this.setState({ loading: true });
 
-    const {
-      navigation,
-      actions,
-      previousScreen,
-      deepLinkData,
-      user,
-    } = this.props;
+    const { navigation, actions, previousScreen, deepLinkData } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
     const activeScreen = navigation.getParam("activeScreen");
 
+    actions.updateFormField("loading", true);
+
     // Check if app is opened from DeepLink
     if (!_.isEmpty(deepLinkData)) {
-      if ((user && !user.id) || !user) {
-        await actions.initAppData();
+      if (deepLinkData.type === DEEP_LINKS.NAVIGATE_TO) {
+        actions.handleDeepLink();
+        return;
       }
-      actions.handleDeepLink();
-      return;
     }
 
     if (activeScreen) {
       if (activeScreen === "VerifyProfile") {
         this.setState({ loading: false });
+        actions.updateFormField("loading", false);
+
         actions.resetToScreen(previousScreen || "WalletLanding");
         return;
       }
 
       actions.navigateTo(activeScreen);
+      actions.updateFormField("loading", false);
+
       this.setState({ loading: false });
       return;
     }
-
-    if (navigation.getParam("show", null)) {
-      await actions.showVerifyScreen(false);
-      await actions.initAppData();
-    }
-
+    actions.updateFormField("loading", false);
     this.setState({ loading: false });
-    onSuccess();
+    if (onSuccess) onSuccess();
   };
 
   onCheckError = () => {
-    const { actions, twoFAStatus, navigation } = this.props;
+    const { actions } = this.props;
     this.setState({ loading: false, value: "", verificationError: true });
     const timeout = setTimeout(() => {
       this.setState({ verificationError: false });
 
-      const showType =
-        this.getVerifyType(navigation.getParam("show", null)) ||
-        twoFAStatus.isActive;
-      if (showType === "pin") {
+      if (!this.shouldShow2FA()) {
         actions.toggleKeypad(true);
       }
 
       clearTimeout(timeout);
-    }, 1000);
+    }, 5000);
   };
 
   setForgotPin = () => {
@@ -165,19 +159,31 @@ class VerifyProfile extends Component {
     }
   };
 
-  getVerifyType = showType => showType && showType === "2FA";
+  getVerificationType = () => {
+    const { user, navigation } = this.props;
+
+    // handling 426 error - PIN || 2FA
+    const typeFromNavigation = navigation.getParam("verificationType", null);
+
+    const typeFromUser = user.two_factor_enabled ? "2FA" : "PIN";
+    return typeFromNavigation || typeFromUser;
+  };
+
+  shouldShow2FA = () => this.getVerificationType() === "2FA";
 
   handleBackButtonClick = () => true;
 
   handlePINChange = newValue => {
     const { actions } = this.props;
+    const { hasSixDigitPin } = this.state;
+    const pinLength = hasSixDigitPin ? 6 : 4;
 
-    if (newValue.length > 4) return;
+    if (newValue.length > pinLength) return;
 
     actions.updateFormField("pin", newValue);
     this.setState({ value: newValue });
 
-    if (newValue.length === 4) {
+    if (newValue.length === pinLength) {
       this.setState({ loading: true });
       actions.checkPIN(this.onCheckSuccess, this.onCheckError);
     }
@@ -185,15 +191,12 @@ class VerifyProfile extends Component {
 
   handle2FAChange = newValue => {
     const { actions } = this.props;
-
     if (newValue.length > 6) {
       this.setState({ loading: false });
       return;
     }
-
-    actions.updateFormField("code", newValue);
     this.setState({ value: newValue });
-
+    actions.updateFormField("code", newValue);
     if (newValue.length === 6) {
       actions.toggleKeypad();
 
@@ -214,10 +217,29 @@ class VerifyProfile extends Component {
     }
   };
 
-  render2FA() {
-    const { loading, value, verificationError } = this.state;
+  renderDots = length => {
     const { actions } = this.props;
+    const { verificationError, value } = this.state;
+
+    const pinLength = length || 6;
+    return (
+      <TouchableOpacity onPress={actions.toggleKeypad}>
+        <HiddenField
+          value={value}
+          error={verificationError}
+          length={pinLength}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  render2FA() {
+    const { loading } = this.state;
+    const { actions, formData } = this.props;
     const style = VerifyProfileStyle();
+
+    const isLoading = formData && (_.isEmpty(formData) || formData.loading);
+    if (isLoading) return <LoadingScreen />;
 
     return (
       <View style={style.wrapper}>
@@ -233,9 +255,8 @@ class VerifyProfile extends Component {
           Please enter your 2FA code to proceed
         </CelText>
 
-        <TouchableOpacity onPress={actions.toggleKeypad}>
-          <HiddenField value={value} length={6} error={verificationError} />
-        </TouchableOpacity>
+        {this.renderDots()}
+
         {loading ? (
           <View
             style={{
@@ -259,8 +280,7 @@ class VerifyProfile extends Component {
   }
 
   renderPIN() {
-    const { loading, value, verificationError } = this.state;
-    const { actions } = this.props;
+    const { loading, hasSixDigitPin } = this.state;
     const style = VerifyProfileStyle();
 
     return (
@@ -272,9 +292,7 @@ class VerifyProfile extends Component {
           Please enter your PIN to proceed
         </CelText>
 
-        <TouchableOpacity onPress={actions.toggleKeypad}>
-          <HiddenField value={value} error={verificationError} />
-        </TouchableOpacity>
+        {this.renderDots(hasSixDigitPin ? 6 : 4)}
         <View>
           <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
         </View>
@@ -296,15 +314,14 @@ class VerifyProfile extends Component {
 
   render() {
     const { value } = this.state;
-    const { twoFAStatus, actions, navigation } = this.props;
-    const { appState } = store.getState().app;
-    const hideBack = navigation.getParam("hideBack"); // CN-4644 show FAB on Verity Screen except after login and come from background
+    const { actions, navigation, appState } = this.props;
+    const hideBack = navigation.getParam("hideBack");
 
-    const showType =
-      this.getVerifyType(navigation.getParam("show", null)) ||
-      twoFAStatus.isActive;
-    const field = showType ? "code" : "pin";
-    const onPressFunc = showType ? this.handle2FAChange : this.handlePINChange;
+    const shouldShow2FA = this.shouldShow2FA();
+    const field = shouldShow2FA ? "code" : "pin";
+    const onPressFunc = shouldShow2FA
+      ? this.handle2FAChange
+      : this.handlePINChange;
     const style = VerifyProfileStyle();
 
     return (
@@ -316,7 +333,7 @@ class VerifyProfile extends Component {
       >
         <NavigationEvents onDidFocus={() => this.openKeypad()} />
         <View style={style.container}>
-          {showType ? this.render2FA() : this.renderPIN()}
+          {shouldShow2FA ? this.render2FA() : this.renderPIN()}
           <CelNumpad
             field={field}
             value={value}
