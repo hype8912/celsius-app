@@ -102,14 +102,11 @@ class CoinGridCard extends Component {
     const shouldShowGraph =
       graphData && dateArray.length > 0 && priceArray.length > 0;
 
-    const coinInterest = interestUtil.getUserInterestForCoin(coin.short);
-    const isBelowThreshold = interestUtil.isBelowThreshold(coin.short);
-    const specialRate = isBelowThreshold
-      ? coinInterest.specialApyRate
-      : coinInterest.apyRate;
-    const isInCel = !coinInterest.inCEL
-      ? coinInterest.compound_rate
-      : specialRate;
+    const interestRate = interestUtil.getUserInterestForCoin(coin.short);
+
+    const isInCel = !interestRate.inCEL
+      ? interestRate.compound_rate
+      : interestRate.rateInCel;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
 
     return (
@@ -121,7 +118,7 @@ class CoinGridCard extends Component {
                 <CelText weight="300" type="H6">
                   {displayName}
                 </CelText>
-                {coinInterest.eligible && (
+                {interestRate.eligible && (
                   <CelText color={STYLES.COLORS.GREEN} type="H7">
                     {formatter.percentageDisplay(isInCel)}
                   </CelText>
