@@ -7,6 +7,8 @@ import CelText from "../CelText/CelText";
 import CelButton from "../CelButton/CelButton";
 import CoinIcon from "../CoinIcon/CoinIcon";
 import RoundedBadge from "../RoundedBadge/RoundedBadge";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const WithdrawalAddressCard = ({
   coinShort,
@@ -27,6 +29,7 @@ const WithdrawalAddressCard = ({
     if (withdrawalAddress.label) {
       return (
         <RoundedBadge
+          color={getColor(COLOR_KEYS.BACKGROUND)}
           onPress={onPressAddressLabel}
           text={withdrawalAddress.label}
         />
@@ -42,7 +45,7 @@ const WithdrawalAddressCard = ({
   return (
     <Card>
       <View style={[style.bodyWrapper, { opacity }]}>
-        <View style={{ alignSelf: "center" }}>
+        <View style={{ alignSelf: "flex-start" }}>
           <CoinIcon
             customStyles={style.size}
             coinShort={coinShort}

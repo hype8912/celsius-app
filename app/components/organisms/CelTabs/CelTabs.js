@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 import * as appActions from "../../../redux/actions";
 import CelTabsStyle from "./CelTabs.styles";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
-import { heightPercentageToDP } from "../../../utils/styles-util";
+import { getColor, heightPercentageToDP } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -62,7 +62,9 @@ class CelTabs extends Component {
                   type="H6"
                   weight={activeTab === tab.label ? "medium" : "regular"}
                   color={
-                    activeTab === tab.label ? STYLES.COLORS.CELSIUS_BLUE : null
+                    activeTab === tab.label
+                      ? getColor(COLOR_KEYS.TAB_SELECTED)
+                      : getColor(COLOR_KEYS.TAB_UNSELECTED)
                   }
                 >
                   {tab.label}

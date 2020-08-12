@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import appsFlyer from "react-native-appsflyer";
@@ -22,40 +22,25 @@ appsFlyerUtil.initSDK();
   state => ({
     deepLinkData: state.deepLink.deepLinkData,
     appState: state.app.appState,
-    user: state.user.profile,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class DeepLinkController extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      allowHandleDeepLink: false,
-    };
-  }
-
   componentDidUpdate(prevProps) {
-    const { deepLinkData, appState, user, actions } = this.props;
-    const { allowHandleDeepLink } = this.state;
-
+    const { deepLinkData, appState, actions } = this.props;
     if (
       prevProps.appState.match(/inactive|background/) &&
       appState === "active"
     ) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ allowHandleDeepLink: true });
+      if (Platform.OS === "ios") {
+        appsFlyer.trackAppLaunch();
+      }
     }
 
     if (!_.isEqual(deepLinkData, prevProps.deepLinkData)) {
-      if (allowHandleDeepLink) {
-        if (user && user.id) {
-          if (deepLinkData && deepLinkData.type) {
-            actions.handleDeepLink();
-          }
-        }
+      if (deepLinkData && deepLinkData.type) {
+        actions.handleDeepLink();
       }
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ allowHandleDeepLink: false });
     }
   }
 

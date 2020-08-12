@@ -8,9 +8,8 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import passwordUtil from "../../../utils/password-util";
+import securityUtil from "../../../utils/security-util";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -20,9 +19,7 @@ import STYLES from "../../../constants/STYLES";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class ChangePassword extends Component {
-  static propTypes = {
-    // text: PropTypes.string
-  };
+  static propTypes = {};
   static defaultProps = {};
 
   static navigationOptions = () => ({
@@ -35,6 +32,10 @@ class ChangePassword extends Component {
       formData: { oldPassword, newPassword },
     } = this.props;
     await actions.resetPassword(oldPassword, newPassword);
+    actions.updateFormFields({
+      oldPassword: "",
+      newPassword: "",
+    });
   };
 
   render() {
@@ -46,12 +47,7 @@ class ChangePassword extends Component {
 
     return (
       <RegularLayout fabType={"hide"}>
-        <CelText
-          align={"center"}
-          margin={"0 0 30 0"}
-          color={STYLES.COLORS.MEDIUM_GRAY}
-          type={"H4"}
-        >
+        <CelText align={"center"} margin={"0 0 30 0"} type={"H4"}>
           To change your password, please fill in the fields below:
         </CelText>
         <CelInput
@@ -80,9 +76,9 @@ class ChangePassword extends Component {
         <CelButton
           onPress={this.changePassword}
           loading={changingPassword}
-          margin={"10 0 0 0"}
+          margin={"30 0 0 0"}
           disabled={
-            passwordUtil.calculatePasswordScore(formData.newPassword).result
+            securityUtil.calculatePasswordScore(formData.newPassword).result
               .score < 80
           }
         >

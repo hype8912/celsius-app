@@ -6,11 +6,9 @@ export {
   isCompanyMember,
   isUSCitizen,
   isUSResident,
-  isCelsiusMember,
   hasPassedKYC,
   isKYCRejectedForever,
   // TODO(ns) KYC: isRejecEted, isPending
-  isMalisaPusonja,
   hasSSN,
   hasAddress,
   getUserKYCStatus,
@@ -18,7 +16,7 @@ export {
 };
 
 /**
- * get if the user is a company member
+ * get if the user is a logged in
  * @returns {boolean}
  */
 function isUserLoggedIn() {
@@ -58,15 +56,6 @@ function isUSResident() {
 }
 
 /**
- * get if user is celsius member
- * @returns {boolean}
- */
-function isCelsiusMember() {
-  const celsiusMember = store.getState().user.profile.celsius_member;
-  return celsiusMember;
-}
-
-/**
  *  get if user has passed KYC
  * @returns {string} status - one of KYC_STATUSES
  */
@@ -93,14 +82,6 @@ function hasPassedKYC() {
 function isKYCRejectedForever() {
   const status = getUserKYCStatus();
   return status === KYC_STATUSES.permanently_rejected;
-}
-
-function isMalisaPusonja() {
-  const { profile } = store.getState().user;
-  return (
-    profile.email === "malisa.pusonja@gmail.com" ||
-    profile.email === "lela.djokic@mvpworkshop.co"
-  );
 }
 
 /**

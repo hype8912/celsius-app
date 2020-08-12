@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, ScrollView } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import _ from "lodash";
@@ -12,12 +11,13 @@ import Separator from "../../atoms/Separator/Separator";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import { isUSResident } from "../../../utils/user-util";
 import PerCoinCelInterestCardStyle from "./PerCoinCelInterestCard.styles";
 import ScrollMore from "../../atoms/ScrollMore/ScrollMore";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import RateInfoCard from "../RateInfoCard/RateInfoCard";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -36,7 +36,6 @@ class PerCoinCelInterestCard extends Component {
   constructor(props) {
     super(props);
     const { appSettings, actions, currencies } = props;
-
     const coinList = Object.keys(appSettings.interest_in_cel_per_coin).filter(
       coin => coin !== "CEL"
     );
@@ -47,7 +46,6 @@ class PerCoinCelInterestCard extends Component {
     const totalCoins = coinList.length;
     let countCoinsTrue = 0;
     let checked = false;
-
     Object.keys(appSettings.interest_in_cel_per_coin).forEach(key => {
       if (appSettings.interest_in_cel_per_coin[key] === true) countCoinsTrue++;
     });
@@ -169,11 +167,11 @@ class PerCoinCelInterestCard extends Component {
           name="MinusBorder"
           width="23"
           height="23"
-          fill={STYLES.COLORS.CELSIUS_BLUE}
+          fill="active"
           style={{
             borderWidth: 1,
             borderRadius: 5,
-            borderColor: STYLES.COLORS.GRAY,
+            borderColor: getColor(COLOR_KEYS.PARAGRAPH),
           }}
         />
       );
@@ -183,7 +181,7 @@ class PerCoinCelInterestCard extends Component {
           name="CheckedBorder"
           width="23"
           height="23"
-          fill={STYLES.COLORS.GREEN}
+          fill={getColor(COLOR_KEYS.POSITIVE_STATE)}
         />
       );
     }
@@ -196,9 +194,7 @@ class PerCoinCelInterestCard extends Component {
 
     const { formData, actions, interestCompliance, activeScreen } = this.props;
     const { coinList, isExpanded, coinNames, isLoading } = this.state;
-
     if (!formData.coinsInCel) return null;
-
     return (
       <Card>
         <CelCheckbox
@@ -228,14 +224,13 @@ class PerCoinCelInterestCard extends Component {
             paddingBottom: 10,
           }}
         >
-          <CelText weight="300" type="H4" color={STYLES.COLORS.MEDIUM_GRAY}>
+          <CelText weight="300" type="H4">
             Choose each coin separately
           </CelText>
           <View style={{ paddingTop: 5, paddingRight: 5 }}>
             <Icon
               name={isExpanded ? "IconChevronUp" : "IconChevronDown"}
               height="9"
-              fill={STYLES.COLORS.MEDIUM_GRAY}
               width="14"
               iconOpacity={0.5}
             />
@@ -262,7 +257,6 @@ class PerCoinCelInterestCard extends Component {
                   }}
                   value={!!formData.coinsInCel[c]}
                   rightText={`${coinNames[c]} - ${c}`}
-                  fillColor={STYLES.COLORS.MEDIUM_GRAY}
                   textWeight="300"
                 />
               ))}

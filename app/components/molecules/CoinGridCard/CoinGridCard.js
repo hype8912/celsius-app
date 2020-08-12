@@ -1,20 +1,22 @@
 import React, { Component, Fragment } from "react";
 import { View, Animated } from "react-native";
 import PropTypes from "prop-types";
-
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
 import Graph from "../../graphs/Graph/Graph";
-
-import STYLES from "../../../constants/STYLES";
-import { heightPercentageToDP } from "../../../utils/styles-util";
+import { getColor, heightPercentageToDP } from "../../../utils/styles-util";
 import CoinGridCardStyle from "./CoinGridCard.styles";
 import { THEMES } from "../../../constants/UI";
 import interestUtil from "../../../utils/interest-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+
+const GraphLight = require("../../../../assets/images/placeholders/graph-light.png");
+const GraphDark = require("../../../../assets/images/placeholders/graph-dark.png");
 
 class CoinGridCard extends Component {
   static propTypes = {
@@ -31,32 +33,8 @@ class CoinGridCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dateArray: [],
-      priceArray: [],
-      coinPriceChange: null,
-      coinInterest: {},
       animatedValue: new Animated.Value(0),
     };
-  }
-
-  async componentDidMount() {
-    const { graphData, currencyRates, coin } = this.props;
-    const coinPriceChange = currencyRates.price_change_usd["1d"];
-
-    const coinInterest = interestUtil.getUserInterestForCoin(coin.short);
-
-    await this.setState({
-      coinPriceChange,
-      coinInterest,
-    });
-    if (graphData) {
-      const dateArray = graphData["1d"].map(data => data[0]);
-      const priceArray = graphData["1d"].map(data => data[1]);
-      this.setState({
-        dateArray,
-        priceArray,
-      });
-    }
   }
 
   animate() {
@@ -74,16 +52,12 @@ class CoinGridCard extends Component {
       </CelText>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
-          fill={STYLES.COLORS.CELSIUS_BLUE}
+          fill={getColor(COLOR_KEYS.LINK)}
           width="13"
           height="13"
           name="CirclePlus"
         />
-        <CelText
-          margin={"0 0 0 5"}
-          type={"H7"}
-          color={STYLES.COLORS.CELSIUS_BLUE}
-        >
+        <CelText margin={"0 0 0 5"} type={"H7"} link>
           Deposit
         </CelText>
       </View>
@@ -93,7 +67,7 @@ class CoinGridCard extends Component {
   coinCardFull = coin => (
     <Fragment>
       <Counter
-        color={CoinGridCardStyle.text}
+        color={getColor(COLOR_KEYS.HEADLINE)}
         weight="600"
         type="H3"
         margin="3 0 3 0"
@@ -115,15 +89,28 @@ class CoinGridCard extends Component {
       onCardPress,
       graphData,
     } = this.props;
-    const { dateArray, priceArray, coinPriceChange, coinInterest } = this.state;
     const hasTransactions = Number(coin.has_transaction) > 0;
     const style = CoinGridCardStyle();
 
-    const padding = graphData ? "12 0 0 0" : undefined; // undefined so it will fallback to default card prop padding
+    const dateArray = graphData ? graphData["1d"].map(data => data[0]) : [];
+    const priceArray = graphData ? graphData["1d"].map(data => data[1]) : [];
+
+    const shouldShowGraph =
+      graphData && dateArray.length > 0 && priceArray.length > 0;
+
+    const coinInterest = interestUtil.getUserInterestForCoin(coin.short);
+    const isBelowThreshold = interestUtil.isBelowThreshold(coin.short);
+    const specialRate = isBelowThreshold
+      ? coinInterest.specialApyRate
+      : coinInterest.apyRate;
+    const isInCel = !coinInterest.inCEL
+      ? coinInterest.compound_rate
+      : specialRate;
+    const coinPriceChange = currencyRates.price_change_usd["1d"];
 
     return (
       <Animated.View style={this.animate()}>
-        <Card size="half" padding={padding} onPress={onCardPress}>
+        <Card size="half" padding={"12 0 0 0"} onPress={onCardPress}>
           <View style={style.cardInnerView}>
             <View style={style.wrapper}>
               <View style={style.coinTextWrapper}>
@@ -131,8 +118,11 @@ class CoinGridCard extends Component {
                   {displayName}
                 </CelText>
                 {coinInterest.eligible && (
-                  <CelText color={STYLES.COLORS.GREEN} type="H7">
-                    {coinInterest.display}
+                  <CelText
+                    color={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                    type="H7"
+                  >
+                    {formatter.percentageDisplay(isInCel)}
                   </CelText>
                 )}
               </View>
@@ -142,7 +132,7 @@ class CoinGridCard extends Component {
             </View>
           </View>
 
-          {graphData && dateArray.length > 0 && priceArray.length > 0 ? (
+          {shouldShowGraph ? (
             <View style={{ ...this.props.style }}>
               <Graph
                 key={coin.short}
@@ -159,7 +149,18 @@ class CoinGridCard extends Component {
               />
             </View>
           ) : (
-            <View style={{ marginBottom: "45%" }} />
+            <View style={{ ...this.props.style, marginHorizontal: 0 }}>
+              <ThemedImage
+                lightSource={GraphLight}
+                darkSource={GraphDark}
+                resizeMode="contain"
+                style={{
+                  width: "100%",
+                  height: heightPercentageToDP("10%"),
+                  marginBottom: "-10%",
+                }}
+              />
+            </View>
           )}
         </Card>
       </Animated.View>

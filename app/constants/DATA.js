@@ -26,6 +26,7 @@ const BLOCKEXPLORERS_STAGING = {
   eth: "https://rinkeby.etherscan.io/tx/",
   eos: "https://jungle.bloks.io/transaction/",
   erc20: "https://rinkeby.etherscan.io/tx/",
+  bsv: "https://testnet.bitcoincloud.net/tx/",
 };
 const BLOCKEXPLORERS_PRODUCTION = {
   btc: "https://blockexplorer.com/tx/",
@@ -38,13 +39,15 @@ const BLOCKEXPLORERS_PRODUCTION = {
   btg: "https://btgexplorer.com/tx/",
   eth: "https://etherscan.io/tx/",
   eos: "https://bloks.io/transaction/",
+  etc: "https://explorer.bitquery.io/ethclassic/tx/", // TODO: add staging link
   erc20: "https://etherscan.io/tx/",
+  bsv: "https://blockchair.com/bitcoin-sv/transaction/",
 };
 
 const BLOCKEXPLORERS =
   ENV === "PRODUCTION" ? BLOCKEXPLORERS_PRODUCTION : BLOCKEXPLORERS_STAGING;
 
-const BRANCH_LINKS = {
+const DEEP_LINKS = {
   TRANSFER: "TRANSFER",
   INDIVIDUAL_REFERRAL: "INDIVIDUAL_REFERRAL",
   COMPANY_REFERRAL: "COMPANY_REFERRAL",
@@ -269,17 +272,17 @@ const LOAN_INTEREST_COINS = [
   "PAX",
 ];
 
-const TOTAL_ASSETS_AMOUNT = {
-  DATE: "07 MAY 2020", // write in same format every week
-  TOTAL_AUM: 574478079,
-  TOTAL_COLLATERAL_AND_CASH: 311284892,
-};
-
-const SIMPLEX_PAYMENT_STATUSES = {
+const BUY_COINS_PAYMENT_STATUSES = {
   PENDING: "pending",
+
   APPROVED: "approved",
-  CANCELLED: "declined",
+  COMPLETED: "completed",
+
+  CANCELLED: "cancelled",
+  EXPIRED: "expired",
+  DECLINED: "declined",
   REFUNDED: "refunded",
+  FAILED: "failed",
 };
 
 const SIMPLEX_FIAT_CURRENCIES = [
@@ -361,7 +364,13 @@ const SIMPLEX_FIAT_CURRENCIES = [
   },
 ];
 
-const SECURITY_STRENGTH_ITEMS = [
+const PIN_STRENGTH_ITEMS = [
+  { copy: "Don't use your birthday" },
+  { copy: "No 6 digits in ascending/descending order" },
+  { copy: "Minimum 4 unique digits" },
+];
+
+const PASSWORD_STRENGTH_ITEMS = [
   { copy: "Minimum 8 Characters." },
   { copy: "Capital letter - at least one." },
   { copy: "Numbers – at least one." },
@@ -401,12 +410,6 @@ const COMING_SOON_COINS = [
     learn_more_link: "https://www.paxos.com/paxgold/",
   },
   {
-    name: "Binance USD",
-    short: "BUSD",
-    image_url: require("../../assets/images/coins/binanceusd.png"),
-    learn_more_link: "https://www.paxos.com/busd/",
-  },
-  {
     name: "Binance Coin",
     short: "BNB",
     image_url: require("../../assets/images/coins/binance.png"),
@@ -420,10 +423,76 @@ const COMING_SOON_COINS = [
   },
 ];
 
+const UNICORN_ICONS = [
+  "Ape",
+  "Appearance",
+  "Average",
+  "Borrow",
+  "CelPay",
+  "Celsius",
+  "CheckCircle",
+  "CirclePlus",
+  "CloseCircle",
+  "Community",
+  "Contacts",
+  "Couple",
+  "Deposit",
+  "DrivingLicense",
+  "Earned",
+  "EyeHide",
+  "EyeShow",
+  "Filter",
+  "GreenCheck",
+  "GridView",
+  "IDCard",
+  "Info",
+  "InfoCircle",
+  "Key",
+  "ListView",
+  "Loan",
+  "Loans",
+  "Lock",
+  "Mail",
+  "Mobile",
+  "MyCel",
+  "NewWindowIcon",
+  "NotSecure",
+  "Notifications",
+  "Passport",
+  "PiggyBank",
+  "Profile",
+  "Rates",
+  "ReceiveArrowTransactions",
+  "Refer",
+  "Search",
+  "Security",
+  "Sent",
+  "Settings",
+  "Shield",
+  "StackedCoins",
+  "Support",
+  "Switch",
+  "Total",
+  "TransactionCC",
+  "TransactionCancelled",
+  "TransactionCelsius",
+  "TransactionInterest",
+  "TransactionLoan",
+  "TransactionLocked",
+  "TransactionReceived",
+  "TransactionSent",
+  "Transactions",
+  "UtilityBill",
+  "Wallet",
+  "WalletSettings",
+  "WarningCircle",
+  "Withdraw",
+];
+
 export {
   BLOCKEXPLORERS,
   KYC_STATUSES,
-  BRANCH_LINKS,
+  DEEP_LINKS,
   TRANSFER_STATUSES,
   TRANSACTION_TYPES,
   CONTACT_NETWORK,
@@ -435,11 +504,12 @@ export {
   LOAN_TRANSACTION_TYPES,
   PRIMETRUST_KYC_STATES,
   LOAN_INTEREST_COINS,
-  TOTAL_ASSETS_AMOUNT,
-  SIMPLEX_PAYMENT_STATUSES,
+  BUY_COINS_PAYMENT_STATUSES,
   SIMPLEX_FIAT_CURRENCIES,
-  SECURITY_STRENGTH_ITEMS,
+  PASSWORD_STRENGTH_ITEMS,
+  PIN_STRENGTH_ITEMS,
   SECURITY_STRENGTH_LEVEL,
   NOTIFICATION_TOKEN,
   COMING_SOON_COINS,
+  UNICORN_ICONS,
 };

@@ -1,9 +1,9 @@
 import BigNumber from "bignumber.js";
 import _ from "lodash";
 import { LOAN_PAYMENT_TYPES, LOAN_STATUS, LOAN_TYPES } from "../constants/DATA";
-import STYLES from "../constants/STYLES";
 import formatter from "./formatter";
 import store from "../redux/store";
+import { COLOR_KEYS } from "../constants/COLORS";
 
 const loanUtil = {
   mapLoan,
@@ -58,7 +58,7 @@ function getLoanStatusDetails(loan) {
     case LOAN_STATUS.APPROVED:
       return {
         ...commonProps,
-        color: STYLES.COLORS.CELSIUS_BLUE,
+        color: COLOR_KEYS.LINK,
         displayText: "Active Loan",
         collateral: "Collateral:",
       };
@@ -66,7 +66,7 @@ function getLoanStatusDetails(loan) {
     case LOAN_STATUS.PENDING:
       return {
         ...commonProps,
-        color: STYLES.COLORS.ORANGE,
+        color: COLOR_KEYS.ALERT_STATE,
         displayText: "Pending Loan",
         collateral: "Estimated Collateral:",
       };
@@ -74,7 +74,7 @@ function getLoanStatusDetails(loan) {
     case LOAN_STATUS.COMPLETED:
       return {
         ...commonProps,
-        color: STYLES.COLORS.GREEN,
+        color: COLOR_KEYS.POSITIVE_STATE,
         displayText: "Completed Loan",
         collateral: "Unlocked Collateral:",
       };
@@ -82,7 +82,7 @@ function getLoanStatusDetails(loan) {
     case LOAN_STATUS.REJECTED:
       return {
         ...commonProps,
-        color: STYLES.COLORS.RED,
+        color: COLOR_KEYS.NEGATIVE_STATE,
         displayText: "Loan rejected",
         collateral: "Estimated Collateral:",
       };
@@ -90,7 +90,7 @@ function getLoanStatusDetails(loan) {
     case LOAN_STATUS.CANCELED:
       return {
         ...commonProps,
-        color: STYLES.COLORS.RED,
+        color: COLOR_KEYS.NEGATIVE_STATE,
         displayText: "Canceled Loan",
         collateral: "Estimated Collateral:",
       };
@@ -98,7 +98,7 @@ function getLoanStatusDetails(loan) {
     case LOAN_STATUS.REFINANCED:
       return {
         ...commonProps,
-        color: STYLES.COLORS.RED,
+        color: COLOR_KEYS.NEGATIVE_STATE,
         displayText: "Refinanced Loan",
         collateral: "Estimated Collateral:",
       };
@@ -233,10 +233,10 @@ function getMarginCallParams(loan) {
   const hasEnoughOriginalCoin = !!walletSummary.coins.find(
     coin =>
       coin.short === loan.margin_call.collateral_coin &&
-      Number(coin.amount) >= Number(loan.margin_call.margin_call_amount)
+      coin.amount.isGreaterThanOrEqualTo(loan.margin_call.margin_call_amount)
   );
-  const hasEnoughOtherCoins = !!walletSummary.coins.find(
-    coin => Number(loan.margin_call.margin_call_amount) <= Number(coin.amount)
+  const hasEnoughOtherCoins = !!walletSummary.coins.find(coin =>
+    coin.amount.isGreaterThanOrEqualTo(loan.margin_call.margin_call_amount)
   );
 
   return {
@@ -280,20 +280,20 @@ function emitLoanParams(
       loyaltyInfo &&
       loanParams.monthlyInterest.minus(
         loanParams.monthlyInterest.multipliedBy(
-          loyaltyInfo.tier.loanInterestBonus
+          loyaltyInfo && loyaltyInfo.tier.loanInterestBonus
         )
       );
     loanParams.totalInCEL =
       loyaltyInfo &&
       loanParams.totalInterest.minus(
         loanParams.totalInterest.multipliedBy(
-          loyaltyInfo.tier.loanInterestBonus
+          loyaltyInfo && loyaltyInfo.tier.loanInterestBonus
         )
       );
 
     loanParams.loyaltyApr = loanParams.annualInterestPct.minus(
       loanParams.annualInterestPct.multipliedBy(
-        loyaltyInfo.tier.loanInterestBonus
+        loyaltyInfo && loyaltyInfo.tier.loanInterestBonus
       )
     );
 

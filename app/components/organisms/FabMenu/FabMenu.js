@@ -21,13 +21,13 @@ import { hasPassedKYC, isKYCRejectedForever } from "../../../utils/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
     fabMenuOpen: state.ui.fabMenuOpen,
     theme: state.user.appSettings.theme,
-    appInitialized: state.app.appInitialized,
     fabType: state.ui.fabType,
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
@@ -131,12 +131,12 @@ class FabMenu extends Component {
 
     switch (theme) {
       case THEMES.DARK:
-      case THEMES.CELSIUS:
         return {
           color: "dark",
           blur: 15,
         };
       case THEMES.LIGHT:
+      case THEMES.UNICORN:
       default:
         return {
           color: "light",
@@ -185,11 +185,10 @@ class FabMenu extends Component {
   };
 
   renderMenuItem = item => {
-    const { theme, actions } = this.props;
+    const { actions } = this.props;
     return (
       <CircleButton
         key={item.label}
-        theme={theme}
         onPress={() => {
           actions.resetToScreen(item.screen);
           actions.closeFabMenu();
@@ -214,7 +213,7 @@ class FabMenu extends Component {
   renderFabMenu = () => {
     const style = FabMenuStyle();
     const { menuItems } = this.state;
-    const { actions, theme } = this.props;
+    const { actions } = this.props;
     const tintColor = this.getTintColor();
 
     if (Platform.OS !== "android") {
@@ -235,16 +234,7 @@ class FabMenu extends Component {
               actions.closeFabMenu();
             }}
           >
-            <Icon
-              name={"QuestionCircle"}
-              width={25}
-              height={25}
-              fill={
-                theme === "dark"
-                  ? STYLES.COLORS.WHITE_OPACITY5
-                  : STYLES.COLORS.DARK_GRAY
-              }
-            />
+            <Icon name={"QuestionCircle"} width={25} height={25} />
             <CelText weight={"300"} type={"H5"}>
               Need help?
             </CelText>
@@ -268,16 +258,7 @@ class FabMenu extends Component {
             actions.closeFabMenu();
           }}
         >
-          <Icon
-            name={"QuestionCircle"}
-            width={25}
-            height={25}
-            fill={
-              theme === "dark"
-                ? STYLES.COLORS.WHITE_OPACITY5
-                : STYLES.COLORS.DARK_GRAY
-            }
-          />
+          <Icon name={"QuestionCircle"} width={25} height={25} />
           <CelText weight={"300"} type={"H5"}>
             Need help?
           </CelText>
@@ -292,10 +273,18 @@ class FabMenu extends Component {
   renderFab = () => {
     const style = FabMenuStyle();
     const { fabType } = this.props;
+    const backgroundColor = {
+      backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+    };
     return (
       <Fragment>
         <Animated.View
-          style={[style.shadowStyle, style.fabButton, style.opacityCircle]}
+          style={[
+            style.shadowStyle,
+            style.fabButton,
+            style.opacityCircle,
+            backgroundColor,
+          ]}
         />
         <Animated.View style={[style.fabButton]}>
           <Fab onPress={this.fabAction} type={fabType} />
@@ -310,7 +299,6 @@ class FabMenu extends Component {
 
     if (isKYCRejectedForever()) return null;
 
-    // if (!appInitialized) return null; // Too many bugs with this one line of code :D
     if (fabType === "hide") return null;
 
     const FabMenuCmp = this.renderFabMenu;

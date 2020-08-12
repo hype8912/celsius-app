@@ -4,6 +4,7 @@ import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width, height } = Dimensions.get("window");
 
@@ -31,15 +32,15 @@ const base = {
     left: widthPercentageToDP("30%"),
   },
   opacityCircle: {
-    backgroundColor: STYLES.COLORS.CELSIUS,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
     width: 60,
     height: 60,
     borderRadius: 30,
-    elevation: Platform.OS === "android" ? 9 : 0,
+    elevation: Platform.OS === "android" ? 10 : 0,
   },
   background: {
     opacity: 0.95,
-    backgroundColor: "red",
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   animatedBackground: {
     position: "absolute",
@@ -61,10 +62,6 @@ const base = {
 
 const themed = {
   light: {
-    background: {
-      opacity: 0.97,
-      backgroundColor: "white",
-    },
     shadowStyle: {
       shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW,
       shadowOffset: { width: 0, height: 6 },
@@ -73,10 +70,6 @@ const themed = {
     },
   },
   dark: {
-    background: {
-      opacity: 0.99,
-      backgroundColor: "rgb(21, 30, 39)",
-    },
     shadowStyle: {
       shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW,
       shadowOffset: { width: 0, height: 8 },
@@ -85,7 +78,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const FabMenuAnimatedStyle = () => getThemedStyle(base, themed);

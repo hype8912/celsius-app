@@ -15,12 +15,11 @@ import RegisterPromoCodeCard from "../../molecules/RegisterPromoCodeCard/Registe
 import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
 import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
-import passwordUtil from "../../../utils/password-util";
-import STYLES from "../../../constants/STYLES";
+import securityUtil from "../../../utils/security-util";
 
 @connect(
   state => ({
-    user: state.user.profile,
+    // user: state.user.profile,
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
     callsInProgress: state.api.callsInProgress,
@@ -103,7 +102,7 @@ class RegisterInitial extends Component {
       !!formData.firstName,
       !!formData.lastName,
       !!formData.email,
-      passwordUtil.calculatePasswordScore(formData.password).result.score > 80,
+      securityUtil.calculatePasswordScore(formData.password).result.score > 80,
     ];
     const fieldsFilledOut = fields.every(x => x);
 
@@ -263,16 +262,16 @@ class RegisterInitial extends Component {
           </View>
           <View style={{ justifyContent: "flex-end" }}>
             <CelText weight="300" align="center">
-              Already have an account?
+              Already have an account?{" "}
               <CelText
                 weight="300"
                 align="center"
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
                 onPress={() =>
                   actions.navigateTo("LoginLanding", { type: "login" })
                 }
               >
-                {` Log in`}
+                Log in
               </CelText>
             </CelText>
           </View>

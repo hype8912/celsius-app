@@ -73,7 +73,9 @@ function updateProfileAddressInfo(profileAddressInfo) {
       const updatedProfileData = await userKYCService.updateProfileAddressInfo(
         profileAddressInfo
       );
-      dispatch(updateProfileAddressInfoSuccess(updatedProfileData.data));
+      dispatch(
+        updateProfileAddressInfoSuccess(updatedProfileData.data.address)
+      );
 
       const compliance = await complianceService.getComplianceInfo();
       dispatch({
@@ -127,7 +129,9 @@ function updateTaxpayerInfo(profileTaxpayerInfoParam) {
       const updatedProfileData = await userKYCService.updateProfileTaxpayerInfo(
         profileTaxpayerInfoParam
       );
-      await dispatch(updateProfileTaxpayerInfoSuccess(updatedProfileData.data));
+      await dispatch(
+        updateProfileTaxpayerInfoSuccess(updatedProfileData.data.taxpayer_info)
+      );
       mixpanelAnalytics.kycTaxPayerInfo();
       return {
         success: true,
@@ -147,7 +151,7 @@ function updateTaxpayerInfo(profileTaxpayerInfoParam) {
 }
 
 /**
- * @TODO add JSDoc
+ * Successful update of personal Info
  */
 export function updateProfileInfoSuccess(personalInfo) {
   return {
@@ -158,7 +162,7 @@ export function updateProfileInfoSuccess(personalInfo) {
 }
 
 /**
- * @TODO add JSDoc
+ * Successful update of address info
  */
 function updateProfileAddressInfoSuccess(addressInfo) {
   return {
@@ -169,7 +173,7 @@ function updateProfileAddressInfoSuccess(addressInfo) {
 }
 
 /**
- * @TODO add JSDoc
+ * Successful update of taxpayer info
  */
 function updateProfileTaxpayerInfoSuccess(taxpayerInfo) {
   return {
@@ -197,7 +201,7 @@ function getKYCDocuments(documents) {
 }
 
 /**
- * @TODO add JSDoc
+ * Successfully retrieved KYC Documents
  */
 function getKYCDocumentsSuccess(documents) {
   return {
@@ -208,7 +212,7 @@ function getKYCDocumentsSuccess(documents) {
 }
 
 /**
- * @TODO add JSDoc
+ * Successfully created kyc documents
  */
 function createKYCDocumentsSuccess() {
   return {
@@ -240,7 +244,7 @@ function sendVerificationSMS(phone) {
 }
 
 /**
- * @TODO add JSDoc
+ * Successfully sent sms verification
  */
 function sendVerificationSMSSuccess() {
   return {

@@ -4,7 +4,8 @@ import { TouchableOpacity, View } from "react-native";
 import Slider from "@react-native-community/slider";
 
 import HorizontalSliderStyle from "./HorizontalSlider.styles";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class HorizontalSlider extends Component {
   static propTypes = {
@@ -37,9 +38,9 @@ class HorizontalSlider extends Component {
     return (
       <View style={style.container}>
         <Slider
-          minimumTrackTintColor={STYLES.COLORS.CELSIUS_BLUE}
-          maximumTrackTintColor={STYLES.COLORS.DARK_GRAY_OPACITY}
-          thumbTintColor={STYLES.COLORS.CELSIUS_BLUE}
+          minimumTrackTintColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+          maximumTrackTintColor={getColor(COLOR_KEYS.PARAGRAPH)}
+          thumbTintColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
           style={{ flex: 1 }}
           minimumValue={0}
           maximumValue={items.length - 1}

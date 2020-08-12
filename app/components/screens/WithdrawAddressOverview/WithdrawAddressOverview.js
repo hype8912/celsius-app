@@ -18,6 +18,8 @@ import API from "../../../constants/API";
 import { EMPTY_STATES } from "../../../constants/UI";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import Separator from "../../atoms/Separator/Separator";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -36,7 +38,7 @@ class WithdrawAddressOverview extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Withdrawal Addresses ",
+    title: "Withdrawal Addresses",
     right: "profile",
   });
 
@@ -87,22 +89,29 @@ class WithdrawAddressOverview extends Component {
   };
 
   renderNoWithdrawalAddressCoins = () => {
-    const { hodlStatus, noWithdrawalAddresses, currenciesRates } = this.props;
+    const {
+      noWithdrawalAddresses,
+      currenciesRates,
+      withdrawalAddresses,
+      securityOverview,
+    } = this.props;
     if (noWithdrawalAddresses && noWithdrawalAddresses.length > 0) {
-      return noWithdrawalAddresses.map(coin => {
-        const imageUrl = currenciesRates.filter(
-          image => image.short === coin.short
-        )[0].image_url;
-        return (
-          <NoWithdrawalAddressCard
-            imageUrl={imageUrl}
-            coinName={formatter.capitalize(coin.name)}
-            coinShort={coin.short}
-            onPress={() => this.handlePress(coin.short)}
-            disabledPress={hodlStatus.isActive}
-          />
-        );
-      });
+      return noWithdrawalAddresses
+        .filter(coin => withdrawalAddresses[coin.short] === undefined)
+        .map(coin => {
+          const imageUrl = currenciesRates.filter(
+            image => image.short === coin.short
+          )[0].image_url;
+          return (
+            <NoWithdrawalAddressCard
+              imageUrl={imageUrl}
+              coinName={formatter.capitalize(coin.name)}
+              coinShort={coin.short}
+              onPress={() => this.handlePress(coin.short)}
+              disabledPress={securityOverview.hodl_mode_active}
+            />
+          );
+        });
     }
   };
 
@@ -140,10 +149,10 @@ class WithdrawAddressOverview extends Component {
                 hodlStatus={hodlStatus}
               />
               {withdrawalAddresses[key].locked && hours && minutes && (
-                <Card margin="0 0 10 0">
+                <View>
                   <CelText align="center" type="H6">
-                    Due to our security protocols, your address will be active
-                    in
+                    Due to our security protocols, your {key} address will be
+                    active in
                   </CelText>
 
                   <CelText
@@ -154,7 +163,7 @@ class WithdrawAddressOverview extends Component {
                   >
                     {`${hours}h ${minutes}m.`}
                   </CelText>
-                </Card>
+                </View>
               )}
             </View>
           ) : null;
@@ -188,7 +197,7 @@ class WithdrawAddressOverview extends Component {
     return (
       <RegularLayout>
         <View>
-          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+          <Card color={getColor(COLOR_KEYS.BANNER_INFO)}>
             <View style={{ flexDirection: "row" }}>
               <View style={{ flex: 1, paddingRight: 5 }}>
                 <Icon

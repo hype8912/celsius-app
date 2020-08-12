@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
@@ -26,7 +25,6 @@ const base = {
     justifyContent: "space-between",
   },
   caretStyle: {
-    // marginRight: 20,
     marginTop: 10,
     paddingTop: 5,
     width: 25,
@@ -49,7 +47,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const RegisterPromoCodeCardStyle = () => getThemedStyle(base, themed);

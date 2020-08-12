@@ -1,10 +1,4 @@
-// import STYLES from '../../../constants/STYLES';
-// import { Dimensions } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
-
-// const SCREEN_HEIGHT = Dimensions.get("window").height;
-
-// const titleSize = SCREEN_HEIGHT
 
 const base = {
   container: {
@@ -20,7 +14,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelPayChooseFriendStyle = () => getThemedStyle(base, themed);

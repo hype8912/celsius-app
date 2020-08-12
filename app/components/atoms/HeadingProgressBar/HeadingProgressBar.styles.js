@@ -24,7 +24,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const HeadingProgressBarStyle = () => getThemedStyle(base, themed);

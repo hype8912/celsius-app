@@ -12,23 +12,6 @@ import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
 const LoanApplicationSuccessModalStories = () => (
   <StoryWrapper title="Loan Application Successful Modal">
-    <CelText margin="0 0 10 0">
-      Application successful, autoapproved, with possible prepayment modal:
-    </CelText>
-    <CelButton
-      style={{ marginBottom: 5 }}
-      onPress={() => {
-        store.dispatch(
-          updateFormFields({
-            loanAmount: 1,
-            coin: "CEL",
-          })
-        );
-        store.dispatch(openModal(MODALS.LOAN_APPLICATION_SUCCESS_MODAL));
-      }}
-    >
-      Open Autoapproved Loan
-    </CelButton>
     <CelText margin="15 0 10 0">Application successful modal:</CelText>
     <CelButton
       onPress={() => {

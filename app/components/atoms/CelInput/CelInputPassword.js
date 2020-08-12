@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 
 import STYLES from "../../../constants/STYLES";
 import CelInputText from "./CelInputText";
-import { THEMES } from "../../../constants/UI";
 import CelText from "../CelText/CelText";
 import PassMeterTooltip from "../PassMeterTooltip/PassMeterTooltip";
 import PassStrengthMeter from "../PassStrengthMeter/PassStrengthMeter";
@@ -83,7 +82,6 @@ class CelInputPassword extends Component {
 
   render() {
     const {
-      theme,
       value,
       disabled,
       showPasswordTooltip,
@@ -93,8 +91,6 @@ class CelInputPassword extends Component {
       showPassMeter,
     } = this.props;
     const { visible } = this.state;
-    const fillColor =
-      theme !== THEMES.DARK ? STYLES.COLORS.GRAY : STYLES.COLORS.WHITE;
     const iconName = visible ? "HIDE" : "SHOW";
     const activeField = forms.activeField;
     return (
@@ -148,7 +144,7 @@ class CelInputPassword extends Component {
                 paddingRight: 15,
               }}
             />
-            {!!value && showPassMeter &&  (
+            {!!value && showPassMeter && (
               <PassStrengthMeter
                 password={value}
                 customStyle={{
@@ -173,7 +169,7 @@ class CelInputPassword extends Component {
             }}
             onPress={() => this.setState({ visible: !visible })}
           >
-            <CelText type="H5" align={"center"} color={fillColor}>
+            <CelText type="H5" align={"center"}>
               {iconName}
             </CelText>
           </TouchableOpacity>

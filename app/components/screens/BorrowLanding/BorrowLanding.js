@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  Animated,
-  View,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from "react-native";
+import { Animated, View, TouchableOpacity, ScrollView } from "react-native";
 
 import * as appActions from "../../../redux/actions";
 import BorrowLandingStyle from "./BorrowLanding.styles";
@@ -27,8 +21,9 @@ import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
 import STYLES from "../../../constants/STYLES";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
-import LoanAdvertiseModal from "../../modals/LoanAdvertiseModal/LoanAdvertiseModal";
 import Spinner from "../../atoms/Spinner/Spinner";
+import { STORYBOOK } from "../../../../dev-settings.json";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -80,7 +75,7 @@ class BorrowLanding extends Component {
     const { ltv } = this.props;
 
     this.state = {
-      isLoading: true,
+      isLoading: !STORYBOOK,
       xOffset: new Animated.Value(0),
       filterItem: null,
     };
@@ -91,7 +86,6 @@ class BorrowLanding extends Component {
   async componentDidMount() {
     const { actions, loanCompliance, formData } = this.props;
     actions.checkForLoanAlerts();
-    actions.openModal(MODALS.LOAN_ADVERTISE_MODAL);
 
     if (formData.prepayLoanId) {
       actions.openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL);
@@ -158,9 +152,11 @@ class BorrowLanding extends Component {
               onPress={() => actions.navigateTo("BorrowChooseLoan")}
             >
               <View style={style.buttonItself}>
-                <Image
+                <ThemedImage
                   style={style.buttonIconHand}
-                  source={require("../../../../assets/images/icon-apply-for-a-new-loan.png")}
+                  lightSource={require("../../../../assets/images/icon-apply-for-a-new-loan.png")}
+                  darkSource={require("../../../../assets/images/icon-apply-for-a-new-loan.png")}
+                  unicornSource={require("../../../../assets/images/icon-apply-for-a-new-loan-unicorn.png")}
                 />
                 <CelText align="center">Apply for a loan</CelText>
               </View>
@@ -173,9 +169,11 @@ class BorrowLanding extends Component {
               }}
             >
               <View style={style.buttonItself}>
-                <Image
+                <ThemedImage
                   style={style.buttonIconCalc}
-                  source={require("../../../../assets/images/calculator.png")}
+                  lightSource={require("../../../../assets/images/calculator.png")}
+                  darkSource={require("../../../../assets/images/calculator.png")}
+                  unicornSource={require("../../../../assets/images/calculator-unicorn.png")}
                 />
                 <CelText align="center">Calculator</CelText>
               </View>
@@ -313,7 +311,7 @@ class BorrowLanding extends Component {
 
   // slavija intersection
   renderIntersection() {
-    const { user, kycStatus, loanCompliance, allLoans } = this.props;
+    const { kycStatus, loanCompliance, allLoans } = this.props;
 
     const hasLoans = !!allLoans.length;
 
@@ -321,12 +319,10 @@ class BorrowLanding extends Component {
       return (
         <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_VERIFIED_BORROW} />
       );
-    if (!user.celsius_member)
-      return (
-        <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_MEMBER_BORROW} />
-      );
     if (!loanCompliance.allowed)
       return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
+
+    if (hasLoans) return this.renderDefaultView();
 
     if (!hasLoans) return this.renderNoLoans();
 
@@ -334,28 +330,11 @@ class BorrowLanding extends Component {
   }
 
   render() {
-    const {
-      walletSummary,
-      actions,
-      formData,
-      userTriggeredActions,
-    } = this.props;
+    const { walletSummary } = this.props;
 
     if (!walletSummary) return null;
 
-    return (
-      <>
-        {this.renderIntersection()}
-        {!userTriggeredActions.hide_loan_advertise_modal && (
-          <LoanAdvertiseModal
-            closeModal={actions.closeModal}
-            updateFormField={actions.updateFormField}
-            formData={formData}
-            setUserAppSettings={actions.setUserAppSettings}
-          />
-        )}
-      </>
-    );
+    return <>{this.renderIntersection()}</>;
   }
 }
 

@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
@@ -11,7 +10,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CardSectionStyle = () => getThemedStyle(base, themed);

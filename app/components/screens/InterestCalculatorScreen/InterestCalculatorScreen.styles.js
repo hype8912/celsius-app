@@ -11,7 +11,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const InterestCalculatorScreenStyle = () => getThemedStyle(base, themed);

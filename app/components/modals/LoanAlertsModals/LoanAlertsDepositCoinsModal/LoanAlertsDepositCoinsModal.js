@@ -22,20 +22,20 @@ class LoanAlertsDepositCoinsModal extends Component {
     actions.navigateTo("Deposit", {
       coin: loan.coin_loan_asset ? loan.coin_loan_asset : "DAI",
       loan,
-      isMarginWarning: true,
     });
     actions.closeModal();
   };
 
   render() {
     const { loan } = this.props;
+
     return (
       <InfoModal
         name={MODALS.LOAN_ALERT_MODAL}
         heading={"You Are Almost Done With Your Loan Payout!"}
         paragraphs={[
           `You have a principle of ${
-            loan && loan.loanAmount ? loan.loanAmount : "123"
+            loan && loan.loan_amount ? loan.loan_amount : "123"
           } ${
             loan && loan.coin_loan_asset ? loan.coin_loan_asset : "DAI"
           }, but there are not enough funds in your wallet. Please deposit more ${

@@ -7,29 +7,32 @@ import {
   Platform,
 } from "react-native";
 import React from "react";
+import _ from "lodash";
+
 import formatter from "./formatter";
 import store from "../redux/store";
 import appUtil from "./app-util";
+import { COLOR_KEYS, COLORS } from "../constants/COLORS";
+import { THEMES } from "../constants/UI";
+import FONTS from "../constants/FONTS";
 
 const { width, height } = Dimensions.get("window");
 
-// TODO check if we can use these more
-// TODO check if we can use these more
-// TODO check if we need three font methods
-// TODO check if we need three font methods
-// TODO check if we need three font methods
+// TODO: should be export default
 export {
   getMargins,
   getPadding,
   widthPercentageToDP,
   heightPercentageToDP,
   getScaledFont,
-  getFont,
+  getFontFamily,
+  getThemeFontFamily,
   getFontSize,
   disableAccessibilityFontScaling,
   getTheme,
   addThemeToComponents,
   getThemedStyle,
+  getColor,
 };
 
 /**
@@ -89,11 +92,52 @@ function getThemedStyle(
   themed,
   theme = store.getState().user.appSettings.theme
 ) {
-  return StyleSheet.create(formatter.deepmerge(base, themed[theme]));
-  // return StyleSheet.flatten([StyleSheet.create(base), StyleSheet.create(themed[theme])])
-  // return StyleSheet.create(_.merge({ ...base }, { ...themed[theme] }));
-  // return _.mergeWith({ ...base }, { ...themed[theme] });
-  // return formatter.deepmerge(base, themed[theme])
+  const combinedStyles = formatter.deepmerge(
+    setColors(base, theme),
+    themed[theme] || themed.light
+  );
+  return StyleSheet.create(combinedStyles);
+}
+
+/**
+ * Sets colors for specific COLOR_KEY
+ *
+ * @param {Object} baseStyle - base styles for component
+ * @param {string} theme - one of THEMES
+ * @returns {Object} stylesWithColors
+ */
+function setColors(baseStyle, theme) {
+  const stylesWithColors = _.cloneDeep(baseStyle);
+  // gets all elements specified in base styles (eg. container)
+  const elements = Object.keys(baseStyle);
+  // gets array of all color keys
+  const colorKeys = Object.values(COLOR_KEYS);
+
+  elements.forEach(el => {
+    // gets array of all style properties for specific element (eg. backgroundColor, borderWidth...)
+    const styleProps = Object.keys(baseStyle[el]);
+
+    styleProps.forEach(sp => {
+      // if style property value is in the colorKeys array
+      if (colorKeys.includes(stylesWithColors[el][sp])) {
+        // replace it with the correct color for specific key and theme
+        stylesWithColors[el][sp] = getColor(stylesWithColors[el][sp], theme);
+      }
+    });
+  });
+
+  return stylesWithColors;
+}
+
+/**
+ * Sets theme styles for component
+ *
+ * @param {string} colorKey - color key
+ * @param {string} theme - current active theme
+ * @returns {Object} themed styles
+ */
+function getColor(colorKey, theme = getTheme()) {
+  return COLORS[theme][colorKey];
 }
 
 /**
@@ -159,37 +203,66 @@ function getScaledFont(fontSize) {
 }
 
 /**
- * Gets scaled font size for different devices or different themes
+ * Gets font family based on theme and weight
  *
- * @param {number} fontSize
- * @returns {number}
+ * @param {string} weight - check CelText weight properties
+ * @param {string} overrideFont - override theme font
+ * @returns {string} - Barlow-Regular|Pangram-Bold
  */
+function getFontFamily(weight = "regular", overrideFont = null) {
+  let baseFont = overrideFont;
 
-function getFont(fontSize) {
-  const scale = 350;
+  if (!baseFont) {
+    baseFont = getThemeFontFamily();
+  }
 
-  const ratio = fontSize / scale; // get ratio based on your standard scale
-  const newSize = Math.round(ratio * width);
-  return newSize;
+  if (baseFont === "RobotoMono") {
+    return "RobotoMono-Regular";
+  }
+
+  const fontWeight = FONTS[`FONT_WEIGHTS_${baseFont.toUpperCase()}`][weight];
+  const fontFamily = `${baseFont}${fontWeight}`;
+
+  return fontFamily;
+}
+
+/**
+ * Gets font family based on them
+ *
+ * @returns {string} - Barlow|Pangram
+ */
+function getThemeFontFamily() {
+  const theme = getTheme();
+
+  switch (theme) {
+    case THEMES.UNICORN:
+    default:
+      return "Pangram";
+
+    case THEMES.LIGHT:
+    case THEMES.DARK:
+      return "Barlow";
+  }
 }
 
 /**
  * Gets scaled font size type
  *
- * @param {number} newSize
+ * @param {string} type - H0|H1|H2...H8
+ * @param {string} overrideFont - override theme font
  * @returns {number}
  */
+function getFontSize(type = "H5", overrideFont = null) {
+  let baseFont = overrideFont;
 
-function getFontSize() {
-  let newSize;
+  if (!baseFont) {
+    baseFont = getThemeFontFamily();
+  }
 
-  if (width > 350) {
-    newSize = "H4";
-  } else if (width < 350 && width > 250) {
-    newSize = "H6";
-  } else newSize = "H7";
-
-  return newSize;
+  const fontSizes =
+    FONTS[`FONT_SIZES_${baseFont.toUpperCase()}`] || FONTS.FONT_SIZES_BARLOW;
+  const fontSize = fontSizes[type];
+  return fontSize;
 }
 
 /**

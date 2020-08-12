@@ -152,7 +152,6 @@ class CelModal extends Component {
           height="15"
           width="15"
           viewBox="0 0 1000 1000"
-          fill={"#3D4853"}
           marginTop={20}
         />
       </TouchableOpacity>

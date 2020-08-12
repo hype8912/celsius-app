@@ -5,6 +5,7 @@ import CelText from "../../atoms/CelText/CelText";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPickerStyle from "./CoinPicker.styles";
 import Icon from "../../atoms/Icon/Icon";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CoinPicker extends Component {
   static propTypes = {
@@ -19,6 +20,7 @@ class CoinPicker extends Component {
   };
 
   static defaultProps = {
+    type: "basic",
     coin: "",
     defaultSelected: "",
   };
@@ -30,7 +32,7 @@ class CoinPicker extends Component {
 
     let coinListFormatted = [];
     if (type === "withIcon") {
-      if (coin !== "USD")
+      if (coin !== "USD" && availableCoins)
         availableCoins.forEach(c => {
           if (c.value !== "USD") coinListFormatted.push(c);
         });
@@ -56,7 +58,7 @@ class CoinPicker extends Component {
     }
   }
 
-  getIconColor = style => StyleSheet.flatten(style.iconColor).color; // get color from raw json depending on style theme
+  getIconColor = style => StyleSheet.flatten(style.iconColor).color;
 
   renderByType = () => {
     const { type, coin, navigateTo, field, onChange } = this.props;
@@ -94,12 +96,12 @@ class CoinPicker extends Component {
                     type="coin"
                     icon={icon}
                     disabled
+                    iconColor={COLOR_KEYS.HEADLINE}
                   />
                 )}
               </View>
               <View style={style.iconStyle}>
                 <CelText
-                  color={iconColor}
                   type="H3"
                   margin={"10 0 10 0"}
                   style={{ paddingRight: 10 }}
@@ -111,7 +113,7 @@ class CoinPicker extends Component {
                     width="13"
                     height="13"
                     name="CaretDown"
-                    fill={iconColor}
+                    fill={COLOR_KEYS.HEADLINE}
                   />
                 )}
               </View>
@@ -144,7 +146,7 @@ class CoinPicker extends Component {
                   width="13"
                   height="13"
                   name="CaretDown"
-                  fill={iconColor}
+                  fill={COLOR_KEYS.HEADLINE}
                 />
               </View>
             </TouchableOpacity>

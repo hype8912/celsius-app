@@ -14,7 +14,6 @@ import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCa
 
 @connect(
   state => ({
-    formData: state.forms.formData,
     loanSettings: state.loans.loanSettings,
     loyaltyInfo: state.loyalty.loyaltyInfo,
   }),
@@ -83,6 +82,7 @@ class ChoosePaymentMethod extends Component {
         onPress: () => actions.navigateTo("PaymentCel", { reason, id }),
         lightImage: require("../../../../assets/images/icons/cel.png"),
         darkImage: require("../../.././../assets/images/icons/cel-dark.png"),
+        unicornImage: require("../../.././../assets/images/icons/cel-unicorn.png"),
         label: activeCards.cel ? "Currently active" : null,
       },
       {
@@ -91,6 +91,7 @@ class ChoosePaymentMethod extends Component {
         onPress: () => actions.navigateTo("LoanPaymentCoin", { reason, id }),
         lightImage: require("../../../../assets/images/icons/crypto.png"),
         darkImage: require("../../.././../assets/images/icons/crypto-dark.png"),
+        unicornImage: require("../../.././../assets/images/icons/crypto-unicorn.png"),
         label: activeCards.coin ? "Currently active" : null,
       },
       {
@@ -106,13 +107,10 @@ class ChoosePaymentMethod extends Component {
         },
         lightImage: require("../../../../assets/images/icons/dollars.png"),
         darkImage: require("../../../../assets/images/icons/dollars-dark.png"),
+        unicornImage: require("../../../../assets/images/icons/dollars-unicorn.png"),
         label: activeCards.usd ? "Currently active" : null,
       },
     ];
-
-    if (reason === LOAN_PAYMENT_REASONS.INTEREST) {
-      cardProps.pop();
-    }
 
     return cardProps;
   };

@@ -7,9 +7,10 @@ import { transitionConfig } from "./navigationConfig";
 import Storybook from "../components/screens/Storybook/Storybook";
 
 import Home from "../components/screens/Home/Home";
+import SplashScreen from "../components/screens/SplashScreen/SplashScreen";
 import Community from "../components/screens/Community/Community";
 import Maintenance from "../components/screens/Maintenance/Maintenance";
-import LockedAccount from "../components/screens/LockedAccount/LockedAccount";
+import TooManyRequests from "../components/screens/TooManyRequests/TooManyRequests";
 import LoginLanding from "../components/screens/LoginLanding/LoginLanding";
 import Login from "../components/screens/Login/Login";
 import ForgotPassword from "../components/screens/ForgotPassword/ForgotPassword";
@@ -17,7 +18,9 @@ import RegisterInitial from "../components/screens/RegisterInitial/RegisterIniti
 import RegisterSetPin from "../components/screens/RegisterSetPin/RegisterSetPin";
 import TermsOfUse from "../components/screens/TermsOfUse/TermsOfUse";
 import Welcome from "../components/screens/Welcome/Welcome";
+import PasswordBreached from "../components/screens/PasswordBreached/PasswordBreached";
 import VerifyProfile from "../components/screens/VerifyProfile/VerifyProfile";
+import SixDigitPinExplanation from "../components/screens/SixDigitPinExplanation/SixDigitPinExplanation";
 import TransactionsOnHold from "../components/screens/TransactionsOnHold/TransactionsOnHold";
 import KYCProfileDetails from "../components/screens/KYCProfileDetails/KYCProfileDetails";
 import KYCAddressInfo from "../components/screens/KYCAddressInfo/KYCAddressInfo";
@@ -35,6 +38,7 @@ import AllTransactions from "../components/screens/AllTransactions/AllTransactio
 import GetCoinsLanding from "../components/screens/GetCoinsLanding/GetCoinsLanding";
 import GetCoinsEnterAmount from "../components/screens/GetCoinsEnterAmount/GetCoinsEnterAmount";
 import GetCoinsTransactionDetails from "../components/screens/GetCoinsTransactionDetails/GetCoinsTransactionDetails";
+import GetCoinsGem from "../components/screens/GetCoinsGem/GetCoinsGem";
 import MyCel from "../components/screens/MyCel/MyCel";
 import Simplex from "../components/screens/Simplex/SimplexScreen";
 import InterestCalculatorScreen from "../components/screens/InterestCalculatorScreen/InterestCalculatorScreen";
@@ -106,15 +110,17 @@ import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/Hod
 import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
+import BitWala from "../components/screens/BitWala/BitWala";
 
 export const screens = {
   /**
    * Out of limit
    */
 
+  SplashScreen,
   Home,
   Maintenance,
-  LockedAccount,
+  TooManyRequests,
   Storybook,
 
   /**
@@ -122,6 +128,7 @@ export const screens = {
    */
 
   Welcome,
+  PasswordBreached,
   LoginLanding,
   Login,
   ForgotPassword,
@@ -141,8 +148,10 @@ export const screens = {
   KYCCheckPhotos,
   KYCPrimeTrustToU,
   KYCFinalRejection,
+  BitWala,
 
   VerifyProfile,
+  SixDigitPinExplanation,
 
   /**
    * Wallet
@@ -171,6 +180,7 @@ export const screens = {
   GetCoinsEnterAmount,
   GetCoinsTransactionDetails,
   Simplex,
+  GetCoinsGem,
 
   /**
    * Borrow

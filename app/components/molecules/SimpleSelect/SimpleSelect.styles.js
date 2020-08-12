@@ -1,6 +1,9 @@
-// import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import {
+  getFontFamily,
+  getFontSize,
+  getThemedStyle,
+} from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   inputAndroidContainer: {
@@ -16,12 +19,12 @@ const base = {
     alignItems: "center",
   },
   inputAndroid: {
-    fontSize: 26,
-    fontFamily: "Barlow-Regular",
+    fontSize: getFontSize("H2"),
+    color: COLOR_KEYS.PARAGRAPH,
   },
   inputIOS: {
-    fontSize: 26,
-    fontFamily: "Barlow-Regular",
+    fontSize: getFontSize("H2"),
+    color: COLOR_KEYS.PARAGRAPH,
   },
   iconContainer: {
     position: "relative",
@@ -32,28 +35,28 @@ const base = {
 const themed = {
   light: {
     inputAndroid: {
-      color: STYLES.COLORS.DARK_GRAY,
+      fontFamily: getFontFamily("regular", "Barlow"),
     },
     inputIOS: {
-      color: STYLES.COLORS.DARK_GRAY,
+      fontFamily: getFontFamily("regular", "Barlow"),
     },
   },
 
   dark: {
     inputAndroid: {
-      color: STYLES.COLORS.WHITE,
+      fontFamily: getFontFamily("regular", "Barlow"),
     },
     inputIOS: {
-      color: STYLES.COLORS.WHITE,
+      fontFamily: getFontFamily("regular", "Barlow"),
     },
   },
 
-  celsius: {
+  unicorn: {
     inputAndroid: {
-      color: STYLES.COLORS.DARK_GRAY,
+      fontFamily: getFontFamily("regular", "Pangram"),
     },
     inputIOS: {
-      color: STYLES.COLORS.DARK_GRAY,
+      fontFamily: getFontFamily("regular", "Pangram"),
     },
   },
 };

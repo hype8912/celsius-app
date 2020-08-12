@@ -1,6 +1,4 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-// import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -22,7 +20,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const TransactionFilterModalStyle = () => getThemedStyle(base, themed);

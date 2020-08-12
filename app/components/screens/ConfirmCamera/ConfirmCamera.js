@@ -13,7 +13,7 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import { navigateTo } from "../../../redux/nav/navActions";
+import { navigateTo, navigateBack } from "../../../redux/nav/navActions";
 
 @connect(
   state => ({
@@ -27,13 +27,19 @@ import { navigateTo } from "../../../redux/nav/navActions";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class ConfirmCamera extends Component {
-  static navigationOptions = () => ({
-    transparent: true,
-    customBack: () => {
-      store.dispatch(navigateTo("KYCVerifyIdentity"));
-    },
-    gesturesEnabled: false,
-  });
+  static navigationOptions = ({ navigation }) => {
+    const documentPicture = navigation.getParam("documentPicture");
+    const navigate = documentPicture
+      ? navigateTo("KYCVerifyIdentity")
+      : navigateBack();
+    return {
+      transparent: true,
+      customBack: () => {
+        store.dispatch(navigate);
+      },
+      gesturesEnabled: false,
+    };
+  };
 
   constructor(props) {
     super(props);
@@ -171,8 +177,6 @@ class ConfirmCamera extends Component {
                   actions.navigateBack();
                   actions.retakePhoto();
                 }}
-                white
-                inverse
                 ghost
               >
                 Retake Photo

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Platform, Switch, View } from "react-native";
-// import PropTypes from 'prop-types';
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -9,10 +8,11 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
 import IconButton from "../../organisms/IconButton/IconButton";
-import STYLES from "../../../constants/STYLES";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
 import Spinner from "../../atoms/Spinner/Spinner";
-import { LOAN_PAYMENT_REASONS, THEMES } from "../../../constants/UI";
+import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 
 @connect(
   state => ({
@@ -54,24 +54,10 @@ class InterestPaymentSettings extends Component {
   rightSwitch = () => {
     const { isAutomaticInterestPaymentEnabled } = this.state;
 
-    const isIos = Platform.OS === "ios";
-    const falseColor = isIos ? "transparent" : STYLES.COLORS.DARK_GRAY3;
-    const theme = getTheme();
     return (
-      <Switch
+      <CelSwitch
         onValueChange={this.handleSwitchChange}
         value={isAutomaticInterestPaymentEnabled}
-        thumbColor={
-          theme === THEMES.LIGHT
-            ? STYLES.COLORS.WHITE
-            : STYLES.COLORS.DARK_TOGGLE_FOREGROUND
-        }
-        ios_backgroundColor={
-          theme === THEMES.LIGHT
-            ? STYLES.COLORS.DARK_GRAY3
-            : STYLES.COLORS.DARK_TOGGLE_BACKGROUND
-        }
-        trackColor={{ false: falseColor, true: STYLES.COLORS.GREEN }}
       />
     );
   };
@@ -126,8 +112,12 @@ class InterestPaymentSettings extends Component {
           </IconButton>
 
           {!isAutomaticInterestPaymentEnabled ? (
-            <Card margin={"20 0 0 0"} color={STYLES.COLORS.ORANGE}>
-              <CelText weight="300" alignItems="center" color="#FFFFFF">
+            <Card margin={"20 0 0 0"} color={getColor(COLOR_KEYS.ALERT_STATE)}>
+              <CelText
+                weight="300"
+                alignItems="center"
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+              >
                 You must manually complete your monthly interest payments.
               </CelText>
             </Card>

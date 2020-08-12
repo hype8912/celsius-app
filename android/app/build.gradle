@@ -131,8 +131,8 @@ android {
         applicationId "network.celsius.wallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 61
-        versionName "4.3.0"
+        versionCode 65
+        versionName "4.5.0"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
     }
@@ -164,7 +164,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 //     implementation 'com.google.firebase:firebase-analytics:17.2.2' //<-- app crashes
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.0'
     implementation 'com.mixpanel.android:mixpanel-android:5.5.0'
 
     if (enableHermes) {

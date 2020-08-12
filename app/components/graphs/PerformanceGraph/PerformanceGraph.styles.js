@@ -1,10 +1,11 @@
 import { Dimensions } from "react-native";
 import {
+  getFontFamily,
   getThemedStyle,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const height = heightPercentageToDP("25%");
 const { width } = Dimensions.get("window");
@@ -33,7 +34,7 @@ const base = {
     alignItems: "center",
   },
   labelText: {
-    fontFamily: "Barlow-Regular",
+    fontFamily: getFontFamily("regular"),
     color: "white",
     height: heightPercentageToDP("2.7%"),
   },
@@ -53,22 +54,15 @@ const base = {
     marginTop: -20,
     alignItems: "flex-start",
   },
+  labelBackground: {
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
 };
 
 const themed = {
-  light: {
-    labelBackground: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY,
-    },
-  },
-
-  dark: {
-    labelBackground: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const PerformanceGraphStyle = () => getThemedStyle(base, themed);

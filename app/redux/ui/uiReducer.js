@@ -1,8 +1,5 @@
 import ACTIONS from "../../constants/ACTIONS";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 const initialState = {
   fabMenuOpen: false,
   fabType: "hide",

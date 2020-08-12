@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 
 import moment from "moment";
 import Banner from "../Banner/Banner";
-import STYLES from "../../../constants/STYLES";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class LoanTrigger extends Component {
   static propTypes = {
@@ -20,13 +21,10 @@ class LoanTrigger extends Component {
 
   render() {
     const { actions } = this.props;
-    // const style = LoanTriggerStyle();
-
-    const content = `Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending money you need at the lowest rates in the industry!`;
-
+    const content = `Did you know you can get all the cash you need? Every Celsian is pre-approved.`;
     return (
       <Banner
-        backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
+        backgroundColor={getColor(COLOR_KEYS.LINK)}
         image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
         action={() => {
           actions.navigateTo("BorrowChooseLoan");
@@ -45,7 +43,7 @@ class LoanTrigger extends Component {
           actions.closeBanner();
         }}
         textButtonText={"Don't show"}
-        title={"Did you know..."}
+        title={"Don’t sell coins, HODL and borrow like the 1%"}
         content={content}
         close={() => actions.closeBanner()}
       />

@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-
 import CelButtonStyle from "./CelButton.styles";
 import Icon from "../Icon/Icon";
-import { getMargins } from "../../../utils/styles-util";
+import { getMargins, getColor } from "../../../utils/styles-util";
 import CelText from "../CelText/CelText";
 import Spinner from "../Spinner/Spinner";
-import STYLES from "../../../constants/STYLES";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const buttonSizes = ["small", "medium"];
+const backButtonSize = 20;
 
 class CelButton extends Component {
   static propTypes = {
@@ -97,11 +97,11 @@ class CelButton extends Component {
     if (iconRightColor) {
       color = iconRightColor;
     } else if (basic) {
-      color = STYLES.COLORS.DARK_GRAY_OPACITY;
+      color = getColor(COLOR_KEYS.HEADLINE);
     } else {
       color = disabled
-        ? STYLES.COLORS.MEDIUM_GRAY
-        : STYLES.COLORS.WHITE_OPACITY3;
+        ? getColor(COLOR_KEYS.PARAGRAPH)
+        : getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND);
     }
 
     return (
@@ -110,8 +110,8 @@ class CelButton extends Component {
       >
         <Icon
           name={iconRight}
-          height={iconRightHeight}
-          width={iconRightWidth}
+          height={this.props.backButton ? backButtonSize : iconRightHeight}
+          width={this.props.backButton ? backButtonSize : iconRightWidth}
           fill={color}
         />
       </View>

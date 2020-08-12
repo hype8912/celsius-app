@@ -1,6 +1,5 @@
 import { Dimensions } from "react-native";
 import STYLES from "../../../constants/STYLES";
-// import {STYLES} from "../../config/constants/style";
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -49,8 +48,6 @@ const base = {
   button: {
     paddingTop: 30,
   },
-
-  text: {},
 };
 
 const themed = {
@@ -58,7 +55,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ChangeAvatarStyle = () => getThemedStyle(base, themed);

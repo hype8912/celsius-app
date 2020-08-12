@@ -1,9 +1,9 @@
 import { Dimensions } from "react-native";
-import STYLES from "../../../constants/STYLES";
 import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width } = Dimensions.get("window");
 
@@ -17,11 +17,9 @@ const base = {
   },
   cryptoSection: {
     alignItems: "center",
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
     paddingVertical: 10,
   },
   fiatWrapper: {
-    backgroundColor: STYLES.COLORS.WHITE,
     padding: 10,
     borderRadius: 8,
     marginBottom: 15,
@@ -34,6 +32,9 @@ const base = {
     width: width - widthPercentageToDP("10%"),
     marginHorizontal: 20,
   },
+  text: {
+    color: COLOR_KEYS.HEADLINE,
+  },
 };
 
 const themed = {
@@ -41,7 +42,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const GetCoinsEnterAmountStyle = () => getThemedStyle(base, themed);

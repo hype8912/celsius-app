@@ -16,6 +16,8 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import addressUtil from "../../../utils/address-util";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -41,35 +43,18 @@ class WithdrawConfirm extends Component {
   }
 
   renderInfoBox = () => {
-    const { walletSummary, formData, user, loyaltyInfo } = this.props;
+    const { walletSummary, formData, loyaltyInfo } = this.props;
     const coinData =
       formData.coin &&
       walletSummary.coins.filter(
         c => c.short === formData.coin.toUpperCase()
       )[0];
-    const newBalance = coinData && coinData.amount - formData.amountCrypto;
-
-    if (user.celsius_member && formData.coin === "CEL" && newBalance < 1) {
-      return (
-        <InfoBox
-          backgroundColor={STYLES.COLORS.RED}
-          padding="15 15 15 15"
-          color="white"
-        >
-          <CelText color={STYLES.COLORS.WHITE}>
-            Withdrawing will leave you with less than 1 CEL in your wallet,
-            which result in losing your Celsius membership. This will restrict
-            you from using all the available Celsius features. Are you sure that
-            you want to withdraw?
-          </CelText>
-        </InfoBox>
-      );
-    }
+    const newBalance = coinData && coinData.amount.minus(formData.amountCrypto);
 
     if (
       formData.coin === "CEL" &&
       loyaltyInfo &&
-      newBalance < loyaltyInfo.min_for_tier
+      newBalance.isLessThan(loyaltyInfo.min_for_tier)
     ) {
       return (
         <InfoBox
@@ -109,9 +94,11 @@ class WithdrawConfirm extends Component {
     const coinData =
       formData.coin &&
       walletSummary.coins.find(c => c.short === formData.coin.toUpperCase());
+
     const newBalanceCrypto =
-      coinData && coinData.amount - formData.amountCrypto;
-    const newBalanceUsd = coinData && coinData.amount_usd - formData.amountUsd;
+      coinData && coinData.amount.minus(formData.amountCrypto);
+    const newBalanceUsd =
+      coinData && coinData.amount_usd.minus(formData.amountUsd);
 
     const isLoading = apiUtil.areCallsInProgress(
       [API.WITHDRAW_CRYPTO],
@@ -131,7 +118,8 @@ class WithdrawConfirm extends Component {
     let disclaimerText =
       "Follow instructions in email to complete this withdrawal.";
     if (
-      formData.amountUsd > Number(withdrawalSettings.maximum_withdrawal_amount)
+      Number(formData.amountUsd) >
+      Number(withdrawalSettings.maximum_withdrawal_amount)
     ) {
       disclaimerText +=
         " Please note that withdrawals might be delayed for twenty-four (24) hours due to our security protocols.";
@@ -157,7 +145,12 @@ class WithdrawConfirm extends Component {
             <Separator />
             <View style={styles.address}>
               <CelText type="H6">New wallet balance:</CelText>
-              <CelText style={styles.lineHeight} type="H6" weight="bold">
+              <CelText
+                style={styles.lineHeight}
+                type="H4"
+                weight="bold"
+                color={getColor(COLOR_KEYS.HEADLINE)}
+              >
                 {formatter.crypto(newBalanceCrypto, formData.coin)} |{" "}
                 {formatter.usd(newBalanceUsd)}
               </CelText>
@@ -168,9 +161,10 @@ class WithdrawConfirm extends Component {
               <View>
                 <CelText
                   style={[styles.lineHeight]}
-                  type="H6"
+                  type="H4"
                   weight="bold"
                   margin={"0 5 0 5"}
+                  color={getColor(COLOR_KEYS.HEADLINE)}
                 >
                   {address}
                 </CelText>
@@ -185,7 +179,7 @@ class WithdrawConfirm extends Component {
           >
             Send email verification
           </CelButton>
-          <CelText align="center" margin="20 0 20 0" color="gray">
+          <CelText align="center" margin="20 0 20 0">
             {disclaimerText}
           </CelText>
         </Card>

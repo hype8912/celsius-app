@@ -35,21 +35,17 @@ class TransactionFilterModal extends Component {
     super(props);
     const { coins, depositCompliance } = props;
 
-    const coinSelectItems = coins.filter(c =>
-      depositCompliance.coins.includes(c.short)
-    );
+    const coinSelectItems =
+      coins && coins.filter(c => depositCompliance.coins.includes(c.short));
 
-    const coinsList = coinSelectItems.map(c => ({
-      value: c.short,
-      icon: `Icon${c.short}`,
-      image_url: c.image_url,
-      title: `${formatter.capitalize(c.name)} (${c.short})`,
-    }));
-
-    coinsList.unshift({
-      title: "All Transactions",
-      value: null,
-    });
+    const coinsList = coinSelectItems
+      ? coinSelectItems.map(c => ({
+          value: c.short,
+          icon: `Icon${c.short}`,
+          image_url: c.image_url,
+          title: `${formatter.capitalize(c.name)} (${c.short})`,
+        }))
+      : [];
 
     this.state = {
       coinsList,

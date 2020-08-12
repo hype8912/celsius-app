@@ -11,7 +11,6 @@ import Constants from "../../constants";
 import { getSecureStoreKey } from "../utils/expo-storage";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
-import { isKYCRejectedForever } from "./user-util";
 import mixpanelAnalytics from "./mixpanel-analytics";
 
 const {
@@ -25,11 +24,13 @@ let token;
 let deviceModel;
 let osVersion;
 let buildVersion;
+const decodedPublicKey = Base64.decode(PUBLIC_KEY);
 
 export default {
   initInterceptors,
   areCallsInProgress,
   parseValidationErrors,
+  wereSuccessfulInHistory,
 };
 
 /**
@@ -65,7 +66,10 @@ async function requestInterceptor(req) {
     };
   }
 
-  if (newRequest.method === "post") {
+  if (
+    newRequest.method === "post" &&
+    newRequest.headers["Content-Type"] !== "multipart/form-data"
+  ) {
     newRequest.data = qs.stringify(newRequest.data);
   }
 
@@ -123,16 +127,16 @@ function setContentTypeHeaders(request) {
   let contentType = headers["Content-Type"];
   let accept = headers.Accept;
 
+  if (method === "post") {
+    contentType = "application/x-www-form-urlencoded; charset=UTF-8";
+    accept = "application/json";
+  }
+
   if (
     (url.includes("profile/profile_picture") && !data.profile_picture_url) ||
     url.includes("user/profile/documents")
   ) {
     contentType = "multipart/form-data";
-  }
-
-  if (method === "post") {
-    contentType = "application/x-www-form-urlencoded; charset=UTF-8";
-    accept = "application/json";
   }
 
   return {
@@ -148,9 +152,7 @@ async function setAppVersionHeaders() {
   const clientVersion = ENV === "PRODUCTION" ? CLIENT_VERSION : ENV;
   if (!buildVersion) {
     const metadata = await CodePush.getUpdateMetadata();
-    buildVersion = metadata
-      ? `${metadata.appVersion}@${metadata.label}`
-      : "local";
+    buildVersion = metadata ? `${clientVersion}@${metadata.label}` : "local";
   }
 
   return {
@@ -217,6 +219,7 @@ async function responseInterceptor(res) {
 async function errorInterceptor(serverError) {
   const defaultMsg = "Oops, it looks like something went wrong!";
   const defaultError = {
+    slug: "UNKNOWN_SERVER_ERROR",
     type: "Unknown Server Error",
     msg: defaultMsg,
     raw_error: serverError,
@@ -228,17 +231,33 @@ async function errorInterceptor(serverError) {
   if (!err.status)
     err.status = serverError.response ? serverError.response.status : null;
 
+  if (!err.slug) {
+    err.slug = "NO_SLUG";
+
+    // 426 doesn't return a slug, we have a lot of false ooops errors on mixpanel
+    if (err.status === 426) {
+      err.slug = "VERIFICATION_REQUIRED";
+      err.msg = null;
+    }
+  }
+
   mixpanelAnalytics.apiError({
     ...err,
-    url: serverError.config.url,
-    method: serverError.config.method,
+    url: serverError.config && serverError.config.url,
+    method: serverError.config && serverError.config.method,
   });
 
   if (err.status === 401) handle401(err);
-  if (err.status === 403) handle403(err);
+  if (err.status === 403) {
+    if (err.slug === "SIX_DIGIT_PIN_REQUIRED") {
+      await handleSixDigitPinChange(serverError.config);
+      return;
+    }
+    await handle403(err);
+  }
   if (err.status === 426) {
-    handle426(err);
-    return Promise.resolve();
+    const res = await handle426(err, serverError.config);
+    return Promise.resolve(res);
   }
   if (err.status === 429) handle429();
   if (err.status === 503) handle503(err);
@@ -250,45 +269,115 @@ async function errorInterceptor(serverError) {
   return Promise.reject(err);
 }
 
-function handle401(err) {
+async function handle401(err) {
   if (err.slug === "SESSION_EXPIRED") {
     store.dispatch(actions.expireSession());
-    store.dispatch(actions.logoutUser());
+    store.dispatch(actions.logoutFormDevice());
+  }
+  if (err.slug === "PASSWORD_LEAKED") {
+    store.dispatch(actions.resetToScreen("PasswordBreached"));
+  }
+  if (err.slug === "TWO_FACTOR_INVALID_CODE") {
+    store.dispatch(actions.showMessage("error", err.msg));
+  }
+  if (err.slug === "COMPLIANCE_ERROR") {
+    if (err.type === "BitWala") {
+      store.dispatch(actions.navigateTo("BitWala"));
+    }
   }
 }
 
-function handle403(err) {
+async function handle403(err) {
   if (err.slug === "USER_SUSPENDED") {
     const { profile } = store.getState().user;
     if (profile && profile.id) {
-      store.dispatch(actions.logoutUser());
+      store.dispatch(actions.logoutFormDevice());
     }
     store.dispatch(actions.showMessage("error", err.msg));
   }
-}
-
-function handle426(err) {
-  const { showVerifyScreen } = store.getState().app;
-  if (!showVerifyScreen) {
-    store.dispatch(
-      actions.navigateTo("VerifyProfile", {
-        hideBack: true,
-        show: err.show,
-        onSuccess: () => {
-          store.dispatch(
-            actions.resetToScreen(
-              isKYCRejectedForever() ? "KYCFinalRejection" : "WalletLanding"
-            )
-          );
-        },
-      })
-    );
-    store.dispatch(actions.showVerifyScreen());
+  if (err.slug === "Token Expired") {
+    store.dispatch(actions.logoutFormDevice("login", "inactiveUser", err.msg));
   }
 }
 
+async function handleSixDigitPinChange(reqConfig) {
+  return new Promise((resolve, reject) => {
+    const { formData } = store.getState().forms;
+    if (formData.pin || formData.code) {
+      navigateToSixDigitFlow(reqConfig, resolve, reject);
+    } else {
+      store.dispatch(
+        actions.navigateTo("VerifyProfile", {
+          hideBack: true,
+          showLogOutBtn: true,
+          onSuccess: () => {
+            navigateToSixDigitFlow(reqConfig, resolve, reject);
+          },
+        })
+      );
+    }
+  });
+}
+
+function navigateToSixDigitFlow(reqConfig, resolve, reject) {
+  store.dispatch(
+    actions.navigateTo("SixDigitPinExplanation", {
+      onSuccess: async () => {
+        try {
+          // fetch failed request again after verification successful
+          const res = await axios(reqConfig);
+          store.dispatch(actions.resetToScreen("WalletLanding"));
+          store.dispatch(actions.updateFormField("loading", false));
+          return resolve(res);
+        } catch (e) {
+          return reject(e);
+        }
+      },
+    })
+  );
+}
+
+async function handle426(err, reqConfig) {
+  return new Promise((resolve, reject) => {
+    // get active screen before rerouting
+    const { activeScreen } = store.getState().nav;
+
+    if (activeScreen !== "VerifyProfile") {
+      store.dispatch(
+        actions.navigateTo("VerifyProfile", {
+          hideBack: true,
+          showLogOutBtn: true,
+          // PIN || 2FA
+          verificationType: err.show,
+          hasSixDigitPin: err.has_six_digit_pin,
+          onSuccess: async () => {
+            try {
+              // fetch failed request again after verification successful
+              const res = await axios(reqConfig);
+
+              // navigate back
+              if (
+                !["LoginLanding", "Login", "SplashScreen"].includes(
+                  activeScreen
+                )
+              ) {
+                store.dispatch(actions.navigateBack());
+              }
+
+              // return successful response
+              return resolve(res);
+            } catch (e) {
+              return reject(e);
+            }
+          },
+        })
+      );
+    }
+  });
+}
+
 function handle429() {
-  store.dispatch(actions.navigateTo("LockedAccount"));
+  store.dispatch(actions.navigateTo("TooManyRequests"));
 }
 
 function handle503(err) {
@@ -327,24 +416,45 @@ function parseValidationErrors(serverError) {
 }
 
 /**
+ * Checks if some endpoints were successful in history
+ *
+ * @param {Array} callNames - array of calls from API
+ * @params {Number} numberOfCallsInHistory - number of calls to look into history
+ * @return {Boolean}
+ */
+function wereSuccessfulInHistory(callNames, numberOfCallsInHistory = 5) {
+  const history = store.getState().api.history;
+  const succesfulCalls = callNames.map(cn => `${cn}_SUCCESS`);
+  const lastNCalls = history.slice(0, numberOfCallsInHistory);
+
+  let wereSuccessful = false;
+
+  lastNCalls.forEach(cn => {
+    wereSuccessful = wereSuccessful || succesfulCalls.includes(cn);
+  });
+
+  return wereSuccessful;
+}
+
+/**
  * Verifies the data with signature key from the server
  *
- * @param {Object} address - data from server response
+ * @param {Object} data - data from server response
  * @param {string} sign - sign from response headers
  * @returns {boolean}
  *
  * endpont /users/hodl_mode/begin returns wrong api key
  * CN-4875 Wire hodl mode
  */
-function verifyKey(data, sign) {
-  try {
-    const sig2 = new r.KJUR.crypto.Signature({ alg: "SHA256withRSA" });
-    sig2.init(Base64.decode(PUBLIC_KEY));
-    sig2.updateString(JSON.stringify(data));
-    const isValid = true || sig2.verify(sign);
 
-    return ENV === "PRODUCTION" ? true : isValid;
-  } catch (err) {
-    return true;
+function verifyKey(data, sign) {
+  const sig2 = new r.KJUR.crypto.Signature({ alg: "SHA256withRSA" });
+  sig2.init(decodedPublicKey);
+  if (typeof data === "string") {
+    sig2.updateString(data);
+  } else {
+    sig2.updateString(JSON.stringify(data));
   }
+  const isValid = sig2.verify(sign);
+  return isValid;
 }

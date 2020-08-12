@@ -63,6 +63,12 @@ function getPropsFromTransaction(transaction) {
           color: STYLES.COLORS.RED,
         };
       }
+      if (!transaction.loan_data.unlock_reason) {
+        return {
+          status: "Loan",
+          color: STYLES.COLORS.CELSIUS_BLUE,
+        };
+      }
       break;
     case TRANSACTION_TYPES.COLLATERAL_LIQUIDATED:
       return {
@@ -70,7 +76,10 @@ function getPropsFromTransaction(transaction) {
         color: STYLES.COLORS.RED,
       };
     default: {
-      return {};
+      return {
+        status: "",
+        color: STYLES.COLORS.CELSIUS_BLUE,
+      };
     }
   }
 }
@@ -102,7 +111,8 @@ const CollateralLoanCard = ({ transaction, navigateTo }) => {
             )}
           </CelText>
           <CelText type="H6" align="center">
-            Loan initiated: {moment(transaction.time).format("D MMM YYYY")}
+            Loan initiated:{" "}
+            {moment(transaction.loan_data.initiation_date).format("D MMM YYYY")}
           </CelText>
 
           <Separator margin="12 0 12 0" />

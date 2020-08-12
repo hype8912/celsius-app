@@ -9,11 +9,12 @@ import { lookup, countries } from "country-data";
 import * as appActions from "../../../redux/actions";
 
 import CelSelectStyle from "./CelSelect.styles";
-import { getMargins } from "../../../utils/styles-util";
+import { getColor, getMargins } from "../../../utils/styles-util";
 import Icon from "../../atoms/Icon/Icon";
 import SELECT_VALUES from "../../../constants/SELECT_VALUES";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { PERSON_TITLE, GENDER, STATE, DAYS, YEARS, MONTHS } = SELECT_VALUES;
 
@@ -208,6 +209,7 @@ class CelSelect extends Component {
             {this.renderImage(cmpStyle.flagImage, country.alpha2)}
             <CelText
               type="H4"
+              weight="light"
               align="left"
               style={{ marginLeft: 10, marginRight: 5 }}
             >
@@ -236,7 +238,7 @@ class CelSelect extends Component {
           style={[inputStyle, { flexDirection: "row", alignItems: "center" }]}
         >
           <View style={{ flexDirection: "row" }}>
-            <CelText type="H4" color={textColor}>
+            <CelText type="H4" weight="light" color={textColor}>
               {value ? value.label : labelText}
             </CelText>
             {!disabled && (
@@ -276,14 +278,14 @@ class CelSelect extends Component {
             flex: 1,
           }}
         >
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             {countryInput
               ? this.renderImage(
                   [cmpStyle.flagImage, { marginRight: 5 }],
                   this.state.value.alpha2
                 )
               : null}
-            <CelText type="H4" color={textColor}>
+            <CelText type="H4" weight="light" color={textColor}>
               {value ? value.label || value.name : labelText}
             </CelText>
           </View>
@@ -335,7 +337,12 @@ class CelSelect extends Component {
 
         {!!error && (
           <View>
-            <CelText margin="5 0 0 0" color="red" style={{ height: 20 }}>
+            <CelText
+              margin="5 0 0 0"
+              color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+              style={{ height: 20 }}
+              type="H6"
+            >
               {!!error && error}
             </CelText>
           </View>

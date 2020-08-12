@@ -9,7 +9,7 @@ import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import InterestDueModalStyle from "./InterestDueModal.styles";
-import CelButton from "../../atoms/CelButton/CelButton";
+// import CelButton from "../../atoms/CelButton/CelButton";
 
 class InterestDueModal extends Component {
   static propTypes = {
@@ -86,11 +86,12 @@ class InterestDueModal extends Component {
           ))}
         </View>
 
-        {alert && (
-          <CelButton basic onPress={this.seeLoanDetails}>
-            See Loan Details
-          </CelButton>
-        )}
+        {/* TODO: to be fixed in CN-6810 */}
+        {/* {alert && (*/}
+        {/*  <CelButton basic onPress={this.seeLoanDetails}>*/}
+        {/*    See Loan Details*/}
+        {/*  </CelButton>*/}
+        {/* )}*/}
 
         <View
           style={{

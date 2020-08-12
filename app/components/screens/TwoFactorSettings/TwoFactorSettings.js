@@ -14,6 +14,8 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Card from "../../atoms/Card/Card";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import Separator from "../../atoms/Separator/Separator";
+import loggerUtil from "../../../utils/logger-util";
+import { STORYBOOK } from "../../../../dev-settings.json";
 
 @connect(
   state => ({
@@ -34,20 +36,28 @@ class TwoFactorSettings extends Component {
   constructor(props) {
     super(props);
 
+    const secret = STORYBOOK && "NN5TSVC6MFIGGWS3LJCSYT3VNE2ESRSG";
+
     this.state = {
-      secretLoaded: false,
-      secret: null,
+      secretLoaded: !!secret,
+      secret: secret || null,
     };
   }
 
   async componentDidMount() {
     const { actions, formData } = this.props;
-    const data = await actions.getTwoFactorSecret(formData.pin);
-    if (data.ok) {
-      this.setState({
-        secret: data.secret,
-        secretLoaded: true,
-      });
+    try {
+      const data = await actions.getTwoFactorSecret(formData.pin);
+      if (data.ok) {
+        const qrCodeUrl = this.getQRCode(data.secret);
+        this.setState({
+          secret: data.secret,
+          secretLoaded: true,
+          qrCodeUrl,
+        });
+      }
+    } catch (e) {
+      loggerUtil.log(e);
     }
   }
 
@@ -56,7 +66,7 @@ class TwoFactorSettings extends Component {
 
   render() {
     const { actions } = this.props;
-    const { secret, secretLoaded } = this.state;
+    const { secret, secretLoaded, qrCodeUrl } = this.state;
     const style = TwoFactorSettingsStyle();
 
     if (!secretLoaded) return <LoadingScreen />;
@@ -69,7 +79,7 @@ class TwoFactorSettings extends Component {
         <Card styles={{ alignItems: "center", marginTop: 25 }}>
           <View style={style.qrWrapper}>
             <QRCode
-              value={this.getQRCode(secret)}
+              value={qrCodeUrl}
               size={141}
               bgColor="#FFF"
               fgColor="#000"
@@ -78,7 +88,7 @@ class TwoFactorSettings extends Component {
           <CelText
             align="center"
             style={style.secretText}
-            onPress={() => Linking.openURL(this.getQRCode(secret))}
+            onPress={() => Linking.openURL(qrCodeUrl)}
           >
             {secret}
           </CelText>

@@ -6,15 +6,14 @@ import { clearForm } from "../forms/formsActions";
 import transfersService from "../../services/transfer-service";
 import formatter from "../../utils/formatter";
 import { navigateTo } from "../nav/navActions";
-import celUtilityUtil from "../../utils/cel-utility-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { CEL_PAY_TYPES } from "../../constants/UI";
 
 export { celPayFriend, celPayShareLink };
 
 /**
- * TODO add JSDoc
- */
+ * creates celpay transfer for a friend to be sent
+ **/
 function celPayFriend() {
   return async (dispatch, getState) => {
     try {
@@ -63,8 +62,6 @@ function celPayFriend() {
       );
       dispatch(closeModal());
 
-      await celUtilityUtil.refetchMembershipIfChanged(transfer.coin);
-
       mixpanelAnalytics.initiatedCelPay(CEL_PAY_TYPES.FRIEND);
     } catch (err) {
       dispatch(apiError(API.CREATE_TRANSFER, err));
@@ -74,8 +71,8 @@ function celPayFriend() {
 }
 
 /**
- * TODO add JSDoc
- */
+ * creates celpay transfer as a link to be shared
+ **/
 function celPayShareLink() {
   return async (dispatch, getState) => {
     try {
@@ -111,8 +108,6 @@ function celPayShareLink() {
         })
       );
       dispatch(closeModal());
-
-      await celUtilityUtil.refetchMembershipIfChanged(transfer.coin);
 
       mixpanelAnalytics.initiatedCelPay(CEL_PAY_TYPES.LINK);
     } catch (err) {

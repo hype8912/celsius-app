@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   widthPercentageToDP,
@@ -46,7 +45,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const WiringBankInfomationStyle = () => getThemedStyle(base, themed);

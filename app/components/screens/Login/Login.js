@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import LoginStyle from "./Login.styles";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
@@ -13,7 +13,6 @@ import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -100,30 +99,23 @@ class Login extends Component {
                 this.pass = input;
               }}
             />
-            {ENV !== "STAGING" ? (
-              <View style={style.forgotPassword}>
-                <TouchableOpacity
-                  onPress={() => actions.navigateTo("ForgotPassword")}
-                >
-                  <CelText weight="300" color={STYLES.COLORS.CELSIUS_BLUE}>
-                    Forgot password?
-                  </CelText>
-                </TouchableOpacity>
-              </View>
-            ) : null}
 
             {this.renderCaptcha()}
 
-            {/* <CelButton*/}
-            {/*  margin="10 0 40 0"*/}
-            {/*  onPress={this.loginUser}*/}
-            {/*  loading={loginLoading}*/}
-            {/* >*/}
-            {/*  Log in*/}
-            {/* </CelButton>*/}
+            <CelButton
+              margin="35 0 25 0"
+              basic
+              onPress={() => actions.navigateTo("ForgotPassword")}
+            >
+              Forgot password?
+            </CelButton>
 
             {ENV === "STAGING" ? (
-              <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
+              <CelButton
+                basic
+                margin="0 0 25 0"
+                onPress={() => actions.navigateTo("Storybook")}
+              >
                 Open Storybook
               </CelButton>
             ) : null}
@@ -134,7 +126,7 @@ class Login extends Component {
               <CelText
                 weight="300"
                 align="center"
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
                 onPress={() =>
                   actions.navigateTo("LoginLanding", { type: "register" })
                 }

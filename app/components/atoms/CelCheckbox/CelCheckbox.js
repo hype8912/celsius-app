@@ -4,23 +4,22 @@ import { TouchableOpacity, View } from "react-native";
 import CheckBox from "react-native-check-box";
 
 import CelText from "../CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import { THEMES } from "../../../constants/UI";
 import Spinner from "../Spinner/Spinner";
 import Icon from "../Icon/Icon";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const checked = (
   <Icon
     name="CheckedBorder"
     width="23"
     height="23"
-    fill={STYLES.COLORS.GREEN}
+    fill={getColor(COLOR_KEYS.POSITIVE_STATE)}
   />
 );
 
-const unchecked = (
-  <Icon name="Unchecked" width="23" height="23" fill={STYLES.COLORS.GRAY} />
-);
+const unchecked = <Icon name="Unchecked" width="23" height="23" />;
 
 const CelCheckbox = ({
   field,
@@ -33,7 +32,7 @@ const CelCheckbox = ({
   textWeight,
   loading,
   theme,
-  fillColor,
+  fillColor = getColor(COLOR_KEYS.PARAGRAPH),
 }) => {
   const onPress = onChange || updateFormField;
 
@@ -48,8 +47,6 @@ const CelCheckbox = ({
         </View>
       ) : (
         <CheckBox
-          checkBoxColor={STYLES.COLORS.MEDIUM_GRAY}
-          checkedCheckBoxColor={STYLES.COLORS.GREEN}
           style={{ paddingRight: 10 }}
           onClick={() => onPress(field, !value)}
           isChecked={value}

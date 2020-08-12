@@ -16,6 +16,7 @@ import Separator from "../../atoms/Separator/Separator";
 @connect(
   state => ({
     formData: state.forms.formData,
+    activeScreen: state.nav.activeScreen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -95,13 +96,15 @@ class SelectCountry extends Component {
   }
 
   onCountrySelect = async (field, country) => {
-    const { actions } = this.props;
+    const { actions, activeScreen } = this.props;
     await actions.updateFormFields({
       [field]: country,
       state: null,
       search: "",
     });
-    actions.navigateBack();
+    if (activeScreen === "SelectCountry") {
+      actions.navigateBack();
+    }
   };
 
   getSelectStyle = (style, isActive = false) => {
@@ -126,7 +129,7 @@ class SelectCountry extends Component {
     return false;
   };
 
-  renderCountries = ({ item: country }) => {
+  renderCountry = ({ item: country }) => {
     const { navigation, formData } = this.props;
     const style = SelectCountryStyles();
     const field = navigation.getParam("field_name", "NO-FIELD");
@@ -149,7 +152,7 @@ class SelectCountry extends Component {
                 <CelText
                   type="H4"
                   align="left"
-                  style={{ marginLeft: 5, width: 50 }}
+                  style={{ marginLeft: 5, width: 60 }}
                 >
                   {country.countryCallingCodes
                     ? country.countryCallingCodes[0]
@@ -198,7 +201,7 @@ class SelectCountry extends Component {
           {filteredCountries.length > 0 ? (
             <FlatList
               data={filteredCountries}
-              renderItem={this.renderCountries}
+              renderItem={this.renderCountry}
               keyExtractor={country => country.alpha2}
             />
           ) : (

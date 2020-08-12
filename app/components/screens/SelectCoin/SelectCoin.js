@@ -13,12 +13,13 @@ import { THEMES } from "../../../constants/UI";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import { getTheme } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
     formData: state.forms.formData,
-    walletSummary: state.wallet.summary,
     currencies: state.currencies.rates,
+    activeScreen: state.nav.activeScreen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -40,12 +41,14 @@ class SelectCoin extends Component {
         "coinListFormatted"
       );
 
-      const allCoins = coinListFormatted.map(coin => {
-        return {
-          ...coin,
-          image: getImageForCrypto(coin, nextProps.currencies),
-        };
-      });
+      const allCoins =
+        coinListFormatted &&
+        coinListFormatted.map(coin => {
+          return {
+            ...coin,
+            image: getImageForCrypto(coin, nextProps.currencies),
+          };
+        });
 
       const text =
         (nextProps.formData &&
@@ -53,11 +56,13 @@ class SelectCoin extends Component {
           nextProps.formData.search.toLowerCase()) ||
         "";
 
-      newState.filteredCoins = allCoins.filter(
-        coin =>
-          coin.label.toLowerCase().includes(text) ||
-          coin.value.toLowerCase().includes(text)
-      );
+      newState.filteredCoins =
+        allCoins &&
+        allCoins.filter(
+          coin =>
+            coin.label.toLowerCase().includes(text) ||
+            coin.value.toLowerCase().includes(text)
+        );
 
       newState.search = nextProps.formData.search;
     }
@@ -77,12 +82,14 @@ class SelectCoin extends Component {
     const { currencies, navigation } = this.props;
     const coinListFormatted = navigation.getParam("coinListFormatted");
 
-    const allCoins = coinListFormatted.map(coin => {
-      return {
-        ...coin,
-        image: getImageForCrypto(coin, currencies),
-      };
-    });
+    const allCoins =
+      coinListFormatted &&
+      coinListFormatted.map(coin => {
+        return {
+          ...coin,
+          image: getImageForCrypto(coin, currencies),
+        };
+      });
     this.setState({
       filteredCoins: allCoins,
     });
@@ -104,42 +111,21 @@ class SelectCoin extends Component {
     const theme = getTheme();
     const style = SelectCoinStyle();
 
-    if (theme === THEMES.LIGHT && item.image) {
+    if (theme !== THEMES.DARK && item.image) {
       return (
         <Image source={{ uri: item.image }} style={{ width: 30, height: 30 }} />
       );
     }
 
     if (theme === THEMES.DARK && item.image) {
-      return (
-        <Icon
-          name={`Icon${item.value}`}
-          fill={STYLES.COLORS.WHITE}
-          height={30}
-          width={30}
-        />
-      );
+      return <Icon name={`Icon${item.value}`} height={30} width={30} />;
     }
 
     return (
-      <View
-        style={[
-          {
-            backgroundColor:
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.MEDIUM_GRAY1
-                : STYLES.COLORS.DARK_HEADER,
-          },
-          style.iconCircle,
-        ]}
-      >
+      <View style={style.iconCircle}>
         <Icon
           name={`Icon${item.value}`}
-          fill={
-            theme === THEMES.LIGHT
-              ? STYLES.COLORS.DARK_GRAY
-              : STYLES.COLORS.WHITE
-          }
+          fill={COLOR_KEYS.BACKGROUND}
           height={30}
           width={30}
         />
@@ -148,7 +134,7 @@ class SelectCoin extends Component {
   };
 
   renderItem = ({ item }) => {
-    const { actions, formData, navigation } = this.props;
+    const { actions, formData, navigation, activeScreen } = this.props;
     const selectedCoin = formData.selectedCoin;
     const coin = formData.coin;
     const isActive = selectedCoin
@@ -170,7 +156,9 @@ class SelectCoin extends Component {
               [field]: item.value,
               search: "",
             });
-            actions.navigateBack();
+            if (activeScreen === "SelectCoin") {
+              actions.navigateBack();
+            }
           }}
         >
           <View style={itemStyle}>
@@ -196,7 +184,7 @@ class SelectCoin extends Component {
     return (
       <RegularLayout>
         <View>
-          {filteredCoins.length > 0 ? (
+          {filteredCoins && filteredCoins.length > 0 ? (
             <FlatList
               data={filteredCoins}
               renderItem={this.renderItem}

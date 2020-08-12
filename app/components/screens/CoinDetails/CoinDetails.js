@@ -12,9 +12,12 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import CoinDetailsStyle from "./CoinDetails.styles";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import Badge from "../../atoms/Badge/Badge";
-import { getTheme, widthPercentageToDP } from "../../../utils/styles-util";
+import {
+  getColor,
+  getTheme,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import Icon from "../../atoms/Icon/Icon";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
@@ -22,14 +25,12 @@ import InterestCard from "../../molecules/InterestCard/InterestCard";
 import interestUtil from "../../../utils/interest-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import Counter from "../../molecules/Counter/Counter";
-
-const { COLORS } = STYLES;
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
     currencies: state.currencies.rates,
     walletSummary: state.wallet.summary,
-    currencyRatesShort: state.currencies.currencyRatesShort,
     interestRates: state.generalData.interestRates,
     celpayCompliance: state.compliance.celpay,
     coinAmount: state.graph.coinLastValue,
@@ -151,6 +152,7 @@ class CoinDetails extends Component {
       depositCompliance,
       simplexCompliance,
     } = this.props;
+
     const coinDetails = this.getCoinDetails();
     const style = CoinDetailsStyle();
     const coinPrice = currencies
@@ -176,6 +178,14 @@ class CoinDetails extends Component {
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
+    const isBelowThreshold = interestUtil.isBelowThreshold(coinDetails.short);
+    const specialRate = isBelowThreshold
+      ? interestRate.specialApyRate
+      : interestRate.apyRate;
+    const isInCel = !interestRate.inCEL
+      ? interestRate.compound_rate
+      : specialRate;
+
     return (
       <RegularLayout
         padding={"20 0 100 0"}
@@ -200,7 +210,7 @@ class CoinDetails extends Component {
                     weight="600"
                     type="H2"
                     margin={"3 0 3 0"}
-                    number={coinDetails.amount_usd}
+                    number={coinDetails.amount_usd.toNumber()}
                     speed={5}
                     usd
                   />
@@ -344,14 +354,16 @@ class CoinDetails extends Component {
                       <Badge
                         margin="0 10 10 12"
                         style={{ alignContent: "center" }}
-                        color={COLORS.GREEN}
+                        color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                       >
                         <CelText
                           margin={"0 5 0 5"}
                           align="justify"
                           type="H5"
                           color="white"
-                        >{`${interestRate.display} APY`}</CelText>
+                        >{`${formatter.percentageDisplay(
+                          isInCel
+                        )} APY`}</CelText>
                       </Badge>
                     </View>
                   )}

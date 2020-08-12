@@ -1,8 +1,5 @@
 import ACTIONS from "../../constants/ACTIONS";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 function initialState() {
   return {
     interestRates: undefined,
@@ -11,7 +8,7 @@ function initialState() {
     celUtilityTiers: undefined,
     withdrawalSettings: undefined,
     buyCoinsSettings: undefined,
-    backendStatus: undefined, // TODO move to appReducer ?
+    backendStatus: undefined,
     loanTermsOfUse: undefined,
     pdf: undefined,
   };
@@ -26,12 +23,6 @@ export default function generalDataReducer(state = initialState(), action) {
         ...state,
         loanTermsOfUse: action.lToU,
         pdf: action.pdf,
-      };
-
-    case ACTIONS.GET_BACKEND_STATUS_SUCCESS:
-      return {
-        ...state,
-        backendStatus: action.backendStatus,
       };
 
     case ACTIONS.TOGGLE_MAINTENANCE_MODE:
@@ -64,9 +55,13 @@ export default function generalDataReducer(state = initialState(), action) {
         withdrawalSettings: action.withdrawalSettings,
         celPaySettings: action.celPaySettings,
         automaticLoanLimit: action.automaticLoanLimit,
-        buyCoinsSettings: action.buyCoinsSettings,
+        buyCoinsSettings: {
+          ...state.buyCoinsSettings,
+          ...action.buyCoinsSettings,
+        },
       };
 
+    case ACTIONS.GET_APP_BOOTSTRAP_SUCCESS:
     case ACTIONS.GET_LOYALTY_INFO_SUCCESS:
       return {
         ...state,

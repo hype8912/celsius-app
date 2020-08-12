@@ -1,28 +1,19 @@
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
-  text: {
-    fontFamily: "Barlow-Regular",
-  },
+  text: { color: COLOR_KEYS.PARAGRAPH },
+  H1: { color: COLOR_KEYS.HEADLINE },
+  H2: { color: COLOR_KEYS.HEADLINE },
+  H3: { color: COLOR_KEYS.HEADLINE },
+  link: { color: COLOR_KEYS.LINK },
 };
 
 const themed = {
-  light: {
-    textColor: {
-      color: STYLES.COLORS.DARK_GRAY, // medium_gray je bilo 30.01.
-    },
-  },
-  dark: {
-    textColor: { color: STYLES.COLORS.WHITE_OPACITY5 },
-    H1: { color: STYLES.COLORS.WHITE },
-    H2: { color: STYLES.COLORS.WHITE },
-    H3: { color: STYLES.COLORS.WHITE },
-  },
-  celsius: {
-    textColor: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
+  light: {},
+  dark: {},
+  unicorn: {
+    link: { textDecorationLine: "underline" },
   },
 };
 

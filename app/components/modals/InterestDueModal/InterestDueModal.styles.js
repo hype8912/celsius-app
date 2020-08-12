@@ -1,29 +1,19 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   installmentsWrapper: {
     borderRadius: 5,
     padding: 10,
     margin: 10,
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
 };
 
 const themed = {
-  light: {
-    installmentsWrapper: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
-
-  dark: {
-    installmentsWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const InterestDueModalStyle = () => getThemedStyle(base, themed);

@@ -4,7 +4,8 @@ import { Linking, View } from "react-native";
 
 import ContactSupportStyle from "./ContactSupport.styles";
 import CelText from "../CelText/CelText";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const ContactSupport = ({
   content,
@@ -26,7 +27,7 @@ const ContactSupport = ({
 
 const SupportLink = () => (
   <CelText
-    color={STYLES.COLORS.CELSIUS_BLUE}
+    color={getColor(COLOR_KEYS.LINK)}
     onPress={() => Linking.openURL("mailto:app@celsius.network")}
   >
     {"app@celsius.network"}

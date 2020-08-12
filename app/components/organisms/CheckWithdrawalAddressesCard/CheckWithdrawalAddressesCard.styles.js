@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { Platform } from "react-native";
 import {
   getThemedStyle,
@@ -29,6 +28,7 @@ const base = {
 
   infoTextWrapper: {
     width: "100%",
+    justifyContent: "space-around",
     flexDirection: "column",
     alignItems: "flex-end",
     paddingVertical: 8,
@@ -45,7 +45,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CheckWithdrawalAddressesCardStyle = () => getThemedStyle(base, themed);

@@ -5,18 +5,17 @@ import { bindActionCreators } from "redux";
 import { View } from "react-native";
 
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 import * as appActions from "../../../redux/actions";
-import { getTheme, widthPercentageToDP } from "../../../utils/styles-util";
+import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import formatter from "../../../utils/formatter";
-import { THEMES } from "../../../constants/UI";
 import Spinner from "../../atoms/Spinner/Spinner";
 import { isUSCitizen } from "../../../utils/user-util";
 import Badge from "../../atoms/Badge/Badge";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import Separator from "../../atoms/Separator/Separator";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -61,15 +60,13 @@ class InterestCard extends Component {
   };
 
   render() {
-    const { tier, coin, actions, interestRates, interestRate } = this.props;
+    const { tier, coin, actions, interestRate } = this.props;
     const { loading } = this.state;
 
     if (!interestRate.eligible) return null;
     if (tier === "NONE") return null;
     if (isUSCitizen()) return null;
     if (coin === "CEL") return null;
-
-    const theme = getTheme();
 
     return (
       <View style={{ paddingHorizontal: 5 }}>
@@ -91,11 +88,11 @@ class InterestCard extends Component {
               <Badge
                 margin="12 0 10 12"
                 style={{ alignContent: "center" }}
-                color={STYLES.COLORS.GREEN}
+                color={getColor(COLOR_KEYS.POSITIVE_STATE)}
               >
                 <CelText align="justify" type="H5" color="white">
                   {formatter.percentageDisplay(
-                    interestRates[coin].compound_cel_rate
+                    interestRate.specialApyRate || interestRate.apyRate
                   )}
                 </CelText>
               </Badge>
@@ -122,20 +119,14 @@ class InterestCard extends Component {
               />
             )}
           </View>
-          <Card
-            color={
-              theme !== THEMES.DARK
-                ? STYLES.COLORS.LIGHT_GRAY
-                : STYLES.COLORS.DARK_GRAY
-            }
-          >
+          <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
             <CelText weight={"300"} type={"H7"}>
               To earn interest in CEL on all your deposited coins, visit{" "}
               <CelText
                 onPress={() => actions.navigateTo("MyCel")}
                 weight={"300"}
                 type={"H7"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
               >
                 My CEL
               </CelText>{" "}

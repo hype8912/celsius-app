@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions, Platform } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { height, width } = Dimensions.get("window");
 const newWidth = height * (3 / 4);
@@ -41,6 +42,7 @@ const base = {
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
 };
 
@@ -49,26 +51,17 @@ const themed = {
     maskOverlayColor: {
       backgroundColor: "rgba(241,239,238,0.6)",
     },
-    actionBar: {
-      backgroundColor: "white",
-    },
   },
 
   dark: {
     maskOverlayColor: {
       backgroundColor: STYLES.COLORS.DARK_OVERLAY,
     },
-    actionBar: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
   },
 
-  celsius: {
+  unicorn: {
     maskOverlayColor: {
       backgroundColor: "rgba(241,239,238,0.6)",
-    },
-    actionBar: {
-      backgroundColor: "white",
     },
   },
 };

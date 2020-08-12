@@ -73,7 +73,6 @@ class SecurityOverview extends Component {
 
   getFixNowParams = () => {
     const { securityOverview, twoFAStatus } = this.props;
-
     let scoreParams = securityOverview.score_parameters;
     const scoreParamsCount = securityOverview.score_parameters_count;
     let scoreParamsFixableCount =
@@ -112,7 +111,7 @@ class SecurityOverview extends Component {
           selectedModalData: {
             title: "Why should you whitelist your withdrawal addresses?",
             body: [
-              "Whitelisting a withdrawal address means that in the rare chance a hacker is able to gain access to your account, the only place they can send your crypto is a wallet that you already control. In addition, changing a whitelisted address for a specific coin requires email confirmation and will incur a 24-hour lockdown on all withdrawals in that coin.",
+              "Whitelisting a withdrawal address means that in the rare chance a hacker is able to gain access to your account, the only place they can send your crypto is a wallet that you already control. In addition, changing a whitelisted address for a specific coin requires email confirmation and will incur a 24 hours lock-down on all withdrawals in that coin.",
             ],
           },
         });
@@ -137,7 +136,6 @@ class SecurityOverview extends Component {
     const { actions, securityOverview, twoFAStatus } = this.props;
     const style = SecurityOverviewStyle();
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
-
     const fixNowParams = this.getFixNowParams();
     return (
       <RegularLayout>
@@ -157,7 +155,7 @@ class SecurityOverview extends Component {
             <Separator text="2FA VERIFICATION" showInfo />
           </TouchableOpacity>
           <ToggleInfoCard
-            subtitle={"Your 2FA verification is"}
+            subtitle={"Your 2FA is"}
             onPress={this.onPress2fa}
             enabled={twoFAStatus.isActive}
           />

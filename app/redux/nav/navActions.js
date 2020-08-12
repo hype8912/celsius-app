@@ -36,6 +36,7 @@ function setTopLevelNavigator(navigatorRef) {
  */
 function navigateTo(routeName, params) {
   return () => {
+    if (!_navigator) return;
     _navigator.dispatch(
       NavigationActions.navigate({
         routeName,
@@ -51,6 +52,7 @@ function navigateTo(routeName, params) {
  */
 function navigateBack(backScreenName) {
   return () => {
+    if (!_navigator) return;
     if (backScreenName === "VerifyProfile") {
       // If back button leads to VerifyProfile, skip it and go back one more screen
       userBehavior.navigated("Back");
@@ -72,8 +74,8 @@ function navigateBack(backScreenName) {
  */
 
 function resetToScreen(screenName, params) {
-  userBehavior.navigated(screenName);
   return () => {
+    if (!_navigator) return;
     _navigator.dispatch(
       StackActions.reset({
         index: 0,
@@ -83,5 +85,6 @@ function resetToScreen(screenName, params) {
         ],
       })
     );
+    userBehavior.navigated(screenName);
   };
 }

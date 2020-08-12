@@ -1,21 +1,21 @@
 import React, { Component } from "react";
+// eslint-disable-next-line import/no-unresolved
+import { openInbox } from "react-native-email-link";
 import _ from "lodash";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-// import SecuritySettingsStyle from "./SecuritySettings.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { HODL_STATUS, MODALS } from "../../../constants/UI";
-import RemoveAuthAppModal from "../../modals/RemoveAuthAppModal/RemoveAuthAppModal";
+import { HODL_STATUS } from "../../../constants/UI";
 import { hasPassedKYC } from "../../../utils/user-util";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
-import STYLES from "../../../constants/STYLES";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -86,7 +86,17 @@ class SecuritySettings extends Component {
     const { is2FAEnabled } = this.state;
     const { actions } = this.props;
     if (is2FAEnabled) {
-      actions.openModal(MODALS.REMOVE_AUTHAPP_MODAL);
+      actions.navigateTo("VerifyProfile", {
+        onSuccess: async () => {
+          await actions.disableTwoFactor();
+          actions.navigateTo("SecuritySettings");
+          openInbox({
+            title: "Remove Auth App",
+            message:
+              "If you remove authentication application you will lose a second step of verification. Are you sure you want to proceed?",
+          });
+        },
+      });
     } else {
       actions.navigateTo("VerifyProfile", {
         onSuccess: () => actions.navigateTo("TwoFactorSettings"),
@@ -101,7 +111,10 @@ class SecuritySettings extends Component {
       <CelSwitch
         onValueChange={this.handleSwitchChangeHodl}
         value={isInHodlMode}
-        disabled={hodlStatus.state === HODL_STATUS.PENDING_DEACTIVATION || hodlStatus.created_by === "backoffice"}
+        disabled={
+          hodlStatus.state === HODL_STATUS.PENDING_DEACTIVATION ||
+          hodlStatus.created_by === "backoffice"
+        }
       />
     );
   };
@@ -112,59 +125,63 @@ class SecuritySettings extends Component {
   };
 
   securityOverallScore = () => {
-    const { securityOverview } = this.props
+    const { securityOverview } = this.props;
 
-    if (_.isEmpty(securityOverview)) return
+    if (_.isEmpty(securityOverview)) return;
 
     const strength = securityOverview.overall_score_strength.toLowerCase();
     switch (strength) {
       case SECURITY_STRENGTH_LEVEL.WEAK.toLowerCase():
         return {
           text: strength.toUpperCase(),
-          textColor: STYLES.COLORS.RED,
+          textColor: getColor(COLOR_KEYS.NEGATIVE_STATE),
         };
       case SECURITY_STRENGTH_LEVEL.FAIR.toLowerCase():
         return {
           text: strength.toUpperCase(),
-          textColor: STYLES.COLORS.ORANGE_DARK,
+          textColor: getColor(COLOR_KEYS.ALERT_STATE),
         };
       case SECURITY_STRENGTH_LEVEL.GOOD.toLowerCase():
         return {
           text: strength.toUpperCase(),
-          textColor: STYLES.COLORS.ORANGE,
+          textColor: getColor(COLOR_KEYS.ALERT_STATE),
         };
       case SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase():
         return {
           text: strength.toUpperCase(),
-          textColor: STYLES.COLORS.GREEN,
+          textColor: getColor(COLOR_KEYS.POSITIVE_STATE),
         };
       default:
         return null;
     }
-  }
+  };
 
   render() {
-    const { actions, is2FAEnabled, user, kycStatus, securityOverview } = this.props;
+    const {
+      actions,
+      is2FAEnabled,
+      user,
+      kycStatus,
+      securityOverview,
+    } = this.props;
+
     const Switcher2FA = this.rightSwitch2FA;
     const SwitcherHodl = this.rightSwitchHodl;
-    const rightText = this.securityOverallScore()
-
+    const rightText = this.securityOverallScore();
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
-
 
     return (
       <RegularLayout>
-       { kycStatus && hasPassedKYC() && !_.isEmpty(securityOverview) &&
-       <IconButton
-          margin="0 0 0 0"
-          rightText={rightText.text}
-          rightTextColor={rightText.textColor}
-          onPress={() =>
-            actions.navigateTo('SecurityOverview')
-          }
-        >
-          Security Overview
-        </IconButton>}
+        {kycStatus && hasPassedKYC() && !_.isEmpty(securityOverview) && (
+          <IconButton
+            margin="0 0 0 0"
+            rightText={rightText.text}
+            rightTextColor={rightText.textColor}
+            onPress={() => actions.navigateTo("SecurityOverview")}
+          >
+            Security Overview
+          </IconButton>
+        )}
 
         <IconButton margin={"20 0 20 0"} right={<Switcher2FA />} hideIconRight>
           Two-Factor Verification
@@ -203,25 +220,19 @@ class SecuritySettings extends Component {
           Change withdrawal addresses
         </IconButton>
 
-
-         <CelButton
-          margin="0 0 30 0"
+        <CelButton
+          margin="0 0 20 0"
           basic
-          onPress={() => {actions.navigateTo('ActionsByUser')}}
-         >
+          onPress={() => {
+            actions.navigateTo("ActionsByUser");
+          }}
+        >
           User Actions
-         </CelButton>
-
-
-        <CelButton onPress={this.logoutUser}>
-          Log out from all devices
         </CelButton>
 
-        <RemoveAuthAppModal
-          closeModal={actions.closeModal}
-          navigateTo={actions.navigateTo}
-          disableTwoFactor={actions.disableTwoFactor}
-        />
+        <CelButton margin="0 0 20 0" onPress={this.logoutUser}>
+          Log out from all devices
+        </CelButton>
       </RegularLayout>
     );
   }

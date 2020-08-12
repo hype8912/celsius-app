@@ -11,20 +11,10 @@ const initialState = {
 
 export default function kycReducer(state = initialState, action) {
   switch (action.type) {
-    // case ACTIONS.START_KYC_SUCCESS:
     case ACTIONS.GET_PRIMETRUST_TOU_LINK_SUCCESS:
       return {
         ...state,
         primeTrustToULink: action.link,
-      };
-
-    case ACTIONS.GET_KYC_STATUS_SUCCESS:
-      return {
-        ...state,
-        profile: {
-          ...state.profile,
-          kyc: action.kyc,
-        },
       };
 
     case ACTIONS.GET_KYC_DOCUMENTS_SUCCESS:

@@ -1,9 +1,6 @@
 import ACTIONS from "../../constants/ACTIONS";
 import transactionMapUtil from "../../utils/transaction-map-util";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 const initialState = {
   transactionList: null,
   transactionDetails: null,

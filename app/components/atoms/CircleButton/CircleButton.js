@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { TouchableOpacity, View, StyleSheet } from "react-native";
+import { TouchableOpacity, View, ImageBackground } from "react-native";
 
 import CircleButtonStyle from "./CircleButton.styles";
 import Icon from "../Icon/Icon";
@@ -20,7 +20,8 @@ class CircleButton extends Component {
     disabled: PropTypes.bool,
     isSelected: PropTypes.bool,
     selectable: PropTypes.bool,
-    type: PropTypes.oneOf(["menu", "theme", "coin"]).isRequired,
+    iconColor: PropTypes.string,
+    type: PropTypes.oneOf(["menu", "theme", "coin", "fab"]).isRequired,
   };
 
   static defaultProps = {
@@ -39,12 +40,9 @@ class CircleButton extends Component {
     );
   }
 
-  getFillColor = style => StyleSheet.flatten(style.fillColor).color; // get color from raw json depending on style theme
-
   render() {
     const {
       disabled,
-      theme,
       style,
       onPress,
       text,
@@ -53,12 +51,17 @@ class CircleButton extends Component {
       isSelected,
       selectable,
       iconSize,
+      backgroundImage,
+      iconColor,
     } = this.props;
-    let fillColor = "";
-    const styleCmp = CircleButtonStyle(theme);
-    if (icon) {
-      fillColor = this.getFillColor(styleCmp);
+
+    const styleCmp = CircleButtonStyle();
+
+    let fillColor = styleCmp.iconColor.color;
+    if (iconColor) {
+      fillColor = iconColor;
     }
+
     const textStyle = [styleCmp.text, styleCmp[`text${type}`]];
 
     return (
@@ -74,14 +77,31 @@ class CircleButton extends Component {
               elevation: 2,
             }}
           >
-            <View style={[styleCmp.view, styleCmp[`view${type}`]]}>
-              {icon &&
-                (iconSize ? (
-                  <Icon name={icon} fill={fillColor} width={iconSize} />
-                ) : (
-                  <Icon name={icon} fill={fillColor} />
-                ))}
-            </View>
+            {backgroundImage ? (
+              <ImageBackground
+                source={backgroundImage}
+                style={[styleCmp.container, styleCmp.view]}
+                imageStyle={{ borderRadius: 30 }}
+              >
+                <View style={[styleCmp.view, styleCmp[`view${type}`]]}>
+                  {icon &&
+                    (iconSize ? (
+                      <Icon name={icon} fill={fillColor} width={iconSize} />
+                    ) : (
+                      <Icon name={icon} fill={fillColor} />
+                    ))}
+                </View>
+              </ImageBackground>
+            ) : (
+              <View style={[styleCmp.view, styleCmp[`view${type}`]]}>
+                {icon &&
+                  (iconSize ? (
+                    <Icon name={icon} fill={fillColor} width={iconSize} />
+                  ) : (
+                    <Icon name={icon} fill={fillColor} />
+                  ))}
+              </View>
+            )}
           </View>
         </TouchableOpacity>
         <View>

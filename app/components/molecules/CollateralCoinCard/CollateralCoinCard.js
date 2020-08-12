@@ -88,7 +88,7 @@ class CollateralCoinCard extends Component {
       ? formatter.crypto(walletCoin.amount, walletCoin.short, { precision: 2 })
       : null;
     amountUsd = walletCoin ? formatter.usd(walletCoin.amount_usd) : null;
-    isAllowed = walletCoin ? walletCoin.amount_usd > 0 : false; // TODO check this!
+    isAllowed = walletCoin ? walletCoin.amount_usd.isGreaterThan(0) : false; // TODO check this!
 
     await this.setState({ name, currency, isAllowed });
 
@@ -98,7 +98,7 @@ class CollateralCoinCard extends Component {
       });
       amountUsd = formatter.usd(coin.amount_usd);
 
-      const collateralAmount = formData.loanAmount * 2;
+      const collateralAmount = Number(formData.loanAmount) * 2;
       isAllowed = coin.amount_usd >= collateralAmount;
       color =
         coin.amount_usd < collateralAmount
@@ -123,10 +123,12 @@ class CollateralCoinCard extends Component {
         isAllowed,
       });
     } else if (type === COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD) {
-      isAllowed = walletCoin ? walletCoin.amount_usd > amountNeededUsd : false;
+      isAllowed = walletCoin
+        ? walletCoin.amount_usd.isGreaterThan(amountNeededUsd)
+        : false;
       color = !isAllowed ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
       value =
-        (amountNeededUsd - walletCoin.amount_usd) /
+        (amountNeededUsd - walletCoin.amount_usd.toNumber()) /
         currencyRatesShort[coin.short.toLowerCase()];
       additionalCryptoAmount = formatter.crypto(value, coin.short, {
         precision: 2,
@@ -239,7 +241,7 @@ class CollateralCoinCard extends Component {
             height="13"
             name="CirclePlus"
           />
-          <CelText margin={"0 0 0 5"} color={STYLES.COLORS.CELSIUS_BLUE}>
+          <CelText margin={"0 0 0 5"} link>
             Deposit more
           </CelText>
         </View>

@@ -34,7 +34,7 @@ class DepositInfoModal extends Component {
 
     const theme = getTheme();
 
-    const coinName = currencies.find(coin => coin.short === type);
+    const coinName = currencies && currencies.find(coin => coin.short === type);
     let steps;
 
     switch (type) {
@@ -42,7 +42,7 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image:
-              theme === THEMES.LIGHT
+              theme !== THEMES.DARK
                 ? require(`../../../../assets/images/deposit-icn.png`)
                 : require(`../../../../assets/images/deposit-icn-dark.png`),
             darkImage: require("../../../../assets/images/deposit-icn.png"),
@@ -54,7 +54,7 @@ class DepositInfoModal extends Component {
           },
           {
             image:
-              theme === THEMES.LIGHT
+              theme !== THEMES.DARK
                 ? require(`../../../../assets/images/deposit-icn.png`)
                 : require(`../../../../assets/images/deposit-icn-dark.png`),
             title: "Review your transaction details carefully",

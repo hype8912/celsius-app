@@ -27,7 +27,8 @@ const patchPostMessageJsCode = `(${String(function() {
 
 @connect(
   state => ({
-    simplexData: state.simplex.simplexData,
+    simplexData: state.buyCoins.simplexData,
+    paymentRequest: state.buyCoins.paymentRequest,
     fabType: state.ui.fabType,
     formData: state.forms.formData,
   }),
@@ -102,14 +103,15 @@ class SimplexScreen extends Component {
     if (event && event.nativeEvent && event.nativeEvent.data === "success") {
       // user passed successfully
       actions.resetToScreen("WalletLanding");
-      mixpanelAnalytics.finishedSimplexFlow(
+      mixpanelAnalytics.finishedBuyCoinsFlow(
         "CARD",
         formData.cryptoCoin,
         formData.fiatCoin,
         formData.amountInUsd,
         formData.amountFiat,
         formData.amountCrypto,
-        "success"
+        "success",
+        "simplex"
       );
     } else {
       // user doesn't passed successfully
@@ -117,25 +119,33 @@ class SimplexScreen extends Component {
         "warning",
         "Simplex request failed. Please try again later."
       );
-      mixpanelAnalytics.finishedSimplexFlow(
+      mixpanelAnalytics.finishedBuyCoinsFlow(
         "CARD",
         formData.cryptoCoin,
         formData.fiatCoin,
         formData.amountInUsd,
         formData.amountFiat,
         formData.amountCrypto,
-        "failed"
+        "failed",
+        "simplex"
       );
     }
   };
 
   render() {
-    const { simplexData } = this.props;
+    const { paymentRequest, simplexData } = this.props;
     const { webViewLoaded } = this.state;
+
+    const data = {
+      ...paymentRequest,
+      ...simplexData,
+    };
 
     return (
       <View style={{ flex: 1 }}>
-        {!webViewLoaded && <LoadingState heading="Please wait..." />}
+        {(!webViewLoaded || !paymentRequest) && (
+          <LoadingState heading="Please wait..." />
+        )}
 
         <WebView
           style={{ opacity: webViewLoaded ? 1 : 0 }}
@@ -143,7 +153,7 @@ class SimplexScreen extends Component {
           javaScriptEnabled
           injectedJavaScript={patchPostMessageJsCode}
           automaticallyAdjustContentInsets
-          source={{ html: this.generateWebViewContent(simplexData) }}
+          source={{ html: this.generateWebViewContent(data) }}
         />
       </View>
     );

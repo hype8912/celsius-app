@@ -1,8 +1,8 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -14,7 +14,7 @@ const base = {
     borderRadius: 10,
     width: widthPercentageToDP("50%") - 28, // same width as Card.styles.js style half
     minHeight: 130,
-    borderColor: "gray",
+    borderColor: COLOR_KEYS.LINK,
     marginVertical: 8,
     alignItems: "center",
     justifyContent: "center",
@@ -25,7 +25,7 @@ const base = {
     borderRadius: 10,
     width: "100%",
     height: 80,
-    borderColor: "gray",
+    borderColor: COLOR_KEYS.LINK,
     marginVertical: 8,
     flexDirection: "row",
     alignItems: "center",
@@ -43,7 +43,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CoinsCardStyle = () => getThemedStyle(base, themed);

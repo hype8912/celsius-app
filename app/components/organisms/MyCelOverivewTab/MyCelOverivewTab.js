@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import * as appActions from "../../../redux/actions";
 import MyCelOverivewTabStyle from "./MyCelOverivewTab.styles";
 import CelText from "../../atoms/CelText/CelText";
-// import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import { widthPercentageToDP } from "../../../utils/styles-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
@@ -37,7 +36,6 @@ class MyCelOverivewTab extends Component {
               type={"H5"}
               weight={"500"}
               style={{ marginTop: widthPercentageToDP("15.3") / 3 }}
-              // color={color}
             >
               Your CEL Ratio is
             </CelText>
@@ -58,6 +56,7 @@ class MyCelOverivewTab extends Component {
                 style={[style.starIcon, { marginTop: 6 }]}
                 lightSource={require("../../../../assets/images/loyaltyIcons/reward-icon3x.png")}
                 darkSource={require("../../../../assets/images/loyaltyIcons/reward-dark-icon3x.png")}
+                unicornSource={require("../../../../assets/images/loyaltyIcons/reward-unicorn-icon3x.png")}
               />
             </View>
             <View style={{ marginTop: 40, paddingHorizontal: 10 }}>
@@ -89,10 +88,11 @@ class MyCelOverivewTab extends Component {
             }
           >
             <CelText
-              style={style.loyalityQuestion}
+              link
               type={"H4"}
               align={"center"}
               weight={"400"}
+              margin="30 0 0 0"
             >
               How do we calculate loyalty level?
             </CelText>

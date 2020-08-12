@@ -1,56 +1,28 @@
 import _ from "lodash";
 import moment from "moment";
 
-import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
-import { showMessage, openModal, closeModal } from "../ui/uiActions";
-import userProfileService from "../../services/user-profile-service";
-import { deleteSecureStoreKey } from "../../utils/expo-storage";
+import { showMessage, closeModal } from "../ui/uiActions";
 import logger from "../../utils/logger-util";
 import { setFormErrors, updateFormField } from "../forms/formsActions";
 import { default as NavActions, navigateTo } from "../nav/navActions";
-import { MODALS } from "../../constants/UI";
 import apiUtil from "../../utils/api-util";
-import { getWalletSummary } from "../wallet/walletActions";
 import userDataService from "../../services/user-data-service";
-import { getUserPersonalInfoSuccess } from "./userProfileActions";
 import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util";
 import { KYC_STATUSES } from "../../constants/DATA";
-
-const { SECURITY_STORAGE_AUTH_KEY } = Constants;
+import interestUtil from "../../utils/interest-util";
 
 export {
-  getCelsiusMemberStatus,
   getUserAppSettings,
   setUserAppSettings,
   getLinkedBankAccount,
   linkBankAccount,
   setHodlProps,
   getUserStatus,
+  getUserAppBootstrap,
 };
-
-/**
- * Gets profile info for user
- */
-function getProfileInfo() {
-  return async dispatch => {
-    dispatch(startApiCall(API.GET_USER_PERSONAL_INFO));
-
-    try {
-      const personalInfoRes = await userProfileService.getPersonalInfo();
-      const personalInfo = personalInfoRes.data.profile || personalInfoRes.data;
-      dispatch(getUserPersonalInfoSuccess(personalInfo));
-    } catch (err) {
-      if (err.status === 422) {
-        deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-      }
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_USER_PERSONAL_INFO, err));
-    }
-  };
-}
 
 /**
  * Get linked bank account info
@@ -98,30 +70,6 @@ function linkBankAccount(bankAccountInfo) {
         dispatch(showMessage("error", err.msg));
       }
       dispatch(apiError(API.LINK_BANK_ACCOUNT, err));
-    }
-  };
-}
-
-/**
- * If user has never been a member, he receives 1CEL and becomes a member
- */
-function getCelsiusMemberStatus() {
-  return async dispatch => {
-    try {
-      dispatch(startApiCall(API.GET_MEMBER_STATUS));
-      const celMemberStatus = await userDataService.getCelsiusMemberStatus();
-      if (celMemberStatus.data.is_new_member) {
-        dispatch(openModal(MODALS.BECAME_CEL_MEMBER_MODAL));
-      }
-      dispatch(getWalletSummary());
-      dispatch(getProfileInfo());
-      dispatch({
-        type: ACTIONS.GET_MEMBER_STATUS_SUCCESS,
-        isNewMember: celMemberStatus.data.is_new_member,
-      });
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_PREVIOUS_SCREEN, err));
     }
   };
 }
@@ -274,7 +222,7 @@ function setUserAppSettings(data) {
                   .day(8)
                   .format(
                     "DD MMMM"
-                  )}, you will receive interest income on selected coinsin in original coins.`
+                  )}, you will receive interest income on selected coins in in original coins.`
               )
             );
           }
@@ -320,25 +268,17 @@ function getUserStatus() {
     if (!isLoggedIn) return;
 
     dispatch(startApiCall(API.POLL_USER_DATA));
-
     try {
       const res = await userDataService.getUserStatus();
       const hodlStatus = res.data.hodlModeStatus;
       const kyc = res.data.kycStatus;
       const twoFAStatus = res.data.twoFactorStatus;
       const newStatus = res.data.kycStatus.status;
+
       dispatch({
-        type: ACTIONS.POLL_HODL_STATUS_SUCCESS,
+        type: ACTIONS.POLL_USER_DATA_SUCCESS,
         hodlStatus,
-      });
-
-      dispatch({
-        type: ACTIONS.GET_KYC_STATUS_SUCCESS,
         kyc,
-      });
-
-      dispatch({
-        type: ACTIONS.GET_2FA_STATUS_SUCCESS,
         twoFAStatus,
       });
 
@@ -358,7 +298,7 @@ function getUserStatus() {
         }
       }
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
+      if (err.status !== 429) dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.POLL_USER_DATA, err));
     }
   };
@@ -371,5 +311,38 @@ function setHodlProps(activeHodlMode) {
   return {
     type: ACTIONS.SET_HODL_PROPS,
     activeHodlMode,
+  };
+}
+
+/**
+ * Gets app boostrap.
+ */
+function getUserAppBootstrap() {
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.GET_APP_BOOTSTRAP));
+
+      const userAppData = await userDataService.getUserAppBootstrap();
+
+      // NOTE(fj) BE returns cel_rate as "0" every time
+      const interestRates = interestUtil.getLoyaltyRates(
+        userAppData.data.loyalty
+      );
+
+      dispatch({
+        type: ACTIONS.GET_APP_BOOTSTRAP_SUCCESS,
+        user: {
+          ...userAppData.data.user,
+          kyc: userAppData.data.kyc,
+        },
+        appSettings: userAppData.data.user_settings,
+        loyaltyInfo: userAppData.data.loyalty,
+        complianceInfo: userAppData.data.compliance,
+        interestRates,
+      });
+    } catch (e) {
+      dispatch(apiError(API.GET_APP_BOOTSTRAP, e));
+      dispatch(showMessage("error", e.msg));
+    }
   };
 }

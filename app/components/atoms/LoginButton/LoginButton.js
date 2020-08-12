@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, TouchableOpacity, Image } from "react-native";
-
 import LoginButtonStyle from "./LoginButton.styles";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 
 class LoginButton extends Component {
   static propTypes = {
@@ -30,11 +28,7 @@ class LoginButton extends Component {
             <Image source={icon} style={style.icon} />
           </View>
           <View style={{ flex: 5, justifyContent: "center" }}>
-            <CelText
-              type="H4"
-              style={style.text}
-              color={STYLES.COLORS.MEDIUM_GRAY}
-            >
+            <CelText type="H4" style={style.text} color={style.textColor.color}>
               {text}
             </CelText>
           </View>
@@ -45,8 +39,10 @@ class LoginButton extends Component {
   };
 
   render() {
-    const { onPress, disabled } = this.props;
+    const { onPress, disabled, text } = this.props;
     const LoginButtonContent = this.renderLoginButtonContent;
+
+    if (text.includes("Twitter")) return <LoginButtonContent />;
 
     return (
       <TouchableOpacity disabled={disabled} onPress={onPress}>

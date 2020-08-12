@@ -1,6 +1,5 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -10,7 +9,7 @@ const base = {
     borderRadius: 8,
   },
   greenWrapper: {
-    backgroundColor: STYLES.COLORS.GREEN,
+    backgroundColor: COLOR_KEYS.POSITIVE_STATE,
   },
   textWrapper: {
     flexDirection: "row",
@@ -28,35 +27,20 @@ const base = {
     justifyContent: "center",
     width: 160,
     height: 25,
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
+  upperText: {
+    color: COLOR_KEYS.HEADLINE,
+  },
+  highlightWrapper: {
+    backgroundColor: COLOR_KEYS.CARDS,
   },
 };
 
 const themed = {
-  light: {
-    highlightWrapper: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-    upperTextWrapper: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-    upperText: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
-    },
-  },
-
-  dark: {
-    highlightWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    upperTextWrapper: {
-      backgroundColor: STYLES.COLORS.SEMI_GRAY,
-    },
-    upperText: {
-      color: STYLES.COLORS.WHITE,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const PaymentListItemStyle = () => getThemedStyle(base, themed);

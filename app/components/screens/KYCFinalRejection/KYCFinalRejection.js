@@ -19,6 +19,7 @@ class KYCFinalRejection extends Component {
 
   static navigationOptions = () => ({
     header: null,
+    gesturesEnabled: false,
   });
 
   render() {

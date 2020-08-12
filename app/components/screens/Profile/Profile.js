@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import React, { Component } from "react";
-// import Constants from 'expo-constants';
 import { Image, Linking, TouchableOpacity, View } from "react-native";
 import * as appActions from "../../../redux/actions";
 
@@ -10,7 +9,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
 import Separator from "../../atoms/Separator/Separator";
 import IconButton from "../../organisms/IconButton/IconButton";
-import { MODALS, THEMES } from "../../../constants/UI";
+import { MODALS } from "../../../constants/UI";
 import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
 import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -22,17 +21,15 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import { hasPassedKYC } from "../../../utils/user-util";
 import ProfileStyle from "./Profile.styles";
 import Icon from "../../atoms/Icon/Icon";
-import { getTheme } from "../../../utils/styles-util";
 import Constants from "../../../../constants";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
     user: state.user.profile,
     profilePicture: state.user.profile.profile_picture,
-    formData: state.forms.formData,
-    formErrors: state.forms.formErrors,
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
@@ -41,9 +38,7 @@ import API from "../../../constants/API";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class Profile extends Component {
-  static propTypes = {
-    // text: PropTypes.string
-  };
+  static propTypes = {};
   static defaultProps = {};
 
   static navigationOptions = () => ({
@@ -113,7 +108,6 @@ class Profile extends Component {
     } = this.props;
     const { revisionId } = this.state;
     const style = ProfileStyle();
-    const theme = getTheme();
     const { ENV } = Constants;
 
     const disabled = apiUtil.areCallsInProgress(
@@ -166,7 +160,7 @@ class Profile extends Component {
               <TouchableOpacity
                 onPress={() => actions.navigateTo("ChangeAvatar")}
               >
-                <CelText color={STYLES.COLORS.CELSIUS_BLUE} margin="10 0 0 0">
+                <CelText link margin="10 0 0 0">
                   Change photo
                 </CelText>
               </TouchableOpacity>
@@ -236,6 +230,7 @@ class Profile extends Component {
             <CelText margin={"0 0 20 0"}>
               Receive your total transaction history report via email.
             </CelText>
+
             <IconButton
               onPress={() => this.sendCsvRequest()}
               margin="0 0 20 0"
@@ -260,11 +255,7 @@ class Profile extends Component {
                 name={"Twitter"}
                 width={35}
                 height={35}
-                fill={
-                  theme === THEMES.LIGHT
-                    ? STYLES.COLORS.DARK_GRAY3
-                    : STYLES.COLORS.WHITE_OPACITY5
-                }
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Twitter
@@ -279,11 +270,7 @@ class Profile extends Component {
                 name={"Facebook"}
                 width={35}
                 height={35}
-                fill={
-                  theme === THEMES.LIGHT
-                    ? STYLES.COLORS.DARK_GRAY3
-                    : STYLES.COLORS.WHITE_OPACITY5
-                }
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Facebook
@@ -298,11 +285,7 @@ class Profile extends Component {
                 name={"Reddit"}
                 width={35}
                 height={35}
-                fill={
-                  theme === THEMES.LIGHT
-                    ? STYLES.COLORS.DARK_GRAY3
-                    : STYLES.COLORS.WHITE_OPACITY5
-                }
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Reddit
@@ -315,11 +298,7 @@ class Profile extends Component {
                 name={"Telegram"}
                 width={35}
                 height={35}
-                fill={
-                  theme === THEMES.LIGHT
-                    ? STYLES.COLORS.DARK_GRAY3
-                    : STYLES.COLORS.WHITE_OPACITY5
-                }
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Telegram
@@ -335,7 +314,6 @@ class Profile extends Component {
               onPress={() => {
                 Linking.openURL("https://celsius.network/terms-of-use/");
               }}
-              textColor={STYLES.COLORS.CELSIUS_BLUE}
             >
               See Terms of Use
             </CelButton>

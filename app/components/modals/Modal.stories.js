@@ -1,10 +1,11 @@
 import React from "react";
+import _ from "lodash";
 import { View } from "react-native";
 import { Provider } from "react-redux";
 import { storiesOf } from "@storybook/react-native/dist";
 import store from "../../redux/store";
 import { openModal } from "../../redux/ui/uiActions";
-import { MODALS } from "../../constants/UI";
+import { MODALS, THEMES } from "../../constants/UI";
 import CelButton from "../atoms/CelButton/CelButton";
 import CenterView from "../../../storybook/stories/CenterView";
 import LoanAlertsPayoutPrincipalModal from "./LoanAlertsModals/LoanAlertsPayoutPrincipalModal/LoanAlertsPayoutPrincipalModal";
@@ -14,16 +15,13 @@ import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsModals/LoanAlertsMarg
 
 import ApiKeyRevokeModalStories from "./ApiKeyRevokeModal/ApiKeyRevokeModal.stories";
 import ApiKeySuccessModalStories from "./ApiKeySuccessModal/ApiKeySuccessModal.stories";
-import BecomeCelMemberModalStories from "./BecomeCelMemberModal/BecomeCelMemberModal.stories";
 import CalculateLoyaltyLevelModalStories from "./CalculateLoyaltyLevelModal/CalculateLoyaltyLevelModal.stories";
 import CancelLoanModalStories from "./CancelLoanModal/CancelLoanModal.stories";
 import CelPayReceivedModalStories from "./CelPayReceivedModal/CelPayReceivedModal.stories";
 import ChangeWithdrawalAddressModalStories from "./ChangeWithdrawalAddressModal/ChangeWithdrawalAddressModal.stories";
 import ConfirmWithdrawalAddressModalStories from "./ConfirmWithdrawalAddressModal/ConfirmWithdrawalAddressModal.stories";
-import CreateNewAccountModalStories from "./CreateNewAccountModal/CreateNewAccountModal.stories";
 import DepositInfoModalStories from "./DepositInfoModal/DepositInfoModal.stories";
 import LoanApplicationSuccessModalStories from "./LoanApplicationSuccessModal/LoanApplicationSuccessModal.stories";
-import LoseMembershipModalStories from "./LoseMembershipModal/LoseMembershipModal.stories";
 import LoseTierModalStories from "./LoseTierModal/LoseTierModal.stories";
 import MemoIdModalStories from "./MemoIdModal/MemoIdModal.stories";
 import PrepayDollarInterestModalStories from "./PrepayDollarInterestModal/PrepayDollarInterestModal.stories";
@@ -31,16 +29,42 @@ import PrepaymentSuccessfulModalStories from "./PrepaymentSuccessfulModal/Prepay
 import ReferralSendModalStories from "./ReferralSendModal/ReferralSendModal.stories";
 import RegisterPromoCodeModalStories from "./RegisterPromoCodeModal/RegisterPromoCodeModal.stories";
 import RejectionReasonsModalStories from "./RejectionReasonsModal/RejectionReasonsModal.stories";
-import RemoveAuthAppModalStories from "./RemoveAuthAppModal/RemoveAuthAppModal.stories";
 import SsnModalStories from "./SsnModal/SsnModal.stories";
 import TransactionFilterModalStories from "./TransactionFilterModal/TransactionFilterModal.stories";
-import VerifyAuthAppModalStories from "./VerifyAuthAppModal/VerifyAuthAppModal.stories";
 import WithdrawalInfoModalStories from "./WithdrawalInfoModal/WithdrawalInfoModal.stories";
 import WithdrawWarningModalStories from "./WithdrawWarningModal/WithdrawWarningModal.stories";
 import DestinationInfoTagModalStories from "./DestinationInfoTagModal/DestinationInfoTagModal.stories";
 import InterestDueModalStories from "./InterestDueModal/InterestDueModal.stories";
 import ReferralReceivedModalStories from "./ReferralReceivedModal/ReferralReceivedModal.stories";
 import CelPayInfoModalStories from "./CelPayInfoModal/CelPayInfoModal.stories";
+import ACTIONS from "../../constants/ACTIONS";
+import GetCoinsConfirmModalStories from "./GetCoinsConfirmModal/GetCoinsConfirmModal.stories";
+
+const changeTheme = () => {
+  const currentState = _.cloneDeep(store.getState());
+
+  const theme = currentState.user.appSettings.theme;
+  let nextTheme;
+
+  switch (theme) {
+    case THEMES.LIGHT:
+      nextTheme = THEMES.DARK;
+      break;
+    case THEMES.DARK:
+      nextTheme = THEMES.UNICORN;
+      break;
+    case THEMES.UNICORN:
+      nextTheme = THEMES.LIGHT;
+      break;
+  }
+
+  currentState.user.appSettings.theme = nextTheme;
+
+  store.dispatch({
+    type: ACTIONS.SET_WHOLE_STATE,
+    state: currentState,
+  });
+};
 
 storiesOf("Modals", module)
   .addDecorator(getStory => (
@@ -50,24 +74,24 @@ storiesOf("Modals", module)
   ))
   .add("All Modals", () => (
     <View>
+      <CelButton onPress={changeTheme}>Change Theme</CelButton>
+
+      <GetCoinsConfirmModalStories />
+      <InterestDueModalStories />
+      <CelPayReceivedModalStories />
       <ReferralReceivedModalStories />
       <DepositInfoModalStories />
       <LoanApplicationSuccessModalStories />
       <WithdrawalInfoModalStories />
-      <InterestDueModalStories />
       <ApiKeyRevokeModalStories />
       <ApiKeySuccessModalStories />
-      <BecomeCelMemberModalStories />
       <CalculateLoyaltyLevelModalStories />
       <CancelLoanModalStories />
-      <CelPayReceivedModalStories />
       <ChangeWithdrawalAddressModalStories />
       <ConfirmWithdrawalAddressModalStories />
-      <CreateNewAccountModalStories />
       <DestinationInfoTagModalStories />
       <DepositInfoModalStories />
       <LoanApplicationSuccessModalStories />
-      <LoseMembershipModalStories />
       <LoseTierModalStories />
       <MemoIdModalStories />
       <PrepayDollarInterestModalStories />
@@ -75,10 +99,8 @@ storiesOf("Modals", module)
       <ReferralSendModalStories />
       <RegisterPromoCodeModalStories />
       <RejectionReasonsModalStories />
-      <RemoveAuthAppModalStories />
       <SsnModalStories />
       <TransactionFilterModalStories />
-      <VerifyAuthAppModalStories />
       <WithdrawWarningModalStories />
       <CelPayInfoModalStories />
     </View>

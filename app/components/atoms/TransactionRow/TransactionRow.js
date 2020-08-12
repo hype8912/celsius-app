@@ -7,6 +7,7 @@ import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Separator from "../Separator/Separator";
 import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
 
 class TransactionRow extends Component {
   static propTypes = {
@@ -42,7 +43,7 @@ class TransactionRow extends Component {
       <View>
         <TouchableOpacity style={style.container} onPress={onPress}>
           <View style={style.leftSide}>
-            <View style={[style.circle, { backgroundColor: color }]}>
+            <View style={[style.circle, { backgroundColor: getColor(color) }]}>
               <CelText type={"H7"} color={STYLES.COLORS.WHITE}>
                 {shortName}
               </CelText>
@@ -72,7 +73,7 @@ class TransactionRow extends Component {
 
           <View style={style.rightSide}>
             <View style={style.statusText}>
-              <CelText type="H6" weight="medium" color={color}>
+              <CelText type="H6" weight="medium" color={getColor(color)}>
                 {statusText}
               </CelText>
             </View>

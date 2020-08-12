@@ -5,7 +5,6 @@ import { showMessage } from "../ui/uiActions";
 import { clearForm } from "../forms/formsActions";
 import transactionsService from "../../services/transactions-service";
 import { navigateTo } from "../nav/navActions";
-import celUtilityUtil from "../../utils/cel-utility-util";
 import { getWalletSummary } from "../wallet/walletActions";
 import mockTransactions from "../../mock-data/transactions.mock";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
@@ -98,7 +97,8 @@ function getTransactionDetails(id = "") {
 }
 
 /**
- * TODO add JSDoc
+ * cancels transaction by supplying transaction id
+ * @param {string} withdrawalId
  */
 function cancelWithdrawal(withdrawalId) {
   return async dispatch => {
@@ -124,8 +124,9 @@ function cancelWithdrawal(withdrawalId) {
 }
 
 /**
- * TODO add JSDoc
- */
+ * transaction details success actions
+ * @param {string} transaction
+ * */
 function getTransactionDetailsSuccess(transaction) {
   return {
     type: ACTIONS.GET_TRANSACTION_DETAILS_SUCCESS,
@@ -153,8 +154,6 @@ function withdrawCrypto() {
         type: ACTIONS.WITHDRAW_CRYPTO_SUCCESS,
         transaction: res.data.transaction,
       });
-
-      await celUtilityUtil.refetchMembershipIfChanged(coin.toUpperCase());
 
       dispatch(
         navigateTo("TransactionsIntersection", {

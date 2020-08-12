@@ -4,10 +4,9 @@ import { View } from "react-native";
 import CelsiusStatsStyle from "./CelStats.styles";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
-import { THEMES } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CelStats extends Component {
   constructor(props) {
@@ -18,11 +17,11 @@ class CelStats extends Component {
   setTierColor = tier => {
     switch (tier) {
       case "platinum":
-        return STYLES.COLORS.CELSIUS_BLUE;
+        return getColor(COLOR_KEYS.BANNER_INFO);
       case "gold":
-        return STYLES.COLORS.ORANGE;
+        return getColor(COLOR_KEYS.ALERT_STATE);
       case "silver":
-        return STYLES.COLORS.DARK_GRAY;
+        return getColor(COLOR_KEYS.SECTION_TITLE);
       default:
         return null;
     }
@@ -30,7 +29,6 @@ class CelStats extends Component {
 
   render() {
     const style = CelsiusStatsStyle();
-    const theme = getTheme();
     const { celTierStats, totalCelUsers } = this.props;
 
     if (!celTierStats || !totalCelUsers) {
@@ -93,7 +91,7 @@ class CelStats extends Component {
                   }}
                 >
                   <CelText
-                    color={STYLES.COLORS.WHITE}
+                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                     allCaps
                     weight={"600"}
                     type={"H7"}
@@ -115,12 +113,7 @@ class CelStats extends Component {
                 })}$`}
               </CelText>
             </View>
-            <Separator
-              vertical
-              height={"50%"}
-              margin={"20 0 0 0"}
-              color={theme === THEMES.DARK ? STYLES.COLORS.LIGHT_GRAY : null}
-            />
+            <Separator vertical height={"50%"} margin={"20 0 0 0"} />
             <View style={style.celTierItem}>
               <CelText
                 weight={"600"}
@@ -131,12 +124,7 @@ class CelStats extends Component {
                 {formatter.percentageDisplay(i.percentageOfUsers / 100)}
               </CelText>
             </View>
-            <Separator
-              vertical
-              height={"50%"}
-              margin={"20 0 0 0"}
-              color={theme === THEMES.DARK ? STYLES.COLORS.LIGHT_GRAY : null}
-            />
+            <Separator vertical height={"50%"} margin={"20 0 0 0"} />
             <View style={style.celTierItem}>
               <CelText
                 weight={"600"}

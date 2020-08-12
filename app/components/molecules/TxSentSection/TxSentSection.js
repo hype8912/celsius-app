@@ -7,6 +7,8 @@ import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 class TxSentSection extends Component {
   static propTypes = {
@@ -28,9 +30,7 @@ class TxSentSection extends Component {
       <View>
         <Card margin={"20 0 20 0"}>
           <View style={style.text}>
-            <CelText
-              style={{ color: STYLES.COLORS.MEDIUM_GRAY }}
-            >{`${text}`}</CelText>
+            <CelText>{`${text}`}</CelText>
           </View>
           <View style={style.content}>
             {!data || !participant || !participant.profile_picture ? (
@@ -51,7 +51,7 @@ class TxSentSection extends Component {
                 </CelText>
                 <CelText
                   style={{ paddingTop: 5 }}
-                  color={STYLES.COLORS.CELSIUS_BLUE}
+                  color={getColor(COLOR_KEYS.LINK)}
                   type="H6"
                 >
                   {participant.email ? participant.email : " "}
@@ -61,7 +61,7 @@ class TxSentSection extends Component {
             <View style={style.icon}>
               <Icon
                 name="Celsius"
-                fill={STYLES.COLORS.CELSIUS_BLUE}
+                fill={COLOR_KEYS.LINK}
                 height={30}
                 width={30}
               />

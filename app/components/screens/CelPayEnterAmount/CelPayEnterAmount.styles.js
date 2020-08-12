@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { Dimensions, Platform } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
@@ -60,7 +59,7 @@ const themed = {
     },
   },
 
-  celsius: {
+  unicorn: {
     selectWrapper: {
       backgroundColor: STYLES.COLORS.WHITE,
     },

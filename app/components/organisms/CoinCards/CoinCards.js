@@ -11,6 +11,8 @@ import CoinListCard from "../../molecules/CoinListCard/CoinListCard";
 import Icon from "../../atoms/Icon/Icon";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import animationsUtil from "../../../utils/animations-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CoinCards extends Component {
   static propTypes = {
@@ -23,28 +25,7 @@ class CoinCards extends Component {
     shouldAnimate: PropTypes.bool,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      coinsWithTransactions: [],
-      coinsWithoutTransactions: [],
-    };
-  }
-
-  componentDidMount() {
-    this.filterCoins();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.walletSummary.total_amount_usd !==
-      this.props.walletSummary.total_amount_usd
-    ) {
-      this.filterCoins();
-    }
-  }
-
-  filterCoins = async () => {
+  filterCoins = () => {
     const {
       walletSummary,
       currenciesRates,
@@ -52,6 +33,17 @@ class CoinCards extends Component {
       navigateTo,
       depositCompliance,
     } = this.props;
+
+    let coinsWithTransactions = [];
+    let coinsWithoutTransactions = [];
+
+    if (!walletSummary || !currenciesRates) {
+      return {
+        coinsWithTransactions,
+        coinsWithoutTransactions,
+      };
+    }
+
     const allowedCoins = [];
 
     if (walletSummary) {
@@ -62,49 +54,51 @@ class CoinCards extends Component {
 
         if (
           !depositCompliance.coins.includes(coin.short) &&
-          coin.amount_usd > 0
+          coin.amount_usd.isGreaterThan(0)
         ) {
           allowedCoins.push(coin);
         }
       });
     }
 
-    allowedCoins.sort((a, b) => b.amount_usd - a.amount_usd);
-
-    if (allowedCoins) {
+    allowedCoins.sort((a, b) => b.amount_usd.minus(a.amount_usd));
+    if (allowedCoins && currenciesRates) {
       const coins = [];
       allowedCoins.forEach(coin => {
-        const tempCoin = coin;
-        tempCoin.currency = currenciesRates.find(
-          c => c.short === coin.short.toUpperCase()
-        );
-        tempCoin.graphData = !_.isEmpty(currenciesGraphs[coin.short])
-          ? currenciesGraphs[coin.short]
-          : null;
-        tempCoin.navigate = Number(coin.has_transaction)
-          ? () =>
-              navigateTo("CoinDetails", {
-                coin: coin.short,
-                title: tempCoin.currency.displayName,
-              })
-          : () => navigateTo("Deposit", { coin: coin.short });
+        if (coin.short) {
+          const tempCoin = coin;
+          tempCoin.currency = currenciesRates.find(
+            c => c.short === coin.short.toUpperCase()
+          );
+          tempCoin.graphData =
+            currenciesGraphs && !_.isEmpty(currenciesGraphs[coin.short])
+              ? currenciesGraphs[coin.short]
+              : null;
+          tempCoin.navigate = Number(coin.has_transaction)
+            ? () =>
+                navigateTo("CoinDetails", {
+                  coin: coin.short,
+                  title: tempCoin.currency.displayName,
+                })
+            : () => navigateTo("Deposit", { coin: coin.short });
 
-        coins.push(coin);
+          coins.push(coin);
+        }
       });
 
-      const coinsWithTransactions = _.remove(
+      coinsWithTransactions = _.remove(
         coins,
         c => Number(c.has_transaction) !== 0
       );
-      const coinsWithoutTransactions = _.remove(
+      coinsWithoutTransactions = _.remove(
         coins,
         c => Number(c.has_transaction) === 0
       );
 
-      await this.setState({
+      return {
         coinsWithTransactions,
         coinsWithoutTransactions,
-      });
+      };
     }
   };
 
@@ -153,8 +147,13 @@ class CoinCards extends Component {
 
     return (
       <TouchableOpacity style={gridStyle} onPress={() => navigateTo("Deposit")}>
-        <Icon fill={"gray"} width="17" height="17" name="CirclePlus" />
-        <CelText type="H5" margin={isGrid ? "5 0 0 0" : "0 0 0 5"}>
+        <Icon
+          fill={getColor(COLOR_KEYS.LINK)}
+          width="17"
+          height="17"
+          name="CirclePlus"
+        />
+        <CelText type="H5" margin={isGrid ? "5 0 0 0" : "0 0 0 5"} link>
           Deposit coins
         </CelText>
       </TouchableOpacity>
@@ -163,9 +162,10 @@ class CoinCards extends Component {
 
   render() {
     const style = CoinCardsStyle();
-
-    const { coinsWithTransactions, coinsWithoutTransactions } = this.state;
-
+    const {
+      coinsWithTransactions,
+      coinsWithoutTransactions,
+    } = this.filterCoins();
     return (
       <View>
         <ExpandableItem

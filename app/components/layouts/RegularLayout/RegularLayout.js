@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { withNavigationFocus } from "react-navigation";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import { STORYBOOK } from "../../../../dev-settings.json";
 import * as appActions from "../../../redux/actions";
 
 import RegularLayoutStyle from "./RegularLayout.styles";
@@ -64,6 +64,7 @@ class RegularLayout extends Component {
   };
 
   setFabType = () => {
+    if (STORYBOOK) return;
     const { isFocused, fabType, actions } = this.props;
     if (isFocused === true) {
       actions.setFabType(fabType);

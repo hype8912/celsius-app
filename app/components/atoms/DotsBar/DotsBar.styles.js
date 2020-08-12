@@ -24,7 +24,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const DotsBarStyle = () => getThemedStyle(base, themed);

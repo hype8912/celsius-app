@@ -1,23 +1,17 @@
-// TODO(sb): RN update dependencies fixes
-// import * as GoogleSignInAndroid from "expo-google-sign-in";
 import { GoogleSignin } from "@react-native-community/google-signin";
-// import * as Facebook from "expo-facebook";
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 
 import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { startApiCall, apiError } from "../api/apiActions";
-import { navigateTo } from "../nav/navActions";
+import { navigateTo, resetToScreen } from "../nav/navActions";
 import { showMessage } from "../ui/uiActions";
 import { updateFormFields } from "../forms/formsActions";
 import { setSecureStoreKey } from "../../utils/expo-storage";
-import userProfileService from "../../services/user-profile-service";
-import { initAppData } from "../app/appActions";
-import { claimAllBranchTransfers } from "../transfers/transfersActions";
 import branchUtil from "../../utils/branch-util";
-import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import userAuthService from "../../services/user-auth-service";
+import { getInitialCelsiusData } from "../generalData/generalDataActions";
 
 const { SECURITY_STORAGE_AUTH_KEY, FACEBOOK_URL } = Constants;
 
@@ -99,8 +93,10 @@ function registerUserTwitter() {
       const { id_token: idToken, user } = res.data;
       dispatch(registerSocialSuccess("twitter", idToken, user));
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.REGISTER_USER_TWITTER, err));
+      // Don't show message if BitWala
+      if (err.type === "BitWala") return;
+      dispatch(showMessage("error", err.msg));
     }
   };
 }
@@ -236,8 +232,10 @@ function registerUserFacebook() {
       const { id_token: idToken, user } = res.data;
       dispatch(registerSocialSuccess("facebook", idToken, user));
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.REGISTER_USER_FACEBOOK, err));
+      // Don't show message if BitWala
+      if (err.type === "BitWala") return;
+      dispatch(showMessage("error", err.msg));
     }
   };
 }
@@ -255,7 +253,6 @@ function loginFacebook(facebookUser) {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.LOGIN_USER_FACEBOOK));
-
       const user = {
         email: facebookUser.email,
         first_name: facebookUser.first_name,
@@ -340,8 +337,10 @@ function registerUserGoogle() {
 
       dispatch(registerSocialSuccess("google", idToken, user));
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.REGISTER_USER_GOOGLE, err));
+      // Don't show message if BitWala
+      if (err.type === "BitWala") return;
+      dispatch(showMessage("error", err.msg));
     }
   };
 }
@@ -386,23 +385,15 @@ function loginGoogle(googleUser) {
  * @param {string} token - auth token from social network
  */
 function loginSocialSuccess(network, token) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, token);
-
-    const userRes = await userProfileService.getPersonalInfo();
-    const user = userRes.data;
-
-    const { showVerifyScreen } = getState().app;
-    if (!showVerifyScreen) {
-      await dispatch(initAppData());
-      dispatch(navigateTo("WalletLanding"));
-    }
 
     dispatch({
       type: ACTIONS[`LOGIN_USER_${network.toUpperCase()}_SUCCESS`],
-      user,
     });
 
+    await dispatch(getInitialCelsiusData());
+    dispatch(resetToScreen("Home"));
     // dispatch(claimAllBranchTransfers());
   };
 }
@@ -415,26 +406,14 @@ function loginSocialSuccess(network, token) {
  * @param {string} user - registered user on Celsius
  */
 function registerSocialSuccess(network, token, user) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, token);
 
-    await dispatch(initAppData(token));
     dispatch({
       type: ACTIONS[`REGISTER_USER_${network.toUpperCase()}_SUCCESS`],
       user,
     });
 
-    mixpanelAnalytics.sessionStarted("User register social");
-    dispatch(claimAllBranchTransfers());
-
-    const { profile } = getState().user;
-
-    if (!profile.pin) {
-      dispatch(navigateTo("RegisterSetPin"));
-    } else {
-      dispatch(navigateTo("VerifyProfile"), {
-        onSuccess: () => navigateTo("WalletLanding"),
-      });
-    }
+    dispatch(navigateTo("RegisterSetPin"));
   };
 }

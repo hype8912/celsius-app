@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { View, Platform, Switch } from "react-native";
 import PropTypes from "prop-types";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
 
 // import CelSwitchStyle from "./CelSwitch.styles";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const falseColor =
   Platform.OS === "ios" ? "transparent" : STYLES.COLORS.DARK_GRAY3;
-const theme = getTheme();
 
 class CelSwitch extends Component {
   static propTypes = {
@@ -20,15 +20,12 @@ class CelSwitch extends Component {
     disabled: PropTypes.bool,
   };
   static defaultProps = {
-    thumbColor:
-      theme === "light"
-        ? STYLES.COLORS.WHITE
-        : STYLES.COLORS.DARK_TOGGLE_FOREGROUND,
-    iosBackgroundColor:
-      theme === "light"
-        ? STYLES.COLORS.DARK_GRAY3
-        : STYLES.COLORS.DARK_TOGGLE_BACKGROUND,
-    trackColor: { false: falseColor, true: STYLES.COLORS.GREEN },
+    thumbColor: getColor(COLOR_KEYS.TOGGLE_ON_FOREGROUND),
+    iosBackgroundColor: getColor(COLOR_KEYS.TOGGLE_OFF_BACKGROUND),
+    trackColor: {
+      false: falseColor,
+      true: getColor(COLOR_KEYS.TOGGLE_ON_BACKGROUND),
+    },
   };
 
   constructor(props) {

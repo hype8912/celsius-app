@@ -1,9 +1,8 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -16,7 +15,6 @@ const base = {
     justifyContent: "space-evenly",
   },
   interests: {
-    // flexDirection: "row",
     flex: 1,
     padding: 12,
   },
@@ -38,18 +36,15 @@ const base = {
   progress: {
     justifyContent: "center",
   },
+  card: {
+    color: COLOR_KEYS.BACKGROUND,
+  },
 };
 
 const themed = {
-  light: {
-    card: { color: "#F3F3F3" },
-  },
-
-  dark: {
-    card: { color: STYLES.COLORS.MEDIUM_GRAY },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const LoanOverviewCardStyle = () => getThemedStyle(base, themed);

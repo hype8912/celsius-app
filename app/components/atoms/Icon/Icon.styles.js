@@ -1,8 +1,13 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
   fillColor: {},
+  pngIcon: {
+    height: 20,
+    width: 20,
+    resizeMode: "contain",
+    marginHorizontal: 2,
+  },
 };
 
 const themed = {
@@ -10,7 +15,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const IconStyle = () => getThemedStyle(base, themed);

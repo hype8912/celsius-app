@@ -1,5 +1,5 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -30,6 +30,7 @@ const base = {
   },
   iconCircle: {
     borderRadius: 15,
+    backgroundColor: COLOR_KEYS.HEADLINE,
   },
 };
 
@@ -38,7 +39,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const SelectCoinStyle = () => getThemedStyle(base, themed);

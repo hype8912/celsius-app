@@ -11,13 +11,12 @@ import Separator from "../../atoms/Separator/Separator";
 import * as appActions from "../../../redux/actions";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import formatter from "../../../utils/formatter";
-import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
     formData: state.forms.formData,
     buyCoinsSettings: state.generalData.buyCoinsSettings,
-    simplexData: state.simplex.simplexData,
+    simplexData: state.buyCoins.simplexData,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -30,7 +29,7 @@ class GetCoinsConfirmModal extends Component {
 
     actions.navigateTo("VerifyProfile", {
       onSuccess: async () => {
-        await actions.simplexCreatePaymentRequest();
+        await actions.createSimplexPayment();
         actions.navigateTo("Simplex");
       },
     });
@@ -77,13 +76,9 @@ class GetCoinsConfirmModal extends Component {
             {formatter.crypto(cryptoAmount, formData.cryptoCoin)}
           </CelText>
           <View style={style.infoBlock}>
-            <CelText
-              align={"center"}
-              type={"H6"}
-              color={STYLES.COLORS.MEDIUM_GRAY}
-            >
-              {formData.coin} amount is an estimate. Actual amount will be based
-              on exchange rate at the moment of processing the order.
+            <CelText align={"center"} type={"H6"}>
+              {formData.cryptoCoin} amount is an estimate. Actual amount will be
+              based on exchange rate at the moment of processing the order.
             </CelText>
           </View>
           <View style={style.transferData}>
@@ -92,8 +87,8 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Payment Method:
               </CelText>
-              <CelText type={"H6"} align={"right"}>
-                {simplexData.paymentMethod}
+              <CelText type={"H6"} align={"right"} weight="bold">
+                Credit Card
               </CelText>
             </View>
             <Separator />
@@ -101,7 +96,7 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Delivery:
               </CelText>
-              <CelText type={"H6"} align={"right"}>
+              <CelText type={"H6"} align={"right"} weight="bold">
                 0-1 day
               </CelText>
             </View>
@@ -110,7 +105,7 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Price:
               </CelText>
-              <CelText type={"H6"} align={"right"}>
+              <CelText type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(baseAmount, formData.fiatCoin)}
               </CelText>
             </View>
@@ -124,7 +119,7 @@ class GetCoinsConfirmModal extends Component {
                   3.5% or $10.00 minimum
                 </CelText>
               </View>
-              <CelText type={"H6"} align={"right"}>
+              <CelText type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(fee, formData.fiatCoin)}
               </CelText>
             </View>
@@ -133,7 +128,7 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Transfer Amount:
               </CelText>
-              <CelText type={"H6"} align={"right"}>
+              <CelText type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(totalAmount, formData.fiatCoin)}
               </CelText>
             </View>

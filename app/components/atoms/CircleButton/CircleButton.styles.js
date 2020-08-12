@@ -1,6 +1,6 @@
-import { Platform } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -21,88 +21,25 @@ const base = {
     shadowColor: STYLES.COLORS.DARK_GRAY,
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 5,
-    zIndex: -1,
   },
   text: {
     marginTop: 10,
+    color: COLOR_KEYS.PARAGRAPH,
   },
+  viewmenu: { backgroundColor: COLOR_KEYS.PRIMARY_BUTTON },
+  textmenu: { color: COLOR_KEYS.PARAGRAPH },
+  viewcoin: { backgroundColor: COLOR_KEYS.CARDS },
+  textcoin: { color: COLOR_KEYS.HEADLINE },
+  fillColor: { color: COLOR_KEYS.HEADLINE },
+  iconColor: { color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND },
 };
 
 const themed = {
-  light: {
-    container: {
-      ...Platform.select({
-        android: {
-          ...STYLES.ANDROID_SHADOW_STYLES,
-        },
-        ios: {
-          ...STYLES.SHADOW_STYLES,
-        },
-      }),
-    },
-    viewmenu: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    textmenu: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-    viewcoin: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    textcoin: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-    fillColor: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-  },
+  light: {},
 
-  dark: {
-    container: {
-      ...Platform.select({
-        android: {
-          ...STYLES.ANDROID_SHADOW_STYLES,
-          borderColor: "transparent",
-        },
-        ios: {
-          ...STYLES.SHADOW_STYLES,
-        },
-      }),
-    },
-    viewmenu: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    textmenu: {
-      color: STYLES.COLORS.WHITE,
-    },
-    viewcoin: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    textcoin: {
-      color: STYLES.COLORS.WHITE,
-    },
-    fillColor: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
-  },
+  dark: {},
 
-  celsius: {
-    viewmenu: {
-      backgroundColor: STYLES.COLORS.CELSIUS,
-    },
-    textmenu: {
-      color: STYLES.COLORS.WHITE,
-    },
-    viewcoin: {
-      backgroundColor: STYLES.COLORS.CELSIUS,
-    },
-    textcoin: {
-      color: STYLES.COLORS.WHITE,
-    },
-    fillColor: {
-      color: STYLES.COLORS.WHITE,
-    },
-  },
+  unicorn: {},
 };
 
 const CircleButtonStyle = theme =>

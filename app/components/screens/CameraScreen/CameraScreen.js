@@ -6,6 +6,7 @@ import {
   Image,
   SafeAreaView,
   Dimensions,
+  Platform,
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -28,13 +29,17 @@ import {
   ALL_PERMISSIONS,
   requestForPermission,
 } from "../../../utils/device-permissions";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { height, width } = Dimensions.get("window");
 
 @connect(
   state => ({
     cameraType: state.camera.cameraType,
-    cameraRollLastPhoto: state.camera.cameraRollPhotos[0],
+    cameraRollLastPhoto: state.camera.cameraRollPhotos.length
+      ? state.camera.cameraRollPhotos[0]
+      : null,
     photo: state.camera.photo,
     cameraField: state.camera.cameraField,
     cameraHeading: state.camera.cameraHeading,
@@ -81,6 +86,7 @@ class CameraScreen extends Component {
     this.state = {
       hasCameraPermission: false,
       hasCameraRollPermission: false,
+      takingPhoto: false,
       hasInitialPhoto: !!props.photo,
       size: {
         width,
@@ -179,12 +185,17 @@ class CameraScreen extends Component {
   takePhoto = async camera => {
     if (camera) {
       const { actions, mask, navigation } = this.props;
+      const hideBack = navigation.getParam("hideBack");
       const maskType = mask || "utility";
       const options = {
         quality: 0.5,
-        orientation: RNCamera.Constants.Orientation.auto,
+        orientation:
+          Platform.OS === "ios"
+            ? RNCamera.Constants.Orientation.auto
+            : RNCamera.Constants.Orientation.portrait,
         pauseAfterCapture: true,
         fixOrientation: true,
+        base64: true,
       };
 
       try {
@@ -195,6 +206,7 @@ class CameraScreen extends Component {
 
         actions.startApiCall(API.TAKE_CAMERA_PHOTO);
         await actions.navigateTo("ConfirmCamera", {
+          documentPicture: hideBack,
           onSave: navigation.getParam("onSave"),
         });
 
@@ -232,6 +244,12 @@ class CameraScreen extends Component {
         loggerUtil.err(err);
       }
     }
+  };
+
+  pressCircle = async () => {
+    this.setState({ takingPhoto: true });
+    await this.takePhoto(this.camera);
+    this.setState({ takingPhoto: false });
   };
 
   renderMask = () => {
@@ -301,6 +319,7 @@ class CameraScreen extends Component {
 
   render() {
     const { cameraType, actions, cameraRollLastPhoto } = this.props;
+    const { takingPhoto } = this.state;
     const style = CameraScreenStyle();
     const Mask = this.renderMask;
     const isFocused = this.props.navigation.isFocused();
@@ -334,13 +353,15 @@ class CameraScreen extends Component {
 
             <TouchableOpacity
               style={{ flex: 1 }}
-              onPress={() => this.takePhoto(this.camera)}
+              onPress={this.pressCircle}
+              disabled={takingPhoto}
             >
               <Icon
                 name="Shutter"
-                fill={STYLES.COLORS.CELSIUS_BLUE}
+                fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                 width="60"
                 height="60"
+                iconOpacity={takingPhoto ? 0.5 : 1}
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -349,12 +370,7 @@ class CameraScreen extends Component {
                 this.setState({ ratio: "4:3" }, actions.flipCamera);
               }}
             >
-              <Icon
-                style={{ alignSelf: "flex-end" }}
-                name="Swap"
-                width="35"
-                fill={"#3D4853"}
-              />
+              <Icon style={{ alignSelf: "flex-end" }} name="Swap" width="35" />
             </TouchableOpacity>
           </View>
         </SafeAreaView>

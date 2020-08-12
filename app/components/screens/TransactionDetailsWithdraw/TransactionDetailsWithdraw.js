@@ -2,18 +2,19 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
-
 import TransactionWithdrawDetailsStyle from "./TransactionDetailsWithdraw.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
 import TxAddressSection from "../../atoms/TxAddressSection/TxAddressSection";
 import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 import CelButton from "../../atoms/CelButton/CelButton";
-import STYLES from "../../../constants/STYLES";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
+import CheckEmailInfoBox from "../../atoms/CheckEmailInfoBox/CheckEmailInfoBox";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class TransactionDetailsWithdraw extends Component {
   static propTypes = {
@@ -29,6 +30,11 @@ class TransactionDetailsWithdraw extends Component {
     const transactionProps = transaction.uiProps;
     const style = TransactionWithdrawDetailsStyle();
 
+    const cancellable = ![
+      TRANSACTION_TYPES.WITHDRAWAL_CANCELED,
+      TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED,
+    ].includes(transaction.type);
+
     return (
       <RegularLayout>
         <View>
@@ -40,17 +46,12 @@ class TransactionDetailsWithdraw extends Component {
 
           {transaction.type === TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW && (
             <InfoBox
-              backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
+              backgroundColor={getColor(COLOR_KEYS.LINK)}
               padding={"20 30 20 10"}
             >
               <View style={style.direction}>
-                <Icon
-                  name={"Info"}
-                  height="25"
-                  width="25"
-                  fill={STYLES.COLORS.WHITE}
-                />
-                <CelText color={"white"} margin={"0 10 0 10"}>
+                <Icon name={"Info"} height="25" width="25" fill="#FFFFFF" />
+                <CelText color="#FFFFFF" margin={"0 10 0 10"}>
                   Due to the larger amount of funds being sent, this transaction
                   may take a little bit longer.
                 </CelText>
@@ -60,25 +61,11 @@ class TransactionDetailsWithdraw extends Component {
 
           {transaction.type ===
             TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION && (
-            <InfoBox
-              backgroundColor={STYLES.COLORS.ORANGE}
-              padding={"20 20 20 10"}
-            >
-              <View style={style.direction}>
-                <View style={style.circle}>
-                  <Icon
-                    name={"Mail"}
-                    height="15"
-                    width="15"
-                    fill={STYLES.COLORS.RED}
-                  />
-                </View>
-                <CelText color={"white"} margin={"0 10 0 10"}>
-                  In order to proceed, you must confirm the transaction via
-                  email.
-                </CelText>
-              </View>
-            </InfoBox>
+            <CheckEmailInfoBox
+              infoText={
+                "In order to proceed, you must confirm the transaction via email."
+              }
+            />
           )}
 
           <TxAddressSection
@@ -94,16 +81,17 @@ class TransactionDetailsWithdraw extends Component {
             label={"Time"}
             value={moment.utc(transaction.time).format("h:mm A (z)")}
           />
+
           <CelButton
-            margin={"40 0 0 0"}
+            margin={"20 0 0 0"}
             onPress={() => navigateTo("WalletLanding")}
           >
             Go Back to Wallet
           </CelButton>
-          {transaction.type !== TRANSACTION_TYPES.WITHDRAWAL_CANCELED && (
+          {cancellable && (
             <CelButton
               margin={"20 0 0 0"}
-              color={STYLES.COLORS.RED}
+              color="red"
               basic
               onPress={() => cancelWithdrawal(transaction.id)}
             >

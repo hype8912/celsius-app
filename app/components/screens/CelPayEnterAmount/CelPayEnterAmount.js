@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import BigNumber from "bignumber.js";
 
 import * as appActions from "../../../redux/actions";
 import CelPayEnterAmountStyle from "./CelPayEnterAmount.styles";
@@ -11,17 +12,16 @@ import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { CEL_PAY_TYPES, KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
-import STYLES from "../../../constants/STYLES";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { PREDIFINED_AMOUNTS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
 import cryptoUtil from "../../../utils/crypto-util";
-import { isMalisaPusonja } from "../../../utils/user-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
-import LoseMembershipModal from "../../modals/LoseMembershipModal/LoseMembershipModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -57,16 +57,20 @@ class CelPayEnterAmount extends Component {
       walletSummary,
       actions,
     } = this.props;
-
-    const coinSelectItems = currencies
-      .filter(c => celpayCompliance.coins.includes(c.short))
-      .filter(c => {
-        const balanceUsd = walletSummary.coins.filter(
-          coin => coin.short === c.short.toUpperCase()
-        )[0].amount_usd;
-        return balanceUsd > 0;
-      })
-      .map(c => ({ label: `${c.displayName}  (${c.short})`, value: c.short }));
+    const coinSelectItems =
+      currencies &&
+      currencies
+        .filter(c => celpayCompliance.coins.includes(c.short))
+        .filter(c => {
+          const balanceUsd = walletSummary.coins.filter(
+            coin => coin.short === c.short.toUpperCase()
+          )[0].amount_usd;
+          return balanceUsd.isGreaterThan(0);
+        })
+        .map(c => ({
+          label: `${c.displayName}  (${c.short})`,
+          value: c.short,
+        }));
 
     this.setNavigationParams();
 
@@ -146,7 +150,7 @@ class CelPayEnterAmount extends Component {
     const { formData } = this.props;
 
     if (formData.amountCrypto && formData.amountCrypto > 0) {
-      return formData.friend ? "Add a note" : "Send";
+      return "Send";
     }
     return "Enter amount above";
   };
@@ -180,23 +184,38 @@ class CelPayEnterAmount extends Component {
       // if no predefined label is forwarded and the value is in usd
       if (predefined.label.length === 0) {
         amountUsd = formatter.setCurrencyDecimals(newValue, "USD");
-        amountCrypto = amountUsd / coinRate;
+        if (amountUsd === "" || amountUsd === ".") {
+          amountCrypto = new BigNumber(0).dividedBy(coinRate);
+        } else {
+          amountCrypto = new BigNumber(amountUsd).dividedBy(coinRate);
+        }
       } else {
         amountUsd = predefined.label === "ALL" ? balanceUsd : newValue;
         amountUsd = this.getUsdValue(amountUsd);
         amountCrypto =
-          predefined.label === "ALL" ? balanceCrypto : amountUsd / coinRate;
+          predefined.label === "ALL"
+            ? balanceCrypto
+            : new BigNumber(amountUsd).dividedBy(coinRate);
         amountCrypto = formatter.removeDecimalZeros(amountCrypto);
       }
       // if no predefined label is forwarded and the value is no in usd (crypto)
     } else if (predefined.label.length === 0) {
-      amountCrypto = formatter.setCurrencyDecimals(newValue);
-      amountUsd = amountCrypto * coinRate;
+      if (newValue === ".") {
+        amountCrypto = formatter.setCurrencyDecimals(0);
+      } else {
+        amountCrypto = formatter.setCurrencyDecimals(newValue);
+      }
+      amountUsd = Number(amountCrypto) * coinRate;
       amountUsd = this.getUsdValue(amountUsd);
       if (amountUsd === "0") amountUsd = "";
     } else {
-      amountCrypto = predefined.label === "ALL" ? balanceCrypto : newValue;
-      amountCrypto = formatter.removeDecimalZeros(amountCrypto);
+      amountCrypto =
+        predefined.label === "ALL"
+          ? new BigNumber(balanceCrypto).toFixed(8)
+          : newValue;
+      amountCrypto = new BigNumber(
+        formatter.removeDecimalZeros(amountCrypto)
+      ).toFixed(8);
       amountUsd = predefined.label === "ALL" ? balanceUsd : predefined.value;
       amountUsd = this.getUsdValue(amountUsd);
     }
@@ -209,7 +228,7 @@ class CelPayEnterAmount extends Component {
     }
 
     // if crypto amount is undefined, set it to empty string
-    if (!amountCrypto) amountCrypto = "";
+    // if (!new BigNumber(amountCrypto).toNumber()) amountCrypto = "";
     // Change value '.' to '0.'
     if (amountCrypto[0] === ".") amountCrypto = `0${amountCrypto}`;
     // if the crypto amount is eg. 01 the value will be 1, 00 -> 0
@@ -221,12 +240,11 @@ class CelPayEnterAmount extends Component {
       amountCrypto = amountCrypto[1];
     }
 
-    if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto)) {
+    if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto.toFixed(8))) {
       return actions.showMessage("warning", "Insufficient funds!");
     }
 
     if (
-      !isMalisaPusonja() &&
       cryptoUtil.isGreaterThan(
         amountUsd,
         celPaySettings.maximum_transfer_amount
@@ -234,9 +252,9 @@ class CelPayEnterAmount extends Component {
     ) {
       return actions.showMessage(
         "warning",
-        `You have surpassed the daily limit. Please enter an amount below ${formatter.usd(
+        `You have surpassed the daily limit of ${formatter.usd(
           celPaySettings.maximum_transfer_amount
-        )} to continue.`
+        )}. Please enter different amount to continue.`
       );
     }
 
@@ -268,11 +286,8 @@ class CelPayEnterAmount extends Component {
     )[0];
 
     // TODO: move newBalance calc to util
-    const newBalance = Number(coinData.amount) - Number(formData.amountCrypto);
+    const newBalance = coinData.amount.minus(formData.amountCrypto);
 
-    if (celUtilityUtil.isLosingMembership(formData.coin, newBalance)) {
-      return actions.openModal(MODALS.LOSE_MEMBERSHIP_MODAL);
-    }
     if (celUtilityUtil.isLosingTier(formData.coin, newBalance)) {
       return actions.openModal(MODALS.LOSE_TIER_MODAL);
     }
@@ -323,7 +338,7 @@ class CelPayEnterAmount extends Component {
           <BalanceView
             opacity={0.65}
             coin={formData.coin}
-            crypto={coinData.amount}
+            crypto={coinData && coinData.amount && coinData.amount.toFixed(8)}
             usd={coinData.amount_usd}
           />
           <View style={style.wrapper}>
@@ -347,8 +362,8 @@ class CelPayEnterAmount extends Component {
                 coin={formData.coin}
                 amountColor={
                   keypadOpen
-                    ? STYLES.COLORS.CELSIUS_BLUE
-                    : STYLES.COLORS.DARK_GRAY
+                    ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                    : getColor(COLOR_KEYS.HEADLINE)
                 }
               />
             </View>
@@ -383,7 +398,6 @@ class CelPayEnterAmount extends Component {
           autofocus={false}
         />
 
-        <LoseMembershipModal navigateToNextStep={this.navigateToNextStep} />
         {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
           <LoseTierModal
             navigateToNextStep={this.navigateToNextStep}

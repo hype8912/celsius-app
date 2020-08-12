@@ -5,7 +5,6 @@ import RNPickerSelect from "react-native-picker-select";
 
 import SimpleSelectStyle from "./SimpleSelect.styles";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 
 const SimpleSelect = props => {
@@ -18,14 +17,12 @@ const SimpleSelect = props => {
     updateFormField,
     field,
     iconName,
-    fillColor,
     iconWidth,
     placeholder,
     style: selectStyle,
-    theme,
   } = props;
 
-  const style = SimpleSelectStyle(theme);
+  const style = SimpleSelectStyle();
   if (selectStyle) {
     additionalStyle = {
       inputAndroid: {
@@ -54,11 +51,7 @@ const SimpleSelect = props => {
       useNativeAndroidPickerStyle={false}
       value={displayValue}
       Icon={() => (
-        <Icon
-          name={iconName || "CaretDown"}
-          width={iconWidth || 12}
-          fill={fillColor || STYLES.COLORS.DARK_GRAY}
-        />
+        <Icon name={iconName || "CaretDown"} width={iconWidth || 12} />
       )}
       items={items}
     />

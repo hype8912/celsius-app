@@ -18,6 +18,8 @@ import { MODALS } from "../../../constants/UI";
 import ChangeWithdrawalAddressModal from "../../modals/ChangeWithdrawalAddressModal/ChangeWithdrawalAddressModal";
 import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -112,7 +114,7 @@ class WithdrawConfirmAddress extends Component {
               <CelText type={"H1"}>
                 {formatter.getEllipsisAmount(formData.amountCrypto, -5)}
               </CelText>
-              <CelText color={"gray"} type={"H3"}>
+              <CelText type={"H3"} color={getColor(COLOR_KEYS.PARAGRAPH)}>
                 {formatter.usd(formData.amountUsd)}
               </CelText>
             </View>

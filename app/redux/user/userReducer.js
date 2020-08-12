@@ -1,5 +1,6 @@
 import ACTIONS from "../../constants/ACTIONS";
 import { mapProfile } from "../../utils/user-util";
+import { THEMES } from "../../constants/UI";
 
 /**
  * TODO make it a function add JSDoc & desc for return
@@ -11,7 +12,7 @@ const initialState = {
 
   // TODO move to userDataReducer
   appSettings: {
-    theme: "light",
+    theme: THEMES.UNICORN,
     activeHodlMode: undefined,
   },
 
@@ -21,14 +22,10 @@ const initialState = {
 export default (state = initialState, action) => {
   let profile;
   switch (action.type) {
-    case ACTIONS.LOGIN_USER_SUCCESS:
     case ACTIONS.REGISTER_USER_SUCCESS:
     case ACTIONS.REGISTER_USER_FACEBOOK_SUCCESS:
     case ACTIONS.REGISTER_USER_GOOGLE_SUCCESS:
     case ACTIONS.REGISTER_USER_TWITTER_SUCCESS:
-    case ACTIONS.LOGIN_USER_GOOGLE_SUCCESS:
-    case ACTIONS.LOGIN_USER_FACEBOOK_SUCCESS:
-    case ACTIONS.LOGIN_USER_TWITTER_SUCCESS:
     case ACTIONS.GET_USER_PERSONAL_INFO_SUCCESS:
     case ACTIONS.UPDATE_USER_PERSONAL_INFO_SUCCESS:
     case ACTIONS.GET_USER_TAXPAYER_INFO_SUCCESS:
@@ -42,12 +39,20 @@ export default (state = initialState, action) => {
         },
       };
 
+    case ACTIONS.SET_SIX_DIGIT_PIN:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          has_six_digit_pin: true,
+        },
+      };
+
     case ACTIONS.UPDATE_USER_ADDRESS_INFO_SUCCESS:
       return {
         ...state,
         profile: {
           ...state.profile,
-          country: action.addressInfo.address.country,
           ...action.addressInfo,
         },
       };
@@ -86,6 +91,20 @@ export default (state = initialState, action) => {
         },
       };
 
+    case ACTIONS.GET_APP_BOOTSTRAP_SUCCESS:
+      profile = mapProfile(action.personalInfo || action.user);
+      return {
+        ...state,
+        appSettings: {
+          ...state.appSettings,
+          ...action.appSettings,
+        },
+        profile: {
+          ...state.profile,
+          ...profile,
+        },
+      };
+
     case ACTIONS.SET_APP_SETTINGS_SUCCESS:
     case ACTIONS.GET_APP_SETTINGS_SUCCESS:
       return {
@@ -93,15 +112,6 @@ export default (state = initialState, action) => {
         appSettings: {
           ...state.appSettings,
           ...action.userAppData,
-        },
-      };
-
-    case ACTIONS.GET_MEMBER_STATUS_SUCCESS:
-      return {
-        ...state,
-        profile: {
-          ...state.profile,
-          celsius_member: action.isNewMember || state.profile.celsius_member,
         },
       };
 
@@ -121,6 +131,16 @@ export default (state = initialState, action) => {
           ...state.profile,
           twitter_oauth_token: action.twitter_tokens.oauth_token,
           twitter_oauth_secret: action.twitter_tokens.oauth_token_secret,
+        },
+      };
+
+    case ACTIONS.START_KYC_SUCCESS:
+    case ACTIONS.POLL_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          kyc: action.kyc,
         },
       };
 

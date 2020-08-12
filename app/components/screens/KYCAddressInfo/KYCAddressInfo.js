@@ -79,6 +79,10 @@ class KYCAddressInfo extends Component {
   submitAddressInfo = async () => {
     const { formData, actions } = this.props;
 
+    if (formData.country.name === "Germany") {
+      return actions.navigateTo("BitWala");
+    }
+
     const updatedAddressInfo = {
       street: formData.street,
       flat_number: formData.flatNumber,
@@ -190,6 +194,7 @@ class KYCAddressInfo extends Component {
             onPress={this.submitAddressInfo}
             iconRight="IconArrowRight"
             loading={updatingAddressInfoInProgress}
+            disabled={updatingAddressInfoInProgress}
           >
             Continue
           </CelButton>

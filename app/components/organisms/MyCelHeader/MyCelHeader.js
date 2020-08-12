@@ -10,7 +10,8 @@ import formatter from "../../../utils/formatter";
 import PieProgressBar from "../../graphs/PieProgressBar/PieProgressBar";
 
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -32,9 +33,10 @@ class MyCelHeader extends Component {
       coin => coin.short === "CEL"
     )[0];
     let color;
-    if (loyaltyInfo.tier_level === 1) color = STYLES.COLORS.GRAY;
-    if (loyaltyInfo.tier_level === 2) color = STYLES.COLORS.ORANGE;
-    if (loyaltyInfo.tier_level === 3) color = STYLES.COLORS.CELSIUS_BLUE;
+    if (loyaltyInfo.tier_level === 1)
+      color = getColor(COLOR_KEYS.SECTION_TITLE);
+    if (loyaltyInfo.tier_level === 2) color = getColor(COLOR_KEYS.ALERT_STATE);
+    if (loyaltyInfo.tier_level === 3) color = getColor(COLOR_KEYS.LINK);
 
     if (loyaltyInfo.tier_level === 0) return null;
 
@@ -44,7 +46,7 @@ class MyCelHeader extends Component {
           <View style={style.topContainer}>
             <View style={style.celContainer}>
               <CelText color={"white"} type={"H4"} weight={"700"}>
-                {formatter.usd(celAmount.amount_usd)}
+                {formatter.usd(celAmount.amount_usd, { precision: 0 })}
               </CelText>
               <CelText color={"white"} type={"H6"} weight={"300"}>
                 CEL coins

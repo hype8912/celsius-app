@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   heightPercentageToDP,
@@ -9,7 +8,7 @@ const base = {
   container: {
     flexDirection: "column",
     justifyContent: "center",
-    height: heightPercentageToDP("15%"),
+    height: heightPercentageToDP("12%"),
   },
 
   section: {
@@ -28,6 +27,7 @@ const base = {
     justifyContent: "flex-end",
   },
   meter: {
+    height: heightPercentageToDP("2%"),
     width: widthPercentageToDP("40%"),
   },
 };
@@ -37,7 +37,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const SecurityStrengthMeterStyle = () => getThemedStyle(base, themed);

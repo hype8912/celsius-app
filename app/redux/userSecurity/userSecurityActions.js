@@ -2,7 +2,7 @@ import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage, toggleKeypad } from "../ui/uiActions";
-import { updateFormField } from "../forms/formsActions";
+import { updateFormField, updateFormFields } from "../forms/formsActions";
 import { navigateTo, navigateBack } from "../nav/navActions";
 import userSecurityService from "../../services/user-security-service";
 import userAuthService from "../../services/user-auth-service";
@@ -106,10 +106,12 @@ function checkPIN(onSuccess, onError) {
       if (onSuccess) onSuccess();
     } catch (err) {
       if (onError) onError();
-      dispatch(showMessage("error", err.msg));
+      if (err.status !== 429) {
+        dispatch(showMessage("error", err.msg));
+        dispatch(updateFormField("pin", ""));
+        dispatch(toggleKeypad());
+      }
       dispatch(apiError(API.CHECK_PIN, err));
-      dispatch(updateFormField("pin", ""));
-      dispatch(toggleKeypad());
     }
   };
 }
@@ -166,39 +168,84 @@ function setPin() {
 /**
  * Changes PIN for user
  */
-function changePin() {
+function changePin(onSuccess) {
   return async (dispatch, getState) => {
+    const { formData } = getState().forms;
+    const { profile } = getState().user;
+
+    const securityTypeCode = profile.two_factor_enabled
+      ? "twoFactorCode"
+      : "pin";
+    let pinData = {
+      [`${securityTypeCode}`]: profile.two_factor_enabled
+        ? formData.code
+        : formData.pin,
+      new_pin: formData.newPin,
+      new_pin_confirm: formData.newPinConfirm,
+    };
+    dispatch(toggleKeypad());
+
+    if (profile.two_factor_enabled) {
+      await dispatch(
+        navigateTo("VerifyProfile", {
+          hideBack: true,
+          onSuccess: async () => {
+            dispatch(updateFormField("loading", true));
+            pinData = {
+              ...pinData,
+              twoFactorCode: getState().forms.formData.code,
+            };
+            await dispatch(completePinChange(pinData, onSuccess));
+          },
+        })
+      );
+    } else {
+      dispatch(updateFormField("loading", true));
+      dispatch(completePinChange(pinData, onSuccess));
+    }
+  };
+}
+
+function completePinChange(pinData, onSuccess) {
+  return async (dispatch, getState) => {
+    const { formData } = getState().forms;
+    const { securityOverview } = getState().security;
+
     try {
-      const { formData } = getState().forms;
-      const { securityOverview } = getState().security;
-
-      const pinData = {
-        pin: formData.pin,
-        new_pin: formData.newPin,
-        new_pin_confirm: formData.newPinConfirm,
-      };
-
-      dispatch(toggleKeypad());
       dispatch(startApiCall(API.CHANGE_PIN));
       await userSecurityService.changePin(pinData);
 
       dispatch({ type: ACTIONS.CHANGE_PIN_SUCCESS });
       dispatch({ type: ACTIONS.CLEAR_FORM });
-      dispatch(showMessage("success", "Successfully changed PIN number"));
+
+      dispatch({ type: ACTIONS.SET_SIX_DIGIT_PIN });
       mixpanelAnalytics.changePin();
-      // dispatch(navigateTo("SecuritySettings"));
+      dispatch(showMessage("success", "Successfully changed PIN number"));
+      if (formData.upgradeToSixDigitPin) {
+        onSuccess();
+        return;
+      }
 
       if (securityOverview.fromFixNow) {
         dispatch(toFixNow());
-      } else {
-        dispatch(navigateTo("SecuritySettings"));
+        dispatch(updateFormField("loading", false));
+        return;
       }
-      return true;
+
+      dispatch(navigateTo("SecuritySettings"));
+      dispatch(updateFormField("loading", false));
+      return;
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CHANGE_PIN, err));
-      dispatch(updateFormField("newPinConfirm", ""));
-      dispatch(updateFormField("newPin", ""));
+      dispatch(
+        updateFormFields({
+          pinCreated: false,
+          newPinConfirm: "",
+          newPin: "",
+          loading: false,
+        })
+      );
       return false;
     }
   };
@@ -256,7 +303,7 @@ function logoutFromAllDevices() {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.LOGOUT_FROM_ALL_DEVICES));
-      await userAuthService.invalidateSession();
+      await userSecurityService.invalidateSession();
       await mixpanelAnalytics.loggedOutOfAllSessions();
       dispatch({
         type: ACTIONS.LOGOUT_FROM_ALL_DEVICES_SUCCESS,

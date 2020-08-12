@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
@@ -7,6 +6,7 @@ const base = {
   },
   bodyWrapper: {
     flexDirection: "row",
+    marginVertical: 7,
   },
   cardBody: {
     flex: 1,
@@ -27,7 +27,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const NoWithdrawalAddressCardStyle = () => getThemedStyle(base, themed);

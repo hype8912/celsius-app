@@ -1,34 +1,27 @@
-import Branch from "react-native-branch";
-
 import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { startApiCall, apiError } from "../api/apiActions";
 import { navigateTo, resetToScreen } from "../nav/navActions";
 import { showMessage } from "../ui/uiActions";
-import { initAppData, showVerifyScreen } from "../app/appActions";
 import {
   registerUserFacebook,
   registerUserGoogle,
   registerUserTwitter,
 } from "./thirdPartyActions";
-import { claimAllBranchTransfers } from "../transfers/transfersActions";
 import {
   deleteSecureStoreKey,
   setSecureStoreKey,
 } from "../../utils/expo-storage";
-import userProfileService from "../../services/user-profile-service";
 import userAuthService from "../../services/user-auth-service";
 import apiUtil from "../../utils/api-util";
 import logger from "../../utils/logger-util";
 import { setFormErrors } from "../forms/formsActions";
-import appsFlyerUtil from "../../utils/appsflyer-util";
 import branchUtil from "../../utils/branch-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
-import {
-  logoutUserMixpanel,
-  registerMixpanelUser,
-} from "../../utils/mixpanel-util";
+import { logoutUserMixpanel } from "../../utils/mixpanel-util";
+import userSecurityService from "../../services/user-security-service";
+import { getInitialCelsiusData } from "../generalData/generalDataActions";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -40,6 +33,7 @@ export {
   expireSession,
   sendResetLink,
   refreshAuthToken,
+  logoutFormDevice,
 };
 
 /**
@@ -51,42 +45,27 @@ function loginUser() {
       const { formData } = getState().forms;
 
       dispatch(startApiCall(API.LOGIN_USER));
+
       const res = await userAuthService.login({
         email: formData.email,
         password: formData.password,
         reCaptchaKey: formData.reCaptchaKey,
       });
+
       // add token to expo storage
       await setSecureStoreKey(
         SECURITY_STORAGE_AUTH_KEY,
         res.data.auth0.id_token
       );
 
-      const userRes = await userProfileService.getPersonalInfo();
-      const user = userRes.data;
-
-      const { showVerifyScreen: showVerifyScreenValue } = getState().app;
-      if (!showVerifyScreenValue) {
-        await dispatch(initAppData());
-        dispatch(claimAllBranchTransfers());
-      }
-
       dispatch({
         type: ACTIONS.LOGIN_USER_SUCCESS,
         callName: API.LOGIN_USER,
         tokens: res.data.auth0,
-        user,
       });
 
-      if (!user.pin) {
-        dispatch(navigateTo("RegisterSetPin"));
-      } else {
-        dispatch(navigateTo("VerifyScreen"), {
-          onSuccess: () => {
-            resetToScreen("WalletLanding");
-          },
-        });
-      }
+      await dispatch(getInitialCelsiusData());
+      dispatch(resetToScreen("Home"));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.LOGIN_USER, err));
@@ -119,23 +98,22 @@ function registerUser() {
         SECURITY_STORAGE_AUTH_KEY,
         res.data.auth0.id_token
       );
-      await dispatch(initAppData());
 
-      mixpanelAnalytics.sessionStarted("User registred");
-      dispatch(claimAllBranchTransfers());
       dispatch({
         type: ACTIONS.REGISTER_USER_SUCCESS,
         user: res.data.user,
         tokens: res.data.auth0,
       });
+
       dispatch(navigateTo("RegisterSetPin"));
     } catch (err) {
-      if (err.type === "Validation error") {
-        dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
-      } else {
-        dispatch(showMessage("error", err.msg));
-      }
       dispatch(apiError(API.REGISTER_USER, err));
+      if (err.type === "Validation error") {
+        return dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
+      }
+      // Don't show message if BitWala
+      if (err.type === "BitWala") return;
+      dispatch(showMessage("error", err.msg));
     }
   };
 }
@@ -166,17 +144,37 @@ function sendResetLink() {
 function logoutUser() {
   return async dispatch => {
     try {
-      await dispatch(resetToScreen("Welcome"));
-
       await logoutUserMixpanel();
+      await userSecurityService.invalidateSession();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-      await deleteSecureStoreKey("HIDE_MODAL_INTEREST_IN_CEL");
-      if (Constants.appOwnership === "standalone") Branch.logout();
       dispatch({
         type: ACTIONS.LOGOUT_USER,
       });
-      dispatch(showVerifyScreen(false));
       mixpanelAnalytics.sessionEnded("Logout user");
+      dispatch(resetToScreen("Welcome"));
+    } catch (err) {
+      logger.err(err);
+    }
+  };
+}
+
+/**
+ *
+ */
+function logoutFormDevice(type, reason, msg) {
+  return async dispatch => {
+    try {
+      if (reason === "inactiveUser")
+        await dispatch(
+          resetToScreen("LoginLanding", { type, inactiveUser: reason, msg })
+        );
+      else await dispatch(resetToScreen("Welcome"));
+
+      await logoutUserMixpanel();
+      await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+      dispatch({
+        type: ACTIONS.LOGOUT_USER,
+      });
     } catch (err) {
       logger.err(err);
     }
@@ -220,13 +218,6 @@ function createAccount() {
     if (!formData.googleId && !formData.facebookId && !formData.twitterId) {
       await dispatch(registerUser());
     }
-
-    const user = getState().user.profile;
-    if (user.id) {
-      appsFlyerUtil.registrationCompleted(user);
-      registerMixpanelUser(user.id);
-      mixpanelAnalytics.registrationCompleted(user);
-    }
   };
 }
 
@@ -247,8 +238,8 @@ function refreshAuthToken() {
         type: ACTIONS.REFRESH_AUTH_TOKEN_SUCCESS,
       });
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.REFRESH_AUTH_TOKEN, err));
+      return err;
     }
   };
 }

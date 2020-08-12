@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -7,7 +7,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import WalletInterestStyle from "./WalletInterest.styles";
 import { EMPTY_STATES } from "../../../constants/UI";
@@ -18,6 +17,7 @@ import InterestCalculatorScreen from "../InterestCalculatorScreen/InterestCalcul
 import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util";
 import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 import Counter from "../../molecules/Counter/Counter";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(
   state => ({
@@ -48,15 +48,14 @@ class WalletInterest extends Component {
         left: "back",
         right: "profile",
       },
-      loading: true,
     };
   }
 
   async componentDidMount() {
     const { actions } = this.props;
+    actions.changeInterestHeaderContent();
     await actions.getLoyaltyInfo();
     await actions.getUserAppSettings();
-    this.setState({ loading: false });
   }
 
   render() {
@@ -68,21 +67,15 @@ class WalletInterest extends Component {
       actions,
       interestCompliance,
     } = this.props;
-    const { loading } = this.state;
     const style = WalletInterestStyle();
 
-    if (loading || !appSettings || !loyaltyInfo) return <LoadingScreen />;
-    if (!interestCompliance) {
+    if (!appSettings || !loyaltyInfo) return <LoadingScreen />;
+    if (!interestCompliance.allowed) {
       return <InterestCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
     }
     if (isUSCitizen() && !user.ssn) {
       return (
         <InterestCalculatorScreen purpose={EMPTY_STATES.NO_SSN_INTEREST} />
-      );
-    }
-    if (!user.celsius_member) {
-      return (
-        <InterestCalculatorScreen purpose={EMPTY_STATES.NON_MEMBER_INTEREST} />
       );
     }
     if (walletSummary.total_interest_earned <= 0) {
@@ -107,7 +100,7 @@ class WalletInterest extends Component {
               <View style={style.amountWrapper}>
                 <Counter
                   weight="600"
-                  type="H3"
+                  type="H2"
                   number={walletSummary.total_interest_earned}
                   speed={5}
                   usd
@@ -115,9 +108,7 @@ class WalletInterest extends Component {
                 <TouchableOpacity
                   onPress={() => actions.navigateTo("InterestRates")}
                 >
-                  <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-                    Rates this week
-                  </CelText>
+                  <CelText link>Rates this week</CelText>
                 </TouchableOpacity>
               </View>
               <Separator margin="10 0 0 0" />
@@ -127,7 +118,7 @@ class WalletInterest extends Component {
                 }}
                 style={{ marginTop: 10 }}
               >
-                <Image
+                <ThemedImage
                   style={{
                     alignSelf: "center",
                     width: 25,
@@ -135,9 +126,13 @@ class WalletInterest extends Component {
                     marginBottom: 5,
                     marginTop: 6,
                   }}
-                  source={require("../../../../assets/images/calculator.png")}
+                  lightSource={require("../../../../assets/images/calculator.png")}
+                  darkSource={require("../../../../assets/images/calculator.png")}
+                  unicornSource={require("../../../../assets/images/calculator-unicorn.png")}
                 />
-                <CelText align="center">Calculator</CelText>
+                <CelText align="center" link>
+                  Calculator
+                </CelText>
               </TouchableOpacity>
             </>
           </Card>

@@ -6,19 +6,19 @@ import MultiInfoCardStyle from "./MultiInfoCardButton.styles";
 import CelText from "../../atoms/CelText/CelText";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import Badge from "../../atoms/Badge/Badge";
 import Icon from "../../atoms/Icon/Icon";
 import {
-  getTheme,
+  getColor,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import { THEMES } from "../../../constants/UI";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class MultiInfoCardButton extends Component {
   static propTypes = {
     darkImage: PropTypes.number,
+    unicornImage: PropTypes.number,
     lightImage: PropTypes.number,
     textButton: PropTypes.string,
     explanation: PropTypes.string,
@@ -40,6 +40,7 @@ class MultiInfoCardButton extends Component {
     const {
       darkImage,
       lightImage,
+      unicornImage,
       textButton,
       explanation,
       onPress,
@@ -48,7 +49,6 @@ class MultiInfoCardButton extends Component {
     } = this.props;
 
     const style = MultiInfoCardStyle();
-    const theme = getTheme();
     return (
       <Card onPress={onPress} padding={"20 20 20 10"} disabled={disabled}>
         <View style={style.cardWrapper}>
@@ -57,44 +57,32 @@ class MultiInfoCardButton extends Component {
               style={[style.image, disabled ? { opacity: 0.3 } : null]}
               darkSource={darkImage}
               lightSource={lightImage}
+              unicornSource={unicornImage}
             />
           </View>
           <View style={style.explanationWrapper}>
-            <CelText
-              weight={"500"}
-              type={"H3"}
-              color={STYLES.COLORS.CELSIUS_BLUE}
-              margin={"0 0 0 0"}
-              style={disabled ? { opacity: 0.3 } : null}
-            >
-              {textButton}
-              <View
-                style={{
-                  height: heightPercentageToDP("2.5%"),
-                  width: widthPercentageToDP("4.5%"),
-                }}
+            <View style={style.titleWrapper}>
+              <CelText
+                weight={"500"}
+                type={"H3"}
+                color={getColor(COLOR_KEYS.LINK)}
+                margin={"0 0 0 0"}
+                style={disabled ? { opacity: 0.3 } : null}
               >
-                <Icon
-                  name={"IconChevronRight"}
-                  fill={
-                    disabled
-                      ? STYLES.COLORS.DARK_GRAY3
-                      : STYLES.COLORS.DARK_GRAY5
-                  }
-                  height={heightPercentageToDP("2.5%")}
-                  width={widthPercentageToDP("2.5%")}
-                  style={style.chevronStyle}
-                />
-              </View>
-            </CelText>
+                {textButton}
+              </CelText>
+              <Icon
+                name={"IconChevronRight"}
+                fill={COLOR_KEYS.LINK}
+                height={heightPercentageToDP("2.5%")}
+                width={widthPercentageToDP("3%")}
+                style={style.chevronStyle}
+              />
+            </View>
             {label ? (
               <View style={style.active}>
                 <Badge
-                  color={
-                    theme === THEMES.LIGHT
-                      ? STYLES.COLORS.GREEN
-                      : STYLES.COLORS.MEDIUM_GRAY3
-                  }
+                  color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                   style={{ alignItems: "flex-start", opacity: 1, zIndex: 100 }}
                 >
                   <CelText type="H6" color="white">

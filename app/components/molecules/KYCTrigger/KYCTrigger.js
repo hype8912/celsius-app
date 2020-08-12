@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import STYLES from "../../../constants/STYLES";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { MODALS } from "../../../constants/UI";
 import Banner from "../Banner/Banner";
 import { hasPassedKYC } from "../../../utils/user-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class KYCTrigger extends Component {
   static propTypes = {
@@ -22,14 +23,14 @@ class KYCTrigger extends Component {
       case KYC_STATUSES.pending:
       case KYC_STATUSES.sending:
       case KYC_STATUSES.sent:
-        color = STYLES.COLORS.ORANGE;
+        color = getColor(COLOR_KEYS.ALERT_STATE);
         break;
       case KYC_STATUSES.permanently_rejected:
       case KYC_STATUSES.rejected:
-        color = STYLES.COLORS.RED;
+        color = getColor(COLOR_KEYS.NEGATIVE_STATE);
         break;
       default:
-        color = STYLES.COLORS.CELSIUS_BLUE;
+        color = getColor(COLOR_KEYS.LINK);
     }
 
     return color;
@@ -99,7 +100,7 @@ class KYCTrigger extends Component {
           [KYC_STATUSES.rejected, KYC_STATUSES.permanently_rejected].includes(
             kycType
           )
-            ? "What could have gone wrong?"
+            ? "Rejection reasons"
             : null
         }
         title={kycInfo.title}

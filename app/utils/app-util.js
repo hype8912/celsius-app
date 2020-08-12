@@ -1,6 +1,3 @@
-// TODO(sb): RN update dependencies fixes
-// import * as Font from "expo-font";
-// import { Asset } from "expo-asset";
 import React from "react";
 import { Image } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
@@ -18,9 +15,8 @@ import {
 import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
-import apiUtil from "./api-util";
-import uxCamUtil from "./uxcam-util";
 import { initMixpanel } from "./mixpanel-util";
+import { isUserLoggedIn } from "./user-util";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -37,23 +33,23 @@ export default {
   // cacheFonts,
   recursiveMap,
   getRevisionId,
+  updateCelsiusApp,
+  checkAndRefreshAuthToken,
 };
 
 /**
  * Initializes all third party services used in Celsius app
  */
 async function initializeThirdPartyServices() {
-  await store.dispatch(actions.setAppsFlyerUID());
-  await store.dispatch(actions.setAdvertisingId());
+  store.dispatch(actions.setAppsFlyerUID());
+  store.dispatch(actions.setAdvertisingId());
 
-  apiUtil.initInterceptors();
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
   await initMixpanel();
-  await uxCamUtil.initUxCam();
 }
 
 /**
- * Logs the user out on environment change, helps developers
+ * Logs the user out on environment change, helps developers when switching from development to production
  */
 async function logoutOnEnvChange() {
   const previousBaseUrl = await getSecureStoreKey("BASE_URL");
@@ -64,12 +60,35 @@ async function logoutOnEnvChange() {
 }
 
 /**
+ * Updates Celsius app to the newest code push version on app startup
+ */
+async function updateCelsiusApp() {
+  const { deepLinkData } = store.getState().deepLink;
+  if (deepLinkData.type) return;
+
+  const hasUpdate = await CodePush.checkForUpdate();
+  // eslint-disable-next-line no-undef
+  if (!__DEV__ && hasUpdate) {
+    store.dispatch(
+      actions.showMessage(
+        "info",
+        "Please wait while Celsius app is being updated."
+      )
+    );
+    return await CodePush.sync({
+      updateDialog: false,
+      installMode: CodePush.InstallMode.IMMEDIATE,
+    });
+  }
+}
+
+/**
  * Initializes the connectivity listener for the app
  */
 function initInternetConnectivityListener() {
-  NetInfo.isConnected.addEventListener("connectionChange", isConnected =>
-    store.dispatch(actions.setInternetConnection(isConnected))
-  );
+  NetInfo.addEventListener(state => {
+    store.dispatch(actions.setInternetConnection(state.isConnected));
+  });
 }
 
 /**
@@ -81,16 +100,11 @@ let iteration = 0;
 let backendPollInterval;
 async function pollBackendStatus() {
   if (backendPollInterval) clearInterval(backendPollInterval);
-
-  await store.dispatch(actions.getBackendStatus());
-  await store.dispatch(actions.getUserStatus());
-  await checkAndRefreshAuthToken();
-
   backendPollInterval = setInterval(async () => {
-    await store.dispatch(actions.getBackendStatus());
-    await store.dispatch(actions.getUserStatus());
-    await checkAndRefreshAuthToken();
-
+    if (isUserLoggedIn()) {
+      await store.dispatch(actions.getUserStatus());
+      await checkAndRefreshAuthToken();
+    }
     iteration++;
   }, POLL_INTERVAL);
 }
@@ -98,12 +112,15 @@ async function pollBackendStatus() {
 /**
  * Check if auth token is about too expire and refresh it from BE
  * Check every 15min, or every 30 poll iterations
+ *
+ * @param {string} token - auth token from storage
  */
-async function checkAndRefreshAuthToken() {
+async function checkAndRefreshAuthToken(token) {
   if (iteration % 30 !== 0) return;
 
   const EXPIRES_IN_HOURS = 24;
-  const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+  const storageToken =
+    token || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
   if (!storageToken) return;
 
   const decodedToken = jwtDecode(storageToken);
@@ -115,7 +132,8 @@ async function checkAndRefreshAuthToken() {
     .isAfter(moment(expirationDate));
 
   if (isAboutToExpire) {
-    await store.dispatch(actions.refreshAuthToken());
+    const refreshTokenError = await store.dispatch(actions.refreshAuthToken());
+    return refreshTokenError;
   }
 }
 

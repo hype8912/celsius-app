@@ -22,7 +22,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const TransactionDetailsCelPayStyle = () => getThemedStyle(base, themed);

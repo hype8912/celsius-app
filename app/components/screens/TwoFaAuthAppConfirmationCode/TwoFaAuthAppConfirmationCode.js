@@ -3,15 +3,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Keyboard, TouchableOpacity, Clipboard } from "react-native";
+// eslint-disable-next-line import/no-unresolved
+import { openInbox } from "react-native-email-link";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { MODALS } from "../../../constants/UI";
 import UI from "../../../constants/STYLES";
-import VerifyAuthAppModal from "../../modals/VerifyAuthAppModal/VerifyAuthAppModal";
 import Spinner from "../../atoms/Spinner/Spinner";
 
 @connect(
@@ -46,21 +46,21 @@ class TwoFaAuthAppConfirmationCode extends Component {
         if (securityOverview.fromFixNow) {
           actions.toFixNow();
         } else {
-          actions.openModal(MODALS.VERIFY_AUTHAPP_MODAL);
+          actions.showMessage(
+            "warning",
+            "To complete your Two-Factor verification request follow the email instructions."
+          );
+          openInbox({
+            title: "2FA email confirmation!",
+            message: "Open your email app to confirm 2FA activation",
+          });
+          actions.navigateTo("SecuritySettings");
         }
         this.setState({ loading: false });
       }
     } catch (e) {
-      actions.showMessage("warning", e.msg);
       this.setState({ loading: false });
     }
-  };
-
-  done = async () => {
-    const { actions } = this.props;
-
-    await actions.closeModal();
-    actions.navigateTo("WalletLanding");
   };
 
   pasteCodeHelperButton = () => (
@@ -125,8 +125,6 @@ class TwoFaAuthAppConfirmationCode extends Component {
             Verify Auth App
           </CelButton>
         )}
-
-        <VerifyAuthAppModal onVerify={this.done} />
       </RegularLayout>
     );
   }

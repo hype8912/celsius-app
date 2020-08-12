@@ -1,6 +1,4 @@
 import { Dimensions } from "react-native";
-
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const { height } = Dimensions.get("window");
@@ -13,8 +11,8 @@ const base = {
     minHeight: 0.8 * height,
   },
   image: {
-    width: 140,
-    height: 140,
+    width: 30,
+    height: 30,
     resizeMode: "contain",
   },
 };
@@ -24,7 +22,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const LoadingStateStyle = () => getThemedStyle(base, themed);

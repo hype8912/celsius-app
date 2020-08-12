@@ -52,22 +52,22 @@ storiesOf("Banner/Trigger", module)
         image={require("../../../../assets/images/present-image.png")}
         action={() => openModal(MODALS.REFERRAL_SEND_MODAL)}
         buttonText={"Share referral code"}
-        title={"Refer & Earn!"}
+        title={"Earn $20 with each referral!"}
         content={
-          "Earn even more when others sign up for Celsius with your referral code!"
+          "Celsius now pays you and your friends $20 every time a new Celsian deposits $200 for 30 days."
         }
       />
     </View>
   ))
   .add("Loan Trigger", () => (
-  <View style={{ marginBottom: 30 }}>
-    <Banner
-      backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
-      image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
-      action={() => {}}
-      buttonText={"Get a loan"}
-      title={"Did you know..."}
-      content={`Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending money you need at the lowest rates in the industry!`}
-    />
-  </View>
-));
+    <View style={{ marginBottom: 30 }}>
+      <Banner
+        backgroundColor={STYLES.COLORS.CELSIUS_BLUE}
+        image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
+        action={() => {}}
+        buttonText={"Get a loan"}
+        title={"Did you know..."}
+        content={`Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending money you need at the lowest rates in the industry!`}
+      />
+    </View>
+  ));

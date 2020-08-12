@@ -64,7 +64,7 @@ class TransactionDetailsLoans extends Component {
 
           {transaction.type.includes("LOCKED") ? (
             <View style={{ marginTop: 20 }}>
-              <View style={{ paddingHorizontal: 20 }}>
+              <View>
                 <View
                   style={{
                     flexDirection: "row",
@@ -88,7 +88,7 @@ class TransactionDetailsLoans extends Component {
                 </Card>
                 <Separator margin="20 0 20 0" />
               </View>
-              <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
+              <View style={{ marginBottom: 20 }}>
                 <View
                   style={{
                     flexDirection: "row",

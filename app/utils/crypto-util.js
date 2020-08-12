@@ -1,5 +1,6 @@
 import BigNumber from "bignumber.js";
 import { BLOCKEXPLORERS } from "../constants/DATA";
+import store from "../redux/store";
 
 /**
  * Checks if coin is ERC20
@@ -26,6 +27,8 @@ function isERC20(currency) {
       "tgbp",
       "thkd",
       "taud",
+      "busd",
+      "bat",
     ].indexOf(currency.toLowerCase()) !== -1
   );
 }
@@ -46,25 +49,29 @@ function hasLinkToBuy(currency) {
 }
 
 function buyInApp(currency) {
-  return ["BTC", "BCH", "ETH", "LTC", "XRP", "XLM", "CEL"].includes(currency);
+  const { compliance } = store.getState();
+  const { simplex, gem } = compliance;
+
+  const availableCoins = [];
+  simplex.coins.forEach(c => availableCoins.push(c));
+  gem.coins.forEach(c => {
+    if (!availableCoins.includes(c)) availableCoins.push(c);
+  });
+
+  return availableCoins.includes(currency);
 }
 
 function provideLink(currency) {
   let link;
   switch (currency) {
-    case "BCH":
-      link = "https://buy.moonpay.io/celsius";
-      break;
     case "BTC":
-      link = "https://buy.moonpay.io/celsius";
-      break;
+    case "BCH":
     case "ETH":
-      link = "https://buy.moonpay.io/celsius";
-      break;
     case "LTC":
-      link = "https://buy.moonpay.io/celsius";
-      break;
     case "XRP":
+    case "XLM":
+    case "OMG":
+    case "DAI":
       link = "https://buy.moonpay.io/celsius";
       break;
     case "TUSD":
@@ -88,21 +95,8 @@ function provideLink(currency) {
     case "TGBP":
       link = "https://www.trusttoken.com/truegbp";
       break;
-    case "CEL":
-      link =
-        "https://switcheo.exchange/markets/CEL_ETH?utm_source=website&utm_term=btn1";
-      break;
     case "DASH":
       link = "https://www.dash.org/where-to-buy";
-      break;
-    case "XLM":
-      link = "https://buy.moonpay.io/celsius";
-      break;
-    case "OMG":
-      link = "https://buy.moonpay.io/celsius";
-      break;
-    case "DAI":
-      link = "https://buy.moonpay.io/celsius";
       break;
     default:
       link = null;
@@ -113,19 +107,13 @@ function provideLink(currency) {
 function provideText(currency) {
   let text;
   switch (currency) {
-    case "BCH":
-      text = `Buy ${currency} in App`;
-      break;
     case "BTC":
-      text = `Buy ${currency} in App`;
-      break;
+    case "BCH":
     case "ETH":
-      text = `Buy ${currency} in App`;
-      break;
     case "LTC":
-      text = `Buy ${currency} in App`;
-      break;
     case "XRP":
+    case "CEL":
+    case "XLM":
       text = `Buy ${currency} in App`;
       break;
     case "TUSD":
@@ -138,25 +126,13 @@ function provideText(currency) {
       text = `Buy ${currency} from Paxos`;
       break;
     case "THKD":
-      text = `Buy ${currency} from TrustToken`;
-      break;
     case "TCAD":
-      text = `Buy ${currency} from TrustToken`;
-      break;
     case "TAUD":
-      text = `Buy ${currency} from TrustToken`;
-      break;
     case "TGBP":
       text = `Buy ${currency} from TrustToken`;
       break;
-    case "CEL":
-      text = `Buy ${currency} in App`;
-      break;
     case "DASH":
       text = `Buy ${currency}`;
-      break;
-    case "XLM":
-      text = `Buy ${currency} in App`;
       break;
     case "OMG":
       text = `Buy ${currency} on MoonPay`;
@@ -233,6 +209,12 @@ export function getBlockExplorerLink(transaction) {
         link: BLOCKEXPLORERS.btg && `${BLOCKEXPLORERS.btg}${tId}`,
         text: "btgexplorer",
       };
+    // ETC
+    case "etc":
+      return {
+        link: BLOCKEXPLORERS.etc && `${BLOCKEXPLORERS.etc}${tId}`,
+        text: "bitquery.io",
+      };
 
     // ETH & ERC20
     case "eth":
@@ -244,6 +226,11 @@ export function getBlockExplorerLink(transaction) {
     case "usdc":
     case "cel":
     case "omg":
+    case "link":
+    case "lpt":
+    case "snx":
+    case "kcn":
+    case "matic":
       return {
         link: BLOCKEXPLORERS.eth && `${BLOCKEXPLORERS.eth}${tId}`,
         text: "etherscan",

@@ -1,6 +1,5 @@
-// import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -37,47 +36,22 @@ const base = {
     height: 30,
     borderRadius: 15,
     borderWidth: 2,
-    borderColor: STYLES.COLORS.WHITE,
+    borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
   },
 
   monthly: {
     width: "45%",
     paddingHorizontal: 5,
   },
+  textOpacity: {
+    opacity: 0.6,
+  },
 };
 
 const themed = {
-  light: {
-    grayCard: {
-      color: STYLES.COLORS.LIGHT_GRAY,
-    },
-    blueCard: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
-    },
-    blueCardBoldText: {
-      color: STYLES.COLORS.WHITE,
-    },
-    blueCardText: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
-  },
-
-  dark: {
-    grayCard: {
-      color: STYLES.COLORS.SEMI_GRAY,
-    },
-    blueCard: {
-      color: STYLES.COLORS.CELSIUS_BLUE,
-    },
-    blueCardBoldText: {
-      color: STYLES.COLORS.WHITE,
-    },
-    blueCardText: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const ConfirmYourLoanStyle = () => getThemedStyle(base, themed);

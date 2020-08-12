@@ -1,8 +1,8 @@
-// SIMPLEX_PAYMENT_STATUSES.APPROVED
-import { SIMPLEX_PAYMENT_STATUSES } from "../constants/DATA";
+// BUY_COINS_PAYMENT_STATUSES.APPROVED
+import { BUY_COINS_PAYMENT_STATUSES } from "../constants/DATA";
 
 const simplexCreditApproved = {
-  id: SIMPLEX_PAYMENT_STATUSES.APPROVED,
+  id: BUY_COINS_PAYMENT_STATUSES.APPROVED,
   fiat_amount: "122.11",
   amount: "0.5",
   fee: "10",
@@ -17,9 +17,9 @@ const simplexCreditApproved = {
   type: "DEPOSIT_CONFIRMED",
 };
 
-// SIMPLEX_PAYMENT_STATUSES.APPROVED.CANCELED
+// BUY_COINS_PAYMENT_STATUSES.APPROVED.CANCELED
 const simplexCreditCanceled = {
-  id: SIMPLEX_PAYMENT_STATUSES.CANCELLED,
+  id: BUY_COINS_PAYMENT_STATUSES.CANCELLED,
   user_id: "26d12326-ed9f-40d5-bba9-28e4566ad3d0",
   order_id: "4cf8e659-6205-43b3-a9c2-9aa9dbb61b94",
   status: "declined",
@@ -31,9 +31,9 @@ const simplexCreditCanceled = {
   type: "CANCELED",
 };
 
-// SIMPLEX_PAYMENT_STATUSES.APPROVED.PENDING
+// BUY_COINS_PAYMENT_STATUSES.APPROVED.PENDING
 const simplexCreditPending = {
-  id: SIMPLEX_PAYMENT_STATUSES.PENDING,
+  id: BUY_COINS_PAYMENT_STATUSES.PENDING,
   user_id: "26d12326-ed9f-40d5-bba9-28e4566ad3d0",
   order_id: "4cf8e659-6205-43b3-a9c2-9aa9dbb61b94",
   status: "pending",
@@ -46,7 +46,7 @@ const simplexCreditPending = {
 };
 
 export default {
-  [SIMPLEX_PAYMENT_STATUSES.PENDING]: simplexCreditPending,
-  [SIMPLEX_PAYMENT_STATUSES.APPROVED]: simplexCreditApproved,
-  [SIMPLEX_PAYMENT_STATUSES.CANCELED]: simplexCreditCanceled,
+  [BUY_COINS_PAYMENT_STATUSES.PENDING]: simplexCreditPending,
+  [BUY_COINS_PAYMENT_STATUSES.APPROVED]: simplexCreditApproved,
+  [BUY_COINS_PAYMENT_STATUSES.CANCELED]: simplexCreditCanceled,
 };

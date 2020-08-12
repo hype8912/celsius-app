@@ -1,10 +1,12 @@
+// eslint-disable-next-line import/no-unresolved
+import { openInbox } from "react-native-email-link";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage } from "../ui/uiActions";
 import { clearForm } from "../forms/formsActions";
 import walletService from "../../services/wallet-service";
-import { navigateTo } from "../nav/navActions";
+import { navigateBack, navigateTo } from "../nav/navActions";
 import addressUtil from "../../utils/address-util";
 
 export {
@@ -102,7 +104,7 @@ function getCoinAddressSuccess(address) {
 /**
  * Sets withdrawal address for user for coin
  *
- * @param {string} flow - one of withdrawal|change-address
+ * @param {string} flow - one of withdrawal|change-address|wallet
  */
 function setCoinWithdrawalAddress(flow = "withdrawal") {
   return async (dispatch, getState) => {
@@ -130,11 +132,22 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
 
       dispatch(setCoinWithdrawalAddressSuccess(coin, response.data));
 
-      const nextScreen =
-        flow === "change-address" ? "WithdrawAddressLabel" : "WithdrawConfirm";
-      dispatch(navigateTo(nextScreen));
-
+      if (flow === "wallet") {
+        dispatch(navigateTo("WalletLanding"));
+        dispatch(
+          showMessage(
+            "warning",
+            `Open your email to confirm the setting of your ${formData.coin} withdrawal address. Note that withdrawals for ${formData.coin} will be locked for the next 24h due to not having 2FA set.`
+          )
+        );
+      }
       if (flow === "change-address") {
+        dispatch(navigateTo("WithdrawAddressLabel"));
+        openInbox({
+          title: "Confirm Change Address",
+          message:
+            "Please choose email app to confirm withdrawal address change",
+        });
         dispatch(
           showMessage(
             "success",
@@ -142,9 +155,14 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
           )
         );
       }
+      if (flow === "withdrawal") dispatch(navigateTo("WithdrawConfirm"));
     } catch (error) {
       dispatch(showMessage("error", error.msg));
       dispatch(apiError(API.SET_COIN_WITHDRAWAL_ADDRESS, error));
+
+      if (flow === "wallet") {
+        dispatch(navigateBack());
+      }
     }
   };
 }

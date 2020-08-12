@@ -17,7 +17,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const SimplexScreenStyle = () => getThemedStyle(base, themed);
