@@ -90,7 +90,6 @@ import MaintenanceStories from "./Maintenance/Maintenance.stories";
 import CelPayMessageStories from "./CelPayMessage/CelPayMessage.stories";
 import KYCFinalRejectionStories from "./KYCFinalRejection/KYCFinalRejection.stories";
 import SixDigitPinExplanationStories from "./SixDigitPinExplanation/SixDigitPinExplanation.stories";
-import ActivateSixDigitPinStories from "./ActivateSixDigitPin/ActivateSixDigitPin.stories";
 import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stories";
 import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
 import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
@@ -604,9 +603,4 @@ storiesOf("KYCFinalRejection", module).add(
 storiesOf("SixDigitPinExplanation", module).add(
   "SixDigitPinExplanation",
   SixDigitPinExplanationStories.regular
-);
-
-storiesOf("ActivateSixDigitPin", module).add(
-  "ActivateSixDigitPin",
-  ActivateSixDigitPinStories.regular
 );

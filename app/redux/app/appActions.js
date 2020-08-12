@@ -48,7 +48,6 @@ const SCREENS_WITH_LATER_VERIFICATION = [
   "TwoFactorSettings",
   "RegisterSetPin",
   "ChangePin",
-  "ActivateSixDigitPin",
 ];
 const ASK_FOR_PIN_SHORT = 30 * 1000;
 const ASK_FOR_PIN_LONG = 10 * 60 * 1000;
