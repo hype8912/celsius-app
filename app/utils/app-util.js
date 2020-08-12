@@ -34,6 +34,7 @@ export default {
   recursiveMap,
   getRevisionId,
   updateCelsiusApp,
+  shouldUpdateCelsiusApp,
   checkAndRefreshAuthToken,
 };
 
@@ -66,9 +67,7 @@ async function updateCelsiusApp() {
   const { deepLinkData } = store.getState().deepLink;
   if (deepLinkData.type) return;
 
-  const hasUpdate = await CodePush.checkForUpdate();
-  // eslint-disable-next-line no-undef
-  if (!__DEV__ && hasUpdate) {
+  if (await shouldUpdateCelsiusApp()) {
     store.dispatch(
       actions.showMessage(
         "info",
@@ -80,6 +79,16 @@ async function updateCelsiusApp() {
       installMode: CodePush.InstallMode.IMMEDIATE,
     });
   }
+}
+
+/**
+ * Checks if app should be updated
+ * This is disabled in dev mode
+ */
+async function shouldUpdateCelsiusApp() {
+  const hasUpdate = await CodePush.checkForUpdate();
+  // eslint-disable-next-line no-undef
+  return !__DEV__ && hasUpdate;
 }
 
 /**
