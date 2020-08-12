@@ -420,6 +420,24 @@ const COMING_SOON_COINS = [
     image_url: require("../../assets/images/coins/iota.png"),
     learn_more_link: "https://www.iota.org/",
   },
+  {
+    name: "Kava.io",
+    short: "KAVA",
+    image_url: require("../../assets/images/coins/kava.png"),
+    learn_more_link: "https://www.kava.io/",
+  },
+  {
+    name: "Band Protocol",
+    short: "BAND",
+    image_url: require("../../assets/images/coins/band.png"),
+    learn_more_link: "https://bandprotocol.com/",
+  },
+  {
+    name: "Horizen",
+    short: "ZEN",
+    image_url: require("../../assets/images/coins/horizen.png"),
+    learn_more_link: "https://www.horizen.global/",
+  },
 ];
 
 export {

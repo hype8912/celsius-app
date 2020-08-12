@@ -56,7 +56,7 @@ class Deposit extends Component {
   constructor(props) {
     super(props);
 
-    const { depositCompliance, currencies } = props;
+    const { depositCompliance, currencies, actions, navigation } = props;
 
     const coinSelectItems =
       currencies &&
@@ -66,6 +66,9 @@ class Deposit extends Component {
           label: `${formatter.capitalize(c.name)} (${c.short})`,
           value: c.short,
         }));
+
+    const currencyFromNav = navigation.getParam("coin");
+    actions.updateFormField("selectedCoin", currencyFromNav || "ETH");
 
     this.state = {
       isFetchingAddress: false,
@@ -142,25 +145,10 @@ class Deposit extends Component {
     };
   };
 
-  getDefaultSelectedCoin = () => {
-    const { formData, navigation } = this.props;
-    const currencyFromNav = navigation.getParam("coin");
-
-    // If nothing comes through navigation and nothing stored in the redux state,
-    // use ETH as default selected coin
-    let defaultSelectedCoin = "ETH";
-
-    if (currencyFromNav) {
-      defaultSelectedCoin = currencyFromNav;
-    } else if (formData.selectedCoin) {
-      defaultSelectedCoin = formData.selectedCoin;
-    }
-    return defaultSelectedCoin;
-  };
-
   handleCoinSelect = async (field, item) => {
     const { actions } = this.props;
-    await actions.updateFormField(field, item);
+    actions.openModal(MODALS.DEPOSIT_INFO_MODAL);
+    actions.updateFormField(field, item);
     await this.fetchAddress(item);
   };
 
@@ -331,7 +319,7 @@ class Deposit extends Component {
       destinationTag,
       memoId,
     } = this.getAddress(formData.selectedCoin);
-    const coin = navigation.getParam("coin");
+    const coin = formData.selectedCoin;
     const {
       useAlternateAddress,
       isFetchingAddress,
@@ -383,7 +371,6 @@ class Deposit extends Component {
           onChange={this.handleCoinSelect}
           coin={formData.selectedCoin}
           field="selectedCoin"
-          defaultSelected={this.getDefaultSelectedCoin()}
           availableCoins={coinSelectItems}
           navigateTo={actions.navigateTo}
         />
