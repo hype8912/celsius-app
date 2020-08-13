@@ -8,7 +8,6 @@ export {
   isUSResident,
   hasPassedKYC,
   isKYCRejectedForever,
-  // TODO(ns) KYC: isRejecEted, isPending
   hasSSN,
   hasAddress,
   getUserKYCStatus,

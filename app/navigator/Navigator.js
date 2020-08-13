@@ -21,7 +21,6 @@ import Welcome from "../components/screens/Welcome/Welcome";
 import PasswordBreached from "../components/screens/PasswordBreached/PasswordBreached";
 import VerifyProfile from "../components/screens/VerifyProfile/VerifyProfile";
 import SixDigitPinExplanation from "../components/screens/SixDigitPinExplanation/SixDigitPinExplanation";
-import ActivateSixDigitPin from "../components/screens/ActivateSixDigitPin/ActivateSixDigitPin";
 import TransactionsOnHold from "../components/screens/TransactionsOnHold/TransactionsOnHold";
 import KYCProfileDetails from "../components/screens/KYCProfileDetails/KYCProfileDetails";
 import KYCAddressInfo from "../components/screens/KYCAddressInfo/KYCAddressInfo";
@@ -51,7 +50,7 @@ import BorrowCollateral from "../components/screens/BorrowCollateral/BorrowColla
 import BorrowLoanOption from "../components/screens/BorrowLoanOption/BorrowLoanOption";
 import BorrowLoanTerm from "../components/screens/BorrowLoanTerm/BorrowLoanTerm";
 import BorrowBankAccount from "../components/screens/BorrowBankAccount/BorrowBankAccount";
-import ConfirmYourLoan from "../components/screens/ConfirmYourLoan/ConfirmYourLoan";
+import BorrowLoanConfirm from "../components/screens/BorrowLoanConfirm/BorrowLoanConfirm";
 import BorrowLanding from "../components/screens/BorrowLanding/BorrowLanding";
 import ChoosePaymentMethod from "../components/screens/ChoosePaymentMethod/ChoosePaymentMethod";
 import ChooseMarginCollateralCoin from "../components/screens/ChooseMarginCollateralCoin/ChooseMarginCollateralCoin";
@@ -111,6 +110,7 @@ import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/Hod
 import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
+import BitWala from "../components/screens/BitWala/BitWala";
 
 export const screens = {
   /**
@@ -148,10 +148,10 @@ export const screens = {
   KYCCheckPhotos,
   KYCPrimeTrustToU,
   KYCFinalRejection,
+  BitWala,
 
   VerifyProfile,
   SixDigitPinExplanation,
-  ActivateSixDigitPin,
 
   /**
    * Wallet
@@ -194,7 +194,7 @@ export const screens = {
   BorrowLoanOption,
   BorrowLoanTerm,
   BorrowBankAccount,
-  ConfirmYourLoan,
+  BorrowLoanConfirm,
   BorrowLanding,
   ChoosePaymentMethod,
   ChooseMarginCollateralCoin,

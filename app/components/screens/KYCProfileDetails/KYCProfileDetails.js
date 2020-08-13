@@ -123,6 +123,10 @@ class KYCProfileDetails extends Component {
     const isFormValid = this.validateForm(formData);
 
     if (isFormValid) {
+      if (formData.citizenship.name === "Germany") {
+        return actions.navigateTo("BitWala");
+      }
+
       const updatedUser = {
         first_name: formData.firstName,
         last_name: formData.lastName,

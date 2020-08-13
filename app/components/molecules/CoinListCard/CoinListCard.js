@@ -63,6 +63,11 @@ class CoinListCard extends Component {
 
   renderInterestRate = coin => {
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
+
+    const isInCel = !interestRate.inCEL
+      ? interestRate.compound_rate
+      : interestRate.rateInCel;
+
     if (!interestRate.eligible) return null;
     return (
       <CelText
@@ -71,7 +76,7 @@ class CoinListCard extends Component {
         color={STYLES.COLORS.GREEN}
         margin="0 0 0 3"
       >
-        {interestRate.display} APY
+        {formatter.percentageDisplay(isInCel)} APY
       </CelText>
     );
   };

@@ -29,8 +29,8 @@ import Card from "../../atoms/Card/Card";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import { renderHodlEmptyState } from "../../../utils/hodl-util";
-import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({

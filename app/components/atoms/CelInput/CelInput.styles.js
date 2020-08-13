@@ -51,7 +51,7 @@ const base = {
     borderTopWidth: 0.5,
     borderLeftWidth: 0.5,
     borderRightWidth: 0.5,
-    borderBottomWidth: 2,
+    borderBottomWidth: 0.5,
   },
   rightText: {
     position: "absolute",

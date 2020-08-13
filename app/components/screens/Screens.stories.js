@@ -70,7 +70,7 @@ import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
 import ActionsByUserStories from "./ActionsByUser/ActionsByUser.stories";
 import CelPayChooseFriendStories from "./CelPayChooseFriend/CelPayChooseFriend.stories";
-import ConfirmYourLoanStories from "./ConfirmYourLoan/ConfirmYourLoan.stories";
+import BorrowLoanConfirmStories from "./BorrowLoanConfirm/BorrowLoanConfirm.stories";
 import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
 import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
 import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
@@ -90,7 +90,6 @@ import MaintenanceStories from "./Maintenance/Maintenance.stories";
 import CelPayMessageStories from "./CelPayMessage/CelPayMessage.stories";
 import KYCFinalRejectionStories from "./KYCFinalRejection/KYCFinalRejection.stories";
 import SixDigitPinExplanationStories from "./SixDigitPinExplanation/SixDigitPinExplanation.stories";
-import ActivateSixDigitPinStories from "./ActivateSixDigitPin/ActivateSixDigitPin.stories";
 import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stories";
 import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
 import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
@@ -486,10 +485,10 @@ storiesOf("CelPayChooseFriend", module)
   .add("Has Contacts", CelPayChooseFriendStories.hasContacts)
   .add("No Contacts", CelPayChooseFriendStories.noContacts);
 
-storiesOf("ConfirmYourLoan", module)
-  .add("Stable coin", ConfirmYourLoanStories.stableCoin)
-  .add("USD - US Bank", ConfirmYourLoanStories.usdUS)
-  .add("USD - non-US Bank", ConfirmYourLoanStories.usdNonUS);
+storiesOf("BorrowLoanConfirm", module)
+  .add("Stable coin", BorrowLoanConfirmStories.stableCoin)
+  .add("USD - US Bank", BorrowLoanConfirmStories.usdUS)
+  .add("USD - non-US Bank", BorrowLoanConfirmStories.usdNonUS);
 
 storiesOf("CellphoneEnter", module).add(
   "Regular",
@@ -604,9 +603,4 @@ storiesOf("KYCFinalRejection", module).add(
 storiesOf("SixDigitPinExplanation", module).add(
   "SixDigitPinExplanation",
   SixDigitPinExplanationStories.regular
-);
-
-storiesOf("ActivateSixDigitPin", module).add(
-  "ActivateSixDigitPin",
-  ActivateSixDigitPinStories.regular
 );

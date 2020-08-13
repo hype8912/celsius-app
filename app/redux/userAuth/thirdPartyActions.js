@@ -93,8 +93,10 @@ function registerUserTwitter() {
       const { id_token: idToken, user } = res.data;
       dispatch(registerSocialSuccess("twitter", idToken, user));
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.REGISTER_USER_TWITTER, err));
+      // Don't show message if BitWala
+      if (err.type === "BitWala") return;
+      dispatch(showMessage("error", err.msg));
     }
   };
 }
@@ -230,8 +232,10 @@ function registerUserFacebook() {
       const { id_token: idToken, user } = res.data;
       dispatch(registerSocialSuccess("facebook", idToken, user));
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.REGISTER_USER_FACEBOOK, err));
+      // Don't show message if BitWala
+      if (err.type === "BitWala") return;
+      dispatch(showMessage("error", err.msg));
     }
   };
 }
@@ -333,8 +337,10 @@ function registerUserGoogle() {
 
       dispatch(registerSocialSuccess("google", idToken, user));
     } catch (err) {
-      dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.REGISTER_USER_GOOGLE, err));
+      // Don't show message if BitWala
+      if (err.type === "BitWala") return;
+      dispatch(showMessage("error", err.msg));
     }
   };
 }

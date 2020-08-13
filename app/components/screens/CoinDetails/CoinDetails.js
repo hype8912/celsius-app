@@ -178,13 +178,9 @@ class CoinDetails extends Component {
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
-    const isBelowThreshold = interestUtil.isBelowThreshold(coinDetails.short);
-    const specialRate = isBelowThreshold
-      ? interestRate.specialApyRate
-      : interestRate.apyRate;
     const isInCel = !interestRate.inCEL
       ? interestRate.compound_rate
-      : specialRate;
+      : interestRate.rateInCel;
 
     return (
       <RegularLayout

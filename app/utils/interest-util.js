@@ -7,7 +7,6 @@ const interestUtil = {
   calculateAPY,
   calculateBonusRate,
   getBaseCelRate,
-  isBelowThreshold,
 };
 
 /**
@@ -24,16 +23,13 @@ const interestUtil = {
 function getUserInterestForCoin(coinShort) {
   const interestRates = store.getState().generalData.interestRates;
   const appSettings = store.getState().user.appSettings;
-  const celUtilityTiers = store.getState().generalData.celUtilityTiers;
-  const loyaltyInfo = store.getState().loyalty.loyaltyInfo;
+  const walletSummary = store.getState().wallet.summary;
 
-  let interestRate = 0;
   let interestRateDisplay;
   let inCEL = false;
   let eligible = false;
-  let coinThreshold;
-  let specialRate;
-  let specialRateDisplay;
+  let isBelowThreshold;
+
   if (
     interestRates &&
     interestRates[coinShort] &&
@@ -49,53 +45,36 @@ function getUserInterestForCoin(coinShort) {
     interestRateDisplay = !inCEL
       ? formatter.percentageDisplay(interestRates[coinShort].compound_rate)
       : formatter.percentageDisplay(interestRates[coinShort].compound_cel_rate);
-
-    interestRate = !inCEL
-      ? interestRates[coinShort].compound_rate
-      : interestRates[coinShort].compound_cel_rate;
   }
 
   if (
-    interestRates &&
     interestRates[coinShort] &&
-    interestRates[coinShort].rate_on_first_n_coins &&
-    interestRates[coinShort].threshold_on_first_n_coins
+    interestRates[coinShort].threshold_on_first_n_coins &&
+    walletSummary
   ) {
-    coinThreshold = Number(interestRates[coinShort].threshold_on_first_n_coins);
-    specialRate = Number(interestRates[coinShort].rate_on_first_n_coins);
-    specialRateDisplay = formatter.percentageDisplay(
-      interestRates[coinShort].rate_on_first_n_coins
+    const coinBalance = walletSummary.coins.find(c => c.short === coinShort)
+      .amount;
+
+    isBelowThreshold = coinBalance.isLessThan(
+      interestRates[coinShort].threshold_on_first_n_coins
     );
   }
 
-  const apyRate = calculateAPY(
-    calculateBonusRate(
-      interestRates[coinShort] ? interestRates[coinShort].rate : 0,
-      celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
-    )
-  );
-
-  const specialApyRate = calculateAPY(
-    calculateBonusRate(
-      specialRate,
-      celUtilityTiers[loyaltyInfo.tier.title].interest_bonus
-    )
-  );
+  const rateInCel =
+    typeof isBelowThreshold !== "undefined" && !isBelowThreshold
+      ? interestRates[coinShort].cel_rate
+      : interestRates[coinShort].compound_cel_rate;
 
   return {
     ...interestRates[coinShort],
     // Quickfix for ORBS and DAI crashes
     baseRate: interestRates[coinShort] ? interestRates[coinShort].rate : 0,
     coin: coinShort,
-    rate: interestRate,
     display: interestRateDisplay,
-    coinThreshold,
-    specialRate,
-    specialRateDisplay,
+    isBelowThreshold,
     inCEL,
     eligible,
-    apyRate,
-    specialApyRate,
+    rateInCel,
   };
 }
 
@@ -120,7 +99,6 @@ function getLoyaltyRates(loyaltyInfo) {
       interestRates[coinShort].cel_rate
     );
   });
-
   return interestRates;
 }
 
@@ -151,8 +129,8 @@ function calculateBonusRate(apr, bonusRate) {
  * param {string} base rate for calculating rate in CEL
  */
 function getBaseCelRate(coin) {
-  const interestRates = store.getState().generalData.interestRates;
   const walletSummary = store.getState().wallet.summary;
+  const interestRates = store.getState().generalData.interestRates;
 
   let baseRate = interestRates[coin].rate;
 
@@ -162,29 +140,13 @@ function getBaseCelRate(coin) {
     const shouldUseSpecialRate = coinBalance.isLessThan(
       interestRates[coin].threshold_on_first_n_coins
     );
+
     baseRate = shouldUseSpecialRate
       ? interestRates[coin].rate_on_first_n_coins
       : baseRate;
   }
 
   return baseRate;
-}
-
-function isBelowThreshold(coin) {
-  const interestRates = store.getState().generalData.interestRates;
-  const walletSummary = store.getState().wallet.summary;
-
-  if (
-    interestRates[coin] &&
-    interestRates[coin].threshold_on_first_n_coins &&
-    walletSummary
-  ) {
-    const coinBalance = walletSummary.coins.find(c => c.short === coin).amount;
-
-    return coinBalance.isLessThan(
-      interestRates[coin].threshold_on_first_n_coins
-    );
-  }
 }
 
 export default interestUtil;

@@ -42,9 +42,6 @@ function getTransaction(transactionId) {
   return axios.get(`${apiUrl}/wallet/transactions/${transactionId}`);
 }
 
-/**
- * TODO add JSDoc
- */
 function cancelWithdrawalService(withdrawalId) {
   return axios.post(`${apiUrl}/wallet/withdrawal/cancel/${withdrawalId}`);
 }

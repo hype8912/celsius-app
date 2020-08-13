@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { countries } from "country-data";
 
 import * as appActions from "../../../redux/actions";
-import ConfirmYourLoanStyle from "./ConfirmYourLoan.styles";
+import ConfirmYourLoanStyle from "./BorrowLoanConfirm.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import formatter from "../../../utils/formatter";
@@ -20,7 +20,6 @@ import API from "../../../constants/API";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
-// TODO rename to BorrowLoanConfirm
 @connect(
   state => ({
     formData: state.forms.formData,
@@ -29,7 +28,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-class ConfirmYourLoan extends Component {
+class BorrowLoanConfirm extends Component {
   static propTypes = {};
   static defaultProps = {};
 
@@ -585,4 +584,4 @@ class ConfirmYourLoan extends Component {
   }
 }
 
-export default ConfirmYourLoan;
+export default BorrowLoanConfirm;
