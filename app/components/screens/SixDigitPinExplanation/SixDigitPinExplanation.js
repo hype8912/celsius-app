@@ -36,7 +36,7 @@ class SixDigitPinExplanation extends Component {
     const { actions, navigation } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
 
-    actions.updateFormField("upgradeToSixDigitPin", true); // Flag for navigation to ActivateSixDigitPin
+    actions.updateFormField("upgradeToSixDigitPin", true); // Flag for navigation to Six digit pin activation
     actions.navigateTo("ChangePin", { onSuccess });
   };
 

@@ -1,9 +1,6 @@
 import ACTIONS from "../../constants/ACTIONS";
 import formatter from "../../utils/formatter";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 const initialState = {
   rates: undefined,
   graphs: undefined,

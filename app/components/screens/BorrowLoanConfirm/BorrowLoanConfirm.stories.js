@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 
-import ConfirmYourLoan from "./ConfirmYourLoan";
+import BorrowLoanConfirm from "./BorrowLoanConfirm";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockLoansStore from "../../../../celsius-app-creds/mock-data/mockLoansStore";
@@ -28,8 +28,8 @@ const stableCoin = () => {
 
   return (
     <ScreenStoryWrapper
-      screenName="ConfirmYourLoan"
-      screen={ConfirmYourLoan}
+      screenName="BorrowLoanConfirm"
+      screen={BorrowLoanConfirm}
       state={state}
     />
   );
@@ -42,8 +42,8 @@ const usdUS = () => {
 
   return (
     <ScreenStoryWrapper
-      screenName="ConfirmYourLoan"
-      screen={ConfirmYourLoan}
+      screenName="BorrowLoanConfirm"
+      screen={BorrowLoanConfirm}
       state={state}
     />
   );
@@ -56,8 +56,8 @@ const usdNonUS = () => {
 
   return (
     <ScreenStoryWrapper
-      screenName="ConfirmYourLoan"
-      screen={ConfirmYourLoan}
+      screenName="BorrowLoanConfirm"
+      screen={BorrowLoanConfirm}
       state={state}
     />
   );

@@ -12,9 +12,6 @@ export {
   resetToScreen,
 };
 
-/**
- * TODO add JSDoc
- */
 function setActiveScreen(screenName) {
   return dispatch => {
     dispatch({ type: ACTIONS.SET_ACTIVE_SCREEN, payload: { screenName } });

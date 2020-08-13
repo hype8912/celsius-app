@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, View } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -12,6 +12,7 @@ import { getColor } from "../../../utils/styles-util";
 import Spinner from "../../atoms/Spinner/Spinner";
 import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 
 @connect(
   state => ({
@@ -53,25 +54,10 @@ class InterestPaymentSettings extends Component {
   rightSwitch = () => {
     const { isAutomaticInterestPaymentEnabled } = this.state;
 
-    const thumbColor = isAutomaticInterestPaymentEnabled
-      ? getColor(COLOR_KEYS.TOGGLE_ON_FOREGROUND)
-      : getColor(COLOR_KEYS.TOGGLE_OFF_FOREGROUND);
-
-    const backgroundColor = isAutomaticInterestPaymentEnabled
-      ? getColor(COLOR_KEYS.TOGGLE_ON_BACKGROUND)
-      : getColor(COLOR_KEYS.TOGGLE_OFF_BACKGROUND);
-
-    const trackColor = {
-      true: getColor(COLOR_KEYS.TOGGLE_ON_BACKGROUND),
-      false: getColor(COLOR_KEYS.TOGGLE_OFF_BACKGROUND),
-    };
     return (
-      <Switch
+      <CelSwitch
         onValueChange={this.handleSwitchChange}
         value={isAutomaticInterestPaymentEnabled}
-        thumbColor={thumbColor}
-        ios_backgroundColor={backgroundColor}
-        trackColor={trackColor}
       />
     );
   };

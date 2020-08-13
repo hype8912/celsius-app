@@ -16,7 +16,6 @@ const loansService = {
   prepayInterest,
   payPrincipal,
   payMonthlyInterest,
-  getAmortizationTable,
   sendBankDetailsEmail,
   getLoanAlerts,
 };
@@ -205,16 +204,6 @@ function payMonthlyInterest(id, coin, verification) {
     ...verification,
     coin,
   });
-}
-
-/**
- *
- * @param id
- * @returns {Promise}
- */
-// TODO: remove
-function getAmortizationTable(id) {
-  return axios.get(`${apiUrl}/loans/${id}/amortization-table`);
 }
 
 /**

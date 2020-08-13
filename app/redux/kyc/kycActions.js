@@ -273,9 +273,6 @@ function verifySMS(verificationCode) {
   };
 }
 
-/**
- * @TODO add JSDoc
- */
 export function verifySMSSuccess() {
   return {
     type: ACTIONS.VERIFY_SMS_SUCCESS,
@@ -283,9 +280,6 @@ export function verifySMSSuccess() {
   };
 }
 
-/**
- * @TODO add JSDoc
- */
 let timeout;
 
 function createKYCDocs() {
@@ -333,9 +327,6 @@ function createKYCDocs() {
   };
 }
 
-/**
- * @TODO add JSDoc
- */
 function startKYC() {
   return async dispatch => {
     dispatch(startApiCall(API.START_KYC));
@@ -357,9 +348,6 @@ function startKYC() {
   };
 }
 
-/**
- * @TODO add JSDoc
- */
 function startKYCSuccess() {
   return {
     type: ACTIONS.START_KYC_SUCCESS,
@@ -447,9 +435,6 @@ function getPrimeTrustToULink() {
   };
 }
 
-/**
- * TODO add JSdoc
- */
 function getPrimeTrustToULinkSuccess(data) {
   return {
     type: ACTIONS.GET_PRIMETRUST_TOU_LINK_SUCCESS,
@@ -474,9 +459,6 @@ function profileTaxpayerInfo() {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function profileTaxpayerInfoSuccess(taxPayerInfo) {
   return {
     type: ACTIONS.GET_USER_TAXPAYER_INFO_SUCCESS,
@@ -503,9 +485,6 @@ function getKYCDocTypes() {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function getKYCDocTypesSuccess(kycDocTypes) {
   return {
     type: ACTIONS.GET_KYC_DOC_TYPES_SUCCESS,
