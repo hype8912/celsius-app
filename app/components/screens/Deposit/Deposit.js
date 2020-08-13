@@ -70,6 +70,8 @@ class Deposit extends Component {
     const currencyFromNav = navigation.getParam("coin");
     actions.updateFormField("selectedCoin", currencyFromNav || "ETH");
 
+    this.fetchAddress(currencyFromNav || "ETH");
+
     this.state = {
       isFetchingAddress: false,
       useAlternateAddress: false,
