@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Animated, Image, Linking, View } from "react-native";
 
-// import ComingSoonCoinsStyle from "./ComingSoonCoins.styles";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";

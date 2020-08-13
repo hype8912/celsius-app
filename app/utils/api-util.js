@@ -178,7 +178,6 @@ async function setAuthHeaders() {
 
 /**
  * Intercepts every successful response from server
- * TODO: make verifyKey work in 2020!
  */
 async function responseInterceptor(res) {
   const { backendStatus } = store.getState().generalData;

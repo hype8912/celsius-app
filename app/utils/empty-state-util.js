@@ -8,7 +8,7 @@ import CelText from "../components/atoms/CelText/CelText";
 import STYLES from "../constants/STYLES";
 
 export default {
-  getProps, // TODO add JSDoc
+  getProps,
 };
 
 function getProps(purpose, componentProps) {

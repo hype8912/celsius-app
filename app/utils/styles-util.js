@@ -18,7 +18,6 @@ import FONTS from "../constants/FONTS";
 
 const { width, height } = Dimensions.get("window");
 
-// TODO: should be export default
 export {
   getMargins,
   getPadding,

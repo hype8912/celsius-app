@@ -12,7 +12,7 @@ export {
   getProfileInfo,
   updateProfilePicture,
   getUserPersonalInfoSuccess,
-  getPreviousPinScreen, // TODO wtf?
+  getPreviousPinScreen, // TODO what is this?
 };
 
 /**
@@ -41,9 +41,6 @@ function getProfileInfo() {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function getUserPersonalInfoSuccess(personalInfo) {
   return {
     type: ACTIONS.GET_USER_PERSONAL_INFO_SUCCESS,
@@ -69,9 +66,6 @@ function updateProfilePicture(image) {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function updateProfilePictureSuccess(image) {
   return {
     type: ACTIONS.UPLOAD_PLOFILE_IMAGE_SUCCESS,
@@ -80,9 +74,6 @@ function updateProfilePictureSuccess(image) {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function getPreviousPinScreen(activeScreen) {
   return async dispatch => {
     dispatch(startApiCall(API.GET_PREVIOUS_SCREEN));
