@@ -1,5 +1,8 @@
 import axios from "axios";
 import apiUrl from "./api-url";
+import Constants from "../../constants";
+
+const { ONFIDO_API_KEY } = Constants;
 
 const userKYCService = {
   getKYCDocTypes,
@@ -13,6 +16,7 @@ const userKYCService = {
   createKYCDocuments,
   getKYCDocuments,
   ensureApplicant,
+  getMobileSDKToken,
 };
 
 /**
@@ -151,6 +155,25 @@ function getKYCDocuments() {
  */
 function ensureApplicant() {
   return axios.get(`${apiUrl}/me/kyc/ensure_applicant`);
+}
+
+/**
+ * Gets OnfidoSDK mobile token
+ *
+ * @returns {Promise}
+ */
+function getMobileSDKToken(applicantId) {
+  return fetch("https://api.onfido.com/v3/sdk_token", {
+    method: "POST",
+    headers: {
+      Authorization: `Token token=${ONFIDO_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      applicant_id: applicantId,
+      application_id: "network.celsius.wallet",
+    }),
+  });
 }
 
 export default userKYCService;
