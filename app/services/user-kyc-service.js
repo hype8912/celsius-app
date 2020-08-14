@@ -13,7 +13,6 @@ const userKYCService = {
   getProfileTaxpayerInfo,
   updateProfileTaxpayerInfo,
   startKYC,
-  createKYCDocuments,
   getKYCDocuments,
   ensureApplicant,
   getMobileSDKToken,
@@ -112,30 +111,6 @@ function updateProfileTaxpayerInfo(profileTaxpayerInfo) {
  */
 function startKYC() {
   return axios.post(`${apiUrl}/me/kyc/start`);
-}
-
-/**
- * Creates KYC documents for user
- * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#10e4b34c-ebc6-4b0f-a0d0-c2fcf97d74c4
- *
- * @returns {Promise}
- */
-function createKYCDocuments(documents) {
-  const formData = new FormData();
-  formData.append("document_front_image", {
-    name: "front.jpg",
-    type: "image/jpg",
-    uri: documents.front.uri,
-  });
-  if (documents.back) {
-    formData.append("document_back_image", {
-      name: "back.jpg",
-      type: "image/jpg",
-      uri: documents.back.uri,
-    });
-  }
-  formData.append("type", documents.type);
-  return axios.put(`${apiUrl}/user/profile/documents`, formData);
 }
 
 /**
