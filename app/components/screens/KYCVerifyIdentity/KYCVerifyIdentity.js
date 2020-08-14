@@ -15,6 +15,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 @connect(
   state => ({
@@ -38,7 +39,7 @@ class KYCVerifyIdentity extends Component {
     gesturesEnabled: false,
   });
 
-  async componentDidMount() {
+  componentDidMount() {
     const { actions } = this.props;
     actions.getMobileSDKToken();
     actions.getKYCDocTypes();
@@ -78,8 +79,7 @@ class KYCVerifyIdentity extends Component {
         backImageId,
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log({ err });
+      mixpanelAnalytics.onfidoSDKError(err);
     }
   };
 
