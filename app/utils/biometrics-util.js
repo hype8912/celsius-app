@@ -1,6 +1,11 @@
 import ReactNativeBiometrics from "react-native-biometrics";
 
-export { askUserToProvideBiometrics };
+export {
+  createBiometricsSignature,
+  askUserToProvideBiometrics,
+  isBiometricsSensorAvailable,
+  createBiometricsKey,
+};
 
 async function isBiometricsSensorAvailable() {
   try {
@@ -47,11 +52,12 @@ async function askUserToProvideBiometrics(onSuccess) {
 
 async function createBiometricsKey() {
   try {
-    const keyExist = await checkBiometricsKey();
-    if (!keyExist) {
+    const key = await checkBiometricsKey();
+    // console.log('key: ', key)
+    if (!key.keysExist) {
       await ReactNativeBiometrics.createKeys("Confirm fingerprint");
+      // console.log('bioKey: ', bioKey)
     }
-    // await createBiometricsSignature()
   } catch (e) {
     // console.log('create biometrics key failed: ', e)
   }
@@ -59,18 +65,30 @@ async function createBiometricsKey() {
 
 async function checkBiometricsKey() {
   const resultObject = await ReactNativeBiometrics.biometricKeysExist();
-  // console.log('keys exist: ', resultObject)
   return resultObject;
 }
 
 // resultObject.signature sent to server, resultObject.success used for check if pass or not.
-// async function createBiometricsSignature () {
-//   const epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString()
-//   const payload = epochTimeSeconds + 'Ovo je custom poruka'
-//   const resultObject = await ReactNativeBiometrics.createSignature({
-//     promptMessage: 'Sign in',
-//     payload
-//   })
-//
-//   // console.log('createBiometricsSignature: ', resultObject)
-// }
+async function createBiometricsSignature(onSuccess) {
+  const epochTimeSeconds = Math.round(new Date().getTime() / 1000).toString();
+  const payload = `${epochTimeSeconds}Ovo je custom poruka`;
+
+  try {
+    const resultObject = await ReactNativeBiometrics.createSignature({
+      promptMessage: "Authenticate yourself",
+      payload,
+    });
+    // console.log('payload: ', payload)
+    // console.log('createBiometricsSignature: ', resultObject)
+    if (resultObject.success) {
+      // TODO Call endpoint and send signature and payload
+      // verifySignatureWithServer(signature, payload)
+      if (onSuccess) onSuccess();
+    }
+  } catch (e) {
+    // TODO better error handling, for now we have 2 errors
+    // console.log('error je: ', e)
+    await ReactNativeBiometrics.deleteKeys();
+    await createBiometricsKey();
+  }
+}
