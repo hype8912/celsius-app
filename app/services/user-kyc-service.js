@@ -17,6 +17,7 @@ const userKYCService = {
   getKYCDocuments,
   ensureApplicant,
   getMobileSDKToken,
+  saveKYCDocuments,
 };
 
 /**
@@ -158,8 +159,22 @@ function ensureApplicant() {
 }
 
 /**
+ * Saves KYC doc ids from Onfido into db
+ *
+ * @param {Array} documents
+ * @param {string} documents[].id - document id from Onfido
+ * @param {string} documents[].type - passport|driving_licence|identity_card
+ * @param {string} documents[].side - front|back
+ * @returns {Promise}
+ */
+function saveKYCDocuments(documents) {
+  return axios.put(`${apiUrl}/user/kyc/documents`, { documents });
+}
+
+/**
  * Gets OnfidoSDK mobile token
  *
+ * @param {string} applicantId - applicant id from onfido
  * @returns {Promise}
  */
 function getMobileSDKToken(applicantId) {
