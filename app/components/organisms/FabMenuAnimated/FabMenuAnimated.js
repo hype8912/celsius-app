@@ -135,12 +135,11 @@ class FabMenuAnimated extends Component {
         label: "Borrow",
         screen: "BorrowLanding",
       });
-    if (kycStatus && hasPassedKYC())
-      main[2].splice(1, 0, {
-        iconName: "Profile",
-        label: "Profile",
-        screen: "Profile",
-      });
+    main[2].splice(1, 0, {
+      iconName: "Profile",
+      label: "Profile",
+      screen: "Profile",
+    });
     // TODO change borrow landing to new screen
     if (user)
       main[1].push({

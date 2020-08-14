@@ -27,6 +27,7 @@ export {
   profileTaxpayerInfo,
   getKYCDocTypes,
   createKYCApplicant,
+  getMobileSDKToken,
 };
 
 /**
@@ -510,6 +511,33 @@ function createKYCApplicant() {
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CREATE_KYC_APPLICANT, err));
+    }
+  };
+}
+
+/**
+ * Creates/Fetches onfido applicant id
+ */
+function getMobileSDKToken() {
+  return async (dispatch, getState) => {
+    dispatch(startApiCall(API.GET_ONFIDO_MOBILE_SDK));
+    const { applicantId } = getState().kyc;
+
+    try {
+      const resSDKToken = await userKYCService.getMobileSDKToken(applicantId);
+      let mobileSDKToken;
+      if (resSDKToken.ok) {
+        const res = await resSDKToken.json();
+        mobileSDKToken = res.token;
+      }
+
+      dispatch({
+        type: ACTIONS.GET_ONFIDO_MOBILE_SDK_SUCCESS,
+        mobileSDKToken,
+      });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_ONFIDO_MOBILE_SDK, err));
     }
   };
 }
