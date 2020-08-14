@@ -28,6 +28,7 @@ export {
   getKYCDocTypes,
   createKYCApplicant,
   getMobileSDKToken,
+  saveKYCDocuments,
 };
 
 /**
@@ -539,5 +540,43 @@ function getMobileSDKToken() {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_ONFIDO_MOBILE_SDK, err));
     }
+  };
+}
+
+function saveKYCDocuments() {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(startApiCall(API.GET_ONFIDO_MOBILE_SDK));
+      const { formData } = getState().forms;
+
+      const documents = [
+        {
+          type: formData.documentType,
+          side: "front",
+          id: formData.frontImageId,
+        },
+      ];
+
+      if (formData.backImageId) {
+        documents.push({
+          type: formData.documentType,
+          side: "back",
+          id: formData.backImageId,
+        });
+      }
+
+      await userKYCService.saveKYCDocuments(documents);
+      dispatch(saveKYCDocumentsSuccess());
+      dispatch(NavActions.navigateTo("KYCTaxpayer"));
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_ONFIDO_MOBILE_SDK, err));
+    }
+  };
+}
+
+function saveKYCDocumentsSuccess() {
+  return {
+    type: ACTIONS.SAVE_KYC_DOCUMENTS_SUCCESS,
   };
 }
