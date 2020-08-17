@@ -52,10 +52,17 @@ class PaymentCard extends Component {
       "MARGIN_CALL"
     ),
     loan: PropTypes.instanceOf(Object),
+    number: PropTypes.number,
+    isOverview: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    isOverview: false,
   };
 
   constructor(props) {
     super(props);
+
     this.state = {
       currency: null,
       name: null,
@@ -211,30 +218,25 @@ class PaymentCard extends Component {
     }
   };
 
-  marginResolve = () => {
-    const { options } = this.state;
+  marginResolve = loanId => {
+    const { actions, isOverview } = this.props;
     const style = PaymentCardStyle();
 
-    if (!options)
+    if (isOverview)
       return (
         <View style={style.buttonsWrapper}>
           <CelModalButton
             buttonStyle={"secondary"}
             position={"single"}
-            onPress={() => this.showOptions()}
+            onPress={() =>
+              actions.navigateTo("SingleMarginCallScreen", { id: loanId })
+            }
           >
             Resolve Margin Call
           </CelModalButton>
         </View>
       );
-
     return this.marginCallOptions();
-  };
-
-  showOptions = () => {
-    this.setState({
-      options: true,
-    });
   };
 
   marginCallOptions = () => {
@@ -247,7 +249,7 @@ class PaymentCard extends Component {
     } = this.state;
     return (
       <View>
-        <Card margin={"10 0 10 0"} color={style.card.color}>
+        <Card margin={"0 0 10 0"} color={style.card.color}>
           <CelText weight={"300"}>
             Note: These are current estimates. Final values fixed when Margin
             Call is resolved.
@@ -302,6 +304,8 @@ class PaymentCard extends Component {
       loan,
       type,
       actions,
+      number,
+      isOverview,
     } = this.props;
     const {
       cryptoAmount,
@@ -314,7 +318,6 @@ class PaymentCard extends Component {
       hasEnough,
       collateralAmount,
       additionalUsdAmount,
-      options,
     } = this.state;
     const style = PaymentCardStyle();
     const theme = getTheme();
@@ -344,6 +347,7 @@ class PaymentCard extends Component {
 
     if (!loan) return null;
     let time;
+    const loanNumber = number + 1;
 
     if (
       loan &&
@@ -351,7 +355,6 @@ class PaymentCard extends Component {
       type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD
     )
       time = presentTime(loan.margin_call.margin_call_detected, true);
-
     if (
       currency &&
       cryptoAmount &&
@@ -366,15 +369,25 @@ class PaymentCard extends Component {
           opacity={isLoading ? 0.7 : 1}
         >
           <View>
-            {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
+            {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && isOverview && (
               <View>
-                <CelText
-                  weight={"500"}
-                  type={"H5"}
-                  color={STYLES.COLORS.CELSIUS_BLUE}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
                 >
-                  {`Loan - #${loan.id}`}
-                </CelText>
+                  {loanNumber ? (
+                    <CelText>{`Margin Call #${loanNumber}`}</CelText>
+                  ) : null}
+                  <CelText
+                    weight={"500"}
+                    type={"H5"}
+                    color={STYLES.COLORS.CELSIUS_BLUE}
+                  >
+                    {`Loan - #${loan.id}`}
+                  </CelText>
+                </View>
                 <Separator margin={"10 0 10 0"} />
               </View>
             )}
@@ -386,7 +399,13 @@ class PaymentCard extends Component {
             >
               {this.getTypeOfPaymentTitle(reason)}
             </CelText>
-            <View key={coin.name} style={style.mainContainer}>
+            <View
+              key={coin.name}
+              style={[
+                style.mainContainer,
+                { marginBottom: isOverview ? 50 : 10 },
+              ]}
+            >
               <View style={style.coinInfo}>
                 <View style={style.iconContainer}>
                   <CoinIcon
@@ -426,8 +445,6 @@ class PaymentCard extends Component {
                 )}
               </View>
 
-              <Separator margin={"10 0 10 0"} />
-
               {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
                 <View style={style.textContainer}>
                   <CelText weight={"300"} align="left">
@@ -451,6 +468,7 @@ class PaymentCard extends Component {
                 <View>
                   {!hasEnough && (
                     <View>
+                      <Separator margin={"10 0 10 0"} />
                       <CelText weight={"300"} type={"H6"}>
                         Current available balance in wallet:
                       </CelText>
@@ -469,33 +487,6 @@ class PaymentCard extends Component {
                       />
                     </View>
                   )}
-
-                  {loan &&
-                    loan.margin_call &&
-                    type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
-                      <Card
-                        margin={!options ? "10 0 60 0" : "10 0 10 0"}
-                        color={style.card.color}
-                      >
-                        <CelText align={"left"} type={"H6"}>
-                          Time remaining to resolve Margin Call
-                        </CelText>
-                        <CelText align={"left"} weight={"500"} type={"H3"}>
-                          {time.days >= 1
-                            ? `00h 00m`
-                            : `${time.hours}h ${time.minutes}m`}
-                        </CelText>
-                        {time.days >= 1 && (
-                          <Card color={STYLES.COLORS.RED}>
-                            <CelText weight={"300"} type={"H6"} color={"white"}>
-                              Your loan is now in default and you are at risk of
-                              collateral liquidation. We advise you to contact
-                              your loan manager now.
-                            </CelText>
-                          </Card>
-                        )}
-                      </Card>
-                    )}
                 </View>
               )}
 
@@ -505,11 +496,32 @@ class PaymentCard extends Component {
                   {this.renderDepositMore()}
                 </View>
               ) : null}
+              {isOverview && (
+                <Card margin={"10 0 0 0"} color={style.card.color}>
+                  <CelText align={"left"} type={"H6"}>
+                    Time remaining to resolve Margin Call
+                  </CelText>
+                  <CelText align={"left"} weight={"500"} type={"H3"}>
+                    {time.days >= 1
+                      ? `00h 00m`
+                      : `${time.hours}h ${time.minutes}m`}
+                  </CelText>
+                  {time.days >= 1 && (
+                    <Card color={STYLES.COLORS.RED}>
+                      <CelText weight={"300"} type={"H6"} color={"white"}>
+                        Your loan is now in default and you are at risk of
+                        collateral liquidation. We advise you to contact your
+                        loan manager now.
+                      </CelText>
+                    </Card>
+                  )}
+                </Card>
+              )}
             </View>
           </View>
 
           {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD &&
-            this.marginResolve()}
+            this.marginResolve(loan.id)}
         </Card>
       );
     }

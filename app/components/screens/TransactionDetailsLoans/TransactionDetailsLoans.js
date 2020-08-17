@@ -54,6 +54,19 @@ class TransactionDetailsLoans extends Component {
             value={moment.utc(transaction.time).format("h:mm A (z)")}
           />
 
+          <TxBasicSection
+            label={"New Collateral Balance"}
+            value={`${formatter.crypto(
+              Number(transaction.loan_data.loan_collateral_crypto) -
+                Number(transaction.amount),
+              transaction.coin.toUpperCase()
+            )} 
+            ${formatter.usd(
+              Number(transaction.loan_data.loan_collateral_usd) -
+                Number(transaction.amount_usd)
+            )}`}
+          />
+
           {transaction.type.includes("UNLOCKED") ? (
             <Card>
               <CelText align={"left"} type={"H5"} weight={"600"}>
@@ -115,6 +128,17 @@ class TransactionDetailsLoans extends Component {
               </View>
             </View>
           ) : null}
+
+          <CelButton
+            margin={"20 0 0 0"}
+            onPress={() =>
+              navigateTo("LoanRequestDetails", {
+                id: transaction.loan_data.loan_number,
+              })
+            }
+          >
+            Loan Overview
+          </CelButton>
 
           <CelButton
             margin={"20 0 0 0"}

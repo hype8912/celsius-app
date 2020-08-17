@@ -12,7 +12,11 @@ import Icon from "../../atoms/Icon/Icon";
 import formatter from "../../../utils/formatter";
 import { getMargins, widthPercentageToDP } from "../../../utils/styles-util";
 import { LOAN_STATUS } from "../../../constants/DATA";
-import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
+import {
+  LOAN_ALERTS,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+} from "../../../constants/UI";
 import PaymentListItem from "../../atoms/PaymentListItem/PaymentListItem";
 import STYLES from "../../../constants/STYLES";
 import CircularProgressBar from "../../graphs/CircularProgressBar/CircularProgressBar";
@@ -73,7 +77,8 @@ class LoanOverviewCard extends Component {
   payPrincipal = async () => {
     const { actions, loan } = this.props;
     this.setState({ isLoading: true });
-    await actions.payPrincipal(loan.id);
+
+    await actions.setLoanAlert(loan.id, LOAN_ALERTS.PRINCIPAL_ALERT);
     this.setState({ isLoading: false });
   };
 

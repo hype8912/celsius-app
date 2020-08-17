@@ -33,6 +33,7 @@ export {
   getLoanAlerts,
   startedLoanApplication,
   extendLoan,
+  setLoanAlert,
 };
 
 /**
@@ -497,6 +498,24 @@ function checkForLoanAlerts() {
     if (loanAlerts.length) {
       dispatch(openModal(MODALS.LOAN_ALERT_MODAL));
     }
+  };
+}
+
+/**
+ * Sets loan alert for which you wish to open modal
+ */
+
+function setLoanAlert(loanId, alertType) {
+  return dispatch => {
+    const loanAlerts = [];
+
+    loanAlerts.push({ id: loanId, type: alertType });
+
+    dispatch({
+      type: ACTIONS.CHECK_LOAN_ALERTS,
+      loanAlerts,
+    });
+    dispatch(openModal(MODALS.LOAN_ALERT_MODAL));
   };
 }
 

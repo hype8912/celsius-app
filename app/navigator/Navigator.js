@@ -114,6 +114,7 @@ import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfi
 import InterestPaymentOverviewScreen from "../components/screens/InterestPaymentOverviewScreen/InterestPaymentOverviewScreen";
 import ExtendLoanScreen from "../components/screens/ExtendLoanScreen/ExtendLoanScreen";
 import MarginCallOverviewScreen from "../components/screens/MarginCallOverviewScreen/MarginCallOverviewScreen";
+import SingleMarginCallScreen from "../components/screens/SingleMarginCallScreen/SingleMarginCallScreen";
 import BitWala from "../components/screens/BitWala/BitWala";
 
 export const screens = {
@@ -220,6 +221,7 @@ export const screens = {
   ExtendLoanScreen,
   InterestPaymentOverviewScreen,
   MarginCallOverviewScreen,
+  SingleMarginCallScreen,
 
   /**
    * MyCel

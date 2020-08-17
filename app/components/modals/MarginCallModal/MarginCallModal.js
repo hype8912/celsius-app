@@ -22,9 +22,13 @@ import { presentTime } from "../../../utils/ui-util";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class MarginCallModal extends Component {
-  cure = () => {
+  cure = (multipleAlerts, loansOverview) => {
     const { actions } = this.props;
-    actions.navigateTo("MarginCallOverviewScreen", { allLoans: true });
+    if (multipleAlerts) {
+      actions.navigateTo("MarginCallOverviewScreen", { allLoans: true });
+    } else {
+      actions.navigateTo("SingleMarginCallScreen", { id: loansOverview[0].id });
+    }
     actions.closeModal();
   };
 
@@ -97,7 +101,10 @@ class MarginCallModal extends Component {
         </View>
 
         <View style={style.buttonsWrapper}>
-          <CelModalButton buttonStyle={"red"} onPress={() => this.cure()}>
+          <CelModalButton
+            buttonStyle={"red"}
+            onPress={() => this.cure(multipleAlerts, loansOverview)}
+          >
             Resolve Margin Call
           </CelModalButton>
         </View>

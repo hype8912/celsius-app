@@ -47,6 +47,7 @@ class MarginCallOverviewScreen extends Component {
   render() {
     const { modalLoan } = this.state;
     const { allLoans, loanAlerts, currencyRates } = this.props;
+
     const loansOverview = allLoans
       .filter(loan =>
         loanAlerts.find(
@@ -57,7 +58,7 @@ class MarginCallOverviewScreen extends Component {
       .sort((a, b) => a.id - b.id);
     return (
       <RegularLayout>
-        {loansOverview.map(loan => {
+        {loansOverview.map((loan, i) => {
           return (
             <View key={loan.id}>
               <PaymentCard
@@ -66,6 +67,8 @@ class MarginCallOverviewScreen extends Component {
                 loan={loan}
                 reason={LOAN_PAYMENT_REASONS.MARGIN_CALL}
                 handleSelectCoin={() => this.selectCoin(loan)}
+                number={i}
+                isOverview
               />
             </View>
           );

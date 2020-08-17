@@ -228,10 +228,10 @@ function getTransactionProps(transaction) {
   switch (transaction.type) {
     case TRANSACTION_TYPES.MARGIN_CALL:
       return {
-        title: () => "Margin Call Collateral",
-        color: STYLES.COLORS.RED,
-        shortName: "MC",
-        statusText: "Margin Call",
+        title: () => "Collateral Added",
+        color: STYLES.COLORS.CELSIUS_BLUE,
+        shortName: "CA",
+        statusText: "Collateral Added",
       };
     case TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED:
       return {
