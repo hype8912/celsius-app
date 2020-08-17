@@ -339,20 +339,6 @@ class LoanOverviewCard extends Component {
             )}
           </View>
 
-          {loan.can_pay_principal && (
-            <View>
-              <Separator size={2} margin={"0 0 0 0"} />
-              <CelButton
-                onPress={this.payPrincipal}
-                margin={"15 0 15 0"}
-                color="green"
-                loading={isLoading}
-                disabled={isLoading}
-              >
-                Payout Principal
-              </CelButton>
-            </View>
-          )}
           {loan.can_pay_interest && (
             <View>
               <Separator size={2} margin={"0 0 0 0"} />
