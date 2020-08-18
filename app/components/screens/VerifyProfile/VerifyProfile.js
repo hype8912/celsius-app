@@ -18,7 +18,7 @@ import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { STORYBOOK } from "../../../../dev-settings.json";
-// import { askUserToProvideBiometrics } from "../../../utils/biometrics-util";
+// import { isBiometricsSensorAvailable, createBiometricsKey, createBiometricsSignature } from "../../../utils/biometrics-util";
 
 @connect(
   state => ({
@@ -73,9 +73,12 @@ class VerifyProfile extends Component {
       this.setState({ hasSixDigitPin: true });
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
 
+    // await isBiometricsSensorAvailable()
+    // await createBiometricsKey()
+
     // TODO - This is where I used biometrics to check
     // const onSuccess = navigation.getParam("onSuccess");
-    // await askUserToProvideBiometrics(onSuccess)
+    // await createBiometricsSignature(onSuccess)
   };
 
   componentWillUpdate(nextProps) {
