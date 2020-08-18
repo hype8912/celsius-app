@@ -27,6 +27,7 @@ export {
   getKYCDocTypes,
   createKYCApplicant,
   getMobileSDKToken,
+  saveKYCDocuments,
 };
 
 /**
@@ -483,5 +484,51 @@ function getMobileSDKToken() {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_ONFIDO_MOBILE_SDK, err));
     }
+  };
+}
+
+function saveKYCDocuments() {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(startApiCall(API.SAVE_KYC_DOCUMENTS));
+      const { formData } = getState().forms;
+
+      const documents = [
+        {
+          type: formData.documentType,
+          side: "front",
+          id: formData.frontImageId,
+        },
+      ];
+
+      if (formData.backImageId) {
+        documents.push({
+          type: formData.documentType,
+          side: "back",
+          id: formData.backImageId,
+        });
+      }
+
+      await userKYCService.saveKYCDocuments(documents);
+      dispatch(saveKYCDocumentsSuccess());
+      dispatch(showMessage("success", "Successfully submitted KYC Documents!"));
+
+      if (formData.state && PRIMETRUST_KYC_STATES.includes(formData.state)) {
+        dispatch(NavActions.navigateTo("KYCAddressProof"));
+      } else {
+        dispatch(NavActions.navigateTo("KYCTaxpayer"));
+      }
+
+      mixpanelAnalytics.kycDocumentsSubmitted();
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.SAVE_KYC_DOCUMENTS, err));
+    }
+  };
+}
+
+function saveKYCDocumentsSuccess() {
+  return {
+    type: ACTIONS.SAVE_KYC_DOCUMENTS_SUCCESS,
   };
 }

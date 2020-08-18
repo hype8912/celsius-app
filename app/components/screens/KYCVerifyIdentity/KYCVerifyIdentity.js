@@ -78,6 +78,7 @@ class KYCVerifyIdentity extends Component {
         frontImageId,
         backImageId,
       });
+      actions.saveKYCDocuments();
     } catch (err) {
       mixpanelAnalytics.onfidoSDKError(err);
     }
