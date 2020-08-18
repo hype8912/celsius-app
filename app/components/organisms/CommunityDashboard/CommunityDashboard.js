@@ -50,7 +50,7 @@ class CommunityDashboard extends Component {
         explanation: "Sent via CelPay in total",
       });
     }
-    if (name === "INTEREST") {
+    if (name === "REWARDS") {
       this.setState({
         primaryNumber: formatter.usd(communityStats.total_interests_usd),
         explanation: `ASSETS AS OF ${communityStats.community_settings.date}`,
@@ -90,25 +90,25 @@ class CommunityDashboard extends Component {
       explanationText = "Highest CelPay sent";
       number = formatter.usd(communityStats.highest_celpay_transaction_usd);
     }
-    if (name === "CELPAY" && button === "Transactions") {
+    if (name === "CELPAY" && button === " Number of Transactions") {
       explanationText = "Number of CelPay transactions";
       number = formatter.round(communityStats.celpay_transactions_num, {
         noPrecision: true,
       });
     }
-    if (name === "CELPAY" && button === "Total") {
+    if (name === "CELPAY" && button === "Amount Sent") {
       explanationText = "Sent via CelPay in total";
       number = formatter.usd(communityStats.total_celpay_sent_usd);
     }
-    if (name === "INTEREST" && button === "Earned") {
+    if (name === "REWARDS" && button === "Total Earned") {
       explanationText = "Total community earn in the last 12 months";
       number = formatter.usd(communityStats.total_interests_usd);
     }
-    if (name === "INTEREST" && button === "Average") {
+    if (name === "REWARDS" && button === "Average Rewards") {
       explanationText = "The average earn per user in the last 12 months";
       number = formatter.usd(communityStats.average_interest_earned_usd);
     }
-    if (name === "INTEREST" && button === "Rates") {
+    if (name === "REWARDS" && button === "Rates") {
       explanationText = "Interest rates";
       number = 31000;
     }

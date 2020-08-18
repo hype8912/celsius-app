@@ -8,6 +8,7 @@ import STYLES from "../../../constants/STYLES";
 import CelText from "../CelText/CelText";
 import { PASSWORD_STRENGTH_ITEMS } from "../../../constants/DATA";
 import securityUtil from "../../../utils/security-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class PassMeterTooltip extends Component {
   static propTypes = {
@@ -41,6 +42,9 @@ class PassMeterTooltip extends Component {
 
     return (
       <View style={[style.container, customStyle]}>
+        <CelText color={COLOR_KEYS.WHITE} margin={"0 0 10 0"}>
+          Must have:
+        </CelText>
         {this.handleSecurityItems().map((i, k) => (
           <View style={style.securityStrengthItem} k={k}>
             <Icon

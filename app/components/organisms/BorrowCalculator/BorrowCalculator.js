@@ -283,7 +283,7 @@ class BorrowCalculator extends Component {
         <Separator margin={"0 0 10 0"} />
         <View>
           <CelText type="H4" align={"center"} margin={"15 0 20 0"}>
-            Choose a coin to use as collateral
+            Choose a coin as collateral
           </CelText>
           <Icon
             name={`Icon${formData.coin}`}

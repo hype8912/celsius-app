@@ -354,7 +354,7 @@ class Deposit extends Component {
     return (
       <RegularLayout padding={"20 0 100 0"}>
         <CelText align="center" weight="regular" type="H4">
-          Choose coin to deposit
+          Choose coin to transfer
         </CelText>
         <CoinPicker
           type={"withIcon"}

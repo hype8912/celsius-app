@@ -109,7 +109,7 @@ class FabMenuAnimated extends Component {
     if (depositCompliance.allowed)
       main[1].push({
         iconName: "Deposit",
-        label: "Deposit",
+        label: "Transfer",
         screen: "Deposit",
       });
     if (kycStatus && hasPassedKYC() && withdrawCompliance.allowed)
@@ -126,13 +126,13 @@ class FabMenuAnimated extends Component {
       });
     main[0].push({
       iconName: "Community",
-      label: "Community",
+      label: "Community Info",
       screen: "Community",
     });
     if (loanCompliance.allowed)
       main[1].push({
         iconName: "Borrow",
-        label: "Borrow",
+        label: "Borrow $$",
         screen: "BorrowLanding",
       });
     if (kycStatus && hasPassedKYC())

@@ -52,9 +52,9 @@ class KYCCheckPhotos extends Component {
 
     actions.activateCamera({
       cameraField: "front",
-      cameraHeading: "Take a Front side photo",
+      cameraHeading: "Capture the front of your document",
       cameraCopy:
-        "Center the front side of your document in the marked area. Be sure the photo is clear and the document details are easy to read.",
+        "Center the front of your document in the marked area. Be sure the photo is clear and the document is easy to read.",
       cameraType: "back",
       mask: "document",
     });
@@ -73,9 +73,9 @@ class KYCCheckPhotos extends Component {
 
     actions.activateCamera({
       cameraField: "back",
-      cameraHeading: "Take a Back side photo",
+      cameraHeading: "Capture the back of your document ",
       cameraCopy:
-        "Now, turn the back side of your document. Center it in the marked area, and make sure that all the details are easy to read.",
+        "Center the back of your document in the marked area. Be sure the photo is clear and the document is easy to read.",
       cameraType: "back",
       mask: "document",
     });

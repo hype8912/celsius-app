@@ -69,9 +69,9 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image: { uri: coinName.image_url },
-            title: `Only deposit Ripple (XRP) to this wallet`,
+            title: `Only transfer Ripple (XRP) to this wallet`,
             description:
-              "Sending any other digital asset to this specific address, will result in permanent loss.",
+              "Sending any other asset to this address will result in a permanent loss of funds.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
@@ -89,9 +89,9 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image: { uri: coinName.image_url },
-            title: `Only deposit Stellar (XLM) to this wallet`,
+            title: `Only transfer Stellar (XLM) to this wallet`,
             description:
-              "Sending any other digital asset to this specific address, will result in permanent loss.",
+              "Sending any other asset to this address will result in a permanent loss of funds.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
@@ -109,9 +109,9 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image: { uri: coinName.image_url },
-            title: `Only deposit EOS (EOS) to this wallet`,
+            title: `Only transfer EOS (EOS) to this wallet`,
             description:
-              "Sending any other digital asset to this specific address, will result in permanent loss.",
+              "Sending any other asset to this address will result in a permanent loss of funds.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
@@ -135,7 +135,7 @@ class DepositInfoModal extends Component {
     if (type === "USDT ERC20") {
       return {
         image: { uri: coinName.image_url },
-        title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
+        title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
         description:
           "Please ensure only Tether ERC20 tokens are deposited to this address. Sending coins other than USDT ERC20 to this address may result in the permanent loss of funds.",
         buttonText: "I Understand",
@@ -146,7 +146,7 @@ class DepositInfoModal extends Component {
     if (type === "MATIC") {
       return {
         image: { uri: coinName.image_url },
-        title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
+        title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
         description:
           "This address is only for MATIC ERC20 tokens. Sending other MATIC coins to this address may result in a permanent loss of funds.",
         buttonText: "I Understand",
@@ -156,7 +156,7 @@ class DepositInfoModal extends Component {
 
     return {
       image: { uri: coinName.image_url },
-      title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
+      title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
       description:
         "Sending any other digital asset to this specific address, will result in permanent loss.",
       buttonText: "I Understand",

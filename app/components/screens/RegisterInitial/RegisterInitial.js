@@ -169,10 +169,10 @@ class RegisterInitial extends Component {
         <View style={{ justifyContent: "space-between", height: "100%" }}>
           <View style={{ justifyContent: "flex-start" }}>
             <CelText margin="0 0 10 0" align="center" type="H1">
-              Create Wallet
+              Create Your Celsius Wallet
             </CelText>
             <CelText margin="0 0 30 0" weight="300" align="center">
-              Create a new wallet
+              Enter your information below
             </CelText>
 
             <CelInput

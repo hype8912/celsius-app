@@ -38,11 +38,10 @@ class MyCelInterestTab extends Component {
                 weight={"600"}
                 align={"center"}
               >
-                Earn better interest
+                Earn More Rewards
               </CelText>
               <CelText align={"center"} type={"H4"} weight={"300"}>
-                Choose to earn weekly interest in CEL tokens and earn more
-                interest on all non-CEL deposits.
+                Choose to earn in CEL tokens and earn more on all your assets.
               </CelText>
             </View>
           </View>
@@ -52,7 +51,7 @@ class MyCelInterestTab extends Component {
               <CelText align={"center"} type={"H4"} weight={"500"}>
                 Loyalty Level{" "}
                 <CelText align={"center"} type={"H4"} weight={"300"}>
-                  your interest in CEL would be:{" "}
+                  your rewards will increase :{" "}
                 </CelText>
               </CelText>
             </CelText>

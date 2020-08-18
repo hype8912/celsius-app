@@ -61,7 +61,7 @@ class KYCTrigger extends Component {
       default:
         title = "Verify Your Profile";
         content =
-          "Become a Celsius member by verifying your profile. You will be able to earn interest on your deposited coins, take dollar and stable coin loans and send crypto to your friends.";
+          "Complete verification to have full access your to Celsius Network wallet.";
     }
 
     return { title, content, info };

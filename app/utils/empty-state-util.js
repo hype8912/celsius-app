@@ -248,9 +248,7 @@ function getProps(purpose, componentProps) {
       return {
         ...props,
         heading: "Insufficient funds!",
-        paragraphs: [
-          "Please deposit more funds in order to gain eligibility to use this feature.",
-        ],
+        paragraphs: ["Transfer more funds to gain access to this feature. "],
       };
 
     case EMPTY_STATES.NO_CONTACTS:
