@@ -43,7 +43,7 @@ class PaymentCard extends Component {
       if (reason) {
         actions.showMessage(
           "success",
-          "You have successfully changed interest payment method"
+          "You have successfully changed rewards payment method"
         );
         return actions.navigateTo("LoanSettings");
       }

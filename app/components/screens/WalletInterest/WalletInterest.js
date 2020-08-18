@@ -35,7 +35,7 @@ import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 )
 class WalletInterest extends Component {
   static navigationOptions = {
-    title: "Interest earned",
+    title: "Rewards earned",
     right: "profile",
   };
 
@@ -44,7 +44,7 @@ class WalletInterest extends Component {
 
     this.state = {
       header: {
-        title: "Interest earned",
+        title: "Rewards earned",
         left: "back",
         right: "profile",
       },
@@ -108,7 +108,7 @@ class WalletInterest extends Component {
                 <TouchableOpacity
                   onPress={() => actions.navigateTo("InterestRates")}
                 >
-                  <CelText link>Weekly Reward Rates</CelText>
+                  <CelText link>Weekly Rewards Rates</CelText>
                 </TouchableOpacity>
               </View>
               <Separator margin="10 0 0 0" />

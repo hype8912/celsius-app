@@ -63,7 +63,7 @@ class RateInfoCard extends Component {
         {!interestRate.inCEL ? (
           <Card color={getColor(COLOR_KEYS.LINK)}>
             <CelText color={"white"}>
-              Upgrade your interest settings to earn in CEL and you could get up
+              Upgrade your rewards settings to earn in CEL and you could get up
               to {formatter.percentageDisplay(interestRate.compound_cel_rate)}{" "}
               APY on your first{" "}
               <CelText
@@ -107,7 +107,7 @@ class RateInfoCard extends Component {
             basic
             margin={"10 0 10 0"}
           >
-            Earn interest in Cel
+            Earn rewards in Cel
           </CelButton>
         )}
       </View>

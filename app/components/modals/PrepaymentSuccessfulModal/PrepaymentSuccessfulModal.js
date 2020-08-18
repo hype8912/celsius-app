@@ -41,11 +41,11 @@ class PrepaymentSuccessfulModal extends Component {
           margin={"0 20 5 20"}
           weight={"700"}
         >
-          {` Successfully Prepayed ${formData.prepaidPeriod} Months of Interest`}
+          {` Successfully Prepayed ${formData.prepaidPeriod} Months of Rewards`}
         </CelText>
         <CelText align={"center"} margin={"5 20 20 20"}>
           {`This means you don’t need to make any payments in the next ${formData.prepaidPeriod} months!
-          We will let you know when your interest payment resumes.`}
+          We will let you know when your rewards payment resumes.`}
         </CelText>
         <CelButton
           basic

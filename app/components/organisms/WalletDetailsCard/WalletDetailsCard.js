@@ -88,7 +88,7 @@ class WalletDetailsCard extends PureComponent {
             <TouchableOpacity
               onPress={() => actions.navigateTo("InterestRates")}
             >
-              <CelText link>Weekly Reward Rates</CelText>
+              <CelText link>Weekly Rewards Rates</CelText>
             </TouchableOpacity>
           </View>
         </View>

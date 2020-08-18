@@ -118,7 +118,7 @@ const FAB_TYPE = ["main", "support", "hide"];
 
 const WELCOME_MESSAGES = [
   {
-    title: "Interest Income",
+    title: "Rewards Income",
     text:
       "Make your Mondays a whole lot more interesting. Deposit coins and receive weekly interest payments directly to your Celsius wallet.",
   },
@@ -224,7 +224,7 @@ const TRANSACTION_FILTER_TYPE = [
     value: null,
   },
   {
-    title: "Interest",
+    title: "Rewards",
     value: "interest",
     icon: "TransactionInterest",
   },

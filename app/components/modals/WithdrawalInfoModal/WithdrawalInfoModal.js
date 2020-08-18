@@ -29,7 +29,7 @@ class WithdrawalInfoModal extends Component {
       case "CEL":
         title = "Are you sure you want to withdraw CEL? ";
         body =
-          "The longer you HODL and the more you HODL, the more interest you'll earn with Celsius. Withdrawing your funds will reduce the amount of interest you could potentially earn.";
+          "The longer you HODL and the more you HODL, the more rewards you'll earn with Celsius. Withdrawing your funds will reduce the amount of you could potentially earn.";
         break;
       case "DASH":
         title = "ATTENTION";
