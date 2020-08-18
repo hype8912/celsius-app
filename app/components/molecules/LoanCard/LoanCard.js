@@ -123,7 +123,7 @@ class LoanCard extends Component {
       color = this.getPropsFromTransaction(transaction).color;
     }
 
-    if (transaction.type === "MARGIN_CALL")
+    if (transaction && transaction.type && transaction.type === "MARGIN_CALL")
       return (
         <Card noBorder padding="15 15 15 15">
           <View

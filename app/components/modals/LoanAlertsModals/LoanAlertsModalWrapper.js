@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import moment from "moment";
 
 import { LOAN_ALERTS } from "../../../constants/UI";
 import * as appActions from "../../../redux/actions";
@@ -115,6 +114,8 @@ class LoanAlertsModalWrapper extends Component {
   renderPrincipalModal = loan => {
     const { principalCoinWallet } = this.state;
     const canPayPrincipal = loan.can_pay_principal;
+    // const isPrincipalWeekAway = loanPaymentUtil.isPrincipalWeekAway(loan);
+    // if (isPrincipalWeekAway) return <PrincipalAlertModal/>
     if (canPayPrincipal) {
       if (Number(loan.loan_amount) <= principalCoinWallet.amount.toNumber()) {
         return <LoanAlertsPayoutPrincipalModal loan={loan} />;
@@ -133,38 +134,13 @@ class LoanAlertsModalWrapper extends Component {
     return null;
   };
 
-  isSameInterestDay = activeLoan => {
-    if (
-      activeLoan &&
-      activeLoan.installments_to_be_paid &&
-      activeLoan.installments_to_be_paid.installments[0]
-    ) {
-      const currentDay = moment.utc();
-      const newCurrentDay = moment.utc();
-      const isThreeDays = moment(
-        activeLoan.installments_to_be_paid.installments[0].to
-      )
-        .utc()
-        .isSame(currentDay.subtract(3, "days"), "day");
-      const isSevenDays = moment(
-        activeLoan.installments_to_be_paid.installments[0].to
-      )
-        .utc()
-        .isSame(newCurrentDay.subtract(7, "days"), "day");
-      return {
-        threeDays: isThreeDays ? 3 : false,
-        sevenDays: isSevenDays ? 7 : false,
-      };
-    }
-  };
-
   renderInterestModal = loan => {
     const { actions } = this.props;
     const { activeAlert } = this.state;
 
     // if no money reminder 3 & 7 days, if you have money and manual payment reminder 3 days
     const payment = loanPaymentUtil.calculateAdditionalPayment(loan);
-    const isSameDay = this.isSameInterestDay(loan);
+    const isSameDay = loanPaymentUtil.isSameInterestDay(loan);
     const hasNoMoney =
       !payment.hasEnough &&
       isSameDay &&
