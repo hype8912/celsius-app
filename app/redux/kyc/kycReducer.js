@@ -19,7 +19,6 @@ export default function kycReducer(state = initialState, action) {
       };
 
     case ACTIONS.GET_KYC_DOCUMENTS_SUCCESS:
-    case ACTIONS.CREATE_KYC_DOCUMENTS_SUCCESS:
       return {
         ...state,
         kycDocuments: action.documents,
