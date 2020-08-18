@@ -66,7 +66,7 @@ class WithdrawalInfoModal extends Component {
       {
         title: "Check your withdrawal address",
         body:
-          "Take a closer look at the address you wish to send your funds to. If you transferred money from an exchange, the address may not be correct. You can change it from your security settings.",
+          "Take a closer look at the address you wish to send your funds to. If you transferred coins from an exchange, the address may not be correct. You can change it from your security settings.",
         firstButtonCopy: "Previous Tip",
         firstButtonStyle: "secondary",
         firstButtonPosition: "left",

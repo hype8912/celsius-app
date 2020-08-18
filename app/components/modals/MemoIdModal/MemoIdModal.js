@@ -11,7 +11,7 @@ const MemoIdModal = props => {
     `Quoting the Memo ID with the ${
       coin === "EOS" ? "EOS" : "Stellar"
     } wallet address ensures that your transaction is uniquely identified and processed successfully.`,
-    "Exchanges require Memo ID, so please make sure to provide it, or you risk losing your money.",
+    "Exchanges require Memo ID, so please make sure to provide it, or you risk losing your coins.",
   ];
 
   return (
