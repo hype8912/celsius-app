@@ -64,7 +64,7 @@ class CommunityDashboard extends Component {
             precision: 0,
           }
         ),
-        explanation: "Total Assets Under Management",
+        explanation: "Total Community Assets",
       });
     }
   }
@@ -116,7 +116,7 @@ class CommunityDashboard extends Component {
       name === `ASSETS AS OF ${communityStats.community_settings.date}` &&
       button === "Total AUM"
     ) {
-      explanationText = "Total Assets Under Management";
+      explanationText = "Total Community Assets";
       number = formatter.usd(communityStats.community_settings.total_aum, {
         precision: 0,
       });
