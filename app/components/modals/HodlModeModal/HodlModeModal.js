@@ -32,8 +32,17 @@ class HodlModeModal extends Component {
         name={MODALS.HODL_MODE_MODAL}
         heading={"HODL Mode is activated"}
         paragraphs={[
-          <CelText>For your security, we have put your account in HODL Mode. If you would to exit HODL Mode, please
-            <CelText color={STYLES.COLORS.CELSIUS_BLUE} onPress={() => actions.navigateTo("Support")}> contact our support team</CelText>.
+          <CelText>
+            For your security, we have put your wallet in HODL Mode. If you
+            would to exit HODL Mode, please
+            <CelText
+              color={STYLES.COLORS.CELSIUS_BLUE}
+              onPress={() => actions.navigateTo("Support")}
+            >
+              {" "}
+              contact our support team
+            </CelText>
+            .
           </CelText>,
         ]}
         yesCopy={"Go to Wallet"}

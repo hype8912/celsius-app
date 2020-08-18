@@ -169,10 +169,10 @@ class RegisterInitial extends Component {
         <View style={{ justifyContent: "space-between", height: "100%" }}>
           <View style={{ justifyContent: "flex-start" }}>
             <CelText margin="0 0 10 0" align="center" type="H1">
-              Create Account
+              Create Wallet
             </CelText>
             <CelText margin="0 0 30 0" weight="300" align="center">
-              Create a new account
+              Create a new wallet
             </CelText>
 
             <CelInput
@@ -262,7 +262,7 @@ class RegisterInitial extends Component {
           </View>
           <View style={{ justifyContent: "flex-end" }}>
             <CelText weight="300" align="center">
-              Already have an account?{" "}
+              Already have a wallet?{" "}
               <CelText
                 weight="300"
                 align="center"

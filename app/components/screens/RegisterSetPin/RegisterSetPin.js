@@ -113,7 +113,7 @@ class RegisterSetPin extends Component {
     const screenText = {};
     screenText.headingText = !pinCreated ? "Create a PIN" : "Repeat PIN";
     screenText.subheadingText = !pinCreated
-      ? "Create a unique PIN to secure your account."
+      ? "Create a unique PIN to secure your wallet."
       : "You're almost there!";
 
     return screenText;

@@ -77,7 +77,7 @@ function getProps(purpose, componentProps) {
         image: require("../../assets/images/hodlModeStatus.png"),
         heading: "HODL Mode is active!",
         paragraphs: [
-          `Your account is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. These will be available once HODL Mode deactivation wait period is over.`,
+          `Your wallet is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. These will be available once HODL Mode deactivation wait period is over.`,
         ],
         secondaryOnPress: () => actions.navigateTo("WalletLanding"),
         secondaryButton: "Go back to wallet",
@@ -89,7 +89,7 @@ function getProps(purpose, componentProps) {
         heading: "HODL Mode is active!",
         paragraphs: [
           <CelText>
-            Your account was set to HODL Mode by our team, which means all
+            Your wallet was set to HODL Mode by our team, which means all
             outgoing functionalities are currently unavailable. This includes
             withdrawing funds, sending funds via CelPay, and changing
             whitelisted withdrawal addresses. If you would like to deactivate
@@ -112,7 +112,7 @@ function getProps(purpose, componentProps) {
         image: require("../../assets/images/hodlModeStatus.png"),
         heading: "HODL Mode is active!",
         paragraphs: [
-          "Your account is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. Use the button below to start the deactivation process and exit HODL Mode.",
+          "Your wallet is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. Use the button below to start the deactivation process and exit HODL Mode.",
         ],
         onPress: () => {
           actions.navigateTo("HodlLanding");
