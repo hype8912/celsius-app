@@ -85,7 +85,7 @@ class InterestPaymentOverviewScreen extends Component {
               </View>
 
               {!payment.hasEnough && (
-                <View style={{ alignSelf: "center" }}>
+                <View style={{ marginHorizontal: 20 }}>
                   <AdditionalAmountCard
                     color={STYLES.COLORS.RED}
                     text={" additionally required"}

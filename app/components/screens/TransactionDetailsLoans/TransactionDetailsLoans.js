@@ -57,8 +57,7 @@ class TransactionDetailsLoans extends Component {
           <TxBasicSection
             label={"New Collateral Balance"}
             value={`${formatter.crypto(
-              Number(transaction.loan_data.loan_collateral_crypto) -
-                Number(transaction.amount),
+              Number(transaction.loan_data.loan_collateral_crypto),
               transaction.coin.toUpperCase()
             )} 
             ${formatter.usd(

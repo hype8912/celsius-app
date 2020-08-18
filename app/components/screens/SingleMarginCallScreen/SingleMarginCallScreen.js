@@ -13,6 +13,7 @@ import { presentTime } from "../../../utils/ui-util";
 import { COIN_CARD_TYPE, LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import LtvCard from "../../molecules/LtvCard/LtvCard";
+import MarginCallConfirmModal from "../../modals/MarginCallConfirmModal/MarginCallConfirmModal";
 
 @connect(
   state => ({
@@ -38,11 +39,18 @@ class SingleMarginCallScreen extends Component {
 
     this.state = {
       loan: allLoans.find(l => l.id === loanId),
+      modalLoan: null,
     };
   }
 
+  selectCoin = loan => {
+    this.setState({
+      modalLoan: loan,
+    });
+  };
+
   render() {
-    const { loan } = this.state;
+    const { loan, modalLoan } = this.state;
     const { currencyRates } = this.props;
     if (!loan) return null;
     const time = presentTime(loan.margin_call.margin_call_detected, true);
@@ -76,6 +84,7 @@ class SingleMarginCallScreen extends Component {
           handleSelectCoin={() => this.selectCoin(loan)}
         />
         <LtvCard loan={loan} />
+        <MarginCallConfirmModal loan={modalLoan} />
       </RegularLayout>
     );
   }

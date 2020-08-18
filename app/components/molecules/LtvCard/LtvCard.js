@@ -91,6 +91,7 @@ class LtvCard extends Component {
             name={info ? "IconChevronDown" : "IconChevronUp"}
             width={15}
             height={15}
+            color={STYLES.COLORS.LIGHT_GRAY}
           />
         </View>
         {info && this.renderContent(loan)}
