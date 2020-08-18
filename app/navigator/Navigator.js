@@ -26,7 +26,6 @@ import KYCProfileDetails from "../components/screens/KYCProfileDetails/KYCProfil
 import KYCAddressInfo from "../components/screens/KYCAddressInfo/KYCAddressInfo";
 import KYCTaxpayer from "../components/screens/KYCTaxpayer/KYCTaxpayer";
 import KYCVerifyIdentity from "../components/screens/KYCVerifyIdentity/KYCVerifyIdentity";
-import KYCAddressProof from "../components/screens/KYCAddressProof/KYCAddressProof";
 import KYCCheckPhotos from "../components/screens/KYCCheckPhotos/KYCCheckPhotos";
 import KYCPrimeTrustToU from "../components/screens/KYCPrimeTrustToU/KYCPrimeTrustToU";
 import KYCFinalRejection from "../components/screens/KYCFinalRejection/KYCFinalRejection";
@@ -144,7 +143,6 @@ export const screens = {
   KYCAddressInfo,
   KYCTaxpayer,
   KYCVerifyIdentity,
-  KYCAddressProof,
   KYCCheckPhotos,
   KYCPrimeTrustToU,
   KYCFinalRejection,
