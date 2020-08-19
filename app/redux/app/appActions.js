@@ -49,7 +49,7 @@ const SCREENS_WITH_LATER_VERIFICATION = [
   "RegisterSetPin",
   "ChangePin",
 ];
-const ASK_FOR_PIN_SHORT = 30 * 1000;
+const ASK_FOR_PIN_SHORT = 5 * 60 * 1000;
 const ASK_FOR_PIN_LONG = 10 * 60 * 1000;
 let pinTimeout;
 let startOfBackgroundTimer;
