@@ -178,7 +178,7 @@ function setUserAppSettings(data) {
               return dispatch(
                 showMessage(
                   "success",
-                  `Congrats! You have chosen to earn interest income in CEL for all transferred coins. Interest has already been calculated for this week, so you will receive interest in CEL beginning Monday, ${currentDate
+                  `Congrats! You have chosen to earn a reward income in CEL for all transferred coins. Interest has already been calculated for this week, so you will receive interest in CEL beginning Monday, ${currentDate
                     .day(15)
                     .format("DD MMMM")}. `
                 )
@@ -188,7 +188,7 @@ function setUserAppSettings(data) {
               return dispatch(
                 showMessage(
                   "success",
-                  `You have chosen to earn interest income in-kind for all transferred coins. Interest has already been calculated for this week, so you will receive interest in-kind beginning Monday, ${currentDate
+                  `You have chosen to earn a reward income in-kind for all transferred coins. Interest has already been calculated for this week, so you will receive interest in-kind beginning Monday, ${currentDate
                     .day(15)
                     .format("DD MMMM")}.`
                 )

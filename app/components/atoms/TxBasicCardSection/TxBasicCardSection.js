@@ -22,7 +22,7 @@ const TxBasicCardSection = ({ label, value, coin, monthly, total }) => {
       <Card>
         <View style={style.amount}>
           <View>
-            <CelText type={"H6"}>Monthly Interest</CelText>
+            <CelText type={"H6"}>Monthly Rewards</CelText>
             <CelText type={coinSize} weight={"600"}>
               {" "}
               {formatter.usd(monthly)}
@@ -30,7 +30,7 @@ const TxBasicCardSection = ({ label, value, coin, monthly, total }) => {
           </View>
           <Separator vertical />
           <View>
-            <CelText type={"H6"}>Total Interest</CelText>
+            <CelText type={"H6"}>Total Rewards</CelText>
             <CelText
               color={STYLES.COLORS.CELSIUS_BLUE}
               type={coinSize}

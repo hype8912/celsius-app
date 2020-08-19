@@ -202,7 +202,7 @@ function getProps(purpose, componentProps) {
     case EMPTY_STATES.NON_VERIFIED_DEPOSIT:
       return {
         ...props,
-        heading: "Start earning interest",
+        heading: "Start earning rewards",
         paragraphs: [
           "Start earning 7% a year on your coin. All you have to do is become a Celsius member by verifying your profile.",
         ],

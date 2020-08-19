@@ -22,7 +22,7 @@ const MissingInfoCard = props => {
 
   if (!user.email) {
     title = "Your email is missing from your profile.";
-    body = "Your email is required in order to receive interest.";
+    body = "Your email is required in order to receive rewards.";
     cta = "Contact support";
     onPress = () => Linking.openURL("mailto:app@celsius.network");
   }

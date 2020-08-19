@@ -35,7 +35,7 @@ import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 )
 class WalletInterest extends Component {
   static navigationOptions = {
-    title: "Interest earned",
+    title: "Rewards earned",
     right: "profile",
   };
 
@@ -44,7 +44,7 @@ class WalletInterest extends Component {
 
     this.state = {
       header: {
-        title: "Interest earned",
+        title: "Rewards earned",
         left: "back",
         right: "profile",
       },
