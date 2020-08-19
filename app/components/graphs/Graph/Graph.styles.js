@@ -60,7 +60,7 @@ const base = {
     right: 0,
   },
   cursorBackgroundColor: {
-    backgroundColor: COLOR_KEYS.CARDS,
+    backgroundColor: "red",
   },
   labelBoxBackgroundColor: {},
 };
