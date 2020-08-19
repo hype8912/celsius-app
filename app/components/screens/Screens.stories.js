@@ -263,9 +263,7 @@ storiesOf("RegisterInitial", module)
   .add("With Errors", RegisterInitialStories.withErrors)
   .add("With Referral", RegisterInitialStories.withReferral);
 
-storiesOf("CameraScreen", module)
-  .add("Profile", CameraScreenStories.profile)
-  .add("Utility Bill", CameraScreenStories.utility);
+storiesOf("CameraScreen", module).add("Profile", CameraScreenStories.profile);
 
 storiesOf("KYCProfileDetails", module)
   .add("Empty", KYCProfileDetailsStories.empty)

@@ -70,7 +70,7 @@ class CameraScreen extends Component {
       PropTypes.string,
       PropTypes.instanceOf(Object),
     ]),
-    mask: PropTypes.oneOf(["circle", "utility"]),
+    mask: PropTypes.oneOf(["circle"]),
     onSave: PropTypes.func,
   };
 
@@ -141,11 +141,6 @@ class CameraScreen extends Component {
 
   getMaskImage = mask => {
     switch (mask) {
-      case "utility":
-        return {
-          lightSource: require("../../../../assets/images/mask/bill-mask-markers-light.png"),
-          darkSource: require("../../../../assets/images/mask/bill-mask-markers-dark.png"),
-        };
       case "circle":
       default:
         return {
@@ -157,11 +152,10 @@ class CameraScreen extends Component {
 
   pickImage = async () => {
     const { actions, mask, navigation } = this.props;
-    const maskType = mask || "utility";
     try {
       const result = await ImagePicker.openPicker({
-        width: STYLES.CAMERA_MASK_SIZES[maskType].width,
-        height: STYLES.CAMERA_MASK_SIZES[maskType].height,
+        width: STYLES.CAMERA_MASK_SIZES[mask].width,
+        height: STYLES.CAMERA_MASK_SIZES[mask].height,
         cropping: true,
       });
       if (result.cancelled) {
@@ -181,7 +175,6 @@ class CameraScreen extends Component {
     if (camera) {
       const { actions, mask, navigation } = this.props;
       const hideBack = navigation.getParam("hideBack");
-      const maskType = mask || "utility";
       const options = {
         quality: 0.5,
         orientation:
@@ -213,16 +206,15 @@ class CameraScreen extends Component {
           const overScan = ((coef - size.width) * 0.5) / coef;
           cropWidth = photo.width - 2 * size.width * overScan;
           cropWidth =
-            (cropWidth * STYLES.CAMERA_MASK_SIZES[maskType].width) / size.width;
+            (cropWidth * STYLES.CAMERA_MASK_SIZES[mask].width) / size.width;
         } else {
           cropWidth =
-            (STYLES.CAMERA_MASK_SIZES[maskType].width / size.width) *
-            photo.width;
+            (STYLES.CAMERA_MASK_SIZES[mask].width / size.width) * photo.width;
         }
 
         const cropHeight =
-          (cropWidth / STYLES.CAMERA_MASK_SIZES[maskType].width) *
-          STYLES.CAMERA_MASK_SIZES[maskType].height;
+          (cropWidth / STYLES.CAMERA_MASK_SIZES[mask].width) *
+          STYLES.CAMERA_MASK_SIZES[mask].height;
 
         const croppedImage = await ImageEditor.cropImage(photo.uri, {
           offset: {
@@ -249,8 +241,7 @@ class CameraScreen extends Component {
 
   renderMask = () => {
     const { mask, cameraHeading, cameraCopy } = this.props;
-    const maskType = mask || "utility";
-    const imageSource = this.getMaskImage(maskType);
+    const imageSource = this.getMaskImage(mask);
     const style = CameraScreenStyle();
     return (
       <View
@@ -292,8 +283,8 @@ class CameraScreen extends Component {
           <ThemedImage
             {...imageSource}
             style={{
-              width: STYLES.CAMERA_MASK_SIZES[maskType].width,
-              height: STYLES.CAMERA_MASK_SIZES[maskType].height,
+              width: STYLES.CAMERA_MASK_SIZES[mask].width,
+              height: STYLES.CAMERA_MASK_SIZES[mask].height,
               alignSelf: "center",
             }}
           />
@@ -302,7 +293,7 @@ class CameraScreen extends Component {
         <View style={[style.mask, style.maskOverlayColor]}>
           <View
             style={{
-              width: STYLES.CAMERA_MASK_SIZES[maskType].width,
+              width: STYLES.CAMERA_MASK_SIZES[mask].width,
               alignSelf: "center",
               marginTop: 20,
             }}

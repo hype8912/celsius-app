@@ -105,8 +105,6 @@ const CACHE_IMAGES = [
   require("../../assets/images/mask/dark-circle-mask.png"),
   require("../../assets/images/mask/square-mask-01.png"),
   require("../../assets/images/mask/dark-qrcode-mask3x.png"),
-  require("../../assets/images/mask/bill-mask-markers-dark.png"),
-  require("../../assets/images/mask/bill-mask-markers-light.png"),
   require("../../assets/images/splashScreen-celsius-new.png"),
   require("../../assets/images/victory-bear3x.png"),
   require("../../assets/images/loyaltyIcons/star-bg3x.png"),
