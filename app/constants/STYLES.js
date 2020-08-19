@@ -61,6 +61,10 @@ const CAMERA_MASK_SIZES = {
     width: 250,
     height: 250,
   },
+  utility: {
+    width: 286,
+    height: 341,
+  },
 };
 
 const SHADOW_STYLES = {
