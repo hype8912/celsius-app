@@ -1,3 +1,4 @@
+import { BigNumber } from "bignumber.js";
 import formatter from "./formatter";
 import store from "../redux/store";
 
@@ -52,8 +53,9 @@ function getUserInterestForCoin(coinShort) {
     interestRates[coinShort].threshold_on_first_n_coins &&
     walletSummary
   ) {
-    const coinBalance = walletSummary.coins.find(c => c.short === coinShort)
-      .amount;
+    const coinBalance = new BigNumber(
+      walletSummary.coins.find(c => c.short === coinShort).amount
+    );
 
     isBelowThreshold = coinBalance.isLessThan(
       interestRates[coinShort].threshold_on_first_n_coins

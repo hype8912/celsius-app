@@ -56,7 +56,7 @@ class Deposit extends Component {
   constructor(props) {
     super(props);
 
-    const { depositCompliance, currencies, actions, navigation } = props;
+    const { depositCompliance, currencies, navigation, actions } = props;
 
     const coinSelectItems =
       currencies &&
@@ -66,9 +66,9 @@ class Deposit extends Component {
           label: `${formatter.capitalize(c.name)} (${c.short})`,
           value: c.short,
         }));
-
     const currencyFromNav = navigation.getParam("coin");
     actions.updateFormField("selectedCoin", currencyFromNav || "ETH");
+    this.fetchAddress(currencyFromNav || "ETH");
 
     this.state = {
       isFetchingAddress: false,
