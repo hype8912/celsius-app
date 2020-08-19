@@ -244,7 +244,7 @@ class VerifyProfile extends Component {
     const { actions, formData } = this.props;
     const style = VerifyProfileStyle();
 
-    const isLoading = _.isEmpty(formData) || formData.loading;
+    const isLoading = formData && (_.isEmpty(formData) || formData.loading);
     if (isLoading) return <LoadingScreen />;
 
     return (
