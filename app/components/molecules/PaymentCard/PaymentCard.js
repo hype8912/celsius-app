@@ -247,6 +247,7 @@ class PaymentCard extends Component {
       hasEnough,
       additionalUsdAmount,
     } = this.state;
+
     return (
       <View>
         <Card margin={"0 0 10 0"} color={style.card.color}>
@@ -273,7 +274,7 @@ class PaymentCard extends Component {
                 coin: coin.short,
                 amountUsd: additionalUsdAmount,
                 additionalCryptoAmount,
-                marginCall: loan.margin_call.margin_call_activated,
+                isMarginCall: loan.margin_call.margin_call_detected,
               });
             }}
             margin={"10 0 10 0"}

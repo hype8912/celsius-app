@@ -369,7 +369,7 @@ class Deposit extends Component {
       memoId,
     } = this.getAddress(formData.selectedCoin);
     const coin = navigation.getParam("coin");
-    const isMarginCall = navigation.getParam("marginCall");
+    const isMarginCall = navigation.getParam("isMarginCall");
     const reason = navigation.getParam("reason");
 
     const {
@@ -416,7 +416,8 @@ class Deposit extends Component {
 
     return (
       <RegularLayout padding={"20 0 100 0"}>
-        <CelText align="center" weight="regular" type="H4">
+        {isMarginCall ? this.renderPayCard() : null}
+        <CelText align="center" weight="regular" type="H4" margin={"20 0 0 0"}>
           Choose coin to deposit
         </CelText>
         <CoinPicker
@@ -429,8 +430,6 @@ class Deposit extends Component {
           availableCoins={coinSelectItems}
           navigateTo={actions.navigateTo}
         />
-
-        {isMarginCall ? this.renderPayCard() : null}
 
         {isETC && this.renderETCCard()}
         {address && !isFetchingAddress && !isETC ? (
@@ -543,15 +542,7 @@ class Deposit extends Component {
         ) : null}
 
         {reason ? (
-          <View>
-            {!isMarginCall && this.renderPayCard()}
-            <CelButton
-              onPress={() => actions.navigateTo("ChoosePaymentMethod")}
-              margin={"20 0 0 0"}
-            >
-              Continue
-            </CelButton>
-          </View>
+          <View>{!isMarginCall && this.renderPayCard()}</View>
         ) : (
           <View>
             {cryptoUtil.buyInApp(formData.selectedCoin) && (
@@ -577,6 +568,18 @@ class Deposit extends Component {
         )}
 
         {isFetchingAddress && this.renderLoader()}
+
+        {isMarginCall && (
+          <View style={{ marginHorizontal: 20 }}>
+            <Card>
+              <CelText>
+                Once your deposit has been completed our system will notify you.
+                Once the funds are in your wallet, sign back into the app to
+                complete the Margin Call.
+              </CelText>
+            </Card>
+          </View>
+        )}
 
         {formData.selectedCoin === "CEL" ? (
           <View style={{ marginLeft: 20, marginRight: 20 }}>
