@@ -27,6 +27,21 @@ const profile = () => {
   );
 };
 
+const utility = () => {
+  const state = _.cloneDeep(initialState);
+  state.camera = mockCameraStore.utilityBill;
+
+  return (
+    <ScreenStoryWrapper
+      screenName="CameraScreen"
+      screen={CameraScreen}
+      state={state}
+      screenTap
+    />
+  );
+};
+
 export default {
   profile,
+  utility,
 };
