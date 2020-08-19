@@ -68,6 +68,7 @@ class Home extends Component {
         [API.CHECK_PIN, API.CHECK_TWO_FACTOR, API.SET_PIN],
         15
       );
+
       if (hasAlreadyVerified) {
         return this.goToWalletLanding();
       }
@@ -79,15 +80,13 @@ class Home extends Component {
   }
 
   goToWalletLanding = () => {
-    const { actions, bannerProps } = this.props;
-
-    // note :) this was used when we planned to force users to accept updated Terms of USe
-    // if (appSettings && !appSettings.accepted_terms_of_use) {
-    //   return actions.navigateTo("TermsOfUse", {
-    //     purpose: "accept",
-    //     nextScreen: "WalletLanding",
-    //   });
-    // }
+    const { actions, bannerProps, appSettings } = this.props;
+    if (appSettings && !appSettings.accepted_terms_of_use) {
+      return actions.navigateTo("TermsOfUse", {
+        purpose: "accept",
+        nextScreen: "WalletLanding",
+      });
+    }
 
     actions.setBannerProps({
       sessionCount: bannerProps.sessionCount + 1,

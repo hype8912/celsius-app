@@ -27,7 +27,7 @@ const base = {
     justifyContent: "space-around",
   },
   opacityCircle: {
-    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
+    backgroundColor: STYLES.COLORS.CELSIUS,
     width: 60,
     height: 60,
     borderRadius: 30,
@@ -42,7 +42,7 @@ const base = {
     backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   shadowStyle: {
-    shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW, // TODO: missing COLOR_KEY
+    shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW,
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -56,7 +56,7 @@ const themed = {
   light: {},
   dark: {
     shadowStyle: {
-      shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW, // TODO/ missing COLOR_KEY
+      shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW,
       shadowOffset: { width: 0, height: 10 },
       shadowOpacity: 0.08,
       shadowRadius: 4,

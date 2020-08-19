@@ -294,7 +294,6 @@ class CameraScreen extends Component {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={[style.mask, style.maskOverlayColor]} />
-
           <ThemedImage
             {...imageSource}
             style={{

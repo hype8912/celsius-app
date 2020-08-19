@@ -15,7 +15,7 @@ const base = {
     ...Platform.select({
       android: {
         ...STYLES.ANDROID_BORDER_STYLES,
-        borderColor: COLOR_KEYS.TRANSPARENT,
+        borderColor: "transparent",
       },
       ios: {
         ...STYLES.SHADOW_STYLES,

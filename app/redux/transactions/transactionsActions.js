@@ -6,7 +6,9 @@ import { clearForm } from "../forms/formsActions";
 import transactionsService from "../../services/transactions-service";
 import { navigateTo } from "../nav/navActions";
 import { getWalletSummary } from "../wallet/walletActions";
+import mockTransactions from "../../mock-data/transactions.mock";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import { mocks } from "../../../dev-settings";
 
 export {
   getAllTransactions,
@@ -52,7 +54,14 @@ function getAllTransactions(query = {}) {
       const { type, coin, period } = query;
       dispatch(startApiCall(API.GET_ALL_TRANSACTIONS));
 
-      const response = await transactionsService.getAll({ type, coin, period });
+      let response;
+      if (!mocks.USE_MOCK_TRANSACTIONS) {
+        response = await transactionsService.getAll({ type, coin, period });
+      } else {
+        response = {
+          data: Object.values(mockTransactions).filter(t => !!t),
+        };
+      }
 
       dispatch({
         type: ACTIONS.GET_ALL_TRANSACTIONS_SUCCESS,
@@ -74,8 +83,12 @@ function getTransactionDetails(id = "") {
     try {
       dispatch(startApiCall(API.GET_TRANSACTION_DETAILS));
 
-      const res = await transactionsService.getTransaction(id);
-      dispatch(getTransactionDetailsSuccess(res.data.transaction));
+      if (!mocks.USE_MOCK_TRANSACTIONS) {
+        const res = await transactionsService.getTransaction(id);
+        dispatch(getTransactionDetailsSuccess(res.data.transaction));
+      } else {
+        dispatch(getTransactionDetailsSuccess(mockTransactions[id]));
+      }
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_TRANSACTION_DETAILS, err));

@@ -1,7 +1,6 @@
 import { Platform } from "react-native";
 import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -12,13 +11,13 @@ const base = {
   },
 
   contactImageWrapper: {
-    shadowColor: COLOR_KEYS.BLACK,
+    shadowColor: "#000000",
     borderRadius: 50 / 2,
     width: 50,
     height: 50,
     ...Platform.select({
       android: {
-        borderColor: COLOR_KEYS.INPUT_BORDER,
+        borderColor: "#E9E9E9",
         borderTopWidth: 0.2,
         borderLeftWidth: 0.2,
         borderRightWidth: 0.5,
@@ -34,7 +33,7 @@ const base = {
     width: 50,
     height: 50,
     borderRadius: 50 / 2,
-    borderColor: COLOR_KEYS.WHITE,
+    borderColor: "#ffffff",
     borderWidth: 2,
   },
 
@@ -42,7 +41,7 @@ const base = {
     width: 20,
     height: 20,
     borderRadius: 20 / 2,
-    borderColor: COLOR_KEYS.WHITE,
+    borderColor: "#ffffff",
     borderWidth: 1,
     position: "absolute",
     right: 0,

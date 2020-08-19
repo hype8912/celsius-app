@@ -11,10 +11,9 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
   getPadding,
-  getColor,
 } from "../../../utils/styles-util";
 import CelText from "../CelText/CelText";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
 
 class InfoBox extends Component {
   static propTypes = {
@@ -105,7 +104,7 @@ class InfoBox extends Component {
                   name="WarningCircle"
                   height="29"
                   width="29"
-                  fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                  fill={STYLES.COLORS.WHITE}
                 />
               </View>
             )}
@@ -130,15 +129,15 @@ class InfoBox extends Component {
                   style={{
                     width: 0,
                     height: 0,
-                    backgroundColor: COLOR_KEYS.TRANSPARENT,
+                    backgroundColor: "transparent",
                     borderStyle: "solid",
                     marginTop: heightPercentageToDP("0.5%"),
                     borderLeftWidth: widthPercentageToDP("1.5%"),
                     borderRightWidth: widthPercentageToDP("1.5%"),
                     borderBottomWidth: widthPercentageToDP("1.5%"),
-                    borderLeftColor: COLOR_KEYS.TRANSPARENT,
-                    borderRightColor: COLOR_KEYS.TRANSPARENT,
-                    borderBottomColor: COLOR_KEYS.WHITE,
+                    borderLeftColor: "transparent",
+                    borderRightColor: "transparent",
+                    borderBottomColor: "white",
                     transform: [{ rotate }],
                   }}
                 />
@@ -164,11 +163,7 @@ class InfoBox extends Component {
                 }}
               >
                 {explanationText}{" "}
-                <CelText
-                  type={"H5"}
-                  weight={"700"}
-                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                >
+                <CelText type={"H5"} weight={"700"} color={STYLES.COLORS.WHITE}>
                   {boldText}
                 </CelText>
               </CelText>

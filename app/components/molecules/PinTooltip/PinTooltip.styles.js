@@ -8,7 +8,7 @@ import STYLES from "../../../constants/STYLES";
 const base = {
   container: {
     width: "100%",
-    backgroundColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
+    backgroundColor: STYLES.COLORS.DARK_GRAY,
     borderRadius: 8,
     alignSelf: "center",
     padding: 10,

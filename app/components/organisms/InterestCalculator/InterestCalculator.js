@@ -10,6 +10,7 @@ import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
+import STYLES from "../../../constants/STYLES";
 import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
 import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
 import InterestCalculatorStyle from "./InterestCalculator.styles";
@@ -141,10 +142,10 @@ class InterestCalculator extends Component {
     const celCardStyle = [style.earningCard];
 
     const noCelTextColor = !earnInterestIn
-      ? getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)
+      ? STYLES.COLORS.WHITE
       : getColor(COLOR_KEYS.PARAGRAPH);
     const celTextColor = earnInterestIn
-      ? getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)
+      ? STYLES.COLORS.WHITE
       : getColor(COLOR_KEYS.PARAGRAPH);
 
     if (!earnInterestIn) {

@@ -3,7 +3,7 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -19,7 +19,7 @@ const base = {
   active: {
     marginTop: 5,
     width: widthPercentageToDP("3.5%"),
-    borderTopColor: COLOR_KEYS.LINK,
+    borderTopColor: "rgba(65,86,166,1)",
     borderTopWidth: 1,
   },
   buttonWrapper: { flex: 1, flexDirection: "row" },
@@ -28,11 +28,23 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    separatorColor: {
+      color: "black",
+    },
+  },
 
-  dark: {},
+  dark: {
+    separatorColor: {
+      color: STYLES.COLORS.WHITE_OPACITY2,
+    },
+  },
 
-  unicorn: {},
+  unicorn: {
+    separatorColor: {
+      color: "black",
+    },
+  },
 };
 
 const CommunityDashboardStyle = () => getThemedStyle(base, themed);

@@ -24,13 +24,12 @@ import {
   widthPercentageToDP,
   getPadding,
   addThemeToComponents,
-  getColor,
 } from "../../../utils/styles-util";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
 import Message from "../../molecules/Message/Message";
+import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const cardWidth = widthPercentageToDP("80%");
 const { width } = Dimensions.get("window");
@@ -240,7 +239,7 @@ class CelModal extends Component {
                 opacity,
                 height: 10,
                 width: 10,
-                backgroundColor: getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE),
+                backgroundColor: STYLES.COLORS.MEDIUM_GRAY,
                 margin: 8,
                 borderRadius: 5,
               }}
@@ -347,25 +346,25 @@ class CelModal extends Component {
                 {childrenWithProps}
               </View>
             ) : (
-              <View>
-                <ScrollView
-                  style={[
-                    scrollWrapper,
-                    {
-                      marginTop: header
-                        ? heightPercentageToDP("15.3%")
-                        : heightPercentageToDP("2%"),
-                    },
-                    paddingStyle,
-                  ]}
-                  showsVerticalScrollIndicator={false}
-                  contentContainerStyle={{ flexGrow: 1 }}
-                >
-                  {!!modalInfo && this.renderModalContent()}
-                  {childrenWithProps}
-                </ScrollView>
-              </View>
-            )}
+                <View>
+                  <ScrollView
+                    style={[
+                      scrollWrapper,
+                      {
+                        marginTop: header
+                          ? heightPercentageToDP("15.3%")
+                          : heightPercentageToDP("2%"),
+                      },
+                      paddingStyle,
+                    ]}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ flexGrow: 1 }}
+                  >
+                    {!!modalInfo && this.renderModalContent()}
+                    {childrenWithProps}
+                  </ScrollView>
+                </View>
+              )}
           </View>
           <BlurView
             tint={"dark"}

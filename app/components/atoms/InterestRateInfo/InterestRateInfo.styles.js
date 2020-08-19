@@ -3,6 +3,7 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const currencyImageSize = widthPercentageToDP("10.67%");
@@ -32,6 +33,14 @@ const base = {
     width: currencyImageSize,
     height: currencyImageSize,
   },
+  infoWrapper: {},
+  currencyName: {
+    marginBottom: 2,
+    color: STYLES.COLORS.DARK_GRAY,
+  },
+  currencyShort: {
+    color: STYLES.COLORS.DARK_GRAY,
+  },
   imageInfoWrapper: {
     flexDirection: "row",
     paddingVertical: heightPercentageToDP("3.5%"),
@@ -58,6 +67,24 @@ const base = {
     paddingHorizontal: 10,
     width: widthPercentageToDP("37%"),
     height: heightPercentageToDP("5%"),
+  },
+  usdInfoWrapper: {
+    marginTop: 10,
+    backgroundColor: STYLES.COLORS.DARK_GRAY,
+    borderRadius: 5,
+    padding: 10,
+  },
+  regularRateText: {
+    color: STYLES.COLORS.MEDIUM_GRAY,
+  },
+  celRateText: {
+    color: "#fff",
+  },
+  regRateText: {
+    color: STYLES.COLORS.MEDIUM_GRAY,
+  },
+  celsiusRateText: {
+    color: "#fff",
   },
   rateInfoCard: {
     marginTop: 20,

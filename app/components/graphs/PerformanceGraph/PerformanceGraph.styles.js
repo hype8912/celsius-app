@@ -35,7 +35,7 @@ const base = {
   },
   labelText: {
     fontFamily: getFontFamily("regular"),
-    color: COLOR_KEYS.WHITE,
+    color: "white",
     height: heightPercentageToDP("2.7%"),
   },
   scrollPointer: {

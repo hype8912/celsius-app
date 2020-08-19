@@ -1,4 +1,5 @@
-import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
+import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
@@ -17,7 +18,7 @@ const base = {
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
-    shadowColor: getColor(COLOR_KEYS.SEPARATORS), // TODO: To check!
+    shadowColor: STYLES.COLORS.DARK_GRAY,
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 5,
   },

@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 
 import PassMeterTooltipStyle from "./PassMeterTooltip.styles";
 import Icon from "../Icon/Icon";
+import STYLES from "../../../constants/STYLES";
 import CelText from "../CelText/CelText";
 import { PASSWORD_STRENGTH_ITEMS } from "../../../constants/DATA";
 import securityUtil from "../../../utils/security-util";
-import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class PassMeterTooltip extends Component {
@@ -23,7 +23,11 @@ class PassMeterTooltip extends Component {
 
     const score = securityUtil.calculatePasswordScore(password).result.errors;
     const items = PASSWORD_STRENGTH_ITEMS.map(i => {
-      status = !score.includes(i.copy);
+      if (!score.includes(i.copy)) {
+        status = true;
+      } else {
+        status = false;
+      }
       return {
         copy: i.copy,
         status,
@@ -47,14 +51,10 @@ class PassMeterTooltip extends Component {
               name={"CheckCircle"}
               height={12}
               width={12}
-              fill={
-                i.status
-                  ? getColor(COLOR_KEYS.POSITIVE_STATE)
-                  : getColor(COLOR_KEYS.NEGATIVE_STATE)
-              }
+              fill={i.status ? STYLES.COLORS.GREEN : STYLES.COLORS.RED}
             />
             <CelText
-              color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+              color={STYLES.COLORS.WHITE}
               type={"H7"}
               margin={"-3 0 5 5"}
             >

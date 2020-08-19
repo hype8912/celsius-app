@@ -2,10 +2,10 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { View, TouchableOpacity } from "react-native";
 
-import { getPadding, getMargins, getColor } from "../../../utils/styles-util";
+import { getPadding, getMargins } from "../../../utils/styles-util";
 import CardStyle from "./Card.styles";
 import Icon from "../Icon/Icon";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
 
 class Card extends React.Component {
   static propTypes = {
@@ -82,7 +82,10 @@ class Card extends React.Component {
       borderStyle,
     ];
 
-    const closeIconColor = getColor(COLOR_KEYS.HEADLINE);
+    const closeIconColor =
+      color === STYLES.COLORS.CELSIUS_BLUE
+        ? STYLES.COLORS.WHITE
+        : STYLES.COLORS.DARK_GRAY_OPACITY;
 
     const card = (
       <Fragment>

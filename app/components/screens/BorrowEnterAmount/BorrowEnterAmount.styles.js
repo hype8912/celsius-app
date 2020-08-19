@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   coinIconWrapper: {
@@ -28,7 +27,7 @@ const themed = {
     selectWrapper: {
       ...Platform.select({
         android: {
-          borderColor: COLOR_KEYS.TRANSPARENT,
+          borderColor: "transparent",
         },
       }),
     },

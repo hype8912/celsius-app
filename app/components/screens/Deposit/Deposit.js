@@ -14,6 +14,7 @@ import ShareButton from "../../atoms/ShareButton/ShareButton";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
+import STYLES from "../../../constants/STYLES";
 import DepositStyle from "./Deposit.styles";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
@@ -212,12 +213,12 @@ class Deposit extends Component {
 
     return (
       <View style={{ alignSelf: "center" }}>
-        <Card color={getColor(COLOR_KEYS.PRIMARY_BUTTON)} size={"twoThirds"}>
+        <Card color={STYLES.COLORS.CELSIUS_BLUE} size={"twoThirds"}>
           <CelText
             align={"center"}
             weight={"300"}
             type={"H6"}
-            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+            color={STYLES.COLORS.WHITE}
           >
             {collateralMissing}{" "}
           </CelText>
@@ -225,7 +226,7 @@ class Deposit extends Component {
             weight={"300"}
             align={"center"}
             type={"H6"}
-            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+            color={STYLES.COLORS.WHITE}
           >
             required to cover the margin call
           </CelText>

@@ -5,7 +5,6 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width } = Dimensions.get("window");
 
@@ -20,7 +19,7 @@ const base = {
     flex: 4,
   },
   modal: {
-    backgroundColor: COLOR_KEYS.WHITE,
+    backgroundColor: "white",
     width: widthPercentageToDP("90%"),
     borderRadius: 8,
     zIndex: 3,
@@ -37,7 +36,7 @@ const base = {
     position: "absolute",
     top: 20,
     right: 20,
-    backgroundColor: COLOR_KEYS.TRANSPARENT,
+    backgroundColor: "transparent",
     zIndex: 10,
   },
   imageWrapper: {
@@ -82,7 +81,7 @@ const base = {
     width: widthPercentageToDP("90%"),
     height: heightPercentageToDP("15.5%"),
     paddingTop: 5,
-    backgroundColor: COLOR_KEYS.DOT_INDICATOR_INACTIVE,
+    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
     alignItems: "center",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
@@ -92,7 +91,7 @@ const base = {
     width: widthPercentageToDP("28.8%"),
     height: widthPercentageToDP("28.8%"),
     borderRadius: widthPercentageToDP("28.8%") / 2,
-    backgroundColor: COLOR_KEYS.WHITE,
+    backgroundColor: "white",
     position: "absolute",
     justifyContent: "center",
     alignItems: "center",
@@ -111,7 +110,7 @@ const base = {
     alignItems: "center",
     alignContent: "flex-start",
     borderRadius: 25,
-    backgroundColor: COLOR_KEYS.WHITE,
+    backgroundColor: "white",
     marginBottom: 40,
   },
   title: {
@@ -121,18 +120,18 @@ const base = {
     paddingTop: 20,
     paddingHorizontal: 10,
     paddingBottom: 10,
-    color: COLOR_KEYS.SEPARATORS,
+    color: STYLES.COLORS.DARK_GRAY,
   },
   description: {
     paddingHorizontal: 10,
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    color: COLOR_KEYS.TOGGLE_OFF_BACKGROUND,
+    color: "#737A82",
   },
   modalButton: {
     marginTop: 0,
-    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
+    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
   },
   dotsWithdraw: {
     flex: 1,

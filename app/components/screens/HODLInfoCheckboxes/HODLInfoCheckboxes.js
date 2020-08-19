@@ -8,11 +8,11 @@ import * as appActions from "../../../redux/actions";
 // import HODLInfoCheckboxes from "./HODLInfoCheckboxes.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { getColor, getPadding } from "../../../utils/styles-util";
+import { getPadding } from "../../../utils/styles-util";
 import Card from "../../atoms/Card/Card";
+import STYLES from "../../../constants/STYLES";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -87,10 +87,8 @@ class HODLInfoCheckboxes extends Component {
                 }
                 field={`${checkboxCopy[i].field}`}
                 value={formData[`${checkboxCopy[i].field}`]}
-                uncheckedCheckBoxColor={getColor(
-                  COLOR_KEYS.DOT_INDICATOR_INACTIVE
-                )}
-                checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                uncheckedCheckBoxColor={STYLES.COLORS.GRAY}
+                checkedCheckBoxColor={STYLES.COLORS.GREEN}
                 rightText={text.explanation}
                 updateFormField={actions.updateFormField}
               />

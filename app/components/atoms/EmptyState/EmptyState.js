@@ -11,6 +11,7 @@ import CelButton from "../CelButton/CelButton";
 import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import ContactSupport from "../ContactSupport/ContactSupport";
 import emptyStateUtil from "../../../utils/empty-state-util";
+import STYLES from "../../../constants/STYLES";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -57,11 +58,11 @@ class EmptyState extends Component {
               actions.openModal(MODALS.KYC_REJECTION_REASONS_MODAL)
             }
             basic
-            textColor={getColor(COLOR_KEYS.ALERT_STATE)}
+            textColor={STYLES.COLORS.RED}
             iconRight={"IconChevronRight"}
             iconRightHeight={"13"}
             iconRightWidth={"12"}
-            iconRightColor={getColor(COLOR_KEYS.ALERT_STATE)}
+            iconRightColor={STYLES.COLORS.RED}
           >
             Identity verification failed
           </CelButton>

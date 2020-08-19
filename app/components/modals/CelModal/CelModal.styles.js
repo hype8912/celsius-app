@@ -57,7 +57,7 @@ const base = {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: COLOR_KEYS.TRANSPARENT,
+    backgroundColor: "transparent",
     zIndex: 10,
   },
 };

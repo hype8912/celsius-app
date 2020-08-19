@@ -4,12 +4,11 @@ import PropTypes from "prop-types";
 import { getColor } from "../../../utils/styles-util";
 
 // import CelSwitchStyle from "./CelSwitch.styles";
+import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const falseColor =
-  Platform.OS === "ios"
-    ? "transparent"
-    : getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND);
+  Platform.OS === "ios" ? "transparent" : STYLES.COLORS.DARK_GRAY3;
 
 class CelSwitch extends Component {
   static propTypes = {

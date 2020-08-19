@@ -18,9 +18,9 @@ import {
 import { LOAN_STATUS } from "../../../constants/DATA";
 import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import PaymentListItem from "../../atoms/PaymentListItem/PaymentListItem";
+import STYLES from "../../../constants/STYLES";
 import CircularProgressBar from "../../graphs/CircularProgressBar/CircularProgressBar";
 import Badge from "../../atoms/Badge/Badge";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class LoanOverviewCard extends Component {
   static propTypes = {
@@ -225,19 +225,15 @@ class LoanOverviewCard extends Component {
             <Card
               styles={{ alignSelf: "center" }}
               size={"twoThirds"}
-              color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+              color={STYLES.COLORS.RED}
             >
-              <CelText
-                weight={"500"}
-                type={"H5"}
-                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-              >
+              <CelText weight={"500"} type={"H5"} color={STYLES.COLORS.WHITE}>
                 Margin Call Warning
               </CelText>
               <CelText
                 weight={"300"}
                 type={"H6"}
-                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                color={STYLES.COLORS.WHITE}
                 margin={"10 0 0 0"}
               >{`The value of your collateral has dropped significantly. To match the value with the current market prices, we will need to lock an additional ${formatter.crypto(
                 loan.margin_call.margin_call_amount,
@@ -249,7 +245,7 @@ class LoanOverviewCard extends Component {
                     onPress={this.lockMarginCollateral}
                     size={"small"}
                     margin={"10 0 10 0"}
-                    textColor={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+                    textColor={STYLES.COLORS.RED}
                     basic
                     color={"red"}
                   >{`Approve ${loan.margin_call.collateral_coin} Lock`}</CelButton>
@@ -261,7 +257,7 @@ class LoanOverviewCard extends Component {
                   <CelButton
                     onPress={this.depositCoin}
                     size={"small"}
-                    textColor={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                    textColor={STYLES.COLORS.WHITE}
                     ghost
                     color={"red"}
                   >

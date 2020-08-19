@@ -8,7 +8,6 @@ import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import securityUtil from "../../../utils/security-util";
 import { PIN_STRENGTH_ITEMS } from "../../../constants/DATA";
-import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class PinTooltip extends Component {
@@ -79,10 +78,10 @@ class PinTooltip extends Component {
                 borderRightWidth: 10,
                 borderBottomWidth: 10,
                 borderStyle: "solid",
-                backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
-                borderLeftColor: getColor(COLOR_KEYS.TRANSPARENT),
-                borderRightColor: getColor(COLOR_KEYS.TRANSPARENT),
-                borderBottomColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
+                backgroundColor: "transparent",
+                borderLeftColor: "transparent",
+                borderRightColor: "transparent",
+                borderBottomColor: STYLES.COLORS.DARK_GRAY,
                 transform: [
                   {
                     rotate: toolTipPositionTop ? "180deg" : "0deg",
@@ -101,14 +100,10 @@ class PinTooltip extends Component {
                     name={"CheckCircle"}
                     height={12}
                     width={12}
-                    fill={
-                      i.status
-                        ? getColor(COLOR_KEYS.POSITIVE_STATE)
-                        : getColor(COLOR_KEYS.NEGATIVE_STATE)
-                    }
+                    fill={i.status ? STYLES.COLORS.GREEN : STYLES.COLORS.RED}
                   />
                   <CelText
-                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                    color={STYLES.COLORS.WHITE}
                     type={"H7"}
                     margin={"-3 0 5 5"}
                   >

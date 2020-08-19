@@ -8,12 +8,11 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
+import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -74,7 +73,7 @@ class KYCPrimeTrustToU extends Component {
           One last thing! To complete your account verification, please
           carefully read and agree to the
           <CelText
-            color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+            color={STYLES.COLORS.CELSIUS_BLUE}
             onPress={() => Linking.openURL(primeTrustToULink)}
           >
             {" "}
@@ -90,8 +89,8 @@ class KYCPrimeTrustToU extends Component {
             updateFormField={actions.updateFormField}
             field="primeTrustToU"
             value={appSettings.accepted_primetrust_custodial_agreement}
-            uncheckedCheckBoxColor={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
-            checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+            uncheckedCheckBoxColor={STYLES.COLORS.GRAY}
+            checkedCheckBoxColor={STYLES.COLORS.GREEN}
             rightText="I have read and agree to the Terms of Use"
           />
         </Card>

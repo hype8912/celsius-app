@@ -11,6 +11,7 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
+import STYLES from "../../../constants/STYLES";
 import Card from "../../atoms/Card/Card";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import Icon from "../../atoms/Icon/Icon";
@@ -163,10 +164,8 @@ class LoanTermsOfUse extends Component {
                     }
                     field={`loansToU${checkboxes.indexOf(i)}`}
                     value={formData[`loansToU${checkboxes.indexOf(i)}`]}
-                    uncheckedCheckBoxColor={getColor(
-                      COLOR_KEYS.DOT_INDICATOR_INACTIVE
-                    )}
-                    checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                    uncheckedCheckBoxColor={STYLES.COLORS.GRAY}
+                    checkedCheckBoxColor={STYLES.COLORS.GREEN}
                     rightText={checkboxTexts[checkboxes.indexOf(i)]}
                   />
                 </Card>
@@ -185,7 +184,7 @@ class LoanTermsOfUse extends Component {
                 <Icon
                   name="Share"
                   height="24"
-                  fill={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
+                  fill={STYLES.COLORS.GRAY}
                   style={styles.iconStyle}
                 />
                 <CelText align={"center"}>Download</CelText>

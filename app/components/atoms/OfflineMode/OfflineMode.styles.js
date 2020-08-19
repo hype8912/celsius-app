@@ -1,5 +1,5 @@
-import { getColor, getThemedStyle } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getThemedStyle } from "../../../utils/styles-util";
+import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -10,7 +10,7 @@ const base = {
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
+    backgroundColor: STYLES.COLORS.WHITE,
   },
   icon: {
     width: 34,

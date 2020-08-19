@@ -7,8 +7,7 @@ import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Card from "../Card/Card";
 import Separator from "../Separator/Separator";
-import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
 
 const TxBasicCardSection = ({ label, value, coin, monthly, total }) => {
   const style = BasicCardSectionStyle();
@@ -33,7 +32,7 @@ const TxBasicCardSection = ({ label, value, coin, monthly, total }) => {
           <View>
             <CelText type={"H6"}>Total Rewards</CelText>
             <CelText
-              color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+              color={STYLES.COLORS.CELSIUS_BLUE}
               type={coinSize}
               weight={"600"}
             >

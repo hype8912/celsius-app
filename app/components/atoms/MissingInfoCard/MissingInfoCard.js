@@ -47,7 +47,7 @@ const MissingInfoCard = props => {
   return (
     <Card color={getColor(COLOR_KEYS.LINK)} close>
       <CelText
-        color={getColor(COLOR_KEYS.HEADLINE)}
+        color={STYLES.COLORS.WHITE}
         type="H6"
         weight="bold"
         margin="0 10 3 0"
@@ -56,11 +56,11 @@ const MissingInfoCard = props => {
       </CelText>
       {hasNoAddress ? (
         <Fragment>
-          <CelText color={getColor(COLOR_KEYS.HEADLINE)} type="H7">
+          <CelText color={STYLES.COLORS.WHITE} type="H7">
             {body}
             <CelText
               onPress={onPress}
-              color={STYLES.COLORS.WHITE_OPACITY7} // TODO: missing COLOR_KEYS
+              color={STYLES.COLORS.WHITE_OPACITY7}
               type="H7"
               margin="3 0 0 0"
             >
@@ -70,12 +70,12 @@ const MissingInfoCard = props => {
         </Fragment>
       ) : (
         <Fragment>
-          <CelText color={getColor(COLOR_KEYS.HEADLINE)} type="H7">
+          <CelText color={STYLES.COLORS.WHITE} type="H7">
             {body}
           </CelText>
           <CelText
             onPress={onPress}
-            color={STYLES.COLORS.WHITE_OPACITY7} // TODO: missing COLOR_KEYS
+            color={STYLES.COLORS.WHITE_OPACITY7}
             type="H7"
             margin="3 0 0 0"
           >

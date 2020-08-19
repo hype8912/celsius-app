@@ -5,11 +5,10 @@ import { View } from "react-native";
 import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
-import { getColor, getTheme } from "../../../utils/styles-util";
+import { getTheme } from "../../../utils/styles-util";
 import ToggleInfoCardStyle from "./ToggleInfoCard.styles";
 import Icon from "../../atoms/Icon/Icon";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class ToggleInfoCard extends Component {
   static propTypes = {
@@ -54,10 +53,10 @@ class ToggleInfoCard extends Component {
         colors: {
           circleColor:
             theme === "light"
-              ? STYLES.COLORS.GREEN_OPACITY // TODO: missing COLOR_KEYS
-              : STYLES.COLORS.WHITE_OPACITY1, // TODO: missing COLOR_KEYS
-          fill: getColor(COLOR_KEYS.POSITIVE_STATE),
-          textTitle: getColor(COLOR_KEYS.POSITIVE_STATE),
+              ? STYLES.COLORS.GREEN_OPACITY
+              : STYLES.COLORS.WHITE_OPACITY1,
+          fill: STYLES.COLORS.GREEN,
+          textTitle: STYLES.COLORS.GREEN,
         },
         titleText: titleText || "ENABLED",
         titleTextSize: "H2",
@@ -66,9 +65,9 @@ class ToggleInfoCard extends Component {
     }
     return {
       colors: {
-        circleColor: STYLES.COLORS.RED_OPACITY2, // TODO: missing COLOR_KEYS
-        fill: getColor(COLOR_KEYS.NEGATIVE_STATE),
-        textTitle: getColor(COLOR_KEYS.NEGATIVE_STATE),
+        circleColor: STYLES.COLORS.RED_OPACITY2,
+        fill: STYLES.COLORS.RED,
+        textTitle: STYLES.COLORS.RED,
       },
       titleText: "DISABLED",
       titleTextSize: "H2",

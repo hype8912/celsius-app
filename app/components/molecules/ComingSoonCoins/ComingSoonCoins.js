@@ -4,15 +4,11 @@ import { Animated, Image, Linking, View } from "react-native";
 
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
+import STYLES from "../../../constants/STYLES";
 import { THEMES, WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
 import Icon from "../../atoms/Icon/Icon";
-import {
-  getColor,
-  getTheme,
-  widthPercentageToDP,
-} from "../../../utils/styles-util";
+import { getTheme, widthPercentageToDP } from "../../../utils/styles-util";
 import animationsUtil from "../../../utils/animations-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class ComingSoonCoins extends Component {
   static propTypes = {
@@ -77,7 +73,7 @@ class ComingSoonCoins extends Component {
                   name={`Icon${coin.short}`}
                   width="40"
                   height="40"
-                  fill={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
+                  fill={STYLES.COLORS.MEDIUM_GRAY}
                   style={{ marginRight: 12 }}
                 />
               ) : (
