@@ -41,24 +41,24 @@ class CelStats extends Component {
 
     return (
       <View style={style.container}>
-        <Separator text={"CEL INTEREST STATS"} margin={"30 0 20 0"} />
+        <Separator text={"EARN IN CEL"} margin={"30 0 20 0"} />
 
         <View style={style.celTierHead}>
           <View style={style.celTierHeadIndentation} />
 
           <View style={style.celTierItem}>
             <CelText type={"H7"} align={"center"}>
-              Total Interest Distributed in CEL*
+              Total earned in CEL*
             </CelText>
           </View>
           <View style={style.celTierItem}>
             <CelText type={"H7"} align={"center"}>
-              Percentage of Users
+              Percentage of Users in Tie
             </CelText>
           </View>
           <View style={style.celTierItem}>
             <CelText type={"H7"} align={"center"}>
-              Receiving Interest in CEL
+              Percent earning in CEL
             </CelText>
           </View>
         </View>
@@ -108,9 +108,9 @@ class CelStats extends Component {
                 align={"center"}
                 margin={"30 0 15 0"}
               >
-                {`${formatter.crypto(i.totalCelInterests, "", {
+                {`${formatter.usd(i.totalCelInterests, "", {
                   noPrecision: true,
-                })}$`}
+                })}`}
               </CelText>
             </View>
             <Separator vertical height={"50%"} margin={"20 0 0 0"} />
@@ -154,7 +154,7 @@ class CelStats extends Component {
           weight={"300"}
           style={style.celStatsBottomCopy}
         >
-          of the community is choosing to earn interest income in CEL!
+          of app users chose to earn in CEL !
         </CelText>
       </View>
     );

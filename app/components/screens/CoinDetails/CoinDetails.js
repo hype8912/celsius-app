@@ -325,7 +325,7 @@ class CoinDetails extends Component {
               <View style={style.interestWrapper}>
                 <View style={style.interestCardWrapper}>
                   <CelText type="H6" weight="300" margin={"3 0 3 0"}>
-                    Total interest earned
+                    Total Earnings
                   </CelText>
                   <CelText type="H3" weight="600" margin={"3 0 3 0"}>
                     {formatter.usd(coinDetails.interest_earned_usd)}

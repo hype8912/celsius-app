@@ -364,19 +364,18 @@ const SIMPLEX_FIAT_CURRENCIES = [
 ];
 
 const PIN_STRENGTH_ITEMS = [
-  { copy: "Don't use your birthday" },
-  { copy: "No 6 digits in ascending/descending order" },
-  { copy: "Minimum 4 unique digits" },
+  { copy: "Include at least 4 unique digits" },
+  { copy: "Not be 6 consecutive digits" },
+  { copy: "Not include your birthday" },
 ];
 
 const PASSWORD_STRENGTH_ITEMS = [
-  { copy: "Minimum 8 Characters." },
-  { copy: "Capital letter - at least one." },
-  { copy: "Numbers – at least one." },
-  { copy: "Special characters – at least one." },
+  { copy: "Minimum of 8 characters." },
+  { copy: "One capital letter." },
+  { copy: "One number." },
+  { copy: "One special character." },
   {
-    copy:
-      "Can’t contain your name or parts of the your’s full name, username and spaces.",
+    copy: "Cannot include your name, part of your name, username or spaces",
   },
 ];
 

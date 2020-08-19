@@ -76,8 +76,9 @@ class MyCelOverivewTab extends Component {
                 weight={"300"}
               >
                 Your loyalty level is dynamic and will change with changing
-                wallet balances. This includes new wallet activity as well as
-                market fluctuations, so be sure to check your status every week!
+                wallet balances. This includes new transfers and withdrawals as
+                well as market fluctuations. Make sure to check your status
+                every week!
               </CelText>
             </View>
           </View>

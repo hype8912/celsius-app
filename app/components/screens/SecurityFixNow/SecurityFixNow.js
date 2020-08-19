@@ -120,7 +120,7 @@ class SecurityFixNow extends Component {
           title: "Two-Factor Authentication",
           cardTitle: "Your 2FA is",
           body:
-            "Activate an extra layer of security that prevents the risk of unwanted access to your account, even if your login information is compromised.",
+            "Activate an extra layer of security that prevents the risk of unwanted access to your wallet, even if your login information is compromised.",
           enabled: twoFAStatus.isActive,
           showInfoBox:
             (securityOverview.toFixNow && !twoFAStatus.isActive) ||
@@ -139,7 +139,7 @@ class SecurityFixNow extends Component {
           title: `Change Your ${formatter.capitalize(type)}`,
           body: `Your ${type} was last changed ${moment(
             securityOverview[`${type}_last_change`]
-          ).fromNow()}. In order to keep your account secure, it is recommended to change your ${type} at least every 180 days.`,
+          ).fromNow()}. In order to keep your wallet secure, it is recommended to change your ${type} at least every 180 days.`,
           strength: securityOverview[`${type}_strength`],
           lastChange: securityOverview[`${type}_last_change`],
           navigateToScreen: `Change${formatter.capitalize(type)}`,

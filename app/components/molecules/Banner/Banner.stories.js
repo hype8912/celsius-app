@@ -67,7 +67,7 @@ storiesOf("Banner/Trigger", module)
         action={() => {}}
         buttonText={"Get a loan"}
         title={"Did you know..."}
-        content={`Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending money you need at the lowest rates in the industry!`}
+        content={`Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending coins you need at the lowest rates in the industry!`}
       />
     </View>
   ));
