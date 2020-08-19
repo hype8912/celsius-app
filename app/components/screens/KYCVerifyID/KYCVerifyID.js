@@ -213,7 +213,7 @@ class KYCVerifyID extends Component {
             Verify your ID
           </CelText>
           <CelText type="H4" weight="300" margin="10 0 20 0">
-            Take a photo of one of your documents to confirm your identity.
+            Select one of the following to submit
           </CelText>
           {docs && (
             <View

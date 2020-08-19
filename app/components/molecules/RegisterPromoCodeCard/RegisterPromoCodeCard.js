@@ -77,8 +77,9 @@ class RegisterPromoCodeCard extends Component {
             weight={"300"}
             color={STYLES.COLORS.WHITE}
           >
-            Enter your referral code then follow the steps below to receive your
-            reward.
+            Enter your code below. When your crypto balance reaches $200, you
+            and your friend will get rewarded! Balance must remain for at least
+            30 days to qualify.
           </CelText>
           <CelText
             margin={"10 0 0 0"}

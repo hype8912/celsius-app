@@ -136,8 +136,8 @@ class SocialSecurityNumber extends Component {
                 <CelText color="white" weight="semi-bold">
                   Keep in mind!{" "}
                 </CelText>
-                You can only enter SSN information once. To be able to change it
-                in the future, please
+                SSN may only be entered once! If you must change it in the
+                future,
                 <CelText color="white" weight="semi-bold">
                   {" "}
                   contact our support.

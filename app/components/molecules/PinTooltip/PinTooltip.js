@@ -8,6 +8,7 @@ import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import securityUtil from "../../../utils/security-util";
 import { PIN_STRENGTH_ITEMS } from "../../../constants/DATA";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class PinTooltip extends Component {
   static propTypes = {
@@ -90,6 +91,9 @@ class PinTooltip extends Component {
             />
 
             <View style={[style.container, customStyle]}>
+              <CelText color={COLOR_KEYS.WHITE} margin={"0 0 10 0"}>
+                PIN Must:
+              </CelText>
               {this.handleSecurityItems().map((i, k) => (
                 <View style={style.securityStrengthItem} k={k}>
                   <Icon

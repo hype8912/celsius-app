@@ -147,7 +147,7 @@ class WithdrawConfirmAddress extends Component {
               explanationText={
                 <CelText color="white">
                   Please confirm the withdrawal address where your funds will be
-                  sent. If you previously transferred money from an exchange,
+                  sent. If you previously transferred coins from an exchange,
                   this may not be your correct withdrawal address.
                   {"\n\n"}You can change your withdrawal address at any time
                   from your{" "}

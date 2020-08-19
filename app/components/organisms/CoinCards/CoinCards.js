@@ -154,7 +154,7 @@ class CoinCards extends Component {
           name="CirclePlus"
         />
         <CelText type="H5" margin={isGrid ? "5 0 0 0" : "0 0 0 5"} link>
-          Deposit coins
+          Transfer coins
         </CelText>
       </TouchableOpacity>
     );

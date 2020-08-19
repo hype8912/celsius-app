@@ -140,7 +140,7 @@ class GoogleReCaptcha extends Component {
                   class='${this.buttonStyle()}'
                   id='submit'
                 >
-                   ${type !== "register" ? "Log in" : "Create account"}
+                   ${type !== "register" ? "Log in" : "Create wallet"}
                 </button>
             </div>
           <script>

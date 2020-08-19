@@ -28,17 +28,18 @@ const MissingInfoCard = props => {
   }
 
   if (!hasAddress()) {
-    title = "Your address is missing from your profile.";
+    title = "We’re missing your address.";
     body =
-      "Residence details are required in order to receive interest. To make changes to personal information please contact";
+      "Residential details are required in order to receive rewards. Please contact Celsius support to update your address.";
     cta = "Celsius support";
     onPress = () => Linking.openURL("mailto:app@celsius.network");
     hasNoAddress = true;
   }
 
   if (!hasSSN()) {
-    title = "Your Social Security Number is missing from your profile.";
-    body = "Taxpayer details (SSN) are required in order to receive interest.";
+    title = "Your Social Security Number is Missing.";
+    body =
+      "Taxpayer details are required in order to receive rewards on your crypto. Enter your SSN link to profile details.";
     cta = "Enter your SSN";
     onPress = () => navigateTo("PersonalInformation");
   }

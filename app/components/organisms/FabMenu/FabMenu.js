@@ -84,7 +84,7 @@ class FabMenu extends Component {
     if (depositCompliance.allowed)
       main[0].push({
         iconName: "Deposit",
-        label: "Deposit",
+        label: "Transfer",
         screen: "Deposit",
       });
     if (kycStatus && hasPassedKYC() && withdrawCompliance.allowed)
@@ -102,7 +102,7 @@ class FabMenu extends Component {
     if (loanCompliance.allowed)
       main[1].push({
         iconName: "Borrow",
-        label: "Borrow",
+        label: "Borrow $$",
         screen: "BorrowLanding",
       });
     main[1].push({

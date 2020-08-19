@@ -153,7 +153,7 @@ class KYCTaxpayer extends Component {
           basic
           margin="20 0 20 0"
         >
-          Submit without SSN
+          Submit Verification Without SSN
         </CelButton>
       );
     }
@@ -182,7 +182,7 @@ class KYCTaxpayer extends Component {
           weight={"300"}
         >
           {this.isFromUS()
-            ? "US residents must provide their SSN to earn interest through Celsius. This is an optional step and can be entered later."
+            ? "US residents must provide their SSN to earn rewards through Celsius. This can be entered later. However, rewards will not be earned until SSN is entered"
             : "You may need to fill your taxpayer ID for tax reporting. You may add it later in your profile."}
         </CelText>
 

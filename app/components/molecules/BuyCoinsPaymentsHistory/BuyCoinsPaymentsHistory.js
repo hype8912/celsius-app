@@ -57,7 +57,7 @@ class BuyCoinsPaymentsHistory extends Component {
             <EmptyState
               heading="Transaction History"
               paragraphs={[
-                "You haven’t purchased any coins yet! Any crypto purchases made through the Celsius app will appear here.",
+                "Purchases made through your Celsius app will appear here.",
               ]}
             />
           </View>
