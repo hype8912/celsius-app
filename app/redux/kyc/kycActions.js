@@ -6,7 +6,7 @@ import { showMessage } from "../ui/uiActions";
 import userProfileService from "../../services/user-profile-service";
 import apiUtil from "../../utils/api-util";
 import { setFormErrors } from "../forms/formsActions";
-import { KYC_STATUSES } from "../../constants/DATA";
+import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../../constants/DATA";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
@@ -513,7 +513,12 @@ function saveKYCDocuments() {
       dispatch(saveKYCDocumentsSuccess());
       dispatch(showMessage("success", "Successfully submitted KYC Documents!"));
 
-      dispatch(NavActions.navigateTo("KYCTaxpayer"));
+      if (formData.state && PRIMETRUST_KYC_STATES.includes(formData.state)) {
+        dispatch(NavActions.navigateTo("KYCAddressProof"));
+      } else {
+        dispatch(NavActions.navigateTo("KYCTaxpayer"));
+      }
+
       mixpanelAnalytics.kycDocumentsSubmitted();
     } catch (err) {
       dispatch(showMessage("error", err.msg));
