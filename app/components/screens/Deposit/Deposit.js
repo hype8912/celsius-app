@@ -30,6 +30,7 @@ import { hasPassedKYC } from "../../../utils/user-util";
 import formatter from "../../../utils/formatter";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
+import DepositAddressSwitchCard from "../../atoms/DepositAddressSwitchCard/DepositAddressSwitchCard";
 
 @connect(
   state => ({
@@ -91,6 +92,7 @@ class Deposit extends Component {
 
     let address = "";
     let alternateAddress = "";
+    let secondaryAddress = "";
     let destinationTag = "";
     let memoId = "";
     let fullAddress = "";
@@ -99,6 +101,7 @@ class Deposit extends Component {
       return {
         address,
         alternateAddress,
+        secondaryAddress,
         destinationTag,
         memoId,
       };
@@ -115,12 +118,14 @@ class Deposit extends Component {
     // }
     fullAddress = walletAddresses[`${currency}Address`];
     alternateAddress = walletAddresses[`${currency}AlternateAddress`];
+    secondaryAddress = walletAddresses[`${currency}SecondaryAddress`];
     // Because getAddress is called in render method, it might happen that currency is defined and
     // walletAddresses is still not defined because those 2 are fetched from different APIs
     if (!fullAddress) {
       return {
         address,
         alternateAddress,
+        secondaryAddress,
         destinationTag,
         memoId,
       };
@@ -142,6 +147,7 @@ class Deposit extends Component {
     return {
       address,
       alternateAddress,
+      secondaryAddress,
       destinationTag,
       memoId,
     };
@@ -170,7 +176,10 @@ class Deposit extends Component {
     // }
     if (!walletAddresses[`${currency}Address`])
       await actions.getCoinAddress(currency);
-    this.setState({ isFetchingAddress: false, useAlternateAddress: false });
+
+    const { address } = this.getAddress(currency);
+
+    this.setState({ isFetchingAddress: false, displayAddress: address });
   };
 
   openModal = (destinationTag, memoId) => {
@@ -318,15 +327,12 @@ class Deposit extends Component {
     const {
       address,
       alternateAddress,
+      secondaryAddress,
       destinationTag,
       memoId,
     } = this.getAddress(formData.selectedCoin);
     const coin = formData.selectedCoin;
-    const {
-      useAlternateAddress,
-      isFetchingAddress,
-      coinSelectItems,
-    } = this.state;
+    const { displayAddress, isFetchingAddress, coinSelectItems } = this.state;
     const styles = DepositStyle();
     const theme = getTheme();
     let infoColor;
@@ -440,7 +446,7 @@ class Deposit extends Component {
               <View style={styles.qrCode}>
                 <View style={styles.qrCodeWrapper}>
                   <QRCode
-                    value={useAlternateAddress ? alternateAddress : address}
+                    value={displayAddress}
                     size={100}
                     bgColor="#FFF"
                     fgColor="#000"
@@ -452,7 +458,7 @@ class Deposit extends Component {
                   margin="10 0 10 0"
                   style={styles.importantInfo}
                 >
-                  {useAlternateAddress ? alternateAddress : address}
+                  {displayAddress}
                 </CelText>
 
                 <View style={styles.copyShareWrapper}>
@@ -465,16 +471,10 @@ class Deposit extends Component {
                           "Address copied to clipboard!"
                         )
                       }
-                      copyText={
-                        useAlternateAddress ? alternateAddress : address
-                      }
+                      copyText={displayAddress}
                     />
                     <Separator vertical />
-                    <ShareButton
-                      shareText={
-                        useAlternateAddress ? alternateAddress : address
-                      }
-                    />
+                    <ShareButton shareText={displayAddress} />
                   </View>
                 </View>
               </View>
@@ -498,6 +498,13 @@ class Deposit extends Component {
                 alternateAddress,
                 formData.selectedCoin
               )}
+
+            <DepositAddressSwitchCard
+              coin={formData.selectedCoin}
+              address={address}
+              alternateAddress={alternateAddress}
+              secondaryAddress={secondaryAddress}
+            />
           </View>
         ) : null}
 
