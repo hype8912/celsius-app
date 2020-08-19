@@ -119,7 +119,7 @@ class InterestCard extends Component {
           </View>
           <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
             <CelText weight={"300"} type={"H7"}>
-              To earn rewards in CEL on all your deposited coins, visit{" "}
+              To earn rewards in CEL on all your transferred coins, visit{" "}
               <CelText
                 onPress={() => actions.navigateTo("MyCel")}
                 weight={"300"}

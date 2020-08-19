@@ -160,7 +160,7 @@ class TransactionDetailsCelPay extends Component {
               margin={"40 0 0 0"}
               onPress={() => navigateTo("Deposit")}
             >
-              Deposit Coins
+              Transfer Coins
             </CelButton>
           ) : null}
 

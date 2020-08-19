@@ -133,7 +133,7 @@ class PaymentCard extends Component {
                       type="H5"
                       margin={"0 0 0 5"}
                     >
-                      Deposit more
+                      Transfer more
                     </CelText>
                   </TouchableOpacity>
                 </View>

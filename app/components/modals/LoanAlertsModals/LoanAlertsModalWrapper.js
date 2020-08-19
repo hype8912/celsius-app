@@ -133,7 +133,7 @@ class LoanAlertsModalWrapper extends Component {
       return (
         <LoanAlertsMarginCallDepositCoinsModal
           loan={loan}
-          yesCopy={"Deposit coins"}
+          yesCopy={"Transfer coins"}
         />
       );
     }

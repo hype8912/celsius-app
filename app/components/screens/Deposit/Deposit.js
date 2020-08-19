@@ -50,7 +50,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 )
 class Deposit extends Component {
   static navigationOptions = () => ({
-    title: "Deposit coins",
+    title: "Transfer coins",
     right: "profile",
   });
 

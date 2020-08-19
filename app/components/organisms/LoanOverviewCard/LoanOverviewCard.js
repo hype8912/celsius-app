@@ -238,7 +238,7 @@ class LoanOverviewCard extends Component {
               >{`The value of your collateral has dropped significantly. To match the value with the current market prices, we will need to lock an additional ${formatter.crypto(
                 loan.margin_call.margin_call_amount,
                 loan.margin_call.collateral_coin
-              )} from your wallet balance. You can also deposit more funds from your wallet.`}</CelText>
+              )} from your wallet balance. You can also transfer more funds from your wallet.`}</CelText>
               {loan.margin_call && loan.margin_call.hasEnoughOriginalCoin && (
                 <View>
                   <CelButton
@@ -261,7 +261,7 @@ class LoanOverviewCard extends Component {
                     ghost
                     color={"red"}
                   >
-                    Deposit coins
+                    Transfer coins
                   </CelButton>
                 )}
             </Card>

@@ -234,7 +234,7 @@ class CoinDetails extends Component {
                         <View style={style.buttonIcon}>
                           <Icon fill="primary" name="Deposit" width="25" />
                         </View>
-                        <CelText type="H6">Deposit</CelText>
+                        <CelText type="H6">Transfer</CelText>
                       </View>
                     </TouchableOpacity>
                   </>
