@@ -5,6 +5,7 @@ const initialState = {
   status: KYC_STATUSES.collecting,
   primeTrustToULink: undefined,
   kycDocuments: undefined,
+  utilityBill: undefined,
   kycDocTypes: undefined,
   applicantId: undefined,
   mobileSDKToken: undefined,
@@ -22,6 +23,12 @@ export default function kycReducer(state = initialState, action) {
       return {
         ...state,
         kycDocuments: action.documents,
+      };
+
+    case ACTIONS.GET_UTILITY_BILL_SUCCESS:
+      return {
+        ...state,
+        utilityBill: action.utilityBill,
       };
 
     case ACTIONS.GET_KYC_DOC_TYPES_SUCCESS:
