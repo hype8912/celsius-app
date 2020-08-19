@@ -356,6 +356,7 @@ class PaymentCard extends Component {
       type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD
     )
       time = presentTime(loan.margin_call.margin_call_detected, true);
+
     if (
       currency &&
       cryptoAmount &&
@@ -498,6 +499,7 @@ class PaymentCard extends Component {
                 </View>
               ) : null}
               {isOverview &&
+                loan &&
                 loan.margin_call &&
                 type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
                   <Card margin={"10 0 0 0"} color={style.card.color}>

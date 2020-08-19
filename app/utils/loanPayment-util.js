@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import store from "../redux/store";
 import { COIN_CARD_TYPE } from "../constants/UI";
 import formatter from "./formatter";
@@ -5,6 +7,8 @@ import STYLES from "../constants/STYLES";
 
 const loanPaymentUtil = {
   calculateAdditionalPayment,
+  isPrincipalWeekAway,
+  isSameInterestDay,
 };
 
 function calculateAdditionalPayment(
@@ -139,4 +143,39 @@ function calculateAdditionalPayment(
     color: color || STYLES.COLORS.CELSIUS_BLUE,
   };
 }
+
+function isPrincipalWeekAway(activeLoan) {
+  if (activeLoan && !activeLoan.maturity_date) return;
+  const currentDay = moment.utc();
+  const isSevenDays = moment(activeLoan.maturity_date)
+    .utc()
+    .isSame(currentDay.add(7, "days"), "day");
+  return isSevenDays;
+}
+
+function isSameInterestDay(activeLoan) {
+  if (
+    activeLoan &&
+    activeLoan.installments_to_be_paid &&
+    activeLoan.installments_to_be_paid.installments[0]
+  ) {
+    const currentDay = moment.utc();
+    const newCurrentDay = moment.utc();
+    const isThreeDays = moment(
+      activeLoan.installments_to_be_paid.installments[0].to
+    )
+      .utc()
+      .isSame(currentDay.add(3, "days"), "day");
+    const isSevenDays = moment(
+      activeLoan.installments_to_be_paid.installments[0].to
+    )
+      .utc()
+      .isSame(newCurrentDay.add(7, "days"), "day");
+    return {
+      threeDays: isThreeDays ? 3 : false,
+      sevenDays: isSevenDays ? 7 : false,
+    };
+  }
+}
+
 export default loanPaymentUtil;

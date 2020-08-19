@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { showMessage, closeModal, openModal } from "../ui/uiActions";
@@ -474,6 +476,7 @@ function checkForLoanAlerts() {
 
     const loanAlerts = [];
     allLoans.forEach(l => {
+      const currentDay = moment.utc();
       if (
         l.installments_to_be_paid &&
         Number(l.installments_to_be_paid.total)
@@ -485,7 +488,12 @@ function checkForLoanAlerts() {
         loanAlerts.push({ id: l.id, type: LOAN_ALERTS.MARGIN_CALL_ALERT });
       }
 
-      if (l.can_pay_principal && l.coin_loan_asset !== "USD") {
+      if (
+        (l.can_pay_principal && l.coin_loan_asset !== "USD") ||
+        moment(l.maturity_date)
+          .utc()
+          .isSame(currentDay.add(7, "days"), "day")
+      ) {
         loanAlerts.push({ id: l.id, type: LOAN_ALERTS.PRINCIPAL_ALERT });
       }
     });

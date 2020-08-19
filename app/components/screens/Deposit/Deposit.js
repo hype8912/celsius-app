@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Linking, Image, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
@@ -414,8 +414,6 @@ class Deposit extends Component {
 
     const isETC = formData.selectedCoin === "ETC";
 
-    const link = cryptoUtil.provideLink(formData.selectedCoin);
-
     return (
       <RegularLayout padding={"20 0 100 0"}>
         {isMarginCall ? this.renderPayCard() : null}
@@ -534,19 +532,6 @@ class Deposit extends Component {
                 </View>
               </View>
             </Card>
-
-            {cryptoUtil.hasLinkToBuy(formData.selectedCoin) && (
-              <CelText
-                margin={"20 0 10 0"}
-                align={"center"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
-                type={"H4"}
-                weight={"300"}
-                onPress={() => Linking.openURL(link)}
-              >
-                {cryptoUtil.provideText(formData.selectedCoin)}
-              </CelText>
-            )}
 
             {alternateAddress &&
               this.renderSwitchAddressBlock(

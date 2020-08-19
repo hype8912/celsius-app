@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import moment from "moment";
 
 import { LOAN_ALERTS } from "../../../constants/UI";
 import * as appActions from "../../../redux/actions";
@@ -11,6 +10,7 @@ import InterestDueModal from "../InterestDueModal/InterestDueModal";
 import InterestReminderModal from "../InterestReminderModal/InterestReminderModal";
 import loanPaymentUtil from "../../../utils/loanPayment-util";
 import MarginCallModal from "../MarginCallModal/MarginCallModal";
+import PrincipalAlertModal from "../PrincipalAlertModal/PrincipalAlertModal";
 
 @connect(
   state => ({
@@ -64,9 +64,14 @@ class LoanAlertsModalWrapper extends Component {
     return loan;
   };
   static getPrincipalCoinWallet = (walletSummary, loan) => {
-    const principalCoinWallet = walletSummary.coins.find(
-      p => p.short === loan.coin_loan_asset
-    );
+    let principalCoinWallet;
+    if (loan.coin_loan_asset === "USD") {
+      principalCoinWallet = "USD";
+    } else {
+      principalCoinWallet = walletSummary.coins.find(
+        p => p.short === loan.coin_loan_asset
+      );
+    }
     return principalCoinWallet;
   };
 
@@ -84,8 +89,8 @@ class LoanAlertsModalWrapper extends Component {
     this.state = { activeAlert, loan };
   }
 
-  componentDidMount = async () => {
-    const { walletSummary, actions } = this.props;
+  componentDidMount = () => {
+    const { walletSummary } = this.props;
     const { loan } = this.state;
     if (loan) {
       const principalCoinWallet = LoanAlertsModalWrapper.getPrincipalCoinWallet(
@@ -96,7 +101,6 @@ class LoanAlertsModalWrapper extends Component {
         walletSummary,
         loan
       );
-      await actions.setActiveLoan(loan.id);
       this.setState({ loan, principalCoinWallet, collateralCoinWallet });
     }
   };
@@ -113,8 +117,16 @@ class LoanAlertsModalWrapper extends Component {
   };
 
   renderPrincipalModal = loan => {
+    const { actions } = this.props;
     const { principalCoinWallet } = this.state;
     const canPayPrincipal = loan.can_pay_principal;
+    if (principalCoinWallet === "USD") {
+      actions.showMessage("error", "Can't pay principal in USD");
+      return null;
+    }
+    const isPrincipalWeekAway = loanPaymentUtil.isPrincipalWeekAway(loan);
+    if (isPrincipalWeekAway)
+      return <PrincipalAlertModal actions={actions} loan={loan} />;
     if (canPayPrincipal) {
       if (Number(loan.loan_amount) <= principalCoinWallet.amount.toNumber()) {
         return <LoanAlertsPayoutPrincipalModal loan={loan} />;
@@ -133,38 +145,13 @@ class LoanAlertsModalWrapper extends Component {
     return null;
   };
 
-  isSameInterestDay = activeLoan => {
-    if (
-      activeLoan &&
-      activeLoan.installments_to_be_paid &&
-      activeLoan.installments_to_be_paid.installments[0]
-    ) {
-      const currentDay = moment.utc();
-      const newCurrentDay = moment.utc();
-      const isThreeDays = moment(
-        activeLoan.installments_to_be_paid.installments[0].to
-      )
-        .utc()
-        .isSame(currentDay.subtract(3, "days"), "day");
-      const isSevenDays = moment(
-        activeLoan.installments_to_be_paid.installments[0].to
-      )
-        .utc()
-        .isSame(newCurrentDay.subtract(7, "days"), "day");
-      return {
-        threeDays: isThreeDays ? 3 : false,
-        sevenDays: isSevenDays ? 7 : false,
-      };
-    }
-  };
-
   renderInterestModal = loan => {
     const { actions } = this.props;
     const { activeAlert } = this.state;
 
     // if no money reminder 3 & 7 days, if you have money and manual payment reminder 3 days
     const payment = loanPaymentUtil.calculateAdditionalPayment(loan);
-    const isSameDay = this.isSameInterestDay(loan);
+    const isSameDay = loanPaymentUtil.isSameInterestDay(loan);
     const hasNoMoney =
       !payment.hasEnough &&
       isSameDay &&

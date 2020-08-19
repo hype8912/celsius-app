@@ -55,14 +55,20 @@ class TransactionDetailsLoans extends Component {
           />
 
           <TxBasicSection
+            label={"Spot Price"}
+            value={formatter.usd(
+              Number(transaction.amount_usd) / Number(transaction.amount)
+            )}
+          />
+
+          <TxBasicSection
             label={"New Collateral Balance"}
-            value={`${formatter.crypto(
+            value={`     ${formatter.crypto(
               Number(transaction.loan_data.loan_collateral_crypto),
               transaction.coin.toUpperCase()
             )} 
             ${formatter.usd(
-              Number(transaction.loan_data.loan_collateral_usd) -
-                Number(transaction.amount_usd)
+              Number(transaction.loan_data.loan_collateral_usd)
             )}`}
           />
 

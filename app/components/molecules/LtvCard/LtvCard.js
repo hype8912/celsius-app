@@ -30,14 +30,14 @@ class LtvCard extends Component {
 
   renderContent = loan => {
     const content = [
-      { title: "Current LTV", value: `${Math.round(loan.current_ltv)}%` },
-      { title: "Contract LTV", value: `${formatter.percentage(loan.ltv)}%` },
+      { title: "Current LTV:", value: `${Math.round(loan.current_ltv)}%` },
+      { title: "Contract LTV:", value: `${formatter.percentage(loan.ltv)}%` },
       {
-        title: "Margin LTV",
+        title: "Margin LTV:",
         value: `${Math.round(loan.margin_call_threshold)}%`,
       },
       {
-        title: "Liquidation LTV",
+        title: "Liquidation LTV:",
         value: `${Math.round(loan.liquidation_threshold)}%`,
       },
     ];
@@ -59,7 +59,11 @@ class LtvCard extends Component {
             >
               {c.title}
             </CelText>
-            <CelText weight={"500"} type={"H5"}>
+            <CelText
+              color={i === 0 ? STYLES.COLORS.RED : STYLES.COLORS.DARK_GRAY}
+              weight={"500"}
+              type={"H5"}
+            >
               {c.value}
             </CelText>
           </View>

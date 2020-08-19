@@ -46,28 +46,28 @@ class LoanApplicationSuccessModal extends Component {
     actions.closeModal();
   };
 
-  setupAutomaticInterestPayment = async m => {
-    const { actions, loanId } = this.props;
-    let automatic = true;
-    if (m === "manual") {
-      automatic = false;
-      this.setState({
-        noLoading: true,
-      });
-    } else {
-      this.setState({
-        yesLoading: true,
-      });
-    }
-    await actions.updateLoanSettings(loanId, {
-      automatic_interest_payment: automatic,
-    });
-    actions.closeModal();
-  };
+  // setupAutomaticInterestPayment = async m => {
+  //   const { actions, loanId } = this.props;
+  //   let automatic = true;
+  //   if (m === "manual") {
+  //     automatic = false;
+  //     this.setState({
+  //       noLoading: true,
+  //     });
+  //   } else {
+  //     this.setState({
+  //       yesLoading: true,
+  //     });
+  //   }
+  //   await actions.updateLoanSettings(loanId, {
+  //     automatic_interest_payment: automatic,
+  //   });
+  //   actions.closeModal();
+  // };
 
   render() {
     const style = LoanApplicationSuccessModalStyle();
-    const { noLoading, yesLoading } = this.state;
+    const { actions, yesLoading } = this.state;
     const theme = getTheme();
 
     // NOTE: (srdjan) commented after client asked to kick automatic approve loan feature
@@ -146,13 +146,12 @@ class LoanApplicationSuccessModal extends Component {
         picture={require("../../../../assets/images/checkmark.png")}
         heading={"Loan Successfully Initiated"}
         pictureDimensions={{ height: 25, width: 25 }}
-        paragraphs={["Would you like to setup automatic interest payment?"]}
+        paragraphs={[
+          "Thank you for initiating your loan with Celsius. Once approved, your funds will be transferred to your Celsius wallet.",
+        ]}
         yesCopy={"Yes"}
-        onYes={() => this.setupAutomaticInterestPayment()}
+        onYes={() => actions.closeModal()}
         yesloading={yesLoading}
-        noCopy={"No"}
-        onNo={() => this.setupAutomaticInterestPayment("manual")}
-        noLoading={noLoading}
       />
     );
   }

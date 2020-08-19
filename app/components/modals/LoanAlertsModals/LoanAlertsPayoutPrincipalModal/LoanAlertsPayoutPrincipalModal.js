@@ -37,7 +37,7 @@ class LoanAlertsPayoutPrincipalModal extends Component {
 
     return {
       heading: "Confirm Principal Payment",
-      buttonText: "Close Loan",
+      buttonText: "Pay Principal",
       buttonTextTwo: "Extend Loan",
       onPress: async () => {
         this.setState({
@@ -122,9 +122,9 @@ class LoanAlertsPayoutPrincipalModal extends Component {
 
         <View style={style.buttonsWrapper}>
           <CelModalButton
-            buttonStyle={"red"}
+            buttonStyle={"green"}
             position={"single"}
-            yesLoading={isLoadingClose}
+            loading={isLoadingClose}
             onPress={content.onPress}
           >
             {content.buttonText}
