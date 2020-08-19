@@ -40,7 +40,7 @@ class CoinListCard extends Component {
           name="CirclePlus"
         />
         <CelText margin={"0 0 0 5"} link>
-          Deposit
+          Transfer
         </CelText>
       </View>
     </View>

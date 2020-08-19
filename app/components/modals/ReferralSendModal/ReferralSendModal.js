@@ -109,7 +109,7 @@ class ReferralSendModal extends Component {
             onPress={() => {
               actions.setBannerProps({ lastReferral: moment.utc().format() });
               Share.share({
-                message: `Join Celsius Network using my referral code ${slug} when signing up and earn $20 in BTC with your first deposit of $200 or more! #UnbankYourself \n \n${shareLink}`,
+                message: `Join Celsius Network using my referral code ${slug} when signing up and earn $20 in BTC with your first transfer of $200 or more! #UnbankYourself \n \n${shareLink}`,
               });
               mixpanelAnalytics.userReferring();
             }}
@@ -118,9 +118,9 @@ class ReferralSendModal extends Component {
           </CelButton>
         </View>
         <CelText type="H6" align={"left"} style={style.explanation}>
-          *$20 in BTC is distributed when a new user makes a first deposit of
+          *$20 in BTC is distributed when a new user makes a first transfer of
           $200 or more using your referral code at the time of signup. BTC
-          reward will be unlocked 30 days after the initial deposit.
+          reward will be unlocked 30 days after the initial transfer.
         </CelText>
       </CelModal>
     );

@@ -82,7 +82,7 @@ class ApiAuthorizationPermissions extends Component {
           updateFormField={actions.updateFormField}
           value={formData.readDeposits}
         >
-          Read deposits
+          Read transfers
         </SwitchButton>
         <SwitchButton
           field={"readWithdrawals"}

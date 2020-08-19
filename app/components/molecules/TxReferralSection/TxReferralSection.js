@@ -73,7 +73,7 @@ class TxReferralSection extends Component {
           {transaction.type.includes("HODL") && (
             <CelText style={{ marginTop: 20 }} type="H5">
               If {formatter.hideTextExceptFirstNLetters(participant.first_name)}{" "}
-              keeps initial deposit until
+              keeps initial transfer until
               <CelText
                 type="H5"
                 color={getColor(COLOR_KEYS.HEADLINE)}

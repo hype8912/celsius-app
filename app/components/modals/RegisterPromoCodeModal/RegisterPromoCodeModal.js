@@ -176,7 +176,7 @@ class RegisterPromoCodeModal extends Component {
               2. Receive confirmation of account verification.
             </CelText>
             <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
-              3. Deposit $200 or more worth of coins to your Celsius wallet.
+              3. Transfer $200 or more worth of coins to your Celsius wallet.
             </CelText>
           </Card>
         </View>
@@ -259,7 +259,7 @@ class RegisterPromoCodeModal extends Component {
     const congratsText = "You’ve successfully activated your promo code!";
     const messageText = `You’ll receive $${code.amount} in ${
       code.coin
-    } when you deposit $${code.minimumAmount} or more within the next ${
+    } when you transfer $${code.minimumAmount} or more within the next ${
       code.maximumDays
     } days. Your reward will be locked in your wallet for 30 days. If you withdraw $${
       code.minimumAmount

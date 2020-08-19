@@ -28,7 +28,7 @@ class SsnModal extends Component {
         name={MODALS.SSN_MODAL}
         heading={"You Chose Not To Enter Your SSN"}
         paragraphs={[
-          "Your deposits will not earn interest until this portion of your " +
+          "Your transfers will not earn interest until this portion of your " +
             "profile is updated. This can be completed at any time.",
         ]}
         yesCopy={"Continue"}
