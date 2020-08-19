@@ -124,7 +124,7 @@ class LoanAlertsPayoutPrincipalModal extends Component {
           <CelModalButton
             buttonStyle={"green"}
             position={"single"}
-            yesLoading={isLoadingClose}
+            loading={isLoadingClose}
             onPress={content.onPress}
           >
             {content.buttonText}

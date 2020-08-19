@@ -10,9 +10,14 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
 import STYLES from "../../../constants/STYLES";
 import { presentTime } from "../../../utils/ui-util";
-import { COIN_CARD_TYPE, LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import {
+  COIN_CARD_TYPE,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+} from "../../../constants/UI";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import LtvCard from "../../molecules/LtvCard/LtvCard";
+import MarginCallConfirmModal from "../../modals/MarginCallConfirmModal/MarginCallConfirmModal";
 
 @connect(
   state => ({
@@ -38,11 +43,17 @@ class SingleMarginCallScreen extends Component {
 
     this.state = {
       loan: allLoans.find(l => l.id === loanId),
+      isLoading: false,
     };
   }
 
+  onPress = () => {
+    const { actions } = this.props;
+    actions.openModal(MODALS.MARGIN_CALL_CONFIRM);
+  };
+
   render() {
-    const { loan } = this.state;
+    const { loan, isLoading } = this.state;
     const { currencyRates } = this.props;
     if (!loan) return null;
     const time = presentTime(loan.margin_call.margin_call_detected, true);
@@ -73,9 +84,11 @@ class SingleMarginCallScreen extends Component {
           type={COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD}
           loan={loan}
           reason={LOAN_PAYMENT_REASONS.MARGIN_CALL}
-          handleSelectCoin={() => this.selectCoin(loan)}
+          handleSelectCoin={() => this.onPress(loan)}
+          isLoading={isLoading}
         />
         <LtvCard loan={loan} />
+        <MarginCallConfirmModal loan={loan} />
       </RegularLayout>
     );
   }

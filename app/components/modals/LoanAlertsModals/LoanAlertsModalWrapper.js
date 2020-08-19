@@ -10,6 +10,7 @@ import InterestDueModal from "../InterestDueModal/InterestDueModal";
 import InterestReminderModal from "../InterestReminderModal/InterestReminderModal";
 import loanPaymentUtil from "../../../utils/loanPayment-util";
 import MarginCallModal from "../MarginCallModal/MarginCallModal";
+import PrincipalAlertModal from "../PrincipalAlertModal/PrincipalAlertModal";
 
 @connect(
   state => ({
@@ -63,9 +64,14 @@ class LoanAlertsModalWrapper extends Component {
     return loan;
   };
   static getPrincipalCoinWallet = (walletSummary, loan) => {
-    const principalCoinWallet = walletSummary.coins.find(
-      p => p.short === loan.coin_loan_asset
-    );
+    let principalCoinWallet;
+    if (loan.coin_loan_asset === "USD") {
+      principalCoinWallet = "USD";
+    } else {
+      principalCoinWallet = walletSummary.coins.find(
+        p => p.short === loan.coin_loan_asset
+      );
+    }
     return principalCoinWallet;
   };
 
@@ -83,8 +89,8 @@ class LoanAlertsModalWrapper extends Component {
     this.state = { activeAlert, loan };
   }
 
-  componentDidMount = async () => {
-    const { walletSummary, actions } = this.props;
+  componentDidMount = () => {
+    const { walletSummary } = this.props;
     const { loan } = this.state;
     if (loan) {
       const principalCoinWallet = LoanAlertsModalWrapper.getPrincipalCoinWallet(
@@ -95,7 +101,6 @@ class LoanAlertsModalWrapper extends Component {
         walletSummary,
         loan
       );
-      await actions.setActiveLoan(loan.id);
       this.setState({ loan, principalCoinWallet, collateralCoinWallet });
     }
   };
@@ -112,10 +117,16 @@ class LoanAlertsModalWrapper extends Component {
   };
 
   renderPrincipalModal = loan => {
+    const { actions } = this.props;
     const { principalCoinWallet } = this.state;
     const canPayPrincipal = loan.can_pay_principal;
-    // const isPrincipalWeekAway = loanPaymentUtil.isPrincipalWeekAway(loan);
-    // if (isPrincipalWeekAway) return <PrincipalAlertModal/>
+    if (principalCoinWallet === "USD") {
+      actions.showMessage("error", "Can't pay principal in USD");
+      return null;
+    }
+    const isPrincipalWeekAway = loanPaymentUtil.isPrincipalWeekAway(loan);
+    if (isPrincipalWeekAway)
+      return <PrincipalAlertModal actions={actions} loan={loan} />;
     if (canPayPrincipal) {
       if (Number(loan.loan_amount) <= principalCoinWallet.amount.toNumber()) {
         return <LoanAlertsPayoutPrincipalModal loan={loan} />;

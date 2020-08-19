@@ -260,7 +260,9 @@ class LoanOverviewCard extends Component {
                 textSize={"H6"}
                 color={"red"}
                 textColor={"red"}
-                onPress={() => navigateTo("MarginCallOverviewScreen")}
+                onPress={() =>
+                  navigateTo("SingleMarginCallScreen", { id: loan.id })
+                }
               >
                 Respond to Margin Call
               </CelButton>

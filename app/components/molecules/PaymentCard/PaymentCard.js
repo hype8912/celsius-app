@@ -355,6 +355,7 @@ class PaymentCard extends Component {
       type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD
     )
       time = presentTime(loan.margin_call.margin_call_detected, true);
+
     if (
       currency &&
       cryptoAmount &&
@@ -496,27 +497,30 @@ class PaymentCard extends Component {
                   {this.renderDepositMore()}
                 </View>
               ) : null}
-              {isOverview && (
-                <Card margin={"10 0 0 0"} color={style.card.color}>
-                  <CelText align={"left"} type={"H6"}>
-                    Time remaining to resolve Margin Call
-                  </CelText>
-                  <CelText align={"left"} weight={"500"} type={"H3"}>
-                    {time.days >= 1
-                      ? `00h 00m`
-                      : `${time.hours}h ${time.minutes}m`}
-                  </CelText>
-                  {time.days >= 1 && (
-                    <Card color={STYLES.COLORS.RED}>
-                      <CelText weight={"300"} type={"H6"} color={"white"}>
-                        Your loan is now in default and you are at risk of
-                        collateral liquidation. We advise you to contact your
-                        loan manager now.
-                      </CelText>
-                    </Card>
-                  )}
-                </Card>
-              )}
+              {isOverview &&
+                loan &&
+                loan.margin_call &&
+                type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
+                  <Card margin={"10 0 0 0"} color={style.card.color}>
+                    <CelText align={"left"} type={"H6"}>
+                      Time remaining to resolve Margin Call
+                    </CelText>
+                    <CelText align={"left"} weight={"500"} type={"H3"}>
+                      {time.days >= 1
+                        ? `00h 00m`
+                        : `${time.hours}h ${time.minutes}m`}
+                    </CelText>
+                    {time.days >= 1 && (
+                      <Card color={STYLES.COLORS.RED}>
+                        <CelText weight={"300"} type={"H6"} color={"white"}>
+                          Your loan is now in default and you are at risk of
+                          collateral liquidation. We advise you to contact your
+                          loan manager now.
+                        </CelText>
+                      </Card>
+                    )}
+                  </Card>
+                )}
             </View>
           </View>
 
