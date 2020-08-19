@@ -108,7 +108,7 @@ class KYCTaxpayer extends Component {
     const response = await actions.updateTaxpayerInfo(userTaxInfo);
 
     if (response.success) {
-      if (PRIMETRUST_KYC_STATES.includes(formData.state)) {
+      if (this.isForPrimeTrust()) {
         actions.navigateTo("KYCPrimeTrustToU");
         actions.showMessage(
           "success",

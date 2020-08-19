@@ -5,7 +5,6 @@ const kycAnalytics = {
   kycProfileInfo,
   kycAddressInfo,
   kycDocumentsSubmitted,
-  kycUtilityBillSubmitted,
   kycTaxPayerInfo,
   kycStarted,
   onfidoSDKError,
@@ -30,13 +29,6 @@ async function kycAddressInfo() {
  */
 async function kycDocumentsSubmitted() {
   await sendEvent("KYC Documents Submitted");
-}
-
-/**
- * Fires an event when a user submits KYC utility bill photo
- */
-async function kycUtilityBillSubmitted() {
-  await sendEvent("KYC Utility Bill Submitted");
 }
 
 /**

@@ -82,7 +82,6 @@ import LoanPaymentCoinStories from "./LoanPaymentCoin/LoanPaymentCoin.stories";
 import LoanPaymentHistoryStories from "./LoanPaymentHistory/LoanPaymentHistory.stories";
 import WiringBankInformationStories from "./WiringBankInformation/WiringBankInformation.stories";
 import LoanPrepaymentPeriodStories from "./LoanPrepaymentPeriod/LoanPrepaymentPeriod.stories";
-import KYCAddressProofStories from "./KYCAddressProof/KYCAddressProof.stories";
 import ChangePinStories from "./ChangePin/ChangePin.stories";
 import KYCPrimeTrustToUStories from "./KYCPrimeTrustToU/KYCPrimeTrustToU.stories";
 import ApiAuthorizationPermissionsStories from "./ApiAuthorizationPermissions/ApiAuthorizationPermissions.stories";
@@ -264,10 +263,7 @@ storiesOf("RegisterInitial", module)
   .add("With Errors", RegisterInitialStories.withErrors)
   .add("With Referral", RegisterInitialStories.withReferral);
 
-storiesOf("CameraScreen", module)
-  .add("Profile", CameraScreenStories.profile)
-  .add("Document", CameraScreenStories.document)
-  .add("Utility Bill", CameraScreenStories.utility);
+storiesOf("CameraScreen", module).add("Profile", CameraScreenStories.profile);
 
 storiesOf("KYCProfileDetails", module)
   .add("Empty", KYCProfileDetailsStories.empty)
@@ -566,11 +562,6 @@ storiesOf("Maintenance", module).add("Maintenance", MaintenanceStories.regular);
 storiesOf("CelPayMessage", module).add(
   "CelPayMessage",
   CelPayMessageStories.regular
-);
-
-storiesOf("KYCAddressProof", module).add(
-  "KYCAddressProof",
-  KYCAddressProofStories.regular
 );
 
 storiesOf("ChangePin", module).add("ChangePin", ChangePinStories.regular);

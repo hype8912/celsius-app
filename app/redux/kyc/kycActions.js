@@ -6,7 +6,7 @@ import { showMessage } from "../ui/uiActions";
 import userProfileService from "../../services/user-profile-service";
 import apiUtil from "../../utils/api-util";
 import { setFormErrors } from "../forms/formsActions";
-import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../../constants/DATA";
+import { KYC_STATUSES } from "../../constants/DATA";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
@@ -17,11 +17,8 @@ export {
   updateProfileAddressInfo,
   updateTaxpayerInfo,
   getKYCDocuments,
-  createKYCDocs,
   sendVerificationSMS,
   verifySMS,
-  getUtilityBill,
-  setUtilityBill,
   startKYC,
   getPrimeTrustToULink,
   profileTaxpayerInfo,
@@ -215,16 +212,6 @@ function getKYCDocumentsSuccess(documents) {
 }
 
 /**
- * Successfully created kyc documents
- */
-function createKYCDocumentsSuccess() {
-  return {
-    type: ACTIONS.CREATE_KYC_DOCUMENTS_SUCCESS,
-    callName: API.CREATE_KYC_DOCUMENTS,
-  };
-}
-
-/**
  * Sends phone verification SMS to user
  */
 function sendVerificationSMS(phone) {
@@ -283,53 +270,6 @@ export function verifySMSSuccess() {
   };
 }
 
-let timeout;
-
-function createKYCDocs() {
-  return async (dispatch, getState) => {
-    dispatch(startApiCall(API.CREATE_KYC_DOCUMENTS));
-
-    try {
-      const { formData } = getState().forms;
-      const { kycDocuments } = getState().user;
-      timeout = setTimeout(() => {
-        dispatch(
-          showMessage("info", "Please be patient, this may take a bit longer.")
-        );
-        clearTimeout(timeout);
-      }, 5000);
-
-      const docType = formData.documentType || kycDocuments.type;
-      const res = await userKYCService.createKYCDocuments({
-        front: formData.front,
-        back: docType !== "passport" ? formData.back : undefined,
-        type: docType || kycDocuments,
-      });
-
-      dispatch(createKYCDocumentsSuccess(res.data));
-      dispatch(showMessage("success", "Successfully submitted KYC Documents!"));
-
-      if (formData.state && PRIMETRUST_KYC_STATES.includes(formData.state)) {
-        dispatch(NavActions.navigateTo("KYCAddressProof"));
-      } else {
-        dispatch(NavActions.navigateTo("KYCTaxpayer"));
-      }
-
-      clearTimeout(timeout);
-
-      mixpanelAnalytics.kycDocumentsSubmitted();
-    } catch (err) {
-      clearTimeout(timeout);
-      if (err.type === "Validation error") {
-        dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
-      } else {
-        dispatch(showMessage("error", err.msg));
-      }
-      dispatch(apiError(API.CREATE_KYC_DOCUMENTS, err));
-    }
-  };
-}
-
 function startKYC() {
   return async dispatch => {
     dispatch(startApiCall(API.START_KYC));
@@ -357,67 +297,6 @@ function startKYCSuccess() {
     kyc: {
       status: KYC_STATUSES.pending,
     },
-  };
-}
-
-function getUtilityBill() {
-  return async dispatch => {
-    dispatch(startApiCall(API.GET_UTILITY_BILL));
-    try {
-      const res = await userKYCService.getUtilityBill();
-      dispatch(getUtilityBillSuccess(res.data));
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_UTILITY_BILL, err));
-    }
-  };
-}
-
-function getUtilityBillSuccess(utilityBill) {
-  return {
-    type: ACTIONS.GET_UTILITY_BILL_SUCCESS,
-    utilityBill,
-  };
-}
-
-/**
- * Gets KYC Utility Bill photo
- *
- * @params {Object} - utilityBillPhoto
- */
-function setUtilityBill(utilityBillPhoto) {
-  return async dispatch => {
-    dispatch(startApiCall(API.SET_UTILITY_BILL));
-    try {
-      timeout = setTimeout(() => {
-        dispatch(
-          showMessage("info", "Please be patient, this may take a bit longer.")
-        );
-        clearTimeout(timeout);
-      }, 5000);
-
-      await userKYCService.setUtilityBill(utilityBillPhoto);
-
-      dispatch(setUtilityBillSuccess());
-      dispatch(NavActions.navigateTo("KYCTaxpayer"));
-      dispatch(showMessage("success", "Utility bill submitted successfully!"));
-
-      mixpanelAnalytics.kycUtilityBillSubmitted();
-    } catch (err) {
-      clearTimeout(timeout);
-      if (err.type === "Validation error") {
-        dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
-      } else {
-        dispatch(showMessage("error", err.msg));
-      }
-      dispatch(apiError(API.SET_UTILITY_BILL, err));
-    }
-  };
-}
-
-function setUtilityBillSuccess() {
-  return {
-    type: ACTIONS.SET_UTILITY_BILL_SUCCESS,
   };
 }
 
@@ -569,12 +448,7 @@ function saveKYCDocuments() {
       dispatch(saveKYCDocumentsSuccess());
       dispatch(showMessage("success", "Successfully submitted KYC Documents!"));
 
-      if (formData.state && PRIMETRUST_KYC_STATES.includes(formData.state)) {
-        dispatch(NavActions.navigateTo("KYCAddressProof"));
-      } else {
-        dispatch(NavActions.navigateTo("KYCTaxpayer"));
-      }
-
+      dispatch(NavActions.navigateTo("KYCTaxpayer"));
       mixpanelAnalytics.kycDocumentsSubmitted();
     } catch (err) {
       dispatch(showMessage("error", err.msg));
