@@ -116,14 +116,14 @@ class PaymentCel extends Component {
             >
               Loyalty Level
             </CelText>
-            , your next rewards payment would be:
+            , your next interest payment would be:
           </CelText>
           <CelText type={"H1"} weight={"700"} align={"center"}>
             {celDiscount} less
           </CelText>
           <Separator margin={"10 0 12 0"} />
           <CelText>
-            Decrease your monthly rewards payment from{" "}
+            Decrease your monthly interest payment from{" "}
             <CelText weight={"500"}>
               {formatter.usd(loan.monthly_payment)}
             </CelText>{" "}

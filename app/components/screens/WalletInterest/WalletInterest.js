@@ -108,7 +108,7 @@ class WalletInterest extends Component {
                 <TouchableOpacity
                   onPress={() => actions.navigateTo("InterestRates")}
                 >
-                  <CelText link>Weekly Rewards Rates</CelText>
+                  <CelText link>Weekly Reward Rates</CelText>
                 </TouchableOpacity>
               </View>
               <Separator margin="10 0 0 0" />

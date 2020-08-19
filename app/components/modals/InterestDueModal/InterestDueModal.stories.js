@@ -14,7 +14,7 @@ const InterestDueModalStories = () => (
     <CelButton
       onPress={() => store.dispatch(openModal(MODALS.INTEREST_DUE_MODAL))}
     >
-      Open Rewards Due modal
+      Open Interest Due modal
     </CelButton>
     <InterestDueModal
       activeLoan={{

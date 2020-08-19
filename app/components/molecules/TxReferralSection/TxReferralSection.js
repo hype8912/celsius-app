@@ -79,7 +79,7 @@ class TxReferralSection extends Component {
                 color={getColor(COLOR_KEYS.HEADLINE)}
                 weight="600"
               >{` ${moment(transaction.time).format("D MMM YYYY")} `}</CelText>
-              , your referral rewards will unlock.
+              , your referral reward will unlock.
             </CelText>
           )}
         </Card>

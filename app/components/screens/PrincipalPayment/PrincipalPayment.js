@@ -134,7 +134,7 @@ class PrincipalPayment extends Component {
         {payOutPrincipalFromCollateral ? (
           <Card color={STYLES.COLORS.ORANGE}>
             <CelText weight="300" alignItems="center" color="#FFFFFF">
-              Your principal loan amount and any unpaid rewards will
+              Your principal loan amount and any unpaid interest will
               automatically be deducted from your collateral upon loan maturity
               date. Any additional collateral will then be unlocked and
               available in your wallet balance.

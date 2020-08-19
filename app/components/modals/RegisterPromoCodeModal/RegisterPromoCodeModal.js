@@ -261,11 +261,11 @@ class RegisterPromoCodeModal extends Component {
       code.coin
     } when you deposit $${code.minimumAmount} or more within the next ${
       code.maximumDays
-    } days. Your rewards will be locked in your wallet for 30 days. If you withdraw $${
+    } days. Your reward will be locked in your wallet for 30 days. If you withdraw $${
       code.minimumAmount
     } or more from your wallet before ${moment()
       .add(30, "days")
-      .format("DD/MM/YY")}, your rewards will be canceled.`;
+      .format("DD/MM/YY")}, your reward will be canceled.`;
 
     return (
       <View>

@@ -40,11 +40,11 @@ class InterestDueModal extends Component {
     return (
       <CelModal name={modalName}>
         <CelText type="H2" align="center" weight="bold">
-          Rewards Payment
+          Interest Payment
         </CelText>
 
         <CelText align="center" margin="10 0 10 0">
-          Your rewards due is
+          Your interest due is
           <CelText weight="bold">
             {" "}
             {formatter.usd(instalmentsToBePaid.total)}
@@ -63,7 +63,7 @@ class InterestDueModal extends Component {
               Payment Period
             </CelText>
             <CelText type="H7" weight="bold">
-              Monthly Rewards
+              Monthly Interest
             </CelText>
           </View>
 
@@ -109,7 +109,7 @@ class InterestDueModal extends Component {
               closeModal();
             }}
           >
-            Pay Rewards
+            Pay Interest
           </CelModalButton>
         </View>
       </CelModal>

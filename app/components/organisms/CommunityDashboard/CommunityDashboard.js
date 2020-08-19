@@ -109,7 +109,7 @@ class CommunityDashboard extends Component {
       number = formatter.usd(communityStats.average_interest_earned_usd);
     }
     if (name === "REWARDS" && button === "Rates") {
-      explanationText = "Rewards rates";
+      explanationText = "Reward rates";
       number = 31000;
     }
     if (
