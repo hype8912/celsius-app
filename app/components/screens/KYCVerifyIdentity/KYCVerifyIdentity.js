@@ -130,7 +130,7 @@ class KYCVerifyIdentity extends Component {
         </CelText>
 
         <CelText type="H4" weight="300" margin="10 0 20 0" align="center">
-          Take a photo of one of your documents to confirm your identity.
+          Select one of the following to submit
         </CelText>
 
         {availableDocs.map(d => (
@@ -192,7 +192,7 @@ function mapDocs(docs) {
   if (docs.driving_licence) {
     kycDocs.push({
       value: "driving_licence",
-      label: "Drivers License",
+      label: "Driver's License",
       icon: "DrivingLicense",
     });
   }

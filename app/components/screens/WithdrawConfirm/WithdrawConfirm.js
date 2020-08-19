@@ -11,7 +11,6 @@ import Card from "../../atoms/Card/Card";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import formatter from "../../../utils/formatter";
-import STYLES from "../../../constants/STYLES";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import addressUtil from "../../../utils/address-util";
@@ -58,11 +57,11 @@ class WithdrawConfirm extends Component {
     ) {
       return (
         <InfoBox
-          backgroundColor={STYLES.COLORS.ORANGE}
+          backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
           padding="15 15 15 15"
           color="white"
         >
-          <CelText color={STYLES.COLORS.WHITE}>
+          <CelText color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}>
             Withdrawing CEL will affect your{" "}
             <CelText weight="bold" color="white">
               {loyaltyInfo.tier.title} Loyalty level

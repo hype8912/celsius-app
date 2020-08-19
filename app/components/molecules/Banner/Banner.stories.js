@@ -54,7 +54,7 @@ storiesOf("Banner/Trigger", module)
         buttonText={"Share referral code"}
         title={"Earn $20 with each referral!"}
         content={
-          "Celsius now pays you and your friends $20 every time a new Celsian deposits $200 for 30 days."
+          "Celsius now pays you and your friends $20 every time a new Celsian transfers $200 for 30 days."
         }
       />
     </View>
@@ -67,7 +67,7 @@ storiesOf("Banner/Trigger", module)
         action={() => {}}
         buttonText={"Get a loan"}
         title={"Did you know..."}
-        content={`Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending money you need at the lowest rates in the industry!`}
+        content={`Celsius offers cash loans against your crypto? Borrow dollars or stablecoins and get the spending coins you need at the lowest rates in the industry!`}
       />
     </View>
   ));

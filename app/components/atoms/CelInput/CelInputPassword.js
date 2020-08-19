@@ -4,12 +4,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import STYLES from "../../../constants/STYLES";
 import CelInputText from "./CelInputText";
 import CelText from "../CelText/CelText";
 import PassMeterTooltip from "../PassMeterTooltip/PassMeterTooltip";
 import PassStrengthMeter from "../PassStrengthMeter/PassStrengthMeter";
 import * as appActions from "../../../redux/actions";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -119,10 +120,12 @@ class CelInputPassword extends Component {
                       borderRightWidth: 10,
                       borderBottomWidth: 10,
                       borderStyle: "solid",
-                      backgroundColor: "transparent",
-                      borderLeftColor: "transparent",
-                      borderRightColor: "transparent",
-                      borderBottomColor: STYLES.COLORS.DARK_GRAY,
+                      backgroundColor: COLOR_KEYS.TRANSPARENT,
+                      borderLeftColor: COLOR_KEYS.TRANSPARENT,
+                      borderRightColor: COLOR_KEYS.TRANSPARENT,
+                      borderBottomColor: getColor(
+                        COLOR_KEYS.CIRCLE_ICON_FOREGROUND
+                      ), // TODO: check and create tooltip case in storybook
                       transform: [
                         {
                           rotate: toolTipPositionTop ? "180deg" : "0deg",

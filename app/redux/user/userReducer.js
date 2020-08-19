@@ -2,21 +2,17 @@ import ACTIONS from "../../constants/ACTIONS";
 import { mapProfile } from "../../utils/user-util";
 import { THEMES } from "../../constants/UI";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 const initialState = {
   profile: {
     profile_picture: null,
   },
 
-  // TODO move to userDataReducer
   appSettings: {
     theme: THEMES.UNICORN,
     activeHodlMode: undefined,
   },
 
-  bankAccountInfo: null, // TODO move to userDataReducer
+  bankAccountInfo: null,
 };
 
 export default (state = initialState, action) => {

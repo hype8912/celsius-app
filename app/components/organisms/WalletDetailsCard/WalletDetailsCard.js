@@ -49,7 +49,7 @@ class WalletDetailsCard extends PureComponent {
           <View>
             <TouchableOpacity onPress={this.navigateToBalanceHistory}>
               <CelText weight="300" type="H6">
-                Total Wallet balance
+                Total balance
               </CelText>
               <Counter
                 weight="600"
@@ -62,7 +62,7 @@ class WalletDetailsCard extends PureComponent {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.navigateToDeposit}>
-              <CelText link>Deposit coins</CelText>
+              <CelText link>Add coins</CelText>
             </TouchableOpacity>
           </View>
 
@@ -73,7 +73,7 @@ class WalletDetailsCard extends PureComponent {
               onPress={() => actions.navigateTo("WalletInterest")}
             >
               <CelText weight="300" type="H6">
-                Total Interest earned
+                Total Earnings
               </CelText>
               <Counter
                 weight="600"
@@ -88,7 +88,7 @@ class WalletDetailsCard extends PureComponent {
             <TouchableOpacity
               onPress={() => actions.navigateTo("InterestRates")}
             >
-              <CelText link>Rates this week</CelText>
+              <CelText link>Weekly Reward Rates</CelText>
             </TouchableOpacity>
           </View>
         </View>

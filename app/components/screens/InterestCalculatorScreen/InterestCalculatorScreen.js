@@ -57,13 +57,13 @@ class InterestCalculatorScreen extends Component {
         return {
           heading: "Calculate a total interest you may earn.",
           text:
-            "Start earning up to 25% interest a year on your coins by depositing.",
+            "Start earning up to 25% interest a year on your coins by transferring.",
           button: (
             <CelButton
               margin="20 0 0 0"
               onPress={() => actions.navigateTo("Deposit")}
             >
-              Deposit coins
+              Transfer coins
             </CelButton>
           ),
         };
@@ -91,7 +91,7 @@ class InterestCalculatorScreen extends Component {
               margin="20 0 0 0"
               onPress={() => actions.navigateTo("Deposit")}
             >
-              Deposit More Coins
+              Transfer More Coins
             </CelButton>
           ),
         };
@@ -129,7 +129,7 @@ class InterestCalculatorScreen extends Component {
               </View>
             )}
             <CelText align="center" margin="20 0 0 0">
-              How much do you plan to deposit?
+              How much do you plan to transfer?
             </CelText>
           </View>
         </View>

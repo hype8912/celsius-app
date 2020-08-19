@@ -77,7 +77,7 @@ class MyCelHeader extends Component {
           {loyaltyInfo.tier_level !== 3 && (
             <View style={style.bottomContainer}>
               <CelText color={"white"} type={"H5"} weight={"300"}>
-                {"To achieve next level, deposit "}
+                {"To achieve next level, transfer "}
               </CelText>
               <CelText color={"white"} type={"H5"} weight={"700"}>
                 {formatter.crypto(loyaltyInfo.next_level_cel, "CEL")}

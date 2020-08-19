@@ -1,20 +1,13 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 
 const base = {
-  card: {
-    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-  },
+  card: {},
 };
 
 const themed = {
   light: {},
 
-  dark: {
-    card: {
-      backgroundColor: STYLES.COLORS.BLUE_GRAY,
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };

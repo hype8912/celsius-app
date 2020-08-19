@@ -178,13 +178,9 @@ class CoinDetails extends Component {
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
-    const isBelowThreshold = interestUtil.isBelowThreshold(coinDetails.short);
-    const specialRate = isBelowThreshold
-      ? interestRate.specialApyRate
-      : interestRate.apyRate;
     const isInCel = !interestRate.inCEL
       ? interestRate.compound_rate
-      : specialRate;
+      : interestRate.rateInCel;
 
     return (
       <RegularLayout
@@ -238,7 +234,7 @@ class CoinDetails extends Component {
                         <View style={style.buttonIcon}>
                           <Icon fill="primary" name="Deposit" width="25" />
                         </View>
-                        <CelText type="H6">Deposit</CelText>
+                        <CelText type="H6">Transfer</CelText>
                       </View>
                     </TouchableOpacity>
                   </>
@@ -329,7 +325,7 @@ class CoinDetails extends Component {
               <View style={style.interestWrapper}>
                 <View style={style.interestCardWrapper}>
                   <CelText type="H6" weight="300" margin={"3 0 3 0"}>
-                    Total interest earned
+                    Total Earnings
                   </CelText>
                   <CelText type="H3" weight="600" margin={"3 0 3 0"}>
                     {formatter.usd(coinDetails.interest_earned_usd)}

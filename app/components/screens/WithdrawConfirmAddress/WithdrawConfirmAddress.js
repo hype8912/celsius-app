@@ -10,7 +10,6 @@ import BalanceView from "../../atoms/BalanceView/BalanceView";
 import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import CelInput from "../../atoms/CelInput/CelInput";
 import addressUtil from "../../../utils/address-util";
@@ -141,13 +140,13 @@ class WithdrawConfirmAddress extends Component {
             <InfoBox
               triangle
               color={"white"}
-              backgroundColor={STYLES.COLORS.ORANGE}
+              backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
               titleText={"Your withdrawal address"}
               left
               explanationText={
                 <CelText color="white">
                   Please confirm the withdrawal address where your funds will be
-                  sent. If you previously transferred money from an exchange,
+                  sent. If you previously transferred coins from an exchange,
                   this may not be your correct withdrawal address.
                   {"\n\n"}You can change your withdrawal address at any time
                   from your{" "}
@@ -190,7 +189,7 @@ class WithdrawConfirmAddress extends Component {
                 <InfoBox
                   left
                   color={"white"}
-                  backgroundColor={STYLES.COLORS.ORANGE}
+                  backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
                   titleText={
                     "To prevent a permanent loss of your funds, please check if your address has a destination tag."
                   }

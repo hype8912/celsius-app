@@ -58,7 +58,7 @@ class CoinGridCard extends Component {
           name="CirclePlus"
         />
         <CelText margin={"0 0 0 5"} type={"H7"} link>
-          Deposit
+          Transfer
         </CelText>
       </View>
     </View>
@@ -98,14 +98,11 @@ class CoinGridCard extends Component {
     const shouldShowGraph =
       graphData && dateArray.length > 0 && priceArray.length > 0;
 
-    const coinInterest = interestUtil.getUserInterestForCoin(coin.short);
-    const isBelowThreshold = interestUtil.isBelowThreshold(coin.short);
-    const specialRate = isBelowThreshold
-      ? coinInterest.specialApyRate
-      : coinInterest.apyRate;
-    const isInCel = !coinInterest.inCEL
-      ? coinInterest.compound_rate
-      : specialRate;
+    const interestRate = interestUtil.getUserInterestForCoin(coin.short);
+
+    const isInCel = !interestRate.inCEL
+      ? interestRate.compound_rate
+      : interestRate.rateInCel;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
 
     return (
@@ -117,7 +114,7 @@ class CoinGridCard extends Component {
                 <CelText weight="300" type="H6">
                   {displayName}
                 </CelText>
-                {coinInterest.eligible && (
+                {interestRate.eligible && (
                   <CelText
                     color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                     type="H7"

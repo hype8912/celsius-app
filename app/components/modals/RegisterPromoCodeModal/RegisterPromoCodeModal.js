@@ -191,7 +191,7 @@ class RegisterPromoCodeModal extends Component {
               2. Receive confirmation of account verification.
             </CelText>
             <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
-              3. Deposit $200 or more worth of coins to your Celsius wallet.
+              3. Transfer $200 or more worth of coins to your Celsius wallet.
             </CelText>
           </Card>
         </View>

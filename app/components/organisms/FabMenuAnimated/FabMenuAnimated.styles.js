@@ -44,7 +44,7 @@ const base = {
   },
   animatedBackground: {
     position: "absolute",
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     width,
     height,
   },
@@ -63,7 +63,7 @@ const base = {
 const themed = {
   light: {
     shadowStyle: {
-      shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW,
+      shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW, // TODO: missing color
       shadowOffset: { width: 0, height: 6 },
       shadowOpacity: 0.8,
       shadowRadius: 3,
@@ -71,7 +71,7 @@ const themed = {
   },
   dark: {
     shadowStyle: {
-      shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW,
+      shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW, // TODO: missing color
       shadowOffset: { width: 0, height: 8 },
       shadowOpacity: 0.6,
       shadowRadius: 3,

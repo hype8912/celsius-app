@@ -137,7 +137,7 @@ class PersonalInformation extends Component {
                       weight={"300"}
                     >
                       We are required to collect SSN from all American users.
-                      Please provide your SSN to start earning interest. This
+                      Please provide your SSN to start earning rewards. This
                       information is encrypted and highly secured.
                     </CelText>
                   </View>

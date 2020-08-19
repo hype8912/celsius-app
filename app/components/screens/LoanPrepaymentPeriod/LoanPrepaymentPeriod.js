@@ -9,9 +9,10 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
 import CelButton from "../../atoms/CelButton/CelButton";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -102,7 +103,9 @@ class LoanPrepaymentPeriod extends Component {
             type="H6"
             weight="bold"
             color={
-              formData.prepaidPeriod === m ? STYLES.COLORS.CELSIUS_BLUE : null
+              formData.prepaidPeriod === m
+                ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                : null
             }
           >
             {m} MONTHS

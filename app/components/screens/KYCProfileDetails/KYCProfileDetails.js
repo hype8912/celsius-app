@@ -275,7 +275,7 @@ class KYCProfileDetails extends Component {
           basic
           margin={"20 0 20 0"}
         >
-          Do it later
+          Complete later
         </CelButton>
       </RegularLayout>
     );

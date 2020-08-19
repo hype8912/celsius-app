@@ -73,7 +73,7 @@ class Login extends Component {
               Log in
             </CelText>
             <CelText margin="0 0 30 0" weight="300" align="center">
-              Welcome back, please log in to your account
+              Welcome back, please log in to your wallet
             </CelText>
 
             <CelInput
@@ -122,7 +122,7 @@ class Login extends Component {
           </View>
           <View style={style.bottom}>
             <CelText weight="300" align="center">
-              Don't have an account?
+              Don't have a wallet?
               <CelText
                 weight="300"
                 align="center"

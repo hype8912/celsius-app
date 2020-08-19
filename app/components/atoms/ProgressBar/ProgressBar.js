@@ -5,7 +5,6 @@ import { View } from "react-native";
 import ProgressBarStyle from "./ProgressBar.styles";
 import { getMargins } from "../../../utils/styles-util";
 
-// TODO check Loader.js
 class ProgressBar extends Component {
   static propTypes = {
     steps: PropTypes.number.isRequired,

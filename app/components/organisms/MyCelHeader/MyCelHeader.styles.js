@@ -1,4 +1,3 @@
-import STYLES from "../../../constants/STYLES";
 import {
   getThemedStyle,
   widthPercentageToDP,
@@ -41,52 +40,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    minPercentage: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    bonus: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    loan: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    separator: {
-      backgroundColor: STYLES.COLORS.MEDIUM_GRAY3,
-    },
-    tierSilver: {
-      backgroundColor: STYLES.COLORS.MEDIUM_GRAY,
-    },
-  },
+  light: {},
 
-  dark: {
-    minPercentage: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    bonus: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    loan: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    separator: {
-      backgroundColor: "rgb(95,105,122)",
-    },
-    tierSilver: {
-      borderColor: "#000",
-      borderRightWidth: 2,
-    },
-    tierGold: {
-      borderColor: "#000",
-      borderRightWidth: 2,
-    },
-    tierPlatinum: {
-      borderColor: "#000",
-    },
-    tierWrapper: {
-      borderBottomColor: "#000",
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };
