@@ -1,0 +1,17 @@
+[
+  {
+    "outputType": { "type": "APK" },
+    "apkData": {
+      "type": "MAIN",
+      "splits": [],
+      "versionCode": 64,
+      "versionName": "4.5.0",
+      "enabled": true,
+      "outputFile": "app-release.apk",
+      "fullName": "release",
+      "baseName": "release"
+    },
+    "path": "app-release.apk",
+    "properties": {}
+  }
+]

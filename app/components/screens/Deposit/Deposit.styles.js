@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -37,22 +37,11 @@ const base = {
 };
 
 const themed = {
-  light: {
-    promotion: {
-      marginLeft: 20,
-      marginRight: 20,
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
+  light: {},
 
   dark: {
-    promotion: {
-      marginLeft: 20,
-      marginRight: 20,
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
     importantInfo: {
-      color: STYLES.COLORS.WHITE,
+      color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     },
   },
 

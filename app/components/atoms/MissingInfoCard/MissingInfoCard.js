@@ -22,7 +22,7 @@ const MissingInfoCard = props => {
 
   if (!user.email) {
     title = "Your email is missing from your profile.";
-    body = "Your email is required in order to receive interest.";
+    body = "Your email is required in order to receive rewards.";
     cta = "Contact support";
     onPress = () => Linking.openURL("mailto:app@celsius.network");
   }
@@ -47,7 +47,7 @@ const MissingInfoCard = props => {
   return (
     <Card color={getColor(COLOR_KEYS.LINK)} close>
       <CelText
-        color={STYLES.COLORS.WHITE}
+        color={getColor(COLOR_KEYS.HEADLINE)}
         type="H6"
         weight="bold"
         margin="0 10 3 0"
@@ -56,11 +56,11 @@ const MissingInfoCard = props => {
       </CelText>
       {hasNoAddress ? (
         <Fragment>
-          <CelText color={STYLES.COLORS.WHITE} type="H7">
+          <CelText color={getColor(COLOR_KEYS.HEADLINE)} type="H7">
             {body}
             <CelText
               onPress={onPress}
-              color={STYLES.COLORS.WHITE_OPACITY7}
+              color={STYLES.COLORS.WHITE_OPACITY7} // TODO: missing COLOR_KEYS
               type="H7"
               margin="3 0 0 0"
             >
@@ -70,12 +70,12 @@ const MissingInfoCard = props => {
         </Fragment>
       ) : (
         <Fragment>
-          <CelText color={STYLES.COLORS.WHITE} type="H7">
+          <CelText color={getColor(COLOR_KEYS.HEADLINE)} type="H7">
             {body}
           </CelText>
           <CelText
             onPress={onPress}
-            color={STYLES.COLORS.WHITE_OPACITY7}
+            color={STYLES.COLORS.WHITE_OPACITY7} // TODO: missing COLOR_KEYS
             type="H7"
             margin="3 0 0 0"
           >

@@ -6,7 +6,6 @@ import moment from "moment";
 import ReferralSectionStyle from "./TxReferralSection.styles";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -60,7 +59,7 @@ class TxReferralSection extends Component {
                 </CelText>
                 <CelText
                   style={style.textTwo}
-                  color={STYLES.COLORS.CELSIUS_BLUE}
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                   type="H6"
                 >
                   {participant.email
@@ -73,7 +72,7 @@ class TxReferralSection extends Component {
           {transaction.type.includes("HODL") && (
             <CelText style={{ marginTop: 20 }} type="H5">
               If {formatter.hideTextExceptFirstNLetters(participant.first_name)}{" "}
-              keeps initial deposit until
+              keeps initial transfer until
               <CelText
                 type="H5"
                 color={getColor(COLOR_KEYS.HEADLINE)}

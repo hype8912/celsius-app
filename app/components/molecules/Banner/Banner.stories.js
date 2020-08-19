@@ -54,7 +54,7 @@ storiesOf("Banner/Trigger", module)
         buttonText={"Share referral code"}
         title={"Earn $20 with each referral!"}
         content={
-          "Celsius now pays you and your friends $20 every time a new Celsian deposits $200 for 30 days."
+          "Celsius now pays you and your friends $20 every time a new Celsian transfers $200 for 30 days."
         }
       />
     </View>

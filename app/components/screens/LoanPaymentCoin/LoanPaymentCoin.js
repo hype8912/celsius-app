@@ -109,7 +109,7 @@ class LoanPaymentCoin extends Component {
         >
           <Icon fill={"gray"} width="17" height="17" name="CirclePlus" />
           <CelText type="H5" margin={"0 0 0 5"}>
-            Deposit coins
+            Transfer coins
           </CelText>
         </TouchableOpacity>
 

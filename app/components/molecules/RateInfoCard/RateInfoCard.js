@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 
 // import RateInfoCardStyle from "./RateInfoCard.styles";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 import interestUtil from "../../../utils/interest-util";
 import formatter from "../../../utils/formatter";
@@ -63,7 +62,7 @@ class RateInfoCard extends Component {
         {!interestRate.inCEL ? (
           <Card color={getColor(COLOR_KEYS.LINK)}>
             <CelText color={"white"}>
-              Upgrade your interest settings to earn in CEL and you could get up
+              Upgrade your rewards settings to earn in CEL and you could get up
               to {formatter.percentageDisplay(interestRate.compound_cel_rate)}{" "}
               APY on your first{" "}
               <CelText
@@ -77,7 +76,7 @@ class RateInfoCard extends Component {
             </CelText>
           </Card>
         ) : (
-          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+          <Card color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}>
             <CelText color={"white"}>
               Keep HODLing and you could earn up to{" "}
               {formatter.percentageDisplay(interestRate.compound_cel_rate)} APY
@@ -107,7 +106,7 @@ class RateInfoCard extends Component {
             basic
             margin={"10 0 10 0"}
           >
-            Earn interest in Cel
+            Earn rewards in Cel
           </CelButton>
         )}
       </View>

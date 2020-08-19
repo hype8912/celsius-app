@@ -32,12 +32,12 @@ const base = {
   },
   disabledButton: {
     opacity: 0.5,
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 2,
   },
   basicButton: {
-    borderColor: "transparent",
-    backgroundColor: "transparent",
+    borderColor: COLOR_KEYS.TRANSPARENT,
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     height: "auto",
     paddingLeft: 0,
     paddingRight: 0,
@@ -53,17 +53,17 @@ const base = {
     fontSize: getScaledFont(getFontSize("H6")),
   },
   ghostButton: {
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 1,
     borderColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
   ghostredButton: {
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 1,
     borderColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   ghostgreenButton: {
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 1,
     borderColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },

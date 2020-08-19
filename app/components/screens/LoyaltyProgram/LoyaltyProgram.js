@@ -168,7 +168,7 @@ class LoyaltyProgram extends Component {
                       type={"H5"}
                       weight={"300"}
                     >
-                      interest in CEL
+                      rewards in CEL
                     </CelText>
                   </View>
                   <Separator vertical />
@@ -190,7 +190,7 @@ class LoyaltyProgram extends Component {
                       type={"H5"}
                       weight={"300"}
                     >
-                      interest in CEL
+                      rewards in CEL
                     </CelText>
                   </View>
                 </View>
