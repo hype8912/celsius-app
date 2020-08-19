@@ -16,10 +16,10 @@ import * as appActions from "../../../redux/actions";
 import { MODALS, THEMES } from "../../../constants/UI";
 import CelModalStyle from "./CelModal.styles";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import { isIos } from "../../../utils/ui-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -118,7 +118,10 @@ class CelModal extends Component {
       // NOTE: For coins we use PNG in light theme and DVG in dark theme
       return (
         <View style={style.pictureWrapper}>
-          <Icon name={`Icon${coin && coin}`} fill={STYLES.COLORS.WHITE} />
+          <Icon
+            name={`Icon${coin && coin}`}
+            fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+          />
         </View>
       );
     }

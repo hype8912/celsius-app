@@ -1,14 +1,14 @@
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
     flex: 1,
   },
   selectedAmountText: {
-    color: STYLES.COLORS.CELSIUS_BLUE,
+    color: COLOR_KEYS.PRIMARY_BUTTON,
     borderBottomWidth: 1,
-    borderColor: STYLES.COLORS.CELSIUS_BLUE,
+    borderColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
 };
 

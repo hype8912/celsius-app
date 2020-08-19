@@ -5,8 +5,6 @@ import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
 import { showMessage } from "../ui/uiActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
-import { mocks } from "../../../dev-settings";
-import mockTransactions from "../../mock-data/payments.mock";
 import buyCoinsService from "../../services/buy-coins-service";
 import {
   BUY_COINS_PAYMENT_STATUSES,
@@ -30,17 +28,7 @@ function getPaymentRequests() {
     dispatch(startApiCall(API.GET_PAYMENT_REQUESTS));
 
     try {
-      let res;
-      if (!mocks.USE_MOCK_TRANSACTIONS) {
-        res = await buyCoinsService.getAllPayments();
-      } else {
-        res = {
-          data: Object.values(mockTransactions).filter(t =>
-            ["pending", "approved", "declined"].includes(t.id)
-          ),
-        };
-      }
-
+      const res = await buyCoinsService.getAllPayments();
       const payments = res.data.map(mapPayment);
 
       dispatch({
