@@ -1,5 +1,4 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -39,11 +38,7 @@ const base = {
 const themed = {
   light: {},
 
-  dark: {
-    importantInfo: {
-      color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };
