@@ -11,7 +11,6 @@ import * as appActions from "../../../redux/actions";
 import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import ShareButton from "../../atoms/ShareButton/ShareButton";
-import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import STYLES from "../../../constants/STYLES";
@@ -75,8 +74,8 @@ class Deposit extends Component {
 
     this.state = {
       isFetchingAddress: false,
-      useAlternateAddress: false,
       coinSelectItems,
+      displayAddress: null,
     };
   }
 
@@ -243,72 +242,14 @@ class Deposit extends Component {
     );
   };
 
-  renderSwitchAddressBlock = (alternativeAddress, currency) => {
-    const { useAlternateAddress } = this.state;
-    const style = DepositStyle();
-    let alternateText1 = "";
-    let alternateText2 = "";
-    let buttonText = "";
-
-    // Switching wording, depending on currency and if using alternative address
-    if (currency === "LTC") {
-      alternateText1 = `${useAlternateAddress ? "3" : "M"}`;
-      alternateText2 = `${useAlternateAddress ? "M" : "3"}`;
-
-      buttonText = `Use ${useAlternateAddress ? "M" : "3"}-format address`;
-    } else if (currency === "BCH") {
-      alternateText1 = `${useAlternateAddress ? "Cash Address" : "Bitcoin"}`;
-      alternateText2 = `${useAlternateAddress ? "Bitcoin" : "Cash Address"}`;
-
-      buttonText = `Use ${
-        useAlternateAddress ? "Bitcoin" : "Cash Address"
-      }-format`;
-    }
-
-    return (
-      <Card color={STYLES.COLORS.CELSIUS_BLUE}>
-        <CelText
-          style={style.infoBubble}
-          weight="300"
-          alignItems="center"
-          color="#FFFFFF"
-        >
-          {" "}
-          If your wallet doesn't support{" "}
-          <CelText weight="semi-bold" color="#FFFFFF">
-            {alternateText1}-format
-          </CelText>{" "}
-          addresses you can use a{" "}
-          <CelText weight="semi-bold" color="#FFFFFF">
-            {alternateText2}-format
-          </CelText>{" "}
-          {currency} address.
-        </CelText>
-
-        <CelButton
-          size={"medium"}
-          white
-          onPress={() => {
-            this.setState({
-              useAlternateAddress: !this.state.useAlternateAddress,
-            });
-          }}
-          style={{
-            borderWidth: 0.5,
-            borderColor: "#FFFFFF",
-            marginTop: 10,
-            marginBottom: 10,
-          }}
-        >
-          {buttonText}
-        </CelButton>
-      </Card>
-    );
-  };
-
   renderLoader = () => (
     <View
-      style={{ marginTop: 50, justifyContent: "center", alignItems: "center" }}
+      style={{
+        marginBottom: 50,
+        marginTop: 50,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
       <Spinner />
     </View>
@@ -385,7 +326,9 @@ class Deposit extends Component {
 
         {navigation.getParam("isMarginWarning") ? this.renderPayCard() : null}
 
-        {address && !isFetchingAddress ? (
+        {(isFetchingAddress || !displayAddress) && this.renderLoader()}
+
+        {displayAddress && !isFetchingAddress ? (
           <View style={styles.container}>
             {destinationTag || memoId ? (
               <Card>
@@ -493,17 +436,15 @@ class Deposit extends Component {
               </CelText>
             )}
 
-            {alternateAddress &&
-              this.renderSwitchAddressBlock(
-                alternateAddress,
-                formData.selectedCoin
-              )}
-
             <DepositAddressSwitchCard
               coin={formData.selectedCoin}
-              address={address}
+              primaryAddress={address}
               alternateAddress={alternateAddress}
               secondaryAddress={secondaryAddress}
+              displayAddress={displayAddress}
+              setAddress={addressToDisplay =>
+                this.setState({ displayAddress: addressToDisplay })
+              }
             />
           </View>
         ) : null}
@@ -515,8 +456,6 @@ class Deposit extends Component {
           celInterestButton
           interestCompliance={interestCompliance}
         />
-
-        {isFetchingAddress && this.renderLoader()}
 
         {formData.selectedCoin === "CEL" ? (
           <View style={{ marginLeft: 20, marginRight: 20 }}>
