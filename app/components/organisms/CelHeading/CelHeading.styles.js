@@ -52,7 +52,7 @@ const base = {
     backgroundColor: COLOR_KEYS.HEADER,
     ...Platform.select({
       android: {
-        borderColor: COLOR_KEYS.INPUT_BORDER,
+        borderColor: COLOR_KEYS.TRANSPARENT,
         borderBottomWidth: 2,
       },
       ios: {

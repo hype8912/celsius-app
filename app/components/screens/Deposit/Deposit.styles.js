@@ -24,7 +24,7 @@ const base = {
     paddingVertical: "2%",
   },
   qrCodeWrapper: {
-    backgroundColor: "#fff",
+    backgroundColor: COLOR_KEYS.WHITE,
     padding: 10,
     borderRadius: 4,
   },
@@ -39,11 +39,7 @@ const base = {
 const themed = {
   light: {},
 
-  dark: {
-    importantInfo: {
-      color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };

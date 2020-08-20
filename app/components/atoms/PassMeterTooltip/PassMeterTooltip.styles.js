@@ -4,7 +4,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 const base = {
   container: {
     width: "100%",
-    backgroundColor: getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE),
+    backgroundColor: getColor(COLOR_KEYS.TOOLTIP),
     borderRadius: 8,
     alignSelf: "center",
     padding: 10,

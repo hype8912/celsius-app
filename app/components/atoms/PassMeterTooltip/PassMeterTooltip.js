@@ -54,7 +54,7 @@ class PassMeterTooltip extends Component {
               }
             />
             <CelText
-              color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+              color={getColor(COLOR_KEYS.WHITE)}
               type={"H7"}
               margin={"-3 0 5 5"}
             >
