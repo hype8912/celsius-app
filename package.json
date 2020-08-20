@@ -28,7 +28,10 @@
     "test": "jest"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "globals": {
+      "window": {}
+    }
   },
   "husky": {
     "hooks": {
