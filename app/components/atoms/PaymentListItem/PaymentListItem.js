@@ -32,7 +32,7 @@ const PaymentListItem = ({ payment, upperText, type }) => {
       sign: "-",
     };
   if (payment.type === "receiving_principal_back")
-    paymentType = { type: "Principal", color: STYLES.COLORS.GREEN, sign: " " };
+    paymentType = { type: "Principal", color: STYLES.COLORS.RED, sign: "-" };
 
   return (
     <View>
@@ -60,7 +60,11 @@ const PaymentListItem = ({ payment, upperText, type }) => {
             <CelText weight="500" color={textColor} type="H5">
               {paymentType.type}
             </CelText>
-            <CelText weight="500" type="H7" color={paymentType.color}>
+            <CelText
+              weight="500"
+              type="H7"
+              color={textColor || paymentType.color}
+            >
               {formatter.capitalize(payment.status)}
             </CelText>
           </View>
