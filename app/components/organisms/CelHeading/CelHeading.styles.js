@@ -52,7 +52,7 @@ const base = {
     backgroundColor: COLOR_KEYS.HEADER,
     ...Platform.select({
       android: {
-        borderColor: "#E9E9E9",
+        borderColor: COLOR_KEYS.TRANSPARENT,
         borderBottomWidth: 2,
       },
       ios: {
@@ -63,7 +63,7 @@ const base = {
 
   transparentBackground: {
     position: "absolute",
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     zIndex: 100,
     top: 0,
     left: 0,
@@ -77,7 +77,7 @@ const base = {
 
     ...Platform.select({
       android: {
-        borderColor: "#E9E9E9",
+        borderColor: COLOR_KEYS.INPUT_BORDER,
         borderWidth: 1,
       },
       ios: {
@@ -89,7 +89,7 @@ const base = {
   button: {
     borderRadius: 17,
     overflow: "hidden",
-    borderColor: "black",
+    borderColor: COLOR_KEYS.BLACK,
   },
   sameBackground: {
     backgroundColor: COLOR_KEYS.BACKGROUND,
@@ -100,7 +100,7 @@ const themed = {
   light: {},
   dark: {
     headingBackground: {
-      borderColor: "transparent",
+      borderColor: COLOR_KEYS.TRANSPARENT,
     },
   },
   unicorn: {
@@ -108,7 +108,7 @@ const themed = {
       borderColor: null, // TODO: handle this better way when remove light theme
       ...Platform.select({
         android: {
-          borderColor: "transparent",
+          borderColor: COLOR_KEYS.TRANSPARENT,
           borderBottomWidth: 0,
         },
         ios: {

@@ -12,7 +12,7 @@ import Icon from "../../atoms/Icon/Icon";
 import { THEMES } from "../../../constants/UI";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
@@ -100,9 +100,11 @@ class SelectCoin extends Component {
     const itemStyle = [style.item];
 
     if (isActive && theme !== THEMES.DARK) {
-      itemStyle.push({ backgroundColor: STYLES.COLORS.WHITE });
+      itemStyle.push({
+        backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
+      });
     } else if (isActive && theme === THEMES.DARK) {
-      itemStyle.push({ backgroundColor: STYLES.COLORS.DARK_GRAY3 });
+      itemStyle.push({ backgroundColor: STYLES.COLORS.DARK_GRAY3 }); // TODO: missing COLOR_KEY
     }
     return itemStyle;
   };

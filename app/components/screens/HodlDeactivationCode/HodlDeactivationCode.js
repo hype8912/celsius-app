@@ -11,12 +11,12 @@ import CelInput from "../../atoms/CelInput/CelInputText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { EMPTY_STATES, KEYPAD_PURPOSES } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
 import Card from "../../atoms/Card/Card";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import StaticScreen from "../StaticScreen/StaticScreen";
-import { getFontSize } from "../../../utils/styles-util";
+import { getColor, getFontSize } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -118,7 +118,7 @@ class HodlDeactivationCode extends Component {
         </CelText>
         <CelText type={"H4"} align={"center"}>
           <CelText
-            color={STYLES.COLORS.CELSIUS_BLUE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
             onPress={() => actions.navigateTo("Support")}
           >
             Contact our support

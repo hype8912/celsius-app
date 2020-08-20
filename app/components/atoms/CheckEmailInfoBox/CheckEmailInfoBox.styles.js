@@ -2,6 +2,7 @@ import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -13,7 +14,7 @@ const base = {
     borderRadius: widthPercentageToDP("8%") / 2,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   direction: { flexDirection: "row" },
 };

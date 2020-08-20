@@ -7,7 +7,6 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
 import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 import CelButton from "../../atoms/CelButton/CelButton";
-import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
@@ -15,6 +14,8 @@ import TxSentSection from "../../molecules/TxSentSection/TxSentSection";
 import formatter from "../../../utils/formatter";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import CheckEmailInfoBox from "../../atoms/CheckEmailInfoBox/CheckEmailInfoBox";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class TransactionDetailsCelPay extends Component {
   static propTypes = {
@@ -178,7 +179,7 @@ class TransactionDetailsCelPay extends Component {
             <CelButton
               margin={"10 0 0 0"}
               loading={cancelingCelPay}
-              textColor={STYLES.COLORS.RED}
+              textColor={getColor(COLOR_KEYS.NEGATIVE_STATE)}
               basic
               onPress={async () => {
                 await cancelTransfer(transaction);

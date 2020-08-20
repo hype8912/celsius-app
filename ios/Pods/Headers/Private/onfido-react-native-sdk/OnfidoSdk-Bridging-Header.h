@@ -1,1 +1,0 @@
-../../../../../node_modules/@onfido/react-native-sdk/ios/OnfidoSdk-Bridging-Header.h

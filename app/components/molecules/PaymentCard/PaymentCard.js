@@ -10,9 +10,10 @@ import CelText from "../../atoms/CelText/CelText";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import * as appActions from "../../../redux/actions";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   () => ({}),
@@ -88,8 +89,8 @@ class PaymentCard extends Component {
                 type={"H6"}
                 color={
                   hasEnoughForALoan
-                    ? STYLES.COLORS.DARK_GRAY6
-                    : STYLES.COLORS.RED
+                    ? getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)
+                    : getColor(COLOR_KEYS.ALERT_STATE)
                 }
               >{`500 ${coinShort}`}</CelText>
               <Separator margin={"0 5 0 5"} vertical />
@@ -98,8 +99,8 @@ class PaymentCard extends Component {
                 type={"H6"}
                 color={
                   hasEnoughForALoan
-                    ? STYLES.COLORS.DARK_GRAY6
-                    : STYLES.COLORS.RED
+                    ? getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND)
+                    : getColor(COLOR_KEYS.ALERT_STATE)
                 }
               >{`${formatter.usd(100)} USD`}</CelText>
             </View>
@@ -120,7 +121,7 @@ class PaymentCard extends Component {
                     }}
                   >
                     <Icon
-                      fill={STYLES.COLORS.CELSIUS_BLUE}
+                      fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                       width="17"
                       height="17"
                       name="CirclePlus"
@@ -129,7 +130,7 @@ class PaymentCard extends Component {
                       onPress={() =>
                         actions.navigateTo("Deposit", { coin: coinShort })
                       }
-                      color={STYLES.COLORS.CELSIUS_BLUE}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                       type="H5"
                       margin={"0 0 0 5"}
                     >

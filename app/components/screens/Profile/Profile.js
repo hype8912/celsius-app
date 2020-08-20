@@ -6,7 +6,6 @@ import * as appActions from "../../../redux/actions";
 
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
 import Separator from "../../atoms/Separator/Separator";
 import IconButton from "../../organisms/IconButton/IconButton";
 import { MODALS } from "../../../constants/UI";
@@ -25,6 +24,7 @@ import Constants from "../../../../constants";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -129,7 +129,7 @@ class Profile extends Component {
                   height: 100,
                   borderRadius: 50,
                   borderWidth: 4,
-                  borderColor: STYLES.COLORS.WHITE,
+                  borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
                 }}
                 source={{
                   uri: profilePicture,
@@ -144,7 +144,7 @@ class Profile extends Component {
                   height: 100,
                   borderRadius: 50,
                   borderWidth: 4,
-                  borderColor: STYLES.COLORS.WHITE,
+                  borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
                 }}
                 source={require("../../../../assets/images/empty-profile/empty-profile.png")}
                 resizeMethod="resize"

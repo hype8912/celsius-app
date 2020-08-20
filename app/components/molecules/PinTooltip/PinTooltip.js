@@ -4,10 +4,10 @@ import { View } from "react-native";
 
 import PinTooltipStyle from "./PinTooltip.styles";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import securityUtil from "../../../utils/security-util";
 import { PIN_STRENGTH_ITEMS } from "../../../constants/DATA";
+import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class PinTooltip extends Component {
@@ -78,10 +78,10 @@ class PinTooltip extends Component {
                 borderRightWidth: 10,
                 borderBottomWidth: 10,
                 borderStyle: "solid",
-                backgroundColor: "transparent",
-                borderLeftColor: "transparent",
-                borderRightColor: "transparent",
-                borderBottomColor: STYLES.COLORS.DARK_GRAY,
+                backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
+                borderLeftColor: getColor(COLOR_KEYS.TRANSPARENT),
+                borderRightColor: getColor(COLOR_KEYS.TRANSPARENT),
+                borderBottomColor: getColor(COLOR_KEYS.TOOLTIP),
                 transform: [
                   {
                     rotate: toolTipPositionTop ? "180deg" : "0deg",
@@ -100,10 +100,14 @@ class PinTooltip extends Component {
                     name={"CheckCircle"}
                     height={12}
                     width={12}
-                    fill={i.status ? STYLES.COLORS.GREEN : STYLES.COLORS.RED}
+                    fill={
+                      i.status
+                        ? getColor(COLOR_KEYS.POSITIVE_STATE)
+                        : getColor(COLOR_KEYS.NEGATIVE_STATE)
+                    }
                   />
                   <CelText
-                    color={STYLES.COLORS.WHITE}
+                    color={getColor(COLOR_KEYS.WHITE)}
                     type={"H7"}
                     margin={"-3 0 5 5"}
                   >
