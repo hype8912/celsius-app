@@ -45,25 +45,31 @@ function getPropsFromTransaction(transaction) {
         color: STYLES.COLORS.GREEN,
       };
     case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
-      if (transaction.loan_data.unlock_reason === "rejected") {
+      if (transaction.loan_data.status === "rejected") {
         return {
           status: "Rejected Loan",
           color: STYLES.COLORS.RED,
         };
       }
-      if (transaction.loan_data.unlock_reason === "finished") {
+      if (transaction.loan_data.status === "active") {
+        return {
+          status: "Active Loan",
+          color: STYLES.COLORS.CELSIUS_BLUE,
+        };
+      }
+      if (transaction.loan_data.status === "completed") {
         return {
           status: "Completed Loan",
           color: STYLES.COLORS.GREEN,
         };
       }
-      if (transaction.loan_data.unlock_reason === "cancelled") {
+      if (transaction.loan_data.status === "cancelled") {
         return {
           status: "Cancelled Loan",
           color: STYLES.COLORS.RED,
         };
       }
-      if (!transaction.loan_data.unlock_reason) {
+      if (!transaction.loan_data.status) {
         return {
           status: "Loan",
           color: STYLES.COLORS.CELSIUS_BLUE,
