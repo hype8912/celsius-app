@@ -1,5 +1,6 @@
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -15,12 +16,12 @@ const base = {
   },
   inputCel: {
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.WHITE,
     flex: 1,
   },
   taxID: {
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.WHITE,
     flex: 1,
     height: 50,
     justifyContent: "space-around",
@@ -29,7 +30,7 @@ const base = {
   },
   nationalID: {
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.WHITE,
     flex: 1,
     height: 50,
     justifyContent: "space-around",
@@ -46,13 +47,13 @@ const themed = {
   },
   dark: {
     taxID: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: STYLES.COLORS.DARK_HEADER, // TODO: missing COLOR_KEYS
     },
     nationalID: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: STYLES.COLORS.DARK_HEADER, // TODO: missing COLOR_KEYS
     },
     inputCel: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: STYLES.COLORS.DARK_HEADER, // TODO: missing COLOR_KEYS
     },
   },
 

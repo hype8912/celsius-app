@@ -3,7 +3,6 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
@@ -36,7 +35,7 @@ const base = {
     width: widthPercentageToDP("17%"),
     height: widthPercentageToDP("17%"),
     borderRadius: heightPercentageToDP("17%") / 2,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
@@ -49,7 +48,7 @@ const base = {
   },
   loyalityQuestion: {
     marginTop: heightPercentageToDP("1.5%"),
-    color: STYLES.COLORS.CELSIUS_BLUE,
+    color: COLOR_KEYS.PRIMARY_BUTTON,
   },
   explanation: {
     marginBottom: heightPercentageToDP("2.73%"),

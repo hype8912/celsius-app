@@ -7,7 +7,7 @@ const base = {
     backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   loaderView: {
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     position: "absolute",
     top: 20,
     left: 0,

@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
@@ -19,7 +19,7 @@ const base = {
     marginTop: 10,
   },
   activeImage: {
-    borderColor: STYLES.COLORS.GREEN,
+    borderColor: COLOR_KEYS.POSITIVE_STATE,
     width: smallImageSize,
     height: smallImageSize,
     zIndex: -20,
@@ -27,7 +27,7 @@ const base = {
   imageWrapper: {
     width: smallImageSize,
     height: smallImageSize,
-    borderColor: "transparent",
+    borderColor: COLOR_KEYS.TRANSPARENT,
     borderRadius: 50,
     borderWidth: 5,
     justifyContent: "center",
@@ -38,7 +38,7 @@ const base = {
     width: smallImageSize,
     height: smallImageSize,
     borderRadius: smallImageSize / 2,
-    borderColor: "transparent",
+    borderColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 5,
   },
   avatar: {

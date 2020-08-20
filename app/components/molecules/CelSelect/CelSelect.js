@@ -13,7 +13,6 @@ import { getColor, getMargins } from "../../../utils/styles-util";
 import Icon from "../../atoms/Icon/Icon";
 import SELECT_VALUES from "../../../constants/SELECT_VALUES";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { PERSON_TITLE, GENDER, STATE, DAYS, YEARS, MONTHS } = SELECT_VALUES;
@@ -141,7 +140,7 @@ class CelSelect extends Component {
     let item;
     items.forEach(element => {
       item = element;
-      item.color = STYLES.COLORS.DARK_GRAY;
+      item.color = getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND);
       tempItems.push(item);
     });
 

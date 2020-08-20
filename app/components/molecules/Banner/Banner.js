@@ -5,9 +5,9 @@ import { Image, TouchableOpacity, View } from "react-native";
 import BannerStyle from "./Banner.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
-import { widthPercentageToDP } from "../../../utils/styles-util";
+import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class Banner extends Component {
   static propTypes = {
@@ -116,7 +116,7 @@ class Banner extends Component {
               <TouchableOpacity onPress={textButtonAction}>
                 <CelText
                   margin={"7 0 0 10"}
-                  color={STYLES.COLORS.WHITE}
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                   type={"H6"}
                 >
                   {textButtonText}
