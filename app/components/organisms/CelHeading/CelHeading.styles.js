@@ -77,7 +77,7 @@ const base = {
 
     ...Platform.select({
       android: {
-        borderColor: COLOR_KEYS.TOGGLE_OFF_BACKGROUND,
+        borderColor: COLOR_KEYS.INPUT_BORDER,
         borderWidth: 1,
       },
       ios: {

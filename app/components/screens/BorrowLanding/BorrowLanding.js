@@ -10,7 +10,7 @@ import { hasPassedKYC } from "../../../utils/user-util";
 import { EMPTY_STATES, MODALS, LOAN_FILTER_ITEMS } from "../../../constants/UI";
 import BorrowCalculatorScreen from "../BorrowCalculatorScreen/BorrowCalculatorScreen";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
+import { widthPercentageToDP } from "../../../utils/styles-util";
 import LoanOverviewCard from "../../organisms/LoanOverviewCard/LoanOverviewCard";
 
 import Card from "../../atoms/Card/Card";
@@ -19,11 +19,11 @@ import Separator from "../../atoms/Separator/Separator";
 import EmptyState from "../../atoms/EmptyState/EmptyState";
 import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
+import STYLES from "../../../constants/STYLES";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 import Spinner from "../../atoms/Spinner/Spinner";
 import { STORYBOOK } from "../../../../dev-settings.json";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -230,9 +230,7 @@ class BorrowLanding extends Component {
                     type={"H6"}
                     weight={item === filter ? "500" : "300"}
                     color={
-                      item === filter
-                        ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
-                        : undefined
+                      item === filter ? STYLES.COLORS.CELSIUS_BLUE : undefined
                     }
                   >
                     {item}

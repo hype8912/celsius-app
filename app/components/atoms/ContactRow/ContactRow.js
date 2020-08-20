@@ -4,10 +4,9 @@ import PropTypes from "prop-types";
 
 import ContactRowStyle from "./ContactRow.styles";
 import CelText from "../CelText/CelText";
+import STYLES from "../../../constants/STYLES";
 import Icon from "../Icon/Icon";
 import { CONTACT_NETWORK } from "../../../constants/DATA";
-import { COLOR_KEYS } from "../../../constants/COLORS";
-import { getColor } from "../../../utils/styles-util";
 
 class ContactRow extends Component {
   static propTypes = {
@@ -72,7 +71,7 @@ class ContactRow extends Component {
           </View>
           <View style={styles.info}>
             <CelText type="H3">{name}</CelText>
-            <CelText color={getColor(COLOR_KEYS.BANNER_INFO)} type="H6">
+            <CelText color={STYLES.COLORS.CELSIUS_BLUE} type="H6">
               {this.getContactPreference(contact.item)}
             </CelText>
           </View>
@@ -80,7 +79,7 @@ class ContactRow extends Component {
         {hasApp && (
           <Icon
             name="Celsius"
-            fill={getColor(COLOR_KEYS.BANNER_INFO)}
+            fill={STYLES.COLORS.CELSIUS_BLUE}
             height={30}
             width={30}
           />

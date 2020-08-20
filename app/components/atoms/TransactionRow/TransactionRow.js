@@ -6,8 +6,8 @@ import TransactionRowStyle from "./TransactionRow.styles";
 import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Separator from "../Separator/Separator";
+import STYLES from "../../../constants/STYLES";
 import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class TransactionRow extends Component {
   static propTypes = {
@@ -44,10 +44,7 @@ class TransactionRow extends Component {
         <TouchableOpacity style={style.container} onPress={onPress}>
           <View style={style.leftSide}>
             <View style={[style.circle, { backgroundColor: getColor(color) }]}>
-              <CelText
-                type={"H7"}
-                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-              >
+              <CelText type={"H7"} color={STYLES.COLORS.WHITE}>
                 {shortName}
               </CelText>
             </View>

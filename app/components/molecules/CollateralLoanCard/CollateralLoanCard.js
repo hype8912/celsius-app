@@ -7,79 +7,78 @@ import Card from "../../atoms/Card/Card";
 import Separator from "../../atoms/Separator/Separator";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
+import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
-import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 function getPropsFromTransaction(transaction) {
   switch (transaction.type) {
     case TRANSACTION_TYPES.MARGIN_CALL:
       return {
         status: "Active Loan",
-        color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+        color: STYLES.COLORS.CELSIUS_BLUE,
       };
     case TRANSACTION_TYPES.COLLATERAL_PENDING:
       return {
         status: "Pending Loan",
-        color: getColor(COLOR_KEYS.ALERT_STATE),
+        color: STYLES.COLORS.ORANGE,
       };
     case TRANSACTION_TYPES.COLLATERAL_LOCKED:
       return {
         status: "Active Loan",
-        color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+        color: STYLES.COLORS.CELSIUS_BLUE,
       };
     case TRANSACTION_TYPES.LOAN_INTEREST:
       return {
         status: "Active Loan",
-        color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+        color: STYLES.COLORS.CELSIUS_BLUE,
       };
     case TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED:
       return {
         status: "Active Loan",
-        color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+        color: STYLES.COLORS.CELSIUS_BLUE,
       };
     case TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT:
       return {
         status: "Completed Loan",
-        color: getColor(COLOR_KEYS.POSITIVE_STATE),
+        color: STYLES.COLORS.GREEN,
       };
     case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
       if (transaction.loan_data.unlock_reason === "rejected") {
         return {
           status: "Rejected Loan",
-          color: getColor(COLOR_KEYS.NEGATIVE_STATE),
+          color: STYLES.COLORS.RED,
         };
       }
       if (transaction.loan_data.unlock_reason === "finished") {
         return {
           status: "Completed Loan",
-          color: getColor(COLOR_KEYS.POSITIVE_STATE),
+          color: STYLES.COLORS.GREEN,
         };
       }
       if (transaction.loan_data.unlock_reason === "cancelled") {
         return {
           status: "Cancelled Loan",
-          color: getColor(COLOR_KEYS.NEGATIVE_STATE),
+          color: STYLES.COLORS.RED,
         };
       }
       if (!transaction.loan_data.unlock_reason) {
         return {
           status: "Loan",
-          color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+          color: STYLES.COLORS.CELSIUS_BLUE,
         };
       }
       break;
     case TRANSACTION_TYPES.COLLATERAL_LIQUIDATED:
       return {
         status: "Completed Loan",
-        color: getColor(COLOR_KEYS.NEGATIVE_STATE),
+        color: STYLES.COLORS.RED,
       };
     default: {
       return {
         status: "",
-        color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+        color: STYLES.COLORS.CELSIUS_BLUE,
       };
     }
   }

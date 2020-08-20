@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -25,17 +25,35 @@ const base = {
     alignSelf: "center",
     marginTop: 20,
   },
-  maskOverlayColor: {
-    backgroundColor: COLOR_KEYS.MAIN_MENU_OVERLAY, // TODO: check with others (sabelnik)
-  },
 };
 
 const themed = {
-  light: {},
+  light: {
+    maskOverlayColor: {
+      backgroundColor: "rgba(241,239,238,0.6)",
+    },
+    safeAreaBackgroundColor: {
+      backgroundColor: "rgba(241,239,238,0.6)",
+    },
+  },
 
-  dark: {},
+  dark: {
+    maskOverlayColor: {
+      backgroundColor: STYLES.COLORS.DARK_OVERLAY,
+    },
+    safeAreaBackgroundColor: {
+      backgroundColor: STYLES.COLORS.DARK_OVERLAY,
+    },
+  },
 
-  unicorn: {},
+  unicorn: {
+    maskOverlayColor: {
+      backgroundColor: "rgba(241,239,238,0.6)",
+    },
+    safeAreaBackgroundColor: {
+      backgroundColor: "rgba(241,239,238,0.6)",
+    },
+  },
 };
 
 const QRScannerStyle = () => getThemedStyle(base, themed);

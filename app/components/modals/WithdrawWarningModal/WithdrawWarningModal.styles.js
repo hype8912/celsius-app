@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -19,7 +19,7 @@ const base = {
   box: {
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: COLOR_KEYS.DOT_INDICATOR_INACTIVE,
+    borderColor: STYLES.COLORS.GRAY,
     width: 25,
     height: 25,
   },

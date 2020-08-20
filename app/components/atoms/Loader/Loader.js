@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, Animated } from "react-native";
-import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
+import { widthPercentageToDP } from "../../../utils/styles-util";
 
 class Loader extends Component {
   static propTypes = {
@@ -18,9 +18,9 @@ class Loader extends Component {
     width: 50,
     borderWidth: 2,
     borderRadius: 4,
-    borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
-    barColor: getColor(COLOR_KEYS.SEPARATORS),
-    backgroundColor: getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE),
+    borderColor: "white",
+    barColor: STYLES.COLORS.MEDIUM_GRAY3,
+    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
     flowProgress: false,
   };
 

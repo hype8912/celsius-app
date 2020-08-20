@@ -4,8 +4,8 @@ import Svg, { Circle } from "react-native-svg";
 import PropTypes from "prop-types";
 
 import { THEMES } from "../../../constants/UI";
-import { getColor, getTheme } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
+import { getTheme } from "../../../utils/styles-util";
 
 class Spinner extends Component {
   static propTypes = {
@@ -23,7 +23,7 @@ class Spinner extends Component {
 
     this.state = {
       spinValue: new Animated.Value(0),
-      strokeColor: getColor(COLOR_KEYS.HEADER), // TODO: check COLOR_KEY with others
+      strokeColor: this.getColor(theme),
       opacity: this.getOpacity(theme),
     };
     this.animation = null;
@@ -42,6 +42,20 @@ class Spinner extends Component {
     if (!isNaN(opacity)) return opacity;
 
     return theme === THEMES.DARK ? 0.7 : 0.3;
+  };
+
+  getColor = theme => {
+    const { color } = this.props;
+    if (color) return color;
+
+    switch (theme) {
+      case THEMES.DARK:
+        return STYLES.COLORS.WHITE;
+      case THEMES.LIGHT:
+      case THEMES.CELSIUS:
+      default:
+        return STYLES.COLORS.DARK_GRAY;
+    }
   };
 
   repeat = () => {

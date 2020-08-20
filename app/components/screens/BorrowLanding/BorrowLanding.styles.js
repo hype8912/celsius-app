@@ -1,9 +1,9 @@
+import STYLES from "../../../constants/STYLES";
 import {
   getThemedStyle,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -72,7 +72,7 @@ const base = {
   activeFilterLine: {
     height: 1,
     width: 12,
-    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
+    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
     marginTop: 3,
     alignSelf: "center",
   },

@@ -9,8 +9,8 @@ import CelText from "../CelText/CelText";
 import PassMeterTooltip from "../PassMeterTooltip/PassMeterTooltip";
 import PassStrengthMeter from "../PassStrengthMeter/PassStrengthMeter";
 import * as appActions from "../../../redux/actions";
-import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({

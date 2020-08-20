@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import _ from "lodash";
 import moment from "moment";
+import STYLES from "../../../constants/STYLES";
 import SecurityFixNowStyle from "../SecurityFixNow/SecurityFixNow.styles";
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -16,8 +17,6 @@ import CheckWithdrawalAddressesCard from "../../organisms/CheckWithdrawalAddress
 import formatter from "../../../utils/formatter";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
-import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -128,7 +127,7 @@ class SecurityFixNow extends Component {
             twoFAStatus.status === "Pending Activation",
           infoBoxText:
             "To complete your Two-Factor Authentication request follow the email instructions.",
-          infoBoxBackgroundColor: getColor(COLOR_KEYS.ALERT_STATE),
+          infoBoxBackgroundColor: STYLES.COLORS.ORANGE,
           infoBoxIcon: "Info",
           infoBoxTextColor: "white",
           onContinuePress: this.onPress2fa,
@@ -146,7 +145,7 @@ class SecurityFixNow extends Component {
           navigateToScreen: `Change${formatter.capitalize(type)}`,
           showInfoBox: securityOverview.toFixNow,
           infoBoxText: `Successfully changed your ${type}`,
-          infoBoxBackgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE),
+          infoBoxBackgroundColor: STYLES.COLORS.GREEN,
           infoBoxIcon: "CheckCircle",
           infoBoxTextColor: "white",
         };
@@ -213,15 +212,11 @@ class SecurityFixNow extends Component {
               name={content.infoBoxIcon}
               width="25"
               height="25"
-              fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+              fill={STYLES.COLORS.WHITE}
             />
           </View>
           <View style={style.infoBoxTextWrapper}>
-            <CelText
-              type={"H5"}
-              weight={"300"}
-              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-            >
+            <CelText type={"H5"} weight={"300"} color={STYLES.COLORS.WHITE}>
               {content.infoBoxText}
             </CelText>
           </View>

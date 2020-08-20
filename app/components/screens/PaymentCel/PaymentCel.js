@@ -8,11 +8,10 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
 import Separator from "../../atoms/Separator/Separator";
+import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
-import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -113,7 +112,7 @@ class PaymentCel extends Component {
             Based on your current{" "}
             <CelText
               onPress={() => actions.navigateTo("LoyaltyProgram")}
-              style={{ color: getColor(COLOR_KEYS.LINK) }}
+              style={{ color: STYLES.COLORS.CELSIUS_BLUE }}
             >
               Loyalty Level
             </CelText>

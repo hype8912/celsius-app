@@ -3,9 +3,9 @@ import { Image, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { THEMES } from "../../../constants/UI";
+import STYLES from "../../../constants/STYLES";
 import Icon from "../Icon/Icon";
-import { getColor, getTheme } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getTheme } from "../../../utils/styles-util";
 
 class CoinIcon extends Component {
   static propTypes = {
@@ -31,7 +31,7 @@ class CoinIcon extends Component {
         ) : (
           <Icon
             name={`Icon${coinShort}`}
-            fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+            fill={STYLES.COLORS.WHITE}
             style={[customStyles, { opacity: 0.5 }]}
           />
         )}

@@ -1,4 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -23,7 +24,7 @@ const base = {
     paddingVertical: "2%",
   },
   qrCodeWrapper: {
-    backgroundColor: "#fff",
+    backgroundColor: COLOR_KEYS.WHITE,
     padding: 10,
     borderRadius: 4,
   },

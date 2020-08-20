@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 
 // import RateInfoCardStyle from "./RateInfoCard.styles";
 import Card from "../../atoms/Card/Card";
+import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
 import interestUtil from "../../../utils/interest-util";
 import formatter from "../../../utils/formatter";
@@ -76,7 +77,7 @@ class RateInfoCard extends Component {
             </CelText>
           </Card>
         ) : (
-          <Card color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}>
+          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
             <CelText color={"white"}>
               Keep HODLing and you could earn up to{" "}
               {formatter.percentageDisplay(interestRate.compound_cel_rate)} APY

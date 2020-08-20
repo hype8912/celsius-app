@@ -21,11 +21,11 @@ const base = {
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
-    shadowColor: COLOR_KEYS.CIRCLE_ICON_FOREGROUND,
+    shadowColor: STYLES.COLORS.DARK_GRAY,
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 5,
     zIndex: -1,
-    backgroundColor: COLOR_KEYS.CIRCLE_ICON_FOREGROUND,
+    backgroundColor: "white",
   },
   iconStyle: {
     alignItems: "center",
@@ -38,7 +38,6 @@ const base = {
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: COLOR_KEYS.CIRCLE_ICON_FOREGROUND,
   },
   selectWrapper: {
     flexDirection: "row",
@@ -59,11 +58,32 @@ const base = {
 };
 
 const themed = {
-  light: {},
+  light: {
+    circleWrapper: {
+      backgroundColor: STYLES.COLORS.WHITE,
+    },
+    iconWrapper: {
+      backgroundColor: STYLES.COLORS.WHITE,
+    },
+  },
 
-  dark: {},
+  dark: {
+    circleWrapper: {
+      backgroundColor: STYLES.COLORS.DARK_HEADER,
+    },
+    iconWrapper: {
+      backgroundColor: STYLES.COLORS.DARK_HEADER,
+    },
+  },
 
-  unicorn: {},
+  unicorn: {
+    circleWrapper: {
+      backgroundColor: STYLES.COLORS.WHITE,
+    },
+    iconWrapper: {
+      backgroundColor: STYLES.COLORS.WHITE,
+    },
+  },
 };
 
 const CoinPickerStyle = () => getThemedStyle(base, themed);

@@ -44,7 +44,7 @@ const themed = {
     container: {
       ...Platform.select({
         android: {
-          borderColor: COLOR_KEYS.TRANSPARENT,
+          borderColor: "transparent",
         },
       }),
     },

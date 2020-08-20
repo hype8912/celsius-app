@@ -16,6 +16,7 @@ import Login from "../components/screens/Login/Login";
 import ForgotPassword from "../components/screens/ForgotPassword/ForgotPassword";
 import RegisterInitial from "../components/screens/RegisterInitial/RegisterInitial";
 import RegisterSetPin from "../components/screens/RegisterSetPin/RegisterSetPin";
+import TermsOfUse from "../components/screens/TermsOfUse/TermsOfUse";
 import Welcome from "../components/screens/Welcome/Welcome";
 import PasswordBreached from "../components/screens/PasswordBreached/PasswordBreached";
 import VerifyProfile from "../components/screens/VerifyProfile/VerifyProfile";
@@ -133,6 +134,7 @@ export const screens = {
   ForgotPassword,
   RegisterInitial,
   RegisterSetPin,
+  TermsOfUse,
 
   /**
    * KYC

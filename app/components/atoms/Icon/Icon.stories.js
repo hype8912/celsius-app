@@ -2,15 +2,14 @@ import React from "react";
 
 import Icon from "../Icon/Icon";
 import StoryWrapper from "../StoryWrapper/StoryWrapper";
-import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
 
 const IconStories = () => (
   <StoryWrapper title="Icon">
     <StoryWrapper title="Default state">
       <Icon
         name={"Checked"}
-        fill={getColor(COLOR_KEYS.POSITIVE_STATE)}
+        fill={STYLES.COLORS.GREEN}
         width={25}
         height={25}
       />
@@ -18,7 +17,7 @@ const IconStories = () => (
     <StoryWrapper title="With Opacity">
       <Icon
         name={"Checked"}
-        fill={getColor(COLOR_KEYS.POSITIVE_STATE)}
+        fill={STYLES.COLORS.GREEN}
         width={25}
         height={25}
         iconOpacity={0.2}

@@ -5,6 +5,7 @@ import { View, TouchableOpacity, StyleSheet } from "react-native";
 import IconButtonStyle from "./IconButton.styles";
 import Icon from "../../atoms/Icon/Icon";
 import CelText from "../../atoms/CelText/CelText";
+import STYLES from "../../../constants/STYLES";
 import { getMargins, getPadding, getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -83,10 +84,7 @@ class IconButton extends Component {
           {!!right && (
             <View>
               {typeof right === "string" ? (
-                <CelText
-                  type="H4"
-                  color={getColor(COLOR_KEYS.TOGGLE_OFF_BACKGROUND)}
-                >
+                <CelText type="H4" color={STYLES.COLORS.DARK_GRAY}>
                   {right}
                 </CelText>
               ) : (

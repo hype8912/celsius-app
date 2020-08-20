@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import STYLES from "../../../constants/STYLES";
 
 const base = {
   referralHeading: {
@@ -15,7 +15,7 @@ const base = {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+    backgroundColor: STYLES.COLORS.WHITE,
     justifyContent: "center",
     alignContent: "center",
   },

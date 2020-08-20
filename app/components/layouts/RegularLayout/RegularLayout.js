@@ -14,13 +14,12 @@ import { STORYBOOK } from "../../../../dev-settings.json";
 import * as appActions from "../../../redux/actions";
 
 import RegularLayoutStyle from "./RegularLayout.styles";
-import { getColor, getPadding } from "../../../utils/styles-util";
+import { getPadding } from "../../../utils/styles-util";
 import { FAB_TYPE } from "../../../constants/UI";
 import KeyboardShift from "../../atoms/KeyboardShift/KeyboardShift";
 import OfflineMode from "../../atoms/OfflineMode/OfflineMode";
 import Spinner from "../../atoms/Spinner/Spinner";
 import animationsUtil from "../../../utils/animations-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -117,7 +116,7 @@ class RegularLayout extends Component {
                 onRefresh={this.refresh}
                 tintColor="transparent"
                 colors={["transparent"]}
-                style={{ backgroundColor: getColor(COLOR_KEYS.TRANSPARENT) }}
+                style={{ backgroundColor: "transparent" }}
               />
             )
           }

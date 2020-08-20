@@ -8,8 +8,9 @@ import * as appActions from "../../../redux/actions";
 import HODLViewCodeStyles from "./HODLViewCode.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { getColor, getPadding } from "../../../utils/styles-util";
+import { getPadding } from "../../../utils/styles-util";
 import { EMPTY_STATES } from "../../../constants/UI";
+import STYLES from "../../../constants/STYLES";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import Card from "../../atoms/Card/Card";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -17,7 +18,6 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import StaticScreen from "../StaticScreen/StaticScreen";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -120,7 +120,7 @@ class HODLViewCode extends Component {
                 </View>
                 <View style={style.textWrapper}>
                   <CelText
-                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+                    color={STYLES.COLORS.CELSIUS}
                     onPress={() =>
                       this.setState({ showHodlCode: !this.state.showHodlCode })
                     }
@@ -137,10 +137,8 @@ class HODLViewCode extends Component {
               onChange={(field, value) => actions.updateFormField(field, value)}
               field={`agreeHodlMode`}
               value={formData.agreeHodlMode}
-              uncheckedCheckBoxColor={getColor(
-                COLOR_KEYS.DOT_INDICATOR_INACTIVE
-              )}
-              checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+              uncheckedCheckBoxColor={STYLES.COLORS.GRAY}
+              checkedCheckBoxColor={STYLES.COLORS.GREEN}
               rightText={"I memorized my deactivation code"}
             />
           </Card>

@@ -8,6 +8,7 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
+import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import NoWithdrawalAddressCard from "../../atoms/NoWithdrawalAddressCard/NoWithdrawalAddressCard";
 import WithdrawalAddressCard from "../../atoms/WithdrawalAddressCard/WithdrawalAddressCard";
@@ -72,7 +73,7 @@ class WithdrawAddressOverview extends Component {
           type="H6"
           weight="600"
           align="center"
-          color={getColor(COLOR_KEYS.BANNER_INFO)}
+          color={STYLES.COLORS.CELSIUS_BLUE}
           onPress={() => actions.navigateTo("SecurityFixNow")}
         >
           Go back to Fix Now
@@ -203,15 +204,11 @@ class WithdrawAddressOverview extends Component {
                   name={"Info"}
                   width="25"
                   height="25"
-                  fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                  fill={STYLES.COLORS.WHITE}
                 />
               </View>
               <View style={{ flex: 6 }}>
-                <CelText
-                  type={"H5"}
-                  weight={"300"}
-                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                >
+                <CelText type={"H5"} weight={"300"} color={STYLES.COLORS.WHITE}>
                   For your security, if changes are made to a withdrawal
                   address, withdrawals of that coin will be unavailable for 24
                   hours.

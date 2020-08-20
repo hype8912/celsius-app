@@ -1,5 +1,4 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   text: {
@@ -13,7 +12,7 @@ const base = {
     width: 50,
     height: 50,
     borderRadius: 50 / 2,
-    borderColor: COLOR_KEYS.WHITE,
+    borderColor: "#ffffff",
     borderWidth: 3,
   },
   data: {
