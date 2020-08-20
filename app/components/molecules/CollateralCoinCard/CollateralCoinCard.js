@@ -103,7 +103,7 @@ class CollateralCoinCard extends Component {
       color =
         coin.amount_usd < collateralAmount
           ? getColor(COLOR_KEYS.NEGATIVE_STATE)
-          : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
+          : getColor(COLOR_KEYS.PARAGRAPH);
 
       if (currency) {
         value =
