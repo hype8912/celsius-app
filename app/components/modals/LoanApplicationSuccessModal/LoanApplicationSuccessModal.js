@@ -67,7 +67,8 @@ class LoanApplicationSuccessModal extends Component {
 
   render() {
     const style = LoanApplicationSuccessModalStyle();
-    const { actions, yesLoading } = this.state;
+    const { actions } = this.props;
+    const { yesLoading } = this.state;
     const theme = getTheme();
 
     // NOTE: (srdjan) commented after client asked to kick automatic approve loan feature
@@ -149,7 +150,7 @@ class LoanApplicationSuccessModal extends Component {
         paragraphs={[
           "Thank you for initiating your loan with Celsius. Once approved, your funds will be transferred to your Celsius wallet.",
         ]}
-        yesCopy={"Yes"}
+        yesCopy={"Continue"}
         onYes={() => actions.closeModal()}
         yesloading={yesLoading}
       />

@@ -490,9 +490,11 @@ function checkForLoanAlerts() {
 
       if (
         (l.can_pay_principal && l.coin_loan_asset !== "USD") ||
-        moment(l.maturity_date)
-          .utc()
-          .isSame(currentDay.add(7, "days"), "day")
+        (l.can_pay_principal &&
+          l.coin_loan_asset !== "USD" &&
+          moment(l.maturity_date)
+            .utc()
+            .isSame(currentDay.add(7, "days"), "day"))
       ) {
         loanAlerts.push({ id: l.id, type: LOAN_ALERTS.PRINCIPAL_ALERT });
       }
