@@ -11,12 +11,13 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import KYCCheckUtilityBill from "../KYCCheckUtilityBill/KYCCheckUtilityBill";
 import { navigateTo } from "../../../redux/nav/navActions";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -92,10 +93,13 @@ class KYCAddressProof extends Component {
         >
           <Icon
             height="30"
-            fill={STYLES.COLORS.CELSIUS_BLUE}
+            fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
             name="UtilityBill"
           />
-          <CelText color={STYLES.COLORS.CELSIUS_BLUE} margin="0 0 0 15">
+          <CelText
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+            margin="0 0 0 15"
+          >
             Utility Bill Photo >
           </CelText>
         </Card>

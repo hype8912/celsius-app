@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import GetCoinsEnterAmountStyle from "./GetCoinsEnterAmount.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
@@ -234,7 +233,7 @@ class GetCoinsEnterAmount extends Component {
       (!formData.isFiat && type === "crypto") ||
       (formData.isFiat && type === "fiat")
     ) {
-      return { color: STYLES.COLORS.WHITE };
+      return { color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND) };
     }
 
     return null;
@@ -264,7 +263,10 @@ class GetCoinsEnterAmount extends Component {
       callInProgress
     );
 
-    const activeTextStyle = [style.text, { color: STYLES.COLORS.WHITE }];
+    const activeTextStyle = [
+      style.text,
+      { color: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND) },
+    ];
 
     if (!buyCoinsSettings.limit_per_crypto_currency) {
       return <LoadingScreen />;

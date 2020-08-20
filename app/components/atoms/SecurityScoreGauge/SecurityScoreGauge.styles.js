@@ -3,7 +3,7 @@ import {
   widthPercentageToDP,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -30,7 +30,7 @@ const themed = {
 
   dark: {
     wrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: COLOR_KEYS.HEADER, // note: dark theme specific
     },
   },
 

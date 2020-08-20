@@ -42,13 +42,13 @@ const base = {
   triangle: {
     width: 0,
     height: 0,
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderStyle: "solid",
     borderLeftWidth: widthPercentageToDP("1.5%"),
     borderRightWidth: widthPercentageToDP("1.5%"),
     borderBottomWidth: widthPercentageToDP("1.5%"),
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
+    borderLeftColor: COLOR_KEYS.BACKGROUND,
+    borderRightColor: COLOR_KEYS.BACKGROUND,
     borderBottomColor: COLOR_KEYS.CARDS,
     transform: [{ rotate: "180deg" }],
   },
@@ -59,33 +59,28 @@ const base = {
     bottom: 0,
     right: 0,
   },
+  cursorBackgroundColor: {
+    backgroundColor: "red",
+  },
+  labelBoxBackgroundColor: {},
 };
 
 const themed = {
   light: {
-    cursorBackgroundColor: {
-      backgroundColor: "white",
-    },
     labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY,
+      backgroundColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
     },
   },
 
   dark: {
-    cursorBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    },
     labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_LABEL,
+      backgroundColor: STYLES.COLORS.DARK_LABEL, // TODO: missing COLOR_KEY
     },
   },
 
   unicorn: {
-    cursorBackgroundColor: {
-      backgroundColor: "white",
-    },
     labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY,
+      backgroundColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
     },
   },
 };

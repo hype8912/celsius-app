@@ -5,7 +5,8 @@ import { openInbox } from "react-native-email-link";
 import { EMPTY_STATES } from "../constants/UI";
 import { KYC_STATUSES } from "../constants/DATA";
 import CelText from "../components/atoms/CelText/CelText";
-import STYLES from "../constants/STYLES";
+import { getColor } from "./styles-util";
+import { COLOR_KEYS } from "../constants/COLORS";
 
 export default {
   getProps,
@@ -95,7 +96,7 @@ function getProps(purpose, componentProps) {
             whitelisted withdrawal addresses. If you would like to deactivate
             HODL Mode please{" "}
             <CelText
-              color={STYLES.COLORS.CELSIUS_BLUE}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
               onPress={() => actions.navigateTo("Support")}
             >
               contact our support team

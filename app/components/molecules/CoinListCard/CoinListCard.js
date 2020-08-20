@@ -5,7 +5,6 @@ import { View, Animated } from "react-native";
 import CoinListCardStyle from "./CoinListCard.styles";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import Card from "../../atoms/Card/Card";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
@@ -73,7 +72,7 @@ class CoinListCard extends Component {
       <CelText
         weight="500"
         type="H7"
-        color={STYLES.COLORS.GREEN}
+        color={getColor(COLOR_KEYS.POSITIVE_STATE)}
         margin="0 0 0 3"
       >
         {formatter.percentageDisplay(isInCel)} APY
