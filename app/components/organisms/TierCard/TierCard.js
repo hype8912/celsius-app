@@ -90,7 +90,7 @@ class TierCard extends Component {
                 weight={"700"}
                 align={"left"}
               >
-                {celDiscount} more
+                {celDiscount}
               </CelText>
             )}
             {isTransaction && (

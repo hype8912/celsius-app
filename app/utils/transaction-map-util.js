@@ -250,9 +250,9 @@ function getTransactionProps(transaction) {
     case TRANSACTION_TYPES.LOAN_INTEREST:
       return {
         title: () => "Loan Interest Payment",
-        color: STYLES.COLORS.GREEN,
+        color: STYLES.COLORS.RED,
         shortName: "LI",
-        statusText: "Credited",
+        statusText: "Debited",
       };
     case TRANSACTION_TYPES.DEPOSIT_PENDING:
       return {
