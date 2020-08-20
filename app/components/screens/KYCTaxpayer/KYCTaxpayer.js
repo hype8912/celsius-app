@@ -10,11 +10,10 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { MODALS } from "../../../constants/UI";
-import { PRIMETRUST_KYC_STATES } from "../../../constants/DATA";
 import SsnModal from "../../modals/SsnModal/SsnModal";
 import SocialSecurityNumber from "../../molecules/SocialSecurityNumber/SocialSecurityNumber";
 import apiUtil from "../../../utils/api-util";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isForPrimeTrustKYC, isUSCitizen } from "../../../utils/user-util";
 import API from "../../../constants/API";
 
 @connect(
@@ -83,14 +82,6 @@ class KYCTaxpayer extends Component {
     return usCitizen;
   };
 
-  isForPrimeTrust = () => {
-    const { formData, user } = this.props;
-    return (
-      PRIMETRUST_KYC_STATES.includes(formData.state) ||
-      PRIMETRUST_KYC_STATES.includes(user.state)
-    );
-  };
-
   submitTaxpayerInfo = async () => {
     const { actions, formData } = this.props;
     let userTaxInfo;
@@ -108,7 +99,7 @@ class KYCTaxpayer extends Component {
     const response = await actions.updateTaxpayerInfo(userTaxInfo);
 
     if (response.success) {
-      if (PRIMETRUST_KYC_STATES.includes(formData.state)) {
+      if (isForPrimeTrustKYC()) {
         actions.navigateTo("KYCPrimeTrustToU");
         actions.showMessage(
           "success",
@@ -145,7 +136,7 @@ class KYCTaxpayer extends Component {
       );
     }
 
-    if (!this.isForPrimeTrust()) {
+    if (!isForPrimeTrustKYC()) {
       return (
         <CelButton
           onPress={() => actions.openModal(MODALS.SSN_MODAL)}
@@ -163,11 +154,11 @@ class KYCTaxpayer extends Component {
 
   render() {
     const { updatingTaxInfo, isLoading } = this.state;
-    const { actions, user, formData } = this.props;
+    const { actions, user } = this.props;
 
     if (isLoading) return <LoadingScreen />;
 
-    const isPrimeTrustUser = PRIMETRUST_KYC_STATES.includes(formData.state);
+    const isPrimeTrustUser = isForPrimeTrustKYC();
 
     return (
       <RegularLayout>

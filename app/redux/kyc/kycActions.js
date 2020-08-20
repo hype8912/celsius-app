@@ -6,11 +6,12 @@ import { showMessage } from "../ui/uiActions";
 import userProfileService from "../../services/user-profile-service";
 import apiUtil from "../../utils/api-util";
 import { setFormErrors } from "../forms/formsActions";
-import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../../constants/DATA";
+import { KYC_STATUSES } from "../../constants/DATA";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import userKYCService from "../../services/user-kyc-service";
+import { isForPrimeTrustKYC } from "../../utils/user-util";
 
 export {
   updateProfileInfo,
@@ -513,7 +514,7 @@ function saveKYCDocuments() {
       dispatch(saveKYCDocumentsSuccess());
       dispatch(showMessage("success", "Successfully submitted KYC Documents!"));
 
-      if (formData.state && PRIMETRUST_KYC_STATES.includes(formData.state)) {
+      if (isForPrimeTrustKYC() && formData.documentType === "passport") {
         dispatch(NavActions.navigateTo("KYCAddressProof"));
       } else {
         dispatch(NavActions.navigateTo("KYCTaxpayer"));

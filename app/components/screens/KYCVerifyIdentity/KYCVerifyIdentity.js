@@ -16,6 +16,9 @@ import API from "../../../constants/API";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import PoAWarningModal from "../../modals/PoAWarningModal/PoAWarningModal";
+import { isForPrimeTrustKYC } from "../../../utils/user-util";
+import { MODALS } from "../../../constants/UI";
 
 @connect(
   state => ({
@@ -45,6 +48,25 @@ class KYCVerifyIdentity extends Component {
     actions.getKYCDocTypes();
     actions.getKYCDocuments();
   }
+
+  isSavingDocs = () => {
+    const { callsInProgress } = this.props;
+    return apiUtil.areCallsInProgress(
+      [API.SAVE_KYC_DOCUMENTS],
+      callsInProgress
+    );
+  };
+
+  onPressDocumentCard = async type => {
+    if (this.isSavingDocs()) return;
+
+    const { actions } = this.props;
+    if (type === "passport" && isForPrimeTrustKYC()) {
+      actions.openModal(MODALS.POA_WARNING_MODAL);
+    } else {
+      await this.selectDocument(type);
+    }
+  };
 
   selectDocument = async type => {
     const { actions, mobileSDKToken, user } = this.props;
@@ -92,6 +114,7 @@ class KYCVerifyIdentity extends Component {
       navigation,
       formData,
       callsInProgress,
+      actions,
     } = this.props;
 
     if (
@@ -130,13 +153,14 @@ class KYCVerifyIdentity extends Component {
         {availableDocs.map(d => (
           <Card
             key={d.value}
-            onPress={() => this.selectDocument(d.value)}
+            onPress={() => this.onPressDocumentCard(d.value)}
             padding="20 20 20 20"
             styles={{
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "flex-start",
             }}
+            opacity={this.isSavingDocs() ? 0.5 : 1}
           >
             <Icon
               height="30"
@@ -152,6 +176,14 @@ class KYCVerifyIdentity extends Component {
             </CelText>
           </Card>
         ))}
+
+        <PoAWarningModal
+          onNo={actions.closeModal}
+          onYes={() => {
+            this.selectDocument("passport");
+            actions.closeModal();
+          }}
+        />
       </RegularLayout>
     );
   }
