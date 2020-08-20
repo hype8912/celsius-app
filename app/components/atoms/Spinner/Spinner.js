@@ -23,7 +23,7 @@ class Spinner extends Component {
 
     this.state = {
       spinValue: new Animated.Value(0),
-      strokeColor: getColor(COLOR_KEYS.HEADLINE),
+      strokeColor: this.getColor(theme),
       opacity: this.getOpacity(theme),
     };
     this.animation = null;
@@ -42,6 +42,13 @@ class Spinner extends Component {
     if (!isNaN(opacity)) return opacity;
 
     return theme === THEMES.DARK ? 0.7 : 0.3;
+  };
+
+  getColor = () => {
+    const { color } = this.props;
+    if (color) return color;
+
+    return getColor(COLOR_KEYS.HEADLINE);
   };
 
   repeat = () => {

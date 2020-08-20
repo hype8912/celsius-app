@@ -4,6 +4,7 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -87,17 +88,17 @@ const base = {
   },
   bonus: {
     flexDirection: "row",
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     justifyContent: "space-evenly",
   },
   loan: {
     flexDirection: "row",
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     justifyContent: "space-evenly",
   },
   separator: {
     alignItems: "center",
-    backgroundColor: STYLES.COLORS.DARK_GRAY3,
+    backgroundColor: STYLES.COLORS.DARK_GRAY3, // TODO: missing COLOR_KEYS
     paddingVertical: 5,
   },
   tierCommon: {
@@ -107,14 +108,14 @@ const base = {
     alignItems: "center",
   },
   tierSilver: {
-    backgroundColor: STYLES.COLORS.MEDIUM_GRAY,
+    backgroundColor: STYLES.COLORS.MEDIUM_GRAY, // TODO: missing COLOR_KEYS
     borderTopLeftRadius: 3,
   },
   tierGold: {
-    backgroundColor: STYLES.COLORS.ORANGE,
+    backgroundColor: COLOR_KEYS.ALERT_STATE,
   },
   tierPlatinum: {
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
     borderTopRightRadius: 3,
   },
   tierData: {
@@ -130,31 +131,31 @@ const base = {
 const themed = {
   light: {
     minPercentage: {
-      backgroundColor: STYLES.COLORS.WHITE,
+      backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     },
     bonus: {
-      backgroundColor: STYLES.COLORS.WHITE,
+      backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     },
     loan: {
-      backgroundColor: STYLES.COLORS.WHITE,
+      backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     },
     separator: {
-      backgroundColor: STYLES.COLORS.MEDIUM_GRAY3,
+      backgroundColor: STYLES.COLORS.MEDIUM_GRAY3, // TODO: missing COLOR_KEYS
     },
     tierSilver: {
-      backgroundColor: STYLES.COLORS.MEDIUM_GRAY,
+      backgroundColor: STYLES.COLORS.MEDIUM_GRAY, // TODO: missing COLOR_KEYS
     },
   },
 
   dark: {
     minPercentage: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: STYLES.COLORS.DARK_HEADER, // TODO: missing COLOR_KEYS
     },
     bonus: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: STYLES.COLORS.DARK_HEADER, // TODO: missing COLOR_KEYS
     },
     loan: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
+      backgroundColor: STYLES.COLORS.DARK_HEADER, // TODO: missing COLOR_KEYS
     },
     separator: {
       backgroundColor: "rgb(95,105,122)",

@@ -44,7 +44,7 @@ class Graph extends React.Component {
     verticalPadding: heightPercentageToDP("2%"),
     labelWidth: widthPercentageToDP("20.33%"),
     cursorRadius: heightPercentageToDP("1.06%"),
-    backgroundColor: "#F3F3F3",
+    backgroundColor: COLOR_KEYS.INPUT_BORDER,
   };
 
   constructor(props) {

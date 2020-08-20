@@ -6,6 +6,8 @@ import Card from "../Card/Card";
 import CelText from "../CelText/CelText";
 import CoinIcon from "../CoinIcon/CoinIcon";
 import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const NoWithdrawalAddressCard = ({
   coinName,
@@ -44,8 +46,8 @@ const NoWithdrawalAddressCard = ({
             weight="400"
             color={
               !disabledPress
-                ? STYLES.COLORS.CELSIUS_BLUE
-                : STYLES.COLORS.CELSIUS_BLUE_OPACITY5
+                ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                : STYLES.COLORS.CELSIUS_BLUE_OPACITY5 // TODO: Missing COLOR_KEY
             }
             onPress={!disabledPress ? onPress : () => {}}
           >

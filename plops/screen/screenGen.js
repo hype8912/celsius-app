@@ -19,5 +19,11 @@ module.exports = {
         "app/components/screens/{{pascalCase name}}/{{pascalCase name}}.styles.js",
       templateFile: "plops/component/component.styles.js.txt",
     },
+    {
+      type: "add",
+      path:
+        "app/components/screens/{{pascalCase name}}/{{pascalCase name}}.stories.js",
+      templateFile: "plops/screen/stories.js.txt",
+    },
   ],
 };

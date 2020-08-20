@@ -8,14 +8,11 @@ const base = {
 }
 
 const themed = {
-    light: {
-    },
+    light: {},
 
-    dark: {
-    },
+    dark: {},
 
-    unicorn: {
-    }
+    unicorn: {}
 }
 
 const {{pascalCase name}}Style = () => getThemedStyle(base, themed);

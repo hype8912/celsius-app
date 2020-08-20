@@ -3,6 +3,7 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -16,7 +17,7 @@ const base = {
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.WHITE,
   },
   image: {
     width: widthPercentageToDP("10%"),

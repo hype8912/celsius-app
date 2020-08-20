@@ -213,7 +213,7 @@ class GoogleReCaptcha extends Component {
         automaticallyAdjustContentInsets
         style={[
           {
-            backgroundColor: "transparent",
+            backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
             width: "100%",
             height: captchaHeight,
           },

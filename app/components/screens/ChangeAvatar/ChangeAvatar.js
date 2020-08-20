@@ -11,12 +11,13 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import Spinner from "../../atoms/Spinner/Spinner";
-import STYLES from "../../../constants/STYLES";
 import ChangeAvatarStyle from "./ChangeAvatar.styles";
 import {
   ALL_PERMISSIONS,
   requestForPermission,
 } from "../../../utils/device-permissions";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { API_URL } = Constants;
 
@@ -216,7 +217,7 @@ class ChangeAvatar extends Component {
                 paddingTop: 20,
                 borderRadius: 50,
                 borderWidth: 5,
-                borderColor: STYLES.COLORS.WHITE,
+                borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
               }}
             >
               <Spinner />
@@ -228,7 +229,7 @@ class ChangeAvatar extends Component {
                 height: 100,
                 borderRadius: 50,
                 borderWidth: 5,
-                borderColor: STYLES.COLORS.WHITE,
+                borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
               }}
               source={
                 profilePicture
@@ -243,7 +244,7 @@ class ChangeAvatar extends Component {
           </CelButton>
         </View>
         <Separator
-          color={STYLES.COLORS.DARK_GRAY}
+          color={getColor(COLOR_KEYS.SEPARATORS)}
           opacity={0.1}
           textOpacity={0.5}
           text="OR CHOOSE ONE BELOW"

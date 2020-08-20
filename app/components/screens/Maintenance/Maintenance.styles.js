@@ -6,7 +6,7 @@ const base = {
     flex: 1,
   },
   background: {
-    backgroundColor: STYLES.COLORS.GRAY,
+    backgroundColor: STYLES.COLORS.GRAY, // TODO: missing COLOR_KEYS
   },
 };
 
