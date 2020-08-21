@@ -278,10 +278,6 @@ class Community extends Component {
               buttonType: "Total AUM",
               icon: "Total",
             },
-            {
-              buttonType: "Col. & Cash",
-              icon: "PiggyBank",
-            },
           ]}
         />
 

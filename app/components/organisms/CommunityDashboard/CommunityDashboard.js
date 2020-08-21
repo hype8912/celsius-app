@@ -118,15 +118,6 @@ class CommunityDashboard extends Component {
       explanationText = "Total Assets Under Management";
       number = formatter.usd(TOTAL_ASSETS_AMOUNT.TOTAL_AUM, { precision: 0 });
     }
-    if (
-      name === `ASSETS AS OF ${TOTAL_ASSETS_AMOUNT.DATE}` &&
-      button === "Col. & Cash"
-    ) {
-      explanationText = "Collateral and Cash";
-      number = formatter.usd(TOTAL_ASSETS_AMOUNT.TOTAL_COLLATERAL_AND_CASH, {
-        precision: 0,
-      });
-    }
 
     this.setState({
       activeButton: button,
