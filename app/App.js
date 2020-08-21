@@ -54,8 +54,6 @@ class App extends Component {
     apiUtil.initInterceptors();
     store.dispatch(branchUtil.initBranch());
 
-    await appUtil.updateCelsiusApp();
-
     disableAccessibilityFontScaling();
     store.dispatch(actions.isGoodForAnimations());
     store.dispatch(actions.getGeolocation());
@@ -74,15 +72,16 @@ class App extends Component {
       "fontFamily",
       Font.processFontFamily
     );
-
-    appUtil.initializeThirdPartyServices();
     appUtil.pollBackendStatus();
+    await appUtil.initializeThirdPartyServices();
+
+    const updateInProgress = await appUtil.updateCelsiusApp();
+    if (updateInProgress) return;
 
     const token = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
     if (!token) {
       return store.dispatch(actions.navigateTo("Welcome"));
     }
-
     await appUtil.checkAndRefreshAuthToken(token);
 
     await store.dispatch(actions.getInitialCelsiusData());
