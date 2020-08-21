@@ -31,14 +31,13 @@ class Home extends Component {
   async componentDidMount() {
     const { actions } = this.props;
 
+    await actions.getWalletSummary();
     await actions.getUserAppBootstrap();
 
     mixpanelAnalytics.sessionStarted("Init app");
     await actions.setBannerProps();
 
     actions.claimAllBranchTransfers();
-
-    await actions.getWalletSummary();
 
     const { user } = this.props;
     if (user && user.id && !user.has_pin) {

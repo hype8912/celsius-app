@@ -135,9 +135,20 @@ class DepositInfoModal extends Component {
     if (type === "USDT ERC20") {
       return {
         image: { uri: coinName.image_url },
-        title: `Please ensure only Tether ERC20 tokens are deposited to this address`,
+        title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
         description:
-          "Sending other USDT coins to this address (the Omni Layer version) may result in the permanent loss of funds.",
+          "Please ensure only Tether ERC20 tokens are deposited to this address. Sending coins other than USDT ERC20 to this address may result in the permanent loss of funds.",
+        buttonText: "I Understand",
+        coinName,
+      };
+    }
+
+    if (type === "MATIC") {
+      return {
+        image: { uri: coinName.image_url },
+        title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
+        description:
+          "This address is only for MATIC ERC20 tokens. Sending other MATIC coins to this address may result in a permanent loss of funds.",
         buttonText: "I Understand",
         coinName,
       };

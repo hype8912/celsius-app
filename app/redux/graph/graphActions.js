@@ -4,11 +4,6 @@ import { showMessage } from "../ui/uiActions";
 import { apiError, startApiCall } from "../api/apiActions";
 import graphService from "../../services/graph-service";
 
-// TODO add JSDoc
-// TODO add JSDoc
-// TODO add JSDoc
-// TODO add JSDoc
-// TODO add JSDoc
 export {
   getTotalWalletBalanceData,
   getCoinWalletBalanceData,

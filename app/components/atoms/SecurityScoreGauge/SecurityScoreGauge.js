@@ -79,7 +79,6 @@ class SecurityScoreGauge extends Component {
     }
   };
 
-  // TODO enable fix now btn when fix now flow is finished
   render() {
     const style = SecurityScoreGaugeStyle();
     const gaugeProps = this.getGaugeProps();

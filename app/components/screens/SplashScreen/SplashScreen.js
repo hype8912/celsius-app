@@ -5,6 +5,7 @@ import { Image, View, Animated, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import SplashScreenStyle from "./SplashScreen.styles";
 import * as appActions from "../../../redux/actions";
+import appUtil from "../../../utils/app-util";
 
 @connect(
   state => ({
@@ -23,6 +24,7 @@ class CustomSplashScreen extends Component {
       textTranslateAnimation: new Animated.Value(0),
       textOpacityAnimation: new Animated.Value(0),
       shouldShowBlueLogo: false,
+      shouldUpdate: true,
     };
   }
 
@@ -33,7 +35,6 @@ class CustomSplashScreen extends Component {
   });
 
   scale = () => {
-    SplashScreen.hide();
     Animated.timing(this.state.scaleAnimation, {
       toValue: 0,
       duration: this.animationDuration,
@@ -63,7 +64,12 @@ class CustomSplashScreen extends Component {
     ]).start();
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const shouldUpdate = await appUtil.shouldUpdateCelsiusApp();
+    this.setState({ shouldUpdate });
+    SplashScreen.hide();
+    if (shouldUpdate) return;
+
     setTimeout(this.scale, 200);
     setTimeout(() => {
       this.setState({ shouldShowBlueLogo: true });
@@ -79,12 +85,13 @@ class CustomSplashScreen extends Component {
 
   render() {
     const { history } = this.props;
+    const { shouldUpdate } = this.state;
     const logoImage = this.state.shouldShowBlueLogo
       ? require("../../../../assets/images/icons/cel.png")
       : require("../../../../assets/images/icons/cel-white.png");
     const style = SplashScreenStyle();
 
-    if (!history.length) {
+    if (!history.length || shouldUpdate) {
       return (
         <View style={style.blueStaticContainer}>
           <Image

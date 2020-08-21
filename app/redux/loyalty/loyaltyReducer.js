@@ -1,10 +1,7 @@
 import ACTIONS from "../../constants/ACTIONS";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 const initialState = {
-  loyaltyInfo: null, // TODO move to loyaltyReducer
+  loyaltyInfo: null,
 };
 
 export default (state = initialState, action) => {

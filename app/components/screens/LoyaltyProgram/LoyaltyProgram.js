@@ -44,7 +44,6 @@ class LoyaltyProgram extends Component {
     actions.getUserAppSettings();
   }
 
-  // TODO: move to organism
   renderLoyaltyHeader = () => {
     const { loyaltyInfo, walletSummary } = this.props;
     const style = LoyaltyProgramStyle();
@@ -99,7 +98,6 @@ class LoyaltyProgram extends Component {
     if (!loyaltyInfo || !appSettings) return <LoadingScreen />;
     const hasTier = loyaltyInfo.tier.title !== "NONE";
 
-    // Todo(ns) make text below(and calculation) PieProgressBar visible and useful
     return (
       <RegularLayout padding={"0 0 100 0"}>
         <View>

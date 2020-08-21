@@ -2,7 +2,7 @@ import axios from "axios";
 import apiUrl from "./api-url";
 
 const communityService = {
-  getCommunityStatistics, // TODO add JSDoc
+  getCommunityStatistics,
 };
 
 /**

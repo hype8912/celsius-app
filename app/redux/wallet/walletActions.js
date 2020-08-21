@@ -90,9 +90,6 @@ function getAllCoinWithdrawalAddresses() {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function getCoinAddressSuccess(address) {
   return {
     type: ACTIONS.GET_COIN_ADDRESS_SUCCESS,
@@ -187,9 +184,6 @@ function setCoinWithdrawalAddressLabel(coin, label) {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function getAllCoinWithdrawalAddressesSuccess(allWalletAddresses) {
   return {
     type: ACTIONS.GET_ALL_COIN_WITHDRAWAL_ADDRESSES_SUCCESS,
@@ -207,18 +201,13 @@ function getNoWithdrawalAddressesSuccess(noWithdrawalAddresses) {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function setCoinWithdrawalAddressLabels(walletAddressLabels) {
   return {
     type: ACTIONS.SET_COIN_WITHDRAWAL_ADDRESS_LABELS,
     walletAddressLabels,
   };
 }
-/**
- * TODO add JSDoc
- */
+
 function setCoinWithdrawalAddressSuccess(coin, address) {
   return {
     type: ACTIONS.SET_COIN_WITHDRAWAL_ADDRESS_SUCCESS,

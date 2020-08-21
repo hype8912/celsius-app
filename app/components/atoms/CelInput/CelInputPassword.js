@@ -110,30 +110,27 @@ class CelInputPassword extends Component {
             {!!value && showPasswordTooltip && activeField === field && (
               <>
                 <View
-                  style={
-                    // TODO: move to style after create CelInputPassword component
-                    {
-                      position: "absolute",
-                      width: 0,
-                      height: 0,
-                      marginLeft: 145,
-                      top: !toolTipPositionTop ? -10 : "auto",
-                      bottom: toolTipPositionTop ? -10 : "auto",
-                      borderLeftWidth: 10,
-                      borderRightWidth: 10,
-                      borderBottomWidth: 10,
-                      borderStyle: "solid",
-                      backgroundColor: "transparent",
-                      borderLeftColor: "transparent",
-                      borderRightColor: "transparent",
-                      borderBottomColor: STYLES.COLORS.DARK_GRAY,
-                      transform: [
-                        {
-                          rotate: toolTipPositionTop ? "180deg" : "0deg",
-                        },
-                      ],
-                    }
-                  }
+                  style={{
+                    position: "absolute",
+                    width: 0,
+                    height: 0,
+                    marginLeft: 145,
+                    top: !toolTipPositionTop ? -10 : "auto",
+                    bottom: toolTipPositionTop ? -10 : "auto",
+                    borderLeftWidth: 10,
+                    borderRightWidth: 10,
+                    borderBottomWidth: 10,
+                    borderStyle: "solid",
+                    backgroundColor: "transparent",
+                    borderLeftColor: "transparent",
+                    borderRightColor: "transparent",
+                    borderBottomColor: STYLES.COLORS.DARK_GRAY,
+                    transform: [
+                      {
+                        rotate: toolTipPositionTop ? "180deg" : "0deg",
+                      },
+                    ],
+                  }}
                 />
                 <PassMeterTooltip password={value} />
               </>

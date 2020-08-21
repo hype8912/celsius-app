@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
 
 import cryptoUtil from "../../../utils/crypto-util";
-import {
-  getTheme,
-  heightPercentageToDP,
-  widthPercentageToDP,
-} from "../../../utils/styles-util";
+import { getTheme } from "../../../utils/styles-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import * as appActions from "../../../redux/actions";
 import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
@@ -66,7 +62,7 @@ class Deposit extends Component {
   constructor(props) {
     super(props);
 
-    const { depositCompliance, currencies } = props;
+    const { depositCompliance, currencies, actions, navigation } = props;
 
     const coinSelectItems =
       currencies &&
@@ -76,6 +72,11 @@ class Deposit extends Component {
           label: `${formatter.capitalize(c.name)} (${c.short})`,
           value: c.short,
         }));
+
+    const currencyFromNav = navigation.getParam("coin");
+    actions.updateFormField("selectedCoin", currencyFromNav || "ETH");
+
+    this.fetchAddress(currencyFromNav || "ETH");
 
     this.state = {
       isFetchingAddress: false,
@@ -152,25 +153,10 @@ class Deposit extends Component {
     };
   };
 
-  getDefaultSelectedCoin = () => {
-    const { formData, navigation } = this.props;
-    const currencyFromNav = navigation.getParam("coin");
-
-    // If nothing comes through navigation and nothing stored in the redux state,
-    // use ETH as default selected coin
-    let defaultSelectedCoin = "ETH";
-
-    if (currencyFromNav) {
-      defaultSelectedCoin = currencyFromNav;
-    } else if (formData.selectedCoin) {
-      defaultSelectedCoin = formData.selectedCoin;
-    }
-    return defaultSelectedCoin;
-  };
-
   handleCoinSelect = async (field, item) => {
     const { actions } = this.props;
-    await actions.updateFormField(field, item);
+    actions.openModal(MODALS.DEPOSIT_INFO_MODAL);
+    actions.updateFormField(field, item);
     await this.fetchAddress(item);
   };
 
@@ -329,29 +315,6 @@ class Deposit extends Component {
     </View>
   );
 
-  renderETCCard = () => (
-    <View style={DepositStyle().container}>
-      <Card padding="20 20 20 20">
-        <Image
-          style={{
-            alignSelf: "center",
-            width: widthPercentageToDP("10%"),
-            height: heightPercentageToDP("10%"),
-            resizeMode: "contain",
-          }}
-          source={require("../../../../assets/images/error.png")}
-        />
-        <CelText type="H3" align="center" weight="bold" margin="0 0 20 0">
-          Transfers Not Accepted
-        </CelText>
-        <CelText align="center">
-          We are not accepting transfers of this coin at this time. Please check
-          back as the situation should be resolved soon.
-        </CelText>
-      </Card>
-    </View>
-  );
-
   render() {
     const {
       actions,
@@ -368,10 +331,9 @@ class Deposit extends Component {
       destinationTag,
       memoId,
     } = this.getAddress(formData.selectedCoin);
-    const coin = navigation.getParam("coin");
     const isMarginCall = navigation.getParam("isMarginCall");
     const reason = navigation.getParam("reason");
-
+    const coin = formData.selectedCoin;
     const {
       useAlternateAddress,
       isFetchingAddress,
@@ -412,8 +374,6 @@ class Deposit extends Component {
       return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }} />;
     }
 
-    const isETC = formData.selectedCoin === "ETC";
-
     return (
       <RegularLayout padding={"20 0 100 0"}>
         {isMarginCall ? this.renderPayCard() : null}
@@ -426,13 +386,13 @@ class Deposit extends Component {
           onChange={this.handleCoinSelect}
           coin={formData.selectedCoin}
           field="selectedCoin"
-          defaultSelected={this.getDefaultSelectedCoin()}
           availableCoins={coinSelectItems}
           navigateTo={actions.navigateTo}
         />
 
-        {isETC && this.renderETCCard()}
-        {address && !isFetchingAddress && !isETC ? (
+        {navigation.getParam("isMarginWarning") ? this.renderPayCard() : null}
+
+        {address && !isFetchingAddress ? (
           <View style={styles.container}>
             {destinationTag || memoId ? (
               <Card>
