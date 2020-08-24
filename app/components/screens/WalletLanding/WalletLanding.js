@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, BackHandler } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  BackHandler,
+  AsyncStorage,
+} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withNavigationFocus } from "react-navigation";
@@ -10,7 +15,11 @@ import WalletDetailsCard from "../../organisms/WalletDetailsCard/WalletDetailsCa
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
 import CelPayReceivedModal from "../../modals/CelPayReceivedModal/CelPayReceivedModal";
-import { MODALS, WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
+import {
+  MODALS,
+  THEMES,
+  WALLET_LANDING_VIEW_TYPES,
+} from "../../../constants/UI";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import ComingSoonCoins from "../../molecules/ComingSoonCoins/ComingSoonCoins";
 import CoinCards from "../../organisms/CoinCards/CoinCards";
@@ -25,6 +34,8 @@ import { assignPushNotificationToken } from "../../../utils/push-notifications-u
 import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
 import animationsUtil from "../../../utils/animations-util";
 import { COMING_SOON_COINS } from "../../../constants/DATA";
+import IntroduceNewThemeModal from "../../modals/IntroduceNewThemeModal/IntroduceNewThemeModal";
+import { getTheme } from "../../../utils/styles-util";
 
 @connect(
   state => {
@@ -91,14 +102,24 @@ class WalletLanding extends Component {
       hodlStatus,
     } = this.props;
     actions.changeWalletHeaderContent();
+    const dontShowIntroduceNewTheme = await AsyncStorage.getItem(
+      "DONT_SHOW_INTRODUCE_NEW_THEME"
+    );
     setTimeout(() => {
       if (
-        !previouslyOpenedModals.HODL_MODE_MODAL &&
-        hodlStatus.created_by === "backoffice"
-      )
-        actions.openModal(MODALS.HODL_MODE_MODAL);
+        dontShowIntroduceNewTheme !== "DONT_SHOW" &&
+        getTheme() !== THEMES.UNICORN
+      ) {
+        actions.openModal(MODALS.INTRODUCE_NEW_THEME_MODAL);
+      } else {
+        if (
+          !previouslyOpenedModals.HODL_MODE_MODAL &&
+          hodlStatus.created_by === "backoffice"
+        )
+          actions.openModal(MODALS.HODL_MODE_MODAL);
 
-      actions.getLoanAlerts();
+        actions.getLoanAlerts();
+      }
     }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -287,6 +308,7 @@ class WalletLanding extends Component {
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <HodlModeModal />
         <LoanAlertsModalWrapper />
+        <IntroduceNewThemeModal />
       </RegularLayout>
     );
   }

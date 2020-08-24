@@ -49,6 +49,7 @@ class CelText extends Component {
     strikethrough: PropTypes.bool,
     theme: PropTypes.oneOf(Object.values(THEMES)),
     link: PropTypes.bool,
+    underline: PropTypes.bool,
   };
   static defaultProps = {
     type: "H5",
@@ -59,6 +60,7 @@ class CelText extends Component {
     italic: false,
     strikethrough: false,
     link: false,
+    underline: false,
   };
 
   getFontSize = () => {
@@ -111,7 +113,7 @@ class CelText extends Component {
   };
 
   getFontStyle = () => {
-    const { margin, align, strikethrough, theme, link } = this.props;
+    const { margin, align, strikethrough, theme, link, underline } = this.props;
     const cmpStyle = CelTextStyle(theme);
     const fontSize = this.getFontSize();
     const fontFamily = { fontFamily: this.getFontFamily() };
@@ -119,10 +121,17 @@ class CelText extends Component {
     const marginStyle = getMargins(margin);
     const alignStyle = { textAlign: align };
     const linkStyle = link ? cmpStyle.link : null;
-    const decorationStyle = strikethrough
-      ? { textDecorationLine: "line-through", textDecorationStyle: "solid" }
-      : null;
-
+    let decorationStyle;
+    if (strikethrough) {
+      decorationStyle = {
+        textDecorationLine: "line-through",
+        textDecorationStyle: "solid",
+      };
+    } else if (underline) {
+      decorationStyle = { textDecorationLine: "underline" };
+    } else {
+      decorationStyle = null;
+    }
     return [
       cmpStyle.text,
       colorStyle,

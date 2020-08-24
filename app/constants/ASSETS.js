@@ -234,6 +234,7 @@ const CACHE_IMAGES = [
   require(`../../assets/images/bankToTheFuture2.png`),
   require(`../../assets/images/bankToTheFuture3.png`),
   require(`../../assets/images/target-missed.png`),
+  require("../../assets/images/sunset-mockup-02.png"),
 ];
 
 export default {
