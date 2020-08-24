@@ -273,9 +273,8 @@ const LOAN_INTEREST_COINS = [
 ];
 
 const TOTAL_ASSETS_AMOUNT = {
-  DATE: "24 JULY 2020", // write in same format every week
-  TOTAL_AUM: 878362000,
-  TOTAL_COLLATERAL_AND_CASH: 455101156,
+  DATE: "19 AUGUST 2020", // write in same format every week
+  TOTAL_AUM: 1115000000,
 };
 
 const BUY_COINS_PAYMENT_STATUSES = {
