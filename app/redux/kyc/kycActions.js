@@ -188,13 +188,12 @@ function updateProfileTaxpayerInfoSuccess(taxpayerInfo) {
 
 /**
  * Gets users KYC documents
- * @param {Object} documents
  */
-function getKYCDocuments(documents) {
+function getKYCDocuments() {
   return async dispatch => {
     dispatch(startApiCall(API.GET_KYC_DOCUMENTS));
     try {
-      const res = await userKYCService.getKYCDocuments(documents);
+      const res = await userKYCService.getKYCDocuments();
       dispatch(getKYCDocumentsSuccess(res.data));
     } catch (err) {
       dispatch(showMessage("error", err.msg));

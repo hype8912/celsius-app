@@ -2,23 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Image, View } from "react-native";
-import store from "../../../redux/store";
 
 import * as appActions from "../../../redux/actions";
-import { navigateTo } from "../../../redux/nav/navActions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
-import apiUtil from "../../../utils/api-util";
-import API from "../../../constants/API";
-import { PRIMETRUST_KYC_STATES } from "../../../constants/DATA";
+import { isForPrimeTrustKYC } from "../../../utils/user-util";
 
 @connect(
   state => ({
-    formData: state.forms.formData,
-    callsInProgress: state.api.callsInProgress,
-    kycDocuments: state.user.kycDocuments,
+    kycDocuments: state.kyc.kycDocuments,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -29,9 +22,6 @@ class KYCCheckPhotos extends Component {
   static navigationOptions = () => ({
     customCenterComponent: { steps: 7, currentStep: 4, flowProgress: false },
     headerSameColor: true,
-    customBack: () => {
-      store.dispatch(navigateTo("KYCAddressInfo"));
-    },
     gesturesEnabled: false,
   });
 
@@ -47,57 +37,10 @@ class KYCCheckPhotos extends Component {
     return source;
   };
 
-  retakeFrontPhoto = () => {
-    const { actions } = this.props;
+  onContinue = () => {
+    const { actions, kycDocuments } = this.props;
 
-    actions.activateCamera({
-      cameraField: "front",
-      cameraHeading: "Capture the front of your document",
-      cameraCopy:
-        "Center the front of your document in the marked area. Be sure the photo is clear and the document is easy to read.",
-      cameraType: "back",
-      mask: "document",
-    });
-
-    actions.navigateTo("CameraScreen", {
-      hideBack: true,
-      onSave: frontPhoto => {
-        actions.updateFormField("front", frontPhoto);
-        actions.navigateTo("KYCCheckPhotos");
-      },
-    });
-  };
-
-  retakeBackPhoto = () => {
-    const { actions } = this.props;
-
-    actions.activateCamera({
-      cameraField: "back",
-      cameraHeading: "Capture the back of your document ",
-      cameraCopy:
-        "Center the back of your document in the marked area. Be sure the photo is clear and the document is easy to read.",
-      cameraType: "back",
-      mask: "document",
-    });
-
-    actions.navigateTo("CameraScreen", {
-      hideBack: true,
-      onSave: backPhoto => {
-        actions.updateFormField("back", backPhoto);
-        actions.navigateTo("KYCCheckPhotos");
-      },
-    });
-  };
-
-  submitKYCDocs = () => {
-    const { actions, formData } = this.props;
-
-    if (formData.front || formData.back) {
-      actions.createKYCDocs();
-    } else if (
-      formData.state &&
-      PRIMETRUST_KYC_STATES.includes(formData.state)
-    ) {
+    if (isForPrimeTrustKYC() && kycDocuments.type === "passport") {
       actions.navigateTo("KYCAddressProof");
     } else {
       actions.navigateTo("KYCTaxpayer");
@@ -105,24 +48,10 @@ class KYCCheckPhotos extends Component {
   };
 
   render() {
-    const { formData, actions, callsInProgress, kycDocuments } = this.props;
+    const { actions, kycDocuments } = this.props;
 
-    const isLoading = apiUtil.areCallsInProgress(
-      [API.CREATE_KYC_DOCUMENTS],
-      callsInProgress
-    );
-
-    const frontImage = this.getImageSource(
-      formData.front || (kycDocuments && kycDocuments.front)
-    );
-    const backImage = this.getImageSource(
-      formData.back || (kycDocuments && kycDocuments.back)
-    );
-    const onlyFrontPhoto =
-      (formData.documentType && formData.documentType === "passport") ||
-      (!formData.documentType &&
-        kycDocuments &&
-        kycDocuments.type === "passport");
+    const frontImage = this.getImageSource(kycDocuments.front);
+    const backImage = this.getImageSource(kycDocuments.back);
 
     return (
       <RegularLayout>
@@ -141,39 +70,28 @@ class KYCCheckPhotos extends Component {
         >
           <Image
             resizeMode="contain"
-            source={frontImage}
             style={{
-              width: STYLES.CAMERA_MASK_SIZES.document.width - 5,
-              height: STYLES.CAMERA_MASK_SIZES.document.height - 5,
-              overflow: "hidden",
+              width: 300,
+              height: 180,
               borderRadius: 15,
             }}
+            source={frontImage}
           />
 
-          <CelButton basic onPress={this.retakeFrontPhoto} margin="15 0 20 0">
-            Retake
-          </CelButton>
-
-          {!onlyFrontPhoto && (
+          {backImage && (
             <View>
               <Image
                 resizeMode="contain"
                 source={backImage}
                 style={{
-                  width: STYLES.CAMERA_MASK_SIZES.document.width - 5,
-                  height: STYLES.CAMERA_MASK_SIZES.document.height - 5,
+                  width: 300,
+                  height: 180,
                   overflow: "hidden",
                   borderRadius: 15,
+                  borderWidth: 1,
+                  borderColor: "red",
                 }}
               />
-
-              <CelButton
-                basic
-                onPress={this.retakeBackPhoto}
-                margin="15 0 20 0"
-              >
-                Retake
-              </CelButton>
             </View>
           )}
         </View>
@@ -186,15 +104,10 @@ class KYCCheckPhotos extends Component {
           }
           margin="15 0 30 0"
         >
-          Use another document
+          Resubmit document
         </CelButton>
 
-        <CelButton
-          onPress={this.submitKYCDocs}
-          iconRight="IconArrowRight"
-          loading={isLoading}
-          disabled={isLoading}
-        >
+        <CelButton iconRight="IconArrowRight" onPress={this.onContinue}>
           Continue
         </CelButton>
       </RegularLayout>

@@ -24,7 +24,7 @@ import { MODALS } from "../../../constants/UI";
   state => ({
     activeScreen: state.nav.activeScreen,
     formData: state.forms.formData,
-    kycDocuments: state.user.kycDocuments,
+    kycDocuments: state.kyc.kycDocuments,
     callsInProgress: state.api.callsInProgress,
     kycDocTypes: state.kyc.kycDocTypes,
     user: state.user.profile,
@@ -112,7 +112,6 @@ class KYCVerifyIdentity extends Component {
       user,
       kycDocuments,
       navigation,
-      formData,
       callsInProgress,
       actions,
     } = this.props;
@@ -132,10 +131,7 @@ class KYCVerifyIdentity extends Component {
     }
 
     const shouldChangeDoc = navigation.getParam("shouldChangeDoc");
-    if (
-      (formData.front || (kycDocuments && kycDocuments.front)) &&
-      !shouldChangeDoc
-    ) {
+    if (!shouldChangeDoc && kycDocuments && kycDocuments.front) {
       return <KYCCheckPhotos />;
     }
     const availableDocs = mapDocs(kycDocTypes[user.citizenship]);
