@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Linking } from "react-native";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 
@@ -14,6 +15,8 @@ import {
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import TierCard from "../../organisms/TierCard/TierCard";
 import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
+import CelText from "../../atoms/CelText/CelText";
+import STYLES from "../../../constants/STYLES";
 
 @connect(
   state => ({
@@ -121,8 +124,24 @@ class PaymentCel extends Component {
           loading={isLoading}
           disabled={isLoading}
         >
-          Pay with CEL
+          Confirm Payment
         </CelButton>
+        <CelText
+          margin={"20 0 20 0"}
+          align={"center"}
+          weight={"300"}
+          type={"H4"}
+        >
+          Need help? Contact our
+          <CelText
+            weight={"300"}
+            type={"H4"}
+            color={STYLES.COLORS.CELSIUS_BLUE}
+            onPress={() => Linking.openURL("mailto:loans@celsius.network")}
+          >
+            {" Lending Support."}
+          </CelText>
+        </CelText>
         <ConfirmPaymentModal loanId={id} type={"CRYPTO"} cryptoType={"CEL"} />
       </RegularLayout>
     );

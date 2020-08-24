@@ -447,8 +447,10 @@ class PaymentCard extends Component {
                 )}
               </View>
 
+              <Separator margin={"10 0 0 0"} />
+
               {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
-                <View style={style.textContainer}>
+                <View style={[{ flexWrap: "wrap" }, style.textContainer]}>
                   <CelText weight={"300"} align="left">
                     In wallet:{" "}
                   </CelText>

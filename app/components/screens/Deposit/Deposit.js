@@ -505,18 +505,6 @@ class Deposit extends Component {
           <View>{!isMarginCall && this.renderPayCard()}</View>
         ) : (
           <View>
-            {cryptoUtil.buyInApp(formData.selectedCoin) && (
-              <CelText
-                margin={"20 0 20 0"}
-                align={"center"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
-                type={"H4"}
-                weight={"300"}
-                onPress={() => actions.navigateTo("GetCoinsLanding")}
-              >
-                {cryptoUtil.provideText(formData.selectedCoin)}
-              </CelText>
-            )}
             <RateInfoCard
               style={styles.rateInfoCard}
               coin={coinInfo}
@@ -525,6 +513,19 @@ class Deposit extends Component {
               interestCompliance={interestCompliance}
             />
           </View>
+        )}
+
+        {cryptoUtil.buyInApp(formData.selectedCoin) && (
+          <CelText
+            margin={"20 0 20 0"}
+            align={"center"}
+            color={STYLES.COLORS.CELSIUS_BLUE}
+            type={"H4"}
+            weight={"300"}
+            onPress={() => actions.navigateTo("GetCoinsLanding")}
+          >
+            {cryptoUtil.provideText(formData.selectedCoin)}
+          </CelText>
         )}
 
         {isFetchingAddress && this.renderLoader()}

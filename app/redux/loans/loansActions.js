@@ -65,6 +65,14 @@ function applyForALoan() {
       const res = await loansService.apply(loanApplication, verification);
       dispatch({ type: ACTIONS.APPLY_FOR_LOAN_SUCCESS });
 
+      dispatch(
+        navigateTo("LoanRequestDetails", {
+          id: res.data.loan.id,
+          hideBack: true,
+        })
+      );
+      dispatch(showMessage("success", "Loan created successfully!"));
+
       const allLoans = await loansService.getAllLoans();
 
       dispatch({
@@ -74,14 +82,6 @@ function applyForALoan() {
       });
 
       dispatch(setActiveLoan(res.data.loan.id));
-
-      dispatch(
-        navigateTo("LoanRequestDetails", {
-          id: res.data.loan.id,
-          hideBack: true,
-        })
-      );
-      dispatch(showMessage("success", "Loan created successfully!"));
 
       if (
         Number(formData.loanAmount) <= Number(automaticLoanLimit) &&

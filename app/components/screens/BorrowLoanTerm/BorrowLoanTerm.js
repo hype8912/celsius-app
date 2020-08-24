@@ -85,7 +85,7 @@ class BorrowLoanTerm extends Component {
         <CelButton
           margin="50 0 30 0"
           onPress={() => {
-            actions.navigateTo("ConfirmYourLoan");
+            actions.navigateTo("BorrowLoanConfirm");
             mixpanelAnalytics.loanTerms(formData.termOfLoan);
           }}
           iconRight="IconArrowRight"
