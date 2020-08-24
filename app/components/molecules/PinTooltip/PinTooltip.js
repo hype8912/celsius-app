@@ -22,7 +22,7 @@ class PinTooltip extends Component {
   static defaultProps = {
     showTooltip: true,
     toolTipPositionTop: false,
-    positionTop: 220,
+    positionTop: 240,
     positionLeft: 30,
     positionRight: 30,
   };
