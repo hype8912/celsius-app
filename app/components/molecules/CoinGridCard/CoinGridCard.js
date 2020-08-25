@@ -14,6 +14,7 @@ import interestUtil from "../../../utils/interest-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { isUSCitizen } from "../../../utils/user-util";
 
 const GraphLight = require("../../../../assets/images/placeholders/graph-light.png");
 const GraphDark = require("../../../../assets/images/placeholders/graph-dark.png");
@@ -102,14 +103,13 @@ class CoinGridCard extends Component {
     const shouldShowGraph =
       graphData && dateArray.length > 0 && priceArray.length > 0;
 
-    const coinInterest = interestUtil.getUserInterestForCoin(coin.short);
-    const isBelowThreshold = interestUtil.isBelowThreshold(coin.short);
-    const specialRate = isBelowThreshold
-      ? coinInterest.specialApyRate
-      : coinInterest.apyRate;
-    const isInCel = !coinInterest.inCEL
-      ? coinInterest.compound_rate
-      : specialRate;
+    const interestRate = interestUtil.getUserInterestForCoin(coin.short);
+
+    let isInCel;
+    isInCel = !interestRate.inCEL
+      ? interestRate.compound_rate
+      : interestRate.rateInCel;
+    if (isUSCitizen()) isInCel = interestRate.rateInCel;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
 
     return (
@@ -121,7 +121,7 @@ class CoinGridCard extends Component {
                 <CelText weight="300" type="H6">
                   {displayName}
                 </CelText>
-                {coinInterest.eligible && (
+                {interestRate.eligible && (
                   <CelText color={STYLES.COLORS.GREEN} type="H7">
                     {formatter.percentageDisplay(isInCel)}
                   </CelText>

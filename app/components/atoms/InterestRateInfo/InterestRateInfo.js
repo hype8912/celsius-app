@@ -136,9 +136,7 @@ class InterestRateInfo extends Component {
                   CEL
                 </CelText>
                 <CelText type={"H7"} weight="bold" style={styles.celRateText}>
-                  {formatter.percentageDisplay(
-                    interestRate.specialApyRate || interestRate.apyRate
-                  )}
+                  {formatter.percentageDisplay(interestRate.rateInCel)}
                 </CelText>
               </View>
             )}
