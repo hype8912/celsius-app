@@ -94,9 +94,7 @@ class InterestCard extends Component {
                 color={STYLES.COLORS.GREEN}
               >
                 <CelText align="justify" type="H5" color="white">
-                  {formatter.percentageDisplay(
-                    interestRate.specialApyRate || interestRate.apyRate
-                  )}
+                  {formatter.percentageDisplay(interestRate.rateInCel)}
                 </CelText>
               </Badge>
             </View>

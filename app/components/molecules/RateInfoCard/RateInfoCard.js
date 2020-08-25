@@ -11,7 +11,7 @@ import CelText from "../../atoms/CelText/CelText";
 import interestUtil from "../../../utils/interest-util";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { isUSResident } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util";
 import * as appActions from "../../../redux/actions";
 
 @connect(
@@ -38,6 +38,54 @@ class RateInfoCard extends Component {
     style: {},
   };
 
+  renderContent = (interestRate, coin, rate) => {
+    if (isUSCitizen())
+      return (
+        <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+          <CelText color={"white"}>
+            Keep HODLing and you could earn up to{" "}
+            {formatter.percentageDisplay(rate.bonus)} APY on your first{" "}
+            <CelText
+              color={"white"}
+              weight={"bold"}
+            >{`${rate.threshold} ${coin.short}`}</CelText>
+            ! {`${coin.short}`} balances greater than {`${rate.threshold}`} will
+            continue to earn at {formatter.percentageDisplay(rate.apyRate)} APY.{" "}
+          </CelText>
+        </Card>
+      );
+    if (!interestRate.inCEL)
+      return (
+        <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+          <CelText color={"white"}>
+            Upgrade your interest settings to earn in CEL and you could get up
+            to {formatter.percentageDisplay(rate.bonus)} APY on your first{" "}
+            <CelText
+              color={"white"}
+              weight={"bold"}
+            >{`${rate.threshold} ${coin.short}`}</CelText>
+            ! {`${coin.short}`} balances greater than{" "}
+            {`${rate.threshold} ${coin.short}`} will continue to earn at{" "}
+            {formatter.percentageDisplay(rate.apyRate)} APY.
+          </CelText>
+        </Card>
+      );
+    return (
+      <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+        <CelText color={"white"}>
+          Keep HODLing and you could earn up to{" "}
+          {formatter.percentageDisplay(rate.bonus)} APY on your first{" "}
+          <CelText
+            color={"white"}
+            weight={"bold"}
+          >{`${rate.threshold} ${coin.short}`}</CelText>
+          ! {`${coin.short}`} balances greater than {`${rate.threshold}`} will
+          continue to earn at {formatter.percentageDisplay(rate.apyRate)} APY.{" "}
+        </CelText>
+      </Card>
+    );
+  };
+
   render() {
     const {
       coin,
@@ -48,48 +96,36 @@ class RateInfoCard extends Component {
       interestCompliance,
     } = this.props;
 
-    const interestRate = interestUtil.getUserInterestForCoin(
-      !coin ? "BTC" : coin.short
-    );
+    if (!coin) return null;
 
-    if (!interestRate.specialRate && !interestRate.coinThreshold) return null;
-    if ((!interestCompliance && !interestCompliance.allowed) || isUSResident())
+    const interestRate = interestUtil.getUserInterestForCoin(coin.short);
+
+    if (
+      !interestRate.rate_on_first_n_coins &&
+      !interestRate.threshold_on_first_n_coins
+    )
       return null;
 
+    if (
+      (!interestCompliance && !interestCompliance.allowed) ||
+      (isUSCitizen() && (!interestRate.threshold_us || !interestRate.rate_us))
+    )
+      return null;
+
+    const rate = isUSCitizen()
+      ? {
+          threshold: interestRate.threshold_us,
+          bonus: interestRate.rate_us,
+          apyRate: interestRate.compound_rate,
+        }
+      : {
+          threshold: interestRate.threshold_on_first_n_coins,
+          bonus: interestRate.compound_cel_rate,
+          apyRate: interestRate.cel_rate,
+        };
     return (
       <View style={style}>
-        {!interestRate.inCEL ? (
-          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
-            <CelText color={"white"}>
-              Upgrade your interest settings to earn in CEL and you could get up
-              to {formatter.percentageDisplay(interestRate.specialApyRate)} APY
-              on your first{" "}
-              <CelText
-                color={"white"}
-                weight={"bold"}
-              >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
-              ! {`${interestRate.coin}`} balances greater than{" "}
-              {`${interestRate.coinThreshold} ${interestRate.coin}`} will
-              continue to earn at{" "}
-              {formatter.percentageDisplay(interestRate.apyRate)} APY.
-            </CelText>
-          </Card>
-        ) : (
-          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
-            <CelText color={"white"}>
-              Keep HODLing and you could earn up to{" "}
-              {formatter.percentageDisplay(interestRate.specialApyRate)} APY on
-              your first{" "}
-              <CelText
-                color={"white"}
-                weight={"bold"}
-              >{`${interestRate.coinThreshold} ${interestRate.coin}`}</CelText>
-              ! {`${interestRate.coin}`} balances greater than{" "}
-              {`${interestRate.coinThreshold}`} will continue to earn at{" "}
-              {formatter.percentageDisplay(interestRate.apyRate)} APY.{" "}
-            </CelText>
-          </Card>
-        )}
+        {this.renderContent(interestRate, coin, rate)}
         {tierButton && (
           <CelButton
             onPress={() => navigateTo("MyCel")}
@@ -99,15 +135,17 @@ class RateInfoCard extends Component {
             Check tier level
           </CelButton>
         )}
-        {celInterestButton && (
-          <CelButton
-            onPress={() => navigateTo("WalletSettings")}
-            basic
-            margin={"10 0 10 0"}
-          >
-            Earn interest in Cel
-          </CelButton>
-        )}
+        {celInterestButton &&
+          coin.amount_usd.isGreaterThan(0) &&
+          !isUSCitizen() && (
+            <CelButton
+              onPress={() => navigateTo("WalletSettings")}
+              basic
+              margin={"10 0 10 0"}
+            >
+              Earn interest in Cel
+            </CelButton>
+          )}
       </View>
     );
   }
