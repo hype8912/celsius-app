@@ -6,16 +6,16 @@ import PropTypes from "prop-types";
 import * as appActions from "../../../redux/actions";
 import { COIN_CARD_TYPE } from "../../../constants/UI";
 
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
 
-import STYLES from "../../../constants/STYLES";
 import CollateralCoinCardStyle from "./CollateralCoinCard.styles";
 import Separator from "../../atoms/Separator/Separator";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -102,8 +102,8 @@ class CollateralCoinCard extends Component {
       isAllowed = coin.amount_usd >= collateralAmount;
       color =
         coin.amount_usd < collateralAmount
-          ? STYLES.COLORS.RED
-          : STYLES.COLORS.MEDIUM_GRAY;
+          ? getColor(COLOR_KEYS.NEGATIVE_STATE)
+          : getColor(COLOR_KEYS.PARAGRAPH);
 
       if (currency) {
         value =
@@ -126,7 +126,9 @@ class CollateralCoinCard extends Component {
       isAllowed = walletCoin
         ? walletCoin.amount_usd.isGreaterThan(amountNeededUsd)
         : false;
-      color = !isAllowed ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
+      color = !isAllowed
+        ? getColor(COLOR_KEYS.NEGATIVE_STATE)
+        : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
       value =
         (amountNeededUsd - walletCoin.amount_usd.toNumber()) /
         currencyRatesShort[coin.short.toLowerCase()];
@@ -143,7 +145,9 @@ class CollateralCoinCard extends Component {
         additionalCryptoAmount,
       });
     } else if (type === COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD) {
-      color = !isAllowed ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
+      color = !isAllowed
+        ? getColor(COLOR_KEYS.NEGATIVE_STATE)
+        : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
       await this.setState({
         additionalInfoExplanation:
           "required for a first month of loan interest payment.",
@@ -158,7 +162,9 @@ class CollateralCoinCard extends Component {
         Number(marginCall.margin_call_usd_amount) /
         currencyRatesShort[coin.short.toLowerCase()];
       isAllowed = coin.amount >= amountNeededInCoin;
-      color = !isAllowed ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
+      color = !isAllowed
+        ? getColor(COLOR_KEYS.NEGATIVE_STATE)
+        : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
 
       // additionalCryptoAmount - margin call value
       let marginCallValue;
@@ -236,7 +242,7 @@ class CollateralCoinCard extends Component {
           style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
         >
           <Icon
-            fill={STYLES.COLORS.CELSIUS_BLUE}
+            fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
             width="13"
             height="13"
             name="CirclePlus"

@@ -64,8 +64,8 @@ class Welcome extends Component {
             Welcome!
           </CelText>
           <CelText weight="300" align="center" style={style.subtitle}>
-            A new way to earn, borrow and pay on the blockchain. Let’s bring the
-            next 100M people into crypto together.
+            Join Celsius Network and be part of the future of finance. Earn up
+            to 12% annually, and borrow cash starting at just 1% APR.
           </CelText>
           <CelButton
             style={style.button}

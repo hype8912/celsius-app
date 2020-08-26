@@ -95,11 +95,12 @@ class GetCoinsGem extends Component {
 
   createGemUrl = () => {
     const { walletGemAddresses, user } = this.props;
-    onrampConfig.wallets = walletGemAddresses;
+    onrampConfig.wallets = JSON.stringify(walletGemAddresses);
     onrampConfig.userEmail = user.email;
     const queryConfig = qs.stringify(onrampConfig);
+    const gemURL = `${GEM_URL}?${queryConfig}`;
 
-    return `${GEM_URL}?${queryConfig}`;
+    return gemURL;
   };
 
   render() {

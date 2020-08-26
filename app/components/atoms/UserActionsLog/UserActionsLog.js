@@ -7,13 +7,14 @@ import CelText from "../CelText/CelText";
 import UserActionsLogStyle from "./UserActionsLog.styles";
 import Separator from "../Separator/Separator";
 import Icon from "../Icon/Icon";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 const getData = item => {
   if (item.action === "transaction-history") {
     return {
       name: "Csv",
-      color: STYLES.COLORS.CELSIUS_BLUE,
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
       action: "Transaction History Requested",
     };
   }
@@ -21,7 +22,7 @@ const getData = item => {
   if (item.action === "withdrawal-request") {
     return {
       name: "CaretUp",
-      color: STYLES.COLORS.ORANGE,
+      color: getColor(COLOR_KEYS.ALERT_STATE),
       action: "Withdraw Request",
     };
   }
@@ -35,7 +36,7 @@ const getData = item => {
   if (successfulLoginActionTypes.includes(item.action)) {
     return {
       name: "Checked",
-      color: STYLES.COLORS.GREEN,
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
       action: "Successful Login",
     };
   }
@@ -43,7 +44,7 @@ const getData = item => {
   if (item.action === "loan-rejected") {
     return {
       name: "Loan",
-      color: STYLES.COLORS.RED,
+      color: getColor(COLOR_KEYS.NEGATIVE_STATE),
       action: "Loan Rejected",
     };
   }
@@ -51,7 +52,7 @@ const getData = item => {
   if (item.action === "loan-approved") {
     return {
       name: "Loan",
-      color: STYLES.COLORS.GREEN,
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
       action: "Loan Approved",
     };
   }
@@ -59,7 +60,7 @@ const getData = item => {
   if (item.action === "loan-canceled") {
     return {
       name: "Loan",
-      color: STYLES.COLORS.RED,
+      color: getColor(COLOR_KEYS.NEGATIVE_STATE),
       action: "Loan Canceled",
     };
   }
@@ -67,7 +68,7 @@ const getData = item => {
   if (item.action === "change-email") {
     return {
       name: "Mail",
-      color: STYLES.COLORS.CELSIUS_BLUE,
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
       action: "Change Email",
     };
   }
@@ -75,56 +76,64 @@ const getData = item => {
   if (item.action === "change-pin") {
     return {
       name: "Lock",
-      color: STYLES.COLORS.CELSIUS_BLUE,
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
       action: "Change Pin",
     };
   }
 
   if (item.action === "pin-activated") {
-    return { name: "Lock", color: STYLES.COLORS.GREEN, action: "Set Pin" };
+    return {
+      name: "Lock",
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
+      action: "Set Pin",
+    };
   }
   if (item.action === "confirm-celpay") {
     return {
       name: "Mail",
-      color: `${STYLES.COLORS.CELSIUS_BLUE}`,
+      color: `${getColor(COLOR_KEYS.PRIMARY_BUTTON)}`,
       action: "CelPay Confirmed",
     };
   }
   if (item.action === "loan-apply") {
-    return { name: "Lock", color: STYLES.COLORS.GREEN, action: "Loan apply" };
+    return {
+      name: "Lock",
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
+      action: "Loan apply",
+    };
   }
   if (item.action === "change-password-confirm") {
     return {
       name: "Key",
-      color: `${STYLES.COLORS.GREEN}`,
+      color: `${getColor(COLOR_KEYS.POSITIVE_STATE)}`,
       action: "Password changed",
     };
   }
   if (item.action === "2fa-deactivated") {
     return {
       name: "NotSecure",
-      color: `${STYLES.COLORS.RED}`,
+      color: `${getColor(COLOR_KEYS.NEGATIVE_STATE)}`,
       action: "2FA Deactivated",
     };
   }
   if (item.action === "2fa-deactivation-confirm") {
     return {
       name: "NotSecure",
-      color: `${STYLES.COLORS.CELSIUS_BLUE}`,
+      color: `${getColor(COLOR_KEYS.PRIMARY_BUTTON)}`,
       action: "2FA Deactivation Confirm ",
     };
   }
   if (item.action === "2fa-activation-confirm") {
     return {
       name: "Shield",
-      color: `${STYLES.COLORS.CELSIUS_BLUE}`,
+      color: `${getColor(COLOR_KEYS.PRIMARY_BUTTON)}`,
       action: "2FA Activation Confirm ",
     };
   }
   if (item.action === "2fa-activated") {
     return {
       name: "Shield",
-      color: STYLES.COLORS.GREEN,
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
       action: "2FA Activated",
     };
   }
@@ -132,56 +141,56 @@ const getData = item => {
   if (item.action === "hodl-mode-deactivate-confirm") {
     return {
       name: "NotSecure",
-      color: `${STYLES.COLORS.CELSIUS_BLUE}`,
+      color: `${getColor(COLOR_KEYS.PRIMARY_BUTTON)}`,
       action: "HODL Mode Deactivation Confirm ",
     };
   }
   if (item.action === "hodl-mode-activate-confirm") {
     return {
       name: "Shield",
-      color: `${STYLES.COLORS.CELSIUS_BLUE}`,
+      color: `${getColor(COLOR_KEYS.PRIMARY_BUTTON)}`,
       action: "HODL Mode Activation Confirm ",
     };
   }
   if (item.action === "hodl-mode-activated") {
     return {
       name: "Shield",
-      color: STYLES.COLORS.GREEN,
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
       action: "HODL Mode Activated",
     };
   }
   if (item.action === "celpay-claim") {
     return {
       name: "CaretDown",
-      color: STYLES.COLORS.GREEN,
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
       action: "CelPay Claimed",
     };
   }
   if (item.action === "withdraw-info") {
     return {
       name: "CaretUp",
-      color: `${STYLES.COLORS.RED}`,
+      color: `${getColor(COLOR_KEYS.NEGATIVE_STATE)}`,
       action: "Withdraw",
     };
   }
   if (item.action === "deposit-success") {
     return {
       name: "CaretDown",
-      color: STYLES.COLORS.GREEN,
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
       action: "Deposit",
     };
   }
   if (item.action === "confirm-withdrawal-request") {
     return {
       name: "CaretUp",
-      color: `${STYLES.COLORS.GREEN}`,
+      color: `${getColor(COLOR_KEYS.POSITIVE_STATE)}`,
       action: "Withdraw confirm request",
     };
   }
   if (item.action === "withdrawal-address-change") {
     return {
       name: "QrCode",
-      color: `${STYLES.COLORS.CELSIUS_BLUE}`,
+      color: `${getColor(COLOR_KEYS.PRIMARY_BUTTON)}`,
       action: "Withdrawal address change",
     };
   }

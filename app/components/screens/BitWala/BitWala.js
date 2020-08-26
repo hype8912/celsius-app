@@ -32,7 +32,7 @@ class BitWala extends Component {
         <CelText align="center">
           Hey there! Unfortunately, Celsius does not operate in Germany. Go
           check out our licensed partner, Bitwala. They'll get you earning
-          interest in no time!
+          rewards in no time!
         </CelText>
 
         <CelButton

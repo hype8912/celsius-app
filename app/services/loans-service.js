@@ -1,6 +1,5 @@
 import axios from "axios";
 import apiUrl from "./api-url";
-import { mocks } from "../../dev-settings";
 import loanUtil from "../utils/loan-util";
 
 const loansService = {
@@ -16,7 +15,6 @@ const loansService = {
   prepayInterest,
   payPrincipal,
   payMonthlyInterest,
-  getAmortizationTable,
   sendBankDetailsEmail,
   getLoanAlerts,
 };
@@ -76,11 +74,6 @@ function loanApplyPreviewData(loanApplication) {
  * @returns {Promise}
  */
 function setConfirmLoanInfo(loanData) {
-  if (mocks.USE_MOCK_LOAN_INFO) {
-    return {
-      data: { loan: require("../mock-data/loans.mock").default.CONFIRM_LOAN },
-    };
-  }
   return axios.post(`${apiUrl}/loans/new-loan-preview`, {
     loanData,
   });
@@ -92,13 +85,9 @@ function setConfirmLoanInfo(loanData) {
  * @returns {Promise}
  */
 async function getAllLoans() {
-  let loans;
-  if (mocks.USE_MOCK_LOANS) {
-    loans = Object.values(require("../mock-data/loans.mock").default.ALL_LOANS);
-  } else {
-    const res = await axios.get(`${apiUrl}/loans`);
-    loans = res.data;
-  }
+  const res = await axios.get(`${apiUrl}/loans`);
+  const loans = res.data;
+
   return loans.map(l => loanUtil.mapLoan(l));
 }
 
@@ -205,16 +194,6 @@ function payMonthlyInterest(id, coin, verification) {
     ...verification,
     coin,
   });
-}
-
-/**
- *
- * @param id
- * @returns {Promise}
- */
-// TODO: remove
-function getAmortizationTable(id) {
-  return axios.get(`${apiUrl}/loans/${id}/amortization-table`);
 }
 
 /**

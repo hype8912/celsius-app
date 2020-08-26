@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Animated, Image, Linking, View } from "react-native";
 
-// import ComingSoonCoinsStyle from "./ComingSoonCoins.styles";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import { THEMES, WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
 import Icon from "../../atoms/Icon/Icon";
-import { getTheme, widthPercentageToDP } from "../../../utils/styles-util";
+import {
+  getColor,
+  getTheme,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import animationsUtil from "../../../utils/animations-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class ComingSoonCoins extends Component {
   static propTypes = {
@@ -74,7 +77,7 @@ class ComingSoonCoins extends Component {
                   name={`Icon${coin.short}`}
                   width="40"
                   height="40"
-                  fill={STYLES.COLORS.MEDIUM_GRAY}
+                  fill={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
                   style={{ marginRight: 12 }}
                 />
               ) : (

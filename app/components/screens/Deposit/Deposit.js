@@ -14,7 +14,6 @@ import ShareButton from "../../atoms/ShareButton/ShareButton";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import DepositStyle from "./Deposit.styles";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
@@ -50,14 +49,14 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 )
 class Deposit extends Component {
   static navigationOptions = () => ({
-    title: "Deposit coins",
+    title: "Transfer coins",
     right: "profile",
   });
 
   constructor(props) {
     super(props);
 
-    const { depositCompliance, currencies } = props;
+    const { depositCompliance, currencies, navigation, actions } = props;
 
     const coinSelectItems =
       currencies &&
@@ -67,6 +66,9 @@ class Deposit extends Component {
           label: `${formatter.capitalize(c.name)} (${c.short})`,
           value: c.short,
         }));
+    const currencyFromNav = navigation.getParam("coin");
+    actions.updateFormField("selectedCoin", currencyFromNav || "ETH");
+    this.fetchAddress(currencyFromNav || "ETH");
 
     this.state = {
       isFetchingAddress: false,
@@ -143,25 +145,10 @@ class Deposit extends Component {
     };
   };
 
-  getDefaultSelectedCoin = () => {
-    const { formData, navigation } = this.props;
-    const currencyFromNav = navigation.getParam("coin");
-
-    // If nothing comes through navigation and nothing stored in the redux state,
-    // use ETH as default selected coin
-    let defaultSelectedCoin = "ETH";
-
-    if (currencyFromNav) {
-      defaultSelectedCoin = currencyFromNav;
-    } else if (formData.selectedCoin) {
-      defaultSelectedCoin = formData.selectedCoin;
-    }
-    return defaultSelectedCoin;
-  };
-
   handleCoinSelect = async (field, item) => {
     const { actions } = this.props;
-    await actions.updateFormField(field, item);
+    actions.openModal(MODALS.DEPOSIT_INFO_MODAL);
+    actions.updateFormField(field, item);
     await this.fetchAddress(item);
   };
 
@@ -223,12 +210,12 @@ class Deposit extends Component {
 
     return (
       <View style={{ alignSelf: "center" }}>
-        <Card color={STYLES.COLORS.CELSIUS_BLUE} size={"twoThirds"}>
+        <Card color={getColor(COLOR_KEYS.PRIMARY_BUTTON)} size={"twoThirds"}>
           <CelText
             align={"center"}
             weight={"300"}
             type={"H6"}
-            color={STYLES.COLORS.WHITE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
           >
             {collateralMissing}{" "}
           </CelText>
@@ -236,7 +223,7 @@ class Deposit extends Component {
             weight={"300"}
             align={"center"}
             type={"H6"}
-            color={STYLES.COLORS.WHITE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
           >
             required to cover the margin call
           </CelText>
@@ -332,7 +319,7 @@ class Deposit extends Component {
       destinationTag,
       memoId,
     } = this.getAddress(formData.selectedCoin);
-    const coin = navigation.getParam("coin");
+    const coin = formData.selectedCoin;
     const {
       useAlternateAddress,
       isFetchingAddress,
@@ -366,7 +353,7 @@ class Deposit extends Component {
     return (
       <RegularLayout padding={"20 0 100 0"}>
         <CelText align="center" weight="regular" type="H4">
-          Choose coin to deposit
+          Choose coin to transfer
         </CelText>
         <CoinPicker
           type={"withIcon"}
@@ -374,7 +361,6 @@ class Deposit extends Component {
           onChange={this.handleCoinSelect}
           coin={formData.selectedCoin}
           field="selectedCoin"
-          defaultSelected={this.getDefaultSelectedCoin()}
           availableCoins={coinSelectItems}
           navigateTo={actions.navigateTo}
         />

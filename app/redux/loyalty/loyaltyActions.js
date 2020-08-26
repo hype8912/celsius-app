@@ -7,9 +7,6 @@ import interestUtil from "../../utils/interest-util";
 
 export { getLoyaltyInfo };
 
-/**
- * TODO add JSDoc
- */
 function getLoyaltyInfo() {
   return async dispatch => {
     try {
@@ -28,9 +25,6 @@ function getLoyaltyInfo() {
   };
 }
 
-/**
- * TODO add JSDoc
- */
 function getLoyaltyInfoSuccess(loyaltyInfo, interestRates) {
   return {
     type: ACTIONS.GET_LOYALTY_INFO_SUCCESS,

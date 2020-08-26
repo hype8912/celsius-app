@@ -109,7 +109,7 @@ class FabMenuAnimated extends Component {
     if (depositCompliance.allowed)
       main[1].push({
         iconName: "Deposit",
-        label: "Deposit",
+        label: "Transfer",
         screen: "Deposit",
       });
     if (kycStatus && hasPassedKYC() && withdrawCompliance.allowed)
@@ -126,21 +126,20 @@ class FabMenuAnimated extends Component {
       });
     main[0].push({
       iconName: "Community",
-      label: "Community",
+      label: "Community Info",
       screen: "Community",
     });
     if (loanCompliance.allowed)
       main[1].push({
         iconName: "Borrow",
-        label: "Borrow",
+        label: "Borrow $$",
         screen: "BorrowLanding",
       });
-    if (kycStatus && hasPassedKYC())
-      main[2].splice(1, 0, {
-        iconName: "Profile",
-        label: "Profile",
-        screen: "Profile",
-      });
+    main[2].splice(1, 0, {
+      iconName: "Profile",
+      label: "Profile",
+      screen: "Profile",
+    });
     // TODO change borrow landing to new screen
     if (user)
       main[1].push({

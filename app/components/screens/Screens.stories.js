@@ -70,7 +70,7 @@ import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
 import ActionsByUserStories from "./ActionsByUser/ActionsByUser.stories";
 import CelPayChooseFriendStories from "./CelPayChooseFriend/CelPayChooseFriend.stories";
-import ConfirmYourLoanStories from "./ConfirmYourLoan/ConfirmYourLoan.stories";
+import BorrowLoanConfirmStories from "./BorrowLoanConfirm/BorrowLoanConfirm.stories";
 import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
 import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
 import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
@@ -266,7 +266,6 @@ storiesOf("RegisterInitial", module)
 
 storiesOf("CameraScreen", module)
   .add("Profile", CameraScreenStories.profile)
-  .add("Document", CameraScreenStories.document)
   .add("Utility Bill", CameraScreenStories.utility);
 
 storiesOf("KYCProfileDetails", module)
@@ -485,10 +484,10 @@ storiesOf("CelPayChooseFriend", module)
   .add("Has Contacts", CelPayChooseFriendStories.hasContacts)
   .add("No Contacts", CelPayChooseFriendStories.noContacts);
 
-storiesOf("ConfirmYourLoan", module)
-  .add("Stable coin", ConfirmYourLoanStories.stableCoin)
-  .add("USD - US Bank", ConfirmYourLoanStories.usdUS)
-  .add("USD - non-US Bank", ConfirmYourLoanStories.usdNonUS);
+storiesOf("BorrowLoanConfirm", module)
+  .add("Stable coin", BorrowLoanConfirmStories.stableCoin)
+  .add("USD - US Bank", BorrowLoanConfirmStories.usdUS)
+  .add("USD - non-US Bank", BorrowLoanConfirmStories.usdNonUS);
 
 storiesOf("CellphoneEnter", module).add(
   "Regular",

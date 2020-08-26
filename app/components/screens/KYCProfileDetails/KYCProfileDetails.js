@@ -43,6 +43,7 @@ class KYCProfileDetails extends Component {
   async componentDidMount() {
     const { actions } = this.props;
 
+    await actions.createKYCApplicant();
     await actions.getProfileInfo();
     this.setState({ isLoading: false });
 
@@ -275,7 +276,7 @@ class KYCProfileDetails extends Component {
           basic
           margin={"20 0 20 0"}
         >
-          Do it later
+          Complete later
         </CelButton>
       </RegularLayout>
     );

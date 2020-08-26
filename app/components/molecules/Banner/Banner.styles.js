@@ -18,7 +18,7 @@ const base = {
     flex: 0.2,
   },
   halfCircle: {
-    backgroundColor: STYLES.COLORS.WHITE_OPACITY2,
+    backgroundColor: STYLES.COLORS.WHITE_OPACITY2, // TODO: missing COLOR_KEY
     paddingHorizontal: 10,
     marginLeft: -10,
     marginRight: 10,

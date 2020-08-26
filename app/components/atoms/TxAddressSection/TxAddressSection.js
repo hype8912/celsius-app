@@ -5,9 +5,10 @@ import { Linking, TouchableOpacity, View } from "react-native";
 import AddressSectionStyle from "./TxAddressSection.styles";
 import Card from "../Card/Card";
 import CelText from "../CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../Icon/Icon";
 import { getBlockExplorerLink } from "../../../utils/crypto-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const TxAddressSection = ({ transaction, text, address }) => {
   const style = AddressSectionStyle();
@@ -35,7 +36,7 @@ const TxAddressSection = ({ transaction, text, address }) => {
               name="NewWindowIcon"
               height="16"
               width="16"
-              fill={STYLES.COLORS.CELSIUS_BLUE}
+              fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
               style={{ marginTop: 5, marginLeft: 10 }}
             />
           </TouchableOpacity>

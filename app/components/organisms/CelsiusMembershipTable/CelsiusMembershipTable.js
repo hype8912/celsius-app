@@ -91,7 +91,7 @@ class CelsiusMembershipTable extends Component {
               weight="500"
               color={getColor(COLOR_KEYS.HEADLINE)}
             >
-              Bonus
+              Earnings Bonus
             </CelText>
           </View>
 
@@ -126,7 +126,7 @@ class CelsiusMembershipTable extends Component {
               color={getColor(COLOR_KEYS.HEADLINE)}
             >
               {" "}
-              Loan interest
+              Discount on Loan Interest
             </CelText>
           </View>
 

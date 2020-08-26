@@ -74,7 +74,6 @@ class FabMenu extends Component {
       celpayCompliance,
       loanCompliance,
       withdrawCompliance,
-      user,
       kycStatus,
     } = this.props;
     const main = [
@@ -85,7 +84,7 @@ class FabMenu extends Component {
     if (depositCompliance.allowed)
       main[0].push({
         iconName: "Deposit",
-        label: "Deposit",
+        label: "Transfer",
         screen: "Deposit",
       });
     if (kycStatus && hasPassedKYC() && withdrawCompliance.allowed)
@@ -103,15 +102,14 @@ class FabMenu extends Component {
     if (loanCompliance.allowed)
       main[1].push({
         iconName: "Borrow",
-        label: "Borrow",
+        label: "Borrow $$",
         screen: "BorrowLanding",
       });
-    if (user)
-      main[1].push({
-        iconName: "Profile",
-        label: "Profile",
-        screen: "Profile",
-      });
+    main[1].push({
+      iconName: "Profile",
+      label: "Profile",
+      screen: "Profile",
+    });
     // TODO change borrow landing to new screen
     if (kycStatus && hasPassedKYC())
       main[2].splice(1, 0, {

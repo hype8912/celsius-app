@@ -1,10 +1,10 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
     width: "100%",
-    backgroundColor: STYLES.COLORS.DARK_GRAY,
+    backgroundColor: COLOR_KEYS.TOOLTIP,
     borderRadius: 8,
     alignSelf: "center",
     padding: 10,

@@ -178,10 +178,14 @@ class VerifyProfile extends Component {
 
   handlePINChange = newValue => {
     const { actions } = this.props;
-    const { hasSixDigitPin } = this.state;
+    const { hasSixDigitPin, verificationError } = this.state;
     const pinLength = hasSixDigitPin ? 6 : 4;
 
     if (newValue.length > pinLength) return;
+
+    if (newValue.length === 1 && verificationError) {
+      this.setState({ verificationError: false });
+    }
 
     actions.updateFormField("pin", newValue);
     this.setState({ value: newValue });
@@ -194,10 +198,16 @@ class VerifyProfile extends Component {
 
   handle2FAChange = newValue => {
     const { actions } = this.props;
+    const { verificationError } = this.state;
     if (newValue.length > 6) {
       this.setState({ loading: false });
       return;
     }
+
+    if (newValue.length === 1 && verificationError) {
+      this.setState({ verificationError: false });
+    }
+
     this.setState({ value: newValue });
     actions.updateFormField("code", newValue);
     if (newValue.length === 6) {

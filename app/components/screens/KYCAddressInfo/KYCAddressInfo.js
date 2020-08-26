@@ -110,13 +110,13 @@ class KYCAddressInfo extends Component {
     return (
       <RegularLayout>
         <CelText type="H2" weight="bold" margin={"0 0 30 0"} align="center">
-          Address info
+          Residential Address
         </CelText>
 
         <CelInput
           type="text"
           field="street"
-          placeholder="Address"
+          placeholder="Street address"
           value={formData.street}
           error={formErrors.street}
           returnKeyType={"next"}
@@ -131,7 +131,7 @@ class KYCAddressInfo extends Component {
         <CelInput
           type="text"
           field="flatNumber"
-          placeholder="Apartment number (optional)"
+          placeholder="Apartment number (if applicable) "
           value={formData.flatNumber}
           refs={input => {
             this.flat = input;
@@ -204,7 +204,7 @@ class KYCAddressInfo extends Component {
           basic
           margin={"20 0 20 0"}
         >
-          Do it later
+          Complete later
         </CelButton>
       </RegularLayout>
     );

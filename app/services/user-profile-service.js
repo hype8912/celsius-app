@@ -23,7 +23,6 @@ function getPersonalInfo() {
 /**
  * Updates user info
  * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#cd83aca2-11a1-42d2-ad08-3df6b3d2d090
- * @todo check reusability and add params, check update method, duplicate
  *
  * @param {Object} profileInfo
  * @return {Promise}

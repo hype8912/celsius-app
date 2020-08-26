@@ -38,6 +38,8 @@ const MODALS = {
   GET_COINS_CONFIRM_MODAL: "GET_COINS_CONFIRM_MODAL",
   HODL_MODE_MODAL: "HODL_MODE_MODAL",
   SEPARATOR_INFO_MODAL: "SEPARATOR_INFO_MODAL",
+  POA_WARNING_MODAL: "POA_WARNING_MODAL",
+  INTRODUCE_NEW_THEME_MODAL: "INTRODUCE_NEW_THEME_MODAL",
 };
 
 const INITIAL_ROUTE = "SplashScreen";
@@ -118,7 +120,7 @@ const FAB_TYPE = ["main", "support", "hide"];
 
 const WELCOME_MESSAGES = [
   {
-    title: "Interest Income",
+    title: "Rewards Income",
     text:
       "Make your Mondays a whole lot more interesting. Deposit coins and receive weekly interest payments directly to your Celsius wallet.",
   },
@@ -224,7 +226,7 @@ const TRANSACTION_FILTER_TYPE = [
     value: null,
   },
   {
-    title: "Interest",
+    title: "Rewards",
     value: "interest",
     icon: "TransactionInterest",
   },

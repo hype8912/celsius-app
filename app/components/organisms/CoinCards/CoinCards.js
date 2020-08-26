@@ -154,7 +154,7 @@ class CoinCards extends Component {
           name="CirclePlus"
         />
         <CelText type="H5" margin={isGrid ? "5 0 0 0" : "0 0 0 5"} link>
-          Deposit coins
+          Transfer coins
         </CelText>
       </TouchableOpacity>
     );
@@ -169,7 +169,7 @@ class CoinCards extends Component {
     return (
       <View>
         <ExpandableItem
-          heading={"DEPOSITS"}
+          heading={"TRANSFERS"}
           margin={"10 0 10 0"}
           childrenStyle={style.coinCardContainer}
           isExpanded

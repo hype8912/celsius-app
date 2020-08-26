@@ -11,7 +11,6 @@ import { MODALS } from "../../constants/UI";
 import formatter from "../../utils/formatter";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 
-// TODO: move to celpay actions
 export {
   getAllTransfers,
   claimTransfer,
@@ -39,9 +38,6 @@ function getAllTransfers(transferStatus) {
   };
 }
 
-/**
- * @TODO add JSDoc
- */
 function getAllTransfersSuccess(transfers) {
   return {
     type: ACTIONS.GET_ALL_TRANSFERS_SUCCESS,
@@ -50,9 +46,6 @@ function getAllTransfersSuccess(transfers) {
   };
 }
 
-/**
- * @TODO write JSDoc
- */
 function getTransferSuccess(transfer) {
   return {
     type: ACTIONS.GET_TRANSFER_SUCCESS,
@@ -82,9 +75,6 @@ function claimTransfer(transferHash) {
   };
 }
 
-/**
- * @TODO add JSDoc
- */
 function claimTransferSuccess(transfer) {
   return {
     type: ACTIONS.CLAIM_TRANSFER_SUCCESS,
@@ -115,9 +105,6 @@ function cancelTransfer(transaction) {
   };
 }
 
-/**
- * @TODO add JSDoc
- */
 function cancelTransferSuccess(transfer) {
   return {
     type: ACTIONS.CANCEL_TRANSFER_SUCCESS,
@@ -201,7 +188,6 @@ function claimAllBranchTransfers() {
 /**
  * Maps all transfer props
  * @param {Object} transfer
- * @TODO move to reducer
  */
 function mapTransfer(transfer) {
   if (!transfer) return;

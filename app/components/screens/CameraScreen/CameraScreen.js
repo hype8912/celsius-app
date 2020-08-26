@@ -70,7 +70,7 @@ class CameraScreen extends Component {
       PropTypes.string,
       PropTypes.instanceOf(Object),
     ]),
-    mask: PropTypes.oneOf(["circle", "document"]),
+    mask: PropTypes.oneOf(["circle", "utility"]),
     onSave: PropTypes.func,
   };
 
@@ -141,11 +141,6 @@ class CameraScreen extends Component {
 
   getMaskImage = mask => {
     switch (mask) {
-      case "document":
-        return {
-          lightSource: require("../../../../assets/images/mask/card-mask-transparent.png"),
-          darkSource: require("../../../../assets/images/mask/dark-card-mask-transparent.png"),
-        };
       case "utility":
         return {
           lightSource: require("../../../../assets/images/mask/bill-mask-markers-light.png"),
@@ -294,6 +289,7 @@ class CameraScreen extends Component {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={[style.mask, style.maskOverlayColor]} />
+
           <ThemedImage
             {...imageSource}
             style={{

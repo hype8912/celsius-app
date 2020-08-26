@@ -45,7 +45,7 @@ class MyCel extends Component {
 
     const tabs = [
       { label: "OVERVIEW", component: <MyCelOverivewTab /> },
-      { label: "INTEREST", component: <MyCelInterestTab /> },
+      { label: "EARNINGS", component: <MyCelInterestTab /> },
       { label: "LOANS", component: <MyCelLoansTab /> },
     ];
 

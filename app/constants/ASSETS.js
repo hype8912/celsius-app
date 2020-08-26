@@ -101,12 +101,10 @@ const CACHE_IMAGES = [
   require("../../assets/images/icons/contacts-circle/contacts-circle.png"),
   require("../../assets/images/icons/fb-circle/fb-circle.png"),
   require("../../assets/images/icons/tw-circle/tw-circle.png"),
-  require("../../assets/images/mask/card-mask-transparent.png"),
   require("../../assets/images/mask/circle-mask.png"),
   require("../../assets/images/mask/dark-circle-mask.png"),
   require("../../assets/images/mask/square-mask-01.png"),
   require("../../assets/images/mask/dark-qrcode-mask3x.png"),
-  require("../../assets/images/mask/dark-card-mask-transparent.png"),
   require("../../assets/images/mask/bill-mask-markers-dark.png"),
   require("../../assets/images/mask/bill-mask-markers-light.png"),
   require("../../assets/images/splashScreen-celsius-new.png"),
@@ -234,6 +232,7 @@ const CACHE_IMAGES = [
   require(`../../assets/images/bankToTheFuture2.png`),
   require(`../../assets/images/bankToTheFuture3.png`),
   require(`../../assets/images/target-missed.png`),
+  require("../../assets/images/sunset-mockup-02.png"),
 ];
 
 export default {

@@ -1,8 +1,5 @@
 import ACTIONS from "../../constants/ACTIONS";
 
-/**
- * TODO make it a function add JSDoc & desc for return
- */
 const initialState = {
   registeredLink: null,
   promoCode: null,
@@ -17,7 +14,6 @@ export default function campaignReducer(state = initialState, action) {
         registeredLink: action.link,
         transferHash: action.link.hash,
       };
-    case ACTIONS.SUBMIT_PROMO_CODE_SUCCESS:
     case ACTIONS.GET_LINK_BY_URL_SUCCESS:
       return {
         ...state,
@@ -25,6 +21,12 @@ export default function campaignReducer(state = initialState, action) {
           ...state.registeredLink,
           ...action.branchLink,
         },
+      };
+
+    case ACTIONS.SUBMIT_PROMO_CODE_SUCCESS:
+      return {
+        ...state,
+        code: action.code,
       };
 
     case ACTIONS.CHECK_PROFILE_PROMO_CODE_SUCCESS:

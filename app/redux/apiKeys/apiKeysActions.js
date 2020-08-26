@@ -5,7 +5,6 @@ import { showMessage, openModal } from "../ui/uiActions";
 import apiKeyService from "../../services/api-key-service";
 import { MODALS } from "../../constants/UI";
 
-// TODO refactor to use DELETE_SUCCESS
 export { createAPIKey, revokeAPIKey, getAllAPIKeys };
 
 /**

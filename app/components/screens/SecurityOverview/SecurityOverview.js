@@ -101,7 +101,7 @@ class SecurityOverview extends Component {
           selectedModalData: {
             title: "What is HODL Mode?",
             body: [
-              "HODL Mode is a security feature that gives you the ability to temporarily disable outgoing transactions from your Celsius account. You control when HODL Mode is activated, and it is an ideal feature for those that do not plan on withdrawing or transferring funds from their wallet for an extended period of time.",
+              "HODL Mode is a security feature that gives you the ability to temporarily disable outgoing transactions from your Celsius wallet. You control when HODL Mode is activated, and it is an ideal feature for those that do not plan on withdrawing or transferring funds from their wallet for an extended period of time.",
             ],
           },
         });
@@ -111,7 +111,7 @@ class SecurityOverview extends Component {
           selectedModalData: {
             title: "Why should you whitelist your withdrawal addresses?",
             body: [
-              "Whitelisting a withdrawal address means that in the rare chance a hacker is able to gain access to your account, the only place they can send your crypto is a wallet that you already control. In addition, changing a whitelisted address for a specific coin requires email confirmation and will incur a 24 hours lock-down on all withdrawals in that coin.",
+              "Whitelisting a withdrawal address means that in the rare chance a hacker is able to gain access to your wallet, the only place they can send your crypto is a wallet that you already control. In addition, changing a whitelisted address for a specific coin requires email confirmation and will incur a 24 hours lock-down on all withdrawals in that coin.",
             ],
           },
         });

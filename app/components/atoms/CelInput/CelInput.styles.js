@@ -16,7 +16,7 @@ const base = {
     width: "100%",
   },
   trans: {
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
   },
   inputWrapper: {
     ...StyleSheet.flatten(getPadding("0 16 0 16")),
@@ -26,7 +26,7 @@ const base = {
     ...Platform.select({
       android: {
         ...STYLES.ANDROID_BORDER_STYLES,
-        borderColor: "transparent",
+        borderColor: COLOR_KEYS.TRANSPARENT,
       },
       ios: {
         ...STYLES.SHADOW_STYLES,
@@ -47,7 +47,7 @@ const base = {
     shadowOpacity: 0,
   },
   borderView: {
-    borderColor: "#E9E9E9",
+    borderColor: COLOR_KEYS.INPUT_BORDER,
     borderTopWidth: 0.5,
     borderLeftWidth: 0.5,
     borderRightWidth: 0.5,

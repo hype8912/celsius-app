@@ -1,13 +1,13 @@
 import DeviceInfo from "react-native-device-info";
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const hasNotch = DeviceInfo.hasNotch();
 
 const base = {
   container: {
     flex: 1,
-    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    backgroundColor: COLOR_KEYS.DOT_INDICATOR_INACTIVE,
     paddingTop: hasNotch ? 60 : 30,
   },
 };

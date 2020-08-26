@@ -12,13 +12,12 @@ import _ from "lodash";
 import formatter from "./formatter";
 import store from "../redux/store";
 import appUtil from "./app-util";
-import { COLOR_KEYS, COLORS } from "../constants/COLORS";
+import { COLOR_KEYS, COLOR_FAMILY } from "../constants/COLORS";
 import { THEMES } from "../constants/UI";
 import FONTS from "../constants/FONTS";
 
 const { width, height } = Dimensions.get("window");
 
-// TODO: should be export default
 export {
   getMargins,
   getPadding,
@@ -137,7 +136,7 @@ function setColors(baseStyle, theme) {
  * @returns {Object} themed styles
  */
 function getColor(colorKey, theme = getTheme()) {
-  return COLORS[theme][colorKey];
+  return COLOR_FAMILY[theme][colorKey];
 }
 
 /**
