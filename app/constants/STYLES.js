@@ -61,10 +61,6 @@ const CAMERA_MASK_SIZES = {
     width: 250,
     height: 250,
   },
-  document: {
-    width: 300,
-    height: 183,
-  },
   utility: {
     width: 286,
     height: 341,

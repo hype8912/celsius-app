@@ -266,7 +266,6 @@ storiesOf("RegisterInitial", module)
 
 storiesOf("CameraScreen", module)
   .add("Profile", CameraScreenStories.profile)
-  .add("Document", CameraScreenStories.document)
   .add("Utility Bill", CameraScreenStories.utility);
 
 storiesOf("KYCProfileDetails", module)

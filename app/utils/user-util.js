@@ -1,11 +1,12 @@
 import store from "../redux/store";
-import { KYC_STATUSES } from "../constants/DATA";
+import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../constants/DATA";
 
 export {
   isUserLoggedIn,
   isCompanyMember,
   isUSCitizen,
   isUSResident,
+  isForPrimeTrustKYC,
   hasPassedKYC,
   isKYCRejectedForever,
   hasSSN,
@@ -52,6 +53,19 @@ function isUSCitizen() {
 function isUSResident() {
   const { profile } = store.getState().user;
   return profile.country === "United States";
+}
+
+/**
+ * Checks if user should go through PrimeTrust KYC
+ * @returns {boolean}
+ */
+function isForPrimeTrustKYC() {
+  const { profile } = store.getState().user;
+  const { formData } = store.getState().forms;
+  return (
+    PRIMETRUST_KYC_STATES.includes(formData.state) ||
+    PRIMETRUST_KYC_STATES.includes(profile.state)
+  );
 }
 
 /**

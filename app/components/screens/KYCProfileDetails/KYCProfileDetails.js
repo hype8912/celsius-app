@@ -43,6 +43,7 @@ class KYCProfileDetails extends Component {
   async componentDidMount() {
     const { actions } = this.props;
 
+    await actions.createKYCApplicant();
     await actions.getProfileInfo();
     this.setState({ isLoading: false });
 
