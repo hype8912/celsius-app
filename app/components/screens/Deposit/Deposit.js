@@ -267,7 +267,6 @@ class Deposit extends Component {
     } = this.props;
     const {
       address,
-      alternateAddress,
       secondaryAddress,
       destinationTag,
       memoId,
@@ -439,7 +438,6 @@ class Deposit extends Component {
             <DepositAddressSwitchCard
               coin={formData.selectedCoin}
               primaryAddress={address}
-              alternateAddress={alternateAddress}
               secondaryAddress={secondaryAddress}
               displayAddress={displayAddress}
               setAddress={addressToDisplay =>

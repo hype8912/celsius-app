@@ -8,7 +8,6 @@ import CelText from "../CelText/CelText";
 const DepositAddressSwitchCard = ({
   coin,
   primaryAddress,
-  alternateAddress,
   secondaryAddress,
   displayAddress,
   setAddress,
@@ -17,32 +16,16 @@ const DepositAddressSwitchCard = ({
   let buttonText;
   let addressToDisplay;
 
-  if (coin === "LTC" && alternateAddress) {
+  if (coin === "LTC" && secondaryAddress) {
     if (displayAddress === primaryAddress) {
       explanationText =
-        "If your wallet doesn't support 3-format addresses you can use a M-format LTC address";
-      buttonText = "Use M-format address";
-      addressToDisplay = alternateAddress;
+        "If your wallet doesn't support Segwit-format addresses you can use legacy format LTC address";
+      buttonText = "Use legacy format address";
+      addressToDisplay = secondaryAddress;
     }
-    if (displayAddress === alternateAddress) {
-      explanationText =
-        "If your wallet doesn't support M-format addresses you can use a 3-format LTC address";
-      buttonText = "Use 3-format address";
-      addressToDisplay = primaryAddress;
-    }
-  }
-
-  if (coin === "BCH" && alternateAddress) {
-    if (displayAddress === primaryAddress) {
-      explanationText =
-        "If your wallet doesn't support Bitcoin-format addresses you can use a Cash Address-format BCH address";
-      buttonText = "Use Cash format address";
-      addressToDisplay = alternateAddress;
-    }
-    if (displayAddress === alternateAddress) {
-      explanationText =
-        "If your wallet doesn't support Cash Address-format addresses you can use a Bitcoin-format BCH address";
-      buttonText = "Use Bitcoin format address";
+    if (displayAddress === secondaryAddress) {
+      explanationText = "You can also use Segwit-format LTC address";
+      buttonText = "Use Segwit-format address";
       addressToDisplay = primaryAddress;
     }
   }
@@ -50,19 +33,33 @@ const DepositAddressSwitchCard = ({
   if (coin === "BTC" && secondaryAddress) {
     if (displayAddress === primaryAddress) {
       explanationText =
-        "If your wallet doesn't support Bitcoin-format addresses you can use a Segwit-format BTC address";
-      buttonText = "Use Segwit format address";
+        "If your wallet doesn't support Segwit-format addresses you can use legacy format BTC address";
+      buttonText = "Use legacy format address";
       addressToDisplay = secondaryAddress;
     }
     if (displayAddress === secondaryAddress) {
+      explanationText = "You can also use Segwit-format BTC address";
+      buttonText = "Use Segwit-format address";
+      addressToDisplay = primaryAddress;
+    }
+  }
+
+  if (coin === "BCH" && secondaryAddress) {
+    if (displayAddress === primaryAddress) {
       explanationText =
-        "If your wallet doesn't support Segwit-format addresses you can use a Bitcoin-format BTC address";
-      buttonText = "Use Bitcoin format address";
+        "If your wallet doesn't support Segwit-format addresses you can use legacy format BCH address";
+      buttonText = "Use legacy format address";
+      addressToDisplay = secondaryAddress;
+    }
+    if (displayAddress === secondaryAddress) {
+      explanationText = "You can also use Segwit-format BCH address";
+      buttonText = "Use Segwit-format address";
       addressToDisplay = primaryAddress;
     }
   }
 
   if (!addressToDisplay) return null;
+
   return (
     <Card color={STYLES.COLORS.CELSIUS_BLUE} padding="20 20 20 20">
       <CelText weight="300" alignItems="center" color="#FFFFFF">
