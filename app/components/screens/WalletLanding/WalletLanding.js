@@ -107,6 +107,7 @@ class WalletLanding extends Component {
     await assignPushNotificationToken();
 
     await actions.getWalletSummary();
+    await actions.getLoyaltyInfo();
     if (!currenciesRates) actions.getCurrencyRates();
     if (!currenciesGraphs) actions.getCurrencyGraphs();
     this.setWalletFetchingInterval();

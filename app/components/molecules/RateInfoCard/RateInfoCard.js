@@ -43,14 +43,13 @@ class RateInfoCard extends Component {
       return (
         <Card color={STYLES.COLORS.CELSIUS_BLUE}>
           <CelText color={"white"}>
-            Keep HODLing and you could earn up to{" "}
-            {formatter.percentageDisplay(rate.bonus)} APY on your first{" "}
+            Earn {formatter.percentageDisplay(rate.bonus)} APY on your first{" "}
             <CelText
               color={"white"}
               weight={"bold"}
             >{`${rate.threshold} ${coin.short}`}</CelText>
-            ! {`${coin.short}`} balances greater than {`${rate.threshold}`} will
-            continue to earn at {formatter.percentageDisplay(rate.apyRate)} APY.{" "}
+            ! Remaining {`${coin.short}`} balances will continue to earn at{" "}
+            {formatter.percentageDisplay(rate.apyRate)} APY.{" "}
           </CelText>
         </Card>
       );
