@@ -4,14 +4,14 @@ import generalDataService from "../app/services/general-data-service";
 import mockGeneralDataStore from "../celsius-app-creds/mock-data/mockGeneralDataStore";
 import API_URL from "../app/services/api-url";
 
-describe("Live server - fetch initial data", () => {
-  test("getInitialData", async () => {
+describe("getCelsiusInitialData", () => {
+  it("should return initial data", async () => {
     const data = await generalDataService.getCelsiusInitialData();
     expect(data.withdrawal_settings).not.toBeDefined();
   });
 });
 
-describe("Mock server - fetch initial data", () => {
+describe("getCelsiusInitialData", () => {
   beforeEach(() => {
     moxios.install(axios);
   });
@@ -20,7 +20,7 @@ describe("Mock server - fetch initial data", () => {
     moxios.uninstall();
   });
 
-  test("getInitialData", () => {
+  it("should return initial mocked data", () => {
     const data = mockGeneralDataStore;
 
     const withdrawalSettings = {
