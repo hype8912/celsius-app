@@ -25,7 +25,7 @@
     "storybook": "(adb reverse tcp:7007 tcp:7007 || true) && start-storybook",
     "codepush:beta:android": "appcenter codepush release-react -a celsius-network/celsius-1 -d Staging",
     "codepush:beta:ios": "appcenter codepush release-react -a celsius-network/celsius -d Staging",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "jest": {
     "preset": "react-native",
