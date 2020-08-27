@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Linking,
 } from "react-native";
 
 import * as appActions from "../../../redux/actions";
@@ -309,6 +310,24 @@ class BorrowLanding extends Component {
     </RegularLayout>
   );
 
+  renderNoCompliance = () => (
+    <RegularLayout>
+      <CelText type={"H4"} weight={"500"} align={"center"}>
+        You are unable to access this feature due to your jurisdiction. For more
+        information please reach out to
+        <CelText
+          color={STYLES.COLORS.CELSIUS_BLUE}
+          onPress={() => Linking.openURL("mailto:loans@celsius.network")}
+          type={"H4"}
+          weight={"500"}
+        >
+          {" "}
+          loans@celsius.network.
+        </CelText>
+      </CelText>
+    </RegularLayout>
+  );
+
   // slavija intersection
   renderIntersection() {
     const { kycStatus, loanCompliance, allLoans } = this.props;
@@ -319,8 +338,7 @@ class BorrowLanding extends Component {
       return (
         <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_VERIFIED_BORROW} />
       );
-    if (!loanCompliance.allowed)
-      return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
+    if (!loanCompliance.allowed) return this.renderNoCompliance();
 
     if (hasLoans) return this.renderDefaultView();
 

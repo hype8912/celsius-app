@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { View, Animated } from "react-native";
+import _ from "lodash";
 
 import CoinListCardStyle from "./CoinListCard.styles";
 import CelText from "../../atoms/CelText/CelText";
@@ -68,7 +69,7 @@ class CoinListCard extends Component {
       ? interestRate.compound_rate
       : interestRate.rateInCel;
     if (isUSCitizen()) isInCel = interestRate.rateInCel;
-
+    if (_.isEmpty(interestRate)) return null;
     return (
       <CelText
         weight="500"
