@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { View } from "react-native";
 import { Onfido, OnfidoDocumentType } from "@onfido/react-native-sdk";
 import { lookup } from "country-data";
 
@@ -19,6 +20,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import PoAWarningModal from "../../modals/PoAWarningModal/PoAWarningModal";
 import { isForPrimeTrustKYC } from "../../../utils/user-util";
 import { MODALS } from "../../../constants/UI";
+import Spinner from "../../atoms/Spinner/Spinner";
 
 @connect(
   state => ({
@@ -47,6 +49,17 @@ class KYCVerifyIdentity extends Component {
     actions.getMobileSDKToken();
     actions.getKYCDocTypes();
     actions.getKYCDocuments();
+  }
+
+  componentWillUpdate(nextProps) {
+    const { actions, activeScreen, navigation } = this.props;
+    if (
+      activeScreen !== nextProps.activeScreen &&
+      nextProps.activeScreen === "KYCVerifyIdentity"
+    ) {
+      actions.getKYCDocuments();
+      navigation.setParams({ shouldChangeDoc: false });
+    }
   }
 
   isSavingDocs = () => {
@@ -136,6 +149,8 @@ class KYCVerifyIdentity extends Component {
     }
     const availableDocs = mapDocs(kycDocTypes[user.citizenship]);
 
+    const isSavingDocs = this.isSavingDocs();
+
     return (
       <RegularLayout>
         <CelText type="H2" weight="bold" margin={"0 0 30 0"} align="center">
@@ -146,32 +161,43 @@ class KYCVerifyIdentity extends Component {
           Select one of the following to submit
         </CelText>
 
-        {availableDocs.map(d => (
-          <Card
-            key={d.value}
-            onPress={() => this.onPressDocumentCard(d.value)}
-            padding="20 20 20 20"
-            styles={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "flex-start",
-            }}
-            opacity={this.isSavingDocs() ? 0.5 : 1}
-          >
-            <Icon
-              height="30"
-              fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-              name={d.icon}
-            />
-            <CelText
-              color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-              margin="0 0 0 15"
-              type="H3"
+        <View
+          style={{
+            opacity: isSavingDocs ? 0.4 : 1,
+          }}
+        >
+          {availableDocs.map(d => (
+            <Card
+              key={d.value}
+              onPress={() => this.onPressDocumentCard(d.value)}
+              padding="20 20 20 20"
+              styles={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-start",
+              }}
             >
-              {d.label}
-            </CelText>
-          </Card>
-        ))}
+              <Icon
+                height="30"
+                fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+                name={d.icon}
+              />
+              <CelText
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+                margin="0 0 0 15"
+                type="H3"
+              >
+                {d.label}
+              </CelText>
+            </Card>
+          ))}
+        </View>
+
+        {isSavingDocs && (
+          <View style={{ alignItems: "center", marginTop: 20 }}>
+            <Spinner />
+          </View>
+        )}
 
         <PoAWarningModal
           onNo={actions.closeModal}

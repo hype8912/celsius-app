@@ -69,11 +69,12 @@ class KYCCheckPhotos extends Component {
           }}
         >
           <Image
-            resizeMode="contain"
+            resizeMode="cover"
             style={{
               width: 300,
               height: 180,
               borderRadius: 15,
+              marginBottom: 30,
             }}
             source={frontImage}
           />
@@ -81,15 +82,13 @@ class KYCCheckPhotos extends Component {
           {backImage && (
             <View>
               <Image
-                resizeMode="contain"
+                resizeMode="cover"
                 source={backImage}
                 style={{
                   width: 300,
                   height: 180,
                   overflow: "hidden",
                   borderRadius: 15,
-                  borderWidth: 1,
-                  borderColor: "red",
                 }}
               />
             </View>
