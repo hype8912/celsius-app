@@ -26,6 +26,8 @@ function getUserInterestForCoin(coinShort) {
   const appSettings = store.getState().user.appSettings;
   const walletSummary = store.getState().wallet.summary;
 
+  if (!interestRates[coinShort]) return {};
+
   let interestRate = 0;
   let interestRateDisplay;
   let inCEL = false;
@@ -72,7 +74,11 @@ function getUserInterestForCoin(coinShort) {
       ? interestRates[coinShort].cel_rate
       : interestRates[coinShort].compound_cel_rate;
 
-  if (isUSCitizen()) {
+  if (
+    interestRates[coinShort] &&
+    interestRates[coinShort].threshold_us &&
+    isUSCitizen()
+  ) {
     isBelowThreshold = coinBalance.isLessThan(
       interestRates[coinShort].threshold_us
     );

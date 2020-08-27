@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { View, Animated } from "react-native";
 import PropTypes from "prop-types";
+import _ from "lodash";
+
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
@@ -121,7 +123,7 @@ class CoinGridCard extends Component {
                 <CelText weight="300" type="H6">
                   {displayName}
                 </CelText>
-                {interestRate.eligible && (
+                {!_.isEmpty(interestRate) && interestRate.eligible && (
                   <CelText color={STYLES.COLORS.GREEN} type="H7">
                     {formatter.percentageDisplay(isInCel)}
                   </CelText>
