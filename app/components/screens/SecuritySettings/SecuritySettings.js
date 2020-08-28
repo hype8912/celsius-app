@@ -215,6 +215,13 @@ class SecuritySettings extends Component {
 
         <IconButton
           margin="0 0 20 0"
+          onPress={() => actions.navigateTo("BiometricAuthentication")}
+        >
+          Biometric Authentication
+        </IconButton>
+
+        <IconButton
+          margin="0 0 20 0"
           onPress={() => actions.navigateTo("WithdrawAddressOverview")}
         >
           Change withdrawal addresses
