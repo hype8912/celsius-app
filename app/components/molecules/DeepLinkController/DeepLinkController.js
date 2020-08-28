@@ -13,7 +13,8 @@ appsFlyer.onInstallConversionData(data => {
   loggerUtil.log(data);
 });
 appsFlyer.onAppOpenAttribution(res => {
-  store.dispatch(appActions.addDeepLinkData(res.data));
+  if (res.data && res.data.type)
+    store.dispatch(appActions.addDeepLinkData(res.data));
   loggerUtil.log("onAppOpenAttributionCanceller: ", res.data);
 });
 appsFlyerUtil.initSDK();
