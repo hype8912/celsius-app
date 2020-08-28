@@ -2,7 +2,7 @@ import RNUxcam from "react-native-ux-cam";
 import loggerUtil from "./logger-util";
 import Constants from "../../constants";
 
-const { UXCAM_APP_KEY, UXCAM_API_KEY } = Constants;
+const { UXCAM_APP_KEY } = Constants;
 
 async function initUxCam() {
   if (!UXCAM_APP_KEY) return;
@@ -10,7 +10,16 @@ async function initUxCam() {
   try {
     await RNUxcam.optIntoSchematicRecordings();
     await RNUxcam.startWithKey(UXCAM_APP_KEY);
-    await RNUxcam.startWithKey(UXCAM_API_KEY);
+  } catch (err) {
+    loggerUtil.log(err);
+  }
+}
+
+async function startRecording() {
+  if (!UXCAM_APP_KEY) return;
+
+  try {
+    await RNUxcam.startWithKey(UXCAM_APP_KEY);
   } catch (err) {
     loggerUtil.log(err);
   }
@@ -50,6 +59,7 @@ async function stopRecordingAndUploadData() {
 
 export {
   initUxCam,
+  startRecording,
   urlForCurrentUser,
   urlForCurrentSession,
   stopRecordingAndUploadData,
