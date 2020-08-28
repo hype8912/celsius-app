@@ -84,6 +84,7 @@ import Appearance from "../components/screens/Appearance/Appearance";
 import ChangePassword from "../components/screens/ChangePassword/ChangePassword";
 import ChangePin from "../components/screens/ChangePin/ChangePin";
 import BiometricAuthentication from "../components/screens/BiometricAuthentication/BiometricAuthentication";
+import BiometricActivation from "../components/screens/BiometricActivation/BiometricActivation";
 import TwoFactorSettings from "../components/screens/TwoFactorSettings/TwoFactorSettings";
 import TwoFaAuthAppConfirmationCode from "../components/screens/TwoFaAuthAppConfirmationCode/TwoFaAuthAppConfirmationCode";
 import ChangeAvatar from "../components/screens/ChangeAvatar/ChangeAvatar";
@@ -263,6 +264,7 @@ export const screens = {
   ChangePassword,
   ChangePin,
   BiometricAuthentication,
+  BiometricActivation,
   TwoFactorSettings,
   TwoFaAuthAppConfirmationCode,
   HODLViewCode,

@@ -65,7 +65,7 @@ class BiometricAuthentication extends Component {
       actions.navigateTo("VerifyProfile", {
         onSuccess: async () => {
           this.setState({ biometricActivated: true });
-          actions.navigateTo("SecuritySettings");
+          actions.navigateTo("BiometricActivation");
         },
       });
     } else {
@@ -79,13 +79,13 @@ class BiometricAuthentication extends Component {
     const { actions } = this.props;
     const Switcher = this.rightSwitch;
 
-    const biometricsType = BIOMETRIC_TYPES.TOUCH_ID;
+    const biometricType = BIOMETRIC_TYPES.TOUCH_ID;
     const icon =
-      biometricsType === BIOMETRIC_TYPES.TOUCH_ID
+      biometricType === BIOMETRIC_TYPES.TOUCH_ID
         ? "Fingerprint"
         : "FaceRecognition";
     const text =
-      biometricsType === BIOMETRIC_TYPES.TOUCH_ID ? "Touch ID" : "Face ID";
+      biometricType === BIOMETRIC_TYPES.TOUCH_ID ? "Touch ID" : "Face ID";
     const isBiometricAvailableOnAnotherDevice = true;
 
     return (
