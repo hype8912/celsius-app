@@ -121,18 +121,6 @@ class CommunityDashboard extends Component {
         precision: 0,
       });
     }
-    if (
-      name === `ASSETS AS OF ${communityStats.community_settings.date}` &&
-      button === "Col. & Cash"
-    ) {
-      explanationText = "Collateral and Cash";
-      number = formatter.usd(
-        communityStats.community_settings.total_collateral_and_cash,
-        {
-          precision: 0,
-        }
-      );
-    }
 
     this.setState({
       activeButton: button,

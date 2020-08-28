@@ -34,7 +34,6 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
       : KYC_STATUSES.collecting,
     celpayCompliance: state.compliance.celpay,
     depositCompliance: state.compliance.deposit,
-    loanCompliance: state.compliance.loan,
     withdrawCompliance: state.compliance.withdraw,
     user: state.user.profile,
   }),
@@ -72,10 +71,10 @@ class FabMenu extends Component {
     const {
       depositCompliance,
       celpayCompliance,
-      loanCompliance,
       withdrawCompliance,
       kycStatus,
     } = this.props;
+
     const main = [
       [{ iconName: "Wallet", label: "Wallet", screen: "WalletLanding" }],
       [],
@@ -99,12 +98,11 @@ class FabMenu extends Component {
         label: "CelPay",
         screen: "CelPayLanding",
       });
-    if (loanCompliance.allowed)
-      main[1].push({
-        iconName: "Borrow",
-        label: "Borrow $$",
-        screen: "BorrowLanding",
-      });
+    main[1].push({
+      iconName: "Borrow",
+      label: "Borrow",
+      screen: "BorrowLanding",
+    });
     main[1].push({
       iconName: "Profile",
       label: "Profile",

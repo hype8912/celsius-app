@@ -361,6 +361,9 @@ function payPrincipal(id) {
   return async (dispatch, getState) => {
     startApiCall(API.PAY_LOAN_PRINCIPAL);
 
+    return;
+
+    // eslint-disable-next-line no-unreachable
     try {
       const { formData } = getState().forms;
       const verification = {
@@ -477,9 +480,9 @@ function checkForLoanAlerts() {
         loanAlerts.push({ id: l.id, type: LOAN_ALERTS.MARGIN_CALL_ALERT });
       }
 
-      if (l.can_pay_principal && l.coin_loan_asset !== "USD") {
-        loanAlerts.push({ id: l.id, type: LOAN_ALERTS.PRINCIPAL_ALERT });
-      }
+      // if (l.can_pay_principal && l.coin_loan_asset !== "USD") {
+      //   loanAlerts.push({ id: l.id, type: LOAN_ALERTS.PRINCIPAL_ALERT });
+      // }
     });
 
     dispatch({

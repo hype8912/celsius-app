@@ -15,29 +15,30 @@ function handleDeepLink() {
   return (dispatch, getState) => {
     const { deepLinkData } = getState().deepLink;
     const user = getState().user.profile;
+    if (deepLinkData) {
+      if (!deepLinkData.type) return;
 
-    if (!deepLinkData.type) return;
+      dispatch({ type: ACTIONS.DEEPLINK_HANDLED });
 
-    dispatch({ type: ACTIONS.DEEPLINK_HANDLED });
+      switch (deepLinkData.type) {
+        case DEEP_LINKS.NAVIGATE_TO:
+          if (!user.id) return;
 
-    switch (deepLinkData.type) {
-      case DEEP_LINKS.NAVIGATE_TO:
-        if (!user.id) return;
+          dispatch(actions.resetToScreen(deepLinkData.screen));
+          dispatch(actions.clearDeepLinkData());
+          return;
 
-        dispatch(actions.resetToScreen(deepLinkData.screen));
-        dispatch(actions.clearDeepLinkData());
-        return;
+        case DEEP_LINKS.TRANSFER:
+        case DEEP_LINKS.INDIVIDUAL_REFERRAL:
+        case DEEP_LINKS.COMPANY_REFERRAL:
+          dispatch(actions.registerBranchLink(deepLinkData));
+          return;
 
-      case DEEP_LINKS.TRANSFER:
-      case DEEP_LINKS.INDIVIDUAL_REFERRAL:
-      case DEEP_LINKS.COMPANY_REFERRAL:
-        dispatch(actions.registerBranchLink(deepLinkData));
-        dispatch(actions.clearDeepLinkData());
-        return;
-
-      default:
-        return;
+        default:
+          return;
+      }
     }
+    return;
   };
 }
 
