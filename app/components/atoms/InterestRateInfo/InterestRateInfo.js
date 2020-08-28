@@ -62,6 +62,7 @@ class InterestRateInfo extends Component {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
+              flexWrap: "wrap",
             }}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -138,7 +139,7 @@ class InterestRateInfo extends Component {
                   {!isUSCitizen() ? "CEL" : " "}
                 </CelText>
                 <CelText type={"H7"} weight="bold" style={styles.celRateText}>
-                  {formatter.percentageDisplay(interestRate.rateInCel)}
+                  {formatter.percentageDisplay(interestRate.specialRate)}
                 </CelText>
               </View>
             )}

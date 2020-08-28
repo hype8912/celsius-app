@@ -107,11 +107,11 @@ class CoinGridCard extends Component {
 
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
 
-    let isInCel;
-    isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
-    if (isUSCitizen()) isInCel = interestRate.rateInCel;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
 
     return (
@@ -125,7 +125,7 @@ class CoinGridCard extends Component {
                 </CelText>
                 {!_.isEmpty(interestRate) && interestRate.eligible && (
                   <CelText color={STYLES.COLORS.GREEN} type="H7">
-                    {formatter.percentageDisplay(isInCel)}
+                    {formatter.percentageDisplay(rate)}
                   </CelText>
                 )}
               </View>

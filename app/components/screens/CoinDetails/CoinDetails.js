@@ -178,11 +178,11 @@ class CoinDetails extends Component {
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
-    let isInCel;
-    isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
-    if (isUSCitizen()) isInCel = interestRate.rateInCel;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
 
     return (
       <RegularLayout
@@ -359,9 +359,7 @@ class CoinDetails extends Component {
                           align="justify"
                           type="H5"
                           color="white"
-                        >{`${formatter.percentageDisplay(
-                          isInCel
-                        )} APY`}</CelText>
+                        >{`${formatter.percentageDisplay(rate)} APY`}</CelText>
                       </Badge>
                     </View>
                   )}
