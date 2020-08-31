@@ -1,6 +1,7 @@
 import { BigNumber } from "bignumber.js";
 import formatter from "./formatter";
 import store from "../redux/store";
+import { isUSCitizen } from "./user-util";
 
 const interestUtil = {
   getUserInterestForCoin,
@@ -26,6 +27,8 @@ function getUserInterestForCoin(coinShort) {
   const appSettings = store.getState().user.appSettings;
   const walletSummary = store.getState().wallet.summary;
 
+  if (!interestRates[coinShort]) return {};
+
   let interestRateDisplay;
   let inCEL = false;
   let eligible = false;
@@ -48,24 +51,39 @@ function getUserInterestForCoin(coinShort) {
       : formatter.percentageDisplay(interestRates[coinShort].compound_cel_rate);
   }
 
+  const coinBalance = walletSummary.coins.find(c => c.short === coinShort)
+    .amount;
+
   if (
     interestRates[coinShort] &&
     interestRates[coinShort].threshold_on_first_n_coins &&
+    !isUSCitizen() &&
     walletSummary
   ) {
-    const coinBalance = new BigNumber(
-      walletSummary.coins.find(c => c.short === coinShort).amount
-    );
-
     isBelowThreshold = coinBalance.isLessThan(
       interestRates[coinShort].threshold_on_first_n_coins
     );
   }
 
-  const rateInCel =
+  let rateInCel;
+  rateInCel =
     typeof isBelowThreshold !== "undefined" && !isBelowThreshold
       ? interestRates[coinShort].cel_rate
       : interestRates[coinShort].compound_cel_rate;
+
+  if (
+    interestRates[coinShort] &&
+    interestRates[coinShort].threshold_us &&
+    isUSCitizen()
+  ) {
+    isBelowThreshold = coinBalance.isLessThan(
+      interestRates[coinShort].threshold_us
+    );
+    rateInCel =
+      typeof isBelowThreshold !== "undefined" && !isBelowThreshold
+        ? interestRates[coinShort].compound_rate
+        : interestRates[coinShort].rate_us;
+  }
 
   return {
     ...interestRates[coinShort],

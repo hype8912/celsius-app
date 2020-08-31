@@ -11,6 +11,7 @@ import Card from "../Card/Card";
 import CoinIcon from "../CoinIcon/CoinIcon";
 import cryptoUtil from "../../../utils/crypto-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
+import { isUSCitizen } from "../../../utils/user-util";
 
 @connect(
   state => ({
@@ -121,10 +122,11 @@ class InterestRateInfo extends Component {
                 {formatter.percentageDisplay(interestRate.compound_rate)}
               </CelText>
             </View>
-            {currencyInfo.short === "CEL" ? null : (
+            {currencyInfo.short === "CEL" ||
+            (isUSCitizen() && !interestRate.rate_us) ? null : (
               <View style={styles.celRateWrapper}>
-                <CelText type={"H7"} margin="0 5 0 0" color="white">
-                  CEL
+                <CelText type={"H7"} color="white" margin="0 5 0 0">
+                  {!isUSCitizen() ? "CEL" : " "}
                 </CelText>
                 <CelText type={"H7"} weight="bold" style="white">
                   {formatter.percentageDisplay(interestRate.rateInCel)}

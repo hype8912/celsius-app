@@ -5,6 +5,7 @@ import twitter from "react-native-simple-twitter";
 import CodePush from "react-native-code-push";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
+import _ from "lodash";
 
 import Constants from "../../constants";
 import {
@@ -67,7 +68,8 @@ async function logoutOnEnvChange() {
  */
 async function updateCelsiusApp() {
   const { deepLinkData } = store.getState().deepLink;
-  if (deepLinkData.type) return;
+  if (deepLinkData && !_.isEmpty(deepLinkData) && deepLinkData.type)
+    return false;
 
   if (await shouldUpdateCelsiusApp()) {
     store.dispatch(
@@ -76,11 +78,13 @@ async function updateCelsiusApp() {
         "Please wait while Celsius app is being updated."
       )
     );
-    return await CodePush.sync({
+    await CodePush.sync({
       updateDialog: false,
       installMode: CodePush.InstallMode.IMMEDIATE,
     });
+    return true;
   }
+  return false;
 }
 
 /**

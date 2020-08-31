@@ -64,7 +64,7 @@ class WalletSettings extends Component {
     const changesInterestEarn = !appSettings.interest_in_cel;
     if (!changesInterestEarn)
       await deleteSecureStoreKey("HIDE_MODAL_INTEREST_IN_CEL");
-    actions.setUserAppSettings({
+    await actions.setUserAppSettings({
       interest_in_cel: changesInterestEarn,
     });
     this.setState({ interestInCel: changesInterestEarn });
@@ -73,7 +73,7 @@ class WalletSettings extends Component {
   handleViewChange = async view => {
     const { actions } = this.props;
     this.setState({ defaultView: view });
-    actions.setUserAppSettings({ default_wallet_view: view });
+    await actions.setUserAppSettings({ default_wallet_view: view });
   };
 
   render() {
