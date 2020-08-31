@@ -411,7 +411,7 @@ const COMING_SOON_COINS = [
     name: "Binance Coin",
     short: "BNB",
     image_url: require("../../assets/images/coins/binance.png"),
-    learn_more_link: "https://www.binance.com/en/buy-Binance-Coin",
+    learn_more_link: "https://www.binance.com/en",
   },
   {
     name: "IOTA",
