@@ -4,6 +4,10 @@ const base = {
   container: {
     flex: 1,
   },
+  coinName: {
+    height: 40,
+    justifyContent: "center",
+  },
 };
 
 const themed = {
