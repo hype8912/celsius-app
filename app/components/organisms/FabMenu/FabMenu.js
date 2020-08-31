@@ -100,7 +100,7 @@ class FabMenu extends Component {
       });
     main[1].push({
       iconName: "Borrow",
-      label: "Borrow",
+      label: "Borrow $",
       screen: "BorrowLanding",
     });
     main[1].push({
