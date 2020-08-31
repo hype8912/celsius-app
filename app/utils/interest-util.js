@@ -1,5 +1,3 @@
-import { BigNumber } from "bignumber.js";
-import formatter from "./formatter";
 import store from "../redux/store";
 import { isUSCitizen } from "./user-util";
 
@@ -29,10 +27,10 @@ function getUserInterestForCoin(coinShort) {
 
   if (!interestRates[coinShort]) return {};
 
-  let interestRateDisplay;
   let inCEL = false;
   let eligible = false;
   let isBelowThreshold;
+  let specialRate;
 
   if (
     interestRates &&
@@ -45,44 +43,28 @@ function getUserInterestForCoin(coinShort) {
         (appSettings.interest_in_cel &&
           appSettings.interest_in_cel_per_coin[coinShort] === null)) &&
       coinShort !== "CEL";
-
-    interestRateDisplay = !inCEL
-      ? formatter.percentageDisplay(interestRates[coinShort].compound_rate)
-      : formatter.percentageDisplay(interestRates[coinShort].compound_cel_rate);
   }
 
   const coinBalance = walletSummary.coins.find(c => c.short === coinShort)
     .amount;
 
-  if (
-    interestRates[coinShort] &&
-    interestRates[coinShort].threshold_on_first_n_coins &&
-    !isUSCitizen() &&
-    walletSummary
-  ) {
+  if (!isUSCitizen()) {
     isBelowThreshold = coinBalance.isLessThan(
       interestRates[coinShort].threshold_on_first_n_coins
     );
-  }
-
-  let rateInCel;
-  rateInCel =
-    typeof isBelowThreshold !== "undefined" && !isBelowThreshold
-      ? interestRates[coinShort].cel_rate
-      : interestRates[coinShort].compound_cel_rate;
-
-  if (
-    interestRates[coinShort] &&
-    interestRates[coinShort].threshold_us &&
-    isUSCitizen()
-  ) {
+    specialRate = interestRates[coinShort].compound_cel_rate;
+    if (interestRates[coinShort].threshold_on_first_n_coins) {
+      specialRate = isBelowThreshold
+        ? interestRates[coinShort].compound_cel_rate
+        : interestRates[coinShort].cel_rate;
+    }
+  } else {
     isBelowThreshold = coinBalance.isLessThan(
       interestRates[coinShort].threshold_us
     );
-    rateInCel =
-      typeof isBelowThreshold !== "undefined" && !isBelowThreshold
-        ? interestRates[coinShort].compound_rate
-        : interestRates[coinShort].rate_us;
+    specialRate = isBelowThreshold
+      ? interestRates[coinShort].rate_us
+      : interestRates[coinShort].compound_rate;
   }
 
   return {
@@ -90,11 +72,10 @@ function getUserInterestForCoin(coinShort) {
     // Quickfix for ORBS and DAI crashes
     baseRate: interestRates[coinShort] ? interestRates[coinShort].rate : 0,
     coin: coinShort,
-    display: interestRateDisplay,
     isBelowThreshold,
     inCEL,
     eligible,
-    rateInCel,
+    specialRate,
   };
 }
 
@@ -119,6 +100,7 @@ function getLoyaltyRates(loyaltyInfo) {
       interestRates[coinShort].cel_rate
     );
   });
+
   return interestRates;
 }
 
@@ -155,14 +137,11 @@ function getBaseCelRate(coin) {
   let baseRate = interestRates[coin].rate;
 
   if (interestRates[coin].threshold_on_first_n_coins && walletSummary) {
-    const coinBalance = new BigNumber(
-      walletSummary.coins.find(c => c.short === coin).amount
-    );
+    const coinBalance = walletSummary.coins.find(c => c.short === coin).amount;
 
     const shouldUseSpecialRate = coinBalance.isLessThan(
       interestRates[coin].threshold_on_first_n_coins
     );
-
     baseRate = shouldUseSpecialRate
       ? interestRates[coin].rate_on_first_n_coins
       : baseRate;
