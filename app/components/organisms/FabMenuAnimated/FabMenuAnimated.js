@@ -129,7 +129,7 @@ class FabMenuAnimated extends Component {
     });
     main[1].push({
       iconName: "Borrow",
-      label: "Borrow",
+      label: "Borrow $",
       screen: "BorrowLanding",
     });
     main[2].splice(1, 0, {
