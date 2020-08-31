@@ -13,6 +13,7 @@ import {
 } from "../../../utils/styles-util";
 import animationsUtil from "../../../utils/animations-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import ComingSoonCoinsStyle from "./ComingSoonCoins.styles";
 
 class ComingSoonCoins extends Component {
   static propTypes = {
@@ -43,7 +44,7 @@ class ComingSoonCoins extends Component {
 
   render() {
     const theme = getTheme();
-    // const style = ComingSoonCoinsStyle(theme);
+    const style = ComingSoonCoinsStyle();
     const { activeView, coin, isGrid } = this.props;
     const cardSize =
       activeView === WALLET_LANDING_VIEW_TYPES.GRID ? "half" : "full";
@@ -111,9 +112,11 @@ class ComingSoonCoins extends Component {
                     </CelText>
                   )}
                 </View>
-                <CelText type={textSize} weight="bold">
-                  {coin.name}
-                </CelText>
+                <View style={style.coinName}>
+                  <CelText type={textSize} weight="bold">
+                    {coin.name}
+                  </CelText>
+                </View>
               </View>
             </View>
           </View>
