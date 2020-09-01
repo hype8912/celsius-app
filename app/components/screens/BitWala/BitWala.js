@@ -36,7 +36,11 @@ class BitWala extends Component {
         </CelText>
 
         <CelButton
-          onPress={() => Linking.openURL("https://www.bitwala.com/")}
+          onPress={() =>
+            Linking.openURL(
+              "https://www.bitwala.com/de/earning/?utm_source=celsius&utm_campaign=partnership&utm_medium=app-modal"
+            )
+          }
           margin="50 0 20 0"
         >
           Go to Bitwala site
