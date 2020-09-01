@@ -19,6 +19,7 @@ import { BIOMETRIC_TYPES } from "../../../constants/UI";
     securityOverview: state.security.securityOverview,
     user: state.user.profile,
     formData: state.forms.formData,
+    biometrics: state.biometrics.biometrics,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -65,7 +66,7 @@ class BiometricAuthentication extends Component {
       actions.navigateTo("VerifyProfile", {
         onSuccess: async () => {
           this.setState({ biometricActivated: true });
-          actions.navigateTo("SecuritySettings");
+          actions.navigateTo("BiometricActivation");
         },
       });
     } else {
@@ -76,16 +77,20 @@ class BiometricAuthentication extends Component {
   };
 
   render() {
-    const { actions } = this.props;
+    const { actions, biometrics } = this.props;
     const Switcher = this.rightSwitch;
 
-    const biometricsType = BIOMETRIC_TYPES.TOUCH_ID;
+    const biometricType =
+      biometrics.biometryType ===
+      (BIOMETRIC_TYPES.BIOMETRICS || BIOMETRIC_TYPES.TOUCH_ID)
+        ? BIOMETRIC_TYPES.TOUCH_ID
+        : BIOMETRIC_TYPES.FACE_ID;
     const icon =
-      biometricsType === BIOMETRIC_TYPES.TOUCH_ID
+      biometricType === BIOMETRIC_TYPES.TOUCH_ID
         ? "Fingerprint"
         : "FaceRecognition";
     const text =
-      biometricsType === BIOMETRIC_TYPES.TOUCH_ID ? "Touch ID" : "Face ID";
+      biometricType === BIOMETRIC_TYPES.TOUCH_ID ? "Touch ID" : "Face ID";
     const isBiometricAvailableOnAnotherDevice = true;
 
     return (

@@ -258,8 +258,9 @@ const CEL_PAY_TYPES = {
 };
 
 const BIOMETRIC_TYPES = {
-  TOUCH_ID: "TOUCH_ID",
-  FACE_ID: "FACE_ID",
+  TOUCH_ID: "TouchID",
+  FACE_ID: "FaceID",
+  BIOMETRICS: "Biometrics",
 };
 
 export {
