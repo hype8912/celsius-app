@@ -3,7 +3,6 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import RNUxcam from "react-native-ux-cam";
 import * as appActions from "../../../redux/actions";
 import SocialSecurityNumberStyle from "./SocialSecurityNumber.styles";
 import CelText from "../../atoms/CelText/CelText";
@@ -162,7 +161,7 @@ class SocialSecurityNumber extends Component {
           <React.Fragment>
             <View style={style.taxID}>
               <CelInput
-                ref={view => RNUxcam.occludeSensitiveView(view)}
+                hideFromRecording
                 margin="20 0 20 0"
                 type="text"
                 field="itin"
@@ -174,7 +173,7 @@ class SocialSecurityNumber extends Component {
             </View>
             <View style={style.nationalID}>
               <CelInput
-                ref={view => RNUxcam.occludeSensitiveView(view)}
+                hideFromRecording
                 margin="20 0 20 0"
                 type="text"
                 field="national_id"

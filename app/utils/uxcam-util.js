@@ -57,10 +57,17 @@ async function stopRecordingAndUploadData() {
   }
 }
 
+function hideComponentFromRecording(ref) {
+  if (ref) {
+    RNUxcam.occludeSensitiveView(ref);
+  }
+}
+
 export {
   initUxCam,
   startRecording,
   urlForCurrentUser,
   urlForCurrentSession,
   stopRecordingAndUploadData,
+  hideComponentFromRecording,
 };

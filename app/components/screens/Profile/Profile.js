@@ -151,10 +151,10 @@ class Profile extends Component {
               />
             )}
             <View style={{ marginLeft: 20 }}>
-              <CelText weight="600" type="H2">
+              <CelText hideFromRecording weight="600" type="H2">
                 {user.first_name}
               </CelText>
-              <CelText weight="600" type="H2">
+              <CelText hideFromRecording weight="600" type="H2">
                 {user.last_name}
               </CelText>
               <TouchableOpacity

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import {
   getMargins,
   getScaledFont,
@@ -10,6 +10,7 @@ import {
 } from "../../../utils/styles-util";
 import CelTextStyle from "./CelText.styles";
 import { THEMES } from "../../../constants/UI";
+import { hideComponentFromRecording } from "../../../utils/uxcam-util";
 
 class CelText extends Component {
   static propTypes = {
@@ -50,7 +51,9 @@ class CelText extends Component {
     theme: PropTypes.oneOf(Object.values(THEMES)),
     link: PropTypes.bool,
     underline: PropTypes.bool,
+    hideFromRecording: PropTypes.bool,
   };
+
   static defaultProps = {
     type: "H5",
     margin: "0 0 0 0",
@@ -61,13 +64,15 @@ class CelText extends Component {
     strikethrough: false,
     link: false,
     underline: false,
+    hideFromRecording: false,
   };
+
+  componentDidMount() {}
 
   getFontSize = () => {
     const { type, font, size } = this.props;
     const baseFontFamily = font || getThemeFontFamily();
 
-    // NOTE(fj): Check usage of size
     const fontSize = size
       ? { fontSize: getScaledFont(size), lineHeight: getScaledFont(size) }
       : { fontSize: getFontSize(type, baseFontFamily) };
@@ -86,7 +91,6 @@ class CelText extends Component {
     const fontWeightType = weight || this.getFontWeightForType(type);
     let fontFamily = getFontFamily(fontWeightType, font);
 
-    // NOTE(fj): Pangram doesn't have italic text
     if (italic && getThemeFontFamily() === "Barlow") {
       fontFamily =
         fontFamily !== "Barlow-Regular"
@@ -144,7 +148,6 @@ class CelText extends Component {
     ];
   };
 
-  // Greatest Bolognese Ever! CN-4818
   parseText() {
     const { children } = this.props;
 
@@ -161,15 +164,32 @@ class CelText extends Component {
     return children;
   }
 
-  render() {
-    const { style, allCaps, onPress } = this.props;
-    const fontStyle = this.getFontStyle();
-
+  renderRegularComponent = (text, fontStyle, style, onPress) => {
     return (
       <Text style={[fontStyle, style]} onPress={onPress}>
-        {allCaps ? this.parseText().toUpperCase() : this.parseText()}
+        {text}
       </Text>
     );
+  };
+
+  renderHiddenComponent = (text, fontStyle, style, onPress) => {
+    return (
+      <View ref={view => hideComponentFromRecording(view)}>
+        <Text style={[fontStyle, style]} onPress={onPress}>
+          {text}
+        </Text>
+      </View>
+    );
+  };
+
+  render() {
+    const { style, allCaps, onPress, hideFromRecording } = this.props;
+    const fontStyle = this.getFontStyle();
+    const text = allCaps ? this.parseText().toUpperCase() : this.parseText();
+
+    return hideFromRecording
+      ? this.renderHiddenComponent(text, fontStyle, style, onPress)
+      : this.renderRegularComponent(text, fontStyle, style, onPress);
   }
 }
 

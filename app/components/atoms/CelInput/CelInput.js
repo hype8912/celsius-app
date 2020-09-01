@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
-
 import CelInputStyle from "./CelInput.styles";
 import CelInputPassword from "./CelInputPassword";
 import CelInputText from "./CelInputText";
@@ -11,6 +10,7 @@ import CelTextArea from "../CelTextArea/CelTextArea";
 import CelText from "../CelText/CelText";
 import { THEMES } from "../../../constants/UI";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { hideComponentFromRecording } from "../../../utils/uxcam-util";
 
 class CelInput extends Component {
   static propTypes = {
@@ -25,7 +25,6 @@ class CelInput extends Component {
       "text-area",
     ]),
     autoFocus: PropTypes.bool,
-    // autoComplete: // android only
     disabled: PropTypes.bool,
     maxLenght: PropTypes.number,
     placeholder: PropTypes.string,
@@ -48,15 +47,15 @@ class CelInput extends Component {
       "words",
       "characters",
     ]),
-    onChange: PropTypes.func, //
-    autoCorrect: PropTypes.bool, //
+    onChange: PropTypes.func,
+    autoCorrect: PropTypes.bool,
     value: PropTypes.oneOfType([
       PropTypes.instanceOf(Object),
       PropTypes.string,
       PropTypes.number,
-    ]), //
-    field: PropTypes.string.isRequired, //
-    error: PropTypes.string, //
+    ]),
+    field: PropTypes.string.isRequired,
+    error: PropTypes.string,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
     margin: PropTypes.string,
@@ -70,6 +69,7 @@ class CelInput extends Component {
     showPasswordTooltip: PropTypes.bool,
     toolTipPositionTop: PropTypes.bool,
     showPassMeter: PropTypes.bool,
+    hideFromRecording: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -89,6 +89,7 @@ class CelInput extends Component {
     showPasswordTooltip: false,
     toolTipPositionTop: true,
     showPassMeter: false,
+    hideFromRecording: false,
   };
 
   constructor(props) {
@@ -203,8 +204,48 @@ class CelInput extends Component {
     }
   };
 
+  renderRegularComponent = error => {
+    return (
+      <CelText
+        margin="5 0 0 0"
+        color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+        align={"left"}
+        type={"H6"}
+        style={{
+          flexWrap: "wrap",
+          alignSelf: "flex-start",
+          justifyContent: "center",
+          paddingLeft: 5,
+        }}
+      >
+        {error}
+      </CelText>
+    );
+  };
+
+  renderHiddenComponent = error => {
+    return (
+      <View ref={view => hideComponentFromRecording(view)}>
+        <CelText
+          margin="5 0 0 0"
+          color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+          align={"left"}
+          type={"H6"}
+          style={{
+            flexWrap: "wrap",
+            alignSelf: "flex-start",
+            justifyContent: "center",
+            paddingLeft: 5,
+          }}
+        >
+          {error}
+        </CelText>
+      </View>
+    );
+  };
+
   render() {
-    const { error, margin, large } = this.props;
+    const { error, margin, large, hideFromRecording } = this.props;
     const cmpStyle = CelInputStyle();
     const styleWrapper = [
       getMargins(margin),
@@ -217,22 +258,9 @@ class CelInput extends Component {
     return (
       <View style={styleWrapper}>
         <Input />
-        {!!error && (
-          <CelText
-            margin="5 0 0 0"
-            color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
-            align={"left"}
-            type={"H6"}
-            style={{
-              flexWrap: "wrap",
-              alignSelf: "flex-start",
-              justifyContent: "center",
-              paddingLeft: 5,
-            }}
-          >
-            {error}
-          </CelText>
-        )}
+        {!!error && hideFromRecording
+          ? this.renderHiddenComponent(error)
+          : this.renderRegularComponent(error)}
       </View>
     );
   }
