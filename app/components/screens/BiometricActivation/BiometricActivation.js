@@ -11,9 +11,12 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { BIOMETRIC_TYPES } from "../../../constants/UI";
+import { createBiometricsSignature } from "../../../utils/biometrics-util";
 
 @connect(
-  () => ({}),
+  state => ({
+    biometrics: state.biometrics.biometrics,
+  }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class BiometricActivation extends Component {
@@ -26,14 +29,34 @@ class BiometricActivation extends Component {
     hideBack: true,
     gesturesEnabled: false,
   });
-
-  onPressLogin = () => {
-    const { actions } = this.props;
-    actions.navigateTo("Login");
+  onPressEnableBiometric = () => {
+    const { actions, biometrics } = this.props;
+    const biometricType =
+      biometrics.biometryType ===
+      (BIOMETRIC_TYPES.BIOMETRICS || BIOMETRIC_TYPES.TOUCH_ID)
+        ? BIOMETRIC_TYPES.TOUCH_ID
+        : BIOMETRIC_TYPES.FACE_ID;
+    const biometryTypeCopy =
+      biometricType === BIOMETRIC_TYPES.TOUCH_ID
+        ? "Fingerprint"
+        : "Face recognition";
+    createBiometricsSignature(() => {
+      actions.showMessage(
+        "success",
+        `Successfully enabled ${biometryTypeCopy} authentication`
+      );
+      actions.resetToScreen("BiometricAuthentication");
+    }, "Confirm biometrics");
   };
 
   selectedBiometricType = () => {
-    const biometricType = BIOMETRIC_TYPES.FACE_ID;
+    const { biometrics } = this.props;
+    const biometricType =
+      biometrics.biometryType ===
+      (BIOMETRIC_TYPES.BIOMETRICS || BIOMETRIC_TYPES.TOUCH_ID)
+        ? BIOMETRIC_TYPES.TOUCH_ID
+        : BIOMETRIC_TYPES.FACE_ID;
+
     let biometricCopy;
     if (biometricType === BIOMETRIC_TYPES.FACE_ID) {
       biometricCopy = {
@@ -75,7 +98,7 @@ class BiometricActivation extends Component {
           <CelText weight="light" align="center" style={style.subtitle}>
             {copy.description}
           </CelText>
-          <CelButton style={style.button} onPress={this.onPressLogin}>
+          <CelButton style={style.button} onPress={this.onPressEnableBiometric}>
             {copy.button}
           </CelButton>
           <CelText

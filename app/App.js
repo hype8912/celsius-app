@@ -59,6 +59,7 @@ class App extends Component {
     disableAccessibilityFontScaling();
     store.dispatch(actions.isGoodForAnimations());
     store.dispatch(actions.getGeolocation());
+    store.dispatch(actions.getBiometricType());
 
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       store.dispatch(actions.navigateBack());

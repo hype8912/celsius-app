@@ -1,4 +1,6 @@
 import ReactNativeBiometrics from "react-native-biometrics";
+import store from "../redux/store";
+import logger from "./logger-util";
 
 export {
   createBiometricsSignature,
@@ -9,20 +11,10 @@ export {
 
 async function isBiometricsSensorAvailable() {
   try {
-    const resultObject = await ReactNativeBiometrics.isSensorAvailable();
-    const { available, biometryType } = resultObject;
-    // console.log('result object je: ', resultObject)
-    if (available && biometryType === ReactNativeBiometrics.TouchID) {
-      // console.log('TouchID is supported')
-    } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
-      // console.log('FaceID is supported')
-    } else if (available && biometryType === ReactNativeBiometrics.Biometrics) {
-      // console.log('Biometrics is supported')
-    } else {
-      // console.log('Biometrics not supported')
-    }
-    return available;
+    const res = await ReactNativeBiometrics.isSensorAvailable();
+    return res;
   } catch (e) {
+    await logger.err(e);
     // console.log('biometrics failed')
   }
 }
@@ -69,17 +61,16 @@ async function checkBiometricsKey() {
 }
 
 // resultObject.signature sent to server, resultObject.success used for check if pass or not.
-async function createBiometricsSignature(onSuccess) {
+async function createBiometricsSignature(onSuccess, msgForUser) {
+  const user = store.getState().user.profile;
   const epochTimeSeconds = Math.round(new Date().getTime() / 1000).toString();
-  const payload = `${epochTimeSeconds}Ovo je custom poruka`;
+  const payload = `${epochTimeSeconds}${user.id}`;
 
   try {
     const resultObject = await ReactNativeBiometrics.createSignature({
-      promptMessage: "Authenticate yourself",
+      promptMessage: msgForUser || "Authenticate yourself",
       payload,
     });
-    // console.log('payload: ', payload)
-    // console.log('createBiometricsSignature: ', resultObject)
     if (resultObject.success) {
       // TODO Call endpoint and send signature and payload
       // verifySignatureWithServer(signature, payload)

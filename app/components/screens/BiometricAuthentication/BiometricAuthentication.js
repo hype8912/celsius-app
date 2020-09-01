@@ -19,6 +19,7 @@ import { BIOMETRIC_TYPES } from "../../../constants/UI";
     securityOverview: state.security.securityOverview,
     user: state.user.profile,
     formData: state.forms.formData,
+    biometrics: state.biometrics.biometrics,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -76,10 +77,14 @@ class BiometricAuthentication extends Component {
   };
 
   render() {
-    const { actions } = this.props;
+    const { actions, biometrics } = this.props;
     const Switcher = this.rightSwitch;
 
-    const biometricType = BIOMETRIC_TYPES.TOUCH_ID;
+    const biometricType =
+      biometrics.biometryType ===
+      (BIOMETRIC_TYPES.BIOMETRICS || BIOMETRIC_TYPES.TOUCH_ID)
+        ? BIOMETRIC_TYPES.TOUCH_ID
+        : BIOMETRIC_TYPES.FACE_ID;
     const icon =
       biometricType === BIOMETRIC_TYPES.TOUCH_ID
         ? "Fingerprint"
