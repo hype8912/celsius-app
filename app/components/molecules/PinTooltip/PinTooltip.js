@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 
 import PinTooltipStyle from "./PinTooltip.styles";
 import CelText from "../../atoms/CelText/CelText";
@@ -9,6 +9,8 @@ import securityUtil from "../../../utils/security-util";
 import { PIN_STRENGTH_ITEMS } from "../../../constants/DATA";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+
+const { width } = Dimensions.get("window");
 
 class PinTooltip extends Component {
   static propTypes = {
@@ -71,7 +73,7 @@ class PinTooltip extends Component {
                 position: "absolute",
                 width: 0,
                 height: 0,
-                marginLeft: 145,
+                marginLeft: (width - 80) / 2,
                 top: !toolTipPositionTop ? -10 : "auto",
                 bottom: toolTipPositionTop ? -10 : "auto",
                 borderLeftWidth: 10,

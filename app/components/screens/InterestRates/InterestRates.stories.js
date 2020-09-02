@@ -26,7 +26,7 @@ const initialState = {
   generalData: mockGeneralDataStore,
 };
 
-const regular = () => {
+const usCitizen = () => {
   return (
     <ScreenStoryWrapper
       screen={InterestRates}
@@ -37,5 +37,5 @@ const regular = () => {
 };
 
 export default {
-  regular,
+  usCitizen,
 };

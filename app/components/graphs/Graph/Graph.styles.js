@@ -36,8 +36,13 @@ const base = {
     height: heightPercentageToDP("4%"),
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: COLOR_KEYS.CARDS,
     padding: 2,
+  },
+  regularLabelBackground: {
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
+  cardLabelBackground: {
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   triangle: {
     width: 0,
@@ -49,8 +54,13 @@ const base = {
     borderBottomWidth: widthPercentageToDP("1.5%"),
     borderLeftColor: COLOR_KEYS.TRANSPARENT,
     borderRightColor: COLOR_KEYS.TRANSPARENT,
-    borderBottomColor: COLOR_KEYS.CARDS,
     transform: [{ rotate: "180deg" }],
+  },
+  regularTriangleBackground: {
+    borderBottomColor: COLOR_KEYS.CARDS,
+  },
+  cardTriangleBackground: {
+    borderBottomColor: COLOR_KEYS.BACKGROUND,
   },
   scrollPointer: {
     position: "absolute",

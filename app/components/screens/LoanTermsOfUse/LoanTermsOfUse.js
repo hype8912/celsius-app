@@ -46,7 +46,9 @@ class LoanTermsOfUse extends Component {
   getToUProps = () => {
     const { loanTermsOfUse } = this.props;
 
-    const textArray = loanTermsOfUse.split("\n");
+    let textArray = loanTermsOfUse.split("\n");
+    if (textArray.length === 1) textArray = loanTermsOfUse.split("↵");
+
     const textArrayParsed = textArray.map(s => ({
       text: s,
       type: s.includes("## ") ? "heading" : "paragraph",

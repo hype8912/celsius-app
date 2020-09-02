@@ -17,7 +17,7 @@ const base = {
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
-    backgroundColor: COLOR_KEYS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
   image: {
     width: widthPercentageToDP("10%"),

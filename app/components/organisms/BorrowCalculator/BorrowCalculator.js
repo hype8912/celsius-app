@@ -160,6 +160,7 @@ class BorrowCalculator extends Component {
         total: formatter.fiat(loanParams.totalInterest, "USD"),
         type: "USD",
         color: getColor(COLOR_KEYS.BACKGROUND),
+        textColor: getColor(COLOR_KEYS.PARAGRAPH),
       },
       {
         apr: formatter.percentageDisplay(loanParams.loyaltyApr),
@@ -167,6 +168,7 @@ class BorrowCalculator extends Component {
         total: formatter.fiat(loanParams.totalInCEL, "USD"),
         type: "CEL",
         color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+        textColor: getColor(COLOR_KEYS.WHITE),
       },
     ];
     const textType = numberOfDigits > 8 ? "H6" : "H5";
@@ -182,9 +184,7 @@ class BorrowCalculator extends Component {
           <CelText
             type={"H6"}
             align={"center"}
-            color={
-              num.type === "CEL" ? getColor(COLOR_KEYS.PRIMARY_BUTTON) : null
-            }
+            color={num.textColor}
           >
             Pay interest with {num.type}
           </CelText>
@@ -195,18 +195,14 @@ class BorrowCalculator extends Component {
               type={textType}
               weight={"bold"}
               align={"center"}
-              color={
-                num.type === "CEL" ? getColor(COLOR_KEYS.PRIMARY_BUTTON) : null
-              }
+              color={num.textColor}
             >
               {num.apr}
             </CelText>
             <CelText
               type={"H6"}
               align={"center"}
-              color={
-                num.type === "CEL" ? getColor(COLOR_KEYS.PRIMARY_BUTTON) : null
-              }
+              color={num.textColor}
             >
               APR
             </CelText>
@@ -216,18 +212,14 @@ class BorrowCalculator extends Component {
               type={textType}
               weight={"bold"}
               align={"center"}
-              color={
-                num.type === "CEL" ? getColor(COLOR_KEYS.PRIMARY_BUTTON) : null
-              }
+              color={num.textColor}
             >
               {num.monthly}
             </CelText>
             <CelText
               type={"H6"}
               align={"center"}
-              color={
-                num.type === "CEL" ? getColor(COLOR_KEYS.PRIMARY_BUTTON) : null
-              }
+              color={num.textColor}
             >
               Per Month
             </CelText>
@@ -237,18 +229,14 @@ class BorrowCalculator extends Component {
               type={textType}
               weight={"bold"}
               align={"center"}
-              color={
-                num.type === "CEL" ? getColor(COLOR_KEYS.PRIMARY_BUTTON) : null
-              }
+              color={num.textColor}
             >
               {num.total}
             </CelText>
             <CelText
               type={"H6"}
               align={"center"}
-              color={
-                num.type === "CEL" ? getColor(COLOR_KEYS.PRIMARY_BUTTON) : null
-              }
+              color={num.textColor}
             >
               Total
             </CelText>
@@ -336,7 +324,6 @@ class BorrowCalculator extends Component {
           <CelText
             align={"center"}
             weight="300"
-            color={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
             type={"H6"}
           >
             Collateral needed

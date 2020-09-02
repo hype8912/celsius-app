@@ -187,7 +187,6 @@ class BorrowEnterAmount extends Component {
         name={`Icon${formData.coin}`}
         width="40"
         height="40"
-        fill="active"
       />
     );
   };

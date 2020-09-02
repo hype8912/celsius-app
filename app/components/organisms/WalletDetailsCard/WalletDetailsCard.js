@@ -46,7 +46,7 @@ class WalletDetailsCard extends PureComponent {
     return (
       <Card padding="12 12 12 12">
         <View style={walletDetailsCardStyle.container}>
-          <View>
+          <View style={walletDetailsCardStyle.half}>
             <TouchableOpacity onPress={this.navigateToBalanceHistory}>
               <CelText weight="300" type="H6">
                 Total balance
@@ -68,7 +68,7 @@ class WalletDetailsCard extends PureComponent {
 
           <Separator vertical />
 
-          <View>
+          <View style={walletDetailsCardStyle.half}>
             <TouchableOpacity
               onPress={() => actions.navigateTo("WalletInterest")}
             >
@@ -88,7 +88,7 @@ class WalletDetailsCard extends PureComponent {
             <TouchableOpacity
               onPress={() => actions.navigateTo("InterestRates")}
             >
-              <CelText link>Weekly Reward Rates</CelText>
+              <CelText link>Weekly Rates</CelText>
             </TouchableOpacity>
           </View>
         </View>

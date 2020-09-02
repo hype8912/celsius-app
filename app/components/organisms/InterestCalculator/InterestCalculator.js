@@ -232,7 +232,7 @@ class InterestCalculator extends Component {
             marginHorizontal: 20,
           }}
         >
-          <Card color={getColor(COLOR_KEYS.BACKGROUND)} margin="0 20 0 20">
+          <Card color={getColor(COLOR_KEYS.BACKGROUND)} margin="0 20 0 20" noBorder>
             <CelText align={"center"}>
               {formatter.usd(
                 weeklyInterest * currencyRatesShort[selectedCoin.toLowerCase()]
@@ -251,7 +251,7 @@ class InterestCalculator extends Component {
               Rewards per week
             </CelText>
           </Card>
-          <Card color={getColor(COLOR_KEYS.BACKGROUND)} margin="20 20 20 20">
+          <Card color={getColor(COLOR_KEYS.BACKGROUND)} margin="20 20 20 20" noBorder>
             <CelText align={"center"}>
               {formatter.usd(
                 yearlyInterest * currencyRatesShort[selectedCoin.toLowerCase()]

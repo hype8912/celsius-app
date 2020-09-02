@@ -321,8 +321,9 @@ class Graph extends React.Component {
 
   renderPointer = () => {
     const color = this.getColor();
-    const { showCursor } = this.props;
+    const { showCursor, type } = this.props;
     const style = GraphStyle();
+    const isCoinInterest = type === "coin-interest"
 
     return showCursor ? (
       <View style={{ position: "absolute" }}>
@@ -339,7 +340,10 @@ class Graph extends React.Component {
         </View>
 
         <View ref={this.cursor.label} style={[style.pointer]}>
-          <View style={[style.label]}>
+          <View style={[
+            style.label,
+            isCoinInterest ? style.cardLabelBackground : style.regularLabelBackground,
+          ]}>
             <TextInput
               ref={this.cursor.labelText}
               style={{
@@ -361,7 +365,11 @@ class Graph extends React.Component {
               editable={false}
             />
           </View>
-          <View style={[style.triangle]} />
+
+          <View style={[
+            style.triangle,
+            isCoinInterest ? style.cardTriangleBackground : style.regularTriangleBackground,
+          ]} />
         </View>
       </View>
     ) : null;

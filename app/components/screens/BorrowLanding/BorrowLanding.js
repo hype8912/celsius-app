@@ -319,19 +319,21 @@ class BorrowLanding extends Component {
 
   renderNoCompliance = () => (
     <RegularLayout>
-      <CelText type={"H4"} weight={"500"} align={"center"}>
-        You are unable to access this feature due to your jurisdiction. For more
-        information please reach out to
-        <CelText
-          color={getColor(COLOR_KEYS.LINK)}
-          onPress={() => Linking.openURL("mailto:loans@celsius.network")}
-          type={"H4"}
-          weight={"500"}
-        >
-          {" "}
-          loans@celsius.network.
+      <View style={{ height: "100%", justifyContent: "center" }}>
+        <CelText type={"H4"} weight={"500"} align={"center"}>
+          You are unable to access this feature due to your jurisdiction. For more
+          information please reach out to
+          <CelText
+            color={getColor(COLOR_KEYS.LINK)}
+            onPress={() => Linking.openURL("mailto:loans@celsius.network")}
+            type={"H4"}
+            weight={"500"}
+          >
+            {" "}
+            loans@celsius.network.
+          </CelText>
         </CelText>
-      </CelText>
+      </View>
     </RegularLayout>
   );
 

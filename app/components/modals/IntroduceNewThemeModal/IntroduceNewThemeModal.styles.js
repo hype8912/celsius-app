@@ -1,9 +1,11 @@
-// import STYLES from '../../../constants/STYLES';
 import {
+  getColor,
   getThemedStyle,
   heightPercentageToDP,
-  widthPercentageToDP,
+  widthPercentageToDP
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const base = {
   container: {
@@ -14,6 +16,7 @@ const base = {
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     justifyContent: "flex-start",
+    backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
   },
   contentWrapper: {
     width: widthPercentageToDP("72%"),
@@ -31,20 +34,6 @@ const base = {
     justifyContent: "center",
     alignItems: "center",
   },
-  customButton: {
-    marginTop: 20,
-    width: 180,
-    height: 48,
-    borderRadius: 30,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-  buttonText: {
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
   imageWrapper: {
     flex: 1,
     alignItems: "center",
@@ -59,6 +48,10 @@ const base = {
       },
     ],
   },
+  spinnerWrapper: {
+    alignItems: "center",
+    marginTop: 30,
+  }
 };
 
 const themed = {

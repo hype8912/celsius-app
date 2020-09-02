@@ -89,7 +89,6 @@ import ApiAuthorizationPermissionsStories from "./ApiAuthorizationPermissions/Ap
 import MaintenanceStories from "./Maintenance/Maintenance.stories";
 import CelPayMessageStories from "./CelPayMessage/CelPayMessage.stories";
 import KYCFinalRejectionStories from "./KYCFinalRejection/KYCFinalRejection.stories";
-import SixDigitPinExplanationStories from "./SixDigitPinExplanation/SixDigitPinExplanation.stories";
 import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stories";
 import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
 import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
@@ -210,7 +209,8 @@ storiesOf("TransactionsIntersection", module)
   .add("Referrer Pending", TransactionsIntersectionStories.referrerPending)
   .add("Canceled", TransactionsIntersectionStories.canceled);
 
-storiesOf("InterestRates", module).add("Regular", InterestRatesStories.regular);
+storiesOf("InterestRates", module)
+  .add("US Citizens", InterestRatesStories.usCitizen);
 
 storiesOf("WalletInterest", module)
   .add("Regular", WalletInterestStories.regular)
@@ -255,7 +255,6 @@ storiesOf("BorrowLanding", module)
 
 storiesOf("ConfirmCamera", module)
   .add("Profile", ConfirmCameraStories.profile)
-  .add("Document", ConfirmCameraStories.document)
   .add("Utility Bill", ConfirmCameraStories.utility);
 
 storiesOf("RegisterInitial", module)
@@ -597,9 +596,4 @@ storiesOf("LoanPrepaymentPeriod", module).add(
 storiesOf("KYCFinalRejection", module).add(
   "KYCFinalRejection",
   KYCFinalRejectionStories.regular
-);
-
-storiesOf("SixDigitPinExplanation", module).add(
-  "SixDigitPinExplanation",
-  SixDigitPinExplanationStories.regular
 );
