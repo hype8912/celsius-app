@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Clipboard, BackHandler } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Clipboard,
+  BackHandler,
+  Image,
+} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationEvents } from "react-navigation";
@@ -10,7 +16,7 @@ import VerifyProfileStyle from "./VerifyProfile.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { KEYPAD_PURPOSES } from "../../../constants/UI";
+import { BIOMETRIC_TYPES, KEYPAD_PURPOSES } from "../../../constants/UI";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -18,6 +24,7 @@ import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { STORYBOOK } from "../../../../dev-settings.json";
+import { createBiometricsSignature } from "../../../utils/biometrics-util";
 // import { isBiometricsSensorAvailable, createBiometricsKey, createBiometricsSignature } from "../../../utils/biometrics-util";
 
 @connect(
@@ -28,6 +35,7 @@ import { STORYBOOK } from "../../../../dev-settings.json";
     previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
     theme: state.user.appSettings.theme,
+    biometrics: state.biometrics.biometrics,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -229,6 +237,13 @@ class VerifyProfile extends Component {
       this.setState({ loading: false });
     }
   };
+  // TODO - Work in progress
+  onPressBiometric = () => {
+    // const { actions } = this.props
+    createBiometricsSignature(() => {
+      // console.log('go to next screen')
+    }, "Verification required");
+  };
 
   renderDots = length => {
     const { actions } = this.props;
@@ -269,6 +284,7 @@ class VerifyProfile extends Component {
         </CelText>
 
         {this.renderDots()}
+        {this.renderBiometrics()}
 
         {loading ? (
           <View
@@ -306,6 +322,7 @@ class VerifyProfile extends Component {
         </CelText>
 
         {this.renderDots(hasSixDigitPin ? 6 : 4)}
+        {this.renderBiometrics()}
         <View>
           <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
         </View>
@@ -322,6 +339,36 @@ class VerifyProfile extends Component {
           </View>
         )}
       </View>
+    );
+  }
+
+  renderBiometrics() {
+    const { biometrics } = this.props;
+    const style = VerifyProfileStyle();
+
+    let biometricCopy;
+    if (biometrics.biometryType === BIOMETRIC_TYPES.FACE_ID) {
+      biometricCopy = {
+        image: require("../../../../assets/images/face-recognition.png"),
+        text: "Face ID",
+      };
+    } else {
+      biometricCopy = {
+        image: require("../../../../assets/images/fingerprint.png"),
+        text: "Touch ID",
+      };
+    }
+
+    return (
+      <TouchableOpacity
+        style={style.biometricsWrapper}
+        onPress={this.onPressBiometric}
+      >
+        <Image source={biometricCopy.image} style={style.biometricsImage} />
+        <CelText margin="0 0 0 10" align="center" type="H4">
+          {biometricCopy.text}
+        </CelText>
+      </TouchableOpacity>
     );
   }
 

@@ -80,17 +80,14 @@ class BiometricAuthentication extends Component {
     const { actions, biometrics } = this.props;
     const Switcher = this.rightSwitch;
 
-    const biometricType =
-      biometrics.biometryType ===
-      (BIOMETRIC_TYPES.BIOMETRICS || BIOMETRIC_TYPES.TOUCH_ID)
-        ? BIOMETRIC_TYPES.TOUCH_ID
-        : BIOMETRIC_TYPES.FACE_ID;
     const icon =
-      biometricType === BIOMETRIC_TYPES.TOUCH_ID
+      biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
         ? "Fingerprint"
         : "FaceRecognition";
     const text =
-      biometricType === BIOMETRIC_TYPES.TOUCH_ID ? "Touch ID" : "Face ID";
+      biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
+        ? "Touch ID"
+        : "Face ID";
     const isBiometricAvailableOnAnotherDevice = true;
 
     return (

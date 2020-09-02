@@ -31,13 +31,8 @@ class BiometricActivation extends Component {
   });
   onPressEnableBiometric = () => {
     const { actions, biometrics } = this.props;
-    const biometricType =
-      biometrics.biometryType ===
-      (BIOMETRIC_TYPES.BIOMETRICS || BIOMETRIC_TYPES.TOUCH_ID)
-        ? BIOMETRIC_TYPES.TOUCH_ID
-        : BIOMETRIC_TYPES.FACE_ID;
     const biometryTypeCopy =
-      biometricType === BIOMETRIC_TYPES.TOUCH_ID
+      biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
         ? "Fingerprint"
         : "Face recognition";
     createBiometricsSignature(() => {
@@ -51,14 +46,8 @@ class BiometricActivation extends Component {
 
   selectedBiometricType = () => {
     const { biometrics } = this.props;
-    const biometricType =
-      biometrics.biometryType ===
-      (BIOMETRIC_TYPES.BIOMETRICS || BIOMETRIC_TYPES.TOUCH_ID)
-        ? BIOMETRIC_TYPES.TOUCH_ID
-        : BIOMETRIC_TYPES.FACE_ID;
-
     let biometricCopy;
-    if (biometricType === BIOMETRIC_TYPES.FACE_ID) {
+    if (biometrics.biometryType === BIOMETRIC_TYPES.FACE_ID) {
       biometricCopy = {
         image: require("../../../../assets/images/face-recognition.png"),
         title: "Start using Face Recognition",
