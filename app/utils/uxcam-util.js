@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 import React from "react";
 import RNUxcam from "react-native-ux-cam";
 import loggerUtil from "./logger-util";
