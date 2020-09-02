@@ -72,7 +72,6 @@ class RegisterPromoCodeModal extends Component {
     const { actions, type } = this.props;
     this.setState({ loading: true });
     if (type === "celsius") {
-      // actions.submitProfileCode(this.proceed);
       actions.submitPromoCode(this.proceed, this.hasError);
     }
 

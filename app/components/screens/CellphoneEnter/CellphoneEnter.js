@@ -60,6 +60,7 @@ class CellphoneEnter extends Component {
           Enter your phone number
         </CelText>
         <CelInput
+          hideFromRecording
           type="phone"
           field="cellphone"
           placeholder="Phone number"

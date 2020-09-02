@@ -77,6 +77,7 @@ class Login extends Component {
             </CelText>
 
             <CelInput
+              hideFromRecording
               type="text"
               keyboardType={KEYBOARD_TYPE.EMAIL}
               autoCapitalize="none"
@@ -90,6 +91,7 @@ class Login extends Component {
               }}
             />
             <CelInput
+              hideFromRecording
               type="password"
               field="password"
               placeholder="Password"

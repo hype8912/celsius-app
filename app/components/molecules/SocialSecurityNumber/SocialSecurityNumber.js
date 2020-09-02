@@ -58,6 +58,7 @@ class SocialSecurityNumber extends Component {
             <View style={style.ssnInput}>
               <View style={style.inputCel}>
                 <CelInput
+                  hideFromRecording
                   onFocus={this.ssnField}
                   large={false}
                   maxLenght={3}
@@ -81,6 +82,7 @@ class SocialSecurityNumber extends Component {
               <CelText style={{ paddingHorizontal: 10 }}>{"-"}</CelText>
               <View style={style.inputCel}>
                 <CelInput
+                  hideFromRecording
                   large={false}
                   maxLenght={2}
                   keyboardType={"phone-pad"}
@@ -103,6 +105,7 @@ class SocialSecurityNumber extends Component {
               <CelText style={{ paddingHorizontal: 10 }}>{"-"}</CelText>
               <View style={style.inputCel}>
                 <CelInput
+                  hideFromRecording
                   large={false}
                   maxLenght={4}
                   keyboardType={"phone-pad"}

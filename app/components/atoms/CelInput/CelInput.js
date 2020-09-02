@@ -204,48 +204,8 @@ class CelInput extends Component {
     }
   };
 
-  renderRegularComponent = error => {
-    return (
-      <CelText
-        margin="5 0 0 0"
-        color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
-        align={"left"}
-        type={"H6"}
-        style={{
-          flexWrap: "wrap",
-          alignSelf: "flex-start",
-          justifyContent: "center",
-          paddingLeft: 5,
-        }}
-      >
-        {error}
-      </CelText>
-    );
-  };
-
-  renderHiddenComponent = error => {
-    return (
-      <View ref={view => hideComponentFromRecording(view)}>
-        <CelText
-          margin="5 0 0 0"
-          color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
-          align={"left"}
-          type={"H6"}
-          style={{
-            flexWrap: "wrap",
-            alignSelf: "flex-start",
-            justifyContent: "center",
-            paddingLeft: 5,
-          }}
-        >
-          {error}
-        </CelText>
-      </View>
-    );
-  };
-
   render() {
-    const { error, margin, large, hideFromRecording } = this.props;
+    const { error, margin, large } = this.props;
     const cmpStyle = CelInputStyle();
     const styleWrapper = [
       getMargins(margin),
@@ -258,12 +218,25 @@ class CelInput extends Component {
     return (
       <View style={styleWrapper}>
         <Input />
-        {!!error && hideFromRecording
-          ? this.renderHiddenComponent(error)
-          : this.renderRegularComponent(error)}
+        {!!error && (
+          <CelText
+            margin="5 0 0 0"
+            color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+            align={"left"}
+            type={"H6"}
+            style={{
+              flexWrap: "wrap",
+              alignSelf: "flex-start",
+              justifyContent: "center",
+              paddingLeft: 5,
+            }}
+          >
+            {error}
+          </CelText>
+        )}
       </View>
     );
   }
 }
 
-export default CelInput;
+export default hideComponentFromRecording(CelInput);

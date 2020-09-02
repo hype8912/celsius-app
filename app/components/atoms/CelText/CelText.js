@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import {
   getMargins,
   getScaledFont,
@@ -66,8 +66,6 @@ class CelText extends Component {
     underline: false,
     hideFromRecording: false,
   };
-
-  componentDidMount() {}
 
   getFontSize = () => {
     const { type, font, size } = this.props;
@@ -164,33 +162,17 @@ class CelText extends Component {
     return children;
   }
 
-  renderRegularComponent = (text, fontStyle, style, onPress) => {
+  render() {
+    const { style, allCaps, onPress } = this.props;
+    const fontStyle = this.getFontStyle();
+    const text = allCaps ? this.parseText().toUpperCase() : this.parseText();
+
     return (
       <Text style={[fontStyle, style]} onPress={onPress}>
         {text}
       </Text>
     );
-  };
-
-  renderHiddenComponent = (text, fontStyle, style, onPress) => {
-    return (
-      <View ref={view => hideComponentFromRecording(view)}>
-        <Text style={[fontStyle, style]} onPress={onPress}>
-          {text}
-        </Text>
-      </View>
-    );
-  };
-
-  render() {
-    const { style, allCaps, onPress, hideFromRecording } = this.props;
-    const fontStyle = this.getFontStyle();
-    const text = allCaps ? this.parseText().toUpperCase() : this.parseText();
-
-    return hideFromRecording
-      ? this.renderHiddenComponent(text, fontStyle, style, onPress)
-      : this.renderRegularComponent(text, fontStyle, style, onPress);
   }
 }
 
-export default CelText;
+export default hideComponentFromRecording(CelText);

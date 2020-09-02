@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import React, { Component } from "react";
 import { Image, Linking, TouchableOpacity, View } from "react-native";
 import * as appActions from "../../../redux/actions";
-
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Separator from "../../atoms/Separator/Separator";
@@ -131,6 +130,7 @@ class Profile extends Component {
                   borderWidth: 4,
                   borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
                 }}
+                hideFromRecording
                 source={{
                   uri: profilePicture,
                   cache: "default",

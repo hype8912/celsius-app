@@ -60,7 +60,12 @@ class ApiKeySuccessModal extends Component {
         </CelText>
 
         <View style={style.copyShareWrapper}>
-          <CelText align={"center"} weight={"400"} type={"H4"}>
+          <CelText
+            hideFromRecording
+            align={"center"}
+            weight={"400"}
+            type={"H4"}
+          >
             {apiKey}
           </CelText>
           <Separator

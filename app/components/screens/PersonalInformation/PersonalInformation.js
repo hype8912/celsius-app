@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Linking, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
 import moment from "moment";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
@@ -171,7 +170,12 @@ class PersonalInformation extends Component {
             <CelText margin={"0 0 10 0"} type={"H4"} weight={"300"}>
               First name
             </CelText>
-            <CelInput field={"profileFirst"} disabled value={user.first_name} />
+            <CelInput
+              hideFromRecording
+              field={"profileFirst"}
+              disabled
+              value={user.first_name}
+            />
           </View>
         )}
 
@@ -180,7 +184,12 @@ class PersonalInformation extends Component {
             <CelText margin={"0 0 10 0"} type={"H4"} weight={"300"}>
               Last name
             </CelText>
-            <CelInput field={"profileLast"} disabled value={user.last_name} />
+            <CelInput
+              hideFromRecording
+              field={"profileLast"}
+              disabled
+              value={user.last_name}
+            />
           </View>
         )}
 
@@ -220,6 +229,7 @@ class PersonalInformation extends Component {
               Gender
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileGender"}
               disabled
               type="text"
