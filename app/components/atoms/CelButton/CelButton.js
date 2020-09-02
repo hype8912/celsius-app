@@ -82,7 +82,9 @@ class CelButton extends Component {
     if (typeof children === "string") {
       mixpanelAnalytics.buttonPressed(children);
     } else {
-      mixpanelAnalytics.buttonPressed(children.props.children);
+      if (children && children.props) {
+        mixpanelAnalytics.buttonPressed(children.props.children);
+      }
     }
     onPress();
   };
