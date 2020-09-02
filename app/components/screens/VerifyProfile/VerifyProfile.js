@@ -16,7 +16,11 @@ import VerifyProfileStyle from "./VerifyProfile.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { BIOMETRIC_TYPES, KEYPAD_PURPOSES } from "../../../constants/UI";
+import {
+  BIOMETRIC_TYPES,
+  KEYPAD_PURPOSES,
+  MODALS,
+} from "../../../constants/UI";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -25,6 +29,7 @@ import { DEEP_LINKS } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { STORYBOOK } from "../../../../dev-settings.json";
 import { createBiometricsSignature } from "../../../utils/biometrics-util";
+import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
 // import { isBiometricsSensorAvailable, createBiometricsKey, createBiometricsSignature } from "../../../utils/biometrics-util";
 
 @connect(
@@ -239,10 +244,15 @@ class VerifyProfile extends Component {
   };
   // TODO - Work in progress
   onPressBiometric = () => {
-    // const { actions } = this.props
-    createBiometricsSignature(() => {
-      // console.log('go to next screen')
-    }, "Verification required");
+    const { actions } = this.props;
+    const biometricsNotSet = true;
+    if (biometricsNotSet) {
+      actions.openModal(MODALS.BIOMETRICS_AUTHENTICATION_MODAL);
+    } else {
+      createBiometricsSignature(() => {
+        // console.log('go to next screen')
+      }, "Verification required");
+    }
   };
 
   renderDots = length => {
@@ -404,6 +414,7 @@ class VerifyProfile extends Component {
             purpose={KEYPAD_PURPOSES.VERIFICATION}
           />
         </View>
+        <BiometricsAuthenticationModal actions={actions} />
       </RegularLayout>
     );
   }
