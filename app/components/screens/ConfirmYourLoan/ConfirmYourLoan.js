@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { countries } from "country-data";
 
 import * as appActions from "../../../redux/actions";
-import ConfirmYourLoanStyle from "./BorrowLoanConfirm.styles";
+import ConfirmYourLoanStyle from "./ConfirmYourLoan.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import formatter from "../../../utils/formatter";
@@ -28,7 +28,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-class BorrowLoanConfirm extends Component {
+class ConfirmYourLoan extends Component {
   static propTypes = {};
   static defaultProps = {};
 
@@ -584,4 +584,4 @@ class BorrowLoanConfirm extends Component {
   }
 }
 
-export default BorrowLoanConfirm;
+export default ConfirmYourLoan;
