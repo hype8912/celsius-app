@@ -70,7 +70,7 @@ import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
 import ActionsByUserStories from "./ActionsByUser/ActionsByUser.stories";
 import CelPayChooseFriendStories from "./CelPayChooseFriend/CelPayChooseFriend.stories";
-import BorrowLoanConfirmStories from "./BorrowLoanConfirm/BorrowLoanConfirm.stories";
+import BorrowLoanConfirmStories from "./ConfirmYourLoan/ConfirmYourLoan.stories";
 import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
 import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
 import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
@@ -209,8 +209,10 @@ storiesOf("TransactionsIntersection", module)
   .add("Referrer Pending", TransactionsIntersectionStories.referrerPending)
   .add("Canceled", TransactionsIntersectionStories.canceled);
 
-storiesOf("InterestRates", module)
-  .add("US Citizens", InterestRatesStories.usCitizen);
+storiesOf("InterestRates", module).add(
+  "US Citizens",
+  InterestRatesStories.usCitizen
+);
 
 storiesOf("WalletInterest", module)
   .add("Regular", WalletInterestStories.regular)
