@@ -8,8 +8,8 @@ import WelcomeStyle from "./Welcome.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
-import appUtil from "../../../utils/app-util";
 import ReferralReceivedModal from "../../modals/ReferralReceivedModal/ReferralReceivedModal";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 
 @connect(
   state => ({
@@ -28,15 +28,8 @@ class Welcome extends Component {
     hideBack: true,
   });
 
-  state = {
-    revisionId: "",
-  };
-
   async componentDidMount() {
     StatusBar.setHidden(false);
-
-    const appVersion = await appUtil.getRevisionId();
-    this.setState({ revisionId: appVersion.revisionId });
   }
 
   onPressLogin = () => {
@@ -48,7 +41,6 @@ class Welcome extends Component {
     const style = WelcomeStyle();
     const { actions, referralLink } = this.props;
 
-    const { revisionId } = this.state;
     return (
       <RegularLayout
         padding="0 20 0 20"
@@ -78,15 +70,7 @@ class Welcome extends Component {
           <CelButton basic onPress={() => this.onPressLogin()}>
             Login
           </CelButton>
-          <CelText
-            margin="30 0 0 0"
-            weight="light"
-            align="center"
-            type="H7"
-            style={{ opacity: 0.5 }}
-          >
-            Celsius App version: {revisionId}
-          </CelText>
+          <BuildVersion margin={"10 0 0 0"} />
         </View>
 
         <ReferralReceivedModal

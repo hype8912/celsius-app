@@ -14,6 +14,7 @@ import loggerUtil from "../../../utils/logger-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 
 @connect(
   state => ({
@@ -205,6 +206,7 @@ class LoginLanding extends Component {
                 {type === "login" ? ` Sign up` : ` Log in`}
               </CelText>
             </CelText>
+            <BuildVersion margin={"10 0 0 0"} />
           </View>
         </View>
       </AuthLayout>

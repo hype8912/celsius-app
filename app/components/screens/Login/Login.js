@@ -13,6 +13,7 @@ import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 
 @connect(
   state => ({
@@ -135,6 +136,7 @@ class Login extends Component {
               </CelText>
             </CelText>
           </View>
+          <BuildVersion margin={"10 0 0 0"} />
         </View>
       </AuthLayout>
     );

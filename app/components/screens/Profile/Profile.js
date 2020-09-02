@@ -13,7 +13,6 @@ import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal"
 import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
 import CelButton from "../../atoms/CelButton/CelButton";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
-import appUtil from "../../../utils/app-util";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
@@ -25,6 +24,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 
 @connect(
   state => ({
@@ -50,7 +50,6 @@ class Profile extends Component {
     super(props);
     this.state = {
       updatingTaxInfo: false,
-      revisionId: "",
     };
   }
 
@@ -59,9 +58,6 @@ class Profile extends Component {
     actions.profileTaxpayerInfo();
     actions.getUserAppSettings();
     this.initForm(user);
-
-    const appVersion = await appUtil.getRevisionId();
-    this.setState({ revisionId: appVersion.revisionId });
   }
 
   componentDidUpdate(prevProps) {
@@ -106,7 +102,6 @@ class Profile extends Component {
       kycStatus,
       callsInProgress,
     } = this.props;
-    const { revisionId } = this.state;
     const style = ProfileStyle();
     const { ENV } = Constants;
 
@@ -317,9 +312,7 @@ class Profile extends Component {
             >
               See Terms of Use
             </CelButton>
-            <CelText weight="light" align="center" type="H7">
-              {`App Version: ${revisionId}`}
-            </CelText>
+            <BuildVersion />
           </View>
 
           {ENV === "STAGING" ? (
