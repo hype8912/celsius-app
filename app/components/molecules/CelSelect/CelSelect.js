@@ -3,7 +3,6 @@ import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import RNPickerSelect from "react-native-picker-select";
 import { lookup, countries } from "country-data";
 
 import * as appActions from "../../../redux/actions";
@@ -14,6 +13,8 @@ import Icon from "../../atoms/Icon/Icon";
 import SELECT_VALUES from "../../../constants/SELECT_VALUES";
 import CelText from "../../atoms/CelText/CelText";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import PickerModal from "../../modals/PickerModal/PickerModal";
+import { MODALS } from "../../../constants/UI";
 
 const { PERSON_TITLE, GENDER, STATE, DAYS, YEARS, MONTHS } = SELECT_VALUES;
 
@@ -84,10 +85,11 @@ class CelSelect extends Component {
 
     const items = this.getItems(props);
 
+
     this.state = {
-      visible: false,
       items,
       value: undefined,
+      uniqueId: Math.floor(Math.random() * 1000000),
     };
   }
 
@@ -167,14 +169,14 @@ class CelSelect extends Component {
       showCountryFlag,
       hideCallingCodes,
     } = this.props;
-    const { visible, value } = this.state;
+    const { value, uniqueId } = this.state;
 
     const inputStyle = this.getInputStyle();
     const cmpStyle = CelSelectStyle();
     const textColor = this.getTextColor(cmpStyle);
     const iconColor = this.getIconColor(cmpStyle);
 
-    let onPress = () => this.setState({ visible: !visible });
+    let onPress = () => actions.openModal(`${MODALS.PICKER_MODAL}_${uniqueId}`);
 
     if (type === "country") {
       onPress = () =>
@@ -315,21 +317,22 @@ class CelSelect extends Component {
   );
 
   render() {
-    const { type, flex, disabled, onChange, error, style } = this.props;
-    const { items, value } = this.state;
+    const { type, flex, onChange, error, style, actions } = this.props;
+    const { items, value, uniqueId } = this.state;
 
     return (
       <View style={[flex ? { flex } : {}, style]}>
         {!["state", "country", "phone"].includes(type) ? (
-          <RNPickerSelect
-            disabled={disabled}
-            items={items}
-            onValueChange={onChange || this.handlePickerSelect}
-            value={value ? value.value : null}
-            style={{ height: 23 }}
-          >
+          <View>
             {this.renderSelect()}
-          </RNPickerSelect>
+            <PickerModal
+              name={`${MODALS.PICKER_MODAL}_${uniqueId}`}
+              items={items}
+              onPress={onChange || this.handlePickerSelect}
+              closeModal={actions.closeModal}
+              value={value}
+            />
+          </View>
         ) : (
           this.renderSelect()
         )}
