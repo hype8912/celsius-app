@@ -379,7 +379,6 @@ class Deposit extends Component {
               <View style={styles.qrCode}>
                 <View style={styles.qrCodeWrapper}>
                   <QRCode
-                    hideFromRecording
                     value={displayAddress}
                     size={100}
                     bgColor="#FFF"
@@ -400,7 +399,6 @@ class Deposit extends Component {
                   <Separator />
                   <View style={styles.copyShareButtonsWrapper}>
                     <CopyButton
-                      hideFromRecording
                       onCopy={() =>
                         actions.showMessage(
                           "success",
@@ -410,7 +408,7 @@ class Deposit extends Component {
                       copyText={displayAddress}
                     />
                     <Separator vertical />
-                    <ShareButton hideFromRecording shareText={displayAddress} />
+                    <ShareButton shareText={displayAddress} />
                   </View>
                 </View>
               </View>
@@ -430,7 +428,6 @@ class Deposit extends Component {
             )}
 
             <DepositAddressSwitchCard
-              hideFromRecording
               coin={formData.selectedCoin}
               primaryAddress={address}
               secondaryAddress={secondaryAddress}
