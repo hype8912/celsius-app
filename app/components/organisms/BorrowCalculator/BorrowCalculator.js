@@ -158,7 +158,7 @@ class BorrowCalculator extends Component {
         apr: formatter.percentageDisplay(formData.ltv.interest),
         monthly: formatter.fiat(loanParams.monthlyInterest, "USD"),
         total: formatter.fiat(loanParams.totalInterest, "USD"),
-        type: "USD",
+        type: " USD, BTC, ETH or Stablecoins",
         color: getColor(COLOR_KEYS.BACKGROUND),
         textColor: getColor(COLOR_KEYS.PARAGRAPH),
       },
@@ -181,11 +181,7 @@ class BorrowCalculator extends Component {
         ]}
       >
         <View style={style.interestCardTitle}>
-          <CelText
-            type={"H6"}
-            align={"center"}
-            color={num.textColor}
-          >
+          <CelText type={"H6"} align={"center"} color={num.textColor}>
             Pay interest with {num.type}
           </CelText>
         </View>
@@ -199,11 +195,7 @@ class BorrowCalculator extends Component {
             >
               {num.apr}
             </CelText>
-            <CelText
-              type={"H6"}
-              align={"center"}
-              color={num.textColor}
-            >
+            <CelText type={"H6"} align={"center"} color={num.textColor}>
               APR
             </CelText>
           </View>
@@ -216,11 +208,7 @@ class BorrowCalculator extends Component {
             >
               {num.monthly}
             </CelText>
-            <CelText
-              type={"H6"}
-              align={"center"}
-              color={num.textColor}
-            >
+            <CelText type={"H6"} align={"center"} color={num.textColor}>
               Per Month
             </CelText>
           </View>
@@ -233,11 +221,7 @@ class BorrowCalculator extends Component {
             >
               {num.total}
             </CelText>
-            <CelText
-              type={"H6"}
-              align={"center"}
-              color={num.textColor}
-            >
+            <CelText type={"H6"} align={"center"} color={num.textColor}>
               Total
             </CelText>
           </View>
@@ -321,11 +305,7 @@ class BorrowCalculator extends Component {
           >
             {formatter.crypto(loanParams.collateralNeeded || 0, formData.coin)}
           </CelText>
-          <CelText
-            align={"center"}
-            weight="300"
-            type={"H6"}
-          >
+          <CelText align={"center"} weight="300" type={"H6"}>
             Collateral needed
           </CelText>
         </Card>
@@ -346,7 +326,7 @@ class BorrowCalculator extends Component {
             weight={"300"}
             theme={themeModal}
           >
-            Choose your collateral type.
+            Choose your Loan-to-Value percentage
           </CelText>
           <View style={style.ltvWrapper}>
             {sortedLtv &&
@@ -388,7 +368,7 @@ class BorrowCalculator extends Component {
             weight={"300"}
             theme={themeModal}
           >
-            For how long would you borrow?
+            Choose the length of your loan
           </CelText>
           <HorizontalSlider
             items={this.sliderItems}

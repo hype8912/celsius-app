@@ -173,7 +173,7 @@ class KYCTaxpayer extends Component {
           weight={"300"}
         >
           {this.isFromUS()
-            ? "US residents must provide their SSN to earn rewards through Celsius. This can be entered later. However, rewards will not be earned until SSN is entered"
+            ? "US residents must provide their SSN to earn rewards through Celsius. This can be entered later. However, rewards will not be earned until SSN is entered."
             : "You may need to fill your taxpayer ID for tax reporting. You may add it later in your profile."}
         </CelText>
 

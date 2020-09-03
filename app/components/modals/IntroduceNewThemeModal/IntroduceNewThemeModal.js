@@ -48,9 +48,12 @@ class IntroduceNewThemeModal extends Component {
 
   renderContent = () => {
     const style = IntroduceNewThemeModalStyle();
-    const { callsInProgress } = this.props
+    const { callsInProgress } = this.props;
 
-    const isSaving = apiUtil.areCallsInProgress([API.SET_APP_SETTINGS], callsInProgress);
+    const isSaving = apiUtil.areCallsInProgress(
+      [API.SET_APP_SETTINGS],
+      callsInProgress
+    );
 
     return (
       <View>
@@ -62,7 +65,17 @@ class IntroduceNewThemeModal extends Component {
           align={"center"}
           font="Pangram"
         >
-          We are excited to introduce you to the new look of Celsius app.
+          Welcome to the new
+        </CelText>
+        <CelText
+          color={getColor(COLOR_KEYS.LINK, THEMES.UNICORN)}
+          allCaps
+          type={"H4"}
+          weight={"800"}
+          align={"center"}
+          font="Pangram"
+        >
+          Celsius app.
         </CelText>
         <CelText
           margin={"10 0 0 0"}
@@ -71,10 +84,10 @@ class IntroduceNewThemeModal extends Component {
           align={"center"}
           font="Pangram"
         >
-          You can activate the Sunset theme later in the profile settings.
+          Please enjoy our new color theme.
         </CelText>
 
-        { !isSaving ? (
+        {!isSaving ? (
           <View>
             <CelButton
               onPress={() => this.onPress(true)}
