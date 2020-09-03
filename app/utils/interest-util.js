@@ -54,9 +54,10 @@ function getUserInterestForCoin(coinShort) {
     );
     specialRate = interestRates[coinShort].compound_cel_rate;
     if (interestRates[coinShort].threshold_on_first_n_coins) {
-      specialRate = isBelowThreshold
-        ? interestRates[coinShort].compound_cel_rate
-        : interestRates[coinShort].cel_rate;
+      specialRate =
+        isBelowThreshold && interestRates[coinShort]
+          ? interestRates[coinShort].compound_cel_rate
+          : interestRates[coinShort].cel_rate;
     }
   } else {
     isBelowThreshold = coinBalance.isLessThan(
@@ -89,16 +90,18 @@ function getLoyaltyRates(loyaltyInfo) {
 
   Object.keys(interestRates).forEach(coinShort => {
     const baseRate = interestUtil.getBaseCelRate(coinShort);
-    interestRates[coinShort].cel_rate = interestUtil.calculateBonusRate(
-      baseRate,
-      loyaltyInfo.earn_interest_bonus
-    );
-    interestRates[coinShort].compound_rate = interestUtil.calculateAPY(
-      interestRates[coinShort].rate
-    );
-    interestRates[coinShort].compound_cel_rate = interestUtil.calculateAPY(
-      interestRates[coinShort].cel_rate
-    );
+    if (coinShort) {
+      interestRates[coinShort].cel_rate = interestUtil.calculateBonusRate(
+        baseRate,
+        loyaltyInfo.earn_interest_bonus
+      );
+      interestRates[coinShort].compound_rate = interestUtil.calculateAPY(
+        interestRates[coinShort].rate
+      );
+      interestRates[coinShort].compound_cel_rate = interestUtil.calculateAPY(
+        interestRates[coinShort].cel_rate
+      );
+    }
   });
 
   return interestRates;
