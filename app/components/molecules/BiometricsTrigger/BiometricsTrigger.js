@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Banner from "../Banner/Banner";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { DONT_SHOW } from "../../../constants/UI";
+import { DONT_SHOW_AGAIN } from "../../../constants/UI";
 import { setSecureStoreKey } from "../../../utils/expo-storage";
 
 class BiometricsTrigger extends Component {
@@ -35,7 +35,10 @@ class BiometricsTrigger extends Component {
         textButtonText={"Don't show"}
         textButtonAction={() => {
           actions.closeBanner();
-          setSecureStoreKey(DONT_SHOW.BIOMETRIC_BANNER, JSON.stringify(true));
+          setSecureStoreKey(
+            DONT_SHOW_AGAIN.BIOMETRIC_BANNER,
+            JSON.stringify(true)
+          );
         }}
         close={() => actions.closeBanner()}
       />

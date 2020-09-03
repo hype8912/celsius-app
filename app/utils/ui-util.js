@@ -2,7 +2,7 @@ import { Platform } from "react-native";
 import store from "../redux/store";
 import { hasPassedKYC } from "./user-util";
 import { getSecureStoreKey } from "./expo-storage";
-import { DONT_SHOW } from "../constants/UI";
+import { DONT_SHOW_AGAIN } from "../constants/UI";
 
 export { isLoanBannerVisible, isBiometricsBannerVisible, isIos };
 
@@ -22,7 +22,7 @@ function isLoanBannerVisible() {
 
 async function isBiometricsBannerVisible() {
   const dontShow = JSON.parse(
-    await getSecureStoreKey(DONT_SHOW.BIOMETRIC_BANNER)
+    await getSecureStoreKey(DONT_SHOW_AGAIN.BIOMETRIC_BANNER)
   );
   return dontShow;
 }

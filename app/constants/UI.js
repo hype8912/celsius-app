@@ -120,7 +120,7 @@ const WALLET_LANDING_VIEW_TYPES = {
 
 const FAB_TYPE = ["main", "support", "hide"];
 
-const DONT_SHOW = {
+const DONT_SHOW_AGAIN = {
   BIOMETRIC_BANNER: "BIOMETRIC_BANNER",
 };
 
@@ -290,5 +290,5 @@ export {
   CEL_PAY_TYPES,
   HODL_STATUS,
   BIOMETRIC_TYPES,
-  DONT_SHOW,
+  DONT_SHOW_AGAIN,
 };
