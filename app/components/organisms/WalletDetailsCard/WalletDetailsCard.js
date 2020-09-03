@@ -52,6 +52,7 @@ class WalletDetailsCard extends PureComponent {
                 Total balance
               </CelText>
               <Counter
+                hideFromRecording
                 weight="600"
                 type="H3"
                 margin="3 0 3 0"
@@ -76,6 +77,7 @@ class WalletDetailsCard extends PureComponent {
                 Total Earnings
               </CelText>
               <Counter
+                hideFromRecording
                 weight="600"
                 type="H3"
                 margin="3 0 3 0"

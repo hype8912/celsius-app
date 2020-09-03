@@ -27,10 +27,12 @@ class Counter extends Component {
     color: PropTypes.string,
     usd: PropTypes.bool,
     align: PropTypes.string,
+    hideFromRecording: PropTypes.bool,
   };
 
   static defaultProps = {
     usd: false,
+    hideFromRecording: false,
   };
 
   static countInterval;
@@ -99,7 +101,16 @@ class Counter extends Component {
 
   render() {
     const { value, shouldCount } = this.state;
-    const { margin, weight, type, number, color, usd, align } = this.props;
+    const {
+      margin,
+      weight,
+      type,
+      number,
+      color,
+      usd,
+      align,
+      hideFromRecording,
+    } = this.props;
     const style = CounterStyle();
 
     const amount = shouldCount ? value : number;
@@ -110,6 +121,7 @@ class Counter extends Component {
     return (
       <View style={style.container}>
         <CelText
+          hideFromRecording={hideFromRecording}
           weight={weight}
           type={type}
           align={align}

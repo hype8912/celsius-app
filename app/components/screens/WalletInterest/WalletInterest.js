@@ -99,6 +99,7 @@ class WalletInterest extends Component {
               </CelText>
               <View style={style.amountWrapper}>
                 <Counter
+                  hideFromRecording
                   weight="600"
                   type="H2"
                   number={walletSummary.total_interest_earned}

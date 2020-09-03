@@ -206,6 +206,7 @@ class CoinDetails extends Component {
                     {currency.displayName}
                   </CelText>
                   <Counter
+                    hideFromRecording
                     weight="600"
                     type="H2"
                     margin={"3 0 3 0"}
@@ -213,7 +214,7 @@ class CoinDetails extends Component {
                     speed={5}
                     usd
                   />
-                  <CelText weight="300" type="H6">
+                  <CelText hideFromRecording weight="300" type="H6">
                     {formatter.crypto(coinDetails.amount, coinDetails.short)}
                   </CelText>
                 </View>
@@ -330,10 +331,20 @@ class CoinDetails extends Component {
                   <CelText type="H6" weight="300" margin={"3 0 3 0"}>
                     Total Earnings
                   </CelText>
-                  <CelText type="H3" weight="600" margin={"3 0 3 0"}>
+                  <CelText
+                    hideFromRecording
+                    type="H3"
+                    weight="600"
+                    margin={"3 0 3 0"}
+                  >
                     {formatter.usd(coinDetails.interest_earned_usd)}
                   </CelText>
-                  <CelText type="H6" weight="300" margin={"3 0 3 0"}>
+                  <CelText
+                    hideFromRecording
+                    type="H6"
+                    weight="300"
+                    margin={"3 0 3 0"}
+                  >
                     {formatter.crypto(
                       coinDetails.interest_earned,
                       coinDetails.short
@@ -341,7 +352,12 @@ class CoinDetails extends Component {
                   </CelText>
                   {coinDetails.interest_earned_cel &&
                   coinDetails.short !== "CEL" ? (
-                    <CelText type="H6" weight="300" margin={"3 0 0 0"}>
+                    <CelText
+                      hideFromRecording
+                      type="H6"
+                      weight="300"
+                      margin={"3 0 0 0"}
+                    >
                       {formatter.crypto(coinDetails.interest_earned_cel, "CEL")}
                     </CelText>
                   ) : null}
@@ -356,6 +372,7 @@ class CoinDetails extends Component {
                         color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                       >
                         <CelText
+                          hideFromRecording
                           margin={"0 5 0 5"}
                           align="justify"
                           type="H5"
@@ -403,10 +420,16 @@ class CoinDetails extends Component {
               style={{ flexDirection: "row", justifyContent: "space-around" }}
             >
               <View>
-                <CelText type={"H2"} weight={"600"} align={"center"}>
+                <CelText
+                  hideFromRecording
+                  type={"H2"}
+                  weight={"600"}
+                  align={"center"}
+                >
                   {formatter.usd(coinPrice.price)}
                 </CelText>
                 <CelText
+                  hideFromRecording
                   type={"H6"}
                   weight={"300"}
                   align={"center"}
@@ -429,7 +452,12 @@ class CoinDetails extends Component {
                     height={"10"}
                     width={"10"}
                   />
-                  <CelText type={"H2"} weight={"600"} align={"center"}>
+                  <CelText
+                    hideFromRecording
+                    type={"H2"}
+                    weight={"600"}
+                    align={"center"}
+                  >
                     {formatter.round(coinPrice.percent_change_24h, {
                       precision: 2,
                     })}
