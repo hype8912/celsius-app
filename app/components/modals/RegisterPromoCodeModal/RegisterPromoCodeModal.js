@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import RNUxcam from "react-native-ux-cam";
 import RegisterPromoCodeModalStyle from "./RegisterPromoCodeModal.styles";
 import CelModal from "../CelModal/CelModal.js";
 import { MODALS, THEMES } from "../../../constants/UI";
@@ -73,7 +72,6 @@ class RegisterPromoCodeModal extends Component {
     const { actions, type } = this.props;
     this.setState({ loading: true });
     if (type === "celsius") {
-      // actions.submitProfileCode(this.proceed);
       actions.submitPromoCode(this.proceed, this.hasError);
     }
 
@@ -235,7 +233,7 @@ class RegisterPromoCodeModal extends Component {
         </CelText>
         <View style={style.inputWrapper}>
           <CelInput
-            ref={view => RNUxcam.occludeSensitiveView(view)}
+            hideFromRecording
             type="text"
             field="promoCode"
             placeholder="Enter Promo Code"

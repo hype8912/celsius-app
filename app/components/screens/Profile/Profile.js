@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import React, { Component } from "react";
 import { Image, Linking, TouchableOpacity, View } from "react-native";
 import * as appActions from "../../../redux/actions";
-
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Separator from "../../atoms/Separator/Separator";
@@ -131,6 +130,7 @@ class Profile extends Component {
                   borderWidth: 4,
                   borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
                 }}
+                hideFromRecording
                 source={{
                   uri: profilePicture,
                   cache: "default",
@@ -151,10 +151,10 @@ class Profile extends Component {
               />
             )}
             <View style={{ marginLeft: 20 }}>
-              <CelText weight="600" type="H2">
+              <CelText hideFromRecording weight="600" type="H2">
                 {user.first_name}
               </CelText>
-              <CelText weight="600" type="H2">
+              <CelText hideFromRecording weight="600" type="H2">
                 {user.last_name}
               </CelText>
               <TouchableOpacity

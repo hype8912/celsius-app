@@ -335,7 +335,11 @@ class Deposit extends Component {
                       alignItems: "center",
                     }}
                   >
-                    <CelText style={styles.importantInfo} weight={"500"}>
+                    <CelText
+                      hideFromRecording
+                      style={styles.importantInfo}
+                      weight={"500"}
+                    >
                       {destinationTag || memoId}
                     </CelText>
                     <TouchableOpacity
@@ -382,6 +386,7 @@ class Deposit extends Component {
                   />
                 </View>
                 <CelText
+                  hideFromRecording
                   type="H4"
                   align={"center"}
                   margin="10 0 10 0"

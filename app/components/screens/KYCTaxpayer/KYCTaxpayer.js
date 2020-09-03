@@ -162,7 +162,7 @@ class KYCTaxpayer extends Component {
 
     return (
       <RegularLayout>
-        <CelText weight={"700"} type={"H2"} align="center">
+        <CelText hideFromRecording weight={"700"} type={"H2"} align="center">
           {this.isFromUS() ? "Social Security Number" : "Taxpayer ID"}
         </CelText>
 
