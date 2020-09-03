@@ -10,7 +10,7 @@ import { setFormErrors, updateFormField } from "../forms/formsActions";
 import { default as NavActions, navigateTo } from "../nav/navActions";
 import apiUtil from "../../utils/api-util";
 import userDataService from "../../services/user-data-service";
-import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util";
+import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util/user-util";
 import { KYC_STATUSES } from "../../constants/DATA";
 import interestUtil from "../../utils/interest-util";
 

@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 import store from "../redux/store";
-import { hasPassedKYC } from "./user-util";
+import { hasPassedKYC } from "./user-util/user-util";
 
 export { isLoanBannerVisible, isIos };
 

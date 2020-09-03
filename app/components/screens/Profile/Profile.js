@@ -16,7 +16,7 @@ import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import ProfileStyle from "./Profile.styles";
 import Icon from "../../atoms/Icon/Icon";
 import Constants from "../../../../constants";

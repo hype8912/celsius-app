@@ -10,7 +10,7 @@ import * as appActions from "../../../redux/actions";
 import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import formatter from "../../../utils/formatter";
 import Spinner from "../../atoms/Spinner/Spinner";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import Badge from "../../atoms/Badge/Badge";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import Separator from "../../atoms/Separator/Separator";

@@ -3,7 +3,7 @@ import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { heightPercentageToDP } from "./styles-util";
 import { isLoanBannerVisible } from "./ui-util";
-import { hasPassedKYC } from "./user-util";
+import { hasPassedKYC } from "./user-util/user-util";
 
 const animationsUtil = {
   applyOffset,

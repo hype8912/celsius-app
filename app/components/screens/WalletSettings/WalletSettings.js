@@ -8,7 +8,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Separator from "../../atoms/Separator/Separator";
 import IconButton from "../../organisms/IconButton/IconButton";
 import apiUtil from "../../../utils/api-util";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import API from "../../../constants/API";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";

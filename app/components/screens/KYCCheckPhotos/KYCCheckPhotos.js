@@ -7,7 +7,7 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { isForPrimeTrustKYC } from "../../../utils/user-util";
+import { isForPrimeTrustKYC } from "../../../utils/user-util/user-util";
 
 @connect(
   state => ({

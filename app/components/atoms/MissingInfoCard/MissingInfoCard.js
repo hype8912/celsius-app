@@ -4,7 +4,7 @@ import { Linking } from "react-native";
 
 import Card from "../Card/Card";
 import STYLES from "../../../constants/STYLES";
-import { hasSSN, hasAddress, hasPassedKYC } from "../../../utils/user-util";
+import { hasSSN, hasAddress, hasPassedKYC } from "../../../utils/user-util/user-util";
 import CelText from "../CelText/CelText";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
