@@ -33,6 +33,7 @@ class Home extends Component {
 
     await actions.getWalletSummary();
     await actions.getUserAppBootstrap();
+    await actions.getCurrencyRates();
 
     mixpanelAnalytics.sessionStarted("Init app");
     await actions.setBannerProps();

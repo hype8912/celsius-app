@@ -102,6 +102,14 @@ class WalletLanding extends Component {
       hodlStatus,
     } = this.props;
     actions.changeWalletHeaderContent();
+
+    actions.getWalletSummary();
+    if (!currenciesRates) actions.getCurrencyRates();
+    if (!currenciesGraphs) actions.getCurrencyGraphs();
+    actions.getLoyaltyInfo();
+    actions.getLoanAlerts();
+    this.setWalletFetchingInterval();
+
     const dontShowIntroduceNewTheme = await AsyncStorage.getItem(
       "DONT_SHOW_INTRODUCE_NEW_THEME"
     );
@@ -111,26 +119,17 @@ class WalletLanding extends Component {
         getTheme() !== THEMES.UNICORN
       ) {
         actions.openModal(MODALS.INTRODUCE_NEW_THEME_MODAL);
-      } else {
-        if (
-          !previouslyOpenedModals.HODL_MODE_MODAL &&
-          hodlStatus.created_by === "backoffice"
-        )
-          actions.openModal(MODALS.HODL_MODE_MODAL);
-
-        actions.getLoanAlerts();
+      } else if (
+        !previouslyOpenedModals.HODL_MODE_MODAL &&
+        hodlStatus.created_by === "backoffice"
+      ) {
+        actions.openModal(MODALS.HODL_MODE_MODAL);
       }
     }, 2000);
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     await assignPushNotificationToken();
-
-    await actions.getWalletSummary();
-    await actions.getLoyaltyInfo();
-    if (!currenciesRates) actions.getCurrencyRates();
-    if (!currenciesGraphs) actions.getCurrencyGraphs();
-    this.setWalletFetchingInterval();
   };
 
   componentDidUpdate(prevProps) {
@@ -229,8 +228,8 @@ class WalletLanding extends Component {
     } = this.props;
     const style = WalletLandingStyle();
 
-    if (!walletSummary || !user) {
-      return <LoadingScreen />;
+    if (!walletSummary || !user || !currenciesRates) {
+      return <LoadingScreen fabType="hide" />;
     }
 
     return (
