@@ -30,7 +30,7 @@ const base = {
   },
   image: {
     resizeMode: "contain",
-    marginRight: heightPercentageToDP("2%"),
+    marginRight: heightPercentageToDP("1%"),
     marginLeft: 10,
     width: 40,
     height: 40,

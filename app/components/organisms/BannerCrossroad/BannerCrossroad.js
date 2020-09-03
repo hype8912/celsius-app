@@ -9,7 +9,11 @@ import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import LoanTrigger from "../../molecules/LoanTrigger/LoanTrigger";
 import ReferralTrigger from "../../atoms/ReferralTrigger/ReferralTrigger";
-import { isLoanBannerVisible } from "../../../utils/ui-util";
+import BiometricsTrigger from "../../molecules/BiometricsTrigger/BiometricsTrigger";
+import {
+  isLoanBannerVisible,
+  isBiometricsBannerVisible,
+} from "../../../utils/ui-util";
 
 @connect(
   state => ({
@@ -19,6 +23,7 @@ import { isLoanBannerVisible } from "../../../utils/ui-util";
     isBannerVisible: state.ui.isBannerVisible,
     bannerProps: state.ui.bannerProps,
     userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
+    biometrics: state.biometrics.biometrics,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -30,17 +35,20 @@ class BannerCrossroad extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bannerSwitch: true,
+      biometricBannerHidden: false,
+      bannerSwitch: 0,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (isLoanBannerVisible()) {
       this.bannerInterval = setInterval(
         () => this.setState(this.updateState()),
         30000
       );
     }
+    const biometricBannerHidden = await isBiometricsBannerVisible();
+    if (biometricBannerHidden) this.setState({ biometricBannerHidden });
   }
 
   componentWillUnmount() {
@@ -63,11 +71,19 @@ class BannerCrossroad extends Component {
       isBannerVisible,
       bannerProps,
       userTriggeredActions,
+      biometrics,
     } = this.props;
     const { bannerSwitch } = this.state;
     const currentDate = moment.utc().format();
+
     if (!hasPassedKYC())
       return <KYCTrigger actions={actions} kycType={kycStatus} />;
+
+    if (!isBannerVisible) return null;
+
+    if (biometrics.available && !this.state.biometricBannerHidden) {
+      return <BiometricsTrigger actions={actions} />;
+    }
 
     if (this.isPowerOfTwo(bannerProps.sessionCount)) return null;
     if (userTriggeredActions.bannerResurrectionDay) {
@@ -80,7 +96,6 @@ class BannerCrossroad extends Component {
       )
         return null;
     }
-    if (!isBannerVisible) return null;
 
     if (isLoanBannerVisible()) {
       if (!bannerSwitch) return <ReferralTrigger actions={actions} />;
