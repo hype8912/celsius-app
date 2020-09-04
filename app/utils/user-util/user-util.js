@@ -1,5 +1,5 @@
-import store from "../redux/store";
-import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../constants/DATA";
+import store from "../../redux/store";
+import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../../constants/DATA";
 
 export {
   isUserLoggedIn,

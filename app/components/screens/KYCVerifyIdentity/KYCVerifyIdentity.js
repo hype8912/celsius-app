@@ -18,7 +18,7 @@ import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import PoAWarningModal from "../../modals/PoAWarningModal/PoAWarningModal";
-import { isForPrimeTrustKYC } from "../../../utils/user-util";
+import { isForPrimeTrustKYC } from "../../../utils/user-util/user-util";
 import { MODALS } from "../../../constants/UI";
 import Spinner from "../../atoms/Spinner/Spinner";
 

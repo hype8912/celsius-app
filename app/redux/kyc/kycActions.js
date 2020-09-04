@@ -11,7 +11,7 @@ import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import userKYCService from "../../services/user-kyc-service";
-import { isForPrimeTrustKYC } from "../../utils/user-util";
+import { isForPrimeTrustKYC } from "../../utils/user-util/user-util";
 
 export {
   updateProfileInfo,

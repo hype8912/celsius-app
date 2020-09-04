@@ -9,7 +9,7 @@ import SocialSecurityNumberStyle from "./SocialSecurityNumber.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInputText";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import Card from "../../atoms/Card/Card";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";

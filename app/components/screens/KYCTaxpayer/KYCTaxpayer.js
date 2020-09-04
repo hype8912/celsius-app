@@ -13,7 +13,7 @@ import { MODALS } from "../../../constants/UI";
 import SsnModal from "../../modals/SsnModal/SsnModal";
 import SocialSecurityNumber from "../../molecules/SocialSecurityNumber/SocialSecurityNumber";
 import apiUtil from "../../../utils/api-util";
-import { isForPrimeTrustKYC, isUSCitizen } from "../../../utils/user-util";
+import { isForPrimeTrustKYC, isUSCitizen } from "../../../utils/user-util/user-util";
 import API from "../../../constants/API";
 
 @connect(

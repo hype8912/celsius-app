@@ -12,7 +12,7 @@ import {
 import * as appActions from "../../../redux/actions";
 import BorrowLandingStyle from "./BorrowLanding.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import { EMPTY_STATES, MODALS, LOAN_FILTER_ITEMS } from "../../../constants/UI";
 import BorrowCalculatorScreen from "../BorrowCalculatorScreen/BorrowCalculatorScreen";
 import { KYC_STATUSES } from "../../../constants/DATA";

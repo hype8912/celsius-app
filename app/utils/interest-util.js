@@ -1,5 +1,5 @@
 import store from "../redux/store";
-import { isUSCitizen } from "./user-util";
+import { isUSCitizen } from "./user-util/user-util";
 
 const interestUtil = {
   getUserInterestForCoin,

@@ -12,7 +12,7 @@ import GetCoinsInfoModal from "../../modals/GetCoinsInfoModal/GetCoinsInfoModal"
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import BuyCoinsPaymentsHistory from "../../molecules/BuyCoinsPaymentsHistory/BuyCoinsPaymentsHistory";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import store from "../../../redux/store";
 
