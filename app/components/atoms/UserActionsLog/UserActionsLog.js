@@ -194,6 +194,20 @@ const getData = item => {
       action: "Withdrawal address change",
     };
   }
+  if (item.action === "biometrics-activated") {
+    return {
+      name: "Fingerprint",
+      color: `${getColor(COLOR_KEYS.PRIMARY_BUTTON)}`,
+      action: "Biometrics activated",
+    };
+  }
+  if (item.action === "biometrics-deactivated") {
+    return {
+      name: "Fingerprint",
+      color: `${getColor(COLOR_KEYS.PRIMARY_BUTTON)}`,
+      action: "Biometrics deactivated",
+    };
+  }
 };
 
 const UserActionsLog = props => {
