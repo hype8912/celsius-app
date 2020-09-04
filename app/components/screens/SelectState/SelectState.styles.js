@@ -16,7 +16,7 @@ const base = {
     borderRadius: 8,
   },
   activeItem: {
-    backgroundColor: COLOR_KEYS.POSITIVE_STATE,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
   left: {
     flexDirection: "row",

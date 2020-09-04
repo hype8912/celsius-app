@@ -24,7 +24,7 @@ import StaticScreen from "../StaticScreen/StaticScreen";
 import IconButton from "../../organisms/IconButton/IconButton";
 import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
 import DepositInfoModal from "../../modals/DepositInfoModal/DepositInfoModal";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import formatter from "../../../utils/formatter";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";

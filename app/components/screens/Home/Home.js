@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { isKYCRejectedForever } from "../../../utils/user-util";
+import { isKYCRejectedForever } from "../../../utils/user-util/user-util";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import SplashScreen from "../SplashScreen/SplashScreen";
@@ -33,6 +33,7 @@ class Home extends Component {
 
     await actions.getWalletSummary();
     await actions.getUserAppBootstrap();
+    await actions.getCurrencyRates();
 
     mixpanelAnalytics.sessionStarted("Init app");
     await actions.setBannerProps();

@@ -17,7 +17,7 @@ import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { initMixpanel } from "./mixpanel-util";
-import { isUserLoggedIn } from "./user-util";
+import { isUserLoggedIn } from "./user-util/user-util";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,

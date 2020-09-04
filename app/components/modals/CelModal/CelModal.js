@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
 import Modal from "react-native-modal";
@@ -48,42 +47,6 @@ class CelModal extends Component {
     hasCloseButton: true,
     picture: null,
     pictureDimensions: {},
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      modalPosition: { justifyContent: "flex-end" },
-    };
-  }
-
-  componentDidMount() {
-    this.keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      this.keyboardDidShow
-    );
-    this.keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      this.keyboardDidHide
-    );
-  }
-
-  componentWillUnmount() {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
-  keyboardDidShow = () => {
-    this.setState({
-      modalPosition: { justifyContent: "flex-start" },
-    });
-  };
-
-  keyboardDidHide = () => {
-    this.setState({
-      modalPosition: { justifyContent: "flex-end" },
-    });
   };
 
   getTintColor = () => {
@@ -188,10 +151,8 @@ class CelModal extends Component {
       hasCloseButton,
       actions,
     } = this.props;
-    const { modalPosition } = this.state;
     const style = CelModalStyle();
     const tintColor = this.getTintColor();
-
     return (
       <Modal
         isVisible={openedModal === name}
@@ -204,7 +165,7 @@ class CelModal extends Component {
         onBackdropPress={() => actions.closeModal()}
         useNativeDriver={!isIos()}
       >
-        <View style={[style.wrapper, modalPosition]}>
+        <View style={[style.wrapper]}>
           <View style={style.modal}>
             <View style={{ height: picture || hasCloseButton ? 50 : 0 }}>
               {!!hasCloseButton && this.renderClose()}

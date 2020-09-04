@@ -12,7 +12,7 @@ import {
 import * as appActions from "../../../redux/actions";
 import BorrowLandingStyle from "./BorrowLanding.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import { EMPTY_STATES, MODALS, LOAN_FILTER_ITEMS } from "../../../constants/UI";
 import BorrowCalculatorScreen from "../BorrowCalculatorScreen/BorrowCalculatorScreen";
 import { KYC_STATUSES } from "../../../constants/DATA";
@@ -321,8 +321,8 @@ class BorrowLanding extends Component {
     <RegularLayout>
       <View style={{ height: "100%", justifyContent: "center" }}>
         <CelText type={"H4"} weight={"500"} align={"center"}>
-          You are unable to access this feature due to your jurisdiction. For more
-          information please reach out to
+          You are unable to access this feature due to your jurisdiction. For
+          more information please reach out to
           <CelText
             color={getColor(COLOR_KEYS.LINK)}
             onPress={() => Linking.openURL("mailto:loans@celsius.network")}

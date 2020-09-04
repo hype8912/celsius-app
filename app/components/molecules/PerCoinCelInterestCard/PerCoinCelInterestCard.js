@@ -11,7 +11,7 @@ import Separator from "../../atoms/Separator/Separator";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import Icon from "../../atoms/Icon/Icon";
-import { isUSResident } from "../../../utils/user-util";
+import { isUSResident } from "../../../utils/user-util/user-util";
 import PerCoinCelInterestCardStyle from "./PerCoinCelInterestCard.styles";
 import ScrollMore from "../../atoms/ScrollMore/ScrollMore";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";

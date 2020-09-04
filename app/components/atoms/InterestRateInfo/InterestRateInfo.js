@@ -11,7 +11,7 @@ import Card from "../Card/Card";
 import CoinIcon from "../CoinIcon/CoinIcon";
 import cryptoUtil from "../../../utils/crypto-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -128,10 +128,18 @@ class InterestRateInfo extends Component {
             {currencyInfo.short === "CEL" ||
             (isUSCitizen() && !interestRate.rate_us) ? null : (
               <View style={styles.celRateWrapper}>
-                <CelText type={"H7"} color={getColor(COLOR_KEYS.WHITE)} margin="0 5 0 0">
+                <CelText
+                  type={"H7"}
+                  color={getColor(COLOR_KEYS.WHITE)}
+                  margin="0 5 0 0"
+                >
                   {!isUSCitizen() ? "CEL" : " "}
                 </CelText>
-                <CelText type={"H7"} weight="bold" color={getColor(COLOR_KEYS.WHITE)}>
+                <CelText
+                  type={"H7"}
+                  weight="bold"
+                  color={getColor(COLOR_KEYS.WHITE)}
+                >
                   {formatter.percentageDisplay(interestRate.specialRate)}
                 </CelText>
               </View>

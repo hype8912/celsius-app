@@ -28,7 +28,7 @@ class CelButton extends Component {
     ghost: PropTypes.bool,
     textSize: PropTypes.string,
     color: PropTypes.oneOf(["green", "red", "white"]),
-    theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK, THEMES.UNICORN])
+    theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK, THEMES.UNICORN]),
   };
 
   static defaultProps = {
@@ -101,13 +101,13 @@ class CelButton extends Component {
       color = iconRightColor;
     } else {
       const style = CelButtonStyle(theme);
-      this.getTitleStyle(style).forEach(s => { color = s.color || color })
+      this.getTitleStyle(style).forEach(s => {
+        color = s.color || color;
+      });
     }
 
     return (
-      <View
-        style={{ paddingLeft: children ? 10 : 0 }}
-      >
+      <View style={{ paddingLeft: children ? 10 : 0 }}>
         <Icon
           name={iconRight}
           height={this.props.backButton ? backButtonSize : iconRightHeight}
@@ -119,7 +119,7 @@ class CelButton extends Component {
   };
 
   renderLoader = () => {
-    const { theme } = this.props
+    const { theme } = this.props;
     const style = CelButtonStyle(theme);
     const buttonStyle = this.getButtonStyle(style);
     const titleStyle = this.getTitleStyle(style);

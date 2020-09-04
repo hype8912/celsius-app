@@ -14,7 +14,7 @@ import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 
 class CoinListCard extends Component {
   static propTypes = {

@@ -18,7 +18,10 @@ import Fab from "../../molecules/Fab/Fab";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import { THEMES } from "../../../constants/UI";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC, isKYCRejectedForever } from "../../../utils/user-util";
+import {
+  hasPassedKYC,
+  isKYCRejectedForever,
+} from "../../../utils/user-util/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";

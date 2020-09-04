@@ -133,6 +133,7 @@ storiesOf("Profile", module)
 storiesOf("Login", module).add("Regular", LoginStories.regular);
 
 storiesOf("SelectCoin", module)
+  .add("Coin Selected", SelectCoinStories.selected)
   .add("Crypto", SelectCoinStories.crypto)
   .add("Fiat", SelectCoinStories.fiat);
 
@@ -282,6 +283,7 @@ storiesOf("KYCAddressInfo", module).add(
 );
 
 storiesOf("SelectCountry", module)
+  .add("Country Selected", SelectCountryStories.selected)
   .add("Calling Codes", SelectCountryStories.noCodes)
   .add("No Calling Codes", SelectCountryStories.withCodes);
 
@@ -445,10 +447,9 @@ storiesOf("CelPayEnterAmount", module)
 
 storiesOf("QRScanner", module).add("QR Scanner", QRScannerStories.regular);
 
-storiesOf("SelectState", module).add(
-  "Select State",
-  SelectStateStories.regular
-);
+storiesOf("SelectState", module)
+  .add("Regular", SelectStateStories.regular)
+  .add("State Selected", SelectStateStories.selected);
 
 storiesOf("LoanRequestDetails", module)
   .add("Pending", LoanRequestDetailsStories.pending)

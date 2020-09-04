@@ -144,14 +144,14 @@ function sendResetLink() {
 function logoutUser() {
   return async dispatch => {
     try {
+      dispatch(resetToScreen("Welcome"));
       await logoutUserMixpanel();
       await userSecurityService.invalidateSession();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+      mixpanelAnalytics.sessionEnded("Logout user");
       dispatch({
         type: ACTIONS.LOGOUT_USER,
       });
-      mixpanelAnalytics.sessionEnded("Logout user");
-      dispatch(resetToScreen("Welcome"));
     } catch (err) {
       logger.err(err);
     }

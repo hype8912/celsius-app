@@ -7,7 +7,7 @@ import MyCelInterestTabStyle from "./MyCelInterestTab.styles";
 import CelText from "../../atoms/CelText/CelText";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import PerCoinCellInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 
 @connect(
   state => ({
