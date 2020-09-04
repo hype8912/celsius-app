@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import SelectCoin from "./SelectCoin";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -23,6 +24,7 @@ const navigationProps = {
     label: c.name,
     value: c.short,
   })),
+  field: "coin"
 };
 
 const crypto = () => (
@@ -43,7 +45,23 @@ const fiat = () => (
   />
 );
 
+const selected = () => {
+  const state = _.cloneDeep(initialState);
+  state.forms = {
+    formData: { coin: "XRP" }
+  }
+  return (
+    <ScreenStoryWrapper
+      screen={SelectCoin}
+      screenName="SelectCoin"
+      state={state}
+      navigationProps={navigationProps}
+    />
+  )
+};
+
 export default {
+  selected,
   crypto,
   fiat,
 };
