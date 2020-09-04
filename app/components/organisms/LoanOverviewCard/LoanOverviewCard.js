@@ -212,7 +212,7 @@ class LoanOverviewCard extends Component {
             </View>
 
             {loan.status === LOAN_STATUS.PENDING && (
-              <Card color={style.card.color} margin={"30 0 0 0"}>
+              <Card color={style.card.color} margin={"30 0 0 0"} noBorder>
                 <CelText type={"H7"}>
                   Someone from our team is already reviewing your request. You
                   will be notified when your request is approved.

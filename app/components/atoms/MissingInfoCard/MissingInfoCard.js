@@ -4,7 +4,11 @@ import { Linking } from "react-native";
 
 import Card from "../Card/Card";
 import STYLES from "../../../constants/STYLES";
-import { hasSSN, hasAddress, hasPassedKYC } from "../../../utils/user-util";
+import {
+  hasSSN,
+  hasAddress,
+  hasPassedKYC,
+} from "../../../utils/user-util/user-util";
 import CelText from "../CelText/CelText";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -47,7 +51,7 @@ const MissingInfoCard = props => {
   return (
     <Card color={getColor(COLOR_KEYS.LINK)} close>
       <CelText
-        color={getColor(COLOR_KEYS.HEADLINE)}
+        color={getColor(COLOR_KEYS.WHITE)}
         type="H6"
         weight="bold"
         margin="0 10 3 0"
@@ -56,7 +60,7 @@ const MissingInfoCard = props => {
       </CelText>
       {hasNoAddress ? (
         <Fragment>
-          <CelText color={getColor(COLOR_KEYS.HEADLINE)} type="H7">
+          <CelText color={getColor(COLOR_KEYS.WHITE)} type="H7">
             {body}
             <CelText
               onPress={onPress}
@@ -70,7 +74,7 @@ const MissingInfoCard = props => {
         </Fragment>
       ) : (
         <Fragment>
-          <CelText color={getColor(COLOR_KEYS.HEADLINE)} type="H7">
+          <CelText color={getColor(COLOR_KEYS.WHITE)} type="H7">
             {body}
           </CelText>
           <CelText
@@ -79,7 +83,7 @@ const MissingInfoCard = props => {
             type="H7"
             margin="3 0 0 0"
           >
-            {cta}
+            {cta} >
           </CelText>
         </Fragment>
       )}

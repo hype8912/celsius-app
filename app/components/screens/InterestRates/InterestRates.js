@@ -17,7 +17,7 @@ class InterestRates extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Interest rates",
+    title: "Reward rates",
     right: "profile",
   });
 

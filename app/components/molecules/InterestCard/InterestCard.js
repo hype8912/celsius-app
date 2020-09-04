@@ -10,7 +10,7 @@ import * as appActions from "../../../redux/actions";
 import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import formatter from "../../../utils/formatter";
 import Spinner from "../../atoms/Spinner/Spinner";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import Badge from "../../atoms/Badge/Badge";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import Separator from "../../atoms/Separator/Separator";
@@ -91,7 +91,7 @@ class InterestCard extends Component {
                 color={getColor(COLOR_KEYS.POSITIVE_STATE)}
               >
                 <CelText align="justify" type="H5" color="white">
-                  {formatter.percentageDisplay(interestRate.rateInCel)}
+                  {formatter.percentageDisplay(interestRate.specialRate)}
                 </CelText>
               </Badge>
             </View>

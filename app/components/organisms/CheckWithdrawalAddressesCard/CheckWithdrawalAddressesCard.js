@@ -63,12 +63,12 @@ class CheckWithdrawalAddressesCard extends Component {
           <View
             style={[
               style.circle,
-              { backgroundColor: getColor(COLOR_KEYS.TOGGLE_OFF_BACKGROUND) },
+              { backgroundColor: getColor(COLOR_KEYS.LINK) },
             ]}
           >
             <Icon
               name={"Shield"}
-              fill={getColor(COLOR_KEYS.LINK)}
+              fill={getColor(COLOR_KEYS.WHITE)}
               width={35}
               height={35}
             />

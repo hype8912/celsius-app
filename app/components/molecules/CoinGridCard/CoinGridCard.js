@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { View, Animated } from "react-native";
 import PropTypes from "prop-types";
+import _ from "lodash";
+
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
@@ -14,6 +16,7 @@ import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 
 const GraphLight = require("../../../../assets/images/placeholders/graph-light.png");
 const GraphDark = require("../../../../assets/images/placeholders/graph-dark.png");
@@ -100,9 +103,11 @@ class CoinGridCard extends Component {
 
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
 
-    const isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
 
     return (
@@ -114,12 +119,12 @@ class CoinGridCard extends Component {
                 <CelText weight="300" type="H6">
                   {displayName}
                 </CelText>
-                {interestRate.eligible && (
+                {!_.isEmpty(interestRate) && interestRate.eligible && (
                   <CelText
                     color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                     type="H7"
                   >
-                    {formatter.percentageDisplay(isInCel)}
+                    {formatter.percentageDisplay(rate)}
                   </CelText>
                 )}
               </View>

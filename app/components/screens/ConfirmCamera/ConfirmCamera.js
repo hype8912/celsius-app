@@ -51,19 +51,24 @@ class ConfirmCamera extends Component {
     };
   }
 
-  savePhoto = () => {
+  savePhoto = async () => {
     const { actions, cameraField, photo, navigation } = this.props;
 
     const onSave = navigation.getParam("onSave");
 
+    this.setState({
+      isLoading: true,
+    });
+
     if (onSave) {
-      onSave(photo);
+      await onSave(photo);
     } else {
       actions.updateFormField(cameraField, photo);
       actions.navigateBack();
     }
+
     this.setState({
-      isLoading: true,
+      isLoading: false,
     });
   };
 

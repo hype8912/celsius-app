@@ -320,17 +320,17 @@ function getTransactionProps(transaction) {
       };
     case TRANSACTION_TYPES.INTEREST:
       return {
-        title: coin => `${coin} Interest`,
+        title: coin => `${coin} Reward`,
         color: COLOR_KEYS.POSITIVE_STATE,
-        shortName: "I",
-        statusText: `Confirmed ${transaction.interest_coin.toUpperCase()} Interest`,
+        shortName: "R",
+        statusText: `Confirmed ${transaction.interest_coin.toUpperCase()} Reward`,
       };
     case TRANSACTION_TYPES.PENDING_INTEREST:
       return {
-        title: coin => `${coin} Interest`,
+        title: coin => `${coin} Reward`,
         color: COLOR_KEYS.ALERT_STATE,
-        shortName: "I",
-        statusText: "Pending",
+        shortName: "R",
+        statusText: "Pending Reward",
       };
     case TRANSACTION_TYPES.BONUS_TOKEN:
       return {

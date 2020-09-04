@@ -70,7 +70,7 @@ import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
 import ActionsByUserStories from "./ActionsByUser/ActionsByUser.stories";
 import CelPayChooseFriendStories from "./CelPayChooseFriend/CelPayChooseFriend.stories";
-import BorrowLoanConfirmStories from "./BorrowLoanConfirm/BorrowLoanConfirm.stories";
+import BorrowLoanConfirmStories from "./ConfirmYourLoan/ConfirmYourLoan.stories";
 import CellphoneEnterStories from "./CellphoneEnter/CellphoneEnter.stories";
 import CellphoneVerifyStories from "./CellphoneVerify/CellphoneVerify.stories";
 import InterestPaymentSettingsStories from "./InterestPaymentSettings/InterestPaymentSettings.stories";
@@ -89,7 +89,6 @@ import ApiAuthorizationPermissionsStories from "./ApiAuthorizationPermissions/Ap
 import MaintenanceStories from "./Maintenance/Maintenance.stories";
 import CelPayMessageStories from "./CelPayMessage/CelPayMessage.stories";
 import KYCFinalRejectionStories from "./KYCFinalRejection/KYCFinalRejection.stories";
-import SixDigitPinExplanationStories from "./SixDigitPinExplanation/SixDigitPinExplanation.stories";
 import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stories";
 import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
 import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
@@ -134,6 +133,7 @@ storiesOf("Profile", module)
 storiesOf("Login", module).add("Regular", LoginStories.regular);
 
 storiesOf("SelectCoin", module)
+  .add("Coin Selected", SelectCoinStories.selected)
   .add("Crypto", SelectCoinStories.crypto)
   .add("Fiat", SelectCoinStories.fiat);
 
@@ -210,7 +210,10 @@ storiesOf("TransactionsIntersection", module)
   .add("Referrer Pending", TransactionsIntersectionStories.referrerPending)
   .add("Canceled", TransactionsIntersectionStories.canceled);
 
-storiesOf("InterestRates", module).add("Regular", InterestRatesStories.regular);
+storiesOf("InterestRates", module).add(
+  "US Citizens",
+  InterestRatesStories.usCitizen
+);
 
 storiesOf("WalletInterest", module)
   .add("Regular", WalletInterestStories.regular)
@@ -255,7 +258,6 @@ storiesOf("BorrowLanding", module)
 
 storiesOf("ConfirmCamera", module)
   .add("Profile", ConfirmCameraStories.profile)
-  .add("Document", ConfirmCameraStories.document)
   .add("Utility Bill", ConfirmCameraStories.utility);
 
 storiesOf("RegisterInitial", module)
@@ -281,6 +283,7 @@ storiesOf("KYCAddressInfo", module).add(
 );
 
 storiesOf("SelectCountry", module)
+  .add("Country Selected", SelectCountryStories.selected)
   .add("Calling Codes", SelectCountryStories.noCodes)
   .add("No Calling Codes", SelectCountryStories.withCodes);
 
@@ -444,10 +447,9 @@ storiesOf("CelPayEnterAmount", module)
 
 storiesOf("QRScanner", module).add("QR Scanner", QRScannerStories.regular);
 
-storiesOf("SelectState", module).add(
-  "Select State",
-  SelectStateStories.regular
-);
+storiesOf("SelectState", module)
+  .add("Regular", SelectStateStories.regular)
+  .add("State Selected", SelectStateStories.selected);
 
 storiesOf("LoanRequestDetails", module)
   .add("Pending", LoanRequestDetailsStories.pending)
@@ -597,9 +599,4 @@ storiesOf("LoanPrepaymentPeriod", module).add(
 storiesOf("KYCFinalRejection", module).add(
   "KYCFinalRejection",
   KYCFinalRejectionStories.regular
-);
-
-storiesOf("SixDigitPinExplanation", module).add(
-  "SixDigitPinExplanation",
-  SixDigitPinExplanationStories.regular
 );

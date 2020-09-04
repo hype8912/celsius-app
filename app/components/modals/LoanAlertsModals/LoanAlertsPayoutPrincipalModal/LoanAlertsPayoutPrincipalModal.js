@@ -32,6 +32,9 @@ class LoanAlertsPayoutPrincipalModal extends Component {
       loan && loan.loan_amount && loan.coin_loan_asset
         ? `${loan.loan_amount} ${loan.coin_loan_asset}`
         : "123 DAI";
+    return null;
+
+    // eslint-disable-next-line no-unreachable
     return (
       <InfoModal
         name={MODALS.LOAN_ALERT_MODAL}

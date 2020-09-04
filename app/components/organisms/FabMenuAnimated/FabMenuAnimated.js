@@ -18,7 +18,10 @@ import Fab from "../../molecules/Fab/Fab";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import { THEMES } from "../../../constants/UI";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC, isKYCRejectedForever } from "../../../utils/user-util";
+import {
+  hasPassedKYC,
+  isKYCRejectedForever,
+} from "../../../utils/user-util/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
@@ -41,7 +44,6 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
       : KYC_STATUSES.collecting,
     celpayCompliance: state.compliance.celpay,
     depositCompliance: state.compliance.deposit,
-    loanCompliance: state.compliance.loan,
     withdrawCompliance: state.compliance.withdraw,
     user: state.user.profile,
   }),
@@ -96,7 +98,6 @@ class FabMenuAnimated extends Component {
     const {
       depositCompliance,
       celpayCompliance,
-      loanCompliance,
       withdrawCompliance,
       user,
       kycStatus,
@@ -129,12 +130,11 @@ class FabMenuAnimated extends Component {
       label: "Community Info",
       screen: "Community",
     });
-    if (loanCompliance.allowed)
-      main[1].push({
-        iconName: "Borrow",
-        label: "Borrow $$",
-        screen: "BorrowLanding",
-      });
+    main[1].push({
+      iconName: "Borrow",
+      label: "Borrow $",
+      screen: "BorrowLanding",
+    });
     main[2].splice(1, 0, {
       iconName: "Profile",
       label: "Profile",

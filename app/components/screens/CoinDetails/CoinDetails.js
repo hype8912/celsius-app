@@ -25,6 +25,7 @@ import InterestCard from "../../molecules/InterestCard/InterestCard";
 import interestUtil from "../../../utils/interest-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import Counter from "../../molecules/Counter/Counter";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
@@ -178,9 +179,11 @@ class CoinDetails extends Component {
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
-    const isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
 
     return (
       <RegularLayout
@@ -357,9 +360,7 @@ class CoinDetails extends Component {
                           align="justify"
                           type="H5"
                           color="white"
-                        >{`${formatter.percentageDisplay(
-                          isInCel
-                        )} APY`}</CelText>
+                        >{`${formatter.percentageDisplay(rate)} APY`}</CelText>
                       </Badge>
                     </View>
                   )}

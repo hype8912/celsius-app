@@ -13,10 +13,15 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 import * as appActions from "../../../redux/actions";
 import { isIos } from "../../../utils/ui-util";
 import Icon from "../../atoms/Icon/Icon";
+import CelButton from "../../atoms/CelButton/CelButton";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
+import Spinner from "../../atoms/Spinner/Spinner";
 
 @connect(
   state => ({
     openedModal: state.ui.openedModal,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -43,6 +48,13 @@ class IntroduceNewThemeModal extends Component {
 
   renderContent = () => {
     const style = IntroduceNewThemeModalStyle();
+    const { callsInProgress } = this.props;
+
+    const isSaving = apiUtil.areCallsInProgress(
+      [API.SET_APP_SETTINGS],
+      callsInProgress
+    );
+
     return (
       <View>
         <CelText
@@ -51,59 +63,75 @@ class IntroduceNewThemeModal extends Component {
           type={"H4"}
           weight={"800"}
           align={"center"}
+          font="Pangram"
         >
-          We are excited to introduce you to the new look of Celsius app.
+          Welcome to the new
+        </CelText>
+        <CelText
+          color={getColor(COLOR_KEYS.LINK, THEMES.UNICORN)}
+          allCaps
+          type={"H4"}
+          weight={"800"}
+          align={"center"}
+          font="Pangram"
+        >
+          Celsius app.
         </CelText>
         <CelText
           margin={"10 0 0 0"}
           color={getColor(COLOR_KEYS.LINK, THEMES.UNICORN)}
           type={"H5"}
           align={"center"}
+          font="Pangram"
         >
-          You can activate the Sunset theme later in the profile settings.
+          Please enjoy our new color theme.
         </CelText>
 
-        <TouchableOpacity
-          onPress={() => this.dontShowAgain(true)}
-          style={[
-            style.customButton,
-            {
-              backgroundColor: getColor(COLOR_KEYS.LINK, THEMES.UNICORN),
-            },
-          ]}
-        >
-          <CelText
-            color={getColor(COLOR_KEYS.WHITE)}
-            align={"center"}
-            weight={"600"}
-            style={style.buttonText}
-          >
-            Try it now!
-          </CelText>
-        </TouchableOpacity>
-        <CelText
-          onPress={async () => {
-            await this.dontShowAgain();
-          }}
-          color={getColor(COLOR_KEYS.LINK, THEMES.UNICORN)}
-          align={"center"}
-          margin={"20 0 0 0"}
-          underline
-        >
-          Don't show again
-        </CelText>
+        {!isSaving ? (
+          <View>
+            <CelButton
+              onPress={() => this.onPress(true)}
+              margin="30 0 20 0"
+              theme={THEMES.UNICORN}
+            >
+              <CelText
+                font="Pangram"
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+              >
+                Try it now!
+              </CelText>
+            </CelButton>
+
+            <CelButton
+              basic
+              onPress={() => this.onPress()}
+              margin="30 0 20 0"
+              theme={THEMES.UNICORN}
+            >
+              <CelText
+                font="Pangram"
+                color={getColor(COLOR_KEYS.LINK, THEMES.UNICORN)}
+              >
+                Don't show again
+              </CelText>
+            </CelButton>
+          </View>
+        ) : (
+          <View style={style.spinnerWrapper}>
+            <Spinner />
+          </View>
+        )}
       </View>
     );
   };
 
-  dontShowAgain = async theme => {
+  onPress = async shouldSetTheme => {
     const { actions } = this.props;
-
-    if (theme) {
-      actions.setUserAppSettings({ theme: THEMES.UNICORN });
-    }
-
     await AsyncStorage.setItem("DONT_SHOW_INTRODUCE_NEW_THEME", "DONT_SHOW");
+
+    if (shouldSetTheme) {
+      await actions.setUserAppSettings({ theme: THEMES.UNICORN });
+    }
     actions.closeModal();
   };
 
@@ -112,12 +140,7 @@ class IntroduceNewThemeModal extends Component {
     const { openedModal } = this.props;
     return (
       <Modal
-        style={[
-          style.container,
-          {
-            backgroundColor: getColor(COLOR_KEYS.BACKGROUND, THEMES.UNICORN),
-          },
-        ]}
+        style={style.container}
         isVisible={openedModal === MODALS.INTRODUCE_NEW_THEME_MODAL}
         useNativeDriver={!isIos()}
       >

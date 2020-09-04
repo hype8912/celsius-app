@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import SelectState from "./SelectState";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -21,6 +22,22 @@ const regular = () => {
   );
 };
 
+const selected = () => {
+  const state = _.cloneDeep(initialState);
+  state.forms = {
+    formData: { state: "California" },
+  };
+
+  return (
+    <ScreenStoryWrapper
+      screenName="SelectState"
+      screen={SelectState}
+      state={state}
+    />
+  );
+};
+
 export default {
   regular,
+  selected,
 };

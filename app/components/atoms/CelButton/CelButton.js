@@ -3,11 +3,11 @@ import { View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import CelButtonStyle from "./CelButton.styles";
 import Icon from "../Icon/Icon";
-import { getMargins, getColor } from "../../../utils/styles-util";
+import { getMargins } from "../../../utils/styles-util";
 import CelText from "../CelText/CelText";
 import Spinner from "../Spinner/Spinner";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import { THEMES } from "../../../constants/UI";
 
 const buttonSizes = ["small", "medium"];
 const backButtonSize = 20;
@@ -28,6 +28,7 @@ class CelButton extends Component {
     ghost: PropTypes.bool,
     textSize: PropTypes.string,
     color: PropTypes.oneOf(["green", "red", "white"]),
+    theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK, THEMES.UNICORN]),
   };
 
   static defaultProps = {
@@ -78,36 +79,35 @@ class CelButton extends Component {
 
   handlePress = () => {
     const { onPress, children } = this.props;
-
-    mixpanelAnalytics.buttonPressed(children);
+    if (typeof children === "string") {
+      mixpanelAnalytics.buttonPressed(children);
+    } else if (children && children.props) {
+      mixpanelAnalytics.buttonPressed(children.props.children);
+    }
     onPress();
   };
 
   renderIconRight = () => {
     const {
       iconRight,
-      basic,
       children,
       iconRightHeight,
       iconRightWidth,
       iconRightColor,
-      disabled,
+      theme,
     } = this.props;
     let color;
     if (iconRightColor) {
       color = iconRightColor;
-    } else if (basic) {
-      color = getColor(COLOR_KEYS.HEADLINE);
     } else {
-      color = disabled
-        ? getColor(COLOR_KEYS.PARAGRAPH)
-        : getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND);
+      const style = CelButtonStyle(theme);
+      this.getTitleStyle(style).forEach(s => {
+        color = s.color || color;
+      });
     }
 
     return (
-      <View
-        style={{ paddingLeft: children ? 10 : 0, opacity: disabled ? 0.3 : 1 }}
-      >
+      <View style={{ paddingLeft: children ? 10 : 0 }}>
         <Icon
           name={iconRight}
           height={this.props.backButton ? backButtonSize : iconRightHeight}
@@ -119,7 +119,8 @@ class CelButton extends Component {
   };
 
   renderLoader = () => {
-    const style = CelButtonStyle();
+    const { theme } = this.props;
+    const style = CelButtonStyle(theme);
     const buttonStyle = this.getButtonStyle(style);
     const titleStyle = this.getTitleStyle(style);
 
@@ -137,8 +138,8 @@ class CelButton extends Component {
   };
 
   renderButton = () => {
-    const { children, iconRight, style, textSize } = this.props;
-    const celBtnStyle = CelButtonStyle();
+    const { children, iconRight, style, textSize, theme } = this.props;
+    const celBtnStyle = CelButtonStyle(theme);
     const buttonStyle = this.getButtonStyle(celBtnStyle);
     const titleStyle = this.getTitleStyle(celBtnStyle);
 

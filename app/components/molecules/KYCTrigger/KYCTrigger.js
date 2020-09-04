@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { MODALS } from "../../../constants/UI";
 import Banner from "../Banner/Banner";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 

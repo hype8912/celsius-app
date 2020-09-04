@@ -14,7 +14,7 @@ import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import LoadingScreen from "../../screens/LoadingScreen/LoadingScreen";
 import Separator from "../../atoms/Separator/Separator";
 import InterestCalculatorScreen from "../InterestCalculatorScreen/InterestCalculatorScreen";
-import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util";
+import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util/user-util";
 import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 import Counter from "../../molecules/Counter/Counter";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";

@@ -7,6 +7,7 @@ import ACTIONS from "../../constants/ACTIONS";
 import * as transfersActions from "../transfers/transfersActions";
 import * as uiActions from "../ui/uiActions";
 import { setFormErrors } from "../forms/formsActions";
+import * as deepLinkActions from "../deepLink/deepLinkActions";
 
 export {
   registerBranchLink,
@@ -100,6 +101,7 @@ function registerReferralLink(deepLink) {
           return;
         }
         dispatch(uiActions.openModal(MODALS.REFERRAL_RECEIVED_MODAL));
+        dispatch(deepLinkActions.clearDeepLinkData());
       }
     } catch (err) {
       dispatch(apiError(API.GET_LINK_BY_URL, err));

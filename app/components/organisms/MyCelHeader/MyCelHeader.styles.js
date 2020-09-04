@@ -22,13 +22,10 @@ const base = {
     alignItems: "center",
     justifyContent: "space-evenly",
   },
-  otherCoinsContainer: {
+  sideContainer: {
     alignItems: "center",
     justifyContent: "center",
-  },
-  celContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    width: "25%",
   },
   bottomContainer: {
     marginVertical: 10,

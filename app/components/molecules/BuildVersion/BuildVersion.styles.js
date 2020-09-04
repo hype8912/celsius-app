@@ -1,12 +1,9 @@
+// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
   container: {
     flex: 1,
-  },
-  coinName: {
-    height: 40,
-    justifyContent: "center",
   },
 };
 
@@ -18,6 +15,6 @@ const themed = {
   unicorn: {},
 };
 
-const ComingSoonCoinsStyle = () => getThemedStyle(base, themed);
+const BuildVersionStyle = () => getThemedStyle(base, themed);
 
-export default ComingSoonCoinsStyle;
+export default BuildVersionStyle;

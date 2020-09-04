@@ -13,7 +13,10 @@ import { MODALS } from "../../../constants/UI";
 import SsnModal from "../../modals/SsnModal/SsnModal";
 import SocialSecurityNumber from "../../molecules/SocialSecurityNumber/SocialSecurityNumber";
 import apiUtil from "../../../utils/api-util";
-import { isForPrimeTrustKYC, isUSCitizen } from "../../../utils/user-util";
+import {
+  isForPrimeTrustKYC,
+  isUSCitizen,
+} from "../../../utils/user-util/user-util";
 import API from "../../../constants/API";
 
 @connect(
@@ -173,7 +176,7 @@ class KYCTaxpayer extends Component {
           weight={"300"}
         >
           {this.isFromUS()
-            ? "US residents must provide their SSN to earn rewards through Celsius. This can be entered later. However, rewards will not be earned until SSN is entered"
+            ? "US residents must provide their SSN to earn rewards through Celsius. This can be entered later. However, rewards will not be earned until SSN is entered."
             : "You may need to fill your taxpayer ID for tax reporting. You may add it later in your profile."}
         </CelText>
 

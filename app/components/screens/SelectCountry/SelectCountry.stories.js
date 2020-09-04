@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import SelectCountry from "./SelectCountry";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
@@ -39,7 +40,7 @@ const noCodes = () => (
     screenName="Select Country"
     state={initialState}
     navigationProps={{
-      field: "country",
+      field_name: "country",
     }}
   />
 );
@@ -50,13 +51,36 @@ const withCodes = () => (
     screenName="SelectCountry"
     state={initialState}
     navigationProps={{
-      field: "country",
+      field_name: "country",
       hideCallingCodes: true,
     }}
   />
 );
 
+const selected = () => {
+  const state = _.cloneDeep(initialState);
+  state.forms = {
+    formData: {
+      country: {
+        name: "Taiwan",
+      },
+    },
+  };
+
+  return (
+    <ScreenStoryWrapper
+      screenName="SelectCountry"
+      screen={SelectCountry}
+      state={state}
+      navigationProps={{
+        field_name: "country",
+      }}
+    />
+  );
+};
+
 export default {
   noCodes,
   withCodes,
+  selected,
 };

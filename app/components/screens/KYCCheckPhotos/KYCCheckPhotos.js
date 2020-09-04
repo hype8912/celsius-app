@@ -7,7 +7,7 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { isForPrimeTrustKYC } from "../../../utils/user-util";
+import { isForPrimeTrustKYC } from "../../../utils/user-util/user-util";
 
 @connect(
   state => ({
@@ -69,11 +69,12 @@ class KYCCheckPhotos extends Component {
           }}
         >
           <Image
-            resizeMode="contain"
+            resizeMode="cover"
             style={{
               width: 300,
               height: 180,
               borderRadius: 15,
+              marginBottom: 30,
             }}
             source={frontImage}
           />
@@ -81,15 +82,13 @@ class KYCCheckPhotos extends Component {
           {backImage && (
             <View>
               <Image
-                resizeMode="contain"
+                resizeMode="cover"
                 source={backImage}
                 style={{
                   width: 300,
                   height: 180,
                   overflow: "hidden",
                   borderRadius: 15,
-                  borderWidth: 1,
-                  borderColor: "red",
                 }}
               />
             </View>

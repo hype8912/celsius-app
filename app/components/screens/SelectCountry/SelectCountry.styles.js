@@ -16,7 +16,7 @@ const base = {
     borderRadius: 8,
   },
   activeItem: {
-    backgroundColor: COLOR_KEYS.TOGGLE_ON_FOREGROUND,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
   left: {
     flexDirection: "row",

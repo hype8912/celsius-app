@@ -49,7 +49,7 @@ import BorrowCollateral from "../components/screens/BorrowCollateral/BorrowColla
 import BorrowLoanOption from "../components/screens/BorrowLoanOption/BorrowLoanOption";
 import BorrowLoanTerm from "../components/screens/BorrowLoanTerm/BorrowLoanTerm";
 import BorrowBankAccount from "../components/screens/BorrowBankAccount/BorrowBankAccount";
-import BorrowLoanConfirm from "../components/screens/BorrowLoanConfirm/BorrowLoanConfirm";
+import ConfirmYourLoan from "../components/screens/ConfirmYourLoan/ConfirmYourLoan";
 import BorrowLanding from "../components/screens/BorrowLanding/BorrowLanding";
 import ChoosePaymentMethod from "../components/screens/ChoosePaymentMethod/ChoosePaymentMethod";
 import ChooseMarginCollateralCoin from "../components/screens/ChooseMarginCollateralCoin/ChooseMarginCollateralCoin";
@@ -194,7 +194,7 @@ export const screens = {
   BorrowLoanOption,
   BorrowLoanTerm,
   BorrowBankAccount,
-  BorrowLoanConfirm,
+  ConfirmYourLoan,
   BorrowLanding,
   ChoosePaymentMethod,
   ChooseMarginCollateralCoin,

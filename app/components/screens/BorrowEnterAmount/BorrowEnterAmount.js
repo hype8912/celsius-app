@@ -182,14 +182,7 @@ class BorrowEnterAmount extends Component {
           $
         </CelText>
       );
-    return (
-      <Icon
-        name={`Icon${formData.coin}`}
-        width="40"
-        height="40"
-        fill="active"
-      />
-    );
+    return <Icon name={`Icon${formData.coin}`} width="40" height="40" />;
   };
 
   render() {

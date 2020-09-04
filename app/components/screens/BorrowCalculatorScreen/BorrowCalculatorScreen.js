@@ -174,7 +174,7 @@ class BorrowCalculatorScreen extends Component {
     const { purpose, actions } = this.props;
     const defaultProps = {
       subtitle: "Calculate your loan interest.",
-      bottomParagraph: "Calculate your loan interest before you deposit coins",
+      bottomParagraph: "",
       buttonCopy: "Get a Loan",
       onPress: () => actions.navigateTo("BorrowChooseLoan"),
     };

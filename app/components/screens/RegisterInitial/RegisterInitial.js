@@ -16,6 +16,7 @@ import RegisterToUCard from "../../molecules/RegisterToUCard/RegisterToUCard";
 import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import securityUtil from "../../../utils/security-util";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 
 @connect(
   state => ({
@@ -276,6 +277,7 @@ class RegisterInitial extends Component {
             </CelText>
           </View>
         </View>
+        <BuildVersion margin={"10 0 0 0"} />
       </AuthLayout>
     );
   }

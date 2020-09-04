@@ -6,9 +6,9 @@ import LoadingState from "../../atoms/LoadingState/LoadingState";
 class LoadingScreen extends Component {
   static defaultProps = {};
   render() {
-    const { loadingState } = this.props;
+    const { loadingState, fabType } = this.props;
     return (
-      <RegularLayout>
+      <RegularLayout fabType={fabType}>
         <LoadingState {...loadingState} />
       </RegularLayout>
     );

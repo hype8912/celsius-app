@@ -201,7 +201,7 @@ class CelPayChooseFriend extends Component {
       : "None of your friends";
     return (
       <View style={{ paddingTop: 60 }}>
-        <CircleButton icon="Contacts" iconSize={28} />
+        <CircleButton icon="Contacts" iconSize={28} type="coin" />
 
         <CelText weight="bold" type="H2" align="center" margin="25 0 0 0">
           No friends

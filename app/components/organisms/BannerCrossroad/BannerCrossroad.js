@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import moment from "moment";
 
 import * as appActions from "../../../redux/actions";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import LoanTrigger from "../../molecules/LoanTrigger/LoanTrigger";

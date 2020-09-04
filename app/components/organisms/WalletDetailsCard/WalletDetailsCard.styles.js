@@ -5,6 +5,9 @@ const base = {
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  half: {
+    width: "46%",
+  },
 };
 
 const themed = {
