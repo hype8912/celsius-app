@@ -21,7 +21,7 @@ class LoanTrigger extends Component {
 
   render() {
     const { actions } = this.props;
-    const content = `Did you know you can get all the cash you need? Every Celsian is pre-approved.`;
+    const content = `Need funds? With Celsius you can borrow against your crypto. No credit check required!`;
     return (
       <Banner
         backgroundColor={getColor(COLOR_KEYS.LINK)}

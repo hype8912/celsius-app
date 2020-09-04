@@ -53,7 +53,7 @@ class CommunityDashboard extends Component {
     if (name === "REWARDS") {
       this.setState({
         primaryNumber: formatter.usd(communityStats.total_interests_usd),
-        explanation: `ASSETS AS OF ${communityStats.community_settings.date}`,
+        explanation: `Average user earnings in the last 12 months`,
       });
     }
     if (name === `ASSETS AS OF ${communityStats.community_settings.date}`) {
@@ -105,7 +105,8 @@ class CommunityDashboard extends Component {
       number = formatter.usd(communityStats.total_interests_usd);
     }
     if (name === "REWARDS" && button === "Average Rewards") {
-      explanationText = "The average earn per user in the last 12 months";
+      explanationText =
+        "Average user earnings in the last 12 monthsAverage user earnings in the last 12 months";
       number = formatter.usd(communityStats.average_interest_earned_usd);
     }
     if (name === "REWARDS" && button === "Rates") {
