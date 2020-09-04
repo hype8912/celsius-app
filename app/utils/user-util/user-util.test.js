@@ -173,7 +173,7 @@ describe("isKYCRejectedForever()", () => {
   })
 })
 
-describe("hasSSN", () => {
+describe("hasSSN()", () => {
   it("should return true if user is not from US", () => {
     mockState.user.profile.citizenship = "Zimbabwe"
     mockState.user.profile.country = "Zimbabwe"
