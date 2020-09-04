@@ -109,7 +109,7 @@ class Appearance extends Component {
                     : null
                 }
               >
-                Sunset
+                New
               </CelText>
             </View>
             <View>
