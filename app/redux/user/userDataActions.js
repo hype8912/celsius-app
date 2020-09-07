@@ -10,7 +10,7 @@ import { setFormErrors, updateFormField } from "../forms/formsActions";
 import { default as NavActions, navigateTo } from "../nav/navActions";
 import apiUtil from "../../utils/api-util";
 import userDataService from "../../services/user-data-service";
-import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util";
+import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util/user-util";
 import { KYC_STATUSES } from "../../constants/DATA";
 import interestUtil from "../../utils/interest-util";
 
@@ -162,7 +162,7 @@ function setUserAppSettings(data) {
                     .day(8)
                     .format(
                       "DD MMMM"
-                    )}, you will receive interest income in CEL on all deposited coins.`
+                    )}, you will receive interest income in CEL on all transferred coins.`
                 )
               );
             }
@@ -178,7 +178,7 @@ function setUserAppSettings(data) {
               return dispatch(
                 showMessage(
                   "success",
-                  `Congrats! You have chosen to earn interest income in CEL for all deposited coins. Interest has already been calculated for this week, so you will receive interest in CEL beginning Monday, ${currentDate
+                  `Congrats! You have chosen to earn a reward income in CEL for all transferred coins. Interest has already been calculated for this week, so you will receive interest in CEL beginning Monday, ${currentDate
                     .day(15)
                     .format("DD MMMM")}. `
                 )
@@ -188,7 +188,7 @@ function setUserAppSettings(data) {
               return dispatch(
                 showMessage(
                   "success",
-                  `You have chosen to earn interest income in-kind for all deposited coins. Interest has already been calculated for this week, so you will receive interest in-kind beginning Monday, ${currentDate
+                  `You have chosen to earn a reward income in-kind for all transferred coins. Interest has already been calculated for this week, so you will receive interest in-kind beginning Monday, ${currentDate
                     .day(15)
                     .format("DD MMMM")}.`
                 )

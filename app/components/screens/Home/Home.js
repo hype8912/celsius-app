@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { isKYCRejectedForever } from "../../../utils/user-util";
+import { isKYCRejectedForever } from "../../../utils/user-util/user-util";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import SplashScreen from "../SplashScreen/SplashScreen";
@@ -33,6 +33,7 @@ class Home extends Component {
 
     await actions.getWalletSummary();
     await actions.getUserAppBootstrap();
+    await actions.getCurrencyRates();
 
     mixpanelAnalytics.sessionStarted("Init app");
     await actions.setBannerProps();
@@ -68,7 +69,6 @@ class Home extends Component {
         [API.CHECK_PIN, API.CHECK_TWO_FACTOR, API.SET_PIN],
         15
       );
-
       if (hasAlreadyVerified) {
         return this.goToWalletLanding();
       }
@@ -80,13 +80,15 @@ class Home extends Component {
   }
 
   goToWalletLanding = () => {
-    const { actions, bannerProps, appSettings } = this.props;
-    if (appSettings && !appSettings.accepted_terms_of_use) {
-      return actions.navigateTo("TermsOfUse", {
-        purpose: "accept",
-        nextScreen: "WalletLanding",
-      });
-    }
+    const { actions, bannerProps } = this.props;
+
+    // note :) this was used when we planned to force users to accept updated Terms of USe
+    // if (appSettings && !appSettings.accepted_terms_of_use) {
+    //   return actions.navigateTo("TermsOfUse", {
+    //     purpose: "accept",
+    //     nextScreen: "WalletLanding",
+    //   });
+    // }
 
     actions.setBannerProps({
       sessionCount: bannerProps.sessionCount + 1,

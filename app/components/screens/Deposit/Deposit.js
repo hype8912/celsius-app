@@ -11,10 +11,8 @@ import * as appActions from "../../../redux/actions";
 import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import ShareButton from "../../atoms/ShareButton/ShareButton";
-import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import DepositStyle from "./Deposit.styles";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
@@ -26,11 +24,12 @@ import StaticScreen from "../StaticScreen/StaticScreen";
 import IconButton from "../../organisms/IconButton/IconButton";
 import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
 import DepositInfoModal from "../../modals/DepositInfoModal/DepositInfoModal";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import formatter from "../../../utils/formatter";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import DepositAddressSwitchCard from "../../atoms/DepositAddressSwitchCard/DepositAddressSwitchCard";
 
 @connect(
   state => ({
@@ -50,14 +49,14 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 )
 class Deposit extends Component {
   static navigationOptions = () => ({
-    title: "Deposit coins",
+    title: "Transfer coins",
     right: "profile",
   });
 
   constructor(props) {
     super(props);
 
-    const { depositCompliance, currencies, actions, navigation } = props;
+    const { depositCompliance, currencies, navigation, actions } = props;
 
     const coinSelectItems =
       currencies &&
@@ -67,14 +66,14 @@ class Deposit extends Component {
           label: `${formatter.capitalize(c.name)} (${c.short})`,
           value: c.short,
         }));
-
     const currencyFromNav = navigation.getParam("coin");
     actions.updateFormField("selectedCoin", currencyFromNav || "ETH");
+    this.fetchAddress(currencyFromNav || "ETH");
 
     this.state = {
       isFetchingAddress: false,
-      useAlternateAddress: false,
       coinSelectItems,
+      displayAddress: null,
     };
   }
 
@@ -90,6 +89,7 @@ class Deposit extends Component {
 
     let address = "";
     let alternateAddress = "";
+    let secondaryAddress = "";
     let destinationTag = "";
     let memoId = "";
     let fullAddress = "";
@@ -98,6 +98,7 @@ class Deposit extends Component {
       return {
         address,
         alternateAddress,
+        secondaryAddress,
         destinationTag,
         memoId,
       };
@@ -114,12 +115,14 @@ class Deposit extends Component {
     // }
     fullAddress = walletAddresses[`${currency}Address`];
     alternateAddress = walletAddresses[`${currency}AlternateAddress`];
+    secondaryAddress = walletAddresses[`${currency}SecondaryAddress`];
     // Because getAddress is called in render method, it might happen that currency is defined and
     // walletAddresses is still not defined because those 2 are fetched from different APIs
     if (!fullAddress) {
       return {
         address,
         alternateAddress,
+        secondaryAddress,
         destinationTag,
         memoId,
       };
@@ -141,6 +144,7 @@ class Deposit extends Component {
     return {
       address,
       alternateAddress,
+      secondaryAddress,
       destinationTag,
       memoId,
     };
@@ -169,7 +173,10 @@ class Deposit extends Component {
     // }
     if (!walletAddresses[`${currency}Address`])
       await actions.getCoinAddress(currency);
-    this.setState({ isFetchingAddress: false, useAlternateAddress: false });
+
+    const { address } = this.getAddress(currency);
+
+    this.setState({ isFetchingAddress: false, displayAddress: address });
   };
 
   openModal = (destinationTag, memoId) => {
@@ -211,12 +218,12 @@ class Deposit extends Component {
 
     return (
       <View style={{ alignSelf: "center" }}>
-        <Card color={STYLES.COLORS.CELSIUS_BLUE} size={"twoThirds"}>
+        <Card color={getColor(COLOR_KEYS.PRIMARY_BUTTON)} size={"twoThirds"}>
           <CelText
             align={"center"}
             weight={"300"}
             type={"H6"}
-            color={STYLES.COLORS.WHITE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
           >
             {collateralMissing}{" "}
           </CelText>
@@ -224,7 +231,7 @@ class Deposit extends Component {
             weight={"300"}
             align={"center"}
             type={"H6"}
-            color={STYLES.COLORS.WHITE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
           >
             required to cover the margin call
           </CelText>
@@ -233,72 +240,14 @@ class Deposit extends Component {
     );
   };
 
-  renderSwitchAddressBlock = (alternativeAddress, currency) => {
-    const { useAlternateAddress } = this.state;
-    const style = DepositStyle();
-    let alternateText1 = "";
-    let alternateText2 = "";
-    let buttonText = "";
-
-    // Switching wording, depending on currency and if using alternative address
-    if (currency === "LTC") {
-      alternateText1 = `${useAlternateAddress ? "3" : "M"}`;
-      alternateText2 = `${useAlternateAddress ? "M" : "3"}`;
-
-      buttonText = `Use ${useAlternateAddress ? "M" : "3"}-format address`;
-    } else if (currency === "BCH") {
-      alternateText1 = `${useAlternateAddress ? "Cash Address" : "Bitcoin"}`;
-      alternateText2 = `${useAlternateAddress ? "Bitcoin" : "Cash Address"}`;
-
-      buttonText = `Use ${
-        useAlternateAddress ? "Bitcoin" : "Cash Address"
-      }-format`;
-    }
-
-    return (
-      <Card color={getColor(COLOR_KEYS.LINK)}>
-        <CelText
-          style={style.infoBubble}
-          weight="300"
-          alignItems="center"
-          color="#FFFFFF"
-        >
-          {" "}
-          If your wallet doesn't support{" "}
-          <CelText weight="semi-bold" color="#FFFFFF">
-            {alternateText1}-format
-          </CelText>{" "}
-          addresses you can use a{" "}
-          <CelText weight="semi-bold" color="#FFFFFF">
-            {alternateText2}-format
-          </CelText>{" "}
-          {currency} address.
-        </CelText>
-
-        <CelButton
-          size={"medium"}
-          white
-          onPress={() => {
-            this.setState({
-              useAlternateAddress: !this.state.useAlternateAddress,
-            });
-          }}
-          style={{
-            borderWidth: 0.5,
-            borderColor: "#FFFFFF",
-            marginTop: 10,
-            marginBottom: 10,
-          }}
-        >
-          {buttonText}
-        </CelButton>
-      </Card>
-    );
-  };
-
   renderLoader = () => (
     <View
-      style={{ marginTop: 50, justifyContent: "center", alignItems: "center" }}
+      style={{
+        marginBottom: 50,
+        marginTop: 50,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
       <Spinner />
     </View>
@@ -316,16 +265,12 @@ class Deposit extends Component {
     } = this.props;
     const {
       address,
-      alternateAddress,
+      secondaryAddress,
       destinationTag,
       memoId,
     } = this.getAddress(formData.selectedCoin);
     const coin = formData.selectedCoin;
-    const {
-      useAlternateAddress,
-      isFetchingAddress,
-      coinSelectItems,
-    } = this.state;
+    const { displayAddress, isFetchingAddress, coinSelectItems } = this.state;
     const styles = DepositStyle();
     const coinInfo = walletSummary.coins.find(
       c => c.short === formData.selectedCoin
@@ -354,7 +299,7 @@ class Deposit extends Component {
     return (
       <RegularLayout padding={"20 0 100 0"}>
         <CelText align="center" weight="regular" type="H4">
-          Choose coin to deposit
+          Choose coin to transfer
         </CelText>
         <CoinPicker
           type={"withIcon"}
@@ -368,7 +313,9 @@ class Deposit extends Component {
 
         {navigation.getParam("isMarginWarning") ? this.renderPayCard() : null}
 
-        {address && !isFetchingAddress ? (
+        {(isFetchingAddress || !displayAddress) && this.renderLoader()}
+
+        {displayAddress && !isFetchingAddress ? (
           <View style={styles.container}>
             {destinationTag || memoId ? (
               <Card>
@@ -428,7 +375,7 @@ class Deposit extends Component {
               <View style={styles.qrCode}>
                 <View style={styles.qrCodeWrapper}>
                   <QRCode
-                    value={useAlternateAddress ? alternateAddress : address}
+                    value={displayAddress}
                     size={100}
                     bgColor="#FFF"
                     fgColor="#000"
@@ -440,7 +387,7 @@ class Deposit extends Component {
                   margin="10 0 10 0"
                   style={styles.importantInfo}
                 >
-                  {useAlternateAddress ? alternateAddress : address}
+                  {displayAddress}
                 </CelText>
 
                 <View style={styles.copyShareWrapper}>
@@ -453,16 +400,10 @@ class Deposit extends Component {
                           "Address copied to clipboard!"
                         )
                       }
-                      copyText={
-                        useAlternateAddress ? alternateAddress : address
-                      }
+                      copyText={displayAddress}
                     />
                     <Separator vertical />
-                    <ShareButton
-                      shareText={
-                        useAlternateAddress ? alternateAddress : address
-                      }
-                    />
+                    <ShareButton shareText={displayAddress} />
                   </View>
                 </View>
               </View>
@@ -481,11 +422,15 @@ class Deposit extends Component {
               </CelText>
             )}
 
-            {alternateAddress &&
-              this.renderSwitchAddressBlock(
-                alternateAddress,
-                formData.selectedCoin
-              )}
+            <DepositAddressSwitchCard
+              coin={formData.selectedCoin}
+              primaryAddress={address}
+              secondaryAddress={secondaryAddress}
+              displayAddress={displayAddress}
+              setAddress={addressToDisplay =>
+                this.setState({ displayAddress: addressToDisplay })
+              }
+            />
           </View>
         ) : null}
 
@@ -496,8 +441,6 @@ class Deposit extends Component {
           celInterestButton
           interestCompliance={interestCompliance}
         />
-
-        {isFetchingAddress && this.renderLoader()}
 
         {formData.selectedCoin === "CEL" ? (
           <View style={{ marginLeft: 20, marginRight: 20 }}>

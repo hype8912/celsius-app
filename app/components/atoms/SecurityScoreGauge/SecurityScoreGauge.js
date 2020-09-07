@@ -117,17 +117,18 @@ class SecurityScoreGauge extends Component {
         <CelText
           margin={"0 0 15 0"}
           type="H7"
-          color={getColor(COLOR_KEYS.CARDS)}
+          color={getColor(COLOR_KEYS.WHITE)}
         >
           SECURITY SCORE
         </CelText>
         {fixNow.scoreParamsFixableCount > 0 && (
           <CelButton
             ghost
-            color={"red"}
             size={"small"}
-            textColor={"white"}
+            color="white"
+            textColor="white"
             onPress={onPressFixNow}
+            margin="0 0 10 0"
           >
             FIX NOW {fixNow.scoreParamsFixableCount}/{fixNow.scoreParamsCount}
           </CelButton>

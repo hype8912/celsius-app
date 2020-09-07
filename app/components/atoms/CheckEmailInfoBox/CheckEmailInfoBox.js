@@ -4,7 +4,6 @@ import { View } from "react-native";
 import { openInbox } from "react-native-email-link";
 
 import CheckEmailInfoBoxStyle from "./CheckEmailInfoBox.styles";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../Icon/Icon";
 import CelText from "../CelText/CelText";
 import CelButton from "../CelButton/CelButton";
@@ -27,7 +26,7 @@ const CheckEmailInfoBox = props => {
               name={"Mail"}
               height="20"
               width="20"
-              fill={COLOR_KEYS.ALERT_STATE}
+              fill={getColor(COLOR_KEYS.ALERT_STATE)}
             />
           </View>
           <CelText color={"white"} margin={"0 20 0 10"}>
@@ -40,7 +39,7 @@ const CheckEmailInfoBox = props => {
           margin={"20 0 0 35"}
           color={"white"}
           size={"small"}
-          textColor={STYLES.COLORS.ORANGE}
+          textColor={getColor(COLOR_KEYS.ALERT_STATE)}
           onPress={() => openInbox()}
         >
           Check your Email!

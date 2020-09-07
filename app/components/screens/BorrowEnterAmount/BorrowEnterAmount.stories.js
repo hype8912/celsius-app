@@ -53,6 +53,7 @@ const usd = () => {
     ...state.forms.formData,
     coin: "USD",
     loanAmount: 1234,
+    loanType: "USD_LOAN",
   };
 
   return (

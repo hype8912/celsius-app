@@ -133,14 +133,20 @@ class BorrowEnterAmount extends Component {
 
     if (Number(formData.loanAmount) > Number(formData.maxAmount)) {
       return (
-        <CelButton
-          onPress={() => {
-            actions.navigateTo("Deposit");
-          }}
-          margin="40 0 0 0"
-        >
-          Deposit more
-        </CelButton>
+        <>
+          <CelText margin={"20 0 0 0"} align={"center"}>
+            You’ll need to transfer more crypto to be used as collateral for
+            this loan.
+          </CelText>
+          <CelButton
+            onPress={() => {
+              actions.navigateTo("Deposit");
+            }}
+            margin="40 0 0 0"
+          >
+            Transfer more
+          </CelButton>
+        </>
       );
     }
 
@@ -181,7 +187,6 @@ class BorrowEnterAmount extends Component {
         name={`Icon${formData.coin}`}
         width="40"
         height="40"
-        fill="active"
       />
     );
   };

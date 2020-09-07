@@ -7,13 +7,12 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import SelectCoinStyle from "./SelectCoin.styles";
-import Separator from "../../atoms/Separator/Separator";
 import Icon from "../../atoms/Icon/Icon";
 import { THEMES } from "../../../constants/UI";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import formatter from "../../../utils/formatter";
 
 @connect(
   state => ({
@@ -96,13 +95,12 @@ class SelectCoin extends Component {
   }
 
   getSelectStyle = (style, isActive = false) => {
-    const theme = getTheme();
     const itemStyle = [style.item];
 
-    if (isActive && theme !== THEMES.DARK) {
-      itemStyle.push({ backgroundColor: STYLES.COLORS.WHITE });
-    } else if (isActive && theme === THEMES.DARK) {
-      itemStyle.push({ backgroundColor: STYLES.COLORS.DARK_GRAY3 });
+    if (isActive) {
+      itemStyle.push({
+        backgroundColor: getColor(COLOR_KEYS.CARDS),
+      });
     }
     return itemStyle;
   };
@@ -164,7 +162,7 @@ class SelectCoin extends Component {
           <View style={itemStyle}>
             <View style={style.left}>
               {this.renderIcon(item)}
-              <CelText style={{ paddingLeft: 10 }}>{item.label}</CelText>
+              <CelText style={{ paddingLeft: 10 }}>{formatter.capitalize(item.label)}</CelText>
             </View>
             {isActive && (
               <View style={style.right}>
@@ -173,7 +171,6 @@ class SelectCoin extends Component {
             )}
           </View>
         </TouchableOpacity>
-        <Separator />
       </React.Fragment>
     );
   };

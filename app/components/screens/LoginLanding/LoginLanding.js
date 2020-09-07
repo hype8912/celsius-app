@@ -14,6 +14,7 @@ import loggerUtil from "../../../utils/logger-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 
 @connect(
   state => ({
@@ -103,12 +104,12 @@ class LoginLanding extends Component {
       }
       return {
         title: "Log in",
-        subTitle: "Welcome back, please log in to your account",
+        subTitle: "Welcome back, please log in to your Celsius Wallet",
       };
     }
     return {
-      title: "Create Account",
-      subTitle: "Choose how you want to sign up",
+      title: "Create Your Celsius Wallet",
+      subTitle: "How do you want to sign up?",
     };
   };
 
@@ -190,8 +191,8 @@ class LoginLanding extends Component {
             ) : null}
             <CelText weight="300" align="center">
               {type === "login"
-                ? "Don't have an account?"
-                : "Already have an account?"}
+                ? "Don't have an Celsius Wallet?"
+                : "Already have a Celsius Wallet?"}
               <CelText
                 link
                 weight="300"
@@ -205,6 +206,7 @@ class LoginLanding extends Component {
                 {type === "login" ? ` Sign up` : ` Log in`}
               </CelText>
             </CelText>
+            <BuildVersion margin={"10 0 0 0"} />
           </View>
         </View>
       </AuthLayout>

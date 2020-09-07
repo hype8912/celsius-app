@@ -172,7 +172,7 @@ class TransactionsHistory extends Component {
       additionalFilter &&
       additionalFilter.type &&
       additionalFilter.type[0] === "celpay"
-        ? "There are currently no CelPay transactions to display for this account"
+        ? "There are currently no CelPay transactions to display for this wallet"
         : "No transactions for given filters in your wallet";
 
     if (

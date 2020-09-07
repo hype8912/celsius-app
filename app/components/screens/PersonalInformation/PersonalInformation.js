@@ -7,7 +7,7 @@ import moment from "moment";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import CelInput from "../../atoms/CelInput/CelInput";
@@ -137,7 +137,7 @@ class PersonalInformation extends Component {
                       weight={"300"}
                     >
                       We are required to collect SSN from all American users.
-                      Please provide your SSN to start earning interest. This
+                      Please provide your SSN to start earning rewards. This
                       information is encrypted and highly secured.
                     </CelText>
                   </View>

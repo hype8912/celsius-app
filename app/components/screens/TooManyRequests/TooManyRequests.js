@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { View } from "react-native";
 
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelText from "../../atoms/CelText/CelText";
@@ -32,29 +33,31 @@ class TooManyRequests extends Component {
     const { user } = this.props;
     return (
       <RegularLayout fabType="hide">
-        <CelText
-          margin="20 0 15 0"
-          align="center"
-          type="H2"
-          weight={"700"}
-          bold
-        >
-          Too many requests
-        </CelText>
-        <CelText margin="5 0 15 0" align="center" type="H4" weight={"300"}>
-          Yikes, it looks like you made several wrong attempts in a short period
-          of time. You will be able to use the application again in less than an
-          hour. You can reach out to our support team at app@celsius.network.
-        </CelText>
-        {!user.id && (
-          <CelButton
-            margin="40 0 0 0"
-            color="blue"
-            onPress={this.props.actions.navigateBack}
+        <View style={{ height: "100%", justifyContent: "center" }}>
+          <CelText
+            margin="20 0 15 0"
+            align="center"
+            type="H2"
+            weight={"700"}
+            bold
           >
-            Try again
-          </CelButton>
-        )}
+            Too many requests
+          </CelText>
+          <CelText margin="5 0 15 0" align="center" type="H4" weight={"300"}>
+            Yikes, it looks like you made several wrong attempts in a short period
+            of time. You will be able to use the application again in less than an
+            hour. You can reach out to our support team at app@celsius.network.
+          </CelText>
+          {!user.id && (
+            <CelButton
+              margin="40 0 0 0"
+              color="blue"
+              onPress={this.props.actions.navigateBack}
+            >
+              Try again
+            </CelButton>
+          )}
+        </View>
       </RegularLayout>
     );
   }

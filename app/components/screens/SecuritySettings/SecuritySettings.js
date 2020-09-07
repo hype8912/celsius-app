@@ -10,7 +10,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { HODL_STATUS } from "../../../constants/UI";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";

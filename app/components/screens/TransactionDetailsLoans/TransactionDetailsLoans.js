@@ -56,8 +56,7 @@ class TransactionDetailsLoans extends Component {
                 Successfully Completed Loan
               </CelText>
               <CelText align={"left"} type={"H6"}>
-                Your collateral is now released and ready to earn interest
-                again.
+                Your collateral is now released and ready to earn rewards again.
               </CelText>
             </Card>
           ) : null}

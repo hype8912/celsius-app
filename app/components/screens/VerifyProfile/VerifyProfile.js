@@ -129,8 +129,10 @@ class VerifyProfile extends Component {
       return;
     }
     actions.updateFormField("loading", false);
+    if (onSuccess) {
+      await onSuccess();
+    }
     this.setState({ loading: false });
-    if (onSuccess) onSuccess();
   };
 
   onCheckError = () => {
@@ -170,10 +172,10 @@ class VerifyProfile extends Component {
 
   handlePINChange = newValue => {
     const { actions } = this.props;
-    const { hasSixDigitPin, verificationError } = this.state;
+    const { hasSixDigitPin, verificationError, loading } = this.state;
     const pinLength = hasSixDigitPin ? 6 : 4;
 
-    if (newValue.length > pinLength) return;
+    if (newValue.length > pinLength || loading) return;
 
     if (newValue.length === 1 && verificationError) {
       this.setState({ verificationError: false });
@@ -188,7 +190,7 @@ class VerifyProfile extends Component {
     }
   };
 
-  handle2FAChange = newValue => {
+  handle2FAChange = async newValue => {
     const { actions } = this.props;
     const { verificationError } = this.state;
     if (newValue.length > 6) {
@@ -203,9 +205,10 @@ class VerifyProfile extends Component {
     this.setState({ value: newValue });
     actions.updateFormField("code", newValue);
     if (newValue.length === 6) {
+      this.setState({ loading: true })
       actions.toggleKeypad();
-
-      actions.checkTwoFactor(this.onCheckSuccess, this.onCheckError);
+      await actions.checkTwoFactor(this.onCheckSuccess, this.onCheckError);
+      this.setState({ loading: false })
     }
   };
 

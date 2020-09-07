@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { MODALS } from "../../../constants/UI";
 import Banner from "../Banner/Banner";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -61,7 +61,7 @@ class KYCTrigger extends Component {
       default:
         title = "Verify Your Profile";
         content =
-          "Become a Celsius member by verifying your profile. You will be able to earn interest on your deposited coins, take dollar and stable coin loans and send crypto to your friends.";
+          "Complete verification to have full access your to Celsius Network wallet.";
     }
 
     return { title, content, info };

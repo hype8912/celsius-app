@@ -32,12 +32,12 @@ const base = {
   },
   disabledButton: {
     opacity: 0.5,
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 2,
   },
   basicButton: {
-    borderColor: "transparent",
-    backgroundColor: "transparent",
+    borderColor: COLOR_KEYS.TRANSPARENT,
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     height: "auto",
     paddingLeft: 0,
     paddingRight: 0,
@@ -53,24 +53,32 @@ const base = {
     fontSize: getScaledFont(getFontSize("H6")),
   },
   ghostButton: {
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 1,
     borderColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
   ghostredButton: {
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 1,
     borderColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   ghostgreenButton: {
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 1,
     borderColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+  },
+  ghostwhiteButton: {
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
+    borderWidth: 1,
+    borderColor: COLOR_KEYS.WHITE,
   },
   basicredButton: {
     margin: 20,
   },
   basicgreenButton: {
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+  },
+  basicwhiteButton: {
     backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   ghostColorTitle: {
@@ -83,12 +91,17 @@ const base = {
     backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   whiteButton: {
-    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+    backgroundColor: COLOR_KEYS.WHITE,
   },
   basicredTitleButton: {
     paddingHorizontal: 10,
     paddingVertical: 5,
     color: COLOR_KEYS.NEGATIVE_STATE,
+  },
+  basicwhiteTitleButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    color: COLOR_KEYS.WHITE,
   },
   basicgreenTitleButton: {
     paddingHorizontal: 10,
@@ -115,6 +128,6 @@ const themed = {
   },
 };
 
-const CelButtonStyle = () => getThemedStyle(base, themed);
+const CelButtonStyle = (theme) => getThemedStyle(base, themed, theme);
 
 export default CelButtonStyle;

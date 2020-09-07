@@ -102,7 +102,7 @@ class Community extends Component {
 
     return (
       <>
-        <Separator text={"MOST DEPOSITED COIN"} margin={"30 0 20 0"} />
+        <Separator text={"Most Popular Coin"} margin={"30 0 20 0"} />
         <View style={style.image}>
           <Image
             source={{
@@ -122,7 +122,7 @@ class Community extends Component {
           align={"center"}
           type={"H6"}
         >
-          Net Deposit
+          Net Amount Held in Celsius Wallets
         </CelText>
         <CelText weight={"600"} align={"center"} type={"H2"} margin="7 0 7 0">
           {`${formatter.crypto(
@@ -132,16 +132,13 @@ class Community extends Component {
           )} ${highestDeposit.coin}`}
         </CelText>
         <CelText weight={"300"} align={"center"} type={"H5"}>
-          {formatter.usd(bestCoinDepositUsd - bestCoinWithdrawalUsd, {
-            symbol: "",
-          })}{" "}
-          USD
+          {formatter.usd(bestCoinDepositUsd - bestCoinWithdrawalUsd)}{" "}
         </CelText>
         <Card margin={"20 0 0 0"}>
           <View style={style.amountsView}>
             <View>
               <CelText weight={"300"} align={"center"} type={"H6"}>
-                Deposits
+                Total {highestDeposit.coin} transfers
               </CelText>
               <CelText
                 weight={"600"}
@@ -164,7 +161,7 @@ class Community extends Component {
             <Separator margin={"20 0 20 0"} />
             <View>
               <CelText weight={"300"} align={"center"} type={"H6"}>
-                Withdrawals
+                Total {highestDeposit.coin} Withdrawals
               </CelText>
               <CelText
                 weight={"600"}
@@ -198,22 +195,19 @@ class Community extends Component {
     const totalWithdrawalsUsd = -communityStats.total_withdrawals_USD;
     return (
       <>
-        <Separator text={"TOTAL COINS DEPOSITED"} margin={"30 0 20 0"} />
+        <Separator text={"STATS ON ALL COINS"} margin={"30 0 20 0"} />
 
         <CelText weight={"300"} align={"center"} type={"H6"}>
           Net Deposit
         </CelText>
         <CelText weight={"600"} align={"center"} type={"H2"} margin="7 0 7 0">
-          {formatter.usd(totalDepositsUsd - totalWithdrawalsUsd, {
-            symbol: "",
-          })}{" "}
-          USD
+          {formatter.usd(totalDepositsUsd - totalWithdrawalsUsd)}{" "}
         </CelText>
         <Card margin={"20 0 15 0"}>
           <View style={style.amountsView}>
             <View>
               <CelText weight={"300"} align={"center"} type={"H6"}>
-                Deposits
+                Total Incoming Transfers
               </CelText>
               <CelText
                 weight={"600"}
@@ -221,13 +215,13 @@ class Community extends Component {
                 type={"H4"}
                 margin={"5 0 0 0"}
               >
-                {formatter.usd(totalDepositsUsd, { symbol: "" })} USD
+                {formatter.usd(totalDepositsUsd)}
               </CelText>
             </View>
             <Separator margin={"10 0 10 0"} />
             <View>
               <CelText weight={"300"} align={"center"} type={"H6"}>
-                Withdrawals
+                Total Withdrawals
               </CelText>
               <CelText
                 weight={"600"}
@@ -235,7 +229,7 @@ class Community extends Component {
                 type={"H4"}
                 margin={"5 0 0 0"}
               >
-                {formatter.usd(totalWithdrawalsUsd, { symbol: "" })} USD
+                {formatter.usd(totalWithdrawalsUsd)}
               </CelText>
             </View>
           </View>
@@ -252,7 +246,7 @@ class Community extends Component {
           type={"H6"}
           style={style.secondText}
         >
-          Members are depositing
+          Members with active wallets
         </CelText>
       </>
     );
@@ -275,12 +269,8 @@ class Community extends Component {
           info
           buttonTypes={[
             {
-              buttonType: "Total AUM",
+              buttonType: "Total Assets",
               icon: "Total",
-            },
-            {
-              buttonType: "Col. & Cash",
-              icon: "PiggyBank",
             },
           ]}
         />
@@ -315,26 +305,26 @@ class Community extends Component {
           info
           buttonTypes={[
             {
-              buttonType: "Total",
+              buttonType: "Amount Sent",
               icon: "Total",
             },
             {
-              buttonType: "Transactions",
+              buttonType: " Number of Transactions",
               icon: "Transactions",
             },
           ]}
         />
 
         <CommunityDashboard
-          name={"INTEREST"}
+          name={"REWARDS"}
           info
           buttonTypes={[
             {
-              buttonType: "Earned",
+              buttonType: "Total Earned",
               icon: "Earned",
             },
             {
-              buttonType: "Average",
+              buttonType: "Average Rewards",
               icon: "Average",
             },
           ]}

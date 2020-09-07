@@ -68,28 +68,6 @@ class Appearance extends Component {
           <View style={style.buttonsContainer}>
             <View>
               <CircleButton
-                backgroundImage={require("../../../../assets/images/light.png")}
-                icon={theme === THEMES.LIGHT ? "Checked" : false}
-                iconSize={15}
-                type="theme"
-                style={[style.lightThemeButton, style.themeBtn]}
-                onPress={() => {
-                  actions.setUserAppSettings({ theme: THEMES.LIGHT });
-                }}
-              />
-              <CelText
-                align="center"
-                type="H7"
-                margin="10 0 0 0"
-                color={
-                  theme === THEMES.LIGHT ? getColor(COLOR_KEYS.HEADLINE) : null
-                }
-              >
-                Light
-              </CelText>
-            </View>
-            <View>
-              <CircleButton
                 backgroundImage={require("../../../../assets/images/sunset.png")}
                 icon={theme === THEMES.UNICORN ? "Checked" : false}
                 iconSize={15}
@@ -109,7 +87,29 @@ class Appearance extends Component {
                     : null
                 }
               >
-                Sunset
+                New
+              </CelText>
+            </View>
+            <View>
+              <CircleButton
+                backgroundImage={require("../../../../assets/images/light.png")}
+                icon={theme === THEMES.LIGHT ? "Checked" : false}
+                iconSize={15}
+                type="theme"
+                style={[style.lightThemeButton, style.themeBtn]}
+                onPress={() => {
+                  actions.setUserAppSettings({ theme: THEMES.LIGHT });
+                }}
+              />
+              <CelText
+                align="center"
+                type="H7"
+                margin="10 0 0 0"
+                color={
+                  theme === THEMES.LIGHT ? getColor(COLOR_KEYS.HEADLINE) : null
+                }
+              >
+                Light
               </CelText>
             </View>
             <View>

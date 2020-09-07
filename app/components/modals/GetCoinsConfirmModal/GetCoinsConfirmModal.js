@@ -57,7 +57,7 @@ class GetCoinsConfirmModal extends Component {
             weight={"700"}
             margin={"0 0 25 0"}
           >
-            Confirm Transaction Details
+            Confirm Purchase Details
           </CelText>
           <CelText
             type={"H5"}
@@ -65,7 +65,7 @@ class GetCoinsConfirmModal extends Component {
             align={"center"}
             margin={"0 0 10 0"}
           >
-            You are about to receive
+            You are about to purchase
           </CelText>
           <CelText
             align={"center"}
@@ -77,8 +77,9 @@ class GetCoinsConfirmModal extends Component {
           </CelText>
           <View style={style.infoBlock}>
             <CelText align={"center"} type={"H6"}>
-              {formData.cryptoCoin} amount is an estimate. Actual amount will be
-              based on exchange rate at the moment of processing the order.
+              {formData.cryptoCoin} Amount is subject to change. Actual amount
+              will be based on the exchange rate at the moment of processing
+              your order.
             </CelText>
           </View>
           <View style={style.transferData}>

@@ -13,6 +13,7 @@ import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 
 @connect(
   state => ({
@@ -73,7 +74,7 @@ class Login extends Component {
               Log in
             </CelText>
             <CelText margin="0 0 30 0" weight="300" align="center">
-              Welcome back, please log in to your account
+              Welcome back, please log in to your wallet
             </CelText>
 
             <CelInput
@@ -122,7 +123,7 @@ class Login extends Component {
           </View>
           <View style={style.bottom}>
             <CelText weight="300" align="center">
-              Don't have an account?
+              Don't have a wallet?
               <CelText
                 weight="300"
                 align="center"
@@ -135,6 +136,7 @@ class Login extends Component {
               </CelText>
             </CelText>
           </View>
+          <BuildVersion margin={"10 0 0 0"} />
         </View>
       </AuthLayout>
     );

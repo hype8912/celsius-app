@@ -17,7 +17,7 @@ import Fab from "../../molecules/Fab/Fab";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import { THEMES } from "../../../constants/UI";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC, isKYCRejectedForever } from "../../../utils/user-util";
+import { hasPassedKYC, isKYCRejectedForever } from "../../../utils/user-util/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
@@ -34,7 +34,6 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
       : KYC_STATUSES.collecting,
     celpayCompliance: state.compliance.celpay,
     depositCompliance: state.compliance.deposit,
-    loanCompliance: state.compliance.loan,
     withdrawCompliance: state.compliance.withdraw,
     user: state.user.profile,
   }),
@@ -72,11 +71,10 @@ class FabMenu extends Component {
     const {
       depositCompliance,
       celpayCompliance,
-      loanCompliance,
       withdrawCompliance,
-      user,
       kycStatus,
     } = this.props;
+
     const main = [
       [{ iconName: "Wallet", label: "Wallet", screen: "WalletLanding" }],
       [],
@@ -85,7 +83,7 @@ class FabMenu extends Component {
     if (depositCompliance.allowed)
       main[0].push({
         iconName: "Deposit",
-        label: "Deposit",
+        label: "Transfer",
         screen: "Deposit",
       });
     if (kycStatus && hasPassedKYC() && withdrawCompliance.allowed)
@@ -100,18 +98,16 @@ class FabMenu extends Component {
         label: "CelPay",
         screen: "CelPayLanding",
       });
-    if (loanCompliance.allowed)
-      main[1].push({
-        iconName: "Borrow",
-        label: "Borrow",
-        screen: "BorrowLanding",
-      });
-    if (user)
-      main[1].push({
-        iconName: "Profile",
-        label: "Profile",
-        screen: "Profile",
-      });
+    main[1].push({
+      iconName: "Borrow",
+      label: "Borrow $",
+      screen: "BorrowLanding",
+    });
+    main[1].push({
+      iconName: "Profile",
+      label: "Profile",
+      screen: "Profile",
+    });
     // TODO change borrow landing to new screen
     if (kycStatus && hasPassedKYC())
       main[2].splice(1, 0, {

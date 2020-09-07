@@ -19,6 +19,7 @@ const base = {
         borderLeftWidth: 0.2,
         borderRightWidth: 0.5,
         borderBottomWidth: 2,
+        borderColor: COLOR_KEYS.SEPARATORS,
       },
       ios: {
         ...STYLES.SHADOW_STYLES,
@@ -50,25 +51,11 @@ const base = {
 };
 
 const themed = {
-  light: {
-    cardBorder: {
-      ...Platform.select({ android: { borderColor: "#E9E9E9" } }),
-    },
-  },
+  light: {},
 
-  dark: {
-    cardBorder: {
-      ...Platform.select({
-        android: { borderColor: STYLES.COLORS.BLACK_OPACITY2 },
-      }),
-    },
-  },
+  dark: {},
 
-  unicorn: {
-    cardBorder: {
-      ...Platform.select({ android: { borderColor: "#E9E9E9" } }),
-    },
-  },
+  unicorn: {},
 };
 
 const CardStyle = theme =>

@@ -133,7 +133,7 @@ class LoanAlertsModalWrapper extends Component {
       return (
         <LoanAlertsMarginCallDepositCoinsModal
           loan={loan}
-          yesCopy={"Deposit coins"}
+          yesCopy={"Transfer coins"}
         />
       );
     }
@@ -159,8 +159,8 @@ class LoanAlertsModalWrapper extends Component {
     switch (activeAlert.type) {
       case LOAN_ALERTS.INTEREST_ALERT:
         return this.renderInterestModal(loan);
-      case LOAN_ALERTS.PRINCIPAL_ALERT:
-        return this.renderPrincipalModal(loan);
+      // case LOAN_ALERTS.PRINCIPAL_ALERT:
+      //   return this.renderPrincipalModal(loan);
       case LOAN_ALERTS.MARGIN_CALL_ALERT:
         return this.renderMarginCallModal(loan);
     }

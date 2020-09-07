@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
 import Modal from "react-native-modal";
@@ -16,10 +15,10 @@ import * as appActions from "../../../redux/actions";
 import { MODALS, THEMES } from "../../../constants/UI";
 import CelModalStyle from "./CelModal.styles";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import { isIos } from "../../../utils/ui-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -48,42 +47,6 @@ class CelModal extends Component {
     hasCloseButton: true,
     picture: null,
     pictureDimensions: {},
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      modalPosition: { justifyContent: "flex-end" },
-    };
-  }
-
-  componentDidMount() {
-    this.keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      this.keyboardDidShow
-    );
-    this.keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      this.keyboardDidHide
-    );
-  }
-
-  componentWillUnmount() {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
-  keyboardDidShow = () => {
-    this.setState({
-      modalPosition: { justifyContent: "flex-start" },
-    });
-  };
-
-  keyboardDidHide = () => {
-    this.setState({
-      modalPosition: { justifyContent: "flex-end" },
-    });
   };
 
   getTintColor = () => {
@@ -118,7 +81,10 @@ class CelModal extends Component {
       // NOTE: For coins we use PNG in light theme and DVG in dark theme
       return (
         <View style={style.pictureWrapper}>
-          <Icon name={`Icon${coin && coin}`} fill={STYLES.COLORS.WHITE} />
+          <Icon
+            name={`Icon${coin && coin}`}
+            fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+          />
         </View>
       );
     }
@@ -185,10 +151,8 @@ class CelModal extends Component {
       hasCloseButton,
       actions,
     } = this.props;
-    const { modalPosition } = this.state;
     const style = CelModalStyle();
     const tintColor = this.getTintColor();
-
     return (
       <Modal
         isVisible={openedModal === name}
@@ -201,7 +165,7 @@ class CelModal extends Component {
         onBackdropPress={() => actions.closeModal()}
         useNativeDriver={!isIos()}
       >
-        <View style={[style.wrapper, modalPosition]}>
+        <View style={[style.wrapper]}>
           <View style={style.modal}>
             <View style={{ height: picture || hasCloseButton ? 50 : 0 }}>
               {!!hasCloseButton && this.renderClose()}

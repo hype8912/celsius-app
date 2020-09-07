@@ -25,6 +25,7 @@ import InterestCard from "../../molecules/InterestCard/InterestCard";
 import interestUtil from "../../../utils/interest-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import Counter from "../../molecules/Counter/Counter";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
@@ -162,10 +163,13 @@ class CoinDetails extends Component {
       : {};
     const theme = getTheme();
 
+    const hasBalance = !!Number(coinDetails.amount) || !!Number(coinDetails.amount_usd)
+
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short) &&
-      !hodlStatus.isActive;
+      !hodlStatus.isActive &&
+      hasBalance;
 
     const isCoinEligibleForBuying =
       simplexCompliance && simplexCompliance.coins.includes(currency.short);
@@ -173,14 +177,16 @@ class CoinDetails extends Component {
     const isCoinEligibleForDeposit =
       depositCompliance && depositCompliance.coins.includes(currency.short);
 
-    const isCoinEligibleForWithdraw = !hodlStatus.isActive;
+    const isCoinEligibleForWithdraw = !hodlStatus.isActive && hasBalance;
 
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
-    const isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
 
     return (
       <RegularLayout
@@ -234,7 +240,7 @@ class CoinDetails extends Component {
                         <View style={style.buttonIcon}>
                           <Icon fill="primary" name="Deposit" width="25" />
                         </View>
-                        <CelText type="H6">Deposit</CelText>
+                        <CelText type="H6">Transfer</CelText>
                       </View>
                     </TouchableOpacity>
                   </>
@@ -325,7 +331,7 @@ class CoinDetails extends Component {
               <View style={style.interestWrapper}>
                 <View style={style.interestCardWrapper}>
                   <CelText type="H6" weight="300" margin={"3 0 3 0"}>
-                    Total interest earned
+                    Total Earnings
                   </CelText>
                   <CelText type="H3" weight="600" margin={"3 0 3 0"}>
                     {formatter.usd(coinDetails.interest_earned_usd)}
@@ -357,9 +363,7 @@ class CoinDetails extends Component {
                           align="justify"
                           type="H5"
                           color="white"
-                        >{`${formatter.percentageDisplay(
-                          isInCel
-                        )} APY`}</CelText>
+                        >{`${formatter.percentageDisplay(rate)} APY`}</CelText>
                       </Badge>
                     </View>
                   )}

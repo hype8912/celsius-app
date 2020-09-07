@@ -1,5 +1,5 @@
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -11,7 +11,7 @@ const base = {
   circle: {
     height: 40,
     width: 40,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.PRIm,
     borderRadius: 20,
     paddingTop: 10,
   },

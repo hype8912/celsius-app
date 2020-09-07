@@ -5,8 +5,9 @@ import { View } from "react-native";
 import TransactionSectionStyle from "./TxTransactionSection.styles";
 import Card from "../Card/Card";
 import CelText from "../CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import CopyButton from "../CopyButton/CopyButton";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const TxTransactionSection = ({ transaction, text, actions }) => {
   const style = TransactionSectionStyle();
@@ -14,14 +15,18 @@ const TxTransactionSection = ({ transaction, text, actions }) => {
     <View>
       <Card margin={"20 0 20 0"}>
         <View style={style.content}>
-          <CelText style={{ color: STYLES.COLORS.MEDIUM_GRAY }}>{text}</CelText>
+          <CelText
+            style={{ color: getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE) }}
+          >
+            {text}
+          </CelText>
         </View>
         <CelText weight="500" style={style.text} type="H4">
           {transaction.transaction_id}
         </CelText>
         <CopyButton
           text="Copy ID"
-          color={STYLES.COLORS.CELSIUS_BLUE}
+          color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
           copyText={transaction.transaction_id}
           onCopy={() => {
             actions.showMessage(

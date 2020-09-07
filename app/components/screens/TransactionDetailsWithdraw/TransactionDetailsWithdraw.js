@@ -15,10 +15,13 @@ import Icon from "../../atoms/Icon/Icon";
 import CheckEmailInfoBox from "../../atoms/CheckEmailInfoBox/CheckEmailInfoBox";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import API from "../../../constants/API";
+import apiUtil from "../../../utils/api-util";
 
 class TransactionDetailsWithdraw extends Component {
   static propTypes = {
     transaction: PropTypes.instanceOf(Object),
+    callsInProgress: PropTypes.instanceOf(Array),
     navigateTo: PropTypes.func,
     cancelWithdrawal: PropTypes.func,
   };
@@ -26,7 +29,7 @@ class TransactionDetailsWithdraw extends Component {
 
   render() {
     // const style = TransactionDetailsDepositsStyle();
-    const { transaction, navigateTo, cancelWithdrawal } = this.props;
+    const { transaction, navigateTo, cancelWithdrawal, callsInProgress } = this.props;
     const transactionProps = transaction.uiProps;
     const style = TransactionWithdrawDetailsStyle();
 
@@ -34,6 +37,8 @@ class TransactionDetailsWithdraw extends Component {
       TRANSACTION_TYPES.WITHDRAWAL_CANCELED,
       TRANSACTION_TYPES.WITHDRAWAL_CONFIRMED,
     ].includes(transaction.type);
+
+    const isCancelling = apiUtil.areCallsInProgress([API.CANCEL_WITHDRAWAL_TRANSACTION], callsInProgress)
 
     return (
       <RegularLayout>
@@ -94,6 +99,7 @@ class TransactionDetailsWithdraw extends Component {
               color="red"
               basic
               onPress={() => cancelWithdrawal(transaction.id)}
+              loading={isCancelling}
             >
               Cancel Withdrawal
             </CelButton>

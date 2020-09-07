@@ -174,9 +174,8 @@ class BorrowCalculatorScreen extends Component {
     const { purpose, actions } = this.props;
     const defaultProps = {
       subtitle: "Calculate your loan interest.",
-      bottomHeading: "Borrow dollars for your crypto",
-      bottomParagraph: "Calculate your loan interest before you deposit coins",
-      buttonCopy: "Get Loan",
+      bottomParagraph: "",
+      buttonCopy: "Get a Loan",
       onPress: () => actions.navigateTo("BorrowChooseLoan"),
     };
 
@@ -185,7 +184,7 @@ class BorrowCalculatorScreen extends Component {
         return {
           ...defaultProps,
           subtitle: "Calculate your interest before you verify your ID",
-          bottomHeading: "Borrow dollars for Crypto",
+          bottomHeading: "Borrow against your crypto",
           bottomParagraph: loanParams
             ? `Verify your identity to start using your coins as collateral and get a dollar loan starting at just ${formatter.percentageDisplay(
                 loanParams.bestLtv
@@ -207,7 +206,7 @@ class BorrowCalculatorScreen extends Component {
             : null,
           bottomParagraph:
             "Deposit more coins to start your first loan application",
-          buttonCopy: "Deposit coins",
+          buttonCopy: "Transfer coins",
           onPress: () =>
             actions.navigateTo("Deposit", {
               coin: loanParams ? loanParams.largestShortCrypto : null,
@@ -296,7 +295,7 @@ class BorrowCalculatorScreen extends Component {
         </CelText>
         <Separator />
         <CelText type="H4" align={"left"} margin={"15 0 20 0"}>
-          Enter loan amount
+          Enter the amount you’d like to borrow
         </CelText>
         <BorrowCalculator loanParams={loanParams} purpose={purpose} />
         <View>

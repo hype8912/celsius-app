@@ -9,7 +9,7 @@ import SocialSecurityNumberStyle from "./SocialSecurityNumber.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInputText";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import Card from "../../atoms/Card/Card";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -136,8 +136,8 @@ class SocialSecurityNumber extends Component {
                 <CelText color="white" weight="semi-bold">
                   Keep in mind!{" "}
                 </CelText>
-                You can only enter SSN information once. To be able to change it
-                in the future, please
+                SSN may only be entered once! If you must change it in the
+                future,
                 <CelText color="white" weight="semi-bold">
                   {" "}
                   contact our support.

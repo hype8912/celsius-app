@@ -10,6 +10,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 const base = {
   wrapper: {
     alignItems: "center",
+    justifyContent: "flex-end",
     flex: 1,
   },
   modal: {
@@ -57,7 +58,7 @@ const base = {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     zIndex: 10,
   },
 };

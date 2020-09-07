@@ -1,5 +1,8 @@
 import axios from "axios";
 import apiUrl from "./api-url";
+import Constants from "../../constants";
+
+const { ONFIDO_API_KEY } = Constants;
 
 const userKYCService = {
   getKYCDocTypes,
@@ -10,9 +13,10 @@ const userKYCService = {
   getProfileTaxpayerInfo,
   updateProfileTaxpayerInfo,
   startKYC,
-  createKYCDocuments,
   getKYCDocuments,
-  pollKYCStatus,
+  ensureApplicant,
+  getMobileSDKToken,
+  saveKYCDocuments,
 };
 
 /**
@@ -111,30 +115,6 @@ function startKYC() {
 }
 
 /**
- * Creates KYC documents for user
- * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#10e4b34c-ebc6-4b0f-a0d0-c2fcf97d74c4
- *
- * @returns {Promise}
- */
-function createKYCDocuments(documents) {
-  const formData = new FormData();
-  formData.append("document_front_image", {
-    name: "front.jpg",
-    type: "image/jpg",
-    uri: documents.front.uri,
-  });
-  if (documents.back) {
-    formData.append("document_back_image", {
-      name: "back.jpg",
-      type: "image/jpg",
-      uri: documents.back.uri,
-    });
-  }
-  formData.append("type", documents.type);
-  return axios.put(`${apiUrl}/user/profile/documents`, formData);
-}
-
-/**
  * Gets kyc documents for user
  * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#9dfb9269-c3af-4723-8ec9-f62b380b3892
  *
@@ -144,18 +124,46 @@ function getKYCDocuments() {
   return axios.get(`${apiUrl}/me/documents`);
 }
 
-// Docs: https://documenter.getpostman.com/view/4207695/celsius/RW1aHzQg#10e4b34c-ebc6-4b0f-a0d0-c2fcf97d74c4
-
 /**
- * Gets KYC status for user
- * @see https://documenter.getpostman.com/view/4207695/RW1aHzQg#f346333f-db08-4e97-ab03-df9410b03809
+ * Creates/ensures applicant on Onfido
  *
  * @returns {Promise}
  */
-function pollKYCStatus() {
-  return axios.get(`${apiUrl}/me/poll`);
+function ensureApplicant() {
+  return axios.get(`${apiUrl}/me/kyc/ensure_applicant`);
 }
 
-// Docs: https://documenter.getpostman.com/view/4207695/celsius/RW1aHzQg#9dfb9269-c3af-4723-8ec9-f62b380b3892
+/**
+ * Saves KYC doc ids from Onfido into db
+ *
+ * @param {Array} documents
+ * @param {string} documents[].id - document id from Onfido
+ * @param {string} documents[].type - passport|driving_licence|identity_card
+ * @param {string} documents[].side - front|back
+ * @returns {Promise}
+ */
+function saveKYCDocuments(documents) {
+  return axios.put(`${apiUrl}/user/kyc/documents`, { documents });
+}
+
+/**
+ * Gets OnfidoSDK mobile token
+ *
+ * @param {string} applicantId - applicant id from onfido
+ * @returns {Promise}
+ */
+function getMobileSDKToken(applicantId) {
+  return fetch("https://api.onfido.com/v3/sdk_token", {
+    method: "POST",
+    headers: {
+      Authorization: `Token token=${ONFIDO_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      applicant_id: applicantId,
+      application_id: "network.celsius.wallet",
+    }),
+  });
+}
 
 export default userKYCService;

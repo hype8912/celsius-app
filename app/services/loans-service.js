@@ -1,6 +1,5 @@
 import axios from "axios";
 import apiUrl from "./api-url";
-import { mocks } from "../../dev-settings";
 import loanUtil from "../utils/loan-util";
 
 const loansService = {
@@ -75,11 +74,6 @@ function loanApplyPreviewData(loanApplication) {
  * @returns {Promise}
  */
 function setConfirmLoanInfo(loanData) {
-  if (mocks.USE_MOCK_LOAN_INFO) {
-    return {
-      data: { loan: require("../mock-data/loans.mock").default.CONFIRM_LOAN },
-    };
-  }
   return axios.post(`${apiUrl}/loans/new-loan-preview`, {
     loanData,
   });
@@ -91,13 +85,9 @@ function setConfirmLoanInfo(loanData) {
  * @returns {Promise}
  */
 async function getAllLoans() {
-  let loans;
-  if (mocks.USE_MOCK_LOANS) {
-    loans = Object.values(require("../mock-data/loans.mock").default.ALL_LOANS);
-  } else {
-    const res = await axios.get(`${apiUrl}/loans`);
-    loans = res.data;
-  }
+  const res = await axios.get(`${apiUrl}/loans`);
+  const loans = res.data;
+
   return loans.map(l => loanUtil.mapLoan(l));
 }
 

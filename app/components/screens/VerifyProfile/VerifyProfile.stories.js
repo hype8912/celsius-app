@@ -13,6 +13,10 @@ const initialState = {
   forms: {},
 };
 
+const navigationProps = {
+  hasSixDigitPin: true,
+}
+
 const pin = () => {
   const state = _.cloneDeep(initialState);
 
@@ -21,6 +25,7 @@ const pin = () => {
       screenName="VerifyProfile"
       screen={VerifyProfile}
       state={state}
+      navigationProps={navigationProps}
     />
   );
 };

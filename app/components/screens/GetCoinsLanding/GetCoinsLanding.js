@@ -12,7 +12,7 @@ import GetCoinsInfoModal from "../../modals/GetCoinsInfoModal/GetCoinsInfoModal"
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import BuyCoinsPaymentsHistory from "../../molecules/BuyCoinsPaymentsHistory/BuyCoinsPaymentsHistory";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import store from "../../../redux/store";
 
@@ -104,7 +104,7 @@ class GetCoinsLanding extends Component {
         {simplexCompliance.allowed && (
           <MultiInfoCardButton
             textButton={"Credit Card"}
-            explanation={"Buy crypto easily using your credit card."}
+            explanation={"Purchase crypto using your credit card."}
             darkImage={require("../../../../assets/images/icons/credit-card-dark.png")}
             lightImage={require("../../../../assets/images/icons/credit-card-light.png")}
             unicornImage={require("../../../../assets/images/icons/credit-card-unicorn.png")}
@@ -115,7 +115,7 @@ class GetCoinsLanding extends Component {
         {gemCompliance.allowed && (
           <MultiInfoCardButton
             textButton={"Bank Transfer"}
-            explanation={"Buy crypto easily through your bank account."}
+            explanation={"Purchase crypto directly from your bank account. "}
             darkImage={require("../../../../assets/images/icons/bank-wire-dark.png")}
             lightImage={require("../../../../assets/images/icons/bank-wire-light.png")}
             unicornImage={require("../../../../assets/images/icons/bank-wire-unicorn.png")}

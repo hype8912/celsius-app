@@ -17,7 +17,7 @@ class InterestRates extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Interest rates",
+    title: "Reward rates",
     right: "profile",
   });
 
@@ -33,7 +33,7 @@ class InterestRates extends Component {
           align={"center"}
           style={style.explanation}
         >
-          Bonus rates are provided if you choose to earn interest in CEL tokens.{" "}
+          Rates in green are available to users who choose to earn in CEL.{" "}
           <CelText onPress={() => actions.navigateTo("LoyaltyProgram")} link>
             Learn more
           </CelText>

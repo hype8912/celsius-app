@@ -1,16 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Animated, View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Animated,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Linking,
+} from "react-native";
 
 import * as appActions from "../../../redux/actions";
 import BorrowLandingStyle from "./BorrowLanding.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import { EMPTY_STATES, MODALS, LOAN_FILTER_ITEMS } from "../../../constants/UI";
 import BorrowCalculatorScreen from "../BorrowCalculatorScreen/BorrowCalculatorScreen";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { widthPercentageToDP } from "../../../utils/styles-util";
+import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import LoanOverviewCard from "../../organisms/LoanOverviewCard/LoanOverviewCard";
 
 import Card from "../../atoms/Card/Card";
@@ -19,11 +25,11 @@ import Separator from "../../atoms/Separator/Separator";
 import EmptyState from "../../atoms/EmptyState/EmptyState";
 import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
-import STYLES from "../../../constants/STYLES";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 import Spinner from "../../atoms/Spinner/Spinner";
 import { STORYBOOK } from "../../../../dev-settings.json";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -230,7 +236,9 @@ class BorrowLanding extends Component {
                     type={"H6"}
                     weight={item === filter ? "500" : "300"}
                     color={
-                      item === filter ? STYLES.COLORS.CELSIUS_BLUE : undefined
+                      item === filter
+                        ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                        : undefined
                     }
                   >
                     {item}
@@ -309,6 +317,26 @@ class BorrowLanding extends Component {
     </RegularLayout>
   );
 
+  renderNoCompliance = () => (
+    <RegularLayout>
+      <View style={{ height: "100%", justifyContent: "center" }}>
+        <CelText type={"H4"} weight={"500"} align={"center"}>
+          You are unable to access this feature due to your jurisdiction. For more
+          information please reach out to
+          <CelText
+            color={getColor(COLOR_KEYS.LINK)}
+            onPress={() => Linking.openURL("mailto:loans@celsius.network")}
+            type={"H4"}
+            weight={"500"}
+          >
+            {" "}
+            loans@celsius.network.
+          </CelText>
+        </CelText>
+      </View>
+    </RegularLayout>
+  );
+
   // slavija intersection
   renderIntersection() {
     const { kycStatus, loanCompliance, allLoans } = this.props;
@@ -319,8 +347,7 @@ class BorrowLanding extends Component {
       return (
         <BorrowCalculatorScreen purpose={EMPTY_STATES.NON_VERIFIED_BORROW} />
       );
-    if (!loanCompliance.allowed)
-      return <BorrowCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
+    if (!loanCompliance.allowed) return this.renderNoCompliance();
 
     if (hasLoans) return this.renderDefaultView();
 

@@ -46,9 +46,9 @@ class DepositInfoModal extends Component {
                 ? require(`../../../../assets/images/deposit-icn.png`)
                 : require(`../../../../assets/images/deposit-icn-dark.png`),
             darkImage: require("../../../../assets/images/deposit-icn.png"),
-            title: "Only deposit same coin type as selected",
+            title: "Only transfer same coin type as selected",
             description:
-              "Depositing a different coin than selected will result in permanent loss of funds.",
+              "Transferring a different coin than selected will result in permanent loss of funds.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
@@ -59,7 +59,7 @@ class DepositInfoModal extends Component {
                 : require(`../../../../assets/images/deposit-icn-dark.png`),
             title: "Review your transaction details carefully",
             description:
-              "Depositing coins without all required data, such as Destination Tag (XRP) or MemoID (XLM), or incorrect data will result in permanent loss.",
+              "Transferring coins without all required data, such as Destination Tag (XRP) or MemoID (XLM), or incorrect data will result in permanent loss.",
             buttonText: "I Understand",
             onPress: () => actions.closeModal(),
           },
@@ -69,15 +69,15 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image: { uri: coinName.image_url },
-            title: `Only deposit Ripple (XRP) to this wallet`,
+            title: `Only transfer Ripple (XRP) to this wallet`,
             description:
-              "Sending any other digital asset to this specific address, will result in permanent loss.",
+              "Sending any other asset to this address will result in a permanent loss of funds.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
           {
             image: { uri: coinName.image_url },
-            title: "Destination Tag is required to deposit XRP",
+            title: "Destination Tag is required to transfer XRP",
             description:
               "Sending funds without destination tag or with an incorrect one, will result in loss.",
             buttonText: "I Understand",
@@ -89,15 +89,15 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image: { uri: coinName.image_url },
-            title: `Only deposit Stellar (XLM) to this wallet`,
+            title: `Only transfer Stellar (XLM) to this wallet`,
             description:
-              "Sending any other digital asset to this specific address, will result in permanent loss.",
+              "Sending any other asset to this address will result in a permanent loss of funds.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
           {
             image: { uri: coinName.image_url },
-            title: "Memo ID is required to deposit XLM",
+            title: "Memo ID is required to transfer XLM",
             description:
               "Sending funds without memo ID or with an incorrect one, will result in loss.",
             buttonText: "I Understand",
@@ -109,15 +109,15 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image: { uri: coinName.image_url },
-            title: `Only deposit EOS (EOS) to this wallet`,
+            title: `Only transfer EOS (EOS) to this wallet`,
             description:
-              "Sending any other digital asset to this specific address, will result in permanent loss.",
+              "Sending any other asset to this address will result in a permanent loss of funds.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
           {
             image: { uri: coinName.image_url },
-            title: "Memo ID is required to deposit EOS",
+            title: "Memo ID is required to transfer EOS",
             description:
               "Sending funds without memo ID or with an incorrect one, will result in loss.",
             buttonText: "I Understand",
@@ -135,9 +135,9 @@ class DepositInfoModal extends Component {
     if (type === "USDT ERC20") {
       return {
         image: { uri: coinName.image_url },
-        title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
+        title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
         description:
-          "Please ensure only Tether ERC20 tokens are deposited to this address. Sending coins other than USDT ERC20 to this address may result in the permanent loss of funds.",
+          "Please ensure only Tether ERC20 tokens are transferred to this address. Sending coins other than USDT ERC20 to this address may result in the permanent loss of funds.",
         buttonText: "I Understand",
         coinName,
       };
@@ -146,7 +146,7 @@ class DepositInfoModal extends Component {
     if (type === "MATIC") {
       return {
         image: { uri: coinName.image_url },
-        title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
+        title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
         description:
           "This address is only for MATIC ERC20 tokens. Sending other MATIC coins to this address may result in a permanent loss of funds.",
         buttonText: "I Understand",
@@ -156,9 +156,9 @@ class DepositInfoModal extends Component {
 
     return {
       image: { uri: coinName.image_url },
-      title: `Only deposit ${coinName.displayName} (${type}) to this wallet`,
+      title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
       description:
-        "Sending any other digital asset to this specific address, will result in permanent loss.",
+        "Sending any other digital asset to this specific address will result in permanent loss.",
       buttonText: "I Understand",
       coinName,
     };

@@ -44,6 +44,6 @@ export default {
   gold: () => setTier("gold"),
   platinum: () => setTier("platinum"),
   overview: () => setTab("OVERVIEW"),
-  interest: () => setTab("INTEREST"),
+  interest: () => setTab("EARNINGS"),
   loans: () => setTab("LOANS"),
 };

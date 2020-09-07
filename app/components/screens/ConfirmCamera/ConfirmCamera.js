@@ -14,6 +14,8 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { navigateTo, navigateBack } from "../../../redux/nav/navActions";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -49,19 +51,24 @@ class ConfirmCamera extends Component {
     };
   }
 
-  savePhoto = () => {
+  savePhoto = async () => {
     const { actions, cameraField, photo, navigation } = this.props;
 
     const onSave = navigation.getParam("onSave");
 
+    this.setState({
+      isLoading: true,
+    });
+
     if (onSave) {
-      onSave(photo);
+      await onSave(photo);
     } else {
       actions.updateFormField(cameraField, photo);
       actions.navigateBack();
     }
+
     this.setState({
-      isLoading: true,
+      isLoading: false,
     });
   };
 
@@ -121,7 +128,7 @@ class ConfirmCamera extends Component {
                   width: STYLES.CAMERA_MASK_SIZES[maskType].width,
                   height: STYLES.CAMERA_MASK_SIZES[maskType].height,
                   borderWidth: 5,
-                  borderColor: STYLES.COLORS.WHITE,
+                  borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
                   borderRadius:
                     maskType === "circle"
                       ? STYLES.CAMERA_MASK_SIZES[maskType].width / 2
@@ -150,7 +157,7 @@ class ConfirmCamera extends Component {
                   width: STYLES.CAMERA_MASK_SIZES[maskType].width,
                   height: STYLES.CAMERA_MASK_SIZES[maskType].height,
                   borderWidth: 5,
-                  borderColor: STYLES.COLORS.WHITE,
+                  borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
                   borderRadius:
                     maskType === "circle"
                       ? STYLES.CAMERA_MASK_SIZES[maskType].width / 2

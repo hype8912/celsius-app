@@ -38,7 +38,7 @@ class LoanAlertsMarginCallDepositCoinsModal extends Component {
         pictureDimensions={{ width: 30, height: 30 }}
         heading={"Margin Call Warning!"}
         paragraphs={[
-          "The value of your collateral has dropped by 30%. To match the value with the current market prices, you can deposit more funds or choose other coins from your wallet.",
+          "The value of your collateral has dropped by 30%. To match the value with the current market prices, you can transfer more funds or choose other coins from your wallet.",
         ]}
         yesCopy={yesCopy}
         onYes={this.depositCoin}

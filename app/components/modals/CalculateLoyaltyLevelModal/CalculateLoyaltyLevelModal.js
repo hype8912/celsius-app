@@ -45,7 +45,7 @@ class CalculateLoyaltyLevelModal extends Component {
             type={"H5"}
             align={"center"}
           >
-            Each loyalty level will bring you better interest rates -{" "}
+            Each loyalty level will bring you better rewards -{" "}
             <CelText weight={"500"} type={"H5"} align={"center"}>
               so keep HODLing!
             </CelText>

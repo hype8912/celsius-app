@@ -105,13 +105,13 @@ class LoyaltyProgram extends Component {
           {hasTier && this.renderLoyaltyHeader()}
 
           <View style={style.contentWrapper}>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", width: "100%", justifyContent: "space-around" }}>
               <CelText
                 type={"H6"}
                 weight={"300"}
-                style={{ marginTop: widthPercentageToDP("23.3") / 3 }}
+                style={{ marginTop: widthPercentageToDP("23.3") / 3, width: "35%" }}
               >
-                CEL balance is
+                Your CEL balance is
               </CelText>
               <View
                 style={{
@@ -142,6 +142,7 @@ class LoyaltyProgram extends Component {
                 weight={"300"}
                 style={{
                   marginTop: widthPercentageToDP("23.3") / 3,
+                  width: "35%",
                 }}
               >
                 of wallet balance
@@ -168,7 +169,7 @@ class LoyaltyProgram extends Component {
                       type={"H5"}
                       weight={"300"}
                     >
-                      interest in CEL
+                      rewards in CEL
                     </CelText>
                   </View>
                   <Separator vertical />
@@ -190,7 +191,7 @@ class LoyaltyProgram extends Component {
                       type={"H5"}
                       weight={"300"}
                     >
-                      interest in CEL
+                      rewards in CEL
                     </CelText>
                   </View>
                 </View>
@@ -211,7 +212,7 @@ class LoyaltyProgram extends Component {
                 align={"center"}
                 weight={"600"}
               >
-                How do we calculate loyalty level?
+                How do we calculate your loyalty level?
               </CelText>
               <CelText
                 style={style.explanation}
@@ -219,8 +220,8 @@ class LoyaltyProgram extends Component {
                 type={"H4"}
                 weight={"300"}
               >
-                Your loyalty level is determined by the ratio of CEL to other
-                coins in your wallet.
+                Your loyalty level is determined by the percentage of your
+                wallet balance that is in CEL.
               </CelText>
 
               <CelsiusMembershipTable />
@@ -231,7 +232,7 @@ class LoyaltyProgram extends Component {
                 weight="300"
                 margin={"20 0 10 0"}
               >
-                Each loyalty level will bring you better interest rates -
+                Each loyalty level will bring you better rewards -
                 <CelText align="center" type="H4" weight="700">
                   so keep HODLing!
                 </CelText>
@@ -253,8 +254,7 @@ class LoyaltyProgram extends Component {
                 type={"H4"}
                 weight={"300"}
               >
-                Withdrawing funds will affect your loyalty level, so make sure
-                to HODL to keep the numbers going!
+                Withdrawing CEL will affect your loyalty level.
               </CelText>
 
               <View style={style.circle}>
@@ -274,15 +274,16 @@ class LoyaltyProgram extends Component {
                 weight={"300"}
               >
                 Your loyalty level is dynamic and will change with changing
-                wallet balances. This includes new wallet activity as well as
-                market fluctuations, so be sure to check your status every week!
+                wallet balances. This includes new transfers and withdrawals as
+                well as market fluctuations. Make sure to check your status
+                every week!
               </CelText>
             </View>
             <CelButton
               margin={"30 0 10 0"}
               onPress={() => actions.navigateTo("Deposit", { coin: "CEL" })}
             >
-              Deposit CEL
+              Transfer CEL
             </CelButton>
           </View>
         </View>

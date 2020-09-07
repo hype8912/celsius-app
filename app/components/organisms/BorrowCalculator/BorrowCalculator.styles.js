@@ -8,7 +8,7 @@ const base = {
   },
   cardStyle: {
     borderWidth: 1,
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderColor: COLOR_KEYS.PARAGRAPH,
   },
   selectedCardStyle: {
@@ -24,7 +24,7 @@ const base = {
     paddingTop: 10,
   },
   selectedTextStyle: {
-    color: STYLES.COLORS.WHITE,
+    color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   ltvWrapper: {
     flexDirection: "row",
@@ -39,7 +39,7 @@ const base = {
     justifyContent: "space-between",
   },
   interestCardWrapper: {
-    backgroundColor: STYLES.COLORS.SEMI_GRAY,
+    backgroundColor: STYLES.COLORS.SEMI_GRAY, // TODO: find dark theme color
     borderRadius: 8,
     padding: 5,
     marginVertical: 5,

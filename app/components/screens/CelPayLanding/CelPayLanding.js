@@ -7,7 +7,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import { CEL_PAY_TYPES, EMPTY_STATES, MODALS } from "../../../constants/UI";
 import cryptoUtil from "../../../utils/crypto-util";

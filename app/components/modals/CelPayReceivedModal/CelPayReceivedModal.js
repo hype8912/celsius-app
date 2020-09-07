@@ -38,8 +38,8 @@ class CelPayReceivedModal extends Component {
             {" "}
             {formatter.crypto(transfer.amount, transfer.coin)}{" "}
           </CelText>
-          . It's already earning interest in your wallet which will be paid out
-          on a weekly basis. Go to your wallet to find out more about interest
+          . It's already earning rewards in your wallet which will be paid out
+          on a weekly basis. Go to your wallet to find out more about rewards
           rates.
         </CelText>
         <View style={style.buttonsWrapper}>

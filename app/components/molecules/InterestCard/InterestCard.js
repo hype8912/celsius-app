@@ -10,7 +10,7 @@ import * as appActions from "../../../redux/actions";
 import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import formatter from "../../../utils/formatter";
 import Spinner from "../../atoms/Spinner/Spinner";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import Badge from "../../atoms/Badge/Badge";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import Separator from "../../atoms/Separator/Separator";
@@ -81,7 +81,7 @@ class InterestCard extends Component {
               }}
             >
               <CelText style={{ width: "75%" }}>
-                Switch to earning interest in CEL to increase your interest rate
+                Switch to earning rewards in CEL to increase your rewards rate
                 to:
               </CelText>
 
@@ -91,7 +91,7 @@ class InterestCard extends Component {
                 color={getColor(COLOR_KEYS.POSITIVE_STATE)}
               >
                 <CelText align="justify" type="H5" color="white">
-                  {formatter.percentageDisplay(interestRate.rateInCel)}
+                  {formatter.percentageDisplay(interestRate.specialRate)}
                 </CelText>
               </Badge>
             </View>
@@ -106,7 +106,7 @@ class InterestCard extends Component {
             }}
           >
             <CelText color={"#737A82"} type={"H4"} weight={"300"}>
-              Earn interest in CEL
+              Earn rewards in CEL
             </CelText>
             {loading ? (
               <Spinner size={30} />
@@ -119,7 +119,7 @@ class InterestCard extends Component {
           </View>
           <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
             <CelText weight={"300"} type={"H7"}>
-              To earn interest in CEL on all your deposited coins, visit{" "}
+              To earn rewards in CEL on all your transferred coins, visit{" "}
               <CelText
                 onPress={() => actions.navigateTo("MyCel")}
                 weight={"300"}

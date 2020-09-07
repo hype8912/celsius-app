@@ -44,7 +44,7 @@ class MyCelHeader extends Component {
       <View>
         <View style={[style.mainContainer, { backgroundColor: color }]}>
           <View style={style.topContainer}>
-            <View style={style.celContainer}>
+            <View style={style.sideContainer}>
               <CelText color={"white"} type={"H4"} weight={"700"}>
                 {formatter.usd(celAmount.amount_usd, { precision: 0 })}
               </CelText>
@@ -61,7 +61,7 @@ class MyCelHeader extends Component {
               />
             </View>
 
-            <View style={style.otherCoinsContainer}>
+            <View style={style.sideContainer}>
               <CelText color={"white"} type={"H4"} weight={"700"}>
                 {formatter.usd(
                   walletSummary.total_amount_usd - celAmount.amount_usd,
@@ -77,7 +77,7 @@ class MyCelHeader extends Component {
           {loyaltyInfo.tier_level !== 3 && (
             <View style={style.bottomContainer}>
               <CelText color={"white"} type={"H5"} weight={"300"}>
-                {"To achieve next level, deposit "}
+                {"To achieve next level, transfer "}
               </CelText>
               <CelText color={"white"} type={"H5"} weight={"700"}>
                 {formatter.crypto(loyaltyInfo.next_level_cel, "CEL")}

@@ -14,7 +14,7 @@ import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import LoadingScreen from "../../screens/LoadingScreen/LoadingScreen";
 import Separator from "../../atoms/Separator/Separator";
 import InterestCalculatorScreen from "../InterestCalculatorScreen/InterestCalculatorScreen";
-import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util";
+import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util/user-util";
 import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 import Counter from "../../molecules/Counter/Counter";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
@@ -35,7 +35,7 @@ import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 )
 class WalletInterest extends Component {
   static navigationOptions = {
-    title: "Interest earned",
+    title: "Rewards earned",
     right: "profile",
   };
 
@@ -44,7 +44,7 @@ class WalletInterest extends Component {
 
     this.state = {
       header: {
-        title: "Interest earned",
+        title: "Rewards earned",
         left: "back",
         right: "profile",
       },
@@ -95,7 +95,7 @@ class WalletInterest extends Component {
           <Card>
             <>
               <CelText type="H6" weight="300">
-                Total interest earned
+                Total Earnings
               </CelText>
               <View style={style.amountWrapper}>
                 <Counter
@@ -108,7 +108,7 @@ class WalletInterest extends Component {
                 <TouchableOpacity
                   onPress={() => actions.navigateTo("InterestRates")}
                 >
-                  <CelText link>Rates this week</CelText>
+                  <CelText link>Weekly Reward Rates</CelText>
                 </TouchableOpacity>
               </View>
               <Separator margin="10 0 0 0" />
