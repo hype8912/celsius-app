@@ -87,7 +87,7 @@ class TransactionDetailsInterest extends Component {
             </Card>
           ) : null}
 
-          <CelButton margin={"40 0 0 0"} onPress={() => navigateTo("Deposit")}>
+          <CelButton margin={"40 0 0 0"} onPress={() => navigateTo("Deposit", { coin: transaction.coin.toUpperCase() })}>
             Deposit coins
           </CelButton>
           <CelButton

@@ -187,7 +187,7 @@ class LoanTermsOfUse extends Component {
                 <Icon
                   name="Share"
                   height="24"
-                  fill={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
+                  fill={getColor(COLOR_KEYS.PARAGRAPH)}
                   style={styles.iconStyle}
                 />
                 <CelText align={"center"}>Download</CelText>

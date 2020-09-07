@@ -128,7 +128,7 @@ class CollateralCoinCard extends Component {
         : false;
       color = !isAllowed
         ? getColor(COLOR_KEYS.NEGATIVE_STATE)
-        : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
+        : getColor(COLOR_KEYS.PARAGRAPH);
       value =
         (amountNeededUsd - walletCoin.amount_usd.toNumber()) /
         currencyRatesShort[coin.short.toLowerCase()];
@@ -147,7 +147,7 @@ class CollateralCoinCard extends Component {
     } else if (type === COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD) {
       color = !isAllowed
         ? getColor(COLOR_KEYS.NEGATIVE_STATE)
-        : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
+        : getColor(COLOR_KEYS.PARAGRAPH);
       await this.setState({
         additionalInfoExplanation:
           "required for a first month of loan interest payment.",
@@ -164,7 +164,7 @@ class CollateralCoinCard extends Component {
       isAllowed = coin.amount >= amountNeededInCoin;
       color = !isAllowed
         ? getColor(COLOR_KEYS.NEGATIVE_STATE)
-        : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
+        : getColor(COLOR_KEYS.PARAGRAPH);
 
       // additionalCryptoAmount - margin call value
       let marginCallValue;
