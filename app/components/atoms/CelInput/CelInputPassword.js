@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TouchableOpacity, View, Platform } from "react-native";
+import { TouchableOpacity, View, Platform, Dimensions } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -11,6 +11,8 @@ import PassStrengthMeter from "../PassStrengthMeter/PassStrengthMeter";
 import * as appActions from "../../../redux/actions";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
+
+const { width } = Dimensions.get("window");
 
 @connect(
   state => ({
@@ -95,47 +97,46 @@ class CelInputPassword extends Component {
     const iconName = visible ? "HIDE" : "SHOW";
     const activeField = forms.activeField;
     return (
-      <React.Fragment>
+      <View>
         <View>
-          <View
-            style={{
-              position: "absolute",
-              top: toolTipPositionTop ? -145 : 90,
-              left: 0,
-            }}
-          >
-            {!!value && showPasswordTooltip && activeField === field && (
-              <>
-                <View
-                  style={
-                    // TODO: move to style after create CelInputPassword component
-                    {
-                      position: "absolute",
-                      width: 0,
-                      height: 0,
-                      marginLeft: 145,
-                      top: !toolTipPositionTop ? -10 : "auto",
-                      bottom: toolTipPositionTop ? -10 : "auto",
-                      borderLeftWidth: 10,
-                      borderRightWidth: 10,
-                      borderBottomWidth: 10,
-                      borderStyle: "solid",
-                      backgroundColor: COLOR_KEYS.TRANSPARENT,
-                      borderLeftColor: COLOR_KEYS.TRANSPARENT,
-                      borderRightColor: COLOR_KEYS.TRANSPARENT,
-                      borderBottomColor: getColor(COLOR_KEYS.TOOLTIP),
-                      transform: [
-                        {
-                          rotate: toolTipPositionTop ? "180deg" : "0deg",
-                        },
-                      ],
-                    }
+          {!!value && showPasswordTooltip && activeField === field && (
+            <View
+              style={{
+                position: "absolute",
+                top: toolTipPositionTop ? -145 : 90,
+                left: -16,
+                width: width - 40,
+              }}
+            >
+              <View
+                style={
+                  // TODO: move to style after create CelInputPassword component, move into tooltip component
+                  {
+                    position: "absolute",
+                    width: 0,
+                    height: 0,
+                    marginLeft: (width / 2) - 30,
+                    top: !toolTipPositionTop ? -10 : "auto",
+                    bottom: toolTipPositionTop ? -10 : "auto",
+                    borderLeftWidth: 10,
+                    borderRightWidth: 10,
+                    borderBottomWidth: 10,
+                    borderStyle: "solid",
+                    backgroundColor: COLOR_KEYS.TRANSPARENT,
+                    borderLeftColor: COLOR_KEYS.TRANSPARENT,
+                    borderRightColor: COLOR_KEYS.TRANSPARENT,
+                    borderBottomColor: getColor(COLOR_KEYS.TOOLTIP),
+                    transform: [
+                      {
+                        rotate: toolTipPositionTop ? "180deg" : "0deg",
+                      },
+                    ],
                   }
-                />
-                <PassMeterTooltip password={value} />
-              </>
-            )}
-          </View>
+                }
+              />
+              <PassMeterTooltip password={value} />
+            </View>
+          )}
 
           <View>
             <CelInputText
@@ -175,7 +176,7 @@ class CelInputPassword extends Component {
             </CelText>
           </TouchableOpacity>
         )}
-      </React.Fragment>
+      </View>
     );
   }
 }
