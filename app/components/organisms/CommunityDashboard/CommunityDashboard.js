@@ -106,7 +106,7 @@ class CommunityDashboard extends Component {
     }
     if (name === "REWARDS" && button === "Average Rewards") {
       explanationText =
-        "Average user earnings in the last 12 monthsAverage user earnings in the last 12 months";
+        "Average user earnings in the last 12 months";
       number = formatter.usd(communityStats.average_interest_earned_usd);
     }
     if (name === "REWARDS" && button === "Rates") {

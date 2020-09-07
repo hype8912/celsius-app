@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import BigNumber from "bignumber.js";
 
 import * as appActions from "../../../redux/actions";
 import LoanPrepaymentPeriodStyle from "./LoanPrepaymentPeriod.styles";
@@ -19,7 +20,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
     formData: state.forms.formData,
     allLoans: state.loans.allLoans,
     loanSettings: state.loans.loanSettings,
-    currencyRates: state.currencies,
+    currencyRatesShort: state.currencies.currencyRatesShort,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -87,11 +88,11 @@ class LoanPrepaymentPeriod extends Component {
       actions,
       formData,
       navigation,
-      currencyRates,
+      currencyRatesShort,
     } = this.props;
     const loanId = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === loanId);
-    const coinRate = currencyRates[formData.coin.toLowerCase()];
+    const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
 
     const monthValues = this.getMonthValues();
 
@@ -133,12 +134,12 @@ class LoanPrepaymentPeriod extends Component {
   };
 
   renderWhenOnly6Months = () => {
-    const { allLoans, currencyRates, formData, navigation } = this.props;
-    const coinRate = currencyRates[formData.coin.toLowerCase()];
+    const { allLoans, currencyRatesShort, formData, navigation } = this.props;
+    const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
     const loanId = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === loanId);
     const amount = this.calculatePrepaidValue(
-      Number(loan.monthly_payment * 6),
+      new BigNumber(loan.monthly_payment).multipliedBy(6),
       coinRate,
       formData.coin
     );

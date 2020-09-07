@@ -163,10 +163,13 @@ class CoinDetails extends Component {
       : {};
     const theme = getTheme();
 
+    const hasBalance = !!Number(coinDetails.amount) || !!Number(coinDetails.amount_usd)
+
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short) &&
-      !hodlStatus.isActive;
+      !hodlStatus.isActive &&
+      hasBalance;
 
     const isCoinEligibleForBuying =
       simplexCompliance && simplexCompliance.coins.includes(currency.short);
@@ -174,7 +177,7 @@ class CoinDetails extends Component {
     const isCoinEligibleForDeposit =
       depositCompliance && depositCompliance.coins.includes(currency.short);
 
-    const isCoinEligibleForWithdraw = !hodlStatus.isActive;
+    const isCoinEligibleForWithdraw = !hodlStatus.isActive && hasBalance;
 
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);

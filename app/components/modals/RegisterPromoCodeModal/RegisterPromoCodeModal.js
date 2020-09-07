@@ -241,9 +241,8 @@ class RegisterPromoCodeModal extends Component {
             returnKeyType={"send"}
             value={formData.promoCode}
             error={formErrors.promoCodeError && formErrors.promoCodeError.msg}
-            border={theme !== THEMES.DARK}
+            border
             onSubmitEditing={() => this.confirm()}
-            basic={theme === THEMES.LIGHT ? true : null}
           />
         </View>
         <View style={style.buttonWrapper}>

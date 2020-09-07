@@ -395,6 +395,7 @@ class LoanOverviewCard extends Component {
             <CelButton
               basic
               textSize={"H6"}
+              margin="10 0 0 0"
               onPress={() =>
                 navigateTo("ChoosePaymentMethod", {
                   id: loan.id,
@@ -402,7 +403,7 @@ class LoanOverviewCard extends Component {
                 })
               }
             >
-              Prepay interest
+              Prepay interest >
             </CelButton>
           </Card>
         )}
@@ -438,8 +439,8 @@ class LoanOverviewCard extends Component {
         {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(loan.status) &&
           (!loan.hasInterestPaymentFinished || !loan.isPrincipalPaid) && (
             <View>
-              <Separator margin="10 0 20 0" />
               <CelButton
+                margin="30 0 0 0"
                 onPress={() => navigateTo("LoanPaymentList", { id: loan.id })}
               >
                 Upcoming Payments

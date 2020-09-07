@@ -47,7 +47,7 @@ const base = {
     shadowOpacity: 0,
   },
   borderView: {
-    borderColor: COLOR_KEYS.INPUT_BORDER,
+    borderColor: COLOR_KEYS.PARAGRAPH,
     borderTopWidth: 0.5,
     borderLeftWidth: 0.5,
     borderRightWidth: 0.5,
