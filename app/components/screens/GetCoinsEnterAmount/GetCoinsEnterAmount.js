@@ -77,6 +77,8 @@ class GetCoinsEnterAmount extends Component {
   handleNextStep = () => {
     const { actions, formData, currencyRatesShort } = this.props;
 
+    actions.toggleKeypad(false);
+
     const cryptoProp = formData.cryptoCoin.toLowerCase();
     const amountInUsd =
       currencyRatesShort[cryptoProp] * Number(formData.amountCrypto);
@@ -259,6 +261,20 @@ class GetCoinsEnterAmount extends Component {
     return null;
   };
 
+  onPressAmountArea = (isFiatAmountArea = false) => {
+    const { actions, formData } = this.props;
+    actions.toggleKeypad(true);
+
+    if (isFiatAmountArea && formData.isFiat) return;
+    if (!isFiatAmountArea && !formData.isFiat) return;
+
+    actions.updateFormFields({
+      isFiat: isFiatAmountArea,
+      amountFiat: "0",
+      amountCrypto: "0",
+    });
+  };
+
   areAmountsCorrect = () => {
     const { formData, simplexData } = this.props;
     let areCorrect = false;
@@ -302,15 +318,7 @@ class GetCoinsEnterAmount extends Component {
     return (
       <RegularLayout fabType={"hide"} padding={"0 0 0 0"}>
         <TouchableOpacity
-          onPress={() => {
-            if (formData.isFiat) return;
-            actions.updateFormFields({
-              isFiat: true,
-              amountFiat: "0",
-              amountCrypto: "0",
-            });
-            actions.toggleKeypad(true);
-          }}
+          onPress={() => this.onPressAmountArea(true)}
           style={[style.fiatSection, this.handleAmountBackColor("fiat")]}
         >
           <View style={style.amounts}>
@@ -361,15 +369,7 @@ class GetCoinsEnterAmount extends Component {
 
         <TouchableOpacity
           style={[style.cryptoSection, this.handleAmountBackColor("crypto")]}
-          onPress={() => {
-            if (!formData.isFiat) return;
-            actions.updateFormFields({
-              isFiat: false,
-              amountCrypto: "0",
-              amountFiat: "0",
-            });
-            actions.toggleKeypad(true);
-          }}
+          onPress={() => this.onPressAmountArea(false)}
         >
           <View style={style.amounts}>
             <CelText
@@ -418,15 +418,7 @@ class GetCoinsEnterAmount extends Component {
         </TouchableOpacity>
         <CelButton
           margin="30 0 0 0"
-          disabled={
-            !(
-              formData.amountFiat &&
-              getCoinsUtil.isFiatAmountInScope(
-                formData.amountFiat,
-                formData.fiatCoin
-              )
-            )
-          }
+          disabled={!areAmountsCorrect}
           onPress={this.handleNextStep}
           iconRight={areAmountsCorrect ? "IconArrowRight" : ""}
         >
