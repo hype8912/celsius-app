@@ -141,7 +141,7 @@ class RateInfoCard extends Component {
               basic
               margin={"10 0 10 0"}
             >
-              Earn interest in Cel
+              Earn rewards in Cel
             </CelButton>
           )}
       </View>

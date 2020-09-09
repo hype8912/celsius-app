@@ -66,7 +66,13 @@ class InterestRateInfo extends Component {
               flexWrap: "wrap",
             }}
           >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                maxWidth: "60%",
+              }}
+            >
               <View style={styles.imageWrapper}>
                 <CoinIcon
                   customStyles={styles.currencyImage}
@@ -79,7 +85,7 @@ class InterestRateInfo extends Component {
               </CelText>
             </View>
 
-            {cryptoUtil.buyInApp(currencyInfo.short) ? (
+            {cryptoUtil.buyInApp(currencyInfo.short) && (
               <CelText
                 align={"center"}
                 link
@@ -93,7 +99,9 @@ class InterestRateInfo extends Component {
               >
                 {`Buy ${currencyInfo.short}`}
               </CelText>
-            ) : (
+            )}
+
+            {cryptoUtil.hasLinkToBuy(currencyInfo.short) && (
               <CelText
                 align={"center"}
                 link
@@ -128,10 +136,18 @@ class InterestRateInfo extends Component {
             {currencyInfo.short === "CEL" ||
             (isUSCitizen() && !interestRate.rate_us) ? null : (
               <View style={styles.celRateWrapper}>
-                <CelText type={"H7"} color={getColor(COLOR_KEYS.WHITE)} margin="0 5 0 0">
+                <CelText
+                  type={"H7"}
+                  color={getColor(COLOR_KEYS.WHITE)}
+                  margin="0 5 0 0"
+                >
                   {!isUSCitizen() ? "CEL" : " "}
                 </CelText>
-                <CelText type={"H7"} weight="bold" color={getColor(COLOR_KEYS.WHITE)}>
+                <CelText
+                  type={"H7"}
+                  weight="bold"
+                  color={getColor(COLOR_KEYS.WHITE)}
+                >
                   {formatter.percentageDisplay(interestRate.specialRate)}
                 </CelText>
               </View>
