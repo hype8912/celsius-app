@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import BigNumber from "bignumber.js";
 
 import * as appActions from "../../../redux/actions";
 import GetCoinsEnterAmountStyle from "./GetCoinsEnterAmount.styles";
@@ -139,6 +140,30 @@ class GetCoinsEnterAmount extends Component {
       amountFiat,
       amountCrypto: amountCrypto.toString(),
     });
+  };
+
+  handleFiatCoinSelect = async (field, value) => {
+    const { actions } = this.props;
+    actions.updateFormFields({
+      fiatCoin: value,
+      amountFiat: "0",
+      amountCrypto: "0",
+      isFiat: true,
+    });
+  };
+
+  handleCryptoCoinSelect = async (field, value) => {
+    const { actions } = this.props;
+    actions.updateFormFields({
+      cryptoCoin: value,
+      amountCrypto: "0",
+      amountFiat: "0",
+      isFiat: false,
+    });
+  };
+
+  calculateAmounts = async () => {
+    const { actions, formData } = this.props;
 
     if (getCoinsUtil.isAmountInScope()) {
       await actions.getSimplexQuote();
@@ -171,26 +196,6 @@ class GetCoinsEnterAmount extends Component {
         actions.updateFormField("amountFiat", "0");
       }
     }
-  };
-
-  handleFiatCoinSelect = async (field, value) => {
-    const { actions } = this.props;
-    actions.updateFormFields({
-      fiatCoin: value,
-      amountFiat: "0",
-      amountCrypto: "0",
-      isFiat: true,
-    });
-  };
-
-  handleCryptoCoinSelect = async (field, value) => {
-    const { actions } = this.props;
-    actions.updateFormFields({
-      cryptoCoin: value,
-      amountCrypto: "0",
-      amountFiat: "0",
-      isFiat: false,
-    });
   };
 
   handleEnterAmountErrors = () => {
@@ -254,6 +259,26 @@ class GetCoinsEnterAmount extends Component {
     return null;
   };
 
+  areAmountsCorrect = () => {
+    const { formData, simplexData } = this.props;
+    let areCorrect = false;
+    if (formData.isFiat) {
+      if (simplexData.fiat_money) {
+        areCorrect =
+          new BigNumber(formData.amountFiat).isEqualTo(
+            simplexData.fiat_money.total_amount
+          ) && !!formData.amountCrypto;
+      }
+    } else if (simplexData.digital_money) {
+      areCorrect =
+        new BigNumber(formData.amountCrypto).isEqualTo(
+          simplexData.digital_money.amount
+        ) && !!formData.amountFiat;
+    }
+
+    return areCorrect;
+  };
+
   render() {
     const { actions, formData, callInProgress, buyCoinsSettings } = this.props;
     const style = GetCoinsEnterAmountStyle();
@@ -271,9 +296,23 @@ class GetCoinsEnterAmount extends Component {
     if (!buyCoinsSettings.limit_per_crypto_currency) {
       return <LoadingScreen />;
     }
+
+    const areAmountsCorrect = this.areAmountsCorrect();
+
     return (
       <RegularLayout fabType={"hide"} padding={"0 0 0 0"}>
-        <View style={[style.fiatSection, this.handleAmountBackColor("fiat")]}>
+        <TouchableOpacity
+          onPress={() => {
+            if (formData.isFiat) return;
+            actions.updateFormFields({
+              isFiat: true,
+              amountFiat: "0",
+              amountCrypto: "0",
+            });
+            actions.toggleKeypad(true);
+          }}
+          style={[style.fiatSection, this.handleAmountBackColor("fiat")]}
+        >
           <View style={style.amounts}>
             <CelText
               align={"center"}
@@ -293,28 +332,44 @@ class GetCoinsEnterAmount extends Component {
               navigateTo={actions.navigateTo}
             />
           </View>
-          {isFetchingQuotes && !formData.isFiat ? (
-            <View style={{ marginVertical: 15 }}>
+
+          {!areAmountsCorrect && !isFetchingQuotes && !formData.isFiat && (
+            <CelButton
+              onPress={this.calculateAmounts}
+              size="small"
+              margin="10 0 5 0"
+            >
+              Calculate
+            </CelButton>
+          )}
+
+          {isFetchingQuotes && !formData.isFiat && (
+            <View style={{ marginVertical: 10 }}>
               <Spinner size={30} color={style.text.color} />
             </View>
-          ) : (
-            <TouchableOpacity
-              style={{ marginVertical: 10 }}
-              onPress={() => {
-                actions.updateFormFields({
-                  isFiat: true,
-                });
-                actions.toggleKeypad(true);
-              }}
-            >
+          )}
+
+          {((areAmountsCorrect && !isFetchingQuotes && formData.amountFiat) ||
+            formData.isFiat) && (
+            <View style={{ marginVertical: 10 }}>
               <CelText style={this.handleAmountTextStyle("fiat")} type={"H2"}>
                 {formatter.fiat(formData.amountFiat, formData.fiatCoin)}
               </CelText>
-            </TouchableOpacity>
+            </View>
           )}
-        </View>
-        <View
+        </TouchableOpacity>
+
+        <TouchableOpacity
           style={[style.cryptoSection, this.handleAmountBackColor("crypto")]}
+          onPress={() => {
+            if (!formData.isFiat) return;
+            actions.updateFormFields({
+              isFiat: false,
+              amountCrypto: "0",
+              amountFiat: "0",
+            });
+            actions.toggleKeypad(true);
+          }}
         >
           <View style={style.amounts}>
             <CelText
@@ -335,27 +390,32 @@ class GetCoinsEnterAmount extends Component {
               navigateTo={actions.navigateTo}
             />
           </View>
-          {isFetchingQuotes && formData.isFiat ? (
-            <View style={{ marginVertical: 15 }}>
+
+          {!areAmountsCorrect && !isFetchingQuotes && formData.isFiat && (
+            <CelButton
+              onPress={this.calculateAmounts}
+              size="small"
+              margin="10 0 5 0"
+            >
+              Calculate
+            </CelButton>
+          )}
+
+          {isFetchingQuotes && formData.isFiat && (
+            <View style={{ marginVertical: 10 }}>
               <Spinner size={30} color={style.text.color} />
             </View>
-          ) : (
-            <TouchableOpacity
-              style={{ marginVertical: 10 }}
-              onPress={() => {
-                actions.updateFormFields({
-                  isFiat: false,
-                });
-                actions.toggleKeypad(true);
-              }}
-            >
+          )}
+
+          {((areAmountsCorrect && !isFetchingQuotes && formData.amountCrypto) ||
+            !formData.isFiat) && (
+            <View style={{ marginVertical: 10 }}>
               <CelText style={this.handleAmountTextStyle("crypto")} type={"H2"}>
-                {" "}
                 {formatter.crypto(formData.amountCrypto, formData.cryptoCoin)}
               </CelText>
-            </TouchableOpacity>
+            </View>
           )}
-        </View>
+        </TouchableOpacity>
         <CelButton
           margin="30 0 0 0"
           disabled={
@@ -368,15 +428,9 @@ class GetCoinsEnterAmount extends Component {
             )
           }
           onPress={this.handleNextStep}
-          iconRight={
-            formData.amountFiat && Number(formData.amountFiat) > 0
-              ? "IconArrowRight"
-              : ""
-          }
+          iconRight={areAmountsCorrect ? "IconArrowRight" : ""}
         >
-          {formData.amountFiat && Number(formData.amountFiat) > 0
-            ? "Buy Coins"
-            : "Enter amount above"}
+          {areAmountsCorrect ? "Buy Coins" : "Enter amount above"}
         </CelButton>
         <CelNumpad
           field={formData.isFiat ? "amountFiat" : "amountCrypto"}
