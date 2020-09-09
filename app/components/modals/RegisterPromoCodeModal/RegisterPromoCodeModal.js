@@ -53,7 +53,6 @@ class RegisterPromoCodeModal extends Component {
     this.setState({
       confirmed: true,
       loading: false,
-      hasError: true,
     });
   };
 
