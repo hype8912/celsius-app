@@ -38,6 +38,7 @@ class RegisterPromoCodeModal extends Component {
     this.state = {
       confirmed: false,
       loading: false,
+      hasError: false,
     };
   }
 
@@ -49,10 +50,22 @@ class RegisterPromoCodeModal extends Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.hasError !== this.state.hasError) {
+      if (this.state.hasError) {
+        const timeout = setTimeout(() => {
+          this.closeModal();
+          clearTimeout(timeout);
+        }, 4500);
+      }
+    }
+  }
+
   proceed = () => {
     this.setState({
       confirmed: true,
       loading: false,
+      hasError: true,
     });
   };
 
@@ -65,6 +78,7 @@ class RegisterPromoCodeModal extends Component {
     this.setState({
       confirmed: false,
       loading: false,
+      hasError: false,
     });
     actions.closeModal();
   };
@@ -263,11 +277,14 @@ class RegisterPromoCodeModal extends Component {
   };
 
   renderConfirmedPromoCode = () => {
-    const { code } = this.props;
+    const { formErrors, code } = this.props;
+    const { hasError } = this.state;
     const style = RegisterPromoCodeModalStyle();
-    const title = "Hooray!";
-    const subtitle = "Promo code has been added to your profile!";
-    const description = code.description;
+    const title = !hasError ? "Congrats!" : "Ooops,";
+    const subtitle = !hasError
+      ? "You’ve successfully activated your promo code!"
+      : formErrors.promoCodeError.msg;
+    const description = !hasError ? code.description : "";
 
     return (
       <View>
@@ -288,13 +305,15 @@ class RegisterPromoCodeModal extends Component {
           {subtitle}
         </CelText>
 
-        <View style={style.cardWrapper}>
-          <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
-            <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
-              {description}
-            </CelText>
-          </Card>
-        </View>
+        {!hasError && (
+          <View style={style.cardWrapper}>
+            <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
+              <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
+                {description}
+              </CelText>
+            </Card>
+          </View>
+        )}
 
         <View style={style.buttonWrapper}>
           <CelModalButton
