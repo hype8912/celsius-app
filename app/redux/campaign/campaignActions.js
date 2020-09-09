@@ -6,14 +6,14 @@ import { MODALS } from "../../constants/UI";
 import ACTIONS from "../../constants/ACTIONS";
 import * as transfersActions from "../transfers/transfersActions";
 import * as uiActions from "../ui/uiActions";
-import * as formsActions from "../forms/formsActions";
+import { setFormErrors } from "../forms/formsActions";
 import * as deepLinkActions from "../deepLink/deepLinkActions";
 
 export {
   registerBranchLink,
   getBranchIndividualLink,
-  submitProfileCode,
   registrationPromoCode,
+  submitPromoCode,
 };
 
 function getBranchIndividualLink() {
@@ -109,36 +109,6 @@ function registerReferralLink(deepLink) {
   };
 }
 
-// TODO delete this functions after releasing new promo code mechanism
-
-function submitProfileCode(onSuccess) {
-  return async (dispatch, getState) => {
-    try {
-      dispatch(startApiCall(API.CHECK_PROFILE_PROMO_CODE));
-      const { formData } = getState().forms;
-
-      const res = await campaignsService.submitProfileCode(formData.promoCode);
-      dispatch(submitProfileCodeSuccess(res.data.branch_link));
-      if (onSuccess) onSuccess();
-    } catch (err) {
-      dispatch(apiError(API.CHECK_PROFILE_PROMO_CODE, err));
-      dispatch(
-        formsActions.setFormErrors({
-          promoCode: err.msg,
-        })
-      );
-    }
-  };
-}
-
-function submitProfileCodeSuccess(promoCodeInfo) {
-  return {
-    type: ACTIONS.CHECK_PROFILE_PROMO_CODE_SUCCESS,
-    callName: API.CHECK_PROFILE_PROMO_CODE,
-    code: promoCodeInfo,
-  };
-}
-
 function registrationPromoCode(onSuccess) {
   return async (dispatch, getState) => {
     try {
@@ -168,11 +138,36 @@ function registrationPromoCode(onSuccess) {
       dispatch(apiError(API.SUBMIT_PROMO_CODE, err));
       // dispatch(uiActions.showMessage("warning", "Sorry, but this promo code is not valid!"));
       dispatch(
-        formsActions.setFormErrors({
+        setFormErrors({
           promoCode:
             'Uh oh! The referral code you entered is either invalid or can only be redeemed after registration in the "promo code" section of your profile page.',
         })
       );
+    }
+  };
+}
+
+function submitPromoCode(onSuccess, onError) {
+  return async (dispatch, getState) => {
+    try {
+      const { formData } = getState().forms;
+
+      if (formData.promoCode && formData.promoCode !== "") {
+        dispatch(startApiCall(API.SUBMIT_PROMO_CODE));
+
+        const res = await campaignsService.submitPromoCode(formData.promoCode);
+
+        dispatch({
+          type: ACTIONS.SUBMIT_PROMO_CODE_SUCCESS,
+          callName: API.SUBMIT_PROMO_CODE,
+          code: res.data,
+        });
+
+        if (onSuccess) onSuccess();
+      }
+    } catch (e) {
+      dispatch(setFormErrors({ promoCodeError: e }));
+      if (onError) onError();
     }
   };
 }
