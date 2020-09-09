@@ -32,6 +32,8 @@ function isERC20(currency) {
 }
 
 function hasLinkToBuy(currency) {
+  if (buyInApp(currency)) return false;
+
   return [
     "TUSD",
     "USDC",

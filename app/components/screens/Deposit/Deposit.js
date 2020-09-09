@@ -159,7 +159,9 @@ class Deposit extends Component {
 
   fetchAddress = async currency => {
     const { actions, walletAddresses } = this.props;
-    this.setState({ isFetchingAddress: true });
+    if (!hasPassedKYC()) return;
+
+    await this.setState({ isFetchingAddress: true });
     // Every ERC20 has the same address, so we use ETH address
     // Also check if it's already fetched and stored in redux state to avoid additional http requests
     // if (cryptoUtil.isERC20(currency) && !walletAddresses.ETHAddress) {
@@ -176,7 +178,7 @@ class Deposit extends Component {
 
     const { address } = this.getAddress(currency);
 
-    this.setState({ isFetchingAddress: false, displayAddress: address });
+    await this.setState({ isFetchingAddress: false, displayAddress: address });
   };
 
   openModal = (destinationTag, memoId) => {
