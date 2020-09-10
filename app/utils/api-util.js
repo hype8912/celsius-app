@@ -89,13 +89,16 @@ async function setAppsflyerHeaders() {
   let AAID = Platform.OS === "android" && store.getState().app.advertisingId;
 
   if (!AFID) {
-    AFID = await store.dispatch(actions.setAppsFlyerUID());
+    await store.dispatch(actions.setAppsFlyerUID());
+    AFID = store.getState().app.appsFlyerUID;
   }
   if (Platform.OS === "android" && !AAID) {
-    AAID = await store.dispatch(actions.setAdvertisingId());
+    await store.dispatch(actions.setAdvertisingId());
+    AAID = store.getState().app.advertisingId;
   }
   if (Platform.OS === "ios" && !IDFA) {
-    IDFA = await store.dispatch(actions.setAdvertisingId());
+    await store.dispatch(actions.setAdvertisingId());
+    IDFA = store.getState().app.advertisingId;
   }
 
   return {
