@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import qs from "qs";
 import r from "jsrsasign";
 import { Platform } from "react-native";
@@ -25,6 +26,9 @@ let deviceModel;
 let osVersion;
 let buildVersion;
 const decodedPublicKey = Base64.decode(PUBLIC_KEY);
+// NOTE: used for logging API call durations
+const shouldLogDurations = false;
+const durations = {};
 
 export default {
   initInterceptors,
@@ -64,6 +68,11 @@ async function requestInterceptor(req) {
       ...setGeolocationHeaders(),
       ...(await setAuthHeaders()),
     };
+
+    // NOTE: measures the duration of API call
+    if (shouldLogDurations) {
+      durations[req.url] = moment();
+    }
   }
 
   if (
@@ -183,6 +192,17 @@ async function responseInterceptor(res) {
   const { backendStatus } = store.getState().generalData;
   const sign = res.headers["x-cel-sign"];
   const data = res.data;
+
+  // NOTE: logs API call duration to console
+  if (shouldLogDurations) {
+    durations[res.config.url] = moment().diff(
+      durations[res.config.url],
+      "seconds",
+      true
+    );
+    // eslint-disable-next-line no-console
+    console.log({ [res.config.url]: durations[res.config.url] });
+  }
 
   if (
     res.config.url.includes(API_URL) &&
