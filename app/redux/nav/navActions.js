@@ -1,6 +1,7 @@
 import { NavigationActions, StackActions } from "react-navigation";
 import ACTIONS from "../../constants/ACTIONS";
 import userBehavior from "../../utils/mixpanel-analytics";
+import { SCREENS } from "../../constants/SCREENS";
 
 let _navigator;
 
@@ -50,7 +51,7 @@ function navigateTo(routeName, params) {
 function navigateBack(backScreenName) {
   return () => {
     if (!_navigator) return;
-    if (backScreenName === "VerifyProfile") {
+    if (backScreenName === SCREENS.VERIFY_PROFILE) {
       // If back button leads to VerifyProfile, skip it and go back one more screen
       userBehavior.navigated("Back");
       _navigator.dispatch(StackActions.pop({ n: 2 }));

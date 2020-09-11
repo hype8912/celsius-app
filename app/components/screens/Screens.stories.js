@@ -285,7 +285,7 @@ storiesOf("KYCAddressInfo", module).add(
 storiesOf("SelectCountry", module)
   .add("Country Selected", SelectCountryStories.selected)
   .add("Calling Codes", SelectCountryStories.noCodes)
-  .add("No Calling Codes", SelectCountryStories.withCodes)
+  .add("No Calling Codes", SelectCountryStories.withCodes);
 
 storiesOf("BorrowEnterAmount", module)
   .add("Crypto Loan", BorrowEnterAmountStories.crypto)
@@ -364,7 +364,7 @@ storiesOf("BorrowCollateral", module).add(
   BorrowCollateralStories.regular
 );
 
-storiesOf("Appearance", module).add("Apearance", AppearanceStories.regular);
+storiesOf("Appearance", module).add("Appearance", AppearanceStories.regular);
 
 storiesOf("TooManyRequests", module).add(
   "Too Many Requests",

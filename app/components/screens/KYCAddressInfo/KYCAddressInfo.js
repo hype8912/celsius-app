@@ -15,6 +15,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -80,7 +81,7 @@ class KYCAddressInfo extends Component {
     const { formData, actions } = this.props;
 
     if (formData.country.name === "Germany") {
-      return actions.navigateTo("BitWala");
+      return actions.navigateTo(SCREENS.BITWALA);
     }
 
     const updatedAddressInfo = {
@@ -200,7 +201,7 @@ class KYCAddressInfo extends Component {
           </CelButton>
         </View>
         <CelButton
-          onPress={() => actions.navigateTo("WalletLanding")}
+          onPress={() => actions.navigateTo(SCREENS.WALLET_LANDING)}
           basic
           margin={"20 0 20 0"}
         >

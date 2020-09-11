@@ -15,6 +15,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -46,7 +47,8 @@ class LoginLanding extends Component {
   onTwitterSuccess = twitterUser => {
     const { actions, navigation } = this.props;
     const type = navigation.getParam("type");
-    const navigateTo = type === "login" ? "Login" : "RegisterInitial";
+    const navigateTo =
+      type === "login" ? SCREENS.LOGIN : SCREENS.REGISTER_INITIAL;
 
     actions.authTwitter(type, twitterUser, navigateTo);
   };
@@ -185,7 +187,10 @@ class LoginLanding extends Component {
           </View>
           <View style={style.footer}>
             {ENV === "STAGING" ? (
-              <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
+              <CelButton
+                basic
+                onPress={() => actions.navigateTo(SCREENS.STORYBOOK)}
+              >
                 Open Storybook
               </CelButton>
             ) : null}
@@ -198,7 +203,7 @@ class LoginLanding extends Component {
                 weight="300"
                 align="center"
                 onPress={() =>
-                  actions.navigateTo("LoginLanding", {
+                  actions.navigateTo(SCREENS.LOGIN_LANDING, {
                     type: type === "login" ? "register" : "login",
                   })
                 }

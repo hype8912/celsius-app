@@ -13,6 +13,7 @@ import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class TransactionDetailsLoans extends Component {
   static propTypes = {
@@ -114,7 +115,7 @@ class TransactionDetailsLoans extends Component {
           <CelButton
             margin={"20 0 0 0"}
             basic
-            onPress={() => navigateTo("WalletLanding")}
+            onPress={() => navigateTo(SCREENS.WALLET_LANDING)}
           >
             Go Back to Wallet
           </CelButton>

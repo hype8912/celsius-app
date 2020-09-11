@@ -19,6 +19,7 @@ import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -65,15 +66,15 @@ class WithdrawConfirmAddress extends Component {
         withdrawalAddresses[formData.coin.toUpperCase()] &&
         withdrawalAddresses[formData.coin.toUpperCase()].address
     );
-    actions.navigateTo("VerifyProfile", {
-      onSuccess: () => actions.navigateTo("WithdrawConfirm"),
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+      onSuccess: () => actions.navigateTo(SCREENS.WITHDRAW_CONFIRM),
     });
   };
 
   navigate = () => {
     const { actions } = this.props;
     actions.closeModal();
-    actions.navigateTo("WithdrawAddressOverview");
+    actions.navigateTo(SCREENS.WITHDRAW_ADDRESS_OVERVIEW);
   };
 
   render() {

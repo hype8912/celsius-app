@@ -9,6 +9,7 @@ import LoadingState from "../../atoms/LoadingState/LoadingState";
 import Constants from "../../../../constants";
 import store from "../../../redux/store";
 import { navigateTo } from "../../../redux/nav/navActions";
+import { SCREENS } from "../../../constants/SCREENS";
 
 // fix https://github.com/facebook/react-native/issues/10865
 const patchPostMessageJsCode = `(${String(function() {
@@ -39,7 +40,7 @@ class SimplexScreen extends Component {
     title: "Get Coins",
     gesturesEnabled: false,
     customBack: () => {
-      store.dispatch(navigateTo("GetCoinsLanding"));
+      store.dispatch(navigateTo(SCREENS.GET_COINS_LANDING));
     },
   });
 
@@ -102,7 +103,7 @@ class SimplexScreen extends Component {
     const { actions, formData } = this.props;
     if (event && event.nativeEvent && event.nativeEvent.data === "success") {
       // user passed successfully
-      actions.resetToScreen("WalletLanding");
+      actions.resetToScreen(SCREENS.WALLET_LANDING);
       mixpanelAnalytics.finishedBuyCoinsFlow(
         "CARD",
         formData.cryptoCoin,

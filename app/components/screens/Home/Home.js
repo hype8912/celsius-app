@@ -10,6 +10,7 @@ import SplashScreen from "../SplashScreen/SplashScreen";
 import CelsiusLoadingScreen from "../CelsiusLoadingScreen/CelsiusLoadingScreen";
 import appsFlyerUtil from "../../../utils/appsflyer-util";
 import { registerMixpanelUser } from "../../../utils/mixpanel-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -42,11 +43,11 @@ class Home extends Component {
 
     const { user } = this.props;
     if (user && user.id && !user.has_pin) {
-      return actions.resetToScreen("RegisterSetPin");
+      return actions.resetToScreen(SCREENS.REGISTER_SET_PIN);
     }
 
     if (isKYCRejectedForever()) {
-      return actions.resetToScreen("KYCFinalRejection");
+      return actions.resetToScreen(SCREENS.KYC_FINAL_REJECTION);
     }
 
     if (user && user.id && user.has_pin) {
@@ -72,7 +73,7 @@ class Home extends Component {
       if (hasAlreadyVerified) {
         return this.goToWalletLanding();
       }
-      return actions.resetToScreen("VerifyProfile", {
+      return actions.resetToScreen(SCREENS.VERIFY_PROFILE, {
         hideBack: true,
         onSuccess: this.goToWalletLanding,
       });
@@ -94,7 +95,7 @@ class Home extends Component {
       sessionCount: bannerProps.sessionCount + 1,
     });
 
-    actions.resetToScreen("WalletLanding");
+    actions.resetToScreen(SCREENS.WALLET_LANDING);
     actions.handleDeepLink();
   };
 

@@ -14,6 +14,7 @@ import { CEL_PAY_TYPES, EMPTY_STATES, MODALS } from "../../../constants/UI";
 import CelPayInfoModal from "../../modals/CelPayInfoModal/CelPayInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { renderHodlEmptyState } from "../../../utils/hodl-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -47,14 +48,14 @@ class CelPayLanding extends Component {
   sendAsLink = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("CelPayEnterAmount");
+    actions.navigateTo(SCREENS.CEL_PAY_ENTER_AMOUNT);
     mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK);
   };
 
   sendToFriend = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("CelPayEnterAmount", {
+    actions.navigateTo(SCREENS.CEL_PAY_ENTER_AMOUNT, {
       celPayType: CEL_PAY_TYPES.FRIEND,
     });
     mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.FRIEND);

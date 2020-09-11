@@ -10,6 +10,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ReferralReceivedModal from "../../modals/ReferralReceivedModal/ReferralReceivedModal";
 import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -34,7 +35,7 @@ class Welcome extends Component {
 
   onPressLogin = () => {
     const { actions } = this.props;
-    actions.navigateTo("LoginLanding", { type: "login" });
+    actions.navigateTo(SCREENS.LOGIN_LANDING, { type: "login" });
   };
 
   render() {
@@ -62,7 +63,7 @@ class Welcome extends Component {
           <CelButton
             style={style.button}
             onPress={() =>
-              actions.navigateTo("LoginLanding", { type: "register" })
+              actions.navigateTo(SCREENS.LOGIN_LANDING, { type: "register" })
             }
           >
             Join Celsius

@@ -30,6 +30,7 @@ import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import { renderHodlEmptyState } from "../../../utils/hodl-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -253,9 +254,9 @@ class WithdrawEnterAmount extends Component {
     const coinAddress = withdrawalAddresses[formData.coin.toUpperCase()];
 
     if (coinAddress) {
-      actions.navigateTo("WithdrawConfirmAddress");
+      actions.navigateTo(SCREENS.WITHDRAW_CONFIRM_ADDRESS);
     } else {
-      actions.navigateTo("WithdrawCreateAddress");
+      actions.navigateTo(SCREENS.WITHDRAW_CREATE_ADDRESS);
     }
     if (modal) actions.closeModal();
   };

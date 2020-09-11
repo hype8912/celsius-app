@@ -7,6 +7,7 @@ import Banner from "../Banner/Banner";
 import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class KYCTrigger extends Component {
   static propTypes = {
@@ -83,7 +84,7 @@ class KYCTrigger extends Component {
             KYC_STATUSES.sending,
             KYC_STATUSES.sent,
           ].includes(kycType)
-            ? () => actions.navigateTo("KYCProfileDetails")
+            ? () => actions.navigateTo(SCREENS.KYC_PROFILE_DETAILS)
             : null
         }
         buttonText={

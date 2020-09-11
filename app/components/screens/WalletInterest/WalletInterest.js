@@ -18,6 +18,7 @@ import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util/user-util";
 import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 import Counter from "../../molecules/Counter/Counter";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -106,7 +107,7 @@ class WalletInterest extends Component {
                   usd
                 />
                 <TouchableOpacity
-                  onPress={() => actions.navigateTo("InterestRates")}
+                  onPress={() => actions.navigateTo(SCREENS.INTEREST_RATES)}
                 >
                   <CelText link>Weekly Reward Rates</CelText>
                 </TouchableOpacity>
@@ -114,7 +115,7 @@ class WalletInterest extends Component {
               <Separator margin="10 0 0 0" />
               <TouchableOpacity
                 onPress={() => {
-                  actions.navigateTo("InterestCalculatorScreen");
+                  actions.navigateTo(SCREENS.INTEREST_CALCULATOR_SCREEN);
                 }}
                 style={{ marginTop: 10 }}
               >

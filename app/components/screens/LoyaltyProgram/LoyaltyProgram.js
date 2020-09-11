@@ -17,6 +17,7 @@ import Separator from "../../atoms/Separator/Separator";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import CelsiusMembershipTable from "../../organisms/CelsiusMembershipTable/CelsiusMembershipTable";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -105,11 +106,20 @@ class LoyaltyProgram extends Component {
           {hasTier && this.renderLoyaltyHeader()}
 
           <View style={style.contentWrapper}>
-            <View style={{ flexDirection: "row", width: "100%", justifyContent: "space-around" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "space-around",
+              }}
+            >
               <CelText
                 type={"H6"}
                 weight={"300"}
-                style={{ marginTop: widthPercentageToDP("23.3") / 3, width: "35%" }}
+                style={{
+                  marginTop: widthPercentageToDP("23.3") / 3,
+                  width: "35%",
+                }}
               >
                 Your CEL balance is
               </CelText>
@@ -281,7 +291,9 @@ class LoyaltyProgram extends Component {
             </View>
             <CelButton
               margin={"30 0 10 0"}
-              onPress={() => actions.navigateTo("Deposit", { coin: "CEL" })}
+              onPress={() =>
+                actions.navigateTo(SCREENS.DEPOSIT, { coin: "CEL" })
+              }
             >
               Transfer CEL
             </CelButton>

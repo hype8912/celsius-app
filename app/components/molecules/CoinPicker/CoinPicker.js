@@ -6,6 +6,7 @@ import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPickerStyle from "./CoinPicker.styles";
 import Icon from "../../atoms/Icon/Icon";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class CoinPicker extends Component {
   static propTypes = {
@@ -77,7 +78,11 @@ class CoinPicker extends Component {
           <View>
             <TouchableOpacity
               onPress={() =>
-                navigateTo("SelectCoin", { coinListFormatted, onChange, field })
+                navigateTo(SCREENS.SELECT_COIN, {
+                  coinListFormatted,
+                  onChange,
+                  field,
+                })
               }
               style={style.coinPicking}
               disabled={coin === "USD"}
@@ -126,7 +131,11 @@ class CoinPicker extends Component {
           <View style={style.selectWrapper}>
             <TouchableOpacity
               onPress={() =>
-                navigateTo("SelectCoin", { coinListFormatted, onChange, field })
+                navigateTo(SCREENS.SELECT_COIN, {
+                  coinListFormatted,
+                  onChange,
+                  field,
+                })
               }
             >
               <View

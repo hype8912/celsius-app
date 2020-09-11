@@ -21,6 +21,7 @@ import PoAWarningModal from "../../modals/PoAWarningModal/PoAWarningModal";
 import { isForPrimeTrustKYC } from "../../../utils/user-util/user-util";
 import { MODALS } from "../../../constants/UI";
 import Spinner from "../../atoms/Spinner/Spinner";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -55,7 +56,7 @@ class KYCVerifyIdentity extends Component {
     const { actions, activeScreen, navigation } = this.props;
     if (
       activeScreen !== nextProps.activeScreen &&
-      nextProps.activeScreen === "KYCVerifyIdentity"
+      nextProps.activeScreen === SCREENS.KYC_VERIFY_IDENTITY
     ) {
       actions.getKYCDocuments();
       navigation.setParams({ shouldChangeDoc: false });

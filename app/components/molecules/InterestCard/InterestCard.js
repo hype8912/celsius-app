@@ -16,6 +16,7 @@ import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import Separator from "../../atoms/Separator/Separator";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -121,7 +122,7 @@ class InterestCard extends Component {
             <CelText weight={"300"} type={"H7"}>
               To earn rewards in CEL on all your transferred coins, visit{" "}
               <CelText
-                onPress={() => actions.navigateTo("MyCel")}
+                onPress={() => actions.navigateTo(SCREENS.MY_CEL)}
                 weight={"300"}
                 type={"H7"}
                 link

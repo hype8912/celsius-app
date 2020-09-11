@@ -14,7 +14,7 @@ const TxAddressSection = ({ transaction, text, address }) => {
   const style = AddressSectionStyle();
   const link = getBlockExplorerLink(transaction);
 
-  if (!address) return null
+  if (!address) return null;
 
   return link ? (
     <View>

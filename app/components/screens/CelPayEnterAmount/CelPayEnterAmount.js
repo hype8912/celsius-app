@@ -21,6 +21,7 @@ import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -298,9 +299,9 @@ class CelPayEnterAmount extends Component {
     const celPayType = navigation.getParam("celPayType");
 
     if (celPayType === CEL_PAY_TYPES.FRIEND) {
-      actions.navigateTo("CelPayChooseFriend");
+      actions.navigateTo(SCREENS.CEL_PAY_CHOOSE_FRIEND);
     } else {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: () => {
           actions.celPayShareLink();
         },

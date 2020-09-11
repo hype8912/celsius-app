@@ -2,7 +2,7 @@ import {
   getColor,
   getThemedStyle,
   heightPercentageToDP,
-  widthPercentageToDP
+  widthPercentageToDP,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { THEMES } from "../../../constants/UI";
@@ -51,7 +51,7 @@ const base = {
   spinnerWrapper: {
     alignItems: "center",
     marginTop: 30,
-  }
+  },
 };
 
 const themed = {

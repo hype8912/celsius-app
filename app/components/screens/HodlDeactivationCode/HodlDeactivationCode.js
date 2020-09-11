@@ -17,6 +17,7 @@ import API from "../../../constants/API";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import { getColor, getFontSize } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -119,7 +120,7 @@ class HodlDeactivationCode extends Component {
         <CelText type={"H4"} align={"center"}>
           <CelText
             color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-            onPress={() => actions.navigateTo("Support")}
+            onPress={() => actions.navigateTo(SCREENS.SUPPORT)}
           >
             Contact our support
           </CelText>{" "}

@@ -11,6 +11,7 @@ import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -79,7 +80,7 @@ class ChoosePaymentMethod extends Component {
       {
         textButton: `${formatter.capitalize(pay)} with CEL`,
         explanation: `Pay up to ${celDiscount} less interest when you choose to ${pay} your monthly payment in CEL.`,
-        onPress: () => actions.navigateTo("PaymentCel", { reason, id }),
+        onPress: () => actions.navigateTo(SCREENS.PAYMENT_CEL, { reason, id }),
         lightImage: require("../../../../assets/images/icons/cel.png"),
         darkImage: require("../../.././../assets/images/icons/cel-dark.png"),
         unicornImage: require("../../.././../assets/images/icons/cel-unicorn.png"),
@@ -88,7 +89,8 @@ class ChoosePaymentMethod extends Component {
       {
         textButton: `${formatter.capitalize(pay)} with crypto`,
         explanation: `Use coins from your wallet to ${pay} your loan interest.`,
-        onPress: () => actions.navigateTo("LoanPaymentCoin", { reason, id }),
+        onPress: () =>
+          actions.navigateTo(SCREENS.LOAN_PAYMENT_COIN, { reason, id }),
         lightImage: require("../../../../assets/images/icons/crypto.png"),
         darkImage: require("../../.././../assets/images/icons/crypto-dark.png"),
         unicornImage: require("../../.././../assets/images/icons/crypto-unicorn.png"),
@@ -100,9 +102,9 @@ class ChoosePaymentMethod extends Component {
         onPress: () => {
           if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
             actions.updateFormField("coin", "USD");
-            actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
+            actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { id, reason });
           } else {
-            actions.navigateTo("WiringBankInformation", { id, reason });
+            actions.navigateTo(SCREENS.WIRING_BANK_INFORMATION, { id, reason });
           }
         },
         lightImage: require("../../../../assets/images/icons/dollars.png"),
@@ -132,7 +134,9 @@ class ChoosePaymentMethod extends Component {
         </RegularLayout>
         <PrepayDollarInterestModal
           onPressConfirm={() =>
-            actions.navigateTo("LoanPrepaymentPeriod", { type: "dollar" })
+            actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, {
+              type: "dollar",
+            })
           }
         />
       </View>

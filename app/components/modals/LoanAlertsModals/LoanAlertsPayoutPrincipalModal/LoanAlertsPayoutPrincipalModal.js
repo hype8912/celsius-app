@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import InfoModal from "../../InfoModalNew/InfoModal";
 import { MODALS } from "../../../../constants/UI";
 import * as appActions from "../../../../redux/actions";
+import { SCREENS } from "../../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -20,7 +21,7 @@ class LoanAlertsPayoutPrincipalModal extends Component {
   payPrincipal = () => {
     const { actions, loan } = this.props;
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () => actions.payPrincipal(loan.id),
     });
     actions.closeModal();

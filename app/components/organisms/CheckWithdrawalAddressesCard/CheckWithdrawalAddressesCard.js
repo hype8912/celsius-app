@@ -13,6 +13,7 @@ import ToggleInfoCard from "../../molecules/ToggleInfoCard/ToggleInfoCard";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -31,7 +32,7 @@ class CheckWithdrawalAddressesCard extends Component {
     if (fromFixNow) {
       actions.fromFixNow();
     }
-    actions.navigateTo("WithdrawAddressOverview");
+    actions.navigateTo(SCREENS.WITHDRAW_ADDRESS_OVERVIEW);
   };
 
   render() {

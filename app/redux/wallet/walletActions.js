@@ -8,6 +8,7 @@ import { clearForm } from "../forms/formsActions";
 import walletService from "../../services/wallet-service";
 import { navigateBack, navigateTo } from "../nav/navActions";
 import addressUtil from "../../utils/address-util";
+import { SCREENS } from "../../constants/SCREENS";
 
 export {
   getWalletSummary,
@@ -133,7 +134,7 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
       dispatch(setCoinWithdrawalAddressSuccess(coin, response.data));
 
       if (flow === "wallet") {
-        dispatch(navigateTo("WalletLanding"));
+        dispatch(navigateTo(SCREENS.WALLET_LANDING));
         dispatch(
           showMessage(
             "warning",
@@ -142,7 +143,7 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
         );
       }
       if (flow === "change-address") {
-        dispatch(navigateTo("WithdrawAddressLabel"));
+        dispatch(navigateTo(SCREENS.WITHDRAW_ADDRESS_LABEL));
         openInbox({
           title: "Confirm Change Address",
           message:
@@ -155,7 +156,7 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
           )
         );
       }
-      if (flow === "withdrawal") dispatch(navigateTo("WithdrawConfirm"));
+      if (flow === "withdrawal") dispatch(navigateTo(SCREENS.WITHDRAW_CONFIRM));
     } catch (error) {
       dispatch(showMessage("error", error.msg));
       dispatch(apiError(API.SET_COIN_WITHDRAWAL_ADDRESS, error));
@@ -182,7 +183,7 @@ function setCoinWithdrawalAddressLabel(coin, label) {
         label
       );
       dispatch(setCoinWithdrawalAddressLabelSuccess(coin, response.data));
-      dispatch(navigateTo("WithdrawAddressOverview"));
+      dispatch(navigateTo(SCREENS.WITHDRAW_ADDRESS_OVERVIEW));
       dispatch(clearForm());
     } catch (error) {
       dispatch(showMessage("error", error.msg));

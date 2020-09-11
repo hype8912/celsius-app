@@ -9,6 +9,7 @@ import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
 import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 import CelButton from "../../atoms/CelButton/CelButton";
 import TxReferralSection from "../../molecules/TxReferralSection/TxReferralSection";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class TransactionDetailsRewards extends Component {
   static propTypes = {
@@ -48,7 +49,7 @@ class TransactionDetailsRewards extends Component {
           <CelButton
             margin={"20 0 0 0"}
             basic
-            onPress={() => navigateTo("WalletLanding")}
+            onPress={() => navigateTo(SCREENS.WALLET_LANDING)}
           >
             Go Back to Wallet
           </CelButton>

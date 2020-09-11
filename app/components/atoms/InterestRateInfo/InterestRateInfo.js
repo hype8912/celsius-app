@@ -14,6 +14,7 @@ import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import { isUSCitizen } from "../../../utils/user-util/user-util";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -92,7 +93,7 @@ class InterestRateInfo extends Component {
                 type={"H7"}
                 weight={"300"}
                 onPress={() =>
-                  actions.navigateTo("GetCoinsLanding", {
+                  actions.navigateTo(SCREENS.GET_COINS_LANDING, {
                     coin: currencyInfo.short,
                   })
                 }

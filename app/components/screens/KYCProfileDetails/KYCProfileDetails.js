@@ -15,6 +15,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { STORYBOOK } from "../../../../dev-settings.json";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -124,7 +125,7 @@ class KYCProfileDetails extends Component {
 
     if (isFormValid) {
       if (formData.citizenship.name === "Germany") {
-        return actions.navigateTo("BitWala");
+        return actions.navigateTo(SCREENS.BITWALA);
       }
 
       const updatedUser = {
@@ -140,7 +141,7 @@ class KYCProfileDetails extends Component {
       const response = await actions.updateProfileInfo(updatedUser);
 
       if (response.success) {
-        actions.navigateTo("KYCAddressInfo");
+        actions.navigateTo(SCREENS.KYC_ADDRESS_INFO);
       }
     }
 
@@ -270,7 +271,7 @@ class KYCProfileDetails extends Component {
         </View>
         <CelButton
           onPress={() => {
-            actions.navigateTo("WalletLanding");
+            actions.navigateTo(SCREENS.WALLET_LANDING);
             actions.clearForm();
           }}
           basic

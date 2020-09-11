@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import InfoModal from "../InfoModalNew/InfoModal";
 import * as appActions from "../../../redux/actions";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -23,7 +24,7 @@ class LoanApplicationSuccessModal extends Component {
   handlePrepayModal = () => {
     const { actions, loanId } = this.props;
 
-    actions.resetToScreen("ChoosePaymentMethod", {
+    actions.resetToScreen(SCREENS.CHOOSE_PAYMENT_METHOD, {
       id: loanId,
       reason: LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT,
     });

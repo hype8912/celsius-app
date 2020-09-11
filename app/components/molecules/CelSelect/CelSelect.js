@@ -15,6 +15,7 @@ import CelText from "../../atoms/CelText/CelText";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import PickerModal from "../../modals/PickerModal/PickerModal";
 import { MODALS } from "../../../constants/UI";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const { PERSON_TITLE, GENDER, STATE, DAYS, YEARS, MONTHS } = SELECT_VALUES;
 
@@ -84,7 +85,6 @@ class CelSelect extends Component {
     super(props);
 
     const items = this.getItems(props);
-
 
     this.state = {
       items,
@@ -180,18 +180,18 @@ class CelSelect extends Component {
 
     if (type === "country") {
       onPress = () =>
-        actions.navigateTo("SelectCountry", {
+        actions.navigateTo(SCREENS.SELECT_COUNTRY, {
           field_name: field,
           hideCallingCodes,
         });
     } else if (type === "phone") {
       onPress = () =>
-        actions.navigateTo("SelectCountry", {
+        actions.navigateTo(SCREENS.SELECT_COUNTRY, {
           field_name: field,
           hideCallingCodes,
         });
     } else if (type === "state") {
-      onPress = () => actions.navigateTo("SelectState", { field });
+      onPress = () => actions.navigateTo(SCREENS.SELECT_STATE, { field });
     }
 
     const country = this.props.value ? this.props.value : countries.US;

@@ -16,6 +16,7 @@ import CopyButton from "../../atoms/CopyButton/CopyButton";
 import Separator from "../../atoms/Separator/Separator";
 import loggerUtil from "../../../utils/logger-util";
 import { STORYBOOK } from "../../../../dev-settings.json";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -111,7 +112,7 @@ class TwoFactorSettings extends Component {
           <CelButton
             margin={"25 0 25 0"}
             onPress={() => {
-              actions.navigateTo("TwoFaAuthAppConfirmationCode");
+              actions.navigateTo(SCREENS.TWO_FA_AUTH_APP_CONFIRMATION_CODE);
             }}
           >
             Continue

@@ -13,6 +13,7 @@ import Card from "../../atoms/Card/Card";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -101,9 +102,9 @@ class HODLInfoCheckboxes extends Component {
             margin={"10 0 0 0"}
             disabled={!canContinue}
             onPress={() =>
-              actions.navigateTo("VerifyProfile", {
+              actions.navigateTo(SCREENS.VERIFY_PROFILE, {
                 onSuccess: () => {
-                  actions.navigateTo("HODLViewCode");
+                  actions.navigateTo(SCREENS.HODL_VIEW_CODE);
                   actions.getHodlCode();
                 },
               })

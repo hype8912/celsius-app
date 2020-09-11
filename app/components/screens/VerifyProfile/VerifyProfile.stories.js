@@ -15,7 +15,7 @@ const initialState = {
 
 const navigationProps = {
   hasSixDigitPin: true,
-}
+};
 
 const pin = () => {
   const state = _.cloneDeep(initialState);

@@ -44,9 +44,10 @@ class TooManyRequests extends Component {
             Too many requests
           </CelText>
           <CelText margin="5 0 15 0" align="center" type="H4" weight={"300"}>
-            Yikes, it looks like you made several wrong attempts in a short period
-            of time. You will be able to use the application again in less than an
-            hour. You can reach out to our support team at app@celsius.network.
+            Yikes, it looks like you made several wrong attempts in a short
+            period of time. You will be able to use the application again in
+            less than an hour. You can reach out to our support team at
+            app@celsius.network.
           </CelText>
           {!user.id && (
             <CelButton
