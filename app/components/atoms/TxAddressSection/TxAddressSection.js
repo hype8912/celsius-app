@@ -6,7 +6,7 @@ import AddressSectionStyle from "./TxAddressSection.styles";
 import Card from "../Card/Card";
 import CelText from "../CelText/CelText";
 import Icon from "../Icon/Icon";
-import { getBlockExplorerLink } from "../../../utils/crypto-util";
+import { getBlockExplorerLink } from "../../../utils/crypto-util/crypto-util";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 

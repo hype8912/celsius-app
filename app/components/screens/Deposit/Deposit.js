@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
 
-import cryptoUtil from "../../../utils/crypto-util";
+import cryptoUtil from "../../../utils/crypto-util/crypto-util";
 import { getColor } from "../../../utils/styles-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import * as appActions from "../../../redux/actions";

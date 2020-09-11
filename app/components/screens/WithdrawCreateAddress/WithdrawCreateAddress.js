@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { RESULTS } from "react-native-permissions";
 
-import cryptoUtil from "../../../utils/crypto-util";
+import cryptoUtil from "../../../utils/crypto-util/crypto-util";
 import { MODALS } from "../../../constants/UI";
 import addressUtil from "../../../utils/address-util";
 import * as appActions from "../../../redux/actions";

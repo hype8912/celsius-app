@@ -15,7 +15,6 @@ import BalanceView from "../../atoms/BalanceView/BalanceView";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { PREDIFINED_AMOUNTS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
-import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
@@ -240,13 +239,12 @@ class CelPayEnterAmount extends Component {
       amountCrypto = amountCrypto[1];
     }
 
-    if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto.toFixed(8))) {
+    if (new BigNumber(amountCrypto).isGreaterThan(balanceCrypto.toFixed(8))) {
       return actions.showMessage("warning", "Insufficient funds!");
     }
 
     if (
-      cryptoUtil.isGreaterThan(
-        amountUsd,
+      new BigNumber(amountUsd).isGreaterThan(
         celPaySettings.maximum_transfer_amount
       )
     ) {

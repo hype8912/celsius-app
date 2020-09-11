@@ -20,7 +20,6 @@ import store from "../../../redux/store";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import { hasPassedKYC } from "../../../utils/user-util/user-util";
@@ -211,7 +210,7 @@ class WithdrawEnterAmount extends Component {
     ) {
       amountCrypto = amountCrypto[1];
     }
-    if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto.toFixed(8))) {
+    if (new BigNumber(amountCrypto).isGreaterThan(balanceCrypto.toFixed(8))) {
       return actions.showMessage("warning", "Insufficient funds!");
     }
 
@@ -305,7 +304,7 @@ class WithdrawEnterAmount extends Component {
     if (!withdrawCompliance.allowed) {
       return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }} />;
     }
-    if (!cryptoUtil.isGreaterThan(walletSummary.total_amount_usd, 0)) {
+    if (!new BigNumber(walletSummary.total_amount_usd).isGreaterThan(0)) {
       return (
         <StaticScreen
           emptyState={{ purpose: EMPTY_STATES.INSUFFICIENT_FUNDS }}

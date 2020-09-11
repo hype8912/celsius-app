@@ -9,7 +9,7 @@ import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Card from "../Card/Card";
 import CoinIcon from "../CoinIcon/CoinIcon";
-import cryptoUtil from "../../../utils/crypto-util";
+import cryptoUtil from "../../../utils/crypto-util/crypto-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import { isUSCitizen } from "../../../utils/user-util/user-util";
 import { getColor } from "../../../utils/styles-util";
@@ -101,7 +101,7 @@ class InterestRateInfo extends Component {
               </CelText>
             )}
 
-            {cryptoUtil.hasLinkToBuy(currencyInfo.short) && (
+            {cryptoUtil.provideLink(currencyInfo.short) && (
               <CelText
                 align={"center"}
                 link
