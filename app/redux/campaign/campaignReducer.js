@@ -28,6 +28,7 @@ export default function campaignReducer(state = initialState, action) {
       return {
         ...state,
         code: action.code,
+        registeredLink: action.branchLink,
       };
 
     case ACTIONS.CHECK_PROFILE_PROMO_CODE_SUCCESS:
