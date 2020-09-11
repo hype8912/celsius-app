@@ -72,11 +72,7 @@ class PrincipalPayment extends Component {
       <Switch
         onValueChange={this.handleSwitchChange}
         value={payOutPrincipalFromCollateral}
-        thumbColor={
-          theme === THEMES.LIGHT // TODO: solve theming with COLOR_KEYS
-            ? STYLES.COLORS.WHITE
-            : STYLES.COLORS.DARK_TOGGLE_FOREGROUND
-        }
+        thumbColor={getColor(COLOR_KEYS.TOGGLE_OFF_BACKGROUND)}
         ios_backgroundColor={
           theme === THEMES.LIGHT
             ? STYLES.COLORS.DARK_GRAY3
