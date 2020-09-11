@@ -6,12 +6,10 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
-import STYLES from "../../../constants/STYLES";
-import { getColor, getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import Spinner from "../../atoms/Spinner/Spinner";
-import { THEMES } from "../../../constants/UI";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
@@ -65,19 +63,16 @@ class PrincipalPayment extends Component {
 
     // TODO move to styles
     const isIos = Platform.OS === "ios";
-    const falseColor = isIos ? "transparent" : STYLES.COLORS.DARK_GRAY3; // TODO; missing COLOR_KEYS
-    const theme = getTheme();
+    const falseColor = isIos
+      ? getColor(COLOR_KEYS.TRANSPARENT)
+      : getColor(COLOR_KEYS.TAB_UNSELECTED); // TODO; missing COLOR_KEYS
 
     return (
       <Switch
         onValueChange={this.handleSwitchChange}
         value={payOutPrincipalFromCollateral}
         thumbColor={getColor(COLOR_KEYS.TOGGLE_OFF_BACKGROUND)}
-        ios_backgroundColor={
-          theme === THEMES.LIGHT
-            ? STYLES.COLORS.DARK_GRAY3
-            : STYLES.COLORS.DARK_TOGGLE_BACKGROUND
-        }
+        ios_backgroundColor={getColor(COLOR_KEYS.TAB_UNSELECTED)}
         trackColor={{
           false: falseColor,
           true: getColor(COLOR_KEYS.POSITIVE_STATE),

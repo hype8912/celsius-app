@@ -1,3 +1,6 @@
+import { COLOR_KEYS } from "./COLORS";
+import { getColor } from "../utils/styles-util";
+
 const COLORS = {
   TRANSPARENT: "rgba(0,0,0,0)",
   WHITE: "#fff",
@@ -84,7 +87,7 @@ const ANDROID_SHADOW_STYLES = {
 };
 
 const ANDROID_BORDER_STYLES = {
-  borderColor: COLORS.DARK_BACKGROUND,
+  borderColor: getColor(COLOR_KEYS.BORDER_SHADOW_COLOR),
   borderTopWidth: 0.2,
   borderLeftWidth: 0.2,
   borderRightWidth: 0.5,

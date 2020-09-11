@@ -19,7 +19,7 @@ const base = {
         borderLeftWidth: 0.2,
         borderRightWidth: 0.5,
         borderBottomWidth: 2,
-        borderColor: COLOR_KEYS.SEPARATORS,
+        borderColor: COLOR_KEYS.BORDER_SHADOW_COLOR,
       },
       ios: {
         ...STYLES.SHADOW_STYLES,
