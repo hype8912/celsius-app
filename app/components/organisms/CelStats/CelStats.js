@@ -53,7 +53,7 @@ class CelStats extends Component {
           </View>
           <View style={style.celTierItem}>
             <CelText type={"H7"} align={"center"}>
-              Percentage of Users in Tie
+              Percentage of Users in Tier
             </CelText>
           </View>
           <View style={style.celTierItem}>

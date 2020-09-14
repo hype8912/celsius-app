@@ -19,7 +19,7 @@ class GetCoinsInfoModal extends React.Component {
         paragraphs={[
           "You can purchase crypto with a credit card or bank transfer at the best rates in the industry directly through your Celsius app.",
           "* Celsius does not charge any fees for the purchase of Coins.",
-          "** Our partner Simplex charges 3.5% or $10 minimum fee that is included in the price you see. Our partner Wyre charges a fee of 0.75% and Coinify charges 1%.",
+          "** Our partner Simplex charges 3.5% or $10 minimum fee that is included in the price you see. Our partner Wyre charges a fee of 0.1% and Coinify charges 1%.",
         ]}
         yesCopy={"Buy Coins"}
         onYes={this.goNext}
