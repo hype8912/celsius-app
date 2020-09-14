@@ -173,7 +173,7 @@ class CoinCards extends Component {
     return (
       <View>
         <ExpandableItem
-          heading={"TRANSFERS"}
+          heading={"COINS"}
           margin={"10 0 10 0"}
           childrenStyle={style.coinCardContainer}
           isExpanded

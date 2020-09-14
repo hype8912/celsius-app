@@ -58,7 +58,7 @@ class Home extends Component {
           API.REGISTER_USER_GOOGLE,
           API.REGISTER_USER_TWITTER,
         ],
-        5
+        15
       );
       if (newRegistration) {
         appsFlyerUtil.registrationCompleted(user);

@@ -19,7 +19,7 @@ const CelPayInfoModal = props => {
       paragraphs={[
         `No addresses needed - send up to ${formatter.usd(
           maxTransferAmount
-        )} worth of crypto quickly and easily one-touch sharing options.`,
+        )} worth of crypto quickly and easily with one-touch sharing options.`,
       ]}
       yesCopy={"Start CelPay"}
       onYes={close}

@@ -113,12 +113,14 @@ class GetCoinsGem extends Component {
     const styles = GetCoinsGemStyle();
     return (
       <View style={styles.container}>
-        <WebView
-          source={{
-            uri: gemOnrampSrc,
-          }}
-          onMessage={this.finishGemFlow}
-        />
+        <View style={styles.wrapper}>
+          <WebView
+            source={{
+              uri: gemOnrampSrc,
+            }}
+            onMessage={this.finishGemFlow}
+          />
+        </View>
       </View>
     );
   }
