@@ -264,7 +264,7 @@ class LoanRequestDetails extends Component {
 
         <CelButton
           basic
-          onPress={() => actions.navigateTo("WalletLanding")}
+          onPress={() => actions.resetToScreen("WalletLanding")}
           margin={"20 0 0 0"}
         >
           Go back to the wallet
