@@ -18,6 +18,7 @@ import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -83,10 +84,10 @@ class SecurityFixNow extends Component {
   onPress2fa = () => {
     const { actions, twoFAStatus } = this.props;
     if (!twoFAStatus.isActive) {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: () => {
           actions.fromFixNow();
-          actions.navigateTo("TwoFactorSettings");
+          actions.navigateTo(SCREENS.TWO_FACTOR_SETTINGS);
         },
       });
     }
@@ -176,7 +177,7 @@ class SecurityFixNow extends Component {
                 ) && `Change ${formatter.capitalize(content.type)}`
               }
               onPressEnhance={() => {
-                actions.navigateTo("VerifyProfile", {
+                actions.navigateTo(SCREENS.VERIFY_PROFILE, {
                   onSuccess: () => {
                     actions.navigateTo(content.navigateToScreen);
                     actions.fromFixNow();

@@ -18,6 +18,7 @@ import {
   isUSCitizen,
 } from "../../../utils/user-util/user-util";
 import API from "../../../constants/API";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -103,7 +104,7 @@ class KYCTaxpayer extends Component {
 
     if (response.success) {
       if (isForPrimeTrustKYC()) {
-        actions.navigateTo("KYCPrimeTrustToU");
+        actions.navigateTo(SCREENS.KYC_PRIME_TRUST_TOU);
         actions.showMessage(
           "success",
           "You have successfully submitted ssn number"
@@ -187,7 +188,7 @@ class KYCTaxpayer extends Component {
 
         {!!(isPrimeTrustUser && user.ssn) && (
           <CelButton
-            onPress={() => actions.navigateTo("KYCPrimeTrustToU")}
+            onPress={() => actions.navigateTo(SCREENS.KYC_PRIME_TRUST_TOU)}
             iconRight="IconArrowRight"
           >
             Continue

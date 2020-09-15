@@ -364,7 +364,7 @@ storiesOf("BorrowCollateral", module).add(
   BorrowCollateralStories.regular
 );
 
-storiesOf("Appearance", module).add("Apearance", AppearanceStories.regular);
+storiesOf("Appearance", module).add("Appearance", AppearanceStories.regular);
 
 storiesOf("TooManyRequests", module).add(
   "Too Many Requests",

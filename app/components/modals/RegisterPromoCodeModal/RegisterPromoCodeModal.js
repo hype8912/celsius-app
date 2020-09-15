@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import moment from "moment";
 
 import RegisterPromoCodeModalStyle from "./RegisterPromoCodeModal.styles";
 import CelModal from "../CelModal/CelModal.js";
@@ -22,7 +23,7 @@ const theme = getTheme();
   state => ({
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
-    code: state.branch.code,
+    promoCode: state.branch.promoCode,
     referralLink: state.branch.registeredLink,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -45,7 +46,6 @@ class RegisterPromoCodeModal extends Component {
     const { actions } = this.props;
     actions.updateFormFields({
       promoCode: null,
-      code: null,
     });
   }
 
@@ -54,10 +54,6 @@ class RegisterPromoCodeModal extends Component {
       confirmed: true,
       loading: false,
     });
-  };
-
-  hasError = () => {
-    this.setState({ loading: false });
   };
 
   closeModal = () => {
@@ -73,8 +69,7 @@ class RegisterPromoCodeModal extends Component {
     const { actions, type } = this.props;
     this.setState({ loading: true });
     if (type === "celsius") {
-      // actions.submitProfileCode(this.proceed);
-      actions.submitPromoCode(this.proceed, this.hasError);
+      actions.submitProfileCode(this.proceed);
     }
 
     if (type === "register") {
@@ -241,9 +236,8 @@ class RegisterPromoCodeModal extends Component {
             returnKeyType={"send"}
             value={formData.promoCode}
             error={formErrors.promoCodeError && formErrors.promoCodeError.msg}
-            border={theme !== THEMES.DARK}
+            border
             onSubmitEditing={() => this.confirm()}
-            basic={theme === THEMES.LIGHT ? true : null}
           />
         </View>
         <View style={style.buttonWrapper}>
@@ -264,11 +258,25 @@ class RegisterPromoCodeModal extends Component {
   };
 
   renderConfirmedPromoCode = () => {
-    const { code } = this.props;
+    const { promoCode } = this.props;
+    const code = {};
     const style = RegisterPromoCodeModalStyle();
-    const title = "Hooray!";
-    const subtitle = "Promo code has been added to your profile!";
-    const description = code.description;
+
+    code.amount = promoCode.referred_award_amount;
+    code.coin = promoCode.referred_award_coin;
+    code.maximumDays = promoCode.maximum_days_to_claim;
+    code.minimumAmount = promoCode.minimum_deposit_for_reward;
+
+    const congratsText = "You’ve successfully activated your promo code!";
+    const messageText = `You’ll receive $${code.amount} in ${
+      code.coin
+    } when you deposit $${code.minimumAmount} or more within the next ${
+      code.maximumDays
+    } days. Your reward will be locked in your wallet for 30 days. If you withdraw $${
+      code.minimumAmount
+    } or more from your wallet before ${moment()
+      .add(30, "days")
+      .format("DD/MM/YY")}, your reward will be canceled.`;
 
     return (
       <View>
@@ -278,21 +286,21 @@ class RegisterPromoCodeModal extends Component {
           type={"H2"}
           weight={"700"}
         >
-          {title}
+          Congrats!
         </CelText>
         <CelText
-          margin={"0 25 15 25"}
+          margin={"0 25 10 25"}
           align={"center"}
           type={"H4"}
           weight={"300"}
         >
-          {subtitle}
+          {congratsText}
         </CelText>
 
         <View style={style.cardWrapper}>
           <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
             <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
-              {description}
+              {messageText}
             </CelText>
           </Card>
         </View>

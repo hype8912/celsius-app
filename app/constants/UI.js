@@ -1,3 +1,5 @@
+import { SCREENS } from "./SCREENS";
+
 const KEYBOARD_TYPE = {
   DEFAULT: "default",
   NUMERIC: "numeric",
@@ -45,7 +47,7 @@ const MODALS = {
   PICKER_MODAL: "PICKER_MODAL",
 };
 
-const INITIAL_ROUTE = "SplashScreen";
+const INITIAL_ROUTE = SCREENS.SPLASH_SCREEN;
 
 const THEMES = {
   LIGHT: "light",

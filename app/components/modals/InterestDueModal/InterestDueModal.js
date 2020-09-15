@@ -9,6 +9,7 @@ import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import InterestDueModalStyle from "./InterestDueModal.styles";
+import { SCREENS } from "../../../constants/SCREENS";
 // import CelButton from "../../atoms/CelButton/CelButton";
 
 class InterestDueModal extends Component {
@@ -24,7 +25,7 @@ class InterestDueModal extends Component {
     const { closeModal, navigateTo, activeLoan } = this.props;
 
     closeModal();
-    navigateTo("LoanRequestDetails", { id: activeLoan.id });
+    navigateTo(SCREENS.LOAN_REQUEST_DETAILS, { id: activeLoan.id });
   };
 
   render() {
@@ -102,7 +103,7 @@ class InterestDueModal extends Component {
         >
           <CelModalButton
             onPress={() => {
-              navigateTo("ChoosePaymentMethod", {
+              navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
                 reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
                 id: activeLoan.id,
               });

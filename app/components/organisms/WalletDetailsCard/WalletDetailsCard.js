@@ -11,6 +11,7 @@ import WalletDetailsCardStyle from "./WalletDetailsCard.styles";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import * as appActions from "../../../redux/actions";
 import Counter from "../../molecules/Counter/Counter";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -30,13 +31,13 @@ class WalletDetailsCard extends PureComponent {
   navigateToBalanceHistory = () => {
     const { actions, currencies } = this.props;
     if (!currencies) return;
-    actions.navigateTo("BalanceHistory");
+    actions.navigateTo(SCREENS.BALANCE_HISTORY);
   };
 
   navigateToDeposit = () => {
     const { actions, currencies } = this.props;
     if (!currencies) return;
-    actions.navigateTo("Deposit");
+    actions.navigateTo(SCREENS.DEPOSIT);
   };
 
   render() {
@@ -70,7 +71,7 @@ class WalletDetailsCard extends PureComponent {
 
           <View style={walletDetailsCardStyle.half}>
             <TouchableOpacity
-              onPress={() => actions.navigateTo("WalletInterest")}
+              onPress={() => actions.navigateTo(SCREENS.WALLET_INTEREST)}
             >
               <CelText weight="300" type="H6">
                 Total Earnings
@@ -86,7 +87,7 @@ class WalletDetailsCard extends PureComponent {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => actions.navigateTo("InterestRates")}
+              onPress={() => actions.navigateTo(SCREENS.INTEREST_RATES)}
             >
               <CelText link>Weekly Rates</CelText>
             </TouchableOpacity>

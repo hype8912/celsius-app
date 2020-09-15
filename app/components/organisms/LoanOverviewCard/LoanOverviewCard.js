@@ -21,6 +21,7 @@ import PaymentListItem from "../../atoms/PaymentListItem/PaymentListItem";
 import CircularProgressBar from "../../graphs/CircularProgressBar/CircularProgressBar";
 import Badge from "../../atoms/Badge/Badge";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class LoanOverviewCard extends Component {
   static propTypes = {
@@ -54,7 +55,7 @@ class LoanOverviewCard extends Component {
   lockMarginCollateral = async () => {
     const { loan, actions } = this.props;
 
-    await actions.navigateTo("VerifyProfile", {
+    await actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () =>
         actions.lockMarginCallCollateral(
           loan.id,
@@ -78,7 +79,7 @@ class LoanOverviewCard extends Component {
   payPrincipal = async () => {
     const { actions, loan } = this.props;
     this.setState({ isLoading: true });
-    await actions.navigateTo("VerifyProfile", {
+    await actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () => actions.payPrincipal(loan.id),
     });
     this.setState({ isLoading: false });
@@ -86,7 +87,7 @@ class LoanOverviewCard extends Component {
 
   depositCoin = () => {
     const { actions, loan } = this.props;
-    actions.navigateTo("Deposit", {
+    actions.navigateTo(SCREENS.DEPOSIT, {
       coin: loan.margin_call.collateral_coin,
       loan,
       isMarginWarning: true,
@@ -318,7 +319,9 @@ class LoanOverviewCard extends Component {
 
           <View style={style.buttonContainer}>
             <CelButton
-              onPress={() => navigateTo("LoanRequestDetails", { id: loan.id })}
+              onPress={() =>
+                navigateTo(SCREENS.LOAN_REQUEST_DETAILS, { id: loan.id })
+              }
               basic
               textSize={"H6"}
             >
@@ -333,7 +336,9 @@ class LoanOverviewCard extends Component {
               loan.status
             ) && (
               <CelButton
-                onPress={() => navigateTo("LoanSettings", { id: loan.id })}
+                onPress={() =>
+                  navigateTo(SCREENS.LOAN_SETTINGS, { id: loan.id })
+                }
                 basic
                 textSize={"H6"}
               >
@@ -395,14 +400,15 @@ class LoanOverviewCard extends Component {
             <CelButton
               basic
               textSize={"H6"}
+              margin="10 0 0 0"
               onPress={() =>
-                navigateTo("ChoosePaymentMethod", {
+                navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
                   id: loan.id,
                   reason: LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT,
                 })
               }
             >
-              Prepay interest
+              Prepay interest >
             </CelButton>
           </Card>
         )}
@@ -426,7 +432,7 @@ class LoanOverviewCard extends Component {
                   margin={"10 0 0 0"}
                   basic
                   onPress={() =>
-                    navigateTo("LoanPaymentHistory", { id: loan.id })
+                    navigateTo(SCREENS.LOAN_PAYMENT_HISTORY, { id: loan.id })
                   }
                 >
                   See all
@@ -438,9 +444,11 @@ class LoanOverviewCard extends Component {
         {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(loan.status) &&
           (!loan.hasInterestPaymentFinished || !loan.isPrincipalPaid) && (
             <View>
-              <Separator margin="10 0 20 0" />
               <CelButton
-                onPress={() => navigateTo("LoanPaymentList", { id: loan.id })}
+                onPress={() =>
+                  navigateTo(SCREENS.LOAN_PAYMENT_LIST, { id: loan.id })
+                }
+                margin="30 0 0 0"
               >
                 Upcoming Payments
               </CelButton>

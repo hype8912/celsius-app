@@ -16,6 +16,7 @@ import Icon from "../../atoms/Icon/Icon";
 import CollateralCoinCardStyle from "./CollateralCoinCard.styles";
 import Separator from "../../atoms/Separator/Separator";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -128,7 +129,7 @@ class CollateralCoinCard extends Component {
         : false;
       color = !isAllowed
         ? getColor(COLOR_KEYS.NEGATIVE_STATE)
-        : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
+        : getColor(COLOR_KEYS.PARAGRAPH);
       value =
         (amountNeededUsd - walletCoin.amount_usd.toNumber()) /
         currencyRatesShort[coin.short.toLowerCase()];
@@ -147,7 +148,7 @@ class CollateralCoinCard extends Component {
     } else if (type === COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD) {
       color = !isAllowed
         ? getColor(COLOR_KEYS.NEGATIVE_STATE)
-        : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
+        : getColor(COLOR_KEYS.PARAGRAPH);
       await this.setState({
         additionalInfoExplanation:
           "required for a first month of loan interest payment.",
@@ -164,7 +165,7 @@ class CollateralCoinCard extends Component {
       isAllowed = coin.amount >= amountNeededInCoin;
       color = !isAllowed
         ? getColor(COLOR_KEYS.NEGATIVE_STATE)
-        : getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE);
+        : getColor(COLOR_KEYS.PARAGRAPH);
 
       // additionalCryptoAmount - margin call value
       let marginCallValue;
@@ -236,7 +237,9 @@ class CollateralCoinCard extends Component {
     const { coin, actions } = this.props;
     return (
       <TouchableOpacity
-        onPress={() => actions.navigateTo("Deposit", { coin: coin.short })}
+        onPress={() =>
+          actions.navigateTo(SCREENS.DEPOSIT, { coin: coin.short })
+        }
       >
         <View
           style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}

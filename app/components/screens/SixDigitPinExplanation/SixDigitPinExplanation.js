@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import { EMPTY_STATES } from "../../../constants/UI";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -37,7 +38,7 @@ class SixDigitPinExplanation extends Component {
     const onSuccess = navigation.getParam("onSuccess");
 
     actions.updateFormField("upgradeToSixDigitPin", true); // Flag for navigation to Six digit pin activation
-    actions.navigateTo("ChangePin", { onSuccess });
+    actions.navigateTo(SCREENS.CHANGE_PIN, { onSuccess });
   };
 
   render() {

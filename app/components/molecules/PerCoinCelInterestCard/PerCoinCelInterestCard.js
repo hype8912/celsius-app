@@ -18,6 +18,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import RateInfoCard from "../RateInfoCard/RateInfoCard";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -202,14 +203,14 @@ class PerCoinCelInterestCard extends Component {
           onChange={this.toggleAll}
           value={formData.interestInCel}
           fillColor={style.fillColor.color}
-          rightText="Earn interest in CEL"
+          rightText="Earn rewards in CEL"
           textWeight="400"
           checkedImage={this.renderImage()}
         />
 
         <RateInfoCard
           navigateTo={actions.navigateTo}
-          tierButton={activeScreen !== "MyCel"}
+          tierButton={activeScreen !== SCREENS.MY_CEL}
           interestCompliance={interestCompliance}
         />
 

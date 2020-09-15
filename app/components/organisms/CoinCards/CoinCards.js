@@ -13,6 +13,7 @@ import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
 import animationsUtil from "../../../utils/animations-util";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class CoinCards extends Component {
   static propTypes = {
@@ -76,11 +77,11 @@ class CoinCards extends Component {
               : null;
           tempCoin.navigate = Number(coin.has_transaction)
             ? () =>
-                navigateTo("CoinDetails", {
+                navigateTo(SCREENS.COIN_DETAILS, {
                   coin: coin.short,
                   title: tempCoin.currency.displayName,
                 })
-            : () => navigateTo("Deposit", { coin: coin.short });
+            : () => navigateTo(SCREENS.DEPOSIT, { coin: coin.short });
 
           coins.push(coin);
         }
@@ -146,7 +147,10 @@ class CoinCards extends Component {
     const gridStyle = isGrid ? style.addMoreCoinsGrid : style.addMoreCoinsList;
 
     return (
-      <TouchableOpacity style={gridStyle} onPress={() => navigateTo("Deposit")}>
+      <TouchableOpacity
+        style={gridStyle}
+        onPress={() => navigateTo(SCREENS.DEPOSIT)}
+      >
         <Icon
           fill={getColor(COLOR_KEYS.LINK)}
           width="17"
@@ -169,7 +173,7 @@ class CoinCards extends Component {
     return (
       <View>
         <ExpandableItem
-          heading={"TRANSFERS"}
+          heading={"COINS"}
           margin={"10 0 10 0"}
           childrenStyle={style.coinCardContainer}
           isExpanded

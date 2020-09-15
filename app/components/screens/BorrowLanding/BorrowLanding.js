@@ -30,6 +30,7 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import { STORYBOOK } from "../../../../dev-settings.json";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const cardWidth = widthPercentageToDP("70%");
 
@@ -155,7 +156,7 @@ class BorrowLanding extends Component {
           <View style={style.buttonsIconText}>
             <TouchableOpacity
               style={style.buttonIconText}
-              onPress={() => actions.navigateTo("BorrowChooseLoan")}
+              onPress={() => actions.navigateTo(SCREENS.BORROW_CHOOSE_LOAN)}
             >
               <View style={style.buttonItself}>
                 <ThemedImage
@@ -171,7 +172,7 @@ class BorrowLanding extends Component {
             <TouchableOpacity
               style={style.buttonIconText}
               onPress={() => {
-                actions.navigateTo("BorrowCalculatorScreen");
+                actions.navigateTo(SCREENS.BORROW_CALCULATOR_SCREEN);
               }}
             >
               <View style={style.buttonItself}>

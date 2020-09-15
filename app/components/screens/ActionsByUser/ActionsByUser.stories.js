@@ -27,7 +27,7 @@ const regular = () => {
 
   return (
     <ScreenStoryWrapper
-      screenName="VerifyProfile"
+      screenName="ActionsByUser"
       screen={ActionsByUser}
       state={state}
     />

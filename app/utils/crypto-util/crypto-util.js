@@ -1,6 +1,10 @@
-import BigNumber from "bignumber.js";
-import { BLOCKEXPLORERS } from "../constants/DATA";
-import store from "../redux/store";
+import {
+  BLOCKEXPLORER_NAME,
+  BLOCKEXPLORERS,
+  ERC_20_COINS,
+  LINKS_FOR_COINS,
+} from "../../constants/DATA";
+import store from "../../redux/store";
 
 /**
  * Checks if coin is ERC20
@@ -8,42 +12,7 @@ import store from "../redux/store";
  * @returns {boolean}
  */
 function isERC20(currency) {
-  return (
-    [
-      "eth",
-      "dai",
-      "pax",
-      "cel",
-      "omg",
-      "zrx",
-      "tusd",
-      "gusd",
-      "usdc",
-      "leo",
-      "usdt erc20",
-      "tcad",
-      "tgbp",
-      "thkd",
-      "taud",
-      "busd",
-      "bat",
-    ].indexOf(currency.toLowerCase()) !== -1
-  );
-}
-
-function hasLinkToBuy(currency) {
-  return [
-    "TUSD",
-    "USDC",
-    "PAX",
-    "THKD",
-    "TCAD",
-    "TAUD",
-    "TGBP",
-    "DASH",
-    "OMG",
-    "DAI",
-  ].includes(currency);
+  return Object.values(ERC_20_COINS).indexOf(currency.toLowerCase()) !== -1;
 }
 
 function buyInApp(currency) {
@@ -60,46 +29,9 @@ function buyInApp(currency) {
 }
 
 function provideLink(currency) {
-  let link;
-  switch (currency) {
-    case "BTC":
-    case "BCH":
-    case "ETH":
-    case "LTC":
-    case "XRP":
-    case "XLM":
-    case "OMG":
-    case "DAI":
-      link = "https://buy.moonpay.io/celsius";
-      break;
-    case "TUSD":
-      link = "https://www.trusttoken.com/trueusd";
-      break;
-    case "USDC":
-      link = "https://usdc.circle.com/start";
-      break;
-    case "PAX":
-      link = "https://account.paxos.com/signup";
-      break;
-    case "THKD":
-      link = "https://www.trusttoken.com/truehkd";
-      break;
-    case "TCAD":
-      link = "https://www.trusttoken.com/truecad";
-      break;
-    case "TAUD":
-      link = "https://www.trusttoken.com/trueaud";
-      break;
-    case "TGBP":
-      link = "https://www.trusttoken.com/truegbp";
-      break;
-    case "DASH":
-      link = "https://www.dash.org/where-to-buy";
-      break;
-    default:
-      link = null;
-  }
-  return link;
+  if (buyInApp(currency)) return false;
+
+  return LINKS_FOR_COINS[currency] || null;
 }
 
 function provideText(currency) {
@@ -144,12 +76,6 @@ function provideText(currency) {
   return text;
 }
 
-function isGreaterThan(str1, str2) {
-  const num1 = new BigNumber(str1);
-  const num2 = new BigNumber(str2);
-  return num1.gt(num2);
-}
-
 export function getBlockExplorerLink(transaction) {
   const tId = transaction.transaction_id;
   switch (transaction.coin) {
@@ -157,61 +83,61 @@ export function getBlockExplorerLink(transaction) {
     case "btc":
       return {
         link: BLOCKEXPLORERS.btc && `${BLOCKEXPLORERS.btc}${tId}`,
-        text: "blockchain",
+        text: BLOCKEXPLORER_NAME.BTC,
       };
     // BCH
     case "bch":
       return {
         link: BLOCKEXPLORERS.bch && `${BLOCKEXPLORERS.bch}${tId}`,
-        text: "blockdozer",
+        text: BLOCKEXPLORER_NAME.BCH,
       };
     // LTC
     case "ltc":
       return {
         link: BLOCKEXPLORERS.ltc && `${BLOCKEXPLORERS.ltc}${tId}`,
-        text: "chainz",
+        text: BLOCKEXPLORER_NAME.LTC,
       };
     // XRP
     case "xrp":
       return {
         link: BLOCKEXPLORERS.xrp && `${BLOCKEXPLORERS.xrp}${tId}`,
-        text: "xrpcharts",
+        text: BLOCKEXPLORER_NAME.XRP,
       };
     // XLM
     case "xlm":
       return {
         link: BLOCKEXPLORERS.xlm && `${BLOCKEXPLORERS.xlm}${tId}`,
-        text: "stellarchain",
+        text: BLOCKEXPLORER_NAME.XLM,
       };
     // EOS
     case "eos":
       return {
         link: BLOCKEXPLORERS.eos && `${BLOCKEXPLORERS.eos}${tId}`,
-        text: "bloks.io",
+        text: BLOCKEXPLORER_NAME.EOS,
       };
     // DASH
     case "dash":
       return {
         link: BLOCKEXPLORERS.dash && `${BLOCKEXPLORERS.dash}${tId}`,
-        text: "chainz",
+        text: BLOCKEXPLORER_NAME.DASH,
       };
     // ZEC
     case "zec":
       return {
         link: BLOCKEXPLORERS.zec && `${BLOCKEXPLORERS.zec}${tId}`,
-        text: "chain.so",
+        text: BLOCKEXPLORER_NAME.ZEC,
       };
     // BTG
     case "btg":
       return {
         link: BLOCKEXPLORERS.btg && `${BLOCKEXPLORERS.btg}${tId}`,
-        text: "btgexplorer",
+        text: BLOCKEXPLORER_NAME.BTG,
       };
     // ETC
     case "etc":
       return {
         link: BLOCKEXPLORERS.etc && `${BLOCKEXPLORERS.etc}${tId}`,
-        text: "bitquery.io",
+        text: BLOCKEXPLORER_NAME.ETC,
       };
 
     // ETH & ERC20
@@ -231,7 +157,7 @@ export function getBlockExplorerLink(transaction) {
     case "matic":
       return {
         link: BLOCKEXPLORERS.eth && `${BLOCKEXPLORERS.eth}${tId}`,
-        text: "etherscan",
+        text: BLOCKEXPLORER_NAME.ERC20,
       };
 
     default:
@@ -241,8 +167,6 @@ export function getBlockExplorerLink(transaction) {
 
 export default {
   isERC20,
-  isGreaterThan,
-  hasLinkToBuy,
   provideLink,
   provideText,
   buyInApp,

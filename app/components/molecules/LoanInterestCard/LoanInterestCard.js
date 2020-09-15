@@ -14,6 +14,7 @@ import LoanInterestCardStyle from "./LoanInterestCard.styles";
 import Separator from "../../atoms/Separator/Separator";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -65,7 +66,7 @@ class LoanInterestCard extends Component {
       ltv: loanToValue,
     });
     mixpanelAnalytics.loanLTV(loanToValue);
-    actions.navigateTo("BorrowLoanTerm");
+    actions.navigateTo(SCREENS.BORROW_LOAN_TERM);
   };
 
   handleDepositCalculation = () => {
@@ -132,7 +133,7 @@ class LoanInterestCard extends Component {
                 </CelText>
                 <TouchableOpacity
                   onPress={() =>
-                    actions.navigateTo("Deposit", {
+                    actions.navigateTo(SCREENS.DEPOSIT, {
                       coin: formData.collateralCoin,
                     })
                   }

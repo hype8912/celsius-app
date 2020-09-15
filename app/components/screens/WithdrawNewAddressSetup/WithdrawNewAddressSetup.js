@@ -16,6 +16,7 @@ import {
   ALL_PERMISSIONS,
   requestForPermission,
 } from "../../../utils/device-permissions";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -58,7 +59,7 @@ class WithdrawNewAddressSetup extends Component {
     const { actions } = this.props;
     const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
     if (perm === RESULTS.GRANTED) {
-      actions.navigateTo("QRScanner", {
+      actions.navigateTo(SCREENS.QR_SCANNER, {
         onScan: this.handleScan,
       });
     } else {

@@ -13,6 +13,7 @@ import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -60,10 +61,10 @@ class PaymentCel extends Component {
         "You have successfully changed interest payment method"
       );
 
-      return actions.navigateTo("LoanSettings");
+      return actions.navigateTo(SCREENS.LOAN_SETTINGS);
     }
 
-    actions.navigateTo("LoanPrepaymentPeriod", { coin: "CEL", id });
+    actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { coin: "CEL", id });
   };
 
   payInCel = async () => {
@@ -73,7 +74,7 @@ class PaymentCel extends Component {
 
     if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
       actions.updateFormField("coin", "CEL");
-      actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
+      actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { id, reason });
     }
 
     if (reason === LOAN_PAYMENT_REASONS.INTEREST) {
@@ -83,12 +84,12 @@ class PaymentCel extends Component {
         "success",
         "You have successfully changed interest payment method"
       );
-      actions.navigateTo("ChoosePaymentMethod", { id, reason });
+      actions.navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, { id, reason });
       this.setState({ isLoading: false });
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: () => actions.payMonthlyInterest(id, "CEL"),
       });
     }
@@ -112,7 +113,7 @@ class PaymentCel extends Component {
           <CelText align={"center"}>
             Based on your current{" "}
             <CelText
-              onPress={() => actions.navigateTo("LoyaltyProgram")}
+              onPress={() => actions.navigateTo(SCREENS.LOYALTY_PROGRAM)}
               style={{ color: getColor(COLOR_KEYS.LINK) }}
             >
               Loyalty Level

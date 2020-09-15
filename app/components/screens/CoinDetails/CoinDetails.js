@@ -27,6 +27,7 @@ import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import Counter from "../../molecules/Counter/Counter";
 import { isUSCitizen } from "../../../utils/user-util/user-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -111,7 +112,7 @@ class CoinDetails extends Component {
     const { actions } = this.props;
     const { currency } = this.state;
 
-    actions.navigateTo("AllTransactions", { coin: [currency.short] });
+    actions.navigateTo(SCREENS.ALL_TRANSACTIONS, { coin: [currency.short] });
   };
 
   goToCelPay = () => {
@@ -119,14 +120,14 @@ class CoinDetails extends Component {
     const { actions } = this.props;
 
     actions.updateFormField("coin", currency.short);
-    actions.navigateTo("CelPayLanding");
+    actions.navigateTo(SCREENS.CEL_PAY_LANDING);
   };
 
   goToBuyCoins = () => {
     const { currency } = this.state;
     const { actions } = this.props;
     actions.updateFormField("selectedCoin", currency.short);
-    actions.navigateTo("GetCoinsLanding");
+    actions.navigateTo(SCREENS.GET_COINS_LANDING);
   };
 
   refresh = async () => {
@@ -163,10 +164,14 @@ class CoinDetails extends Component {
       : {};
     const theme = getTheme();
 
+    const hasBalance =
+      !!Number(coinDetails.amount) || !!Number(coinDetails.amount_usd);
+
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short) &&
-      !hodlStatus.isActive;
+      !hodlStatus.isActive &&
+      hasBalance;
 
     const isCoinEligibleForBuying =
       simplexCompliance && simplexCompliance.coins.includes(currency.short);
@@ -174,7 +179,7 @@ class CoinDetails extends Component {
     const isCoinEligibleForDeposit =
       depositCompliance && depositCompliance.coins.includes(currency.short);
 
-    const isCoinEligibleForWithdraw = !hodlStatus.isActive;
+    const isCoinEligibleForWithdraw = !hodlStatus.isActive && hasBalance;
 
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
@@ -228,7 +233,7 @@ class CoinDetails extends Component {
                         marginRight: widthPercentageToDP("3.3%"),
                       }}
                       onPress={() =>
-                        actions.navigateTo("Deposit", {
+                        actions.navigateTo(SCREENS.DEPOSIT, {
                           coin: coinDetails.short,
                         })
                       }
@@ -297,7 +302,7 @@ class CoinDetails extends Component {
                     <TouchableOpacity
                       style={style.buttons}
                       onPress={() =>
-                        actions.navigateTo("WithdrawEnterAmount", {
+                        actions.navigateTo(SCREENS.WITHDRAW_ENTER_AMOUNT, {
                           coin: coinDetails.short,
                         })
                       }

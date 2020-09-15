@@ -6,6 +6,7 @@ import hodlService from "../../services/hodl-service";
 import { navigateTo } from "../nav/navActions";
 import { showMessage } from "../ui/uiActions";
 import ACTIONS from "../../constants/ACTIONS";
+import { SCREENS } from "../../constants/SCREENS";
 
 export { getHodlCode, activateHodlMode, deactivateHodlMode };
 
@@ -26,7 +27,7 @@ function getHodlCode() {
       };
       const result = await hodlService.getHodlCode(verification);
 
-      dispatch(navigateTo("HODLViewCode"));
+      dispatch(navigateTo(SCREENS.HODL_VIEW_CODE));
 
       dispatch({
         type: ACTIONS.GET_HODL_CODE_SUCCESS,

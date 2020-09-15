@@ -323,7 +323,7 @@ function getTransactionProps(transaction) {
         title: coin => `${coin} Reward`,
         color: COLOR_KEYS.POSITIVE_STATE,
         shortName: "R",
-        statusText: `Confirmed ${transaction.interest_coin.toUpperCase()} Reward`,
+        statusText: `${transaction.interest_coin.toUpperCase()} Reward`,
       };
     case TRANSACTION_TYPES.PENDING_INTEREST:
       return {

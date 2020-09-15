@@ -8,6 +8,7 @@ import * as appActions from "../../../redux/actions";
 // import MaintenanceStyle from "./Maintenance.styles";
 import { EMPTY_STATES } from "../../../constants/UI";
 import StaticScreen from "../StaticScreen/StaticScreen";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -31,7 +32,7 @@ class Maintenance extends Component {
         !this.props.backendStatus.maintenance) ||
       (!prevProps.appCompliance.allowed && this.props.appCompliance.allowed)
     ) {
-      actions.navigateTo("WalletLanding");
+      actions.navigateTo(SCREENS.WALLET_LANDING);
     }
   }
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
 
-import cryptoUtil from "../../../utils/crypto-util";
+import cryptoUtil from "../../../utils/crypto-util/crypto-util";
 import { getColor } from "../../../utils/styles-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import * as appActions from "../../../redux/actions";
@@ -30,6 +30,7 @@ import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/Destin
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import DepositAddressSwitchCard from "../../atoms/DepositAddressSwitchCard/DepositAddressSwitchCard";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -159,7 +160,9 @@ class Deposit extends Component {
 
   fetchAddress = async currency => {
     const { actions, walletAddresses } = this.props;
-    this.setState({ isFetchingAddress: true });
+    if (!hasPassedKYC()) return;
+
+    await this.setState({ isFetchingAddress: true });
     // Every ERC20 has the same address, so we use ETH address
     // Also check if it's already fetched and stored in redux state to avoid additional http requests
     // if (cryptoUtil.isERC20(currency) && !walletAddresses.ETHAddress) {
@@ -176,7 +179,7 @@ class Deposit extends Component {
 
     const { address } = this.getAddress(currency);
 
-    this.setState({ isFetchingAddress: false, displayAddress: address });
+    await this.setState({ isFetchingAddress: false, displayAddress: address });
   };
 
   openModal = (destinationTag, memoId) => {
@@ -416,7 +419,7 @@ class Deposit extends Component {
                 link
                 type={"H4"}
                 weight={"300"}
-                onPress={() => actions.navigateTo("GetCoinsLanding")}
+                onPress={() => actions.navigateTo(SCREENS.GET_COINS_LANDING)}
               >
                 {cryptoUtil.provideText(formData.selectedCoin)}
               </CelText>
@@ -447,7 +450,7 @@ class Deposit extends Component {
             <IconButton
               margin="20 0 0 0"
               padding="15 18 15 18"
-              onPress={() => actions.navigateTo("LoyaltyProgram")}
+              onPress={() => actions.navigateTo(SCREENS.LOYALTY_PROGRAM)}
             >
               Learn about the CEL Loyalty Program
             </IconButton>

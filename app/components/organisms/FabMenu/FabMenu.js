@@ -26,6 +26,7 @@ import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -79,44 +80,50 @@ class FabMenu extends Component {
     } = this.props;
 
     const main = [
-      [{ iconName: "Wallet", label: "Wallet", screen: "WalletLanding" }],
+      [{ iconName: "Wallet", label: "Wallet", screen: SCREENS.WALLET_LANDING }],
       [],
-      [{ iconName: "Community", label: "Community", screen: "Community" }],
+      [
+        {
+          iconName: "Community",
+          label: "Community",
+          screen: SCREENS.COMMUNITY,
+        },
+      ],
     ];
     if (depositCompliance.allowed)
       main[0].push({
         iconName: "Deposit",
         label: "Transfer",
-        screen: "Deposit",
+        screen: SCREENS.DEPOSIT,
       });
     if (kycStatus && hasPassedKYC() && withdrawCompliance.allowed)
       main[0].push({
         iconName: "Withdraw",
         label: "Withdraw",
-        screen: "WithdrawEnterAmount",
+        screen: SCREENS.WITHDRAW_ENTER_AMOUNT,
       });
     if (celpayCompliance.allowed)
       main[1].push({
         iconName: "CelPay",
         label: "CelPay",
-        screen: "CelPayLanding",
+        screen: SCREENS.CEL_PAY_LANDING,
       });
     main[1].push({
       iconName: "Borrow",
       label: "Borrow $",
-      screen: "BorrowLanding",
+      screen: SCREENS.BORROW_LANDING,
     });
     main[1].push({
       iconName: "Profile",
       label: "Profile",
-      screen: "Profile",
+      screen: SCREENS.PROFILE,
     });
     // TODO change borrow landing to new screen
     if (kycStatus && hasPassedKYC())
       main[2].splice(1, 0, {
         iconName: "MyCel",
         label: "My CEL",
-        screen: "MyCel",
+        screen: SCREENS.MY_CEL,
       });
 
     return {
@@ -229,7 +236,7 @@ class FabMenu extends Component {
             styles={style.helpCard}
             size={"half"}
             onPress={() => {
-              actions.navigateTo("Support");
+              actions.navigateTo(SCREENS.SUPPORT);
               actions.closeFabMenu();
             }}
           >
@@ -253,7 +260,7 @@ class FabMenu extends Component {
           styles={style.helpCard}
           size={"half"}
           onPress={() => {
-            actions.navigateTo("Support");
+            actions.navigateTo(SCREENS.SUPPORT);
             actions.closeFabMenu();
           }}
         >

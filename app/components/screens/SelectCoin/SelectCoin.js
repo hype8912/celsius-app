@@ -13,6 +13,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { getColor, getTheme } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import formatter from "../../../utils/formatter";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -154,7 +155,7 @@ class SelectCoin extends Component {
               [field]: item.value,
               search: "",
             });
-            if (activeScreen === "SelectCoin") {
+            if (activeScreen === SCREENS.SELECT_COIN) {
               actions.navigateBack();
             }
           }}

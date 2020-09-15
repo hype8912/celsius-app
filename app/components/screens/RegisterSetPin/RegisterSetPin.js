@@ -14,6 +14,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PinTooltip from "../../molecules/PinTooltip/PinTooltip";
 import securityUtil from "../../../utils/security-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -85,7 +86,7 @@ class RegisterSetPin extends Component {
         this.setState({ pinCreated: false });
       } else {
         await actions.getInitialCelsiusData();
-        return actions.navigateTo("Home");
+        return actions.navigateTo(SCREENS.HOME);
       }
     } else {
       actions.showMessage("error", "Both PIN numbers should be the same.");

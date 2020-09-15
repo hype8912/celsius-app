@@ -7,6 +7,7 @@ import transactionsService from "../../services/transactions-service";
 import { navigateTo } from "../nav/navActions";
 import { getWalletSummary } from "../wallet/walletActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import { SCREENS } from "../../constants/SCREENS";
 
 export {
   getAllTransactions,
@@ -143,7 +144,7 @@ function withdrawCrypto() {
       });
 
       dispatch(
-        navigateTo("TransactionsIntersection", {
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: res.data.transaction.id,
           hideBack: true,
         })

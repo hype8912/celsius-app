@@ -17,6 +17,7 @@ import Separator from "../../atoms/Separator/Separator";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import CelsiusMembershipTable from "../../organisms/CelsiusMembershipTable/CelsiusMembershipTable";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -290,7 +291,9 @@ class LoyaltyProgram extends Component {
             </View>
             <CelButton
               margin={"30 0 10 0"}
-              onPress={() => actions.navigateTo("Deposit", { coin: "CEL" })}
+              onPress={() =>
+                actions.navigateTo(SCREENS.DEPOSIT, { coin: "CEL" })
+              }
             >
               Transfer CEL
             </CelButton>

@@ -12,6 +12,7 @@ import Icon from "../../atoms/Icon/Icon";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CollateralCoinCard from "../../molecules/CollateralCoinCard/CollateralCoinCard";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -33,7 +34,7 @@ class BorrowCollateral extends Component {
     actions.updateFormField("collateralCoin", coin);
     mixpanelAnalytics.loanCollateral(coin);
 
-    actions.navigateTo("BorrowLoanOption");
+    actions.navigateTo(SCREENS.BORROW_LOAN_OPTION);
   };
 
   render() {
@@ -72,7 +73,7 @@ class BorrowCollateral extends Component {
 
           <TouchableOpacity
             style={style.addMoreCoinsList}
-            onPress={() => actions.navigateTo("Deposit")}
+            onPress={() => actions.navigateTo(SCREENS.DEPOSIT)}
           >
             <Icon fill={"gray"} width="17" height="17" name="CirclePlus" />
             <CelText type="H5" margin={"0 0 0 5"}>

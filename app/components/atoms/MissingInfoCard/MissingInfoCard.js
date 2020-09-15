@@ -12,6 +12,7 @@ import {
 import CelText from "../CelText/CelText";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const MissingInfoCard = props => {
   const { user, navigateTo } = props;
@@ -45,7 +46,7 @@ const MissingInfoCard = props => {
     body =
       "Taxpayer details are required in order to receive rewards on your crypto. Enter your SSN link to profile details.";
     cta = "Enter your SSN";
-    onPress = () => navigateTo("PersonalInformation");
+    onPress = () => navigateTo(SCREENS.PERSONAL_INFORMATION);
   }
 
   return (

@@ -22,6 +22,7 @@ import {
   getFontFamily,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -93,7 +94,7 @@ class LoanTermsOfUse extends Component {
     const { actions } = this.props;
     mixpanelAnalytics.loanToUAgreed();
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () => actions.applyForALoan(),
     });
   };
@@ -187,7 +188,7 @@ class LoanTermsOfUse extends Component {
                 <Icon
                   name="Share"
                   height="24"
-                  fill={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
+                  fill={getColor(COLOR_KEYS.PARAGRAPH)}
                   style={styles.iconStyle}
                 />
                 <CelText align={"center"}>Download</CelText>

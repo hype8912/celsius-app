@@ -8,6 +8,7 @@ import PasswordBreachedStyle from "./PasswordBreached.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -26,7 +27,7 @@ class PasswordBreached extends Component {
 
   onPressLogin = () => {
     const { actions } = this.props;
-    actions.navigateTo("Login");
+    actions.navigateTo(SCREENS.LOGIN);
   };
 
   render() {
