@@ -32,9 +32,11 @@ class Home extends Component {
   async componentDidMount() {
     const { actions } = this.props;
 
-    await actions.getWalletSummary();
     await actions.getUserAppBootstrap();
+    // must be first endpoint to be called
+
     await actions.getCurrencyRates();
+    await actions.getWalletSummary();
 
     mixpanelAnalytics.sessionStarted("Init app");
     await actions.setBannerProps();
