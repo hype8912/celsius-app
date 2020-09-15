@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
 
@@ -7,7 +6,7 @@ const base = {
     flex: 1,
   },
   background: {
-    backgroundColor: STYLES.COLORS.GRAY,
+    backgroundColor: STYLES.COLORS.GRAY, // TODO: missing COLOR_KEYS
   },
 };
 
@@ -16,7 +15,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const MaintenanceStyle = () => getThemedStyle(base, themed);

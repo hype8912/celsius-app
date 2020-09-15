@@ -17,11 +17,16 @@ import Fab from "../../molecules/Fab/Fab";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import { THEMES } from "../../../constants/UI";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC, isKYCRejectedForever } from "../../../utils/user-util";
+import {
+  hasPassedKYC,
+  isKYCRejectedForever,
+} from "../../../utils/user-util/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -33,7 +38,6 @@ import STYLES from "../../../constants/STYLES";
       : KYC_STATUSES.collecting,
     celpayCompliance: state.compliance.celpay,
     depositCompliance: state.compliance.deposit,
-    loanCompliance: state.compliance.loan,
     withdrawCompliance: state.compliance.withdraw,
     user: state.user.profile,
   }),
@@ -71,52 +75,55 @@ class FabMenu extends Component {
     const {
       depositCompliance,
       celpayCompliance,
-      loanCompliance,
       withdrawCompliance,
-      user,
       kycStatus,
     } = this.props;
+
     const main = [
-      [{ iconName: "Wallet", label: "Wallet", screen: "WalletLanding" }],
+      [{ iconName: "Wallet", label: "Wallet", screen: SCREENS.WALLET_LANDING }],
       [],
-      [{ iconName: "Community", label: "Community", screen: "Community" }],
+      [
+        {
+          iconName: "Community",
+          label: "Community",
+          screen: SCREENS.COMMUNITY,
+        },
+      ],
     ];
     if (depositCompliance.allowed)
       main[0].push({
         iconName: "Deposit",
-        label: "Deposit",
-        screen: "Deposit",
+        label: "Transfer",
+        screen: SCREENS.DEPOSIT,
       });
     if (kycStatus && hasPassedKYC() && withdrawCompliance.allowed)
       main[0].push({
         iconName: "Withdraw",
         label: "Withdraw",
-        screen: "WithdrawEnterAmount",
+        screen: SCREENS.WITHDRAW_ENTER_AMOUNT,
       });
     if (celpayCompliance.allowed)
       main[1].push({
         iconName: "CelPay",
         label: "CelPay",
-        screen: "CelPayLanding",
+        screen: SCREENS.CEL_PAY_LANDING,
       });
-    if (loanCompliance.allowed)
-      main[1].push({
-        iconName: "Borrow",
-        label: "Borrow",
-        screen: "BorrowLanding",
-      });
-    if (user)
-      main[1].push({
-        iconName: "Profile",
-        label: "Profile",
-        screen: "Profile",
-      });
+    main[1].push({
+      iconName: "Borrow",
+      label: "Borrow $",
+      screen: SCREENS.BORROW_LANDING,
+    });
+    main[1].push({
+      iconName: "Profile",
+      label: "Profile",
+      screen: SCREENS.PROFILE,
+    });
     // TODO change borrow landing to new screen
     if (kycStatus && hasPassedKYC())
       main[2].splice(1, 0, {
         iconName: "MyCel",
         label: "My CEL",
-        screen: "MyCel",
+        screen: SCREENS.MY_CEL,
       });
 
     return {
@@ -130,12 +137,12 @@ class FabMenu extends Component {
 
     switch (theme) {
       case THEMES.DARK:
-      case THEMES.CELSIUS:
         return {
           color: "dark",
           blur: 15,
         };
       case THEMES.LIGHT:
+      case THEMES.UNICORN:
       default:
         return {
           color: "light",
@@ -184,11 +191,10 @@ class FabMenu extends Component {
   };
 
   renderMenuItem = item => {
-    const { theme, actions } = this.props;
+    const { actions } = this.props;
     return (
       <CircleButton
         key={item.label}
-        theme={theme}
         onPress={() => {
           actions.resetToScreen(item.screen);
           actions.closeFabMenu();
@@ -213,7 +219,7 @@ class FabMenu extends Component {
   renderFabMenu = () => {
     const style = FabMenuStyle();
     const { menuItems } = this.state;
-    const { actions, theme } = this.props;
+    const { actions } = this.props;
     const tintColor = this.getTintColor();
 
     if (Platform.OS !== "android") {
@@ -230,20 +236,11 @@ class FabMenu extends Component {
             styles={style.helpCard}
             size={"half"}
             onPress={() => {
-              actions.navigateTo("Support");
+              actions.navigateTo(SCREENS.SUPPORT);
               actions.closeFabMenu();
             }}
           >
-            <Icon
-              name={"QuestionCircle"}
-              width={25}
-              height={25}
-              fill={
-                theme === "dark"
-                  ? STYLES.COLORS.WHITE_OPACITY5
-                  : STYLES.COLORS.DARK_GRAY
-              }
-            />
+            <Icon name={"QuestionCircle"} width={25} height={25} />
             <CelText weight={"300"} type={"H5"}>
               Need help?
             </CelText>
@@ -263,20 +260,11 @@ class FabMenu extends Component {
           styles={style.helpCard}
           size={"half"}
           onPress={() => {
-            actions.navigateTo("Support");
+            actions.navigateTo(SCREENS.SUPPORT);
             actions.closeFabMenu();
           }}
         >
-          <Icon
-            name={"QuestionCircle"}
-            width={25}
-            height={25}
-            fill={
-              theme === "dark"
-                ? STYLES.COLORS.WHITE_OPACITY5
-                : STYLES.COLORS.DARK_GRAY
-            }
-          />
+          <Icon name={"QuestionCircle"} width={25} height={25} />
           <CelText weight={"300"} type={"H5"}>
             Need help?
           </CelText>
@@ -291,10 +279,18 @@ class FabMenu extends Component {
   renderFab = () => {
     const style = FabMenuStyle();
     const { fabType } = this.props;
+    const backgroundColor = {
+      backgroundColor: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+    };
     return (
       <Fragment>
         <Animated.View
-          style={[style.shadowStyle, style.fabButton, style.opacityCircle]}
+          style={[
+            style.shadowStyle,
+            style.fabButton,
+            style.opacityCircle,
+            backgroundColor,
+          ]}
         />
         <Animated.View style={[style.fabButton]}>
           <Fab onPress={this.fabAction} type={fabType} />

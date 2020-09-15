@@ -10,9 +10,12 @@ import STYLES from "../../../app/constants/STYLES";
 import CenterView from "../CenterView";
 import SVGS from "../../../app/constants/SVGS";
 import Icon from "../../../app/components/atoms/Icon/Icon";
+import { COLORS, COLOR_KEYS } from "../../../app/constants/COLORS";
+import { THEMES } from "../../../app/constants/UI";
 
 const colors = Object.keys(STYLES.COLORS);
 const iconNames = Object.keys(SVGS).filter(name => !name.includes("ViewBox"));
+const colorKeys = Object.values(COLOR_KEYS);
 
 storiesOf("Styleguide", module)
   .addDecorator(getStory => (
@@ -39,6 +42,45 @@ storiesOf("Styleguide", module)
             <CelText>{c}</CelText>
             <CelText>{STYLES.COLORS[c]}</CelText>
           </View>
+        </View>
+      ))}
+    </StoryWrapper>
+  ))
+  .add("Theme Colors", () => (
+    <StoryWrapper title="Theme Colors">
+      {colorKeys.map((c, i) => (
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
+        >
+          <CelText style={{ width: 180 }}>
+            {i + 1}. {c}
+          </CelText>
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              backgroundColor: COLORS[THEMES.LIGHT][c],
+              marginRight: 5,
+            }}
+          />
+
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              backgroundColor: COLORS[THEMES.DARK][c],
+              marginRight: 5,
+            }}
+          />
+
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              backgroundColor: COLORS[THEMES.UNICORN][c],
+              marginRight: 5,
+            }}
+          />
         </View>
       ))}
     </StoryWrapper>

@@ -12,15 +12,16 @@ import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { CEL_PAY_TYPES, KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
-import STYLES from "../../../constants/STYLES";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { PREDIFINED_AMOUNTS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
-import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -56,7 +57,6 @@ class CelPayEnterAmount extends Component {
       walletSummary,
       actions,
     } = this.props;
-
     const coinSelectItems =
       currencies &&
       currencies
@@ -150,7 +150,7 @@ class CelPayEnterAmount extends Component {
     const { formData } = this.props;
 
     if (formData.amountCrypto && formData.amountCrypto > 0) {
-      return formData.friend ? "Add a note" : "Send";
+      return "Send";
     }
     return "Enter amount above";
   };
@@ -240,21 +240,20 @@ class CelPayEnterAmount extends Component {
       amountCrypto = amountCrypto[1];
     }
 
-    if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto.toFixed(8))) {
+    if (new BigNumber(amountCrypto).isGreaterThan(balanceCrypto.toFixed(8))) {
       return actions.showMessage("warning", "Insufficient funds!");
     }
 
     if (
-      cryptoUtil.isGreaterThan(
-        amountUsd,
+      new BigNumber(amountUsd).isGreaterThan(
         celPaySettings.maximum_transfer_amount
       )
     ) {
       return actions.showMessage(
         "warning",
-        `You have surpassed the daily limit. Please enter an amount below ${formatter.usd(
+        `You have surpassed the daily limit of ${formatter.usd(
           celPaySettings.maximum_transfer_amount
-        )} to continue.`
+        )}. Please enter different amount to continue.`
       );
     }
 
@@ -300,9 +299,9 @@ class CelPayEnterAmount extends Component {
     const celPayType = navigation.getParam("celPayType");
 
     if (celPayType === CEL_PAY_TYPES.FRIEND) {
-      actions.navigateTo("CelPayChooseFriend");
+      actions.navigateTo(SCREENS.CEL_PAY_CHOOSE_FRIEND);
     } else {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: () => {
           actions.celPayShareLink();
         },
@@ -362,8 +361,8 @@ class CelPayEnterAmount extends Component {
                 coin={formData.coin}
                 amountColor={
                   keypadOpen
-                    ? STYLES.COLORS.CELSIUS_BLUE
-                    : STYLES.COLORS.DARK_GRAY
+                    ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                    : getColor(COLOR_KEYS.HEADLINE)
                 }
               />
             </View>

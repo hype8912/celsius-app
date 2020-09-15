@@ -18,7 +18,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const PieProgressBarStyle = () => getThemedStyle(base, themed);

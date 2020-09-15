@@ -1,7 +1,6 @@
-// import STYLES from '../../../constants/STYLES';
 import { StyleSheet } from "react-native";
 import { getThemedStyle, getPadding } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -10,48 +9,25 @@ const base = {
   earningCard: {
     flex: 1,
     borderWidth: 1,
-    backgroundColor: STYLES.COLORS.WHITE,
-    borderColor: STYLES.COLORS.DARK_GRAY3,
-  },
-  selectedCard: {
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-    borderColor: STYLES.COLORS.CELSIUS_BLUE,
+    backgroundColor: COLOR_KEYS.CARDS,
+    borderColor: COLOR_KEYS.PARAGRAPH,
   },
   amounts: {
     ...StyleSheet.flatten(getPadding("20 20 20 20")),
   },
+  selectedCard: {
+    backgroundColor: COLOR_KEYS.LINK,
+    borderColor: COLOR_KEYS.LINK,
+  },
+  showInterestWrapper: {
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
 };
 
 const themed = {
-  light: {
-    amounts: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-    calculatorInfo: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
-    },
-    showInterestWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
-
-  dark: {
-    amounts: {
-      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    },
-    calculatorInfo: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
-    },
-    showInterestWrapper: {
-      backgroundColor: STYLES.COLORS.SEMI_GRAY,
-    },
-  },
-
-  celsius: {
-    amounts: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const InterestCalculatorModalStyle = theme =>

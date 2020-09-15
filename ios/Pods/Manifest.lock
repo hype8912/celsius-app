@@ -15,13 +15,13 @@ PODS:
     - AppCenter/Crashes
     - AppCenterReactNativeShared
     - React
-  - AppCenter/Analytics (3.2.0):
+  - AppCenter/Analytics (3.3.2):
     - AppCenter/Core
-  - AppCenter/Core (3.2.0)
-  - AppCenter/Crashes (3.2.0):
+  - AppCenter/Core (3.3.2)
+  - AppCenter/Crashes (3.3.2):
     - AppCenter/Core
-  - AppCenterReactNativeShared (3.0.3):
-    - AppCenter/Core (= 3.2.0)
+  - AppCenterReactNativeShared (3.1.1):
+    - AppCenter/Core (= 3.3.2)
   - AppsFlyerFramework (4.10.4)
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
@@ -701,11 +701,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
-  AppCenter: ca66175050d538b157959382dd43f1ab96cdab84
+  AppCenter: aba7de06e4c2184f90dc84f7866bd07f82427d69
   appcenter: bde9923b687332a25607fc1aa9577c9361cfed85
   appcenter-analytics: 0ee7a35def715d4bce58ec435f54161770195166
   appcenter-crashes: 9f9c5647dba19026ff09509576fb7233f69697ff
-  AppCenterReactNativeShared: d1218878427a69d4b76f73883256455ed20f12b3
+  AppCenterReactNativeShared: b9fa50d999e830e03f086f487b1aa0f9772088c1
   AppsFlyerFramework: aeb793095c1b33170ae30bef66652c0645f409be
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c

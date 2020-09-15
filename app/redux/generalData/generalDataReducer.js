@@ -45,6 +45,10 @@ export default function generalDataReducer(state = initialState(), action) {
           action.interestRates[coinShort].rate_on_first_n_coins;
         interestRates[coinShort].threshold_on_first_n_coins =
           action.interestRates[coinShort].threshold_on_first_n_coins;
+        interestRates[coinShort].rate_us =
+          action.interestRates[coinShort].rate_us;
+        interestRates[coinShort].threshold_us =
+          action.interestRates[coinShort].threshold_us;
       });
 
       return {

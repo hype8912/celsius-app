@@ -10,6 +10,7 @@ import formatter from "../../../utils/formatter";
 import * as appActions from "../../../redux/actions";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelPayReceivedModalStyle from "../CelPayReceivedModal/CelPayReceivedModal.styles";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -38,8 +39,8 @@ class CelPayReceivedModal extends Component {
             {" "}
             {formatter.crypto(transfer.amount, transfer.coin)}{" "}
           </CelText>
-          . It's already earning interest in your wallet which will be paid out
-          on a weekly basis. Go to your wallet to find out more about interest
+          . It's already earning rewards in your wallet which will be paid out
+          on a weekly basis. Go to your wallet to find out more about rewards
           rates.
         </CelText>
         <View style={style.buttonsWrapper}>
@@ -48,7 +49,7 @@ class CelPayReceivedModal extends Component {
             position={"single"}
             onPress={() => {
               actions.closeModal();
-              actions.navigateTo("WalletLanding");
+              actions.navigateTo(SCREENS.WALLET_LANDING);
             }}
           >
             Go to wallet

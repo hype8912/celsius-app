@@ -1,10 +1,8 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   widthPercentageToDP,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -28,14 +26,8 @@ const base = {
 
 const themed = {
   light: {},
-
-  dark: {
-    wrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
-
-  celsius: {},
+  dark: {},
+  unicorn: {},
 };
 
 const SecurityScoreGaugeStyle = () => getThemedStyle(base, themed);

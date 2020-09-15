@@ -11,7 +11,7 @@ import Card from "../../atoms/Card/Card";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import { EMPTY_STATES } from "../../../constants/UI";
 
@@ -72,7 +72,7 @@ class BalanceHistory extends Component {
               <CelText weight="300" type="H6">
                 Total wallet balance
               </CelText>
-              <CelText weight="600" type="H3">
+              <CelText weight="600" type="H2">
                 {walletSummary && formatter.usd(walletSummary.total_amount_usd)}
               </CelText>
             </Card>

@@ -21,6 +21,7 @@ import { getSecureStoreKey } from "./utils/expo-storage";
 import Constants from "../constants";
 import { STORYBOOK } from "../dev-settings";
 import StoryBook from "./components/screens/Storybook/Storybook";
+import { SCREENS } from "./constants/SCREENS";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -54,8 +55,6 @@ class App extends Component {
     apiUtil.initInterceptors();
     store.dispatch(branchUtil.initBranch());
 
-    await appUtil.updateCelsiusApp();
-
     disableAccessibilityFontScaling();
     store.dispatch(actions.isGoodForAnimations());
     store.dispatch(actions.getGeolocation());
@@ -74,21 +73,23 @@ class App extends Component {
       "fontFamily",
       Font.processFontFamily
     );
-
-    appUtil.initializeThirdPartyServices();
     appUtil.pollBackendStatus();
+    await appUtil.initializeThirdPartyServices();
+
+    const updateInProgress = await appUtil.updateCelsiusApp();
+    if (updateInProgress) return;
 
     const token = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
     if (!token) {
-      return store.dispatch(actions.navigateTo("Welcome"));
+      return store.dispatch(actions.navigateTo(SCREENS.WELCOME));
     }
 
-    const refreshTokenError = await appUtil.checkAndRefreshAuthToken(token);
+    const refreshTokenError = await appUtil.checkAndRefreshAuthToken(token, 24);
     // If token is expired go to LoginLanding screen and stop executing actions in App.js
     if (refreshTokenError && refreshTokenError.slug === "Token Expired") return;
 
     await store.dispatch(actions.getInitialCelsiusData());
-    store.dispatch(actions.navigateTo("Home"));
+    store.dispatch(actions.navigateTo(SCREENS.HOME));
   }
 
   componentWillUnmount() {

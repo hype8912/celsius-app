@@ -18,6 +18,7 @@ import {
 import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
 import STYLES from "../../../constants/STYLES";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -61,7 +62,7 @@ class LoanPaymentCoin extends Component {
 
     if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
       actions.updateFormField("coin", coinShort);
-      actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
+      actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { id, reason });
     }
 
     if (reason === LOAN_PAYMENT_REASONS.INTEREST) {
@@ -73,13 +74,16 @@ class LoanPaymentCoin extends Component {
         "success",
         `You have successfully changed interest payment method to ${coinShort}`
       );
-      actions.navigateTo("ChoosePaymentMethod", { id, reason });
+      actions.navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, { id, reason });
       this.setState({ isLoading: { [coinShort]: false } });
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
       await actions.updateFormFields({ coin: coinShort });
       actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
+      // actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+      //   onSuccess: () => actions.payMonthlyInterest(id, coinShort),
+      // });
     }
   };
 
@@ -125,11 +129,11 @@ class LoanPaymentCoin extends Component {
 
         <TouchableOpacity
           style={style.addMoreCoinsList}
-          onPress={() => actions.navigateTo("Deposit")}
+          onPress={() => actions.navigateTo(SCREENS.DEPOSIT)}
         >
           <Icon fill={"gray"} width="17" height="17" name="CirclePlus" />
           <CelText type="H5" margin={"0 0 0 5"}>
-            Deposit coins
+            Transfer coins
           </CelText>
         </TouchableOpacity>
 

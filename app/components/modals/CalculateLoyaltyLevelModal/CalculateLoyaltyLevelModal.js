@@ -40,12 +40,12 @@ class CalculateLoyaltyLevelModal extends Component {
 
         <View style={style.footerContainer}>
           <CelText
-            margin={"10 0 10 0"}
+            margin={"10 20 10 20"}
             weight={"300"}
             type={"H5"}
             align={"center"}
           >
-            Each loyalty level will bring you better interest rates -{" "}
+            Each loyalty level will bring you better rewards -{" "}
             <CelText weight={"500"} type={"H5"} align={"center"}>
               so keep HODLing!
             </CelText>

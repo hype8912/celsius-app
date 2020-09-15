@@ -17,12 +17,12 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { STORYBOOK } from "../../../../dev-settings.json";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
     appState: state.app.appState,
-    formData: state.forms.formData,
-    twoFAStatus: state.security.twoFAStatus,
     deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
     previousScreen: state.nav.previousScreen,
@@ -79,7 +79,7 @@ class VerifyProfile extends Component {
 
     if (
       activeScreen !== nextProps.activeScreen &&
-      nextProps.activeScreen === "VerifyProfile"
+      nextProps.activeScreen === SCREENS.VERIFY_PROFILE
     ) {
       this.setState({ value: "" });
     }
@@ -94,7 +94,7 @@ class VerifyProfile extends Component {
 
   openKeypad = () => {
     const { actions } = this.props;
-    actions.toggleKeypad(true);
+    actions.toggleKeypad(!STORYBOOK);
   };
 
   onCheckSuccess = async () => {
@@ -115,11 +115,11 @@ class VerifyProfile extends Component {
     }
 
     if (activeScreen) {
-      if (activeScreen === "VerifyProfile") {
+      if (activeScreen === SCREENS.VERIFY_PROFILE) {
         this.setState({ loading: false });
         actions.updateFormField("loading", false);
 
-        actions.resetToScreen(previousScreen || "WalletLanding");
+        actions.resetToScreen(previousScreen || SCREENS.WALLET_LANDING);
         return;
       }
 
@@ -130,8 +130,10 @@ class VerifyProfile extends Component {
       return;
     }
     actions.updateFormField("loading", false);
+    if (onSuccess) {
+      await onSuccess();
+    }
     this.setState({ loading: false });
-    if (onSuccess) onSuccess();
   };
 
   onCheckError = () => {
@@ -171,10 +173,10 @@ class VerifyProfile extends Component {
 
   handlePINChange = newValue => {
     const { actions } = this.props;
-    const { hasSixDigitPin, verificationError } = this.state;
+    const { hasSixDigitPin, verificationError, loading } = this.state;
     const pinLength = hasSixDigitPin ? 6 : 4;
 
-    if (newValue.length > pinLength) return;
+    if (newValue.length > pinLength || loading) return;
 
     if (newValue.length === 1 && verificationError) {
       this.setState({ verificationError: false });
@@ -189,7 +191,7 @@ class VerifyProfile extends Component {
     }
   };
 
-  handle2FAChange = newValue => {
+  handle2FAChange = async newValue => {
     const { actions } = this.props;
     const { verificationError } = this.state;
     if (newValue.length > 6) {
@@ -204,9 +206,10 @@ class VerifyProfile extends Component {
     this.setState({ value: newValue });
     actions.updateFormField("code", newValue);
     if (newValue.length === 6) {
+      this.setState({ loading: true });
       actions.toggleKeypad();
-
-      actions.checkTwoFactor(this.onCheckSuccess, this.onCheckError);
+      await actions.checkTwoFactor(this.onCheckSuccess, this.onCheckError);
+      this.setState({ loading: false });
     }
   };
 

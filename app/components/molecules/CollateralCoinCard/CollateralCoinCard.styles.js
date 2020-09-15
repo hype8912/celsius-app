@@ -26,7 +26,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CollateralCoinCardStyle = () => getThemedStyle(base, themed);

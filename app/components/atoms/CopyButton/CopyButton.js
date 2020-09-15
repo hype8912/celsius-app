@@ -7,7 +7,7 @@ import CopyButtonStyle from "./CopyButton.styles";
 
 const CopyButton = props => {
   // To do add propTypes
-  const { copyText, onCopy, text, color } = props;
+  const { copyText, onCopy, text } = props;
   const style = CopyButtonStyle();
 
   return (
@@ -18,7 +18,7 @@ const CopyButton = props => {
         onCopy();
       }}
     >
-      <CelText style={style.text} color={color}>
+      <CelText style={style.text} link>
         {text}
       </CelText>
     </TouchableOpacity>

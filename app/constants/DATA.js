@@ -364,19 +364,18 @@ const SIMPLEX_FIAT_CURRENCIES = [
 ];
 
 const PIN_STRENGTH_ITEMS = [
-  { copy: "Don't use your birthday" },
-  { copy: "No 6 digits in ascending/descending order" },
-  { copy: "Minimum 4 unique digits" },
+  { copy: "Include at least 4 unique digits" },
+  { copy: "Not be 6 consecutive digits" },
+  { copy: "Not include your birthday" },
 ];
 
 const PASSWORD_STRENGTH_ITEMS = [
-  { copy: "Minimum 8 Characters." },
-  { copy: "Capital letter - at least one." },
-  { copy: "Numbers – at least one." },
-  { copy: "Special characters – at least one." },
+  { copy: "Minimum of 8 characters." },
+  { copy: "One capital letter." },
+  { copy: "One number." },
+  { copy: "One special character." },
   {
-    copy:
-      "Can’t contain your name or parts of the your’s full name, username and spaces.",
+    copy: "Cannot include your name, part of your name, username or spaces",
   },
 ];
 
@@ -403,16 +402,10 @@ const COMING_SOON_COINS = [
     learn_more_link: "https://tron.network/",
   },
   {
-    name: "PAX Gold",
-    short: "PAXG",
-    image_url: require("../../assets/images/coins/paxGoldFullColor3x.png"),
-    learn_more_link: "https://www.paxos.com/paxgold/",
-  },
-  {
     name: "Binance Coin",
     short: "BNB",
     image_url: require("../../assets/images/coins/binance.png"),
-    learn_more_link: "https://www.binance.com/en/buy-Binance-Coin",
+    learn_more_link: "https://www.binance.com/en",
   },
   {
     name: "IOTA",
@@ -440,6 +433,78 @@ const COMING_SOON_COINS = [
   },
 ];
 
+const ERC_20_COINS = {
+  ETH: "eth",
+  DAI: "dai",
+  PAX: "pax",
+  CEL: "cel",
+  OMG: "omg",
+  ZRX: "zrx",
+  TUSD: "tusd",
+  GUSD: "gusd",
+  USDC: "usdc",
+  USDT_ERC20: "usdt erc20",
+  TCAD: "tcad",
+  TGBP: "tgbp",
+  THKD: "thkd",
+  TAUD: "taud",
+  BUSD: "busd",
+  LINK: "link",
+  LPT: "lpt",
+  SNX: "snx",
+  KNC: "knc",
+  MATIC: "matic",
+  BAT: "bat",
+  SGA: "sga",
+  XAUT: "xaut",
+  PAXG: "paxg",
+};
+
+const LINKS_TO_BUY = {
+  MOONPAY: "https://buy.moonpay.io/celsius",
+  TRUSTTOKEN_TUSD: "https://www.trusttoken.com/trueusd",
+  USDC_CIRCLE: "https://usdc.circle.com/start",
+  PAXOS: "https://account.paxos.com/signup",
+  TRUSTTOKEN_THKD: "https://www.trusttoken.com/truehkd",
+  TRUSTTOKEN_TCAD: "https://www.trusttoken.com/truecad",
+  TRUSTTOKEN_TAUD: "https://www.trusttoken.com/trueaud",
+  TRUSTTOKEN_GBP: "https://www.trusttoken.com/truegbp",
+  DASH: "https://www.dash.org/where-to-buy",
+};
+
+const LINKS_FOR_COINS = {
+  BTC: LINKS_TO_BUY.MOONPAY,
+  BCH: LINKS_TO_BUY.MOONPAY,
+  ETH: LINKS_TO_BUY.MOONPAY,
+  LTC: LINKS_TO_BUY.MOONPAY,
+  XRP: LINKS_TO_BUY.MOONPAY,
+  XLM: LINKS_TO_BUY.MOONPAY,
+  OMG: LINKS_TO_BUY.MOONPAY,
+  DAI: LINKS_TO_BUY.MOONPAY,
+  TUSD: LINKS_TO_BUY.TRUSTTOKEN_TUSD,
+  USDC: LINKS_TO_BUY.USDC_CIRCLE,
+  PAX: LINKS_TO_BUY.PAXOS,
+  THKD: LINKS_TO_BUY.TRUSTTOKEN_THKD,
+  TCAD: LINKS_TO_BUY.TRUSTTOKEN_TCAD,
+  TAUD: LINKS_TO_BUY.TRUSTTOKEN_TAUD,
+  TGBP: LINKS_TO_BUY.TRUSTTOKEN_GBP,
+  DASH: LINKS_TO_BUY.DASH,
+};
+
+const BLOCKEXPLORER_NAME = {
+  BTC: "blockchain",
+  BCH: "blockdozer",
+  LTC: "chainz",
+  XRP: "xrpcharts",
+  XLM: "stellarchain",
+  EOS: "bloks.io",
+  DASH: "chainz",
+  ZEC: "chain.so",
+  BTG: "btgexplorer",
+  ETC: "bitquery.i",
+  ERC20: "etherscan",
+};
+
 export {
   BLOCKEXPLORERS,
   KYC_STATUSES,
@@ -462,4 +527,7 @@ export {
   SECURITY_STRENGTH_LEVEL,
   NOTIFICATION_TOKEN,
   COMING_SOON_COINS,
+  ERC_20_COINS,
+  LINKS_FOR_COINS,
+  BLOCKEXPLORER_NAME,
 };

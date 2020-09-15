@@ -6,6 +6,7 @@ import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
 import CelModal from "../CelModal/CelModal";
 import InfoModalStyle from "./InfoModal.styles";
+import CelButton from "../../atoms/CelButton/CelButton";
 
 const InfoModal = props => {
   const {
@@ -20,12 +21,12 @@ const InfoModal = props => {
     yesButtonStyle,
     onYes,
     yesCopy,
-    noButtonStyle,
     onNo,
     noCopy,
     coin,
     yesLoading,
     noLoading,
+    noButtonStyle,
   } = props;
 
   const style = InfoModalStyle();
@@ -56,6 +57,12 @@ const InfoModal = props => {
               </CelText>
             ))}
         </View>
+
+        {noCopy ? (
+          <CelButton onPress={onNo} basic color="red" margin="0 0 25 0">
+            {noCopy}
+          </CelButton>
+        ) : null}
 
         <View style={style.buttonWrapper}>
           {yesCopy ? (

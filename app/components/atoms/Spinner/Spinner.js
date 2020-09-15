@@ -3,9 +3,8 @@ import { Animated } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import PropTypes from "prop-types";
 
-import { THEMES } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class Spinner extends Component {
   static propTypes = {
@@ -19,12 +18,11 @@ class Spinner extends Component {
 
   constructor(props) {
     super(props);
-    const theme = getTheme();
 
     this.state = {
       spinValue: new Animated.Value(0),
-      strokeColor: this.getColor(theme),
-      opacity: this.getOpacity(theme),
+      strokeColor: this.getColor(),
+      opacity: this.getOpacity(),
     };
     this.animation = null;
   }
@@ -37,25 +35,18 @@ class Spinner extends Component {
     this.animation.stop();
   };
 
-  getOpacity = theme => {
+  getOpacity = () => {
     const { opacity } = this.props;
     if (!isNaN(opacity)) return opacity;
 
-    return theme === THEMES.DARK ? 0.7 : 0.3;
+    return 1;
   };
 
-  getColor = theme => {
+  getColor = () => {
     const { color } = this.props;
     if (color) return color;
 
-    switch (theme) {
-      case THEMES.DARK:
-        return STYLES.COLORS.WHITE;
-      case THEMES.LIGHT:
-      case THEMES.CELSIUS:
-      default:
-        return STYLES.COLORS.DARK_GRAY;
-    }
+    return getColor(COLOR_KEYS.PARAGRAPH);
   };
 
   repeat = () => {

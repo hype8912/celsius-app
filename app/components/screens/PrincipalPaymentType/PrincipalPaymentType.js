@@ -12,6 +12,7 @@ import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -92,11 +93,11 @@ class PrincipalPaymentType extends Component {
 
         <TouchableOpacity
           style={style.addMoreCoinsList}
-          onPress={() => actions.navigateTo("Deposit")}
+          onPress={() => actions.navigateTo(SCREENS.DEPOSIT)}
         >
           <Icon fill={"gray"} width="17" height="17" name="CirclePlus" />
           <CelText type="H5" margin={"0 0 0 5"}>
-            Deposit coins
+            Transfer coins
           </CelText>
         </TouchableOpacity>
 

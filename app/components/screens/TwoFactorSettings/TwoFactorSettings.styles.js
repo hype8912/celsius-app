@@ -1,6 +1,5 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -10,7 +9,7 @@ const base = {
     marginTop: 15,
     marginBottom: 10,
     padding: 10,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     borderRadius: 6,
   },
   separatorWrapper: {
@@ -18,8 +17,7 @@ const base = {
     width: "100%",
   },
   secretText: {
-    color: STYLES.COLORS.CELSIUS,
-    textDecorationLine: "underline",
+    color: COLOR_KEYS.BANNER_INFO,
     marginTop: 15,
     maxWidth: "70%",
   },
@@ -34,7 +32,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const TwoFactorSettingsStyle = () => getThemedStyle(base, themed);

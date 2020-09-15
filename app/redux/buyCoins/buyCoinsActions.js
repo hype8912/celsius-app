@@ -5,14 +5,12 @@ import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
 import { showMessage } from "../ui/uiActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
-import { mocks } from "../../../dev-settings";
-import mockTransactions from "../../mock-data/payments.mock";
 import buyCoinsService from "../../services/buy-coins-service";
 import {
   BUY_COINS_PAYMENT_STATUSES,
   TRANSACTION_TYPES,
 } from "../../constants/DATA";
-import STYLES from "../../constants/STYLES";
+import { COLOR_KEYS } from "../../constants/COLORS";
 
 export {
   getPaymentRequests,
@@ -30,17 +28,7 @@ function getPaymentRequests() {
     dispatch(startApiCall(API.GET_PAYMENT_REQUESTS));
 
     try {
-      let res;
-      if (!mocks.USE_MOCK_TRANSACTIONS) {
-        res = await buyCoinsService.getAllPayments();
-      } else {
-        res = {
-          data: Object.values(mockTransactions).filter(t =>
-            ["pending", "approved", "declined"].includes(t.id)
-          ),
-        };
-      }
-
+      const res = await buyCoinsService.getAllPayments();
       const payments = res.data.map(mapPayment);
 
       dispatch({
@@ -235,15 +223,15 @@ function mapPayment(payment) {
 
   switch (paymentType) {
     case TRANSACTION_TYPES.DEPOSIT_PENDING:
-      uiProps.color = STYLES.COLORS.ORANGE;
+      uiProps.color = COLOR_KEYS.ALERT_STATE;
       uiProps.statusText = "Pending";
       break;
     case TRANSACTION_TYPES.DEPOSIT_CONFIRMED:
-      uiProps.color = STYLES.COLORS.GREEN;
+      uiProps.color = COLOR_KEYS.POSITIVE_STATE;
       uiProps.statusText = "Confirmed";
       break;
     case TRANSACTION_TYPES.CANCELED:
-      uiProps.color = STYLES.COLORS.RED;
+      uiProps.color = COLOR_KEYS.NEGATIVE_STATE;
       uiProps.statusText = "Cancelled";
       break;
   }

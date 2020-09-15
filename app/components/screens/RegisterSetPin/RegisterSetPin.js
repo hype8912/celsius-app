@@ -14,6 +14,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PinTooltip from "../../molecules/PinTooltip/PinTooltip";
 import securityUtil from "../../../utils/security-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -85,7 +86,7 @@ class RegisterSetPin extends Component {
         this.setState({ pinCreated: false });
       } else {
         await actions.getInitialCelsiusData();
-        return actions.navigateTo("Home");
+        return actions.navigateTo(SCREENS.HOME);
       }
     } else {
       actions.showMessage("error", "Both PIN numbers should be the same.");
@@ -113,7 +114,7 @@ class RegisterSetPin extends Component {
     const screenText = {};
     screenText.headingText = !pinCreated ? "Create a PIN" : "Repeat PIN";
     screenText.subheadingText = !pinCreated
-      ? "Create a unique PIN to secure your account."
+      ? "You will need to remember your PIN to continue to use the app."
       : "You're almost there!";
 
     return screenText;

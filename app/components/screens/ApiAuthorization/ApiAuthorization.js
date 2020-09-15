@@ -8,9 +8,9 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import CelApiDropdown from "../../molecules/CelApiDropdown/CelApiDropdown";
 import ApiKeyRevokeModal from "../../modals/ApiKeyRevokeModal/ApiKeyRevokeModal";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -52,13 +52,15 @@ class ApiAuthorization extends Component {
 
     return (
       <RegularLayout>
-        <CelText color={STYLES.COLORS.MEDIUM_GRAY} type={"H4"} weight={"400"}>
+        <CelText type={"H4"} weight={"400"}>
           Generate a secure API key that enables external services to read some
           of the Celsius data.{" "}
         </CelText>
 
         <CelButton
-          onPress={() => actions.navigateTo("ApiAuthorizationPermissions")}
+          onPress={() =>
+            actions.navigateTo(SCREENS.API_AUTHORIZATION_PERMISSIONS)
+          }
           margin={"30 0 0 0"}
         >
           Generate API key

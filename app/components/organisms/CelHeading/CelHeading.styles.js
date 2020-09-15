@@ -1,14 +1,11 @@
 import { Platform } from "react-native";
-// import DeviceInfo from "react-native-device-info";
 import {
   getThemedStyle,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
-// const hasNotch = DeviceInfo.hasNotch();
-// const isAndroidWithNotch = Platform.OS === "android" && hasNotch
-// const paddingTop = Platform.OS === "android" && !isAndroidWithNotch ? StatusBar.currentHeight : 0
 const headerHeight = 60;
 
 const base = {
@@ -52,9 +49,10 @@ const base = {
   },
 
   headingBackground: {
+    backgroundColor: COLOR_KEYS.HEADER,
     ...Platform.select({
       android: {
-        borderColor: "#E9E9E9",
+        borderColor: COLOR_KEYS.TRANSPARENT,
         borderBottomWidth: 2,
       },
       ios: {
@@ -65,7 +63,7 @@ const base = {
 
   transparentBackground: {
     position: "absolute",
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     zIndex: 100,
     top: 0,
     left: 0,
@@ -79,7 +77,7 @@ const base = {
 
     ...Platform.select({
       android: {
-        borderColor: "#E9E9E9",
+        borderColor: COLOR_KEYS.TOGGLE_OFF_BACKGROUND,
         borderWidth: 1,
       },
       ios: {
@@ -91,36 +89,34 @@ const base = {
   button: {
     borderRadius: 17,
     overflow: "hidden",
-    borderColor: "black",
+    borderColor: COLOR_KEYS.BLACK,
+  },
+  sameBackground: {
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
 };
 
 const themed = {
-  light: {
-    headingBackground: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    sameBackground: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
-
+  light: {},
   dark: {
     headingBackground: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-      borderColor: "transparent",
-    },
-    sameBackground: {
-      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
+      borderColor: COLOR_KEYS.TRANSPARENT,
     },
   },
-
-  celsius: {
+  unicorn: {
     headingBackground: {
-      backgroundColor: STYLES.COLORS.CELSIUS,
-    },
-    sameBackground: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+      borderColor: null, // TODO: handle this better way when remove light theme
+      ...Platform.select({
+        android: {
+          borderColor: COLOR_KEYS.TRANSPARENT,
+          borderBottomWidth: 0,
+        },
+        ios: {
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0,
+          shadowRadius: 0,
+        },
+      }),
     },
   },
 };

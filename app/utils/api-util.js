@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import qs from "qs";
 import r from "jsrsasign";
 import { Platform } from "react-native";
@@ -12,6 +13,7 @@ import { getSecureStoreKey } from "../utils/expo-storage";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import mixpanelAnalytics from "./mixpanel-analytics";
+import { SCREENS } from "../constants/SCREENS";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -25,6 +27,9 @@ let deviceModel;
 let osVersion;
 let buildVersion;
 const decodedPublicKey = Base64.decode(PUBLIC_KEY);
+// NOTE: used for logging API call durations
+const shouldLogDurations = false;
+const durations = {};
 
 export default {
   initInterceptors,
@@ -64,6 +69,11 @@ async function requestInterceptor(req) {
       ...setGeolocationHeaders(),
       ...(await setAuthHeaders()),
     };
+
+    // NOTE: measures the duration of API call
+    if (shouldLogDurations) {
+      durations[req.url] = moment();
+    }
   }
 
   if (
@@ -152,9 +162,7 @@ async function setAppVersionHeaders() {
   const clientVersion = ENV === "PRODUCTION" ? CLIENT_VERSION : ENV;
   if (!buildVersion) {
     const metadata = await CodePush.getUpdateMetadata();
-    buildVersion = metadata
-      ? `${metadata.appVersion}@${metadata.label}`
-      : "local";
+    buildVersion = metadata ? `${clientVersion}@${metadata.label}` : "local";
   }
 
   return {
@@ -185,6 +193,17 @@ async function responseInterceptor(res) {
   const { backendStatus } = store.getState().generalData;
   const sign = res.headers["x-cel-sign"];
   const data = res.data;
+
+  // NOTE: logs API call duration to console
+  if (shouldLogDurations) {
+    durations[res.config.url] = moment().diff(
+      durations[res.config.url],
+      "seconds",
+      true
+    );
+    // eslint-disable-next-line no-console
+    console.log({ [res.config.url]: durations[res.config.url] });
+  }
 
   if (
     res.config.url.includes(API_URL) &&
@@ -276,14 +295,14 @@ async function handle401(err) {
     store.dispatch(actions.logoutFormDevice());
   }
   if (err.slug === "PASSWORD_LEAKED") {
-    store.dispatch(actions.resetToScreen("PasswordBreached"));
+    store.dispatch(actions.resetToScreen(SCREENS.PASSWORD_BREACHED));
   }
   if (err.slug === "TWO_FACTOR_INVALID_CODE") {
     store.dispatch(actions.showMessage("error", err.msg));
   }
   if (err.slug === "COMPLIANCE_ERROR") {
     if (err.type === "BitWala") {
-      store.dispatch(actions.navigateTo("BitWala"));
+      store.dispatch(actions.navigateTo(SCREENS.BITWALA));
     }
   }
 }
@@ -308,7 +327,7 @@ async function handleSixDigitPinChange(reqConfig) {
       navigateToSixDigitFlow(reqConfig, resolve, reject);
     } else {
       store.dispatch(
-        actions.navigateTo("VerifyProfile", {
+        actions.navigateTo(SCREENS.VERIFY_PROFILE, {
           hideBack: true,
           showLogOutBtn: true,
           onSuccess: () => {
@@ -322,12 +341,12 @@ async function handleSixDigitPinChange(reqConfig) {
 
 function navigateToSixDigitFlow(reqConfig, resolve, reject) {
   store.dispatch(
-    actions.navigateTo("SixDigitPinExplanation", {
+    actions.navigateTo(SCREENS.SIX_DIGIT_PIN_EXPLANATION, {
       onSuccess: async () => {
         try {
           // fetch failed request again after verification successful
           const res = await axios(reqConfig);
-          store.dispatch(actions.resetToScreen("WalletLanding"));
+          store.dispatch(actions.resetToScreen(SCREENS.WALLET_LANDING));
           store.dispatch(actions.updateFormField("loading", false));
           return resolve(res);
         } catch (e) {
@@ -343,9 +362,9 @@ async function handle426(err, reqConfig) {
     // get active screen before rerouting
     const { activeScreen } = store.getState().nav;
 
-    if (activeScreen !== "VerifyProfile") {
+    if (activeScreen !== SCREENS.VERIFY_PROFILE) {
       store.dispatch(
-        actions.navigateTo("VerifyProfile", {
+        actions.navigateTo(SCREENS.VERIFY_PROFILE, {
           hideBack: true,
           showLogOutBtn: true,
           // PIN || 2FA
@@ -358,9 +377,11 @@ async function handle426(err, reqConfig) {
 
               // navigate back
               if (
-                !["LoginLanding", "Login", "SplashScreen"].includes(
-                  activeScreen
-                )
+                ![
+                  SCREENS.LOGIN_LANDING,
+                  SCREENS.LOGIN,
+                  SCREENS.SPLASH_SCREEN,
+                ].includes(activeScreen)
               ) {
                 store.dispatch(actions.navigateBack());
               }
@@ -378,7 +399,7 @@ async function handle426(err, reqConfig) {
 }
 
 function handle429() {
-  store.dispatch(actions.navigateTo("TooManyRequests"));
+  store.dispatch(actions.navigateTo(SCREENS.TOO_MANY_REQUESTS));
 }
 
 function handle503(err) {

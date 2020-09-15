@@ -10,6 +10,7 @@ import CelText from "../../../atoms/CelText/CelText";
 import CelModalButton from "../../../atoms/CelModalButton/CelModalButton";
 import CelModal from "../../CelModal/CelModal";
 import CelButton from "../../../atoms/CelButton/CelButton";
+import { SCREENS } from "../../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -24,7 +25,7 @@ class LoanAlertsMarginCallLockCoinModal extends Component {
   lockAdditionalCollateral = () => {
     const { actions, loan } = this.props;
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () =>
         actions.lockMarginCallCollateral(
           loan.id,
@@ -68,7 +69,7 @@ class LoanAlertsMarginCallLockCoinModal extends Component {
             >
               {loan && `${loan.margin_call_amount} ${loan.collateral_coin} `}
             </CelText>
-            from your wallet balance. You can also deposit more funds or choose
+            from your wallet balance. You can also transfer more funds or choose
             other coins from your wallet.
           </CelText>
           <CelButton

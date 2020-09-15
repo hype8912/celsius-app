@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import * as d3 from "d3";
 
 import CircularProgressBarStyles from "./CircularProgressBar.styles";
-import { heightPercentageToDP } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { getColor, heightPercentageToDP } from "../../../utils/styles-util";
 import CelText from "../../atoms/CelText/CelText";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const height = heightPercentageToDP("15%");
 
@@ -45,28 +45,33 @@ class CircularProgressBar extends Component {
       <View>
         {amountLoaned !== 0 && (
           <View>
+            <View
+              style={[
+                style.innerCircle,
+                { backgroundColor: getColor(COLOR_KEYS.BACKGROUND) },
+              ]}
+            />
+
             <Surface width={height} height={height}>
               <Group x={height / 2} y={height / 2}>
                 <Shape
                   d={path(section)}
-                  stroke={STYLES.COLORS.GREEN}
-                  fill={STYLES.COLORS.GREEN}
-                  strokeWidth={4}
+                  fill={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                  stroke={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                  strokeWidth={5}
                 />
               </Group>
             </Surface>
 
-            <View
-              style={[
-                style.innerCircle,
-                { backgroundColor: STYLES.COLORS.GREEN_OPACITY },
-              ]}
-            />
             <View style={[style.contentCircle, style.progressBackground]}>
-              <CelText color={STYLES.COLORS.GRAY} type={"H6"} weight={"300"}>
+              <CelText type={"H6"} weight={"300"}>
                 Amount
               </CelText>
-              <CelText color={STYLES.COLORS.GREEN} type={"H3"} weight={"600"}>
+              <CelText
+                color={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                type={"H3"}
+                weight={"600"}
+              >
                 {amountPaid}
               </CelText>
             </View>

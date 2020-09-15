@@ -15,7 +15,6 @@ import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
-
 import PaymentCardStyle from "./PaymentCard.styles";
 import Separator from "../../atoms/Separator/Separator";
 import CelButton from "../../atoms/CelButton/CelButton";

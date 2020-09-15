@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -10,38 +11,29 @@ const base = {
     borderRadius: 8,
     marginVertical: 20,
     minHeight: 50,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
   leftWrapper: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   rightWrapper: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   rightTextWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 0.3
-  }
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 0.3,
+  },
+  textColor: { color: COLOR_KEYS.PARAGRAPH },
+  iconColor: { color: COLOR_KEYS.PARAGRAPH },
 };
 
 const themed = {
-  light: {
-    container: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    textColor: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY6,
-    },
-  },
-
+  light: {},
   dark: {
     container: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
       ...Platform.select({
         android: {
           ...STYLES.ANDROID_BORDER_STYLES,
@@ -51,34 +43,9 @@ const themed = {
         },
       }),
     },
-    textColor: {
-      color: STYLES.COLORS.WHITE,
-    },
-    iconColor: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
   },
 
-  celsius: {
-    container: {
-      backgroundColor: STYLES.COLORS.WHITE,
-      ...Platform.select({
-        android: {
-          ...STYLES.ANDROID_SHADOW_STYLES,
-          borderColor: "#E9E9E9",
-        },
-        ios: {
-          ...STYLES.SHADOW_STYLES,
-        },
-      }),
-    },
-    textColor: {
-      color: STYLES.COLORS.DARK_GRAY6,
-    },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY6,
-    },
-  },
+  unicorn: {},
 };
 
 const IconButtonStyle = () => getThemedStyle(base, themed);

@@ -15,6 +15,7 @@ import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
 import TierCard from "../../organisms/TierCard/TierCard";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class TransactionDetailsLoans extends Component {
   static propTypes = {
@@ -82,15 +83,14 @@ class TransactionDetailsLoans extends Component {
                 Successfully Completed Loan
               </CelText>
               <CelText align={"left"} type={"H6"}>
-                Your collateral is now released and ready to earn interest
-                again.
+                Your collateral is now released and ready to earn rewards again.
               </CelText>
             </Card>
           ) : null}
 
           {transaction.type.includes("LOCKED") ? (
             <View style={{ marginTop: 20 }}>
-              <View style={{ paddingHorizontal: 20 }}>
+              <View>
                 <View
                   style={{
                     flexDirection: "row",
@@ -114,7 +114,7 @@ class TransactionDetailsLoans extends Component {
                 </Card>
                 <Separator margin="20 0 20 0" />
               </View>
-              <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
+              <View style={{ marginBottom: 20 }}>
                 <View
                   style={{
                     flexDirection: "row",
@@ -152,7 +152,7 @@ class TransactionDetailsLoans extends Component {
           <CelButton
             margin={"20 0 0 0"}
             basic
-            onPress={() => navigateTo("WalletLanding")}
+            onPress={() => navigateTo(SCREENS.WALLET_LANDING)}
           >
             Go Back to Wallet
           </CelButton>

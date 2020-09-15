@@ -4,11 +4,16 @@ import { Animated, Image, Linking, View } from "react-native";
 
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import { THEMES, WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
 import Icon from "../../atoms/Icon/Icon";
-import { getTheme, widthPercentageToDP } from "../../../utils/styles-util";
+import {
+  getColor,
+  getTheme,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import animationsUtil from "../../../utils/animations-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import ComingSoonCoinsStyle from "./ComingSoonCoins.styles";
 
 class ComingSoonCoins extends Component {
   static propTypes = {
@@ -39,7 +44,7 @@ class ComingSoonCoins extends Component {
 
   render() {
     const theme = getTheme();
-    // const style = ComingSoonCoinsStyle(theme);
+    const style = ComingSoonCoinsStyle();
     const { activeView, coin, isGrid } = this.props;
     const cardSize =
       activeView === WALLET_LANDING_VIEW_TYPES.GRID ? "half" : "full";
@@ -73,7 +78,7 @@ class ComingSoonCoins extends Component {
                   name={`Icon${coin.short}`}
                   width="40"
                   height="40"
-                  fill={STYLES.COLORS.MEDIUM_GRAY}
+                  fill={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
                   style={{ marginRight: 12 }}
                 />
               ) : (
@@ -100,16 +105,18 @@ class ComingSoonCoins extends Component {
                   </CelText>
                   {!isGrid && (
                     <CelText
-                      color={STYLES.COLORS.CELSIUS_BLUE}
+                      link
                       onPress={() => Linking.openURL(coin.learn_more_link)}
                     >
                       Learn more
                     </CelText>
                   )}
                 </View>
-                <CelText type={textSize} weight="bold">
-                  {coin.name}
-                </CelText>
+                <View style={style.coinName}>
+                  <CelText type={textSize} weight="bold">
+                    {coin.name}
+                  </CelText>
+                </View>
               </View>
             </View>
           </View>
@@ -117,7 +124,7 @@ class ComingSoonCoins extends Component {
           {isGrid && (
             <CelText
               margin="5 0 0 0"
-              color={STYLES.COLORS.CELSIUS_BLUE}
+              link
               onPress={() => Linking.openURL(coin.learn_more_link)}
             >
               Learn more

@@ -7,6 +7,8 @@ const initialState = {
   kycDocuments: undefined,
   utilityBill: undefined,
   kycDocTypes: undefined,
+  applicantId: undefined,
+  mobileSDKToken: undefined,
 };
 
 export default function kycReducer(state = initialState, action) {
@@ -18,7 +20,6 @@ export default function kycReducer(state = initialState, action) {
       };
 
     case ACTIONS.GET_KYC_DOCUMENTS_SUCCESS:
-    case ACTIONS.CREATE_KYC_DOCUMENTS_SUCCESS:
       return {
         ...state,
         kycDocuments: action.documents,
@@ -34,6 +35,18 @@ export default function kycReducer(state = initialState, action) {
       return {
         ...state,
         kycDocTypes: action.kycDocTypes,
+      };
+
+    case ACTIONS.CREATE_KYC_APPLICANT_SUCCESS:
+      return {
+        ...state,
+        applicantId: action.applicantId,
+      };
+
+    case ACTIONS.GET_ONFIDO_MOBILE_SDK_SUCCESS:
+      return {
+        ...state,
+        mobileSDKToken: action.mobileSDKToken,
       };
 
     default:

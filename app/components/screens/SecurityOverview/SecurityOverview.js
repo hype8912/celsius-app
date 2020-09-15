@@ -16,6 +16,7 @@ import CheckWithdrawalAddressesCard from "../../organisms/CheckWithdrawalAddress
 import SeparatorInfoModal from "../../modals/SeparatorInfoModal/SeparatorInfoModal";
 import { MODALS } from "../../../constants/UI";
 import SecurityOverviewStyle from "./SecurityOverview.styles";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -55,8 +56,8 @@ class SecurityOverview extends Component {
   onPress2fa = () => {
     const { actions, twoFAStatus } = this.props;
     if (!twoFAStatus.isActive) {
-      actions.navigateTo("VerifyProfile", {
-        onSuccess: () => actions.navigateTo("TwoFactorSettings"),
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+        onSuccess: () => actions.navigateTo(SCREENS.TWO_FACTOR_SETTINGS),
       });
     }
   };
@@ -66,14 +67,13 @@ class SecurityOverview extends Component {
     const fixNowContent = securityOverview.score_parameters.filter(
       c => c.fixable && c.name !== "hodl_mode"
     );
-    actions.navigateTo("SecurityFixNow", {
+    actions.navigateTo(SCREENS.SECURITY_FIX_NOW, {
       fixNowContentLength: fixNowContent.length,
     });
   };
 
   getFixNowParams = () => {
     const { securityOverview, twoFAStatus } = this.props;
-
     let scoreParams = securityOverview.score_parameters;
     const scoreParamsCount = securityOverview.score_parameters_count;
     let scoreParamsFixableCount =
@@ -102,7 +102,7 @@ class SecurityOverview extends Component {
           selectedModalData: {
             title: "What is HODL Mode?",
             body: [
-              "HODL Mode is a security feature that gives you the ability to temporarily disable outgoing transactions from your Celsius account. You control when HODL Mode is activated, and it is an ideal feature for those that do not plan on withdrawing or transferring funds from their wallet for an extended period of time.",
+              "HODL Mode is a security feature that gives you the ability to temporarily disable outgoing transactions from your Celsius wallet. You control when HODL Mode is activated, and it is an ideal feature for those that do not plan on withdrawing or transferring funds from their wallet for an extended period of time.",
             ],
           },
         });
@@ -112,7 +112,7 @@ class SecurityOverview extends Component {
           selectedModalData: {
             title: "Why should you whitelist your withdrawal addresses?",
             body: [
-              "Whitelisting a withdrawal address means that in the rare chance a hacker is able to gain access to your account, the only place they can send your crypto is a wallet that you already control. In addition, changing a whitelisted address for a specific coin requires email confirmation and will incur a 24 hours lock-down on all withdrawals in that coin.",
+              "Whitelisting a withdrawal address means that in the rare chance a hacker is able to gain access to your wallet, the only place they can send your crypto is a wallet that you already control. In addition, changing a whitelisted address for a specific coin requires email confirmation and will incur a 24 hours lock-down on all withdrawals in that coin.",
             ],
           },
         });
@@ -137,7 +137,6 @@ class SecurityOverview extends Component {
     const { actions, securityOverview, twoFAStatus } = this.props;
     const style = SecurityOverviewStyle();
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
-
     const fixNowParams = this.getFixNowParams();
     return (
       <RegularLayout>
@@ -182,7 +181,7 @@ class SecurityOverview extends Component {
           </TouchableOpacity>
           <ToggleInfoCard
             subtitle={"HODL mode is"}
-            onPress={() => actions.navigateTo("HodlLanding")}
+            onPress={() => actions.navigateTo(SCREENS.HODL_LANDING)}
             enabled={securityOverview.hodl_mode_active}
           />
 
@@ -200,7 +199,7 @@ class SecurityOverview extends Component {
                   ) && "Change Password"
                 }
                 onPressEnhance={() => {
-                  actions.navigateTo("ChangePassword");
+                  actions.navigateTo(SCREENS.CHANGE_PASSWORD);
                 }}
               />
             </>
@@ -220,8 +219,8 @@ class SecurityOverview extends Component {
                   ) && "Change PIN"
                 }
                 onPressEnhance={() => {
-                  actions.navigateTo("VerifyProfile", {
-                    onSuccess: () => actions.navigateTo("ChangePin"),
+                  actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+                    onSuccess: () => actions.navigateTo(SCREENS.CHANGE_PIN),
                   });
                 }}
               />

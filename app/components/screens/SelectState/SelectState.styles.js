@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   item: {
@@ -16,7 +16,7 @@ const base = {
     borderRadius: 8,
   },
   activeItem: {
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
   left: {
     flexDirection: "row",
@@ -33,29 +33,17 @@ const base = {
     height: 30,
     borderRadius: 15,
     borderWidth: 2,
-    borderColor: STYLES.COLORS.WHITE,
-    backgroundColor: STYLES.COLORS.WHITE,
+    borderColor: COLOR_KEYS.CARDS,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
 };
 
 const themed = {
-  light: {
-    activeItem: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
+  light: {},
 
-  dark: {
-    activeItem: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
+  dark: {},
 
-  celsius: {
-    activeItem: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
+  unicorn: {},
 };
 
 const SelectStateStyles = () => getThemedStyle(base, themed);

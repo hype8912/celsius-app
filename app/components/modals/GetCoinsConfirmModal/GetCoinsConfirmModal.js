@@ -11,7 +11,7 @@ import Separator from "../../atoms/Separator/Separator";
 import * as appActions from "../../../redux/actions";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import formatter from "../../../utils/formatter";
-import STYLES from "../../../constants/STYLES";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -28,10 +28,10 @@ class GetCoinsConfirmModal extends Component {
   onButtonPress = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: async () => {
         await actions.createSimplexPayment();
-        actions.navigateTo("Simplex");
+        actions.navigateTo(SCREENS.SIMPLEX);
       },
     });
     actions.closeModal();
@@ -58,7 +58,7 @@ class GetCoinsConfirmModal extends Component {
             weight={"700"}
             margin={"0 0 25 0"}
           >
-            Confirm Transaction Details
+            Confirm Purchase Details
           </CelText>
           <CelText
             type={"H5"}
@@ -66,7 +66,7 @@ class GetCoinsConfirmModal extends Component {
             align={"center"}
             margin={"0 0 10 0"}
           >
-            You are about to receive
+            You are about to purchase
           </CelText>
           <CelText
             align={"center"}
@@ -77,13 +77,10 @@ class GetCoinsConfirmModal extends Component {
             {formatter.crypto(cryptoAmount, formData.cryptoCoin)}
           </CelText>
           <View style={style.infoBlock}>
-            <CelText
-              align={"center"}
-              type={"H6"}
-              color={STYLES.COLORS.MEDIUM_GRAY}
-            >
-              {formData.coin} amount is an estimate. Actual amount will be based
-              on exchange rate at the moment of processing the order.
+            <CelText align={"center"} type={"H6"}>
+              {formData.cryptoCoin} Amount is subject to change. Actual amount
+              will be based on the exchange rate at the moment of processing
+              your order.
             </CelText>
           </View>
           <View style={style.transferData}>
@@ -92,7 +89,7 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Payment Method:
               </CelText>
-              <CelText type={"H6"} align={"right"}>
+              <CelText type={"H6"} align={"right"} weight="bold">
                 Credit Card
               </CelText>
             </View>
@@ -101,7 +98,7 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Delivery:
               </CelText>
-              <CelText type={"H6"} align={"right"}>
+              <CelText type={"H6"} align={"right"} weight="bold">
                 0-1 day
               </CelText>
             </View>
@@ -110,7 +107,7 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Price:
               </CelText>
-              <CelText type={"H6"} align={"right"}>
+              <CelText type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(baseAmount, formData.fiatCoin)}
               </CelText>
             </View>
@@ -124,7 +121,7 @@ class GetCoinsConfirmModal extends Component {
                   3.5% or $10.00 minimum
                 </CelText>
               </View>
-              <CelText type={"H6"} align={"right"}>
+              <CelText type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(fee, formData.fiatCoin)}
               </CelText>
             </View>
@@ -133,7 +130,7 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Transfer Amount:
               </CelText>
-              <CelText type={"H6"} align={"right"}>
+              <CelText type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(totalAmount, formData.fiatCoin)}
               </CelText>
             </View>

@@ -24,7 +24,14 @@
     "pre:commit": "yarn prettier:hook && yarn lint",
     "storybook": "(adb reverse tcp:7007 tcp:7007 || true) && start-storybook",
     "codepush:beta:android": "appcenter codepush release-react -a celsius-network/celsius-1 -d Staging",
-    "codepush:beta:ios": "appcenter codepush release-react -a celsius-network/celsius -d Staging"
+    "codepush:beta:ios": "appcenter codepush release-react -a celsius-network/celsius -d Staging",
+    "test": "jest --verbose"
+  },
+  "jest": {
+    "preset": "react-native",
+    "globals": {
+      "window": {}
+    }
   },
   "husky": {
     "hooks": {
@@ -32,6 +39,7 @@
     }
   },
   "dependencies": {
+    "@onfido/react-native-sdk": "^1.2.3",
     "@react-native-community/blur": "^3.4.1",
     "@react-native-community/cameraroll": "^1.3.0",
     "@react-native-community/cli-platform-ios": "^2.9.0",
@@ -43,28 +51,35 @@
     "@react-native-community/slider": "^2.0.3",
     "@react-native-firebase/app": "7.0.1",
     "@react-native-firebase/messaging": "7.0.1",
-    "appcenter": "2.5.0",
-    "appcenter-analytics": "2.5.0",
-    "appcenter-crashes": "2.5.0",
+    "ajv": "^6.12.4",
+    "appcenter": "3.1.1",
+    "appcenter-analytics": "3.1.1",
+    "appcenter-crashes": "3.1.1",
     "axios": "^0.19.0",
     "bignumber.js": "^9.0.0",
+    "check-prop-types": "^1.1.2",
     "country-data": "^0.0.31",
     "currency-formatter": "^1.5.5",
     "d3": "^5.12.0",
     "d3-scale": "^3.2.0",
     "d3-shape": "^1.3.5",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.3",
     "expo-barcode-scanner": "^7.0.0",
     "expo-contacts": "^7.0.0",
     "expo-font": "^7.0.0",
     "expo-image-picker": "^7.0.0",
     "expo-location": "^7.0.0",
     "expo-permissions": "^7.0.0",
+    "jest-enzyme": "^7.1.2",
     "js-base64": "^2.5.1",
     "jsrsasign": "^8.0.12",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
+    "moxios": "^0.4.0",
     "password-meter": "^3.1.0",
+    "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.61.4",
     "react-native-appsflyer": "^1.4.6",
@@ -129,10 +144,7 @@
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "react-dom": "^16.11.0",
-    "react-test-renderer": "16.9.0",
+    "react-test-renderer": "^16.13.1",
     "remote-redux-devtools": "^0.5.16"
-  },
-  "jest": {
-    "preset": "react-native"
   }
 }

@@ -1,5 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -15,12 +15,12 @@ const base = {
   },
   inputCel: {
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.CARDS,
     flex: 1,
   },
   taxID: {
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.CARDS,
     flex: 1,
     height: 50,
     justifyContent: "space-around",
@@ -29,7 +29,7 @@ const base = {
   },
   nationalID: {
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.CARDS,
     flex: 1,
     height: 50,
     justifyContent: "space-around",
@@ -39,24 +39,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    nationalID: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
-  dark: {
-    taxID: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    nationalID: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    inputCel: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const SocialSecurityNumberStyle = () => getThemedStyle(base, themed);

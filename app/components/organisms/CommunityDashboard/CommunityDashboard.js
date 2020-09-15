@@ -10,10 +10,9 @@ import CommunityDashboardStyle from "./CommunityDashboard.styles";
 import formatter from "../../../utils/formatter";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
-import { THEMES } from "../../../constants/UI";
 import Icon from "../../atoms/Icon/Icon";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -51,10 +50,10 @@ class CommunityDashboard extends Component {
         explanation: "Sent via CelPay in total",
       });
     }
-    if (name === "INTEREST") {
+    if (name === "REWARDS") {
       this.setState({
         primaryNumber: formatter.usd(communityStats.total_interests_usd),
-        explanation: `ASSETS AS OF ${communityStats.community_settings.date}`,
+        explanation: `Average user earnings in the last 12 months`,
       });
     }
     if (name === `ASSETS AS OF ${communityStats.community_settings.date}`) {
@@ -65,7 +64,7 @@ class CommunityDashboard extends Component {
             precision: 0,
           }
         ),
-        explanation: "Total Assets Under Management",
+        explanation: "Total Community Assets",
       });
     }
   }
@@ -91,48 +90,36 @@ class CommunityDashboard extends Component {
       explanationText = "Highest CelPay sent";
       number = formatter.usd(communityStats.highest_celpay_transaction_usd);
     }
-    if (name === "CELPAY" && button === "Transactions") {
+    if (name === "CELPAY" && button === " Number of Transactions") {
       explanationText = "Number of CelPay transactions";
       number = formatter.round(communityStats.celpay_transactions_num, {
         noPrecision: true,
       });
     }
-    if (name === "CELPAY" && button === "Total") {
+    if (name === "CELPAY" && button === "Amount Sent") {
       explanationText = "Sent via CelPay in total";
       number = formatter.usd(communityStats.total_celpay_sent_usd);
     }
-    if (name === "INTEREST" && button === "Earned") {
+    if (name === "REWARDS" && button === "Total Earned") {
       explanationText = "Total community earn in the last 12 months";
       number = formatter.usd(communityStats.total_interests_usd);
     }
-    if (name === "INTEREST" && button === "Average") {
-      explanationText = "The average earn per user in the last 12 months";
+    if (name === "REWARDS" && button === "Average Rewards") {
+      explanationText = "Average user earnings in the last 12 months";
       number = formatter.usd(communityStats.average_interest_earned_usd);
     }
-    if (name === "INTEREST" && button === "Rates") {
-      explanationText = "Interest rates";
+    if (name === "REWARDS" && button === "Rates") {
+      explanationText = "Reward rates";
       number = 31000;
     }
     if (
       name === `ASSETS AS OF ${communityStats.community_settings.date}` &&
       button === "Total AUM"
     ) {
-      explanationText = "Total Assets Under Management";
+      explanationText = "Total Community Assets";
       number = formatter.usd(communityStats.community_settings.total_aum, {
         precision: 0,
       });
-    }
-    if (
-      name === `ASSETS AS OF ${communityStats.community_settings.date}` &&
-      button === "Col. & Cash"
-    ) {
-      explanationText = "Collateral and Cash";
-      number = formatter.usd(
-        communityStats.community_settings.total_collateral_and_cash,
-        {
-          precision: 0,
-        }
-      );
     }
 
     this.setState({
@@ -146,13 +133,10 @@ class CommunityDashboard extends Component {
     const { name, buttonTypes, info, children } = this.props;
     const { activeButton, primaryNumber, explanation } = this.state;
     const style = CommunityDashboardStyle();
-    const theme = getTheme();
-    const separatorColor =
-      THEMES.LIGHT === theme ? STYLES.COLORS.DARK_GRAY1 : null;
 
     return (
       <View style={style.container}>
-        <Separator margin={"30 0 20 0"} color={separatorColor} text={name} />
+        <Separator margin={"30 0 20 0"} text={name} />
         {buttonTypes && buttonTypes.length > 0 && (
           <View style={style.buttonWrapper}>
             {buttonTypes.map(button => (
@@ -167,9 +151,7 @@ class CommunityDashboard extends Component {
                     height={18}
                     width={18}
                     fill={
-                      activeButton === button.buttonType
-                        ? STYLES.COLORS.CELSIUS_BLUE
-                        : STYLES.COLORS.MEDIUM_GRAY
+                      activeButton === button.buttonType ? "active" : "inactive"
                     }
                     strokeWidth={0.5}
                   />
@@ -179,8 +161,8 @@ class CommunityDashboard extends Component {
                     align={"center"}
                     color={
                       activeButton === button.buttonType
-                        ? STYLES.COLORS.CELSIUS_BLUE
-                        : STYLES.COLORS.MEDIUM_GRAY
+                        ? getColor(COLOR_KEYS.TAB_SELECTED)
+                        : getColor(COLOR_KEYS.TAB_UNSELECTED)
                     }
                   >
                     {button.buttonType.toUpperCase()}

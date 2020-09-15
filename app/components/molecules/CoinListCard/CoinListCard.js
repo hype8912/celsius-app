@@ -1,18 +1,20 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { View, Animated } from "react-native";
+import _ from "lodash";
 
 import CoinListCardStyle from "./CoinListCard.styles";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import Card from "../../atoms/Card/Card";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import interestUtil from "../../../utils/interest-util";
-import { widthPercentageToDP } from "../../../utils/styles-util";
+import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 
 class CoinListCard extends Component {
   static propTypes = {
@@ -33,13 +35,13 @@ class CoinListCard extends Component {
       </CelText>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
-          fill={STYLES.COLORS.CELSIUS_BLUE}
+          fill={getColor(COLOR_KEYS.LINK)}
           width="13"
           height="13"
           name="CirclePlus"
         />
-        <CelText margin={"0 0 0 5"} color={STYLES.COLORS.CELSIUS_BLUE}>
-          Deposit
+        <CelText margin={"0 0 0 5"} link>
+          Transfer
         </CelText>
       </View>
     </View>
@@ -62,20 +64,20 @@ class CoinListCard extends Component {
 
   renderInterestRate = coin => {
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
-
-    const isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
-
-    if (!interestRate.eligible) return null;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
+    if (_.isEmpty(interestRate)) return null;
     return (
       <CelText
         weight="500"
         type="H7"
-        color={STYLES.COLORS.GREEN}
+        color={getColor(COLOR_KEYS.POSITIVE_STATE)}
         margin="0 0 0 3"
       >
-        {formatter.percentageDisplay(isInCel)} APY
+        {formatter.percentageDisplay(rate)} APY
       </CelText>
     );
   };

@@ -5,6 +5,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width } = Dimensions.get("window");
 
@@ -19,7 +20,7 @@ const base = {
     flex: 4,
   },
   modal: {
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.WHITE,
     width: widthPercentageToDP("90%"),
     borderRadius: 8,
     zIndex: 3,
@@ -36,7 +37,7 @@ const base = {
     position: "absolute",
     top: 20,
     right: 20,
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     zIndex: 10,
   },
   imageWrapper: {
@@ -70,7 +71,6 @@ const base = {
     marginBottom: 20,
   },
   contentWrapperDeposit: {
-    // height: width * 0.85,
     marginTop: 100,
     paddingRight: 20,
     paddingLeft: 20,
@@ -82,7 +82,7 @@ const base = {
     width: widthPercentageToDP("90%"),
     height: heightPercentageToDP("15.5%"),
     paddingTop: 5,
-    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    backgroundColor: COLOR_KEYS.DOT_INDICATOR_INACTIVE,
     alignItems: "center",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
@@ -92,7 +92,7 @@ const base = {
     width: widthPercentageToDP("28.8%"),
     height: widthPercentageToDP("28.8%"),
     borderRadius: widthPercentageToDP("28.8%") / 2,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.WHITE,
     position: "absolute",
     justifyContent: "center",
     alignItems: "center",
@@ -111,7 +111,7 @@ const base = {
     alignItems: "center",
     alignContent: "flex-start",
     borderRadius: 25,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.WHITE,
     marginBottom: 40,
   },
   title: {
@@ -121,18 +121,18 @@ const base = {
     paddingTop: 20,
     paddingHorizontal: 10,
     paddingBottom: 10,
-    color: STYLES.COLORS.DARK_GRAY,
+    color: COLOR_KEYS.SEPARATORS,
   },
   description: {
     paddingHorizontal: 10,
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    color: "#737A82",
+    color: COLOR_KEYS.TOGGLE_OFF_BACKGROUND,
   },
   modalButton: {
     marginTop: 0,
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
   },
   dotsWithdraw: {
     flex: 1,
@@ -155,7 +155,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelModalStyle = () => getThemedStyle(base, themed);

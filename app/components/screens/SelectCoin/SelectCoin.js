@@ -7,17 +7,17 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import SelectCoinStyle from "./SelectCoin.styles";
-import Separator from "../../atoms/Separator/Separator";
 import Icon from "../../atoms/Icon/Icon";
 import { THEMES } from "../../../constants/UI";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import formatter from "../../../utils/formatter";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
     formData: state.forms.formData,
-    walletSummary: state.wallet.summary,
     currencies: state.currencies.rates,
     activeScreen: state.nav.activeScreen,
   }),
@@ -96,13 +96,12 @@ class SelectCoin extends Component {
   }
 
   getSelectStyle = (style, isActive = false) => {
-    const theme = getTheme();
     const itemStyle = [style.item];
 
-    if (isActive && theme !== THEMES.DARK) {
-      itemStyle.push({ backgroundColor: STYLES.COLORS.WHITE });
-    } else if (isActive && theme === THEMES.DARK) {
-      itemStyle.push({ backgroundColor: STYLES.COLORS.DARK_GRAY3 });
+    if (isActive) {
+      itemStyle.push({
+        backgroundColor: getColor(COLOR_KEYS.CARDS),
+      });
     }
     return itemStyle;
   };
@@ -111,42 +110,21 @@ class SelectCoin extends Component {
     const theme = getTheme();
     const style = SelectCoinStyle();
 
-    if (theme === THEMES.LIGHT && item.image) {
+    if (theme !== THEMES.DARK && item.image) {
       return (
         <Image source={{ uri: item.image }} style={{ width: 30, height: 30 }} />
       );
     }
 
     if (theme === THEMES.DARK && item.image) {
-      return (
-        <Icon
-          name={`Icon${item.value}`}
-          fill={STYLES.COLORS.WHITE}
-          height={30}
-          width={30}
-        />
-      );
+      return <Icon name={`Icon${item.value}`} height={30} width={30} />;
     }
 
     return (
-      <View
-        style={[
-          {
-            backgroundColor:
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.MEDIUM_GRAY1
-                : STYLES.COLORS.DARK_HEADER,
-          },
-          style.iconCircle,
-        ]}
-      >
+      <View style={style.iconCircle}>
         <Icon
           name={`Icon${item.value}`}
-          fill={
-            theme === THEMES.LIGHT
-              ? STYLES.COLORS.DARK_GRAY
-              : STYLES.COLORS.WHITE
-          }
+          fill={COLOR_KEYS.BACKGROUND}
           height={30}
           width={30}
         />
@@ -177,7 +155,7 @@ class SelectCoin extends Component {
               [field]: item.value,
               search: "",
             });
-            if (activeScreen === "SelectCoin") {
+            if (activeScreen === SCREENS.SELECT_COIN) {
               actions.navigateBack();
             }
           }}
@@ -185,7 +163,9 @@ class SelectCoin extends Component {
           <View style={itemStyle}>
             <View style={style.left}>
               {this.renderIcon(item)}
-              <CelText style={{ paddingLeft: 10 }}>{item.label}</CelText>
+              <CelText style={{ paddingLeft: 10 }}>
+                {formatter.capitalize(item.label)}
+              </CelText>
             </View>
             {isActive && (
               <View style={style.right}>
@@ -194,7 +174,6 @@ class SelectCoin extends Component {
             )}
           </View>
         </TouchableOpacity>
-        <Separator />
       </React.Fragment>
     );
   };

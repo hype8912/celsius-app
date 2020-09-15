@@ -38,8 +38,7 @@ class Fab extends Component {
     return (
       <CircleButton
         style={style.fabButtonStyle}
-        type="menu"
-        theme={"celsius"}
+        type="fab"
         onPress={onPress}
         icon={iconName}
       />

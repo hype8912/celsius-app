@@ -5,6 +5,7 @@ import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage } from "../ui/uiActions";
 import userProfileService from "../../services/user-profile-service";
 import { deleteSecureStoreKey } from "../../utils/expo-storage";
+import { SCREENS } from "../../constants/SCREENS";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -79,7 +80,7 @@ function getPreviousPinScreen(activeScreen) {
     dispatch(startApiCall(API.GET_PREVIOUS_SCREEN));
     let screen;
     try {
-      if (activeScreen !== "VerifyProfile") {
+      if (activeScreen !== SCREENS.VERIFY_PROFILE) {
         screen = activeScreen;
         dispatch({
           type: ACTIONS.GET_PREVIOUS_SCREEN_SUCCESS,

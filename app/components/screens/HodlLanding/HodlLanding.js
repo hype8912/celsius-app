@@ -12,6 +12,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { getPadding } from "../../../utils/styles-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import { EMPTY_STATES } from "../../../constants/UI";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -91,12 +92,14 @@ class HodlLanding extends Component {
               </CelText>
               <CelText type={"H4"} align={"left"}>
                 {
-                  "HODL Mode is a security feature that gives you the ability to temporarily disable outgoing transactions from your Celsius account. You control when HODL Mode is activated, and it is an ideal feature for those that do not plan on withdrawing or transferring funds from their wallet for an extended period of time."
+                  "HODL Mode is a security feature that gives you the ability to temporarily disable outgoing transactions from your Celsius wallet. You control when HODL Mode is activated, and it is an ideal feature for those that do not plan on withdrawing or transferring funds from their wallet for an extended period of time."
                 }
               </CelText>
               <CelButton
                 margin={"20 0 0 0"}
-                onPress={() => actions.navigateTo("HODLInfoCheckboxes")}
+                onPress={() =>
+                  actions.navigateTo(SCREENS.HODL_INFO_CHECK_BOXES)
+                }
               >
                 Continue
               </CelButton>
@@ -119,8 +122,9 @@ class HodlLanding extends Component {
             </CelText>
             <CelButton
               onPress={() =>
-                actions.navigateTo("VerifyProfile", {
-                  onSuccess: () => actions.navigateTo("HodlDeactivationCode"),
+                actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+                  onSuccess: () =>
+                    actions.navigateTo(SCREENS.HODL_DEACTIVATION_CODE),
                 })
               }
               margin={"20 0 0 0"}

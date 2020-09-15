@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import _ from "lodash";
 import moment from "moment";
-import STYLES from "../../../constants/STYLES";
 import SecurityFixNowStyle from "../SecurityFixNow/SecurityFixNow.styles";
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -17,6 +16,9 @@ import CheckWithdrawalAddressesCard from "../../organisms/CheckWithdrawalAddress
 import formatter from "../../../utils/formatter";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -29,6 +31,7 @@ import Icon from "../../atoms/Icon/Icon";
 class SecurityFixNow extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
+
     return {
       title: params.title || `Fix Now (1/${params.fixNowContentLength})`,
       customCenterComponent: {
@@ -81,10 +84,10 @@ class SecurityFixNow extends Component {
   onPress2fa = () => {
     const { actions, twoFAStatus } = this.props;
     if (!twoFAStatus.isActive) {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: () => {
           actions.fromFixNow();
-          actions.navigateTo("TwoFactorSettings");
+          actions.navigateTo(SCREENS.TWO_FACTOR_SETTINGS);
         },
       });
     }
@@ -119,14 +122,14 @@ class SecurityFixNow extends Component {
           title: "Two-Factor Authentication",
           cardTitle: "Your 2FA is",
           body:
-            "Activate an extra layer of security that prevents the risk of unwanted access to your account, even if your login information is compromised.",
+            "Activate an extra layer of security that prevents the risk of unwanted access to your wallet, even if your login information is compromised.",
           enabled: twoFAStatus.isActive,
           showInfoBox:
             (securityOverview.toFixNow && !twoFAStatus.isActive) ||
             twoFAStatus.status === "Pending Activation",
           infoBoxText:
             "To complete your Two-Factor Authentication request follow the email instructions.",
-          infoBoxBackgroundColor: STYLES.COLORS.ORANGE,
+          infoBoxBackgroundColor: getColor(COLOR_KEYS.ALERT_STATE),
           infoBoxIcon: "Info",
           infoBoxTextColor: "white",
           onContinuePress: this.onPress2fa,
@@ -138,13 +141,13 @@ class SecurityFixNow extends Component {
           title: `Change Your ${formatter.capitalize(type)}`,
           body: `Your ${type} was last changed ${moment(
             securityOverview[`${type}_last_change`]
-          ).fromNow()}. In order to keep your account secure, it is recommended to change your ${type} at least every 180 days.`,
+          ).fromNow()}. In order to keep your wallet secure, it is recommended to change your ${type} at least every 180 days.`,
           strength: securityOverview[`${type}_strength`],
           lastChange: securityOverview[`${type}_last_change`],
           navigateToScreen: `Change${formatter.capitalize(type)}`,
           showInfoBox: securityOverview.toFixNow,
           infoBoxText: `Successfully changed your ${type}`,
-          infoBoxBackgroundColor: STYLES.COLORS.GREEN,
+          infoBoxBackgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE),
           infoBoxIcon: "CheckCircle",
           infoBoxTextColor: "white",
         };
@@ -174,7 +177,7 @@ class SecurityFixNow extends Component {
                 ) && `Change ${formatter.capitalize(content.type)}`
               }
               onPressEnhance={() => {
-                actions.navigateTo("VerifyProfile", {
+                actions.navigateTo(SCREENS.VERIFY_PROFILE, {
                   onSuccess: () => {
                     actions.navigateTo(content.navigateToScreen);
                     actions.fromFixNow();
@@ -211,11 +214,15 @@ class SecurityFixNow extends Component {
               name={content.infoBoxIcon}
               width="25"
               height="25"
-              fill={STYLES.COLORS.WHITE}
+              fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
             />
           </View>
           <View style={style.infoBoxTextWrapper}>
-            <CelText type={"H5"} weight={"300"} color={STYLES.COLORS.WHITE}>
+            <CelText
+              type={"H5"}
+              weight={"300"}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+            >
               {content.infoBoxText}
             </CelText>
           </View>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import BigNumber from "bignumber.js";
 
 import * as appActions from "../../../redux/actions";
 import LoanPrepaymentPeriodStyle from "./LoanPrepaymentPeriod.styles";
@@ -9,10 +10,12 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
 import CelButton from "../../atoms/CelButton/CelButton";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import ConfirmPrepaymentModal from "../../modals/ConfirmPrepaymentModal/ConfirmPrepaymentModal";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -22,6 +25,7 @@ import ConfirmPrepaymentModal from "../../modals/ConfirmPrepaymentModal/ConfirmP
     currencyRates: state.currencies.currencyRatesShort,
     loyaltyInfo: state.loyalty.loyaltyInfo,
     walletSummary: state.wallet.summary,
+    currencyRatesShort: state.currencies.currencyRatesShort,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -50,9 +54,15 @@ class LoanPrepaymentPeriod extends Component {
       if (formData.coin === "USD") {
         const amountUsd = formData.prepaidPeriod * loan.monthly_payment;
         actions.updateFormField("amountUsd", amountUsd);
-        actions.navigateTo("WiringBankInformation");
+        actions.navigateTo(SCREENS.WIRING_BANK_INFORMATION);
       } else {
         actions.openModal(MODALS.CONFIRM_INTEREST_PREPAYMENT);
+        // actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+        //   onSuccess: () => {
+        //     actions.prepayInterest(id);
+        //     actions.updateFormField("prepayLoanId", id);
+        //   },
+        // });
       }
     }
   };
@@ -130,11 +140,12 @@ class LoanPrepaymentPeriod extends Component {
       actions,
       formData,
       navigation,
-      currencyRates,
+      currencyRatesShort,
     } = this.props;
     const loanId = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === loanId);
-    const coinRate = currencyRates[formData.coin.toLowerCase()];
+    const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
+
     const monthValues = this.getMonthValues();
 
     const sliderItems = monthValues.map(m => ({
@@ -145,7 +156,9 @@ class LoanPrepaymentPeriod extends Component {
             type="H6"
             weight="bold"
             color={
-              formData.prepaidPeriod === m ? STYLES.COLORS.CELSIUS_BLUE : null
+              formData.prepaidPeriod === m
+                ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                : null
             }
           >
             {m} MONTHS
@@ -173,12 +186,12 @@ class LoanPrepaymentPeriod extends Component {
   };
 
   renderWhenOnly6Months = () => {
-    const { allLoans, currencyRates, formData, navigation } = this.props;
-    const coinRate = currencyRates[formData.coin.toLowerCase()];
+    const { allLoans, currencyRatesShort, formData, navigation } = this.props;
+    const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
     const loanId = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === loanId);
     const amount = this.calculatePrepaidValue(
-      Number(loan.monthly_payment * 6),
+      new BigNumber(loan.monthly_payment).multipliedBy(6),
       coinRate,
       formData.coin
     );

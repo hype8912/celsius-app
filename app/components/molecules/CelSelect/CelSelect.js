@@ -3,17 +3,19 @@ import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import RNPickerSelect from "react-native-picker-select";
 import { lookup, countries } from "country-data";
 
 import * as appActions from "../../../redux/actions";
 
 import CelSelectStyle from "./CelSelect.styles";
-import { getMargins } from "../../../utils/styles-util";
+import { getColor, getMargins } from "../../../utils/styles-util";
 import Icon from "../../atoms/Icon/Icon";
 import SELECT_VALUES from "../../../constants/SELECT_VALUES";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import PickerModal from "../../modals/PickerModal/PickerModal";
+import { MODALS } from "../../../constants/UI";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const { PERSON_TITLE, GENDER, STATE, DAYS, YEARS, MONTHS } = SELECT_VALUES;
 
@@ -85,9 +87,9 @@ class CelSelect extends Component {
     const items = this.getItems(props);
 
     this.state = {
-      visible: false,
       items,
       value: undefined,
+      uniqueId: Math.floor(Math.random() * 1000000),
     };
   }
 
@@ -140,7 +142,7 @@ class CelSelect extends Component {
     let item;
     items.forEach(element => {
       item = element;
-      item.color = STYLES.COLORS.DARK_GRAY;
+      item.color = getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND);
       tempItems.push(item);
     });
 
@@ -167,29 +169,29 @@ class CelSelect extends Component {
       showCountryFlag,
       hideCallingCodes,
     } = this.props;
-    const { visible, value } = this.state;
+    const { value, uniqueId } = this.state;
 
     const inputStyle = this.getInputStyle();
     const cmpStyle = CelSelectStyle();
     const textColor = this.getTextColor(cmpStyle);
     const iconColor = this.getIconColor(cmpStyle);
 
-    let onPress = () => this.setState({ visible: !visible });
+    let onPress = () => actions.openModal(`${MODALS.PICKER_MODAL}_${uniqueId}`);
 
     if (type === "country") {
       onPress = () =>
-        actions.navigateTo("SelectCountry", {
+        actions.navigateTo(SCREENS.SELECT_COUNTRY, {
           field_name: field,
           hideCallingCodes,
         });
     } else if (type === "phone") {
       onPress = () =>
-        actions.navigateTo("SelectCountry", {
+        actions.navigateTo(SCREENS.SELECT_COUNTRY, {
           field_name: field,
           hideCallingCodes,
         });
     } else if (type === "state") {
-      onPress = () => actions.navigateTo("SelectState", { field });
+      onPress = () => actions.navigateTo(SCREENS.SELECT_STATE, { field });
     }
 
     const country = this.props.value ? this.props.value : countries.US;
@@ -208,6 +210,7 @@ class CelSelect extends Component {
             {this.renderImage(cmpStyle.flagImage, country.alpha2)}
             <CelText
               type="H4"
+              weight="light"
               align="left"
               style={{ marginLeft: 10, marginRight: 5 }}
             >
@@ -236,7 +239,7 @@ class CelSelect extends Component {
           style={[inputStyle, { flexDirection: "row", alignItems: "center" }]}
         >
           <View style={{ flexDirection: "row" }}>
-            <CelText type="H4" color={textColor}>
+            <CelText type="H4" weight="light" color={textColor}>
               {value ? value.label : labelText}
             </CelText>
             {!disabled && (
@@ -276,14 +279,14 @@ class CelSelect extends Component {
             flex: 1,
           }}
         >
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             {countryInput
               ? this.renderImage(
                   [cmpStyle.flagImage, { marginRight: 5 }],
                   this.state.value.alpha2
                 )
               : null}
-            <CelText type="H4" color={textColor}>
+            <CelText type="H4" weight="light" color={textColor}>
               {value ? value.label || value.name : labelText}
             </CelText>
           </View>
@@ -314,28 +317,34 @@ class CelSelect extends Component {
   );
 
   render() {
-    const { type, flex, disabled, onChange, error, style } = this.props;
-    const { items, value } = this.state;
+    const { type, flex, onChange, error, style, actions } = this.props;
+    const { items, value, uniqueId } = this.state;
 
     return (
       <View style={[flex ? { flex } : {}, style]}>
         {!["state", "country", "phone"].includes(type) ? (
-          <RNPickerSelect
-            disabled={disabled}
-            items={items}
-            onValueChange={onChange || this.handlePickerSelect}
-            value={value ? value.value : null}
-            style={{ height: 23 }}
-          >
+          <View>
             {this.renderSelect()}
-          </RNPickerSelect>
+            <PickerModal
+              name={`${MODALS.PICKER_MODAL}_${uniqueId}`}
+              items={items}
+              onPress={onChange || this.handlePickerSelect}
+              closeModal={actions.closeModal}
+              value={value}
+            />
+          </View>
         ) : (
           this.renderSelect()
         )}
 
         {!!error && (
           <View>
-            <CelText margin="5 0 0 0" color="red" style={{ height: 20 }}>
+            <CelText
+              margin="5 0 0 0"
+              color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+              style={{ height: 20 }}
+              type="H6"
+            >
               {!!error && error}
             </CelText>
           </View>

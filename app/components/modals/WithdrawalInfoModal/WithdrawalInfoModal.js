@@ -29,7 +29,7 @@ class WithdrawalInfoModal extends Component {
       case "CEL":
         title = "Are you sure you want to withdraw CEL? ";
         body =
-          "The longer you HODL and the more you HODL, the more interest you'll earn with Celsius. Withdrawing your funds will reduce the amount of interest you could potentially earn.";
+          "The longer you HODL and the more you HODL, the more rewards you'll earn with Celsius. Withdrawing your funds will reduce the amount of rewards you could potentially earn.";
         break;
       case "DASH":
         title = "ATTENTION";
@@ -66,7 +66,7 @@ class WithdrawalInfoModal extends Component {
       {
         title: "Check your withdrawal address",
         body:
-          "Take a closer look at the address you wish to send your funds to. If you transferred money from an exchange, the address may not be correct. You can change it from your security settings.",
+          "Take a closer look at the address you wish to send your funds to. If you transferred coins from an exchange, the address may not be correct. You can change it from your security settings.",
         firstButtonCopy: "Previous Tip",
         firstButtonStyle: "secondary",
         firstButtonPosition: "left",
@@ -144,7 +144,7 @@ class WithdrawalInfoModal extends Component {
 
     let picture;
     const theme = getTheme();
-    if (theme === THEMES.LIGHT) {
+    if (theme !== THEMES.DARK) {
       picture = require(`../../../../assets/images/modal-withdraw.png`);
     } else {
       picture = require(`../../../../assets/images/modal-withdraw-dark.png`);

@@ -1,48 +1,24 @@
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
-    flex: 1,
+    backgroundColor: COLOR_KEYS.CIRCLE_ICON_BACKGROUND,
+  },
+  iconColor: {
+    color: COLOR_KEYS.TOGGLE_OFF_FOREGROUND,
+  },
+  textColor: {
+    color: COLOR_KEYS.HEADLINE,
   },
 };
 
 const themed = {
-  light: {
-    container: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
-    },
-    textColor: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-  },
+  light: {},
 
-  dark: {
-    container: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    iconColor: {
-      color: STYLES.COLORS.WHITE_OPACITY3,
-    },
-    textColor: {
-      color: STYLES.COLORS.WHITE,
-    },
-  },
+  dark: {},
 
-  celsius: {
-    container: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
-    },
-    textColor: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-  },
+  unicorn: {},
 };
 
 const CelTextAreaStyle = () => getThemedStyle(base, themed);

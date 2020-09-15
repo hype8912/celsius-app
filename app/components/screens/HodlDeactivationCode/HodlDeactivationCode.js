@@ -11,11 +11,13 @@ import CelInput from "../../atoms/CelInput/CelInputText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { EMPTY_STATES, KEYPAD_PURPOSES } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
 import Card from "../../atoms/Card/Card";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import StaticScreen from "../StaticScreen/StaticScreen";
+import { getColor, getFontSize } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -96,7 +98,7 @@ class HodlDeactivationCode extends Component {
             placeholder={"  X X X X X X X X  "}
             type="text"
             returnKeyType={"done"}
-            style={{ textAlign: "center", fontSize: 30 }}
+            style={{ textAlign: "center", fontSize: getFontSize("H2") }}
             maxLenght={8}
             field={"hodlCode"}
             value={formData.hodlCode}
@@ -117,8 +119,8 @@ class HodlDeactivationCode extends Component {
         </CelText>
         <CelText type={"H4"} align={"center"}>
           <CelText
-            color={STYLES.COLORS.CELSIUS_BLUE}
-            onPress={() => actions.navigateTo("Support")}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+            onPress={() => actions.navigateTo(SCREENS.SUPPORT)}
           >
             Contact our support
           </CelText>{" "}

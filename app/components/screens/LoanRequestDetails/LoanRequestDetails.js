@@ -19,6 +19,8 @@ import LoanApplicationSuccessModal from "../../modals/LoanApplicationSuccessModa
 import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 import TxBasicCardSection from "../../atoms/TxBasicCardSection/TxBasicCardSection";
 import TxCardSection from "../../atoms/TxCardSection/TxCardSection";
+import { getColor } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -223,7 +225,7 @@ class LoanRequestDetails extends Component {
             />
             <CelText
               type={"H5"}
-              color={activeLoan.uiProps.color}
+              color={getColor(activeLoan.uiProps.color)}
               margin={"0 5 0 0"}
             >
               {activeLoan.uiProps.displayText}
@@ -238,7 +240,7 @@ class LoanRequestDetails extends Component {
 
         <CelButton
           basic
-          onPress={() => actions.navigateTo("WalletLanding")}
+          onPress={() => actions.resetToScreen(SCREENS.WALLET_LANDING)}
           margin={"20 0 0 0"}
         >
           Go back to the wallet

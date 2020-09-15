@@ -1,5 +1,3 @@
-import moment from "moment";
-
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { showMessage, closeModal, openModal } from "../ui/uiActions";
@@ -13,6 +11,7 @@ import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import loggerUtil from "../../utils/logger-util";
 import analyticsService from "../../services/analytics-service";
+import { SCREENS } from "../../constants/SCREENS";
 
 export {
   applyForALoan,
@@ -82,6 +81,13 @@ function applyForALoan() {
       });
 
       dispatch(setActiveLoan(res.data.loan.id));
+      dispatch(
+        navigateTo(SCREENS.LOAN_REQUEST_DETAILS, {
+          id: res.data.loan.id,
+          hideBack: true,
+        })
+      );
+      dispatch(showMessage("success", "Loan created successfully!"));
 
       if (
         Number(formData.loanAmount) <= Number(automaticLoanLimit) &&
@@ -338,7 +344,7 @@ function prepayInterest(id) {
         type: ACTIONS.PREPAY_LOAN_INTEREST_SUCCESS,
       });
       dispatch(
-        navigateTo("TransactionsIntersection", {
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transactionId,
           loanPayment: true,
           hideBack: true,
@@ -348,7 +354,7 @@ function prepayInterest(id) {
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.PREPAY_LOAN_INTEREST, err));
-      dispatch(navigateTo("BorrowLanding"));
+      dispatch(navigateTo(SCREENS.BORROW_LANDING));
     }
   };
 }
@@ -363,13 +369,16 @@ function payPrincipal(id) {
   return async dispatch => {
     startApiCall(API.PAY_LOAN_PRINCIPAL);
 
+    return;
+
+    // eslint-disable-next-line no-unreachable
     try {
       const res = await loansService.payPrincipal(id);
 
       const transactionId = res.data.transaction_id;
       dispatch(showMessage("success", "Payment successful"));
       dispatch(
-        navigateTo("TransactionsIntersection", {
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transactionId,
           loanPayment: true,
           hideBack: true,
@@ -392,11 +401,14 @@ function lockMarginCallCollateral(id, coin) {
 
       dispatch(closeModal());
       const transactionId = res.data.transaction_id;
+      // dispatch(
+      //   navigateTo("TransactionsIntersection", {
+      //     id: transactionId,
+      //     hideBack: true,
+      //   })
+      // );
       dispatch(
-        navigateTo("TransactionsIntersection", {
-          id: transactionId,
-          hideBack: true,
-        })
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, { id: transactionId })
       );
 
       apiCallName = API.GET_ALL_LOANS;
@@ -431,7 +443,7 @@ function payMonthlyInterest(id, coin) {
       dispatch({ type: ACTIONS.PAY_LOAN_INTEREST_SUCCESS });
       dispatch(showMessage("success", "Payment successful"));
       dispatch(
-        navigateTo("TransactionsIntersection", {
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transactionId,
           loanPayment: true,
           hideBack: true,
@@ -454,7 +466,7 @@ function checkForLoanAlerts() {
 
     const loanAlerts = [];
     allLoans.forEach(l => {
-      const currentDay = moment.utc();
+      // const currentDay = moment.utc();
       if (
         l.installments_to_be_paid &&
         Number(l.installments_to_be_paid.total)
@@ -466,16 +478,19 @@ function checkForLoanAlerts() {
         loanAlerts.push({ id: l.id, type: LOAN_ALERTS.MARGIN_CALL_ALERT });
       }
 
-      if (
-        (l.can_pay_principal && l.coin_loan_asset !== "USD") ||
-        (l.can_pay_principal &&
-          l.coin_loan_asset !== "USD" &&
-          moment(l.maturity_date)
-            .utc()
-            .isSame(currentDay.add(7, "days"), "day"))
-      ) {
-        loanAlerts.push({ id: l.id, type: LOAN_ALERTS.PRINCIPAL_ALERT });
-      }
+      // if (
+      //   (l.can_pay_principal && l.coin_loan_asset !== "USD") ||
+      //   (l.can_pay_principal &&
+      //     l.coin_loan_asset !== "USD" &&
+      //     moment(l.maturity_date)
+      //       .utc()
+      //       .isSame(currentDay.add(7, "days"), "day"))
+      // ) {
+      //   loanAlerts.push({ id: l.id, type: LOAN_ALERTS.PRINCIPAL_ALERT });
+      // }
+      // if (l.can_pay_principal && l.coin_loan_asset !== "USD") {
+      //   loanAlerts.push({ id: l.id, type: LOAN_ALERTS.PRINCIPAL_ALERT });
+      // }
     });
 
     dispatch({

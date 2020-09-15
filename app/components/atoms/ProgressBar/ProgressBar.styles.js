@@ -1,5 +1,6 @@
 import STYLES from "../../../constants/STYLES";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -16,10 +17,10 @@ const base = {
     borderBottomRightRadius: 30,
   },
   colored: {
-    backgroundColor: STYLES.COLORS.GREEN,
+    backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE),
   },
   nonColor: {
-    backgroundColor: STYLES.COLORS.GREEN_OPACITY,
+    backgroundColor: STYLES.COLORS.GREEN_OPACITY, // TODO: missing color keys
   },
 };
 
@@ -28,7 +29,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ProgressBarStyle = () => getThemedStyle(base, themed);

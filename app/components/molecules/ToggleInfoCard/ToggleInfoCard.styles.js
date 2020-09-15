@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { Platform } from "react-native";
 import {
   getThemedStyle,
@@ -37,7 +36,6 @@ const base = {
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    // alignContent: 'right',
     alignItems: "flex-end",
     margin: 12,
   },
@@ -53,7 +51,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ToggleInfoCardStyle = () => getThemedStyle(base, themed);

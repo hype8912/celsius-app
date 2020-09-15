@@ -18,14 +18,8 @@
   "requires_arc": true,
   "vendored_frameworks": "AppCenterReactNativeShared/AppCenterReactNativeShared.framework",
   "dependencies": {
-    "AppCenterReactNativeShared": [
-
-    ],
-    "AppCenter/Analytics": [
-
-    ],
-    "React": [
-
-    ]
+    "AppCenterReactNativeShared": [],
+    "AppCenter/Analytics": [],
+    "React": []
   }
 }

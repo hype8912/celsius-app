@@ -1,5 +1,7 @@
-// import STYLES from '../../../constants/STYLES';
-import { getThemedStyle, widthPercentageToDP } from "../../../utils/styles-util";
+import {
+  getThemedStyle,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 
 const base = {
   container: {
@@ -13,7 +15,7 @@ const base = {
     alignItems: "center",
     backgroundColor: "white",
   },
-  direction: {flexDirection: "row"}
+  direction: { flexDirection: "row" },
 };
 
 const themed = {
@@ -21,7 +23,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const TransactionWithdrawDetailsStyle = () => getThemedStyle(base, themed);

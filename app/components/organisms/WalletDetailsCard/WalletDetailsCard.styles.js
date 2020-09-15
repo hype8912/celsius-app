@@ -1,10 +1,12 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  half: {
+    width: "46%",
   },
 };
 
@@ -13,7 +15,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const WalletDetailsCardStyle = () => getThemedStyle(base, themed);

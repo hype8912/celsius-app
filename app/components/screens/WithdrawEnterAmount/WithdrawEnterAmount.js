@@ -20,16 +20,17 @@ import store from "../../../redux/store";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import STYLES from "../../../constants/STYLES";
-import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import { renderHodlEmptyState } from "../../../utils/hodl-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -45,11 +46,6 @@ import { renderHodlEmptyState } from "../../../utils/hodl-util";
     keypadOpen: state.ui.isKeypadOpen,
     withdrawalSettings: state.generalData.withdrawalSettings,
     loyaltyInfo: state.loyalty.loyaltyInfo,
-    ltvs: state.loans.ltvs,
-    communityStats: state.community.stats,
-    isBannerVisible: state.ui.isBannerVisible,
-    maximumDiscount:
-      state.generalData.celUtilityTiers.PLATINUM.loan_interest_bonus,
     hodlStatus: state.hodl.hodlStatus,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -215,7 +211,7 @@ class WithdrawEnterAmount extends Component {
     ) {
       amountCrypto = amountCrypto[1];
     }
-    if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto.toFixed(8))) {
+    if (new BigNumber(amountCrypto).isGreaterThan(balanceCrypto.toFixed(8))) {
       return actions.showMessage("warning", "Insufficient funds!");
     }
 
@@ -258,9 +254,9 @@ class WithdrawEnterAmount extends Component {
     const coinAddress = withdrawalAddresses[formData.coin.toUpperCase()];
 
     if (coinAddress) {
-      actions.navigateTo("WithdrawConfirmAddress");
+      actions.navigateTo(SCREENS.WITHDRAW_CONFIRM_ADDRESS);
     } else {
-      actions.navigateTo("WithdrawCreateAddress");
+      actions.navigateTo(SCREENS.WITHDRAW_CREATE_ADDRESS);
     }
     if (modal) actions.closeModal();
   };
@@ -309,7 +305,7 @@ class WithdrawEnterAmount extends Component {
     if (!withdrawCompliance.allowed) {
       return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }} />;
     }
-    if (!cryptoUtil.isGreaterThan(walletSummary.total_amount_usd, 0)) {
+    if (!new BigNumber(walletSummary.total_amount_usd).isGreaterThan(0)) {
       return (
         <StaticScreen
           emptyState={{ purpose: EMPTY_STATES.INSUFFICIENT_FUNDS }}
@@ -369,8 +365,8 @@ class WithdrawEnterAmount extends Component {
                   coin={coin}
                   amountColor={
                     keypadOpen
-                      ? STYLES.COLORS.CELSIUS_BLUE
-                      : STYLES.COLORS.DARK_GRAY
+                      ? getColor(COLOR_KEYS.HEADLINE)
+                      : getColor(COLOR_KEYS.PARAGRAPH)
                   }
                 />
               )}

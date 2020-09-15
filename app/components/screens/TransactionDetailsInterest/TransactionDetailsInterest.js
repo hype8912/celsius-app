@@ -11,6 +11,7 @@ import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class TransactionDetailsInterest extends Component {
   static propTypes = {
@@ -71,29 +72,36 @@ class TransactionDetailsInterest extends Component {
           {transaction.type === TRANSACTION_TYPES.PENDING_INTEREST ? (
             <Card>
               <CelText align={"left"} type={"H4"} weight={"600"}>
-                Want to earn better interest rates?
+                Want to earn better rewards rates?
               </CelText>
               <CelText margin={"20 0 0 0"} align={"left"} type={"H4"}>
-                Earn interest in CEL! Simply go to your settings and change the
-                way you receive interest.
+                Earn rewards in CEL! Simply go to your settings and change the
+                way you receive rewards.
               </CelText>
               <CelButton
                 margin={"20 0 0 0"}
                 basic
-                onPress={() => navigateTo("WalletSettings")}
+                onPress={() => navigateTo(SCREENS.WALLET_SETTINGS)}
               >
                 Change Settings
               </CelButton>
             </Card>
           ) : null}
 
-          <CelButton margin={"40 0 0 0"} onPress={() => navigateTo("Deposit")}>
+          <CelButton
+            margin={"40 0 0 0"}
+            onPress={() =>
+              navigateTo(SCREENS.DEPOSIT, {
+                coin: transaction.coin.toUpperCase(),
+              })
+            }
+          >
             Deposit coins
           </CelButton>
           <CelButton
             margin={"20 0 0 0"}
             basic
-            onPress={() => navigateTo("WalletLanding")}
+            onPress={() => navigateTo(SCREENS.WALLET_LANDING)}
           >
             Go Back to Wallet
           </CelButton>

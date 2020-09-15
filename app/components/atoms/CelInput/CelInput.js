@@ -5,11 +5,12 @@ import PropTypes from "prop-types";
 import CelInputStyle from "./CelInput.styles";
 import CelInputPassword from "./CelInputPassword";
 import CelInputText from "./CelInputText";
-import { getMargins } from "../../../utils/styles-util";
+import { getColor, getMargins } from "../../../utils/styles-util";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
 import CelTextArea from "../CelTextArea/CelTextArea";
 import CelText from "../CelText/CelText";
 import { THEMES } from "../../../constants/UI";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CelInput extends Component {
   static propTypes = {
@@ -140,14 +141,15 @@ class CelInput extends Component {
       rightText,
       showPasswordTooltip,
       toolTipPositionTop,
-      showPassMeter
+      showPassMeter,
     } = this.props;
     const inputStyle = this.getInputStyle();
 
-    const borderBottom = value && showPassMeter && {
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0
-    }
+    const borderBottom = value &&
+      showPassMeter && {
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+      };
 
     switch (type) {
       case "password":
@@ -202,8 +204,8 @@ class CelInput extends Component {
   };
 
   render() {
-    const { error, margin, large, theme } = this.props;
-    const cmpStyle = theme ? CelInputStyle(theme) : CelInputStyle();
+    const { error, margin, large } = this.props;
+    const cmpStyle = CelInputStyle();
     const styleWrapper = [
       getMargins(margin),
       cmpStyle.container,
@@ -218,7 +220,7 @@ class CelInput extends Component {
         {!!error && (
           <CelText
             margin="5 0 0 0"
-            color="red"
+            color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
             align={"left"}
             type={"H6"}
             style={{

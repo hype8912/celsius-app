@@ -10,7 +10,11 @@ import Separator from "../../atoms/Separator/Separator";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Icon from "../../atoms/Icon/Icon";
 import formatter from "../../../utils/formatter";
-import { getMargins, widthPercentageToDP } from "../../../utils/styles-util";
+import {
+  getColor,
+  getMargins,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import { LOAN_STATUS } from "../../../constants/DATA";
 import {
   LOAN_ALERTS,
@@ -18,8 +22,9 @@ import {
   MODALS,
 } from "../../../constants/UI";
 import PaymentListItem from "../../atoms/PaymentListItem/PaymentListItem";
-import STYLES from "../../../constants/STYLES";
 import CircularProgressBar from "../../graphs/CircularProgressBar/CircularProgressBar";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class LoanOverviewCard extends Component {
   static propTypes = {
@@ -53,7 +58,7 @@ class LoanOverviewCard extends Component {
   lockMarginCollateral = async () => {
     const { loan, actions } = this.props;
 
-    await actions.navigateTo("VerifyProfile", {
+    await actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () =>
         actions.lockMarginCallCollateral(
           loan.id,
@@ -243,16 +248,20 @@ class LoanOverviewCard extends Component {
             <Card
               styles={{ alignSelf: "center" }}
               size={"twoThirds"}
-              color={STYLES.COLORS.RED}
+              color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
             >
-              <CelText weight={"500"} type={"H5"} color={STYLES.COLORS.WHITE}>
+              <CelText
+                weight={"500"}
+                type={"H5"}
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+              >
                 Margin Call Warning
               </CelText>
               <CelText
                 margin={"5 0 5 0"}
                 weight={"300"}
                 type={"H5"}
-                color={STYLES.COLORS.WHITE}
+                color={COLOR_KEYS.NEGATIVE_STATE}
               >
                 {`LTV: ${Math.round(loan.current_ltv)}%`}
               </CelText>
@@ -352,7 +361,7 @@ class LoanOverviewCard extends Component {
                     type={"H6"}
                     weight={"400"}
                     align={"left"}
-                    color={STYLES.COLORS.CELSIUS_BLUE}
+                    color={COLOR_KEYS.PRIMARY_BUTTON}
                   >
                     Change payment type
                   </CelText>
@@ -363,7 +372,9 @@ class LoanOverviewCard extends Component {
 
           <View style={style.buttonContainer}>
             <CelButton
-              onPress={() => navigateTo("LoanRequestDetails", { id: loan.id })}
+              onPress={() =>
+                navigateTo(SCREENS.LOAN_REQUEST_DETAILS, { id: loan.id })
+              }
               basic
               textSize={"H6"}
             >
@@ -378,7 +389,9 @@ class LoanOverviewCard extends Component {
               loan.status
             ) && (
               <CelButton
-                onPress={() => navigateTo("LoanSettings", { id: loan.id })}
+                onPress={() =>
+                  navigateTo(SCREENS.LOAN_SETTINGS, { id: loan.id })
+                }
                 basic
                 textSize={"H6"}
               >
@@ -387,9 +400,23 @@ class LoanOverviewCard extends Component {
             )}
           </View>
 
+          {loan.can_pay_principal && (
+            <View>
+              <Separator margin={"0 0 0 0"} />
+              <CelButton
+                onPress={this.payPrincipal}
+                margin={"15 0 15 0"}
+                color="green"
+                loading={isLoading}
+                disabled={isLoading}
+              >
+                Payout Principal
+              </CelButton>
+            </View>
+          )}
           {loan.can_pay_interest && (
             <View>
-              <Separator size={2} margin={"0 0 0 0"} />
+              <Separator margin={"0 0 0 0"} />
               <CelButton
                 onPress={this.payInterest}
                 margin={"15 0 15 0"}
@@ -426,14 +453,15 @@ class LoanOverviewCard extends Component {
             <CelButton
               basic
               textSize={"H6"}
+              margin="10 0 0 0"
               onPress={() =>
-                navigateTo("ChoosePaymentMethod", {
+                navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
                   id: loan.id,
                   reason: LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT,
                 })
               }
             >
-              Prepay interest
+              Prepay interest >
             </CelButton>
           </Card>
         )}
@@ -457,7 +485,7 @@ class LoanOverviewCard extends Component {
                   margin={"10 0 0 0"}
                   basic
                   onPress={() =>
-                    navigateTo("LoanPaymentHistory", { id: loan.id })
+                    navigateTo(SCREENS.LOAN_PAYMENT_HISTORY, { id: loan.id })
                   }
                 >
                   See all
@@ -471,7 +499,9 @@ class LoanOverviewCard extends Component {
             <View>
               <CelButton
                 margin={"10 0 20 0"}
-                onPress={() => navigateTo("LoanPaymentList", { id: loan.id })}
+                onPress={() =>
+                  navigateTo(SCREENS.LOAN_PAYMENT_LIST, { id: loan.id })
+                }
               >
                 Upcoming Payments
               </CelButton>

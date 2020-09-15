@@ -1,10 +1,9 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -28,7 +27,7 @@ const base = {
     paddingHorizontal: widthPercentageToDP("5%"),
     paddingVertical: heightPercentageToDP("3%"),
     marginVertical: heightPercentageToDP("1.5%"),
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     borderRadius: 8,
   },
   circle: {
@@ -37,12 +36,11 @@ const base = {
     width: widthPercentageToDP("17%"),
     height: widthPercentageToDP("17%"),
     borderRadius: heightPercentageToDP("17%") / 2,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
     marginTop: heightPercentageToDP("3%"),
-    // marginTop: heightPercentageToDP("1,53%"),
     marginRight: widthPercentageToDP("3%"),
     marginBottom: heightPercentageToDP("0.8%"),
   },
@@ -51,7 +49,7 @@ const base = {
   },
   loyalityQuestion: {
     marginTop: heightPercentageToDP("1.5%"),
-    color: STYLES.COLORS.CELSIUS_BLUE,
+    color: COLOR_KEYS.LINK,
   },
   explanation: {
     marginBottom: heightPercentageToDP("2.73%"),
@@ -59,19 +57,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    wrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
-
-  dark: {
-    wrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const MyCelInterestTabStyle = () => getThemedStyle(base, themed);

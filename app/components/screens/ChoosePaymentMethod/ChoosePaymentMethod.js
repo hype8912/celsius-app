@@ -16,6 +16,7 @@ import {
 import formatter from "../../../utils/formatter";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
+import { SCREENS } from "../../../constants/SCREENS";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import STYLES from "../../../constants/STYLES";
@@ -27,7 +28,6 @@ import loanPaymentUtil from "../../../utils/loanPayment-util";
 
 @connect(
   state => ({
-    formData: state.forms.formData,
     loanSettings: state.loans.loanSettings,
     loyaltyInfo: state.loyalty.loyaltyInfo,
     allLoans: state.loans.allLoans,
@@ -142,17 +142,21 @@ class ChoosePaymentMethod extends Component {
       {
         textButton: `${formatter.capitalize(pay)} with CEL`,
         explanation: `Pay up to ${celDiscount} less interest when you choose to ${pay} your monthly payment in CEL.`,
+        // onPress: () => actions.navigateTo(SCREENS.PAYMENT_CEL, { reason, id }),
         onPress: () => this.resolve(reason, id, payment, cel, loan),
         lightImage: require("../../../../assets/images/icons/cel.png"),
         darkImage: require("../../.././../assets/images/icons/cel-dark.png"),
+        unicornImage: require("../../.././../assets/images/icons/cel-unicorn.png"),
         label: activeCards.cel ? "Currently active" : null,
       },
       {
         textButton: `${formatter.capitalize(pay)} with crypto`,
         explanation: `Use coins from your wallet to ${pay} your loan interest.`,
-        onPress: () => actions.navigateTo("LoanPaymentCoin", { reason, id }),
+        onPress: () =>
+          actions.navigateTo(SCREENS.LOAN_PAYMENT_COIN, { reason, id }),
         lightImage: require("../../../../assets/images/icons/crypto.png"),
         darkImage: require("../../.././../assets/images/icons/crypto-dark.png"),
+        unicornImage: require("../../.././../assets/images/icons/crypto-unicorn.png"),
         label: activeCards.coin ? "Currently active" : null,
       },
       {
@@ -161,13 +165,15 @@ class ChoosePaymentMethod extends Component {
         onPress: () => {
           if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
             actions.updateFormField("coin", "USD");
-            actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
+            actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { id, reason });
           } else {
+            // actions.navigateTo(SCREENS.WIRING_BANK_INFORMATION, { id, reason });
             actions.openModal(MODALS.DOLLAR_PAYMENT_MODAL);
           }
         },
         lightImage: require("../../../../assets/images/icons/dollars.png"),
         darkImage: require("../../../../assets/images/icons/dollars-dark.png"),
+        unicornImage: require("../../../../assets/images/icons/dollars-unicorn.png"),
         label: activeCards.usd ? "Currently active" : null,
       },
     ];
@@ -260,7 +266,9 @@ class ChoosePaymentMethod extends Component {
         </RegularLayout>
         <PrepayDollarInterestModal
           onPressConfirm={() =>
-            actions.navigateTo("LoanPrepaymentPeriod", { type: "dollar" })
+            actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, {
+              type: "dollar",
+            })
           }
         />
         <DollarPaymentModal loanId={id} close={() => this.closeModal()} />

@@ -1,6 +1,5 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -32,26 +31,16 @@ const base = {
     borderRadius: 13,
     borderWidth: 1,
     borderStyle: "solid",
-    borderColor: STYLES.COLORS.DARK_GRAY1,
+    borderColor: COLOR_KEYS.PARAGRAPH,
     paddingVertical: 4,
     marginLeft: "auto",
   },
 };
 
 const themed = {
-  light: {
-    clearSelectWrapper: {
-      borderColor: STYLES.COLORS.DARK_GRAY7,
-    },
-  },
-
-  dark: {
-    clearSelectWrapper: {
-      borderColor: STYLES.COLORS.WHITE_OPACITY5,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const TransactionsFilterItemStyle = () => getThemedStyle(base, themed);

@@ -12,12 +12,11 @@ import Separator from "../../atoms/Separator/Separator";
 import CelInput from "../../atoms/CelInput/CelInput";
 import Card from "../../atoms/Card/Card";
 import HorizontalSlider from "../../atoms/HorizontalSlider/HorizontalSlider";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { THEMES } from "../../../constants/UI";
 import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 let timeout;
 
@@ -93,21 +92,10 @@ class BorrowCalculator extends Component {
   }
 
   getThemeColors = () => {
-    const { theme, themeModal } = this.props;
-
     return {
-      loanCard:
-        themeModal || theme !== THEMES.DARK
-          ? STYLES.COLORS.LIGHT_GRAY
-          : STYLES.COLORS.SEMI_GRAY,
-      amountCard:
-        themeModal || theme !== THEMES.DARK
-          ? STYLES.COLORS.WHITE
-          : STYLES.COLORS.DARK_HEADER,
-      iconColor:
-        themeModal || theme !== THEMES.DARK
-          ? STYLES.COLORS.DARK_HEADER
-          : STYLES.COLORS.LIGHT_GRAY,
+      loanCard: getColor(COLOR_KEYS.HEADER),
+      amountCard: getColor(COLOR_KEYS.CARDS),
+      iconColor: getColor(COLOR_KEYS.HEADLINE),
     };
   };
 
@@ -156,7 +144,6 @@ class BorrowCalculator extends Component {
     const style = BorrowCalculatorStyle();
     const { loanParams, formData } = this.props;
 
-    const theme = getTheme();
     let numberOfDigits;
 
     if (loanParams.monthlyInterest && loanParams.totalInterest) {
@@ -171,21 +158,20 @@ class BorrowCalculator extends Component {
         apr: formatter.percentageDisplay(formData.ltv.interest),
         monthly: formatter.fiat(loanParams.monthlyInterest, "USD"),
         total: formatter.fiat(loanParams.totalInterest, "USD"),
-        type: "USD",
-        color:
-          theme === THEMES.DARK
-            ? STYLES.COLORS.SEMI_GRAY
-            : STYLES.COLORS.LIGHT_GRAY,
+        type: " USD, BTC, ETH or Stablecoins",
+        color: getColor(COLOR_KEYS.BACKGROUND),
+        textColor: getColor(COLOR_KEYS.PARAGRAPH),
       },
       {
         apr: formatter.percentageDisplay(loanParams.loyaltyApr),
         monthly: formatter.fiat(loanParams.monthlyInCEL, "USD"),
         total: formatter.fiat(loanParams.totalInCEL, "USD"),
         type: "CEL",
-        color: STYLES.COLORS.CELSIUS_BLUE,
+        color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+        textColor: getColor(COLOR_KEYS.WHITE),
       },
     ];
-    const textType = numberOfDigits > 8 ? "H7" : "H6";
+    const textType = numberOfDigits > 8 ? "H6" : "H5";
 
     return INTEREST_DATA.map(num => (
       <View
@@ -195,11 +181,7 @@ class BorrowCalculator extends Component {
         ]}
       >
         <View style={style.interestCardTitle}>
-          <CelText
-            type={"H6"}
-            align={"center"}
-            color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
-          >
+          <CelText type={"H6"} align={"center"} color={num.textColor}>
             Pay interest with {num.type}
           </CelText>
         </View>
@@ -209,15 +191,11 @@ class BorrowCalculator extends Component {
               type={textType}
               weight={"bold"}
               align={"center"}
-              color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
+              color={num.textColor}
             >
               {num.apr}
             </CelText>
-            <CelText
-              type={"H6"}
-              align={"center"}
-              color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
-            >
+            <CelText type={"H6"} align={"center"} color={num.textColor}>
               APR
             </CelText>
           </View>
@@ -226,15 +204,11 @@ class BorrowCalculator extends Component {
               type={textType}
               weight={"bold"}
               align={"center"}
-              color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
+              color={num.textColor}
             >
               {num.monthly}
             </CelText>
-            <CelText
-              type={"H6"}
-              align={"center"}
-              color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
-            >
+            <CelText type={"H6"} align={"center"} color={num.textColor}>
               Per Month
             </CelText>
           </View>
@@ -243,15 +217,11 @@ class BorrowCalculator extends Component {
               type={textType}
               weight={"bold"}
               align={"center"}
-              color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
+              color={num.textColor}
             >
               {num.total}
             </CelText>
-            <CelText
-              type={"H6"}
-              align={"center"}
-              color={num.type === "CEL" ? STYLES.COLORS.WHITE : null}
-            >
+            <CelText type={"H6"} align={"center"} color={num.textColor}>
               Total
             </CelText>
           </View>
@@ -298,7 +268,7 @@ class BorrowCalculator extends Component {
         <Separator margin={"0 0 10 0"} />
         <View>
           <CelText type="H4" align={"center"} margin={"15 0 20 0"}>
-            Choose a coin to use as collateral
+            Choose a coin as collateral
           </CelText>
           <Icon
             name={`Icon${formData.coin}`}
@@ -329,18 +299,13 @@ class BorrowCalculator extends Component {
             style={
               !themeModal
                 ? style.interestCardText
-                : { color: STYLES.COLORS.DARK_GRAY }
+                : { color: getColor(COLOR_KEYS.CIRCLE_ICON_FOREGROUND) }
             }
             type={"H2"}
           >
             {formatter.crypto(loanParams.collateralNeeded || 0, formData.coin)}
           </CelText>
-          <CelText
-            align={"center"}
-            weight="300"
-            color={STYLES.COLORS.MEDIUM_GRAY}
-            type={"H6"}
-          >
+          <CelText align={"center"} weight="300" type={"H6"}>
             Collateral needed
           </CelText>
         </Card>
@@ -361,7 +326,7 @@ class BorrowCalculator extends Component {
             weight={"300"}
             theme={themeModal}
           >
-            Choose your collateral type.
+            Choose your Loan-to-Value percentage
           </CelText>
           <View style={style.ltvWrapper}>
             {sortedLtv &&
@@ -403,7 +368,7 @@ class BorrowCalculator extends Component {
             weight={"300"}
             theme={themeModal}
           >
-            For how long would you borrow?
+            Choose the length of your loan
           </CelText>
           <HorizontalSlider
             items={this.sliderItems}

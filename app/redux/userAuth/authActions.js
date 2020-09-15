@@ -22,6 +22,7 @@ import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { logoutUserMixpanel } from "../../utils/mixpanel-util";
 import userSecurityService from "../../services/user-security-service";
 import { getInitialCelsiusData } from "../generalData/generalDataActions";
+import { SCREENS } from "../../constants/SCREENS";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -65,7 +66,7 @@ function loginUser() {
       });
 
       await dispatch(getInitialCelsiusData());
-      dispatch(resetToScreen("Home"));
+      dispatch(resetToScreen(SCREENS.HOME));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.LOGIN_USER, err));
@@ -105,7 +106,7 @@ function registerUser() {
         tokens: res.data.auth0,
       });
 
-      dispatch(navigateTo("RegisterSetPin"));
+      dispatch(navigateTo(SCREENS.REGISTER_SET_PIN));
     } catch (err) {
       dispatch(apiError(API.REGISTER_USER, err));
       if (err.type === "Validation error") {
@@ -128,7 +129,7 @@ function sendResetLink() {
       dispatch(startApiCall(API.SEND_RESET_LINK));
       await userAuthService.sendResetLink(formData.email);
       dispatch(showMessage("info", "Email sent!"));
-      dispatch(navigateTo("Login"));
+      dispatch(navigateTo(SCREENS.LOGIN));
       dispatch({ type: ACTIONS.SEND_RESET_LINK_SUCCESS });
       mixpanelAnalytics.forgottenPassword();
     } catch (err) {
@@ -144,15 +145,14 @@ function sendResetLink() {
 function logoutUser() {
   return async dispatch => {
     try {
-      await dispatch(resetToScreen("Welcome"));
-
+      dispatch(resetToScreen(SCREENS.WELCOME));
       await logoutUserMixpanel();
       await userSecurityService.invalidateSession();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+      mixpanelAnalytics.sessionEnded("Logout user");
       dispatch({
         type: ACTIONS.LOGOUT_USER,
       });
-      mixpanelAnalytics.sessionEnded("Logout user");
     } catch (err) {
       logger.err(err);
     }
@@ -167,9 +167,13 @@ function logoutFormDevice(type, reason, msg) {
     try {
       if (reason === "inactiveUser")
         await dispatch(
-          resetToScreen("LoginLanding", { type, inactiveUser: reason, msg })
+          resetToScreen(SCREENS.LOGIN_LANDING, {
+            type,
+            inactiveUser: reason,
+            msg,
+          })
         );
-      else await dispatch(resetToScreen("Welcome"));
+      else await dispatch(resetToScreen(SCREENS.WELCOME));
 
       await logoutUserMixpanel();
       await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -7,7 +7,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import WalletInterestStyle from "./WalletInterest.styles";
 import { EMPTY_STATES } from "../../../constants/UI";
@@ -15,9 +14,11 @@ import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import LoadingScreen from "../../screens/LoadingScreen/LoadingScreen";
 import Separator from "../../atoms/Separator/Separator";
 import InterestCalculatorScreen from "../InterestCalculatorScreen/InterestCalculatorScreen";
-import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util";
+import { hasPassedKYC, isUSCitizen } from "../../../utils/user-util/user-util";
 import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 import Counter from "../../molecules/Counter/Counter";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -35,7 +36,7 @@ import Counter from "../../molecules/Counter/Counter";
 )
 class WalletInterest extends Component {
   static navigationOptions = {
-    title: "Interest earned",
+    title: "Rewards earned",
     right: "profile",
   };
 
@@ -44,11 +45,10 @@ class WalletInterest extends Component {
 
     this.state = {
       header: {
-        title: "Interest earned",
+        title: "Rewards earned",
         left: "back",
         right: "profile",
       },
-      loading: true,
     };
   }
 
@@ -57,7 +57,6 @@ class WalletInterest extends Component {
     actions.changeInterestHeaderContent();
     await actions.getLoyaltyInfo();
     await actions.getUserAppSettings();
-    this.setState({ loading: false });
   }
 
   render() {
@@ -69,11 +68,10 @@ class WalletInterest extends Component {
       actions,
       interestCompliance,
     } = this.props;
-    const { loading } = this.state;
     const style = WalletInterestStyle();
 
-    if (loading || !appSettings || !loyaltyInfo) return <LoadingScreen />;
-    if (!interestCompliance) {
+    if (!appSettings || !loyaltyInfo) return <LoadingScreen />;
+    if (!interestCompliance.allowed) {
       return <InterestCalculatorScreen purpose={EMPTY_STATES.COMPLIANCE} />;
     }
     if (isUSCitizen() && !user.ssn) {
@@ -98,32 +96,30 @@ class WalletInterest extends Component {
           <Card>
             <>
               <CelText type="H6" weight="300">
-                Total interest earned
+                Total Earnings
               </CelText>
               <View style={style.amountWrapper}>
                 <Counter
                   weight="600"
-                  type="H3"
+                  type="H2"
                   number={walletSummary.total_interest_earned}
                   speed={5}
                   usd
                 />
                 <TouchableOpacity
-                  onPress={() => actions.navigateTo("InterestRates")}
+                  onPress={() => actions.navigateTo(SCREENS.INTEREST_RATES)}
                 >
-                  <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-                    Rates this week
-                  </CelText>
+                  <CelText link>Weekly Reward Rates</CelText>
                 </TouchableOpacity>
               </View>
               <Separator margin="10 0 0 0" />
               <TouchableOpacity
                 onPress={() => {
-                  actions.navigateTo("InterestCalculatorScreen");
+                  actions.navigateTo(SCREENS.INTEREST_CALCULATOR_SCREEN);
                 }}
                 style={{ marginTop: 10 }}
               >
-                <Image
+                <ThemedImage
                   style={{
                     alignSelf: "center",
                     width: 25,
@@ -131,9 +127,13 @@ class WalletInterest extends Component {
                     marginBottom: 5,
                     marginTop: 6,
                   }}
-                  source={require("../../../../assets/images/calculator.png")}
+                  lightSource={require("../../../../assets/images/calculator.png")}
+                  darkSource={require("../../../../assets/images/calculator.png")}
+                  unicornSource={require("../../../../assets/images/calculator-unicorn.png")}
                 />
-                <CelText align="center">Calculator</CelText>
+                <CelText align="center" link>
+                  Calculator
+                </CelText>
               </TouchableOpacity>
             </>
           </Card>

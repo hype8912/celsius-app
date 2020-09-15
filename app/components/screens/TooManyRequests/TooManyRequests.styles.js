@@ -19,7 +19,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const LockedAccountModeStyle = () => getThemedStyle(base, themed);

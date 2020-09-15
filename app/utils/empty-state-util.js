@@ -5,7 +5,9 @@ import { openInbox } from "react-native-email-link";
 import { EMPTY_STATES } from "../constants/UI";
 import { KYC_STATUSES } from "../constants/DATA";
 import CelText from "../components/atoms/CelText/CelText";
-import STYLES from "../constants/STYLES";
+import { getColor } from "./styles-util";
+import { COLOR_KEYS } from "../constants/COLORS";
+import { SCREENS } from "../constants/SCREENS";
 
 export default {
   getProps,
@@ -48,11 +50,11 @@ function getProps(purpose, componentProps) {
           "Your wallet is currently in HODL Mode, which means outbound transactions are currently unavailable. To make a CelPay, please deactivate HODL Mode.",
         ],
         onPress: () => {
-          actions.navigateTo("HodlLanding");
+          actions.navigateTo(SCREENS.HODL_LANDING);
           actions.setHodlProps(false);
         },
         button: "Deactivate HODL Mode",
-        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryOnPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
         secondaryButton: "Go back to wallet",
       };
     case EMPTY_STATES.HODL_MODE_WARNING_WITHDRAW:
@@ -64,11 +66,11 @@ function getProps(purpose, componentProps) {
           "Your wallet is currently in HODL Mode, which means outbound transactions are currently unavailable. To make a withdrawal, please deactivate HODL Mode.",
         ],
         onPress: () => {
-          actions.navigateTo("HodlLanding");
+          actions.navigateTo(SCREENS.HODL_LANDING);
           actions.setHodlProps(false);
         },
         button: "Deactivate HODL Mode",
-        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryOnPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
         secondaryButton: "Go back to wallet",
       };
     case EMPTY_STATES.HODL_MODE_PENDING_DEACTIVATION:
@@ -77,9 +79,9 @@ function getProps(purpose, componentProps) {
         image: require("../../assets/images/hodlModeStatus.png"),
         heading: "HODL Mode is active!",
         paragraphs: [
-          `Your account is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. These will be available once HODL Mode deactivation wait period is over.`,
+          `Your wallet is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. These will be available once HODL Mode deactivation wait period is over.`,
         ],
-        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryOnPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
         secondaryButton: "Go back to wallet",
       };
     case EMPTY_STATES.HODL_MODE_BACKOFFICE:
@@ -89,21 +91,21 @@ function getProps(purpose, componentProps) {
         heading: "HODL Mode is active!",
         paragraphs: [
           <CelText>
-            Your account was set to HODL Mode by our team, which means all
+            Your wallet was set to HODL Mode by our team, which means all
             outgoing functionalities are currently unavailable. This includes
             withdrawing funds, sending funds via CelPay, and changing
             whitelisted withdrawal addresses. If you would like to deactivate
             HODL Mode please{" "}
             <CelText
-              color={STYLES.COLORS.CELSIUS_BLUE}
-              onPress={() => actions.navigateTo("Support")}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+              onPress={() => actions.navigateTo(SCREENS.SUPPORT)}
             >
               contact our support team
             </CelText>
             .
           </CelText>,
         ],
-        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryOnPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
         secondaryButton: "Go back to wallet",
       };
     case EMPTY_STATES.HODL_MODE_ACTIVE:
@@ -112,14 +114,14 @@ function getProps(purpose, componentProps) {
         image: require("../../assets/images/hodlModeStatus.png"),
         heading: "HODL Mode is active!",
         paragraphs: [
-          "Your account is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. Use the button below to start the deactivation process and exit HODL Mode.",
+          "Your wallet is currently in HODL Mode, which means all outgoing functionalities are currently unavailable. This includes withdrawing funds, sending funds via CelPay, and changing whitelisted withdrawal addresses. Use the button below to start the deactivation process and exit HODL Mode.",
         ],
         onPress: () => {
-          actions.navigateTo("HodlLanding");
+          actions.navigateTo(SCREENS.HODL_LANDING);
           actions.setHodlProps(false);
         },
         button: "Deactivate HODL Mode",
-        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryOnPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
         secondaryButton: "Go back to wallet",
       };
     case EMPTY_STATES.CHECK_YOUR_EMAIL:
@@ -138,7 +140,7 @@ function getProps(purpose, componentProps) {
           }),
         button: "Check Email!",
         secondaryButton: "Go to Wallet",
-        secondaryOnPress: () => actions.navigateTo("WalletLanding"),
+        secondaryOnPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
       };
     case EMPTY_STATES.NO_LOANS:
       return {
@@ -147,9 +149,10 @@ function getProps(purpose, componentProps) {
         paragraphs: [
           "Get a USD or stablecoin loan at the best interest rates on the block!",
         ],
-        onPress: () => actions.navigateTo("BorrowChooseLoan"),
+        onPress: () => actions.navigateTo(SCREENS.BORROW_CHOOSE_LOAN),
         button: "Get Cash",
-        secondaryOnPress: () => actions.navigateTo("BorrowCalculatorScreen"),
+        secondaryOnPress: () =>
+          actions.navigateTo(SCREENS.BORROW_CALCULATOR_SCREEN),
         secondaryButton: "Calculate Loan Interest",
       };
 
@@ -161,7 +164,7 @@ function getProps(purpose, componentProps) {
         paragraphs: [
           "Withdraw pain (and fee!) free with Celsius Network. Complete your KYC verification to take full advantage.",
         ],
-        onPress: () => actions.navigateTo("KYCProfileDetails"),
+        onPress: () => actions.navigateTo(SCREENS.KYC_PROFILE_DETAILS),
       };
 
     case EMPTY_STATES.VERIFICATION_IN_PROCESS_WITHDRAW:
@@ -169,7 +172,7 @@ function getProps(purpose, componentProps) {
         ...props,
         paragraphs: ["Withdraw will be available upon identity verification."],
         button: "Back to wallet",
-        onPress: () => actions.navigateTo("WalletLanding"),
+        onPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
       };
 
     case EMPTY_STATES.MAINTENANCE:
@@ -188,7 +191,7 @@ function getProps(purpose, componentProps) {
         paragraphs: [
           "Quickly, easily and with no fees or keys required. All you have to do is become a Celsius member by verifying your profile.",
         ],
-        onPress: () => actions.navigateTo("KYCProfileDetails"),
+        onPress: () => actions.navigateTo(SCREENS.KYC_PROFILE_DETAILS),
       };
 
     case EMPTY_STATES.VERIFICATION_IN_PROCESS_CELPAY:
@@ -196,17 +199,17 @@ function getProps(purpose, componentProps) {
         ...props,
         paragraphs: ["CelPay will be available upon identity verification."],
         button: "Back to wallet",
-        onPress: () => actions.navigateTo("WalletLanding"),
+        onPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
       };
 
     case EMPTY_STATES.NON_VERIFIED_DEPOSIT:
       return {
         ...props,
-        heading: "Start earning interest",
+        heading: "Start earning rewards",
         paragraphs: [
           "Start earning 7% a year on your coin. All you have to do is become a Celsius member by verifying your profile.",
         ],
-        onPress: () => actions.navigateTo("KYCProfileDetails"),
+        onPress: () => actions.navigateTo(SCREENS.KYC_PROFILE_DETAILS),
       };
 
     case EMPTY_STATES.VERIFICATION_IN_PROCESS_DEPOSIT:
@@ -214,7 +217,7 @@ function getProps(purpose, componentProps) {
         ...props,
         paragraphs: ["Deposits will be available upon identity verification."],
         button: "Back to wallet",
-        onPress: () => actions.navigateTo("WalletLanding"),
+        onPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
       };
 
     case EMPTY_STATES.NO_WITHDRAWAL_ADDRESSES:
@@ -223,7 +226,7 @@ function getProps(purpose, componentProps) {
         heading: "You have no withdrawal addresses set yet!",
         paragraphs: [],
         button: "Back to settings",
-        onPress: () => actions.navigateTo("WalletSettings"),
+        onPress: () => actions.navigateTo(SCREENS.WALLET_SETTINGS),
       };
 
     case EMPTY_STATES.COMPLIANCE:
@@ -248,9 +251,7 @@ function getProps(purpose, componentProps) {
       return {
         ...props,
         heading: "Insufficient funds!",
-        paragraphs: [
-          "Please deposit more funds in order to gain eligibility to use this feature.",
-        ],
+        paragraphs: ["Transfer more funds to gain access to this feature. "],
       };
 
     case EMPTY_STATES.NO_CONTACTS:
@@ -261,7 +262,7 @@ function getProps(purpose, componentProps) {
           "None of your friends has installed Celsius app. You can still CelPay them with a link",
         ],
         button: "Send link",
-        onPress: () => actions.navigateTo("CelPayEnterAmount"),
+        onPress: () => actions.navigateTo(SCREENS.CEL_PAY_ENTER_AMOUNT),
       };
 
     case EMPTY_STATES.NO_TRANSACTIONS:
@@ -280,7 +281,7 @@ function getProps(purpose, componentProps) {
           "All you have to do is become a Celsius member by verifying your profile.",
         ],
         button: "Verify profile",
-        onPress: () => actions.navigateTo("KYCProfileDetails"),
+        onPress: () => actions.navigateTo(SCREENS.KYC_PROFILE_DETAILS),
       };
 
     case EMPTY_STATES.VERIFICATION_IN_PROCESS_GET_COINS:
@@ -291,7 +292,7 @@ function getProps(purpose, componentProps) {
           "You can directly purchase cryptocurrency with credit card on Celsius. This option will be available upon identity verification.",
         ],
         button: "Back to wallet",
-        onPress: () => actions.navigateTo("WalletLanding"),
+        onPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
       };
 
     // TODO: remove, used only on Support screen
@@ -301,7 +302,7 @@ function getProps(purpose, componentProps) {
         heading: "Great job!",
         paragraphs: ["Ready to start exploring Celsius"],
         button: "Go Home",
-        onPress: () => actions.navigateTo("Home"),
+        onPress: () => actions.navigateTo(SCREENS.HOME),
       };
 
     default:

@@ -10,16 +10,17 @@ import PropTypes from "prop-types";
 import { withNavigationFocus } from "react-navigation";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import { STORYBOOK } from "../../../../dev-settings.json";
 import * as appActions from "../../../redux/actions";
 
 import RegularLayoutStyle from "./RegularLayout.styles";
-import { getPadding } from "../../../utils/styles-util";
+import { getColor, getPadding } from "../../../utils/styles-util";
 import { FAB_TYPE } from "../../../constants/UI";
 import KeyboardShift from "../../atoms/KeyboardShift/KeyboardShift";
 import OfflineMode from "../../atoms/OfflineMode/OfflineMode";
 import Spinner from "../../atoms/Spinner/Spinner";
 import animationsUtil from "../../../utils/animations-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -64,6 +65,7 @@ class RegularLayout extends Component {
   };
 
   setFabType = () => {
+    if (STORYBOOK) return;
     const { isFocused, fabType, actions } = this.props;
     if (isFocused === true) {
       actions.setFabType(fabType);
@@ -115,7 +117,7 @@ class RegularLayout extends Component {
                 onRefresh={this.refresh}
                 tintColor="transparent"
                 colors={["transparent"]}
-                style={{ backgroundColor: "transparent" }}
+                style={{ backgroundColor: getColor(COLOR_KEYS.TRANSPARENT) }}
               />
             )
           }

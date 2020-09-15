@@ -4,9 +4,7 @@ import { View, StyleSheet, Image } from "react-native";
 
 import SeparatorStyle from "./Separator.styles";
 import CelText from "../CelText/CelText";
-import { getMargins, getTheme } from "../../../utils/styles-util";
-import { THEMES } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
+import { getMargins } from "../../../utils/styles-util";
 import infoIcon from "../../../../assets/images/icon-info.png";
 
 class Separator extends Component {
@@ -105,7 +103,6 @@ class Separator extends Component {
     const style = SeparatorStyle();
     const separatorColor = color || this.getSeparatorColor(style);
     const margins = getMargins(margin);
-    const theme = getTheme();
 
     return (
       <View style={[style.content, margins]}>
@@ -130,16 +127,7 @@ class Separator extends Component {
             },
           ]}
         >
-          <CelText
-            allCaps={allCaps}
-            color={
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.MEDIUM_GRAY
-                : STYLES.COLORS.WHITE_OPACITY5
-            }
-            align="center"
-            type={fontType}
-          >
+          <CelText allCaps={allCaps} align="center" type={fontType}>
             {text}
           </CelText>
           {showInfo && (

@@ -67,7 +67,7 @@ const themed = {
     },
   },
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CoinCardStyle = () => getThemedStyle(base, themed);

@@ -4,6 +4,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const cursorRadius = heightPercentageToDP("1.06%");
 
@@ -32,23 +33,34 @@ const base = {
   label: {
     borderRadius: 8,
     width: widthPercentageToDP("21.33%"),
-    height: heightPercentageToDP("6.2%"),
+    height: heightPercentageToDP("4%"),
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "rgba(61,72,83,1)",
+    padding: 2,
+  },
+  regularLabelBackground: {
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
+  cardLabelBackground: {
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   triangle: {
     width: 0,
     height: 0,
-    backgroundColor: "transparent",
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderStyle: "solid",
     borderLeftWidth: widthPercentageToDP("1.5%"),
     borderRightWidth: widthPercentageToDP("1.5%"),
     borderBottomWidth: widthPercentageToDP("1.5%"),
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: "rgba(61,72,83,1)",
+    borderLeftColor: COLOR_KEYS.TRANSPARENT,
+    borderRightColor: COLOR_KEYS.TRANSPARENT,
     transform: [{ rotate: "180deg" }],
+  },
+  regularTriangleBackground: {
+    borderBottomColor: COLOR_KEYS.CARDS,
+  },
+  cardTriangleBackground: {
+    borderBottomColor: COLOR_KEYS.BACKGROUND,
   },
   scrollPointer: {
     position: "absolute",
@@ -57,42 +69,28 @@ const base = {
     bottom: 0,
     right: 0,
   },
+  cursorBackgroundColor: {
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
+  labelBoxBackgroundColor: {},
 };
 
 const themed = {
   light: {
-    cursorBackgroundColor: {
-      backgroundColor: "white",
-    },
     labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY,
-    },
-    triangleBackgroundColor: {
-      borderBottomColor: STYLES.COLORS.DARK_GRAY,
+      backgroundColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
     },
   },
 
   dark: {
-    cursorBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_BACKGROUND,
-    },
     labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_LABEL,
-    },
-    triangleBackgroundColor: {
-      borderBottomColor: STYLES.COLORS.DARK_LABEL,
+      backgroundColor: STYLES.COLORS.DARK_LABEL, // TODO: missing COLOR_KEY
     },
   },
 
-  celsius: {
-    cursorBackgroundColor: {
-      backgroundColor: "white",
-    },
+  unicorn: {
     labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY,
-    },
-    triangleBackgroundColor: {
-      borderBottomColor: STYLES.COLORS.DARK_GRAY,
+      backgroundColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
     },
   },
 };

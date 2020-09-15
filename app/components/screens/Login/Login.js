@@ -13,7 +13,8 @@ import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
-import STYLES from "../../../constants/STYLES";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -74,7 +75,7 @@ class Login extends Component {
               Log in
             </CelText>
             <CelText margin="0 0 30 0" weight="300" align="center">
-              Welcome back, please log in to your account
+              Welcome back, please log in to your wallet
             </CelText>
 
             <CelInput
@@ -104,34 +105,41 @@ class Login extends Component {
             {this.renderCaptcha()}
 
             <CelButton
-              margin="35 0 0 0"
+              margin="35 0 25 0"
               basic
-              onPress={() => actions.navigateTo("ForgotPassword")}
+              onPress={() => actions.navigateTo(SCREENS.FORGOT_PASSWORD)}
             >
               Forgot password?
             </CelButton>
 
             {ENV === "STAGING" ? (
-              <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
+              <CelButton
+                basic
+                margin="0 0 25 0"
+                onPress={() => actions.navigateTo(SCREENS.STORYBOOK)}
+              >
                 Open Storybook
               </CelButton>
             ) : null}
           </View>
           <View style={style.bottom}>
             <CelText weight="300" align="center">
-              Don't have an account?
+              Don't have a wallet?
               <CelText
                 weight="300"
                 align="center"
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                link
                 onPress={() =>
-                  actions.navigateTo("LoginLanding", { type: "register" })
+                  actions.navigateTo(SCREENS.LOGIN_LANDING, {
+                    type: "register",
+                  })
                 }
               >
                 {` Sign up`}
               </CelText>
             </CelText>
           </View>
+          <BuildVersion margin={"10 0 0 0"} />
         </View>
       </AuthLayout>
     );

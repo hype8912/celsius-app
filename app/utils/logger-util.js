@@ -6,6 +6,7 @@ import appUtil from "./app-util";
 import mixpanelAnalytics from "./mixpanel-analytics";
 import { navigateTo } from "../redux/nav/navActions";
 import { showMessage } from "../redux/ui/uiActions";
+import { SCREENS } from "../constants/SCREENS";
 
 const { ENV } = Constants;
 
@@ -116,7 +117,9 @@ async function err(e, isFatal = false) {
 
     mixpanelAnalytics.appCrushed(errorObject);
 
-    store.dispatch(navigateTo(profile.id ? "WalletLanding" : "Welcome"));
+    store.dispatch(
+      navigateTo(profile.id ? SCREENS.WALLET_LANDING : SCREENS.WELCOME)
+    );
     const action = {
       text: "Open ticket",
       action: () =>

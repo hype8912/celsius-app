@@ -5,7 +5,7 @@ import * as appActions from "../../../redux/actions";
 // import MyCelStyle from "./MyCel.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import MyCellHeader from "../../organisms/MyCelHeader/MyCelHeader";
+import MyCelHeader from "../../organisms/MyCelHeader/MyCelHeader";
 import CelTabs from "../../organisms/CelTabs/CelTabs";
 import MyCelOverivewTab from "../../organisms/MyCelOverivewTab/MyCelOverivewTab";
 import MyCelInterestTab from "../../organisms/MyCelInterestTab/MyCelInterestTab";
@@ -45,13 +45,13 @@ class MyCel extends Component {
 
     const tabs = [
       { label: "OVERVIEW", component: <MyCelOverivewTab /> },
-      { label: "INTEREST", component: <MyCelInterestTab /> },
+      { label: "EARNINGS", component: <MyCelInterestTab /> },
       { label: "LOANS", component: <MyCelLoansTab /> },
     ];
 
     return (
       <RegularLayout padding={"0 0 100 0"}>
-        <MyCellHeader />
+        <MyCelHeader />
         <CelTabs tabs={tabs} />
       </RegularLayout>
     );

@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 
 import PinTooltipStyle from "./PinTooltip.styles";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import securityUtil from "../../../utils/security-util";
 import { PIN_STRENGTH_ITEMS } from "../../../constants/DATA";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+
+const { width } = Dimensions.get("window");
 
 class PinTooltip extends Component {
   static propTypes = {
@@ -22,7 +25,7 @@ class PinTooltip extends Component {
   static defaultProps = {
     showTooltip: true,
     toolTipPositionTop: false,
-    positionTop: 220,
+    positionTop: 240,
     positionLeft: 30,
     positionRight: 30,
   };
@@ -70,17 +73,17 @@ class PinTooltip extends Component {
                 position: "absolute",
                 width: 0,
                 height: 0,
-                marginLeft: 145,
+                marginLeft: (width - 80) / 2,
                 top: !toolTipPositionTop ? -10 : "auto",
                 bottom: toolTipPositionTop ? -10 : "auto",
                 borderLeftWidth: 10,
                 borderRightWidth: 10,
                 borderBottomWidth: 10,
                 borderStyle: "solid",
-                backgroundColor: "transparent",
-                borderLeftColor: "transparent",
-                borderRightColor: "transparent",
-                borderBottomColor: STYLES.COLORS.DARK_GRAY,
+                backgroundColor: getColor(COLOR_KEYS.TRANSPARENT),
+                borderLeftColor: getColor(COLOR_KEYS.TRANSPARENT),
+                borderRightColor: getColor(COLOR_KEYS.TRANSPARENT),
+                borderBottomColor: getColor(COLOR_KEYS.TOOLTIP),
                 transform: [
                   {
                     rotate: toolTipPositionTop ? "180deg" : "0deg",
@@ -90,16 +93,23 @@ class PinTooltip extends Component {
             />
 
             <View style={[style.container, customStyle]}>
+              <CelText color={COLOR_KEYS.WHITE} margin={"0 0 10 0"}>
+                PIN Must:
+              </CelText>
               {this.handleSecurityItems().map((i, k) => (
                 <View style={style.securityStrengthItem} k={k}>
                   <Icon
                     name={"CheckCircle"}
                     height={12}
                     width={12}
-                    fill={i.status ? STYLES.COLORS.GREEN : STYLES.COLORS.RED}
+                    fill={
+                      i.status
+                        ? getColor(COLOR_KEYS.POSITIVE_STATE)
+                        : getColor(COLOR_KEYS.NEGATIVE_STATE)
+                    }
                   />
                   <CelText
-                    color={STYLES.COLORS.WHITE}
+                    color={getColor(COLOR_KEYS.WHITE)}
                     type={"H7"}
                     margin={"-3 0 5 5"}
                   >

@@ -14,7 +14,9 @@ const ShareButton = props => {
       style={style.container}
       onPress={() => Share.share({ message: shareText, title, name })}
     >
-      <CelText style={style.text}>{name}</CelText>
+      <CelText style={style.text} link>
+        {name}
+      </CelText>
     </TouchableOpacity>
   );
 };

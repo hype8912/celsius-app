@@ -5,7 +5,8 @@ import { Linking, View } from "react-native";
 import Card from "../../atoms/Card/Card";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const RegisterToUCard = props => {
   const { updateFormField, termsOfUse } = props;
@@ -16,31 +17,31 @@ const RegisterToUCard = props => {
           field="termsOfUse"
           updateFormField={updateFormField}
           value={termsOfUse}
-          uncheckedCheckBoxColor={STYLES.COLORS.GRAY}
-          checkedCheckBoxColor={STYLES.COLORS.GREEN}
+          uncheckedCheckBoxColor={getColor(COLOR_KEYS.PARAGRAPH)}
+          checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
         />
 
         <CelText
           onPress={() => updateFormField("termsOfUse", !termsOfUse)}
           style={{ width: "88%" }}
         >
-          I have read and agree to the
+          I have read and agree to the{" "}
           <CelText
-            color={STYLES.COLORS.CELSIUS_BLUE}
+            link
             onPress={() =>
               Linking.openURL("https://celsius.network/terms-of-use/")
             }
           >
-            {" Terms of Use "}
-          </CelText>
-          and
+            Terms of Use
+          </CelText>{" "}
+          and{" "}
           <CelText
-            color={STYLES.COLORS.CELSIUS_BLUE}
+            link
             onPress={() =>
               Linking.openURL("https://celsius.network/privacy-policy/")
             }
           >
-            {" Privacy Policy "}
+            Privacy Policy
           </CelText>
           .
         </CelText>

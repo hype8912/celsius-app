@@ -5,6 +5,7 @@ import twitter from "react-native-simple-twitter";
 import CodePush from "react-native-code-push";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
+import _ from "lodash";
 
 import Constants from "../../constants";
 import {
@@ -16,7 +17,7 @@ import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { initMixpanel } from "./mixpanel-util";
-import { isUserLoggedIn } from "./user-util";
+import { isUserLoggedIn } from "./user-util/user-util";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -65,7 +66,8 @@ async function logoutOnEnvChange() {
  */
 async function updateCelsiusApp() {
   const { deepLinkData } = store.getState().deepLink;
-  if (deepLinkData.type) return;
+  if (deepLinkData && !_.isEmpty(deepLinkData) && deepLinkData.type)
+    return false;
 
   if (await shouldUpdateCelsiusApp()) {
     store.dispatch(
@@ -74,11 +76,13 @@ async function updateCelsiusApp() {
         "Please wait while Celsius app is being updated."
       )
     );
-    return await CodePush.sync({
+    await CodePush.sync({
       updateDialog: false,
       installMode: CodePush.InstallMode.IMMEDIATE,
     });
+    return true;
   }
+  return false;
 }
 
 /**
@@ -124,10 +128,10 @@ async function pollBackendStatus() {
  *
  * @param {string} token - auth token from storage
  */
-async function checkAndRefreshAuthToken(token) {
+async function checkAndRefreshAuthToken(token, expiresInHours) {
   if (iteration % 30 !== 0) return;
 
-  const EXPIRES_IN_HOURS = 24;
+  const EXPIRES_IN_HOURS = expiresInHours || 6;
   const storageToken =
     token || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
   if (!storageToken) return;
@@ -139,7 +143,6 @@ async function checkAndRefreshAuthToken(token) {
   const isAboutToExpire = moment()
     .add(EXPIRES_IN_HOURS, "hours")
     .isAfter(moment(expirationDate));
-
   if (isAboutToExpire) {
     const refreshTokenError = await store.dispatch(actions.refreshAuthToken());
     return refreshTokenError;

@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-// import { View } from 'react-native';
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View } from "react-native";
@@ -8,13 +6,16 @@ import moment from "moment";
 import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
-// import KYCProfileDetailsStyle from "./KYCProfileDetails.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelSelect from "../../molecules/CelSelect/CelSelect";
 import CelButton from "../../atoms/CelButton/CelButton";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
+import { STORYBOOK } from "../../../../dev-settings.json";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -35,7 +36,7 @@ class KYCProfileDetails extends Component {
     super(props);
 
     this.state = {
-      isLoading: true,
+      isLoading: !STORYBOOK,
       updatingProfileInProgress: false,
     };
   }
@@ -43,6 +44,7 @@ class KYCProfileDetails extends Component {
   async componentDidMount() {
     const { actions } = this.props;
 
+    await actions.createKYCApplicant();
     await actions.getProfileInfo();
     this.setState({ isLoading: false });
 
@@ -123,7 +125,7 @@ class KYCProfileDetails extends Component {
 
     if (isFormValid) {
       if (formData.citizenship.name === "Germany") {
-        return actions.navigateTo("BitWala");
+        return actions.navigateTo(SCREENS.BITWALA);
       }
 
       const updatedUser = {
@@ -139,7 +141,7 @@ class KYCProfileDetails extends Component {
       const response = await actions.updateProfileInfo(updatedUser);
 
       if (response.success) {
-        actions.navigateTo("KYCAddressInfo");
+        actions.navigateTo(SCREENS.KYC_ADDRESS_INFO);
       }
     }
 
@@ -149,7 +151,6 @@ class KYCProfileDetails extends Component {
   render() {
     const { formData, formErrors, actions } = this.props;
     const { isLoading, updatingProfileInProgress } = this.state;
-    // const style = KYCProfileDetailsStyle();
     if (isLoading) return <LoadingScreen />;
 
     return (
@@ -231,7 +232,11 @@ class KYCProfileDetails extends Component {
           />
         </View>
         {formErrors.dateOfBirth && (
-          <CelText margin="5 0 0 0" color="red">
+          <CelText
+            margin="5 0 0 0"
+            color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+            type="H6"
+          >
             {formErrors.dateOfBirth}
           </CelText>
         )}
@@ -266,13 +271,13 @@ class KYCProfileDetails extends Component {
         </View>
         <CelButton
           onPress={() => {
-            actions.navigateTo("WalletLanding");
+            actions.navigateTo(SCREENS.WALLET_LANDING);
             actions.clearForm();
           }}
           basic
           margin={"20 0 20 0"}
         >
-          Do it later
+          Complete later
         </CelButton>
       </RegularLayout>
     );

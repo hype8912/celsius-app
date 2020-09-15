@@ -7,7 +7,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelInput from "../../atoms/CelInput/CelInput";
-// import UI from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import BadgeSelector from "../../atoms/BadgeSelector/BadgeSelector";
 import apiUtil from "../../../utils/api-util";

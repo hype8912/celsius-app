@@ -19,7 +19,6 @@ const base = {
     justifyContent: "space-between",
     alignContent: "flex-start",
     alignItems: "flex-start",
-    // alignSelf: 'center',
   },
   accountActionsLog2: {
     flexDirection: "column",
@@ -39,7 +38,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const AccountActivityLogStyle = () => getThemedStyle(base, themed);

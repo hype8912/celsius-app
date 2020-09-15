@@ -1,7 +1,4 @@
-// import STYLES from '../../../constants/STYLES';
-import {
-  getThemedStyle,
-} from "../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
   container: {
@@ -14,7 +11,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const UserActionsStyle = () => getThemedStyle(base, themed);

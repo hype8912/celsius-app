@@ -7,7 +7,6 @@ import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import SwitchButton from "../../organisms/SwitchButton/SwitchButton";
 import ApiKeySuccessModal from "../../modals/ApiKeySuccessModal/ApiKeySuccessModal";
@@ -60,7 +59,7 @@ class ApiAuthorizationPermissions extends Component {
 
     return (
       <RegularLayout>
-        <CelText color={STYLES.COLORS.MEDIUM_GRAY} type={"H4"} weight={"400"}>
+        <CelText type={"H4"} weight={"400"}>
           Generate your API key by selecting permissions from the list below:{" "}
         </CelText>
 
@@ -83,7 +82,7 @@ class ApiAuthorizationPermissions extends Component {
           updateFormField={actions.updateFormField}
           value={formData.readDeposits}
         >
-          Read deposits
+          Read transfers
         </SwitchButton>
         <SwitchButton
           field={"readWithdrawals"}

@@ -9,24 +9,23 @@ import TransactionsHistoryStyle from "./TransactionsHistory.styles";
 import TransactionRow from "../../atoms/TransactionRow/TransactionRow";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
-import { getMargins, getTheme } from "../../../utils/styles-util";
+import { getMargins } from "../../../utils/styles-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
 import EmptyState from "../../atoms/EmptyState/EmptyState";
 import * as appActions from "../../../redux/actions";
 import transactionsFilterUtil from "../../../utils/transactions-filter-util";
-import STYLES from "../../../constants/STYLES";
-import { MODALS, THEMES } from "../../../constants/UI";
+import { MODALS } from "../../../constants/UI";
 import TransactionFilterModal from "../../modals/TransactionFilterModal/TransactionFilterModal";
 import Card from "../../atoms/Card/Card";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
     transactions: state.transactions.transactionList,
     currencyRatesShort: state.currencies.currencyRatesShort,
-    currencies: state.currencies.rates,
     formData: state.forms.formData,
     callsInProgress: state.api.callsInProgress,
   }),
@@ -107,9 +106,9 @@ class TransactionsHistory extends Component {
     const { actions, additionalFilter } = this.props;
 
     if (additionalFilter) {
-      await actions.navigateTo("AllTransactions", { additionalFilter });
+      await actions.navigateTo(SCREENS.ALL_TRANSACTIONS, { additionalFilter });
     } else {
-      await actions.navigateTo("AllTransactions");
+      await actions.navigateTo(SCREENS.ALL_TRANSACTIONS);
     }
     await actions.getAllTransactions();
   };
@@ -121,23 +120,17 @@ class TransactionsHistory extends Component {
 
   renderEmailButton = () => {
     const { callsInProgress } = this.props;
-    const theme = getTheme();
     const disabled = apiUtil.areCallsInProgress(
       [API.GET_CSV_EMAIL],
       callsInProgress
     );
     return (
-      <Card
-        color={
-          theme === THEMES.LIGHT ? STYLES.COLORS.WHITE : STYLES.COLORS.SEMI_GRAY
-        }
-        padding={"20 0 20 0"}
-      >
+      <Card padding={"20 0 20 0"}>
         <TouchableOpacity
           onPress={() => this.sendCsvRequest()}
           disabled={disabled}
         >
-          <Icon name="Mail" fill={STYLES.COLORS.GRAY} width={30} height={30} />
+          <Icon name="Mail" width={30} height={30} />
           <CelText align={"center"}>Send CSV to Email</CelText>
         </TouchableOpacity>
       </Card>
@@ -156,12 +149,7 @@ class TransactionsHistory extends Component {
           alignItems: "flex-end",
         }}
       >
-        <Icon
-          name="Filter"
-          width="16"
-          height="16"
-          fill={STYLES.COLORS.DARK_GRAY}
-        />
+        <Icon name="Filter" width="16" height="16" />
       </TouchableOpacity>
     );
   };
@@ -185,7 +173,7 @@ class TransactionsHistory extends Component {
       additionalFilter &&
       additionalFilter.type &&
       additionalFilter.type[0] === "celpay"
-        ? "There are currently no CelPay transactions to display for this account"
+        ? "There are currently no CelPay transactions to display for this wallet"
         : "No transactions for given filters in your wallet";
 
     if (
@@ -234,7 +222,7 @@ class TransactionsHistory extends Component {
                   index={index}
                   count={transactionsDisplay.length}
                   onPress={() =>
-                    actions.navigateTo("TransactionsIntersection", {
+                    actions.navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
                       id: item.id,
                     })
                   }

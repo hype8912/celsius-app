@@ -8,10 +8,10 @@ import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import WalletDetailsCardStyle from "./WalletDetailsCard.styles";
-import STYLES from "../../../constants/STYLES";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import * as appActions from "../../../redux/actions";
 import Counter from "../../molecules/Counter/Counter";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -31,13 +31,13 @@ class WalletDetailsCard extends PureComponent {
   navigateToBalanceHistory = () => {
     const { actions, currencies } = this.props;
     if (!currencies) return;
-    actions.navigateTo("BalanceHistory");
+    actions.navigateTo(SCREENS.BALANCE_HISTORY);
   };
 
   navigateToDeposit = () => {
     const { actions, currencies } = this.props;
     if (!currencies) return;
-    actions.navigateTo("Deposit");
+    actions.navigateTo(SCREENS.DEPOSIT);
   };
 
   render() {
@@ -47,10 +47,10 @@ class WalletDetailsCard extends PureComponent {
     return (
       <Card padding="12 12 12 12">
         <View style={walletDetailsCardStyle.container}>
-          <View>
+          <View style={walletDetailsCardStyle.half}>
             <TouchableOpacity onPress={this.navigateToBalanceHistory}>
               <CelText weight="300" type="H6">
-                Total Wallet balance
+                Total balance
               </CelText>
               <Counter
                 weight="600"
@@ -63,20 +63,18 @@ class WalletDetailsCard extends PureComponent {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.navigateToDeposit}>
-              <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-                Deposit coins
-              </CelText>
+              <CelText link>Add coins</CelText>
             </TouchableOpacity>
           </View>
 
           <Separator vertical />
 
-          <View>
+          <View style={walletDetailsCardStyle.half}>
             <TouchableOpacity
-              onPress={() => actions.navigateTo("WalletInterest")}
+              onPress={() => actions.navigateTo(SCREENS.WALLET_INTEREST)}
             >
               <CelText weight="300" type="H6">
-                Total Interest earned
+                Total Earnings
               </CelText>
               <Counter
                 weight="600"
@@ -89,11 +87,9 @@ class WalletDetailsCard extends PureComponent {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => actions.navigateTo("InterestRates")}
+              onPress={() => actions.navigateTo(SCREENS.INTEREST_RATES)}
             >
-              <CelText color={STYLES.COLORS.CELSIUS_BLUE}>
-                Rates this week
-              </CelText>
+              <CelText link>Weekly Rates</CelText>
             </TouchableOpacity>
           </View>
         </View>

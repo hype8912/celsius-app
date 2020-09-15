@@ -12,9 +12,12 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import CoinDetailsStyle from "./CoinDetails.styles";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import Badge from "../../atoms/Badge/Badge";
-import { getTheme, widthPercentageToDP } from "../../../utils/styles-util";
+import {
+  getColor,
+  getTheme,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import GraphContainer from "../../graphs/GraphContainer/GraphContainer";
 import Icon from "../../atoms/Icon/Icon";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
@@ -22,14 +25,14 @@ import InterestCard from "../../molecules/InterestCard/InterestCard";
 import interestUtil from "../../../utils/interest-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
 import Counter from "../../molecules/Counter/Counter";
-
-const { COLORS } = STYLES;
+import { isUSCitizen } from "../../../utils/user-util/user-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
     currencies: state.currencies.rates,
     walletSummary: state.wallet.summary,
-    currencyRatesShort: state.currencies.currencyRatesShort,
     interestRates: state.generalData.interestRates,
     celpayCompliance: state.compliance.celpay,
     coinAmount: state.graph.coinLastValue,
@@ -109,7 +112,7 @@ class CoinDetails extends Component {
     const { actions } = this.props;
     const { currency } = this.state;
 
-    actions.navigateTo("AllTransactions", { coin: [currency.short] });
+    actions.navigateTo(SCREENS.ALL_TRANSACTIONS, { coin: [currency.short] });
   };
 
   goToCelPay = () => {
@@ -117,14 +120,14 @@ class CoinDetails extends Component {
     const { actions } = this.props;
 
     actions.updateFormField("coin", currency.short);
-    actions.navigateTo("CelPayLanding");
+    actions.navigateTo(SCREENS.CEL_PAY_LANDING);
   };
 
   goToBuyCoins = () => {
     const { currency } = this.state;
     const { actions } = this.props;
     actions.updateFormField("selectedCoin", currency.short);
-    actions.navigateTo("GetCoinsLanding");
+    actions.navigateTo(SCREENS.GET_COINS_LANDING);
   };
 
   refresh = async () => {
@@ -161,10 +164,14 @@ class CoinDetails extends Component {
       : {};
     const theme = getTheme();
 
+    const hasBalance =
+      !!Number(coinDetails.amount) || !!Number(coinDetails.amount_usd);
+
     const isCoinEligibleForCelPay =
       celpayCompliance.allowed &&
       celpayCompliance.coins.includes(currency.short) &&
-      !hodlStatus.isActive;
+      !hodlStatus.isActive &&
+      hasBalance;
 
     const isCoinEligibleForBuying =
       simplexCompliance && simplexCompliance.coins.includes(currency.short);
@@ -172,14 +179,16 @@ class CoinDetails extends Component {
     const isCoinEligibleForDeposit =
       depositCompliance && depositCompliance.coins.includes(currency.short);
 
-    const isCoinEligibleForWithdraw = !hodlStatus.isActive;
+    const isCoinEligibleForWithdraw = !hodlStatus.isActive && hasBalance;
 
     const interestInCoins = appSettings.interest_in_cel_per_coin;
     const interestRate = interestUtil.getUserInterestForCoin(coinDetails.short);
 
-    const isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
 
     return (
       <RegularLayout
@@ -224,7 +233,7 @@ class CoinDetails extends Component {
                         marginRight: widthPercentageToDP("3.3%"),
                       }}
                       onPress={() =>
-                        actions.navigateTo("Deposit", {
+                        actions.navigateTo(SCREENS.DEPOSIT, {
                           coin: coinDetails.short,
                         })
                       }
@@ -233,7 +242,7 @@ class CoinDetails extends Component {
                         <View style={style.buttonIcon}>
                           <Icon fill="primary" name="Deposit" width="25" />
                         </View>
-                        <CelText type="H6">Deposit</CelText>
+                        <CelText type="H6">Transfer</CelText>
                       </View>
                     </TouchableOpacity>
                   </>
@@ -293,7 +302,7 @@ class CoinDetails extends Component {
                     <TouchableOpacity
                       style={style.buttons}
                       onPress={() =>
-                        actions.navigateTo("WithdrawEnterAmount", {
+                        actions.navigateTo(SCREENS.WITHDRAW_ENTER_AMOUNT, {
                           coin: coinDetails.short,
                         })
                       }
@@ -324,7 +333,7 @@ class CoinDetails extends Component {
               <View style={style.interestWrapper}>
                 <View style={style.interestCardWrapper}>
                   <CelText type="H6" weight="300" margin={"3 0 3 0"}>
-                    Total interest earned
+                    Total Earnings
                   </CelText>
                   <CelText type="H3" weight="600" margin={"3 0 3 0"}>
                     {formatter.usd(coinDetails.interest_earned_usd)}
@@ -349,16 +358,14 @@ class CoinDetails extends Component {
                       <Badge
                         margin="0 10 10 12"
                         style={{ alignContent: "center" }}
-                        color={COLORS.GREEN}
+                        color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                       >
                         <CelText
                           margin={"0 5 0 5"}
                           align="justify"
                           type="H5"
                           color="white"
-                        >{`${formatter.percentageDisplay(
-                          isInCel
-                        )} APY`}</CelText>
+                        >{`${formatter.percentageDisplay(rate)} APY`}</CelText>
                       </Badge>
                     </View>
                   )}

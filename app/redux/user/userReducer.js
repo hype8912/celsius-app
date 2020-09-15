@@ -1,5 +1,6 @@
 import ACTIONS from "../../constants/ACTIONS";
-import { mapProfile } from "../../utils/user-util";
+import { mapProfile } from "../../utils/user-util/user-util";
+import { THEMES } from "../../constants/UI";
 
 const initialState = {
   profile: {
@@ -7,7 +8,7 @@ const initialState = {
   },
 
   appSettings: {
-    theme: "light",
+    theme: THEMES.UNICORN,
     activeHodlMode: undefined,
   },
 

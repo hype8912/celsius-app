@@ -1,22 +1,22 @@
 import React, { Component } from "react";
-import _ from "lodash";
-// import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 // eslint-disable-next-line import/no-unresolved
 import { openInbox } from "react-native-email-link";
+import _ from "lodash";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-// import SecuritySettingsStyle from "./SecuritySettings.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { HODL_STATUS } from "../../../constants/UI";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
-import STYLES from "../../../constants/STYLES";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -87,10 +87,10 @@ class SecuritySettings extends Component {
     const { is2FAEnabled } = this.state;
     const { actions } = this.props;
     if (is2FAEnabled) {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: async () => {
           await actions.disableTwoFactor();
-          actions.navigateTo("SecuritySettings");
+          actions.navigateTo(SCREENS.SECURITY_SETTINGS);
           openInbox({
             title: "Remove Auth App",
             message:
@@ -99,8 +99,8 @@ class SecuritySettings extends Component {
         },
       });
     } else {
-      actions.navigateTo("VerifyProfile", {
-        onSuccess: () => actions.navigateTo("TwoFactorSettings"),
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+        onSuccess: () => actions.navigateTo(SCREENS.TWO_FACTOR_SETTINGS),
       });
     }
   };
@@ -122,7 +122,7 @@ class SecuritySettings extends Component {
 
   handleSwitchChangeHodl = () => {
     const { actions } = this.props;
-    actions.navigateTo("HodlLanding");
+    actions.navigateTo(SCREENS.HODL_LANDING);
   };
 
   securityOverallScore = () => {
@@ -135,22 +135,22 @@ class SecuritySettings extends Component {
       case SECURITY_STRENGTH_LEVEL.WEAK.toLowerCase():
         return {
           text: strength.toUpperCase(),
-          textColor: STYLES.COLORS.RED,
+          textColor: getColor(COLOR_KEYS.NEGATIVE_STATE),
         };
       case SECURITY_STRENGTH_LEVEL.FAIR.toLowerCase():
         return {
           text: strength.toUpperCase(),
-          textColor: STYLES.COLORS.ORANGE_DARK,
+          textColor: getColor(COLOR_KEYS.ALERT_STATE),
         };
       case SECURITY_STRENGTH_LEVEL.GOOD.toLowerCase():
         return {
           text: strength.toUpperCase(),
-          textColor: STYLES.COLORS.ORANGE,
+          textColor: getColor(COLOR_KEYS.ALERT_STATE),
         };
       case SECURITY_STRENGTH_LEVEL.STRONG.toLowerCase():
         return {
           text: strength.toUpperCase(),
-          textColor: STYLES.COLORS.GREEN,
+          textColor: getColor(COLOR_KEYS.POSITIVE_STATE),
         };
       default:
         return null;
@@ -169,7 +169,6 @@ class SecuritySettings extends Component {
     const Switcher2FA = this.rightSwitch2FA;
     const SwitcherHodl = this.rightSwitchHodl;
     const rightText = this.securityOverallScore();
-
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
 
     return (
@@ -179,7 +178,7 @@ class SecuritySettings extends Component {
             margin="0 0 0 0"
             rightText={rightText.text}
             rightTextColor={rightText.textColor}
-            onPress={() => actions.navigateTo("SecurityOverview")}
+            onPress={() => actions.navigateTo(SCREENS.SECURITY_OVERVIEW)}
           >
             Security Overview
           </IconButton>
@@ -196,7 +195,7 @@ class SecuritySettings extends Component {
         {!user.registered_with_social && (
           <IconButton
             margin="0 0 20 0"
-            onPress={() => actions.navigateTo("ChangePassword")}
+            onPress={() => actions.navigateTo(SCREENS.CHANGE_PASSWORD)}
           >
             Change password
           </IconButton>
@@ -206,8 +205,8 @@ class SecuritySettings extends Component {
           <IconButton
             margin="0 0 20 0"
             onPress={() =>
-              actions.navigateTo("VerifyProfile", {
-                onSuccess: () => actions.navigateTo("ChangePin"),
+              actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+                onSuccess: () => actions.navigateTo(SCREENS.CHANGE_PIN),
               })
             }
           >
@@ -217,7 +216,7 @@ class SecuritySettings extends Component {
 
         <IconButton
           margin="0 0 20 0"
-          onPress={() => actions.navigateTo("WithdrawAddressOverview")}
+          onPress={() => actions.navigateTo(SCREENS.WITHDRAW_ADDRESS_OVERVIEW)}
         >
           Change withdrawal addresses
         </IconButton>
@@ -226,7 +225,7 @@ class SecuritySettings extends Component {
           margin="0 0 20 0"
           basic
           onPress={() => {
-            actions.navigateTo("ActionsByUser");
+            actions.navigateTo(SCREENS.ACTIONS_BY_USER);
           }}
         >
           User Actions

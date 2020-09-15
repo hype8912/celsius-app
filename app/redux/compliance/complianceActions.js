@@ -6,6 +6,7 @@ import { deleteSecureStoreKey } from "../../utils/expo-storage";
 import { showMessage } from "../ui/uiActions";
 import complianceService from "../../services/compliance-service";
 import { navigateTo } from "../nav/navActions";
+import { SCREENS } from "../../constants/SCREENS";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -24,7 +25,7 @@ function getComplianceInfo() {
         getComplianceInfoSuccess(complianceInfoRes.data.allowed_actions)
       );
       if (!complianceInfoRes.data.allowed_actions.app.allowed)
-        dispatch(navigateTo("Maintenance"));
+        dispatch(navigateTo(SCREENS.MAINTENANCE));
     } catch (err) {
       if (err.status === 422) {
         deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);

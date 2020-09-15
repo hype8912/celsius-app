@@ -3,7 +3,7 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const currencyImageSize = widthPercentageToDP("10.67%");
 
@@ -32,14 +32,6 @@ const base = {
     width: currencyImageSize,
     height: currencyImageSize,
   },
-  infoWrapper: {},
-  currencyName: {
-    marginBottom: 2,
-    color: STYLES.COLORS.DARK_GRAY,
-  },
-  currencyShort: {
-    color: STYLES.COLORS.DARK_GRAY,
-  },
   imageInfoWrapper: {
     flexDirection: "row",
     paddingVertical: heightPercentageToDP("3.5%"),
@@ -50,12 +42,12 @@ const base = {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: STYLES.COLORS.GREEN,
     borderRadius: 8,
     paddingVertical: 6,
     paddingHorizontal: 10,
     width: widthPercentageToDP("37%"),
     height: heightPercentageToDP("5%"),
+    backgroundColor: COLOR_KEYS.POSITIVE_STATE,
   },
   regularRateWrapper: {
     flexDirection: "row",
@@ -67,45 +59,18 @@ const base = {
     width: widthPercentageToDP("37%"),
     height: heightPercentageToDP("5%"),
   },
-  usdInfoWrapper: {
-    marginTop: 10,
-    backgroundColor: STYLES.COLORS.DARK_GRAY,
-    borderRadius: 5,
-    padding: 10,
-  },
-  regularRateText: {
-    color: STYLES.COLORS.MEDIUM_GRAY,
-    fontFamily: "Barlow-Regular",
-  },
-  celRateText: {
-    color: "#fff",
-    fontFamily: "Barlow-SemiBold",
-  },
-  regRateText: {
-    color: STYLES.COLORS.MEDIUM_GRAY,
-    fontFamily: "Barlow-SemiBold",
-  },
-  celsiusRateText: {
-    color: "#fff",
-    fontFamily: "Barlow-Regular",
-  },
   rateInfoCard: {
-    marginTop: 20
-  }
+    marginTop: 20,
+  },
+  inKindColor: {
+    backgroundColor: COLOR_KEYS.BACKGROUND,
+  },
 };
 
 const themed = {
-  light: {
-    inKindColor: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
-  dark: {
-    inKindColor: {
-      backgroundColor: STYLES.COLORS.DARKEST_HEADER,
-    },
-  },
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const InterestRateInfoStyle = () => getThemedStyle(base, themed);

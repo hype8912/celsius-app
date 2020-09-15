@@ -11,14 +11,15 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
-import STYLES from "../../../constants/STYLES";
 import { LOAN_TYPES } from "../../../constants/DATA";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
     formData: state.forms.formData,
-    loanCompliance: state.compliance.loan,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -62,9 +63,7 @@ class BorrowLoanTerm extends Component {
           <CelText
             type="H6"
             weight="semi-bold"
-            color={
-              formData.termOfLoan === m ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
+            color={formData.termOfLoan === m ? getColor(COLOR_KEYS.LINK) : null}
           >
             {m} MONTHS
           </CelText>
@@ -85,7 +84,8 @@ class BorrowLoanTerm extends Component {
         <CelButton
           margin="50 0 30 0"
           onPress={() => {
-            actions.navigateTo("BorrowLoanConfirm");
+            // actions.navigateTo("BorrowLoanConfirm");
+            actions.navigateTo(SCREENS.CONFIRM_YOUR_LOAN);
             mixpanelAnalytics.loanTerms(formData.termOfLoan);
           }}
           iconRight="IconArrowRight"
@@ -98,7 +98,7 @@ class BorrowLoanTerm extends Component {
       <CelButton
         margin="50 0 30 0"
         onPress={() => {
-          actions.navigateTo("BorrowBankAccount");
+          actions.navigateTo(SCREENS.BORROW_BANK_ACCOUNT);
           mixpanelAnalytics.loanTerms(formData.termOfLoan);
         }}
         iconRight="IconArrowRight"

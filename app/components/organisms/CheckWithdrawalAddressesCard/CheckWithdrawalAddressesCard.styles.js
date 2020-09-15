@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { Platform } from "react-native";
 import {
   getThemedStyle,
@@ -46,7 +45,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CheckWithdrawalAddressesCardStyle = () => getThemedStyle(base, themed);

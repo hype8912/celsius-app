@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import BigNumber from "bignumber.js";
 
 import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
 import TransactionsHistory from "../../molecules/TransactionsHistory/TransactionsHistory";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import { CEL_PAY_TYPES, EMPTY_STATES, MODALS } from "../../../constants/UI";
-import cryptoUtil from "../../../utils/crypto-util";
 import CelPayInfoModal from "../../modals/CelPayInfoModal/CelPayInfoModal";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { renderHodlEmptyState } from "../../../utils/hodl-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -47,14 +48,14 @@ class CelPayLanding extends Component {
   sendAsLink = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("CelPayEnterAmount");
+    actions.navigateTo(SCREENS.CEL_PAY_ENTER_AMOUNT);
     mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK);
   };
 
   sendToFriend = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("CelPayEnterAmount", {
+    actions.navigateTo(SCREENS.CEL_PAY_ENTER_AMOUNT, {
       celPayType: CEL_PAY_TYPES.FRIEND,
     });
     mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.FRIEND);
@@ -95,7 +96,7 @@ class CelPayLanding extends Component {
     if (!celpayCompliance.allowed)
       return <StaticScreen emptyState={{ purpose: EMPTY_STATES.COMPLIANCE }} />;
 
-    if (!cryptoUtil.isGreaterThan(walletSummary.total_amount_usd, 0))
+    if (!new BigNumber(walletSummary.total_amount_usd).isGreaterThan(0))
       return (
         <StaticScreen
           emptyState={{ purpose: EMPTY_STATES.INSUFFICIENT_FUNDS }}
@@ -110,6 +111,7 @@ class CelPayLanding extends Component {
           textButton={"Share as a link"}
           explanation={"Send a direct link with your preferred apps."}
           darkImage={require("../../../../assets/images/hands-in-the-air-dark.png")}
+          unicornImage={require("../../../../assets/images/hands-in-the-air-unicorn.png")}
           lightImage={require("../../../../assets/images/hands-in-the-air.png")}
           onPress={this.sendAsLink}
         />
@@ -117,6 +119,7 @@ class CelPayLanding extends Component {
           textButton={"Send to contacts"}
           explanation={`Send crypto to other Celsians on the network.`}
           darkImage={require("../../../../assets/images/money-currency-union-dark.png")}
+          unicornImage={require("../../../../assets/images/money-currency-union-unicorn.png")}
           lightImage={require("../../../../assets/images/money-currency-union.png")}
           onPress={this.sendToFriend}
         />

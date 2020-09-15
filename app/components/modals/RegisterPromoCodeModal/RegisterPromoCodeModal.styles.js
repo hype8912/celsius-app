@@ -1,4 +1,3 @@
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
@@ -7,6 +6,7 @@ const base = {
   },
   cardWrapper: {
     marginHorizontal: 15,
+    marginBottom: 15,
   },
   inputWrapper: {
     marginLeft: 25,
@@ -19,19 +19,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    messageTextCard: {
-      color: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
-
-  dark: {
-    messageTextCard: {
-      color: STYLES.COLORS.DARK_GRAY2,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const RegisterPromoCodeModalStyle = () => getThemedStyle(base, themed);

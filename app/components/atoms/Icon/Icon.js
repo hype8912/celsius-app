@@ -4,16 +4,8 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 
 import Svgs from "../../../constants/SVGS";
-import { getTheme } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
-import { THEMES } from "../../../constants/UI";
-
-const iconColors = {
-  primary: {
-    [THEMES.LIGHT]: STYLES.COLORS.MEDIUM_GRAY,
-    [THEMES.DARK]: STYLES.COLORS.WHITE_OPACITY5,
-  },
-};
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class Icon extends Component {
   static propTypes = {
@@ -25,7 +17,7 @@ class Icon extends Component {
     iconOpacity: PropTypes.number,
   };
   static defaultProps = {
-    fill: "#000",
+    fill: "primary",
     width: 40,
     height: 40,
     iconOpacity: 1,
@@ -33,19 +25,24 @@ class Icon extends Component {
 
   render() {
     const { name, fill, iconOpacity, style } = this.props;
-    const theme = getTheme();
     let fillColor = fill;
+    const svgIcons = Svgs;
 
-    if (["primary"].includes(fill)) fillColor = iconColors[fill][theme];
+    if (["primary", "inactive"].includes(fill))
+      fillColor = getColor(COLOR_KEYS.TAB_UNSELECTED);
+    if (["active"].includes(fill))
+      fillColor = getColor(COLOR_KEYS.TAB_SELECTED);
+    if (Object.values(COLOR_KEYS).includes(fill)) fillColor = getColor(fill);
 
-    const viewBox = Svgs[`${name}ViewBox`] || this.props.viewBox;
+    const viewBox = svgIcons[`${name}ViewBox`] || this.props.viewBox;
+
     return (
       <View style={{ overflow: "hidden", opacity: iconOpacity }}>
         <SvgIcon
           viewBox={viewBox}
           name={name}
           {...this.props}
-          svgs={Svgs}
+          svgs={svgIcons}
           fill={fillColor}
           style={[{ alignSelf: "center", justifyContent: "center" }, style]}
         />

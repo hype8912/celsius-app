@@ -1,19 +1,22 @@
 import React, { Component, Fragment } from "react";
 import { View, Animated } from "react-native";
 import PropTypes from "prop-types";
+import _ from "lodash";
+
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
 import Graph from "../../graphs/Graph/Graph";
-import STYLES from "../../../constants/STYLES";
-import { heightPercentageToDP } from "../../../utils/styles-util";
+import { getColor, heightPercentageToDP } from "../../../utils/styles-util";
 import CoinGridCardStyle from "./CoinGridCard.styles";
 import { THEMES } from "../../../constants/UI";
 import interestUtil from "../../../utils/interest-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 
 const GraphLight = require("../../../../assets/images/placeholders/graph-light.png");
 const GraphDark = require("../../../../assets/images/placeholders/graph-dark.png");
@@ -52,17 +55,13 @@ class CoinGridCard extends Component {
       </CelText>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
-          fill={STYLES.COLORS.CELSIUS_BLUE}
+          fill={getColor(COLOR_KEYS.LINK)}
           width="13"
           height="13"
           name="CirclePlus"
         />
-        <CelText
-          margin={"0 0 0 5"}
-          type={"H7"}
-          color={STYLES.COLORS.CELSIUS_BLUE}
-        >
-          Deposit
+        <CelText margin={"0 0 0 5"} type={"H7"} link>
+          Transfer
         </CelText>
       </View>
     </View>
@@ -71,7 +70,7 @@ class CoinGridCard extends Component {
   coinCardFull = coin => (
     <Fragment>
       <Counter
-        color={CoinGridCardStyle.text}
+        color={getColor(COLOR_KEYS.HEADLINE)}
         weight="600"
         type="H3"
         margin="3 0 3 0"
@@ -104,9 +103,11 @@ class CoinGridCard extends Component {
 
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
 
-    const isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
 
     return (
@@ -118,9 +119,12 @@ class CoinGridCard extends Component {
                 <CelText weight="300" type="H6">
                   {displayName}
                 </CelText>
-                {interestRate.eligible && (
-                  <CelText color={STYLES.COLORS.GREEN} type="H7">
-                    {formatter.percentageDisplay(isInCel)}
+                {!_.isEmpty(interestRate) && interestRate.eligible && (
+                  <CelText
+                    color={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                    type="H7"
+                  >
+                    {formatter.percentageDisplay(rate)}
                   </CelText>
                 )}
               </View>

@@ -1,38 +1,36 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import React, { Component } from "react";
-// import Constants from 'expo-constants';
 import { Image, Linking, TouchableOpacity, View } from "react-native";
 import * as appActions from "../../../redux/actions";
 
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
 import Separator from "../../atoms/Separator/Separator";
 import IconButton from "../../organisms/IconButton/IconButton";
-import { MODALS, THEMES } from "../../../constants/UI";
+import { MODALS } from "../../../constants/UI";
 import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal";
 import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
 import CelButton from "../../atoms/CelButton/CelButton";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
-import appUtil from "../../../utils/app-util";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import ProfileStyle from "./Profile.styles";
 import Icon from "../../atoms/Icon/Icon";
-import { getTheme } from "../../../utils/styles-util";
 import Constants from "../../../../constants";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
     user: state.user.profile,
     profilePicture: state.user.profile.profile_picture,
-    formData: state.forms.formData,
-    formErrors: state.forms.formErrors,
     kycStatus: state.user.profile.kyc
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
@@ -41,9 +39,7 @@ import API from "../../../constants/API";
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class Profile extends Component {
-  static propTypes = {
-    // text: PropTypes.string
-  };
+  static propTypes = {};
   static defaultProps = {};
 
   static navigationOptions = () => ({
@@ -55,7 +51,6 @@ class Profile extends Component {
     super(props);
     this.state = {
       updatingTaxInfo: false,
-      revisionId: "",
     };
   }
 
@@ -64,9 +59,6 @@ class Profile extends Component {
     actions.profileTaxpayerInfo();
     actions.getUserAppSettings();
     this.initForm(user);
-
-    const appVersion = await appUtil.getRevisionId();
-    this.setState({ revisionId: appVersion.revisionId });
   }
 
   componentDidUpdate(prevProps) {
@@ -111,9 +103,7 @@ class Profile extends Component {
       kycStatus,
       callsInProgress,
     } = this.props;
-    const { revisionId } = this.state;
     const style = ProfileStyle();
-    const theme = getTheme();
     const { ENV } = Constants;
 
     const disabled = apiUtil.areCallsInProgress(
@@ -135,7 +125,7 @@ class Profile extends Component {
                   height: 100,
                   borderRadius: 50,
                   borderWidth: 4,
-                  borderColor: STYLES.COLORS.WHITE,
+                  borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
                 }}
                 source={{
                   uri: profilePicture,
@@ -150,7 +140,7 @@ class Profile extends Component {
                   height: 100,
                   borderRadius: 50,
                   borderWidth: 4,
-                  borderColor: STYLES.COLORS.WHITE,
+                  borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
                 }}
                 source={require("../../../../assets/images/empty-profile/empty-profile.png")}
                 resizeMethod="resize"
@@ -164,9 +154,9 @@ class Profile extends Component {
                 {user.last_name}
               </CelText>
               <TouchableOpacity
-                onPress={() => actions.navigateTo("ChangeAvatar")}
+                onPress={() => actions.navigateTo(SCREENS.CHANGE_AVATAR)}
               >
-                <CelText color={STYLES.COLORS.CELSIUS_BLUE} margin="10 0 0 0">
+                <CelText link margin="10 0 0 0">
                   Change photo
                 </CelText>
               </TouchableOpacity>
@@ -192,14 +182,14 @@ class Profile extends Component {
 
           <IconButton
             icon={"Couple"}
-            onPress={() => actions.navigateTo("PersonalInformation")}
+            onPress={() => actions.navigateTo(SCREENS.PERSONAL_INFORMATION)}
           >
             Personal Information
           </IconButton>
 
           <ExpandableItem heading={"SETTINGS"} isExpanded margin={"0 0 10 0"}>
             <IconButton
-              onPress={() => actions.navigateTo("SecuritySettings")}
+              onPress={() => actions.navigateTo(SCREENS.SECURITY_SETTINGS)}
               margin="20 0 20 0"
               icon="Security"
             >
@@ -207,7 +197,7 @@ class Profile extends Component {
             </IconButton>
             {hasPassedKYC() && (
               <IconButton
-                onPress={() => actions.navigateTo("WalletSettings")}
+                onPress={() => actions.navigateTo(SCREENS.WALLET_SETTINGS)}
                 margin="0 0 20 0"
                 icon="WalletSettings"
               >
@@ -216,7 +206,7 @@ class Profile extends Component {
             )}
             {hasPassedKYC() && (
               <IconButton
-                onPress={() => actions.navigateTo("ApiAuthorization")}
+                onPress={() => actions.navigateTo(SCREENS.API_AUTHORIZATION)}
                 margin="0 0 20 0"
                 icon="Api"
               >
@@ -224,7 +214,7 @@ class Profile extends Component {
               </IconButton>
             )}
             <IconButton
-              onPress={() => actions.navigateTo("Appearance")}
+              onPress={() => actions.navigateTo(SCREENS.APPEARANCE)}
               margin="0 0 20 0"
               icon="Appearance"
             >
@@ -236,6 +226,7 @@ class Profile extends Component {
             <CelText margin={"0 0 20 0"}>
               Receive your total transaction history report via email.
             </CelText>
+
             <IconButton
               onPress={() => this.sendCsvRequest()}
               margin="0 0 20 0"
@@ -260,11 +251,7 @@ class Profile extends Component {
                 name={"Twitter"}
                 width={35}
                 height={35}
-                fill={
-                  theme === THEMES.LIGHT
-                    ? STYLES.COLORS.DARK_GRAY3
-                    : STYLES.COLORS.WHITE_OPACITY5
-                }
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Twitter
@@ -279,11 +266,7 @@ class Profile extends Component {
                 name={"Facebook"}
                 width={35}
                 height={35}
-                fill={
-                  theme === THEMES.LIGHT
-                    ? STYLES.COLORS.DARK_GRAY3
-                    : STYLES.COLORS.WHITE_OPACITY5
-                }
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Facebook
@@ -298,11 +281,7 @@ class Profile extends Component {
                 name={"Reddit"}
                 width={35}
                 height={35}
-                fill={
-                  theme === THEMES.LIGHT
-                    ? STYLES.COLORS.DARK_GRAY3
-                    : STYLES.COLORS.WHITE_OPACITY5
-                }
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Reddit
@@ -315,11 +294,7 @@ class Profile extends Component {
                 name={"Telegram"}
                 width={35}
                 height={35}
-                fill={
-                  theme === THEMES.LIGHT
-                    ? STYLES.COLORS.DARK_GRAY3
-                    : STYLES.COLORS.WHITE_OPACITY5
-                }
+                fill={COLOR_KEYS.PARAGRAPH}
               />
               <CelText type={"H6"} margin={"5 0 0 0"}>
                 Telegram
@@ -335,20 +310,17 @@ class Profile extends Component {
               onPress={() => {
                 Linking.openURL("https://celsius.network/terms-of-use/");
               }}
-              textColor={STYLES.COLORS.CELSIUS_BLUE}
             >
               See Terms of Use
             </CelButton>
-            <CelText weight="light" align="center" type="H7">
-              {`App Version: ${revisionId}`}
-            </CelText>
+            <BuildVersion />
           </View>
 
           {ENV === "STAGING" ? (
             <CelButton
               margin="10 0 0 0"
               basic
-              onPress={() => actions.navigateTo("Storybook")}
+              onPress={() => actions.navigateTo(SCREENS.STORYBOOK)}
             >
               Open Storybook
             </CelButton>

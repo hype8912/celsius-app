@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import STYLES from "../../../constants/STYLES";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { MODALS } from "../../../constants/UI";
 import Banner from "../Banner/Banner";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class KYCTrigger extends Component {
   static propTypes = {
@@ -22,14 +24,14 @@ class KYCTrigger extends Component {
       case KYC_STATUSES.pending:
       case KYC_STATUSES.sending:
       case KYC_STATUSES.sent:
-        color = STYLES.COLORS.ORANGE;
+        color = getColor(COLOR_KEYS.ALERT_STATE);
         break;
       case KYC_STATUSES.permanently_rejected:
       case KYC_STATUSES.rejected:
-        color = STYLES.COLORS.RED;
+        color = getColor(COLOR_KEYS.NEGATIVE_STATE);
         break;
       default:
-        color = STYLES.COLORS.CELSIUS_BLUE;
+        color = getColor(COLOR_KEYS.LINK);
     }
 
     return color;
@@ -60,7 +62,7 @@ class KYCTrigger extends Component {
       default:
         title = "Verify Your Profile";
         content =
-          "Become a Celsius member by verifying your profile. You will be able to earn interest on your deposited coins, take dollar and stable coin loans and send crypto to your friends.";
+          "Complete verification to have full access your to Celsius Network wallet.";
     }
 
     return { title, content, info };
@@ -82,7 +84,7 @@ class KYCTrigger extends Component {
             KYC_STATUSES.sending,
             KYC_STATUSES.sent,
           ].includes(kycType)
-            ? () => actions.navigateTo("KYCProfileDetails")
+            ? () => actions.navigateTo(SCREENS.KYC_PROFILE_DETAILS)
             : null
         }
         buttonText={

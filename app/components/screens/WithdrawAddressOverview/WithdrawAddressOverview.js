@@ -8,7 +8,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
 import NoWithdrawalAddressCard from "../../atoms/NoWithdrawalAddressCard/NoWithdrawalAddressCard";
 import WithdrawalAddressCard from "../../atoms/WithdrawalAddressCard/WithdrawalAddressCard";
@@ -18,6 +17,9 @@ import API from "../../../constants/API";
 import { EMPTY_STATES } from "../../../constants/UI";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import Separator from "../../atoms/Separator/Separator";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -48,8 +50,8 @@ class WithdrawAddressOverview extends Component {
   handlePress = coin => {
     const { actions } = this.props;
     actions.updateFormField("coin", coin);
-    actions.navigateTo("VerifyProfile", {
-      onSuccess: () => actions.navigateTo("WithdrawNewAddressSetup"),
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+      onSuccess: () => actions.navigateTo(SCREENS.WITHDRAW_NEW_ADDRESS_SETUP),
     });
   };
 
@@ -59,7 +61,7 @@ class WithdrawAddressOverview extends Component {
       withdrawAddressLabel: addressLabel,
       coin,
     });
-    actions.navigateTo("WithdrawAddressLabel");
+    actions.navigateTo(SCREENS.WITHDRAW_ADDRESS_LABEL);
   };
 
   renderFromFixNowFlow = () => {
@@ -71,8 +73,8 @@ class WithdrawAddressOverview extends Component {
           type="H6"
           weight="600"
           align="center"
-          color={STYLES.COLORS.CELSIUS_BLUE}
-          onPress={() => actions.navigateTo("SecurityFixNow")}
+          color={getColor(COLOR_KEYS.BANNER_INFO)}
+          onPress={() => actions.navigateTo(SCREENS.SECURITY_FIX_NOW)}
         >
           Go back to Fix Now
         </CelText>
@@ -147,10 +149,10 @@ class WithdrawAddressOverview extends Component {
                 hodlStatus={hodlStatus}
               />
               {withdrawalAddresses[key].locked && hours && minutes && (
-                <Card margin="0 0 10 0">
+                <View>
                   <CelText align="center" type="H6">
-                    Due to our security protocols, your address will be active
-                    in
+                    Due to our security protocols, your {key} address will be
+                    active in
                   </CelText>
 
                   <CelText
@@ -161,7 +163,7 @@ class WithdrawAddressOverview extends Component {
                   >
                     {`${hours}h ${minutes}m.`}
                   </CelText>
-                </Card>
+                </View>
               )}
             </View>
           ) : null;
@@ -195,18 +197,22 @@ class WithdrawAddressOverview extends Component {
     return (
       <RegularLayout>
         <View>
-          <Card color={STYLES.COLORS.CELSIUS_BLUE}>
+          <Card color={getColor(COLOR_KEYS.BANNER_INFO)}>
             <View style={{ flexDirection: "row" }}>
               <View style={{ flex: 1, paddingRight: 5 }}>
                 <Icon
                   name={"Info"}
                   width="25"
                   height="25"
-                  fill={STYLES.COLORS.WHITE}
+                  fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                 />
               </View>
               <View style={{ flex: 6 }}>
-                <CelText type={"H5"} weight={"300"} color={STYLES.COLORS.WHITE}>
+                <CelText
+                  type={"H5"}
+                  weight={"300"}
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+                >
                   For your security, if changes are made to a withdrawal
                   address, withdrawals of that coin will be unavailable for 24
                   hours.

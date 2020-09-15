@@ -16,11 +16,13 @@ import { scaleLinear, scaleTime } from "d3-scale";
 import {
   heightPercentageToDP,
   widthPercentageToDP,
+  getFontSize,
+  getColor,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 import PerformanceGraphStyle from "./PerformanceGraph.styles";
 import Separator from "../../atoms/Separator/Separator";
 import formatter from "../../../utils/formatter";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const d3 = { shape };
 
@@ -187,19 +189,19 @@ class PerformanceGraph extends React.Component {
           <Svg height={this.props.height} width={this.props.width}>
             <Path
               d={this.lineETH}
-              stroke={STYLES.COLORS.GREEN}
+              stroke={getColor(COLOR_KEYS.POSITIVE_STATE)}
               strokeWidth={1.5}
               fill="transparent"
             />
             <Path
               d={this.lineBTC}
-              stroke={STYLES.COLORS.ORANGE}
+              stroke={getColor(COLOR_KEYS.ALERT_STATE)}
               strokeWidth={1.5}
               fill="transparent"
             />
             <Path
               d={this.lineCEL}
-              stroke={STYLES.COLORS.CELSIUS_BLUE}
+              stroke={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
               strokeWidth={1.5}
               fill="transparent"
             />
@@ -210,9 +212,9 @@ class PerformanceGraph extends React.Component {
                 <TextInput
                   ref={this.cursor.labelText}
                   style={{
-                    color: "white",
+                    color: getColor(COLOR_KEYS.PARAGRAPH),
                     height: heightPercentageToDP("5.7%"),
-                    fontSize: 12,
+                    fontSize: getFontSize("H7"),
                     width: widthPercentageToDP("25.73%"),
                     textAlign: "center",
                   }} // TextInput issue- styles cannot override and need to be inline
@@ -249,9 +251,9 @@ class PerformanceGraph extends React.Component {
         <View style={styles.percentageView}>
           {currencies.map(c => {
             let color;
-            if (c === "cel") color = STYLES.COLORS.CELSIUS_BLUE;
-            if (c === "btc") color = STYLES.COLORS.ORANGE;
-            if (c === "eth") color = STYLES.COLORS.GREEN;
+            if (c === "cel") color = getColor(COLOR_KEYS.PRIMARY_BUTTON);
+            if (c === "btc") color = getColor(COLOR_KEYS.ALERT_STATE);
+            if (c === "eth") color = getColor(COLOR_KEYS.POSITIVE_STATE);
             return (
               <View key={c} style={styles.singlePercent}>
                 <View

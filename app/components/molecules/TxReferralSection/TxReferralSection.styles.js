@@ -1,5 +1,5 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   text: {
@@ -13,7 +13,7 @@ const base = {
     width: 50,
     height: 50,
     borderRadius: 50 / 2,
-    borderColor: "#ffffff",
+    borderColor: COLOR_KEYS.WHITE,
     borderWidth: 3,
   },
   data: {
@@ -30,7 +30,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const ReferralSectionStyle = () => getThemedStyle(base, themed);

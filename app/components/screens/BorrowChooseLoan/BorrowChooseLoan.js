@@ -11,6 +11,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { getPadding } from "../../../utils/styles-util";
 import { LOAN_TYPES } from "../../../constants/DATA";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -46,33 +47,36 @@ class BorrowChooseLoan extends Component {
 
     const cardDetails = [];
 
-    if (canBorrowUSD) {
+    if (canBorrowStable) {
       cardDetails.push({
-        textButton: "Borrow Dollars",
-        explanation: "Take out a cash loan against your crypto.",
-        lightImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
-        darkImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
+        textButton: "Borrow Stablecoins",
+        explanation:
+          "Your loan will arrive in your Celsius account within 24 hours.  ",
+        lightImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
+        darkImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
+        unicornImage: require("../../../../assets/images/illustration-borrow-stablecoins-unicorn.png"),
         onPress: () => {
-          actions.navigateTo("BorrowEnterAmount");
+          actions.navigateTo(SCREENS.BORROW_ENTER_AMOUNT);
           actions.updateFormFields({
-            coin: "USD",
-            loanType: LOAN_TYPES.USD_LOAN,
+            coin: "USDC",
+            loanType: LOAN_TYPES.STABLE_COIN_LOAN,
           });
         },
       });
     }
 
-    if (canBorrowStable) {
+    if (canBorrowUSD) {
       cardDetails.push({
-        textButton: "Borrow Stablecoins",
-        explanation: "Take out a loan in one of our supported stable coins.",
-        lightImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
-        darkImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
+        textButton: "Borrow Dollars",
+        explanation: "Your loan will be sent directly to your bank account.",
+        lightImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
+        darkImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
+        unicornImage: require("../../../../assets/images/illustration-borrow-dollars-unicorn.png"),
         onPress: () => {
-          actions.navigateTo("BorrowEnterAmount");
+          actions.navigateTo(SCREENS.BORROW_ENTER_AMOUNT);
           actions.updateFormFields({
-            coin: "USDC",
-            loanType: LOAN_TYPES.STABLE_COIN_LOAN,
+            coin: "USD",
+            loanType: LOAN_TYPES.USD_LOAN,
           });
         },
       });
@@ -94,7 +98,7 @@ class BorrowChooseLoan extends Component {
           ]}
         >
           <CelText align="center" type="H4" weight="300" margin="0 0 20 0">
-            What type of currency would you like to borrow?
+            What would you like to borrow?
           </CelText>
           {cardDetails.map(i => (
             <MultiInfoCardButton {...i} key={i.cardTitle} />

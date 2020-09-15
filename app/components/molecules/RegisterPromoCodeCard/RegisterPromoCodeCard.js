@@ -7,8 +7,9 @@ import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import CelButton from "../../atoms/CelButton/CelButton";
-import STYLES from "../../../constants/STYLES";
 import { MODALS } from "../../../constants/UI";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class RegisterPromoCodeCard extends Component {
   static propTypes = {
@@ -34,14 +35,18 @@ class RegisterPromoCodeCard extends Component {
         <View style={style.referralBody}>
           <View style={style.indentation} />
           <View style={style.referralCopy}>
-            <CelText type={"H5"} weight={"500"} color={STYLES.COLORS.WHITE}>
+            <CelText
+              type={"H5"}
+              weight={"500"}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+            >
               In order to receive your referral reward, you must:
             </CelText>
             <CelText
               margin={"10 0 0 0"}
               type={"H6"}
               weight={"300"}
-              color={STYLES.COLORS.WHITE}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
             >
               1. Complete KYC (Identity Verification)
             </CelText>
@@ -49,7 +54,7 @@ class RegisterPromoCodeCard extends Component {
               margin={"10 0 0 0"}
               type={"H6"}
               weight={"300"}
-              color={STYLES.COLORS.WHITE}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
             >
               2. Receive confirmation of account verification
             </CelText>
@@ -57,9 +62,9 @@ class RegisterPromoCodeCard extends Component {
               margin={"10 0 0 0"}
               type={"H6"}
               weight={"300"}
-              color={STYLES.COLORS.WHITE}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
             >
-              3. Deposit $200 or more worth of coins to your Celsius wallet
+              3. Transfer $200 or more worth of coins to your Celsius wallet
             </CelText>
           </View>
         </View>
@@ -73,16 +78,17 @@ class RegisterPromoCodeCard extends Component {
             margin={"10 0 0 0"}
             type={"H6"}
             weight={"300"}
-            color={STYLES.COLORS.WHITE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
           >
-            Enter your referral code then follow the steps below to receive your
-            reward.
+            Enter your code below. When your crypto balance reaches $200, you
+            and your friend will get rewarded! Balance must remain for at least
+            30 days to qualify.
           </CelText>
           <CelText
             margin={"10 0 0 0"}
             type={"H6"}
             weight={"400"}
-            color={STYLES.COLORS.WHITE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
           >
             NOTE: You will NOT be able to enter a referral code after account
             verification.
@@ -91,7 +97,7 @@ class RegisterPromoCodeCard extends Component {
             margin={"10 0 0 0"}
             type={"H6"}
             weight={"300"}
-            color={STYLES.COLORS.WHITE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
           >
             1. Complete KYC (Identity Verification)
           </CelText>
@@ -99,7 +105,7 @@ class RegisterPromoCodeCard extends Component {
             margin={"10 0 0 0"}
             type={"H6"}
             weight={"300"}
-            color={STYLES.COLORS.WHITE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
           >
             2. Receive confirmation of account verification
           </CelText>
@@ -107,15 +113,15 @@ class RegisterPromoCodeCard extends Component {
             margin={"10 0 0 0"}
             type={"H6"}
             weight={"300"}
-            color={STYLES.COLORS.WHITE}
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
           >
-            3. Deposit $200 or more worth of coins to your Celsius wallet
+            3. Transfer $200 or more worth of coins to your Celsius wallet
           </CelText>
           <View style={{ alignItems: "flex-start" }}>
             <CelButton
               onPress={() => openModal(MODALS.REGISTER_PROMO_CODE_MODAL)}
               color={"white"}
-              textColor={STYLES.COLORS.CELSIUS_BLUE}
+              textColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
               size={"small"}
               margin={"20 0 15 0"}
               style={{ justifyContent: "flex-start" }}
@@ -137,7 +143,11 @@ class RegisterPromoCodeCard extends Component {
     return (
       <Card
         size="full"
-        color={promoCode ? STYLES.COLORS.GREEN : STYLES.COLORS.CELSIUS_BLUE}
+        color={
+          promoCode
+            ? getColor(COLOR_KEYS.POSITIVE_STATE)
+            : getColor(COLOR_KEYS.BANNER_INFO)
+        }
         onPress={() => {
           this.setState({ isExpanded: !isExpanded });
         }}
@@ -150,7 +160,9 @@ class RegisterPromoCodeCard extends Component {
                 width="20"
                 height="20"
                 fill={
-                  promoCode ? STYLES.COLORS.GREEN : STYLES.COLORS.CELSIUS_BLUE
+                  promoCode
+                    ? getColor(COLOR_KEYS.POSITIVE_STATE)
+                    : getColor(COLOR_KEYS.PRIMARY_BUTTON)
                 }
               />
             </View>
@@ -159,7 +171,7 @@ class RegisterPromoCodeCard extends Component {
             <CelText
               type={"H5"}
               weight={"500"}
-              color={STYLES.COLORS.WHITE}
+              color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
               style={{ marginTop: 10 }}
             >
               {promoCode ? "Referral Code Activated" : "Have a referral code?"}
@@ -170,7 +182,7 @@ class RegisterPromoCodeCard extends Component {
                   name={isExpanded ? "UpArrow" : "DownArrow"}
                   width="15"
                   height="15"
-                  fill={STYLES.COLORS.WHITE}
+                  fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
                 />
               </View>
             )}

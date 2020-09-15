@@ -11,6 +11,8 @@ import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import { getTheme } from "../../../utils/styles-util";
 import Separator from "../../atoms/Separator/Separator";
+// import { COLOR_KEYS } from "../../../constants/COLORS";
+// import { SCREENS } from "../../../constants/SCREENS";
 
 class CollateralCoinCard extends Component {
   static propTypes = {

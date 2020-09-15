@@ -29,13 +29,18 @@ import {
   ALL_PERMISSIONS,
   requestForPermission,
 } from "../../../utils/device-permissions";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const { height, width } = Dimensions.get("window");
 
 @connect(
   state => ({
     cameraType: state.camera.cameraType,
-    cameraRollLastPhoto: state.camera.cameraRollPhotos[0],
+    cameraRollLastPhoto: state.camera.cameraRollPhotos.length
+      ? state.camera.cameraRollPhotos[0]
+      : null,
     photo: state.camera.photo,
     cameraField: state.camera.cameraField,
     cameraHeading: state.camera.cameraHeading,
@@ -66,7 +71,7 @@ class CameraScreen extends Component {
       PropTypes.string,
       PropTypes.instanceOf(Object),
     ]),
-    mask: PropTypes.oneOf(["circle", "document"]),
+    mask: PropTypes.oneOf(["circle", "utility"]),
     onSave: PropTypes.func,
   };
 
@@ -82,6 +87,7 @@ class CameraScreen extends Component {
     this.state = {
       hasCameraPermission: false,
       hasCameraRollPermission: false,
+      takingPhoto: false,
       hasInitialPhoto: !!props.photo,
       size: {
         width,
@@ -99,7 +105,7 @@ class CameraScreen extends Component {
 
   componentDidUpdate() {
     const { actions, activeScreen } = this.props;
-    if (activeScreen === "CameraScreen") {
+    if (activeScreen === SCREENS.CAMERA_SCREEN) {
       actions.setFabType("hide");
     }
   }
@@ -136,11 +142,6 @@ class CameraScreen extends Component {
 
   getMaskImage = mask => {
     switch (mask) {
-      case "document":
-        return {
-          lightSource: require("../../../../assets/images/mask/card-mask-transparent.png"),
-          darkSource: require("../../../../assets/images/mask/dark-card-mask-transparent.png"),
-        };
       case "utility":
         return {
           lightSource: require("../../../../assets/images/mask/bill-mask-markers-light.png"),
@@ -167,7 +168,7 @@ class CameraScreen extends Component {
       if (result.cancelled) {
         return;
       }
-      actions.navigateTo("ConfirmCamera", {
+      actions.navigateTo(SCREENS.CONFIRM_CAMERA, {
         onSave: navigation.getParam("onSave"),
       });
       actions.takeCameraPhoto({ uri: result.path });
@@ -200,7 +201,7 @@ class CameraScreen extends Component {
         const photo = await camera.takePictureAsync(options);
 
         actions.startApiCall(API.TAKE_CAMERA_PHOTO);
-        await actions.navigateTo("ConfirmCamera", {
+        await actions.navigateTo(SCREENS.CONFIRM_CAMERA, {
           documentPicture: hideBack,
           onSave: navigation.getParam("onSave"),
         });
@@ -239,6 +240,12 @@ class CameraScreen extends Component {
         loggerUtil.err(err);
       }
     }
+  };
+
+  pressCircle = async () => {
+    this.setState({ takingPhoto: true });
+    await this.takePhoto(this.camera);
+    this.setState({ takingPhoto: false });
   };
 
   renderMask = () => {
@@ -283,6 +290,7 @@ class CameraScreen extends Component {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={[style.mask, style.maskOverlayColor]} />
+
           <ThemedImage
             {...imageSource}
             style={{
@@ -308,6 +316,7 @@ class CameraScreen extends Component {
 
   render() {
     const { cameraType, actions, cameraRollLastPhoto } = this.props;
+    const { takingPhoto } = this.state;
     const style = CameraScreenStyle();
     const Mask = this.renderMask;
     const isFocused = this.props.navigation.isFocused();
@@ -341,13 +350,15 @@ class CameraScreen extends Component {
 
             <TouchableOpacity
               style={{ flex: 1 }}
-              onPress={() => this.takePhoto(this.camera)}
+              onPress={this.pressCircle}
+              disabled={takingPhoto}
             >
               <Icon
                 name="Shutter"
-                fill={STYLES.COLORS.CELSIUS_BLUE}
+                fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                 width="60"
                 height="60"
+                iconOpacity={takingPhoto ? 0.5 : 1}
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -356,12 +367,7 @@ class CameraScreen extends Component {
                 this.setState({ ratio: "4:3" }, actions.flipCamera);
               }}
             >
-              <Icon
-                style={{ alignSelf: "flex-end" }}
-                name="Swap"
-                width="35"
-                fill={"#3D4853"}
-              />
+              <Icon style={{ alignSelf: "flex-end" }} name="Swap" width="35" />
             </TouchableOpacity>
           </View>
         </SafeAreaView>

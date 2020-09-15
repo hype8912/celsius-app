@@ -10,12 +10,14 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import BorrowCalculator from "../../organisms/BorrowCalculator/BorrowCalculator";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { EMPTY_STATES } from "../../../constants/UI";
 import loanUtil from "../../../utils/loan-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => {
@@ -100,7 +102,9 @@ class BorrowCalculatorScreen extends Component {
             <CelText
               weight={formData.termOfLoan === 6 ? "bold" : "300"}
               color={
-                formData.termOfLoan === 6 ? STYLES.COLORS.CELSIUS_BLUE : null
+                formData.termOfLoan === 6
+                  ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                  : null
               }
             >
               6M
@@ -113,7 +117,9 @@ class BorrowCalculatorScreen extends Component {
             <CelText
               weight={formData.termOfLoan === 12 ? "bold" : "300"}
               color={
-                formData.termOfLoan === 12 ? STYLES.COLORS.CELSIUS_BLUE : null
+                formData.termOfLoan === 12
+                  ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                  : null
               }
             >
               1Y
@@ -126,7 +132,9 @@ class BorrowCalculatorScreen extends Component {
             <CelText
               weight={formData.termOfLoan === 24 ? "bold" : "300"}
               color={
-                formData.termOfLoan === 24 ? STYLES.COLORS.CELSIUS_BLUE : null
+                formData.termOfLoan === 24
+                  ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                  : null
               }
             >
               2Y
@@ -139,7 +147,9 @@ class BorrowCalculatorScreen extends Component {
             <CelText
               weight={formData.termOfLoan === 48 ? "bold" : "300"}
               color={
-                formData.termOfLoan === 48 ? STYLES.COLORS.CELSIUS_BLUE : null
+                formData.termOfLoan === 48
+                  ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                  : null
               }
             >
               4Y
@@ -163,13 +173,11 @@ class BorrowCalculatorScreen extends Component {
 
   getPurposeSpecificProps = loanParams => {
     const { purpose, actions } = this.props;
-
     const defaultProps = {
       subtitle: "Calculate your loan interest.",
-      bottomHeading: "Borrow dollars for your crypto",
-      bottomParagraph: "Calculate your loan interest before you deposit coins",
-      buttonCopy: "Get Loan",
-      onPress: () => actions.navigateTo("BorrowChooseLoan"),
+      bottomParagraph: "",
+      buttonCopy: "Get a Loan",
+      onPress: () => actions.navigateTo(SCREENS.BORROW_CHOOSE_LOAN),
     };
 
     switch (purpose) {
@@ -177,14 +185,14 @@ class BorrowCalculatorScreen extends Component {
         return {
           ...defaultProps,
           subtitle: "Calculate your interest before you verify your ID",
-          bottomHeading: "Borrow dollars for Crypto",
+          bottomHeading: "Borrow against your crypto",
           bottomParagraph: loanParams
             ? `Verify your identity to start using your coins as collateral and get a dollar loan starting at just ${formatter.percentageDisplay(
                 loanParams.bestLtv
               )} APR`
             : null,
           buttonCopy: "Verify identity",
-          onPress: () => actions.navigateTo("KYCProfileDetails"),
+          onPress: () => actions.navigateTo(SCREENS.KYC_PROFILE_DETAILS),
         };
 
       case EMPTY_STATES.BORROW_NOT_ENOUGH_FUNDS:
@@ -199,9 +207,9 @@ class BorrowCalculatorScreen extends Component {
             : null,
           bottomParagraph:
             "Deposit more coins to start your first loan application",
-          buttonCopy: "Deposit coins",
+          buttonCopy: "Transfer coins",
           onPress: () =>
-            actions.navigateTo("Deposit", {
+            actions.navigateTo(SCREENS.DEPOSIT, {
               coin: loanParams ? loanParams.largestShortCrypto : null,
             }),
         };
@@ -214,7 +222,7 @@ class BorrowCalculatorScreen extends Component {
           bottomHeading: null,
           bottomParagraph: null,
           buttonCopy: "Go to Wallet",
-          onPress: () => actions.navigateTo("WalletLanding"),
+          onPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
         };
 
       case EMPTY_STATES.NO_LOANS:
@@ -224,7 +232,7 @@ class BorrowCalculatorScreen extends Component {
           bottomHeading: null,
           bottomParagraph: null,
           buttonCopy: "Create a loan",
-          onPress: () => actions.navigateTo("BorrowChooseLoan"),
+          onPress: () => actions.navigateTo(SCREENS.BORROW_CHOOSE_LOAN),
         };
 
       default:
@@ -269,7 +277,6 @@ class BorrowCalculatorScreen extends Component {
       eligibleCoins,
       loyaltyInfo
     );
-
     const purposeProps = this.getPurposeSpecificProps(loanParams);
 
     if (!formData.ltv) return null;
@@ -289,7 +296,7 @@ class BorrowCalculatorScreen extends Component {
         </CelText>
         <Separator />
         <CelText type="H4" align={"left"} margin={"15 0 20 0"}>
-          Enter loan amount
+          Enter the amount you’d like to borrow
         </CelText>
         <BorrowCalculator loanParams={loanParams} purpose={purpose} />
         <View>

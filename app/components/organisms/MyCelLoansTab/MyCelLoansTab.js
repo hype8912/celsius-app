@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import * as appActions from "../../../redux/actions";
 import MyCelLoansTabStyle from "./MyCelLoansTab.styles";
 import CelText from "../../atoms/CelText/CelText";
-// import STYLES from "../../../constants/STYLES";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(
@@ -28,15 +27,15 @@ class MyCelInterestTab extends Component {
                 style={[style.starIcon, { marginTop: 6 }]}
                 lightSource={require("../../../../assets/images/loyaltyIcons/celsiusCircleIcon3x.png")}
                 darkSource={require("../../../../assets/images/loyaltyIcons/celsiusCircleIconDark3x.png")}
+                unicornSource={require("../../../../assets/images/loyaltyIcons/celsiusCircleIconUnicorn3x.png")}
               />
             </View>
             <View style={{ marginTop: 30 }}>
               <CelText type={"H3"} weight={"600"} align={"center"}>
-                Lower interest on Loans
+                Pay Less for Loans
               </CelText>
               <CelText align={"center"} type={"H4"} weight={"300"}>
-                Payout your loan interest with CEL to decrease your monthly
-                payment.
+                Pay your interest with CEL to decrease your monthly payment.
               </CelText>
             </View>
           </View>
@@ -47,7 +46,7 @@ class MyCelInterestTab extends Component {
               <CelText align={"center"} type={"H4"} weight={"500"}>
                 Loyalty Level{" "}
                 <CelText align={"center"} type={"H4"} weight={"300"}>
-                  your interest payment would be:{" "}
+                  your discount is :{" "}
                 </CelText>
               </CelText>
             </CelText>

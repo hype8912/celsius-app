@@ -8,12 +8,12 @@ import * as appActions from "../../../redux/actions";
 // import HODLInfoCheckboxes from "./HODLInfoCheckboxes.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { getPadding } from "../../../utils/styles-util";
+import { getColor, getPadding } from "../../../utils/styles-util";
 import Card from "../../atoms/Card/Card";
-import { THEMES } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -34,7 +34,7 @@ class HODLInfoCheckboxes extends Component {
 
   render() {
     // const style = HodlDisabledActionsStyle();
-    const { theme, actions, formData } = this.props;
+    const { actions, formData } = this.props;
 
     const checkboxCopy = [
       {
@@ -81,24 +81,17 @@ class HODLInfoCheckboxes extends Component {
             HODL Mode:
           </CelText>
           {checkboxCopy.map((text, i) => (
-            <Card
-              key={text.field}
-              color={
-                theme === THEMES.LIGHT
-                  ? STYLES.COLORS.WHITE
-                  : STYLES.COLORS.SEMI_GRAY
-              }
-              margin={"20 0 20 0"}
-              padding={"15 15 0 15"}
-            >
+            <Card key={text.field} margin={"20 0 20 0"} padding={"15 15 0 15"}>
               <CelCheckbox
                 onChange={(field, value) =>
                   actions.updateFormField(field, value)
                 }
                 field={`${checkboxCopy[i].field}`}
                 value={formData[`${checkboxCopy[i].field}`]}
-                uncheckedCheckBoxColor={STYLES.COLORS.GRAY}
-                checkedCheckBoxColor={STYLES.COLORS.GREEN}
+                uncheckedCheckBoxColor={getColor(
+                  COLOR_KEYS.DOT_INDICATOR_INACTIVE
+                )}
+                checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
                 rightText={text.explanation}
                 updateFormField={actions.updateFormField}
               />
@@ -109,9 +102,9 @@ class HODLInfoCheckboxes extends Component {
             margin={"10 0 0 0"}
             disabled={!canContinue}
             onPress={() =>
-              actions.navigateTo("VerifyProfile", {
+              actions.navigateTo(SCREENS.VERIFY_PROFILE, {
                 onSuccess: () => {
-                  actions.navigateTo("HODLViewCode");
+                  actions.navigateTo(SCREENS.HODL_VIEW_CODE);
                   actions.getHodlCode();
                 },
               })

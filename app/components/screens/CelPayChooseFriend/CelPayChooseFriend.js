@@ -22,8 +22,10 @@ import CircleButton from "../../atoms/CircleButton/CircleButton";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { CEL_PAY_TYPES } from "../../../constants/UI";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import Icon from "../../atoms/Icon/Icon";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const loadingText =
   "Your contacts are being imported. This make take a couple of minutes, so we'll let you know once the import is complete. \n" +
@@ -138,7 +140,7 @@ class CelPayChooseFriend extends Component {
     const { actions } = this.props;
 
     actions.updateFormField("friend", undefined);
-    actions.navigateTo("CelPayEnterAmount");
+    actions.navigateTo(SCREENS.CEL_PAY_ENTER_AMOUNT);
 
     mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK);
   };
@@ -147,7 +149,7 @@ class CelPayChooseFriend extends Component {
     const { actions } = this.props;
 
     actions.updateFormField("friend", contact);
-    actions.navigateTo("CelPayMessage");
+    actions.navigateTo(SCREENS.CEL_PAY_MESSAGE);
 
     mixpanelAnalytics.choseCelPayFriend();
   };
@@ -200,7 +202,7 @@ class CelPayChooseFriend extends Component {
       : "None of your friends";
     return (
       <View style={{ paddingTop: 60 }}>
-        <CircleButton icon="Contacts" iconSize={28} />
+        <CircleButton icon="Contacts" iconSize={28} type="coin" />
 
         <CelText weight="bold" type="H2" align="center" margin="25 0 0 0">
           No friends
@@ -260,7 +262,7 @@ class CelPayChooseFriend extends Component {
         </CelText>
 
         {shouldRenderWarning && (
-          <Card color={STYLES.COLORS.ORANGE} margin="15 0 0 0">
+          <Card color={getColor(COLOR_KEYS.ALERT_STATE)} margin="15 0 0 0">
             <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
               <Icon name="WarningCircle" width="25" height="25" fill="white" />
               <CelText

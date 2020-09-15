@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -13,6 +12,7 @@ import Icon from "../../atoms/Icon/Icon";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -34,7 +34,7 @@ class BorrowCollateral extends Component {
     actions.updateFormField("collateralCoin", coin);
     mixpanelAnalytics.loanCollateral(coin);
 
-    actions.navigateTo("BorrowLoanOption");
+    actions.navigateTo(SCREENS.BORROW_LOAN_OPTION);
   };
 
   render() {
@@ -73,11 +73,11 @@ class BorrowCollateral extends Component {
 
           <TouchableOpacity
             style={style.addMoreCoinsList}
-            onPress={() => actions.navigateTo("Deposit")}
+            onPress={() => actions.navigateTo(SCREENS.DEPOSIT)}
           >
             <Icon fill={"gray"} width="17" height="17" name="CirclePlus" />
             <CelText type="H5" margin={"0 0 0 5"}>
-              Deposit coins
+              Transfer coins
             </CelText>
           </TouchableOpacity>
 

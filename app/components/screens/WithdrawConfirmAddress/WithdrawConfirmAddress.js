@@ -10,7 +10,6 @@ import BalanceView from "../../atoms/BalanceView/BalanceView";
 import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import CelInput from "../../atoms/CelInput/CelInput";
 import addressUtil from "../../../utils/address-util";
@@ -18,6 +17,9 @@ import { MODALS } from "../../../constants/UI";
 import ChangeWithdrawalAddressModal from "../../modals/ChangeWithdrawalAddressModal/ChangeWithdrawalAddressModal";
 import MemoIdModal from "../../modals/MemoIdModal/MemoIdModal";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -64,15 +66,15 @@ class WithdrawConfirmAddress extends Component {
         withdrawalAddresses[formData.coin.toUpperCase()] &&
         withdrawalAddresses[formData.coin.toUpperCase()].address
     );
-    actions.navigateTo("VerifyProfile", {
-      onSuccess: () => actions.navigateTo("WithdrawConfirm"),
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+      onSuccess: () => actions.navigateTo(SCREENS.WITHDRAW_CONFIRM),
     });
   };
 
   navigate = () => {
     const { actions } = this.props;
     actions.closeModal();
-    actions.navigateTo("WithdrawAddressOverview");
+    actions.navigateTo(SCREENS.WITHDRAW_ADDRESS_OVERVIEW);
   };
 
   render() {
@@ -112,7 +114,7 @@ class WithdrawConfirmAddress extends Component {
               <CelText type={"H1"}>
                 {formatter.getEllipsisAmount(formData.amountCrypto, -5)}
               </CelText>
-              <CelText color={"gray"} type={"H3"}>
+              <CelText type={"H3"} color={getColor(COLOR_KEYS.PARAGRAPH)}>
                 {formatter.usd(formData.amountUsd)}
               </CelText>
             </View>
@@ -139,13 +141,13 @@ class WithdrawConfirmAddress extends Component {
             <InfoBox
               triangle
               color={"white"}
-              backgroundColor={STYLES.COLORS.ORANGE}
+              backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
               titleText={"Your withdrawal address"}
               left
               explanationText={
                 <CelText color="white">
                   Please confirm the withdrawal address where your funds will be
-                  sent. If you previously transferred money from an exchange,
+                  sent. If you previously transferred coins from an exchange,
                   this may not be your correct withdrawal address.
                   {"\n\n"}You can change your withdrawal address at any time
                   from your{" "}
@@ -188,7 +190,7 @@ class WithdrawConfirmAddress extends Component {
                 <InfoBox
                   left
                   color={"white"}
-                  backgroundColor={STYLES.COLORS.ORANGE}
+                  backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
                   titleText={
                     "To prevent a permanent loss of your funds, please check if your address has a destination tag."
                   }

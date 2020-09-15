@@ -4,6 +4,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {},
@@ -26,7 +27,7 @@ const base = {
     justifyContent: "space-around",
   },
   opacityCircle: {
-    backgroundColor: STYLES.COLORS.CELSIUS,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
     width: 60,
     height: 60,
     borderRadius: 30,
@@ -38,34 +39,24 @@ const base = {
   },
   background: {
     opacity: 0.95,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.BACKGROUND,
+  },
+  shadowStyle: {
+    shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW, // TODO: missing COLOR_KEY
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
   },
 };
 
 const themed = {
-  light: {
-    background: {
-      opacity: 0.97,
-      backgroundColor: "white",
-    },
-    shadowStyle: {
-      shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW,
-      shadowOffset: { width: 0, height: 12 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      width: 60,
-      height: 60,
-      borderRadius: 30,
-    },
-  },
-
+  light: {},
   dark: {
-    background: {
-      opacity: 0.99,
-      backgroundColor: "rgb(21, 30, 39)",
-    },
     shadowStyle: {
-      shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW,
+      shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW, // TODO/ missing COLOR_KEY
       shadowOffset: { width: 0, height: 10 },
       shadowOpacity: 0.08,
       shadowRadius: 4,
@@ -74,8 +65,7 @@ const themed = {
       borderRadius: 30,
     },
   },
-
-  celsius: {},
+  unicorn: {},
 };
 
 const FabMenuStyle = () => getThemedStyle(base, themed);

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { RESULTS } from "react-native-permissions";
 
-import cryptoUtil from "../../../utils/crypto-util";
+import cryptoUtil from "../../../utils/crypto-util/crypto-util";
 import { MODALS } from "../../../constants/UI";
 import addressUtil from "../../../utils/address-util";
 import * as appActions from "../../../redux/actions";
@@ -13,7 +13,6 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
 import formatter from "../../../utils/formatter";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import CelInput from "../../atoms/CelInput/CelInput";
@@ -25,6 +24,9 @@ import {
   ALL_PERMISSIONS,
   requestForPermission,
 } from "../../../utils/device-permissions";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -44,6 +46,7 @@ class WithdrawCreateAddress extends Component {
     super(props);
 
     const { formData, walletSummary } = props;
+
     const coin = formData.coin;
     const coinData = walletSummary.coins.filter(
       c => c.short === coin.toUpperCase()
@@ -67,7 +70,7 @@ class WithdrawCreateAddress extends Component {
     const { actions } = this.props;
     const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
     if (perm === RESULTS.GRANTED) {
-      actions.navigateTo("QRScanner", {
+      actions.navigateTo(SCREENS.QR_SCANNER, {
         onScan: this.handleScan,
       });
     } else {
@@ -84,7 +87,7 @@ class WithdrawCreateAddress extends Component {
     if (!formData.coinTag && ["XRP", "XLM", "EOS"].includes(formData.coin)) {
       actions.openModal(MODALS.WITHDRAW_WARNING_MODAL);
     } else {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: () => actions.setCoinWithdrawalAddress(),
       });
       actions.closeModal();
@@ -94,7 +97,7 @@ class WithdrawCreateAddress extends Component {
   handleConfirmWithdrawalFromModal = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: actions.setCoinWithdrawalAddress,
     });
     actions.closeModal();
@@ -130,13 +133,14 @@ class WithdrawCreateAddress extends Component {
             crypto={balanceCrypto}
             usd={balanceUsd}
           />
+
           <View style={style.wrapper}>
             <View style={style.coinAmountContainer}>
               <CelText type={"H2"}>{formData.coin}</CelText>
               <CelText type={"H1"} weight={"semi-bold"}>
                 {formatter.getEllipsisAmount(formData.amountCrypto, -5)}
               </CelText>
-              <CelText color={"gray"} type={"H3"}>
+              <CelText color={getColor(COLOR_KEYS.PARAGRAPH)} type={"H3"}>
                 {formatter.usd(formData.amountUsd)}
               </CelText>
             </View>
@@ -161,7 +165,7 @@ class WithdrawCreateAddress extends Component {
 
             <View style={style.containerWithMargin}>
               <TouchableOpacity onPress={this.handleScanClick}>
-                <CelText type={"H5"} style={style.tagText}>
+                <CelText type={"H5"} link align="center">
                   Scan QR Code
                 </CelText>
               </TouchableOpacity>
@@ -186,7 +190,7 @@ class WithdrawCreateAddress extends Component {
                         : actions.openModal(MODALS.MEMO_ID_MODAL)
                     }
                   >
-                    <CelText type={"H5"} style={style.tagText}>
+                    <CelText type={"H5"} link align="center">
                       {tagText}
                     </CelText>
                   </TouchableOpacity>
@@ -197,7 +201,7 @@ class WithdrawCreateAddress extends Component {
             cryptoUtil.isERC20(formData.coin.toLowerCase()) ? (
               <InfoBox
                 color={"white"}
-                backgroundColor={STYLES.COLORS.ORANGE}
+                backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
                 titleText={
                   is2FAEnabled
                     ? "Note: we use a smart-contract to send ERC20 tokens, some wallets do not support such transactions."
@@ -209,7 +213,7 @@ class WithdrawCreateAddress extends Component {
             ) : (
               <InfoBox
                 color={"white"}
-                backgroundColor={STYLES.COLORS.ORANGE}
+                backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
                 titleText={
                   is2FAEnabled
                     ? "Changing your withdrawal address will make a withdrawal of your coin unavailable for 24 hours."
@@ -235,8 +239,9 @@ class WithdrawCreateAddress extends Component {
             {!is2FAEnabled && (
               <View style={style.button}>
                 <CelButton
+                  disabled={!formData.withdrawAddress}
                   onPress={() => {
-                    actions.navigateTo("VerifyProfile", {
+                    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
                       onSuccess: () =>
                         actions.setCoinWithdrawalAddress("wallet"),
                     });

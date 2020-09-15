@@ -1,3 +1,5 @@
+import { SCREENS } from "./SCREENS";
+
 const KEYBOARD_TYPE = {
   DEFAULT: "default",
   NUMERIC: "numeric",
@@ -47,14 +49,17 @@ const MODALS = {
   MARGIN_CALL_MODAL: "MARGIN_CALL_MODAL",
   TOP_UP_MODAL: "TOP_UP_MODAL",
   MARGIN_CALL_CONFIRM: "MARGIN_CALL_CONFIRM",
+  POA_WARNING_MODAL: "POA_WARNING_MODAL",
+  INTRODUCE_NEW_THEME_MODAL: "INTRODUCE_NEW_THEME_MODAL",
+  PICKER_MODAL: "PICKER_MODAL",
 };
 
-const INITIAL_ROUTE = "SplashScreen";
+const INITIAL_ROUTE = SCREENS.SPLASH_SCREEN;
 
 const THEMES = {
   LIGHT: "light",
   DARK: "dark",
-  CELSIUS: "celsius",
+  UNICORN: "unicorn",
 };
 
 const EMPTY_STATES = {
@@ -127,7 +132,7 @@ const FAB_TYPE = ["main", "support", "hide"];
 
 const WELCOME_MESSAGES = [
   {
-    title: "Interest Income",
+    title: "Rewards Income",
     text:
       "Make your Mondays a whole lot more interesting. Deposit coins and receive weekly interest payments directly to your Celsius wallet.",
   },
@@ -234,7 +239,7 @@ const TRANSACTION_FILTER_TYPE = [
     value: null,
   },
   {
-    title: "Interest",
+    title: "Rewards",
     value: "interest",
     icon: "TransactionInterest",
   },

@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width } = Dimensions.get("window");
 
@@ -16,29 +16,15 @@ const base = {
     alignItems: "center",
     padding: 10,
     marginBottom: 20,
+    backgroundColor: COLOR_KEYS.CARDS,
   },
+  text: { color: COLOR_KEYS.HEADLINE },
 };
 
 const themed = {
-  light: {
-    view: {
-      backgroundColor: STYLES.COLORS.GRAY,
-    },
-    text: {
-      color: STYLES.COLORS.WHITE,
-    },
-  },
-
-  dark: {
-    view: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY,
-    },
-    text: {
-      color: STYLES.COLORS.WHITE,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const BalanceViewStyle = () => getThemedStyle(base, themed);

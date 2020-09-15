@@ -12,7 +12,9 @@ import {
   PHONES_WITH_CUSTOM_KEYPAD,
 } from "../../../constants/UI";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
+import { STORYBOOK } from "../../../../dev-settings.json";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const BUTTONS = {
   [KEYPAD_PURPOSES.WITHDRAW]: [
@@ -179,7 +181,7 @@ class CelNumpad extends Component {
                     {btn === "<" ? (
                       <Icon
                         name="Backspace"
-                        fill={STYLES.COLORS.DARK_GRAY}
+                        fill={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
                         width="32"
                         style={{ marginTop: 10 }}
                       />
@@ -204,7 +206,7 @@ class CelNumpad extends Component {
         ref={input => {
           this.inputRef = input;
         }}
-        autoFocus={autofocus}
+        autoFocus={!STORYBOOK ? autofocus : false}
       />
     );
   }

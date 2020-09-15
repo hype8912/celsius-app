@@ -10,13 +10,14 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import {
   COIN_CARD_TYPE,
   LOAN_PAYMENT_REASONS,
-  MODALS,
+  // MODALS,
 } from "../../../constants/UI";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import TierCard from "../../organisms/TierCard/TierCard";
 import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
 import CelText from "../../atoms/CelText/CelText";
 import STYLES from "../../../constants/STYLES";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -65,10 +66,10 @@ class PaymentCel extends Component {
         "You have successfully changed interest payment method"
       );
 
-      return actions.navigateTo("LoanSettings");
+      return actions.navigateTo(SCREENS.LOAN_SETTINGS);
     }
 
-    actions.navigateTo("LoanPrepaymentPeriod", { coin: "CEL", id });
+    actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { coin: "CEL", id });
   };
 
   payInCel = async () => {
@@ -78,7 +79,7 @@ class PaymentCel extends Component {
 
     if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
       actions.updateFormField("coin", "CEL");
-      actions.navigateTo("LoanPrepaymentPeriod", { id, reason });
+      actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { id, reason });
     }
 
     if (reason === LOAN_PAYMENT_REASONS.INTEREST) {
@@ -88,12 +89,15 @@ class PaymentCel extends Component {
         "success",
         "You have successfully changed interest payment method"
       );
-      actions.navigateTo("ChoosePaymentMethod", { id, reason });
+      actions.navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, { id, reason });
       this.setState({ isLoading: false });
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+        onSuccess: () => actions.payMonthlyInterest(id, "CEL"),
+      });
+      // actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
     }
   };
 

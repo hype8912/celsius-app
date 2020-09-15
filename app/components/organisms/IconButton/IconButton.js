@@ -5,8 +5,8 @@ import { View, TouchableOpacity, StyleSheet } from "react-native";
 import IconButtonStyle from "./IconButton.styles";
 import Icon from "../../atoms/Icon/Icon";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
-import { getMargins, getPadding } from "../../../utils/styles-util";
+import { getMargins, getPadding, getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class IconButton extends Component {
   static propTypes = {
@@ -34,9 +34,9 @@ class IconButton extends Component {
 
     if (color === "blue") {
       return {
-        primary: STYLES.COLORS.CELSIUS_BLUE,
-        secondary: STYLES.COLORS.WHITE,
-        third: STYLES.COLORS.WHITE,
+        primary: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+        secondary: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
+        third: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
       };
     }
 
@@ -49,11 +49,18 @@ class IconButton extends Component {
 
   renderIconButtonContent = () => {
     const { secondary, third } = this.getColors();
-    const { children, icon, hideIconRight, right, rightText, rightTextColor } = this.props;
+    const {
+      children,
+      icon,
+      hideIconRight,
+      right,
+      rightText,
+      rightTextColor,
+    } = this.props;
     const style = IconButtonStyle();
     return (
       <>
-        <View style={ [style.leftWrapper, {flex: rightText ? 0.7 : 1}] }>
+        <View style={[style.leftWrapper, { flex: rightText ? 0.7 : 1 }]}>
           {!!icon && <Icon fill={third} name={icon} width="25" />}
           <CelText
             type="H4"
@@ -67,18 +74,19 @@ class IconButton extends Component {
             {children}
           </CelText>
         </View>
-        {rightText &&
+        {rightText && (
           <View style={style.rightTextWrapper}>
-            <CelText color={rightTextColor}>
-              {rightText}
-            </CelText>
+            <CelText color={rightTextColor}>{rightText}</CelText>
           </View>
-        }
+        )}
         <View style={style.rightWrapper}>
           {!!right && (
             <View>
               {typeof right === "string" ? (
-                <CelText type="H4" color={STYLES.COLORS.DARK_GRAY}>
+                <CelText
+                  type="H4"
+                  color={getColor(COLOR_KEYS.TOGGLE_OFF_BACKGROUND)}
+                >
                   {right}
                 </CelText>
               ) : (

@@ -1,6 +1,7 @@
 import { NavigationActions, StackActions } from "react-navigation";
 import ACTIONS from "../../constants/ACTIONS";
 import userBehavior from "../../utils/mixpanel-analytics";
+import { SCREENS } from "../../constants/SCREENS";
 
 let _navigator;
 
@@ -33,6 +34,7 @@ function setTopLevelNavigator(navigatorRef) {
  */
 function navigateTo(routeName, params) {
   return () => {
+    if (!_navigator) return;
     _navigator.dispatch(
       NavigationActions.navigate({
         routeName,
@@ -48,7 +50,8 @@ function navigateTo(routeName, params) {
  */
 function navigateBack(backScreenName) {
   return () => {
-    if (backScreenName === "VerifyProfile") {
+    if (!_navigator) return;
+    if (backScreenName === SCREENS.VERIFY_PROFILE) {
       // If back button leads to VerifyProfile, skip it and go back one more screen
       userBehavior.navigated("Back");
       _navigator.dispatch(StackActions.pop({ n: 2 }));
@@ -69,8 +72,8 @@ function navigateBack(backScreenName) {
  */
 
 function resetToScreen(screenName, params) {
-  userBehavior.navigated(screenName);
   return () => {
+    if (!_navigator) return;
     _navigator.dispatch(
       StackActions.reset({
         index: 0,
@@ -80,5 +83,6 @@ function resetToScreen(screenName, params) {
         ],
       })
     );
+    userBehavior.navigated(screenName);
   };
 }

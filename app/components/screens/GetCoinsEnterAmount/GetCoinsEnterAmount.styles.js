@@ -3,7 +3,7 @@ import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width } = Dimensions.get("window");
 
@@ -32,22 +32,17 @@ const base = {
     width: width - widthPercentageToDP("10%"),
     marginHorizontal: 20,
   },
+  text: {
+    color: COLOR_KEYS.HEADLINE,
+  },
 };
 
 const themed = {
-  light: {
-    text: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
-    },
-  },
+  light: {},
 
-  dark: {
-    text: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
-  },
+  dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const GetCoinsEnterAmountStyle = () => getThemedStyle(base, themed);

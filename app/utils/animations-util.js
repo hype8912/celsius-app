@@ -3,7 +3,8 @@ import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { heightPercentageToDP } from "./styles-util";
 import { isLoanBannerVisible } from "./ui-util";
-import { hasPassedKYC } from "./user-util";
+import { hasPassedKYC } from "./user-util/user-util";
+import { SCREENS } from "../constants/SCREENS";
 
 const animationsUtil = {
   applyOffset,
@@ -121,24 +122,28 @@ function scrollListener(y) {
   if (y > threshold) {
     if (
       !changeWalletHeader &&
-      (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory")
+      (activeScreen === SCREENS.WALLET_LANDING ||
+        activeScreen === SCREENS.BALANCE_HISTORY)
     )
       store.dispatch(actions.changeWalletHeaderContent(true));
-    if (!changeCoinDetailsHeader && activeScreen === "CoinDetails")
+    if (!changeCoinDetailsHeader && activeScreen === SCREENS.COIN_DETAILS)
       store.dispatch(actions.changeCoinDetailsHeaderContent(true));
-    if (!changeInterestHeader && activeScreen === "WalletInterest")
+    if (!changeInterestHeader && activeScreen === SCREENS.WALLET_INTEREST)
       store.dispatch(actions.changeInterestHeaderContent(true));
   }
   if (y < threshold && changeCoinDetailsHeader) {
-    if (activeScreen === "CoinDetails")
+    if (activeScreen === SCREENS.COIN_DETAILS)
       store.dispatch(actions.changeCoinDetailsHeaderContent());
   }
   if (y < threshold && changeWalletHeader) {
-    if (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory")
+    if (
+      activeScreen === SCREENS.WALLET_LANDING ||
+      activeScreen === SCREENS.BALANCE_HISTORY
+    )
       store.dispatch(actions.changeWalletHeaderContent());
   }
   if (y < threshold && changeInterestHeader) {
-    if (activeScreen === "WalletInterest")
+    if (activeScreen === SCREENS.WALLET_INTEREST)
       store.dispatch(actions.changeInterestHeaderContent());
   }
 }

@@ -1,9 +1,7 @@
-// import STYLES from '../../../constants/STYLES';
 import { Dimensions } from "react-native";
-import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
-const { COLORS } = STYLES;
 const { width } = Dimensions.get("window");
 
 const baseContainer = {
@@ -25,25 +23,24 @@ const baseContainer = {
 const base = {
   infoContainer: {
     ...baseContainer,
-    backgroundColor: COLORS.CELSIUS_BLUE,
+    backgroundColor: getColor(COLOR_KEYS.BANNER_INFO),
   },
   warningContainer: {
     ...baseContainer,
-    backgroundColor: COLORS.ORANGE,
+    backgroundColor: getColor(COLOR_KEYS.ALERT_STATE),
   },
   errorContainer: {
     ...baseContainer,
-    backgroundColor: COLORS.RED,
+    backgroundColor: getColor(COLOR_KEYS.NEGATIVE_STATE),
   },
   successContainer: {
     ...baseContainer,
-    backgroundColor: COLORS.GREEN,
+    backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE),
   },
   circle: {
     width: 29,
     height: 29,
     borderRadius: 15,
-    // backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -66,7 +63,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const MessageStyle = () => getThemedStyle(base, themed);

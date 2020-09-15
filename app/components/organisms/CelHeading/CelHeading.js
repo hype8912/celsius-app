@@ -11,20 +11,24 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import CelHeadingStyle from "./CelHeading.styles";
-import { getPadding, getTheme } from "../../../utils/styles-util";
+import { getPadding, getColor, getTheme } from "../../../utils/styles-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { THEMES } from "../../../constants/UI";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import HodlBanner from "../../atoms/HodlBanner/HodlBanner";
 import Icon from "../../atoms/Icon/Icon";
 import Loader from "../../atoms/Loader/Loader";
 import fromatter from "../../../utils/formatter";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { STORYBOOK } from "../../../../dev-settings.json";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
-    profilePicture: state.user.profile.profile_picture,
+    profilePicture: state.user.profile
+      ? state.user.profile.profile_picture
+      : "",
     message: state.ui.message,
     formData: state.forms.formData,
     theme: state.user.appSettings.theme,
@@ -105,10 +109,11 @@ class CelHeading extends Component {
     return this.props.scene.index === 0 || hideBack === true ? null : (
       <CelButton
         margin={this.isSearchHeader() ? "8 0 0 4" : null}
-        iconRightColor={STYLES.COLORS.GRAY}
+        iconRightColor={getColor(COLOR_KEYS.SUBHEADING_LIGHT_TEXT)}
         basic
         onPress={() => this.navigateBack(customBack, backScreenName)}
         iconRight="IconChevronLeft"
+        backButton
       />
     );
   };
@@ -119,7 +124,6 @@ class CelHeading extends Component {
     const scene = this.props.scene.descriptor;
 
     const style = CelHeadingStyle();
-    const theme = getTheme();
 
     return {
       action: (
@@ -131,7 +135,7 @@ class CelHeading extends Component {
         <CelButton
           basic
           onPress={() => {
-            this.props.actions.navigateTo("RegisterInitial");
+            this.props.actions.navigateTo(SCREENS.REGISTER_INITIAL);
           }}
         >
           Sign up
@@ -141,7 +145,7 @@ class CelHeading extends Component {
         <CelButton
           basic
           onPress={() => {
-            this.props.actions.navigateTo("Login");
+            this.props.actions.navigateTo(SCREENS.LOGIN);
           }}
         >
           Log in
@@ -149,34 +153,14 @@ class CelHeading extends Component {
       ),
       info: onInfo && (
         <TouchableOpacity basic onPress={onInfo}>
-          <Icon
-            name={"Info"}
-            height={30}
-            width={30}
-            fill={
-              theme === THEMES.LIGHT
-                ? STYLES.COLORS.DARK_GRAY3
-                : STYLES.COLORS.WHITE_OPACITY5
-            }
-          />
+          <Icon name={"Info"} height={30} width={30} />
         </TouchableOpacity>
       ),
-      search: (
-        <Icon
-          name={"Search"}
-          height={30}
-          width={30}
-          fill={
-            theme === THEMES.LIGHT
-              ? STYLES.COLORS.DARK_GRAY3
-              : STYLES.COLORS.WHITE_OPACITY5
-          }
-        />
-      ),
+      search: <Icon name={"Search"} height={30} width={30} />,
       profile: (
         <TouchableOpacity
           onPress={() => {
-            this.props.actions.navigateTo("Profile");
+            this.props.actions.navigateTo(SCREENS.PROFILE);
           }}
         >
           {profilePicture ? (
@@ -214,7 +198,7 @@ class CelHeading extends Component {
           Close
         </CelButton>
       ), // TODO(sb):
-      cancel: scene.state.routeName !== "VerifyProfile" && (
+      cancel: scene.state.routeName !== SCREENS.VERIFY_PROFILE && (
         <CelButton
           basic
           onPress={() => {
@@ -234,12 +218,9 @@ class CelHeading extends Component {
     }
     switch (theme) {
       case THEMES.LIGHT:
+      default:
         return StatusBar.setBarStyle("dark-content");
       case THEMES.DARK:
-        return StatusBar.setBarStyle("light-content");
-      case THEMES.CELSIUS:
-        return StatusBar.setBarStyle("light-content");
-      default:
         return StatusBar.setBarStyle("light-content");
     }
   };
@@ -256,7 +237,8 @@ class CelHeading extends Component {
     let screenTitle;
 
     if (
-      (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory") &&
+      (activeScreen === SCREENS.WALLET_LANDING ||
+        activeScreen === SCREENS.BALANCE_HISTORY) &&
       changeWalletHeader
     ) {
       screenTitle = walletSummary
@@ -265,7 +247,7 @@ class CelHeading extends Component {
       return screenTitle;
     }
 
-    if (activeScreen === "WalletInterest" && changeInterestHeader) {
+    if (activeScreen === SCREENS.WALLET_INTEREST && changeInterestHeader) {
       screenTitle = walletSummary
         ? fromatter.usd(walletSummary.total_interest_earned)
         : title;
@@ -291,12 +273,12 @@ class CelHeading extends Component {
         {customCenterComponent && !customCenterComponent.flowProgress ? (
           <View style={style.customCenterComponent}>
             <Loader
-              barColor={STYLES.COLORS.GREEN}
-              backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+              barColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+              backgroundColor={getColor(COLOR_KEYS.CARDS)}
               progress={
                 customCenterComponent.currentStep / customCenterComponent.steps
               }
-              borderColor={STYLES.COLORS.LIGHT_GRAY}
+              borderColor={getColor(COLOR_KEYS.HEADER)}
               width={40}
             />
           </View>
@@ -315,9 +297,9 @@ class CelHeading extends Component {
     const { activeScreen } = this.props;
 
     let text = "Search";
-    if (activeScreen === "SelectCoin") text = "Search assets";
-    if (activeScreen === "SelectCountry") text = "Search countries";
-    if (activeScreen === "SelectState") text = "Search US States";
+    if (activeScreen === SCREENS.SELECT_COIN) text = "Search assets";
+    if (activeScreen === SCREENS.SELECT_COUNTRY) text = "Search countries";
+    if (activeScreen === SCREENS.SELECT_STATE) text = "Search US States";
 
     return text;
   };
@@ -325,10 +307,20 @@ class CelHeading extends Component {
   getContent = () => {
     const { formData, hodlStatus, actions, activeScreen } = this.props;
     const sceneOptions = this.props.scene.descriptor.options;
-    const style = CelHeadingStyle();
+    const theme = getTheme();
+    const style = CelHeadingStyle(theme);
+
     const paddings = getPadding("0 15 0 15");
     const leftStyle = this.isSearchHeader()
-      ? [style.left, { flexDirection: "row", flex: 2 }]
+      ? [
+          style.left,
+          {
+            flexDirection: "row",
+            flex: 2,
+            alignItems: "center",
+            marginBottom: 7,
+          },
+        ]
       : style.left;
 
     return (
@@ -355,7 +347,7 @@ class CelHeading extends Component {
               >
                 <CelInput
                   debounce
-                  autoFocus
+                  autoFocus={!STORYBOOK}
                   basic
                   margin="0 0 0 0"
                   field="search"
@@ -373,13 +365,12 @@ class CelHeading extends Component {
         sceneOptions.customCenterComponent.flowProgress ? (
           <Loader
             flowProgress={sceneOptions.customCenterComponent.flowProgress}
-            barColor={STYLES.COLORS.GREEN}
-            backgroundColor={STYLES.COLORS.GREEN_OPACITY}
+            barColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+            backgroundColor={getColor(COLOR_KEYS.SEPARATORS)}
             progress={
               sceneOptions.customCenterComponent.currentStep /
               sceneOptions.customCenterComponent.steps
             }
-            borderColor={STYLES.COLORS.LIGHT_GRAY}
             width={100}
           />
         ) : null}

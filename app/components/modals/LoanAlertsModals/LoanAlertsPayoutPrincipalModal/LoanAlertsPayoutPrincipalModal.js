@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import { MODALS } from "../../../../constants/UI";
 import * as appActions from "../../../../redux/actions";
+import { SCREENS } from "../../../../constants/SCREENS";
 import CelText from "../../../atoms/CelText/CelText";
 import formatter from "../../../../utils/formatter";
 import Separator from "../../../atoms/Separator/Separator";
@@ -35,6 +36,10 @@ class LoanAlertsPayoutPrincipalModal extends Component {
     const { actions } = this.props;
     const { loan } = this.state;
 
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+      onSuccess: () => actions.payPrincipal(loan.id),
+    });
+    actions.closeModal();
     return {
       heading: "Confirm Principal Payment",
       buttonText: "Pay Principal",
@@ -66,6 +71,9 @@ class LoanAlertsPayoutPrincipalModal extends Component {
 
   render() {
     const { loan, isLoadingClose } = this.state;
+    return null;
+
+    // eslint-disable-next-line no-unreachable
     const { walletSummary, currencyRates } = this.props;
     const style = LoanAlertsPayoutPrincipalModalStyle();
 

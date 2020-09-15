@@ -109,9 +109,10 @@ class PieProgressBar extends Component {
               if (level === 3) colorSection = "white";
               return (
                 <Shape
+                  opacity={colorSection === "white" ? 1 : 0.5}
                   d={path(sec)}
                   // stroke={stroke}
-                  fill={colorSection}
+                  fill="white"
                   strokeWidth={2}
                   key={sec.index}
                 />

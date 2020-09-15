@@ -6,18 +6,19 @@ import { showMessage } from "../ui/uiActions";
 import userProfileService from "../../services/user-profile-service";
 import apiUtil from "../../utils/api-util";
 import { setFormErrors } from "../forms/formsActions";
-import { KYC_STATUSES, PRIMETRUST_KYC_STATES } from "../../constants/DATA";
+import { KYC_STATUSES } from "../../constants/DATA";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import userKYCService from "../../services/user-kyc-service";
+import { isForPrimeTrustKYC } from "../../utils/user-util/user-util";
+import { SCREENS } from "../../constants/SCREENS";
 
 export {
   updateProfileInfo,
   updateProfileAddressInfo,
   updateTaxpayerInfo,
   getKYCDocuments,
-  createKYCDocs,
   sendVerificationSMS,
   verifySMS,
   getUtilityBill,
@@ -26,6 +27,9 @@ export {
   getPrimeTrustToULink,
   profileTaxpayerInfo,
   getKYCDocTypes,
+  createKYCApplicant,
+  getMobileSDKToken,
+  saveKYCDocuments,
 };
 
 /**
@@ -98,7 +102,7 @@ function updateProfileAddressInfo(profileAddressInfo) {
           )
         );
       } else {
-        dispatch(NavActions.navigateTo("KYCVerifyIdentity"));
+        dispatch(NavActions.navigateTo(SCREENS.KYC_VERIFY_IDENTITY));
       }
       mixpanelAnalytics.kycAddressInfo();
       return {
@@ -185,13 +189,12 @@ function updateProfileTaxpayerInfoSuccess(taxpayerInfo) {
 
 /**
  * Gets users KYC documents
- * @param {Object} documents
  */
-function getKYCDocuments(documents) {
+function getKYCDocuments() {
   return async dispatch => {
     dispatch(startApiCall(API.GET_KYC_DOCUMENTS));
     try {
-      const res = await userKYCService.getKYCDocuments(documents);
+      const res = await userKYCService.getKYCDocuments();
       dispatch(getKYCDocumentsSuccess(res.data));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -208,16 +211,6 @@ function getKYCDocumentsSuccess(documents) {
     type: ACTIONS.GET_KYC_DOCUMENTS_SUCCESS,
     callName: API.GET_KYC_DOCUMENTS,
     documents,
-  };
-}
-
-/**
- * Successfully created kyc documents
- */
-function createKYCDocumentsSuccess() {
-  return {
-    type: ACTIONS.CREATE_KYC_DOCUMENTS_SUCCESS,
-    callName: API.CREATE_KYC_DOCUMENTS,
   };
 }
 
@@ -282,51 +275,6 @@ export function verifySMSSuccess() {
 
 let timeout;
 
-function createKYCDocs() {
-  return async (dispatch, getState) => {
-    dispatch(startApiCall(API.CREATE_KYC_DOCUMENTS));
-
-    try {
-      const { formData } = getState().forms;
-      const { kycDocuments } = getState().user;
-      timeout = setTimeout(() => {
-        dispatch(
-          showMessage("info", "Please be patient, this may take a bit longer.")
-        );
-        clearTimeout(timeout);
-      }, 5000);
-
-      const docType = formData.documentType || kycDocuments.type;
-      const res = await userKYCService.createKYCDocuments({
-        front: formData.front,
-        back: docType !== "passport" ? formData.back : undefined,
-        type: docType || kycDocuments,
-      });
-
-      dispatch(createKYCDocumentsSuccess(res.data));
-      dispatch(showMessage("success", "Successfully submitted KYC Documents!"));
-
-      if (formData.state && PRIMETRUST_KYC_STATES.includes(formData.state)) {
-        dispatch(NavActions.navigateTo("KYCAddressProof"));
-      } else {
-        dispatch(NavActions.navigateTo("KYCTaxpayer"));
-      }
-
-      clearTimeout(timeout);
-
-      mixpanelAnalytics.kycDocumentsSubmitted();
-    } catch (err) {
-      clearTimeout(timeout);
-      if (err.type === "Validation error") {
-        dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
-      } else {
-        dispatch(showMessage("error", err.msg));
-      }
-      dispatch(apiError(API.CREATE_KYC_DOCUMENTS, err));
-    }
-  };
-}
-
 function startKYC() {
   return async dispatch => {
     dispatch(startApiCall(API.START_KYC));
@@ -335,7 +283,7 @@ function startKYC() {
       await userKYCService.startKYC();
 
       dispatch(showMessage("success", "KYC data successfully submitted!"));
-      dispatch(NavActions.navigateTo("WalletLanding"));
+      dispatch(NavActions.navigateTo(SCREENS.WALLET_LANDING));
 
       dispatch(startKYCSuccess());
 
@@ -396,7 +344,7 @@ function setUtilityBill(utilityBillPhoto) {
       await userKYCService.setUtilityBill(utilityBillPhoto);
 
       dispatch(setUtilityBillSuccess());
-      dispatch(NavActions.navigateTo("KYCTaxpayer"));
+      dispatch(NavActions.navigateTo(SCREENS.KYC_TAXPAYER));
       dispatch(showMessage("success", "Utility bill submitted successfully!"));
 
       mixpanelAnalytics.kycUtilityBillSubmitted();
@@ -490,5 +438,98 @@ function getKYCDocTypesSuccess(kycDocTypes) {
     type: ACTIONS.GET_KYC_DOC_TYPES_SUCCESS,
     callName: API.GET_KYC_DOC_TYPES,
     kycDocTypes,
+  };
+}
+
+/**
+ * Creates/Fetches onfido applicant id
+ */
+function createKYCApplicant() {
+  return async dispatch => {
+    dispatch(startApiCall(API.CREATE_KYC_APPLICANT));
+
+    try {
+      const res = await userKYCService.ensureApplicant();
+      dispatch({
+        type: ACTIONS.CREATE_KYC_APPLICANT_SUCCESS,
+        applicantId: res.data.applicant_id,
+      });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.CREATE_KYC_APPLICANT, err));
+    }
+  };
+}
+
+/**
+ * Creates/Fetches onfido applicant id
+ */
+function getMobileSDKToken() {
+  return async (dispatch, getState) => {
+    dispatch(startApiCall(API.GET_ONFIDO_MOBILE_SDK));
+    const { applicantId } = getState().kyc;
+
+    try {
+      const resSDKToken = await userKYCService.getMobileSDKToken(applicantId);
+      let mobileSDKToken;
+      if (resSDKToken.ok) {
+        const res = await resSDKToken.json();
+        mobileSDKToken = res.token;
+      }
+
+      dispatch({
+        type: ACTIONS.GET_ONFIDO_MOBILE_SDK_SUCCESS,
+        mobileSDKToken,
+      });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_ONFIDO_MOBILE_SDK, err));
+    }
+  };
+}
+
+function saveKYCDocuments() {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(startApiCall(API.SAVE_KYC_DOCUMENTS));
+      const { formData } = getState().forms;
+
+      const documents = [
+        {
+          type: formData.documentType,
+          side: "front",
+          id: formData.frontImageId,
+        },
+      ];
+
+      if (formData.backImageId) {
+        documents.push({
+          type: formData.documentType,
+          side: "back",
+          id: formData.backImageId,
+        });
+      }
+
+      await userKYCService.saveKYCDocuments(documents);
+      dispatch(saveKYCDocumentsSuccess());
+      dispatch(showMessage("success", "Successfully submitted KYC Documents!"));
+
+      if (isForPrimeTrustKYC() && formData.documentType === "passport") {
+        dispatch(NavActions.navigateTo(SCREENS.KYC_ADDRESS_PROOF));
+      } else {
+        dispatch(NavActions.navigateTo(SCREENS.KYC_TAXPAYER));
+      }
+
+      mixpanelAnalytics.kycDocumentsSubmitted();
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.SAVE_KYC_DOCUMENTS, err));
+    }
+  };
+}
+
+function saveKYCDocumentsSuccess() {
+  return {
+    type: ACTIONS.SAVE_KYC_DOCUMENTS_SUCCESS,
   };
 }

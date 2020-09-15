@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getFontSize, getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -10,11 +11,11 @@ const base = {
     width: "100%",
     marginVertical: 10,
     height: 50,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     ...Platform.select({
       android: {
         ...STYLES.ANDROID_BORDER_STYLES,
-        borderColor: "transparent",
+        borderColor: COLOR_KEYS.TRANSPARENT,
       },
       ios: {
         ...STYLES.SHADOW_STYLES,
@@ -23,8 +24,7 @@ const base = {
     borderRadius: 8,
   },
   text: {
-    fontSize: STYLES.FONTSIZE.H4,
-    fontFamily: "Barlow-Regular",
+    fontSize: getFontSize("H4"),
     justifyContent: "space-between",
     textAlign: "center",
   },
@@ -40,14 +40,15 @@ const base = {
     height: "100%",
     width: "100%",
   },
+  textColor: {
+    color: COLOR_KEYS.PARAGRAPH,
+  },
 };
 
 const themed = {
   light: {},
-
   dark: {},
-
-  celsius: {},
+  unicorn: {},
 };
 
 const LoginButtonStyle = () => getThemedStyle(base, themed);

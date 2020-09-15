@@ -9,6 +9,8 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../../components/atoms/CelButton/CelButton";
 import CelInput from "../../atoms/CelInput/CelInput";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { STORYBOOK } from "../../../../dev-settings.json";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -46,7 +48,7 @@ class CelPayMessage extends Component {
   handleSend = () => {
     const { actions, formData } = this.props;
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () => {
         actions.celPayFriend();
       },
@@ -71,7 +73,7 @@ class CelPayMessage extends Component {
             field="message"
             value={formData.message}
             numberOfLines={5}
-            autoFocus
+            autoFocus={!STORYBOOK}
           />
 
           <CelButton

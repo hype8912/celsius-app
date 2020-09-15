@@ -7,7 +7,6 @@ import { View } from "react-native";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import LoginLandingStyle from "./LoginLanding.styles";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Constants from "../../../../constants";
 import LoginButton from "../../atoms/LoginButton/LoginButton";
@@ -15,6 +14,8 @@ import loggerUtil from "../../../utils/logger-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -46,7 +47,8 @@ class LoginLanding extends Component {
   onTwitterSuccess = twitterUser => {
     const { actions, navigation } = this.props;
     const type = navigation.getParam("type");
-    const navigateTo = type === "login" ? "Login" : "RegisterInitial";
+    const navigateTo =
+      type === "login" ? SCREENS.LOGIN : SCREENS.REGISTER_INITIAL;
 
     actions.authTwitter(type, twitterUser, navigateTo);
   };
@@ -104,12 +106,12 @@ class LoginLanding extends Component {
       }
       return {
         title: "Log in",
-        subTitle: "Welcome back, please log in to your account",
+        subTitle: "Welcome back, please log in to your Celsius Wallet",
       };
     }
     return {
-      title: "Create Account",
-      subTitle: "Choose how you want to sign up",
+      title: "Create Your Celsius Wallet",
+      subTitle: "How do you want to sign up?",
     };
   };
 
@@ -185,20 +187,23 @@ class LoginLanding extends Component {
           </View>
           <View style={style.footer}>
             {ENV === "STAGING" ? (
-              <CelButton basic onPress={() => actions.navigateTo("Storybook")}>
+              <CelButton
+                basic
+                onPress={() => actions.navigateTo(SCREENS.STORYBOOK)}
+              >
                 Open Storybook
               </CelButton>
             ) : null}
             <CelText weight="300" align="center">
               {type === "login"
-                ? "Don't have an account?"
-                : "Already have an account?"}
+                ? "Don't have an Celsius Wallet?"
+                : "Already have a Celsius Wallet?"}
               <CelText
+                link
                 weight="300"
                 align="center"
-                color={STYLES.COLORS.CELSIUS_BLUE}
                 onPress={() =>
-                  actions.navigateTo("LoginLanding", {
+                  actions.navigateTo(SCREENS.LOGIN_LANDING, {
                     type: type === "login" ? "register" : "login",
                   })
                 }
@@ -206,6 +211,7 @@ class LoginLanding extends Component {
                 {type === "login" ? ` Sign up` : ` Log in`}
               </CelText>
             </CelText>
+            <BuildVersion margin={"10 0 0 0"} />
           </View>
         </View>
       </AuthLayout>

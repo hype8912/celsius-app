@@ -7,11 +7,13 @@ import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import STYLES from "../../../constants/STYLES";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import Spinner from "../../atoms/Spinner/Spinner";
 import { THEMES } from "../../../constants/UI";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -64,7 +66,7 @@ class PrincipalPayment extends Component {
 
     // TODO move to styles
     const isIos = Platform.OS === "ios";
-    const falseColor = isIos ? "transparent" : STYLES.COLORS.DARK_GRAY3;
+    const falseColor = isIos ? "transparent" : STYLES.COLORS.DARK_GRAY3; // TODO; missing COLOR_KEYS
     const theme = getTheme();
 
     return (
@@ -72,7 +74,7 @@ class PrincipalPayment extends Component {
         onValueChange={this.handleSwitchChange}
         value={payOutPrincipalFromCollateral}
         thumbColor={
-          theme === THEMES.LIGHT
+          theme === THEMES.LIGHT // TODO: solve theming with COLOR_KEYS
             ? STYLES.COLORS.WHITE
             : STYLES.COLORS.DARK_TOGGLE_FOREGROUND
         }
@@ -81,7 +83,10 @@ class PrincipalPayment extends Component {
             ? STYLES.COLORS.DARK_GRAY3
             : STYLES.COLORS.DARK_TOGGLE_BACKGROUND
         }
-        trackColor={{ false: falseColor, true: STYLES.COLORS.GREEN }}
+        trackColor={{
+          false: falseColor,
+          true: getColor(COLOR_KEYS.POSITIVE_STATE),
+        }}
       />
     );
   };
@@ -132,7 +137,7 @@ class PrincipalPayment extends Component {
           Payout From Collateral
         </IconButton>
         {payOutPrincipalFromCollateral ? (
-          <Card color={STYLES.COLORS.ORANGE}>
+          <Card color={getColor(COLOR_KEYS.ALERT_STATE)}>
             <CelText weight="300" alignItems="center" color="#FFFFFF">
               Your principal loan amount and any unpaid interest will
               automatically be deducted from your collateral upon loan maturity
@@ -145,7 +150,9 @@ class PrincipalPayment extends Component {
         {!payOutPrincipalFromCollateral ? (
           <IconButton
             margin="10 0 10 0"
-            onPress={() => actions.navigateTo("PrincipalPaymentType", { id })}
+            onPress={() =>
+              actions.navigateTo(SCREENS.PRINCIPAL_PAYMENT_TYPE, { id })
+            }
           >
             Change Principal Payment Type
           </IconButton>

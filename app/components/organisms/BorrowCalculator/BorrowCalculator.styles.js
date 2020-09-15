@@ -1,5 +1,6 @@
 import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -7,21 +8,23 @@ const base = {
   },
   cardStyle: {
     borderWidth: 1,
+    backgroundColor: COLOR_KEYS.TRANSPARENT,
+    borderColor: COLOR_KEYS.PARAGRAPH,
   },
   selectedCardStyle: {
     borderWidth: 1,
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
-    borderColor: STYLES.COLORS.CELSIUS_BLUE,
-    color: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON,
+    borderColor: COLOR_KEYS.PRIMARY_BUTTON,
+    color: COLOR_KEYS.CARDS,
   },
   percentageTextStyle: {
-    color: STYLES.COLORS.DARK_GRAY,
+    color: COLOR_KEYS.PARAGRAPH,
   },
   selectWrapper: {
     paddingTop: 10,
   },
   selectedTextStyle: {
-    color: STYLES.COLORS.WHITE,
+    color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   ltvWrapper: {
     flexDirection: "row",
@@ -36,7 +39,7 @@ const base = {
     justifyContent: "space-between",
   },
   interestCardWrapper: {
-    backgroundColor: STYLES.COLORS.SEMI_GRAY,
+    backgroundColor: STYLES.COLORS.SEMI_GRAY, // TODO: find dark theme color
     borderRadius: 8,
     padding: 5,
     marginVertical: 5,
@@ -49,43 +52,18 @@ const base = {
     justifyContent: "space-evenly",
     marginVertical: 5,
   },
-  interestCardItem: {},
+  separator: {
+    color: COLOR_KEYS.SEPARATORS,
+  },
+  interestCardText: {
+    color: COLOR_KEYS.LINK,
+  },
 };
 
 const themed = {
-  light: {
-    separator: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
-    cardStyle: {
-      backgroundColor: STYLES.COLORS.WHITE,
-      borderColor: STYLES.COLORS.DARK_GRAY3,
-    },
-    percentageTextStyle: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-    interestCardText: {
-      color: STYLES.COLORS.DARK_GRAY,
-      fontWeight: "300",
-    },
-  },
-  dark: {
-    separator: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-    },
-    cardStyle: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-      borderColor: STYLES.COLORS.WHITE_OPACITY5,
-    },
-    percentageTextStyle: {
-      color: STYLES.COLORS.MEDIUM_GRAY,
-    },
-    interestCardText: {
-      color: STYLES.COLORS.RED,
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const LoanCalculatorStyle = theme =>

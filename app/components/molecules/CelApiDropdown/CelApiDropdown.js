@@ -8,9 +8,10 @@ import CelApiDropdownStyle from "./CelApiDropdown.styles";
 import * as appActions from "../../../redux/actions";
 import Icon from "../../atoms/Icon/Icon";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import Separator from "../../atoms/Separator/Separator";
 import { MODALS } from "../../../constants/UI";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -54,7 +55,6 @@ class CelApiDropdown extends Component {
           <View style={[style.normalButton, borderRadius]}>
             <View>
               <CelText
-                color={STYLES.COLORS.MEDIUM_GRAY}
                 type={"H4"}
                 weight={"400"}
               >{`xxxx - xxxx - xxxx - ${children}`}</CelText>
@@ -68,28 +68,26 @@ class CelApiDropdown extends Component {
                 <Icon
                   name={isExpanded ? "UpArrow" : "DownArrow"}
                   height={"10"}
-                  fill={"rgba(61,72,83,0.3)"}
                 />
               </View>
             </TouchableOpacity>
           </View>
           {isExpanded && (
             <View style={style.separator}>
-              <Separator opacity={0.2} />
+              <Separator />
             </View>
           )}
         </View>
         {isExpanded && (
           <View style={style.expand}>
-            <CelText type={"H6"} weight={"400"}>
-              Last used:
-            </CelText>
             <CelText
-              color={STYLES.COLORS.MEDIUM_GRAY}
               type={"H6"}
               weight={"400"}
-              style={[{ marginBottom: 12 }]}
+              color={getColor(COLOR_KEYS.HEADLINE)}
             >
+              Last used:
+            </CelText>
+            <CelText type={"H6"} weight={"400"} style={[{ marginBottom: 12 }]}>
               {moment(apiKey.lastUsed).format("MMMM D, YYYY")}
             </CelText>
 
@@ -98,42 +96,30 @@ class CelApiDropdown extends Component {
               permissions.read_deposit_address === "true" ||
               permissions.withdraw === "true") && (
               <View style={{ marginBottom: 12 }}>
-                <CelText type={"H6"} weight={"400"}>
+                <CelText
+                  type={"H6"}
+                  weight={"400"}
+                  color={getColor(COLOR_KEYS.HEADLINE)}
+                >
                   Permissions:
                 </CelText>
                 {permissions.read_balance === "true" && (
-                  <CelText
-                    color={STYLES.COLORS.MEDIUM_GRAY}
-                    type={"H6"}
-                    weight={"400"}
-                  >
+                  <CelText type={"H6"} weight={"400"}>
                     Read wallet balance
                   </CelText>
                 )}
                 {permissions.read_transactions === "true" && (
-                  <CelText
-                    color={STYLES.COLORS.MEDIUM_GRAY}
-                    type={"H6"}
-                    weight={"400"}
-                  >
+                  <CelText type={"H6"} weight={"400"}>
                     Read transactions
                   </CelText>
                 )}
                 {permissions.read_deposit_address === "true" && (
-                  <CelText
-                    color={STYLES.COLORS.MEDIUM_GRAY}
-                    type={"H6"}
-                    weight={"400"}
-                  >
+                  <CelText type={"H6"} weight={"400"}>
                     Read deposits
                   </CelText>
                 )}
                 {permissions.withdraw === "true" && (
-                  <CelText
-                    color={STYLES.COLORS.MEDIUM_GRAY}
-                    type={"H6"}
-                    weight={"400"}
-                  >
+                  <CelText type={"H6"} weight={"400"}>
                     Read withdrawals
                   </CelText>
                 )}
@@ -143,7 +129,11 @@ class CelApiDropdown extends Component {
             <TouchableOpacity
               onPress={() => actions.openModal(MODALS.API_KEY_REVOKE_MODAL)}
             >
-              <CelText type={"H6"} weight={"400"} style={[{ color: "red" }]}>
+              <CelText
+                type={"H6"}
+                weight={"400"}
+                color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+              >
                 Revoke
               </CelText>
             </TouchableOpacity>

@@ -16,6 +16,8 @@ import {
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import InterestDueModalStyle from "./InterestDueModal.styles";
+import { SCREENS } from "../../../constants/SCREENS";
+// import CelButton from "../../atoms/CelButton/CelButton";
 import LoanCard from "../../molecules/LoanCard/LoanCard";
 import Separator from "../../atoms/Separator/Separator";
 import STYLES from "../../../constants/STYLES";
@@ -41,7 +43,7 @@ class InterestDueModal extends Component {
     if (multipleAlerts) {
       return navigateTo("InterestPaymentOverviewScreen");
     }
-    return navigateTo("ChoosePaymentMethod", {
+    return navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
       reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
       id: activeLoan.id,
     });

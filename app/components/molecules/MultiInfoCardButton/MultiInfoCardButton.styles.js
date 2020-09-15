@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   heightPercentageToDP,
@@ -23,6 +22,8 @@ const base = {
   titleWrapper: {
     flexDirection: "row",
     flexWrap: "nowrap",
+    alignItems: "center",
+    height: heightPercentageToDP("3.5%"),
   },
   explanationWrapper: {
     flex: 0.75,
@@ -34,7 +35,6 @@ const base = {
   },
   chevronStyle: {
     marginLeft: 8,
-    marginBottom: heightPercentageToDP("0.08%"),
   },
 };
 
@@ -43,7 +43,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const MultiInfoCardStyle = () => getThemedStyle(base, themed);

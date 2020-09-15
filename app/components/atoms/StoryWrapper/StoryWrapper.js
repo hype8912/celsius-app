@@ -18,7 +18,7 @@ class StoryWrapper extends React.Component {
     const style = StoryWrapperStyles(theme);
     return (
       <View style={style.container}>
-        <CelText margin={"5 0 5 0"} type="H3" weight="semi-bold">
+        <CelText margin={"45 0 5 0"} type="H3" weight="semi-bold">
           {title}
         </CelText>
         {children}

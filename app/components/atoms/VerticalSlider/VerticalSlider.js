@@ -4,7 +4,8 @@ import { View, TouchableOpacity } from "react-native";
 import Slider from "@react-native-community/slider";
 
 import VerticalSliderStyle from "./VerticalSlider.styles";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class VerticalSlider extends Component {
   static propTypes = {
@@ -23,7 +24,7 @@ class VerticalSlider extends Component {
     super(props);
     this.state = {
       slidingStarted: false,
-      sliderValue: "",
+      sliderValue: props.value,
     };
   }
 
@@ -62,9 +63,9 @@ class VerticalSlider extends Component {
         >
           <View style={{ transform: [{ rotate: "90deg" }] }}>
             <Slider
-              minimumTrackTintColor={STYLES.COLORS.CELSIUS_BLUE}
-              maximumTrackTintColor={STYLES.COLORS.DARK_GRAY_OPACITY}
-              thumbTintColor={STYLES.COLORS.CELSIUS_BLUE}
+              minimumTrackTintColor={getColor(COLOR_KEYS.LINK)}
+              maximumTrackTintColor={getColor(COLOR_KEYS.PARAGRAPH)}
+              thumbTintColor={getColor(COLOR_KEYS.LINK)}
               style={{ width: height, height: 40 }}
               orientation="vertical"
               minimumValue={0}

@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   heightPercentageToDP,
@@ -12,27 +11,29 @@ const base = {
     marginRight: -20,
     marginLeft: -20,
     marginTop: -20,
+    marginBottom: 20,
     paddingHorizontal: 5,
   },
   circleWrapper: {
     flex: 0.2,
   },
   halfCircle: {
-    position: "absolute",
+    backgroundColor: STYLES.COLORS.WHITE_OPACITY2, // TODO: missing COLOR_KEY
+    paddingHorizontal: 10,
+    marginLeft: -10,
+    marginRight: 10,
+    height: "100%",
     justifyContent: "center",
     alignItems: "flex-end",
-    marginTop: heightPercentageToDP("2%"),
-    left: -heightPercentageToDP("14%"),
-    height: heightPercentageToDP("22%"),
-    width: heightPercentageToDP("22%"),
-    borderRadius: heightPercentageToDP("11%"),
-    backgroundColor: STYLES.COLORS.WHITE_OPACITY2,
+    borderTopRightRadius: heightPercentageToDP("50%"),
+    borderBottomRightRadius: heightPercentageToDP("50%"),
   },
   image: {
     resizeMode: "contain",
     marginRight: heightPercentageToDP("2%"),
-    width: heightPercentageToDP("6%"),
-    height: heightPercentageToDP("6%"),
+    marginLeft: 10,
+    width: 40,
+    height: 40,
   },
   textAlignment: {
     flex: 0.8,
@@ -51,7 +52,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const BannerStyle = () => getThemedStyle(base, themed);

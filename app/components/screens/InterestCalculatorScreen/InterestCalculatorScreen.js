@@ -13,6 +13,7 @@ import Separator from "../../atoms/Separator/Separator";
 import { EMPTY_STATES } from "../../../constants/UI";
 import CelButton from "../../atoms/CelButton/CelButton";
 import InterestCalculator from "../../organisms/InterestCalculator/InterestCalculator";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -47,7 +48,7 @@ class InterestCalculatorScreen extends Component {
           button: (
             <CelButton
               margin="20 0 0 0"
-              onPress={() => actions.navigateTo("Profile")}
+              onPress={() => actions.navigateTo(SCREENS.PROFILE)}
             >
               Fill in SSN
             </CelButton>
@@ -57,13 +58,13 @@ class InterestCalculatorScreen extends Component {
         return {
           heading: "Calculate a total interest you may earn.",
           text:
-            "Start earning up to 25% interest a year on your coins by depositing.",
+            "Start earning up to 25% interest a year on your coins by transferring.",
           button: (
             <CelButton
               margin="20 0 0 0"
-              onPress={() => actions.navigateTo("Deposit")}
+              onPress={() => actions.navigateTo(SCREENS.DEPOSIT)}
             >
-              Deposit coins
+              Transfer coins
             </CelButton>
           ),
         };
@@ -76,7 +77,7 @@ class InterestCalculatorScreen extends Component {
           button: (
             <CelButton
               margin="20 0 0 0"
-              onPress={() => actions.navigateTo("KYCVerifyID")}
+              onPress={() => actions.navigateTo(SCREENS.KYC_VERIFY_IDENTITY)}
             >
               Verify identity
             </CelButton>
@@ -89,9 +90,9 @@ class InterestCalculatorScreen extends Component {
           button: (
             <CelButton
               margin="20 0 0 0"
-              onPress={() => actions.navigateTo("Deposit")}
+              onPress={() => actions.navigateTo(SCREENS.DEPOSIT)}
             >
-              Deposit More Coins
+              Transfer More Coins
             </CelButton>
           ),
         };
@@ -129,7 +130,7 @@ class InterestCalculatorScreen extends Component {
               </View>
             )}
             <CelText align="center" margin="20 0 0 0">
-              How much do you plan to deposit?
+              How much do you plan to transfer?
             </CelText>
           </View>
         </View>

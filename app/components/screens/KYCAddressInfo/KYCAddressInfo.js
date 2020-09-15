@@ -15,6 +15,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -80,7 +81,7 @@ class KYCAddressInfo extends Component {
     const { formData, actions } = this.props;
 
     if (formData.country.name === "Germany") {
-      return actions.navigateTo("BitWala");
+      return actions.navigateTo(SCREENS.BITWALA);
     }
 
     const updatedAddressInfo = {
@@ -110,13 +111,13 @@ class KYCAddressInfo extends Component {
     return (
       <RegularLayout>
         <CelText type="H2" weight="bold" margin={"0 0 30 0"} align="center">
-          Address info
+          Residential Address
         </CelText>
 
         <CelInput
           type="text"
           field="street"
-          placeholder="Address"
+          placeholder="Street address"
           value={formData.street}
           error={formErrors.street}
           returnKeyType={"next"}
@@ -131,7 +132,7 @@ class KYCAddressInfo extends Component {
         <CelInput
           type="text"
           field="flatNumber"
-          placeholder="Apartment number (optional)"
+          placeholder="Apartment number (if applicable) "
           value={formData.flatNumber}
           refs={input => {
             this.flat = input;
@@ -200,11 +201,11 @@ class KYCAddressInfo extends Component {
           </CelButton>
         </View>
         <CelButton
-          onPress={() => actions.navigateTo("WalletLanding")}
+          onPress={() => actions.navigateTo(SCREENS.WALLET_LANDING)}
           basic
           margin={"20 0 20 0"}
         >
-          Do it later
+          Complete later
         </CelButton>
       </RegularLayout>
     );

@@ -21,11 +21,11 @@ const base = {
   },
   renderLeftSide: {
     flex: 1,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   renderDeviceDate: {
-    justifyContent: 'center',
-    alignSelf: 'center',
+    justifyContent: "center",
+    alignSelf: "center",
     alignItems: "flex-end",
   },
 };
@@ -35,7 +35,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const LoginDevicesLogStyle = () => getThemedStyle(base, themed);

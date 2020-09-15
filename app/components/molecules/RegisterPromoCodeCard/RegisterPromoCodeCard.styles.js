@@ -1,6 +1,5 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   referralHeading: {
@@ -16,7 +15,7 @@ const base = {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: STYLES.COLORS.WHITE,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
     justifyContent: "center",
     alignContent: "center",
   },
@@ -26,7 +25,6 @@ const base = {
     justifyContent: "space-between",
   },
   caretStyle: {
-    // marginRight: 20,
     marginTop: 10,
     paddingTop: 5,
     width: 25,
@@ -49,7 +47,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const RegisterPromoCodeCardStyle = () => getThemedStyle(base, themed);

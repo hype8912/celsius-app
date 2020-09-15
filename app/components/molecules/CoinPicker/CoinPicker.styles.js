@@ -1,7 +1,7 @@
-// import STYLES from '../../../constants/STYLES';
 import { Platform } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
 import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -21,11 +21,11 @@ const base = {
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
-    shadowColor: STYLES.COLORS.DARK_GRAY,
+    shadowColor: COLOR_KEYS.CIRCLE_ICON_FOREGROUND,
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 5,
     zIndex: -1,
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.CIRCLE_ICON_FOREGROUND,
   },
   iconStyle: {
     alignItems: "center",
@@ -38,6 +38,7 @@ const base = {
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: COLOR_KEYS.CIRCLE_ICON_FOREGROUND,
   },
   selectWrapper: {
     flexDirection: "row",
@@ -46,76 +47,23 @@ const base = {
     alignItems: "center",
     borderRadius: 8,
     ...Platform.select({
-      android: {
-        borderTopWidth: 0.2,
-        borderLeftWidth: 0.2,
-        borderRightWidth: 0.5,
-        borderBottomWidth: 2,
-      },
       ios: {
         ...STYLES.SHADOW_STYLES,
       },
     }),
+    backgroundColor: COLOR_KEYS.CARDS,
     paddingHorizontal: 10,
     marginBottom: 5,
   },
+  iconColor: { color: COLOR_KEYS.PARAGRAPH },
 };
 
 const themed = {
-  light: {
-    circleWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    selectWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-      ...Platform.select({
-        android: {
-          borderColor: "#E9E9E9",
-        },
-      }),
-    },
-    iconWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY,
-    },
-  },
+  light: {},
 
-  dark: {
-    circleWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    selectWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-      ...Platform.select({
-        android: {
-          borderColor: STYLES.COLORS.DARK_GRAY3,
-        },
-      }),
-    },
-    iconWrapper: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER,
-    },
-    iconColor: {
-      color: STYLES.COLORS.WHITE_OPACITY3,
-    },
-  },
+  dark: {},
 
-  celsius: {
-    circleWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    selectWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    iconWrapper: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-    iconColor: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
-    },
-  },
+  unicorn: {},
 };
 
 const CoinPickerStyle = () => getThemedStyle(base, themed);

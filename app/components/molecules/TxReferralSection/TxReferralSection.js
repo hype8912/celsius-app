@@ -6,9 +6,10 @@ import moment from "moment";
 import ReferralSectionStyle from "./TxReferralSection.styles";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 class TxReferralSection extends Component {
   static propTypes = {
@@ -34,7 +35,7 @@ class TxReferralSection extends Component {
       <View>
         <Card margin={"20 0 20 0"}>
           <View style={style.text}>
-            <CelText color={STYLES.COLORS.MEDIUM_GRAY}>{text}</CelText>
+            <CelText>{text}</CelText>
           </View>
           {transaction.type !== TRANSACTION_TYPES.REFERRER_HODL ? (
             <View style={style.content}>
@@ -58,7 +59,7 @@ class TxReferralSection extends Component {
                 </CelText>
                 <CelText
                   style={style.textTwo}
-                  color={STYLES.COLORS.CELSIUS_BLUE}
+                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                   type="H6"
                 >
                   {participant.email
@@ -69,16 +70,12 @@ class TxReferralSection extends Component {
             </View>
           ) : null}
           {transaction.type.includes("HODL") && (
-            <CelText
-              style={{ marginTop: 20 }}
-              type="H5"
-              color={STYLES.COLORS.MEDIUM_GRAY}
-            >
+            <CelText style={{ marginTop: 20 }} type="H5">
               If {formatter.hideTextExceptFirstNLetters(participant.first_name)}{" "}
-              keeps initial deposit until
+              keeps initial transfer until
               <CelText
                 type="H5"
-                color={STYLES.COLORS.DARK_GRAY}
+                color={getColor(COLOR_KEYS.HEADLINE)}
                 weight="600"
               >{` ${moment(transaction.time).format("D MMM YYYY")} `}</CelText>
               , your referral reward will unlock.
@@ -87,7 +84,7 @@ class TxReferralSection extends Component {
         </Card>
         {transaction.type.includes("PENDING") && (
           <Card>
-            <CelText type="H5" color={STYLES.COLORS.MEDIUM_GRAY}>
+            <CelText type="H5">
               Your award is yet to be confirmed. You will be able to see it in
               your wallet, soon.
             </CelText>

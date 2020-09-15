@@ -1,4 +1,3 @@
-// import STYLES from '../../../constants/STYLES';
 import { Dimensions } from "react-native";
 import { getThemedStyle } from "../../../utils/styles-util";
 
@@ -41,7 +40,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const CelNumpadStyle = () => getThemedStyle(base, themed);

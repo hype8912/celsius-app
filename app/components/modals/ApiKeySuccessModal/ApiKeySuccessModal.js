@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -13,6 +12,9 @@ import CopyButton from "../../atoms/CopyButton/CopyButton";
 import ShareButton from "../../atoms/ShareButton/ShareButton";
 import { MODALS } from "../../../constants/UI";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -62,7 +64,10 @@ class ApiKeySuccessModal extends Component {
           <CelText align={"center"} weight={"400"} type={"H4"}>
             {apiKey}
           </CelText>
-          <Separator margin={"20 0 0 0"} />
+          <Separator
+            margin={"20 0 0 0"}
+            color={getColor(COLOR_KEYS.PARAGRAPH)}
+          />
           <View style={style.copyShareButtonsWrapper}>
             <CopyButton
               copyText={apiKey}
@@ -70,7 +75,7 @@ class ApiKeySuccessModal extends Component {
                 actions.showMessage("success", "API key copied to clipboard!")
               }
             />
-            <Separator vertical />
+            <Separator vertical color={getColor(COLOR_KEYS.PARAGRAPH)} />
             <ShareButton shareText={apiKey} />
           </View>
         </View>
@@ -78,7 +83,7 @@ class ApiKeySuccessModal extends Component {
           <CelModalButton
             margin={"20 0 20 0"}
             onPress={() => {
-              actions.navigateTo("ApiAuthorization");
+              actions.navigateTo(SCREENS.API_AUTHORIZATION);
               actions.updateFormFields({
                 readWalletBalance: false,
                 readTransactions: false,

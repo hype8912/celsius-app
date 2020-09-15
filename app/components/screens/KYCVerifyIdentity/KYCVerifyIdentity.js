@@ -1,28 +1,37 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import store from "../../../redux/store";
+import { View } from "react-native";
+import { Onfido, OnfidoDocumentType } from "@onfido/react-native-sdk";
+import { lookup } from "country-data";
 
 import * as appActions from "../../../redux/actions";
-import { navigateTo } from "../../../redux/nav/navActions";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import KYCCheckPhotos from "../KYCCheckPhotos/KYCCheckPhotos";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import PoAWarningModal from "../../modals/PoAWarningModal/PoAWarningModal";
+import { isForPrimeTrustKYC } from "../../../utils/user-util/user-util";
+import { MODALS } from "../../../constants/UI";
+import Spinner from "../../atoms/Spinner/Spinner";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
     activeScreen: state.nav.activeScreen,
     formData: state.forms.formData,
-    kycDocuments: state.user.kycDocuments,
+    kycDocuments: state.kyc.kycDocuments,
     callsInProgress: state.api.callsInProgress,
     kycDocTypes: state.kyc.kycDocTypes,
     user: state.user.profile,
+    mobileSDKToken: state.kyc.mobileSDKToken,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -33,64 +42,81 @@ class KYCVerifyIdentity extends Component {
   static navigationOptions = () => ({
     customCenterComponent: { steps: 7, currentStep: 3, flowProgress: false },
     headerSameColor: true,
-    customBack: () => {
-      store.dispatch(navigateTo("KYCAddressInfo"));
-    },
     gesturesEnabled: false,
   });
 
   componentDidMount() {
     const { actions } = this.props;
+    actions.getMobileSDKToken();
     actions.getKYCDocTypes();
     actions.getKYCDocuments();
   }
 
-  selectDocument = type => {
-    const { actions } = this.props;
-    actions.updateFormFields({
-      documentType: type,
-      front: "",
-      back: "",
-    });
+  componentWillUpdate(nextProps) {
+    const { actions, activeScreen, navigation } = this.props;
+    if (
+      activeScreen !== nextProps.activeScreen &&
+      nextProps.activeScreen === SCREENS.KYC_VERIFY_IDENTITY
+    ) {
+      actions.getKYCDocuments();
+      navigation.setParams({ shouldChangeDoc: false });
+    }
+  }
 
-    actions.activateCamera({
-      cameraField: "front",
-      cameraHeading: "Take a Front side photo",
-      cameraCopy:
-        "Center the front side of your document in the marked area. Be sure the photo is clear and the document details are easy to read.",
-      cameraType: "back",
-      mask: "document",
-    });
-
-    actions.navigateTo("CameraScreen", {
-      hideBack: true,
-      onSave: this.saveFrontPhoto,
-    });
+  isSavingDocs = () => {
+    const { callsInProgress } = this.props;
+    return apiUtil.areCallsInProgress(
+      [API.SAVE_KYC_DOCUMENTS],
+      callsInProgress
+    );
   };
 
-  saveFrontPhoto = frontPhoto => {
-    const { actions, formData } = this.props;
+  onPressDocumentCard = async type => {
+    if (this.isSavingDocs()) return;
 
-    actions.updateFormField("front", frontPhoto);
+    const { actions } = this.props;
+    if (type === "passport" && isForPrimeTrustKYC()) {
+      actions.openModal(MODALS.POA_WARNING_MODAL);
+    } else {
+      await this.selectDocument(type);
+    }
+  };
 
-    if (formData.documentType !== "passport") {
-      actions.activateCamera({
-        cameraField: "back",
-        cameraHeading: "Take a Back side photo",
-        cameraCopy:
-          "Now, turn the back side of your document. Center it in the marked area, and make sure that all the details are easy to read.",
-        cameraType: "back",
-        mask: "document",
-      });
+  selectDocument = async type => {
+    const { actions, mobileSDKToken, user } = this.props;
 
-      actions.navigateTo("CameraScreen", {
-        onSave: backPhoto => {
-          actions.updateFormField("back", backPhoto);
-          actions.navigateTo("KYCCheckPhotos");
+    try {
+      let docType = OnfidoDocumentType.PASSPORT;
+      if (type === "driving_licence")
+        docType = OnfidoDocumentType.DRIVING_LICENCE;
+      if (type === "identity_card")
+        docType = OnfidoDocumentType.NATIONAL_IDENTITY_CARD;
+
+      const countryCode = lookup.countries({ name: user.citizenship })[0]
+        .alpha3;
+
+      const onfidoRes = await Onfido.start({
+        sdkToken: mobileSDKToken,
+        flowSteps: {
+          captureDocument: { docType, countryCode },
         },
       });
-    } else {
-      actions.navigateTo("KYCCheckPhotos");
+
+      const frontImageId = onfidoRes.document.front
+        ? onfidoRes.document.front.id
+        : null;
+      const backImageId = onfidoRes.document.back
+        ? onfidoRes.document.back.id
+        : null;
+
+      actions.updateFormFields({
+        documentType: type,
+        frontImageId,
+        backImageId,
+      });
+      actions.saveKYCDocuments();
+    } catch (err) {
+      mixpanelAnalytics.onfidoSDKError(err);
     }
   };
 
@@ -100,14 +126,18 @@ class KYCVerifyIdentity extends Component {
       user,
       kycDocuments,
       navigation,
-      formData,
       callsInProgress,
+      actions,
     } = this.props;
 
     if (
       !kycDocTypes ||
       apiUtil.areCallsInProgress(
-        [API.GET_KYC_DOC_TYPES, API.GET_KYC_DOCUMENTS],
+        [
+          API.GET_KYC_DOC_TYPES,
+          API.GET_KYC_DOCUMENTS,
+          API.GET_ONFIDO_MOBILE_SDK,
+        ],
         callsInProgress
       )
     ) {
@@ -115,14 +145,12 @@ class KYCVerifyIdentity extends Component {
     }
 
     const shouldChangeDoc = navigation.getParam("shouldChangeDoc");
-    if (
-      (formData.front || (kycDocuments && kycDocuments.front)) &&
-      !shouldChangeDoc
-    ) {
+    if (!shouldChangeDoc && kycDocuments && kycDocuments.front) {
       return <KYCCheckPhotos />;
     }
-
     const availableDocs = mapDocs(kycDocTypes[user.citizenship]);
+
+    const isSavingDocs = this.isSavingDocs();
 
     return (
       <RegularLayout>
@@ -131,26 +159,54 @@ class KYCVerifyIdentity extends Component {
         </CelText>
 
         <CelText type="H4" weight="300" margin="10 0 20 0" align="center">
-          Take a photo of one of your documents to confirm your identity.
+          Select one of the following to submit
         </CelText>
 
-        {availableDocs.map(d => (
-          <Card
-            key={d.value}
-            onPress={() => this.selectDocument(d.value)}
-            padding="20 20 20 20"
-            styles={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "flex-start",
-            }}
-          >
-            <Icon height="30" fill={STYLES.COLORS.CELSIUS_BLUE} name={d.icon} />
-            <CelText color={STYLES.COLORS.CELSIUS_BLUE} margin="0 0 0 15">
-              {d.label} >
-            </CelText>
-          </Card>
-        ))}
+        <View
+          style={{
+            opacity: isSavingDocs ? 0.4 : 1,
+          }}
+        >
+          {availableDocs.map(d => (
+            <Card
+              key={d.value}
+              onPress={() => this.onPressDocumentCard(d.value)}
+              padding="20 20 20 20"
+              styles={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-start",
+              }}
+            >
+              <Icon
+                height="30"
+                fill={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+                name={d.icon}
+              />
+              <CelText
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+                margin="0 0 0 15"
+                type="H3"
+              >
+                {d.label}
+              </CelText>
+            </Card>
+          ))}
+        </View>
+
+        {isSavingDocs && (
+          <View style={{ alignItems: "center", marginTop: 20 }}>
+            <Spinner />
+          </View>
+        )}
+
+        <PoAWarningModal
+          onNo={actions.closeModal}
+          onYes={() => {
+            this.selectDocument("passport");
+            actions.closeModal();
+          }}
+        />
       </RegularLayout>
     );
   }
@@ -185,7 +241,7 @@ function mapDocs(docs) {
   if (docs.driving_licence) {
     kycDocs.push({
       value: "driving_licence",
-      label: "Drivers License",
+      label: "Driver's License",
       icon: "DrivingLicense",
     });
   }

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Image, StatusBar } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
@@ -9,10 +8,9 @@ import WelcomeStyle from "./Welcome.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
-import appUtil from "../../../utils/app-util";
 import ReferralReceivedModal from "../../modals/ReferralReceivedModal/ReferralReceivedModal";
-
-// import STYLES from '../../../constants/STYLES';
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -27,35 +25,29 @@ class Welcome extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    headerSameColor: false,
-    transparent: true,
+    headerSameColor: true,
     hideBack: true,
-    gesturesEnabled: false,
   });
-
-  state = {
-    revisionId: "",
-  };
 
   async componentDidMount() {
     StatusBar.setHidden(false);
-
-    const appVersion = await appUtil.getRevisionId();
-    this.setState({ revisionId: appVersion.revisionId });
   }
 
   onPressLogin = () => {
     const { actions } = this.props;
-    actions.navigateTo("LoginLanding", { type: "login" });
+    actions.navigateTo(SCREENS.LOGIN_LANDING, { type: "login" });
   };
 
   render() {
     const style = WelcomeStyle();
     const { actions, referralLink } = this.props;
 
-    const { revisionId } = this.state;
     return (
-      <RegularLayout fabType="hide">
+      <RegularLayout
+        padding="0 20 0 20"
+        fabType="hide"
+        enableParentScroll={false}
+      >
         <View style={style.wrapper}>
           <Image
             source={require("../../../../assets/images/splashScreen-celsius-new.png")}
@@ -65,13 +57,13 @@ class Welcome extends Component {
             Welcome!
           </CelText>
           <CelText weight="300" align="center" style={style.subtitle}>
-            A new way to earn, borrow and pay on the blockchain. Let’s bring the
-            next 100M people into crypto together.
+            Join Celsius Network and be part of the future of finance. Earn up
+            to 12% annually, and borrow cash starting at just 1% APR.
           </CelText>
           <CelButton
             style={style.button}
             onPress={() =>
-              actions.navigateTo("LoginLanding", { type: "register" })
+              actions.navigateTo(SCREENS.LOGIN_LANDING, { type: "register" })
             }
           >
             Join Celsius
@@ -79,15 +71,7 @@ class Welcome extends Component {
           <CelButton basic onPress={() => this.onPressLogin()}>
             Login
           </CelButton>
-          <CelText
-            margin="30 0 0 0"
-            weight="light"
-            align="center"
-            type="H7"
-            style={{ opacity: 0.5 }}
-          >
-            Celsius App version: {revisionId}
-          </CelText>
+          <BuildVersion margin={"10 0 0 0"} />
         </View>
 
         <ReferralReceivedModal

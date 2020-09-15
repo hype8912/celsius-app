@@ -3,7 +3,7 @@ import {
   getThemedStyle,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const { width } = Dimensions.get("window");
 
@@ -16,7 +16,7 @@ const base = {
     paddingHorizontal: 20,
   },
   coinAmountContainer: {
-    marginTop: heightPercentageToDP("5.56%"),
+    marginTop: heightPercentageToDP("4%"),
     marginBottom: heightPercentageToDP("5.56%"),
     alignItems: "center",
   },
@@ -27,23 +27,16 @@ const base = {
   button: {
     marginTop: heightPercentageToDP("3.26%"),
   },
+  tagText: {
+    color: COLOR_KEYS.LINK,
+    textAlign: "left",
+  },
 };
 
 const themed = {
-  light: {
-    tagText: {
-      color: STYLES.COLORS.DARK_GRAY,
-      textAlign: "left",
-    },
-  },
-  dark: {
-    tagText: {
-      color: STYLES.COLORS.WHITE_OPACITY5,
-      textAlign: "left",
-    },
-  },
-
-  celsius: {},
+  light: {},
+  dark: {},
+  unicorn: {},
 };
 
 const WithdrawalAddressStyle = () => getThemedStyle(base, themed);

@@ -1,8 +1,8 @@
-// import STYLES from '../../../constants/STYLES';
 import {
   getThemedStyle,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -24,7 +24,7 @@ const base = {
     borderRadius: 10,
     width: "100%",
     height: 80,
-    borderColor: "gray",
+    borderColor: COLOR_KEYS.DOT_INDICATOR_INACTIVE,
     marginVertical: 8,
     flexDirection: "row",
     alignItems: "center",
@@ -37,7 +37,7 @@ const themed = {
 
   dark: {},
 
-  celsius: {},
+  unicorn: {},
 };
 
 const BorrowCollateralStyle = () => getThemedStyle(base, themed);

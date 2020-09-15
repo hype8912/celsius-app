@@ -1,0 +1,6 @@
+module Pods_celsius {
+  umbrella header "Pods-celsius-umbrella.h"
+
+  export *
+  module * { export * }
+}

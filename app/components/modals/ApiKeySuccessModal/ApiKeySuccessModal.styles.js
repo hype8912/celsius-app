@@ -1,6 +1,5 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -9,8 +8,8 @@ const base = {
   copyShareWrapper: {
     marginVertical: 20,
     marginHorizontal: 20,
-    borderColor: STYLES.COLORS.LIGHT_GRAY,
-    borderWidth: 2,
+    borderColor: COLOR_KEYS.PARAGRAPH,
+    borderWidth: 1,
     borderRadius: 8,
     padding: 20,
   },
@@ -27,10 +26,8 @@ const base = {
 
 const themed = {
   light: {},
-
   dark: {},
-
-  celsius: {},
+  unicorn: {},
 };
 
 const ApiKeySuccessModalStyle = () => getThemedStyle(base, themed);
