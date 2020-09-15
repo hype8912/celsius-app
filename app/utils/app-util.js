@@ -128,10 +128,10 @@ async function pollBackendStatus() {
  *
  * @param {string} token - auth token from storage
  */
-async function checkAndRefreshAuthToken(token) {
+async function checkAndRefreshAuthToken(token, expiresInHours) {
   if (iteration % 30 !== 0) return;
 
-  const EXPIRES_IN_HOURS = 24;
+  const EXPIRES_IN_HOURS = expiresInHours || 6;
   const storageToken =
     token || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
   if (!storageToken) return;
