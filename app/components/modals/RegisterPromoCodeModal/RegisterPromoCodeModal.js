@@ -64,7 +64,7 @@ class RegisterPromoCodeModal extends Component {
 
   hasError = () => {
     this.setState({
-      confirmed: true,
+      confirmed: false,
       loading: false,
       hasError: true,
     });
@@ -80,11 +80,6 @@ class RegisterPromoCodeModal extends Component {
 
   closeModal = () => {
     const { actions } = this.props;
-    this.setState({
-      confirmed: false,
-      loading: false,
-      hasError: false,
-    });
     actions.closeModal();
   };
 
@@ -281,16 +276,10 @@ class RegisterPromoCodeModal extends Component {
   };
 
   renderConfirmedPromoCode = () => {
-    const { formErrors, code } = this.props;
-    const { hasError } = this.state;
-
     const style = RegisterPromoCodeModalStyle();
 
-    const title = !hasError ? "Congrats!" : "Ooops,";
-    const subtitle = !hasError
-      ? "You’ve successfully activated your promo code!"
-      : formErrors.promoCodeError.msg;
-    const description = !hasError ? code.description : "";
+    const title = "Congrats!";
+    const subtitle = "You’ve successfully activated your promo code!";
 
     return (
       <View>
@@ -311,16 +300,6 @@ class RegisterPromoCodeModal extends Component {
           {subtitle}
         </CelText>
 
-        {!hasError && (
-          <View style={style.cardWrapper}>
-            <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
-              <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
-                {description}
-              </CelText>
-            </Card>
-          </View>
-        )}
-
         <View style={style.buttonWrapper}>
           <CelModalButton
             onPress={() => {
@@ -337,6 +316,7 @@ class RegisterPromoCodeModal extends Component {
   renderModal = () => {
     const { confirmed } = this.state;
     const { referralLink, type } = this.props;
+
     // Promo code
     if (type === "celsius") {
       if (confirmed) return this.renderConfirmedPromoCode();
@@ -346,6 +326,7 @@ class RegisterPromoCodeModal extends Component {
     if (type === "register") {
       if (confirmed || referralLink) return this.renderConfirmedReferralCode();
     }
+
     return this.renderUnconfirmedReferralCode();
   };
 
