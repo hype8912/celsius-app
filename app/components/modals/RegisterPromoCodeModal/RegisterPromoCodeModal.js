@@ -298,7 +298,7 @@ class RegisterPromoCodeModal extends Component {
         </CelText>
 
         <View style={style.cardWrapper}>
-          <Card noBorder>
+          <Card color={style.messageTextCard.color}>
             <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
               {description}
             </CelText>
