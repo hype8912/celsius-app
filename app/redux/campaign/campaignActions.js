@@ -6,7 +6,7 @@ import { MODALS } from "../../constants/UI";
 import ACTIONS from "../../constants/ACTIONS";
 import * as transfersActions from "../transfers/transfersActions";
 import * as uiActions from "../ui/uiActions";
-import { setFormErrors } from "../forms/formsActions";
+import * as formsActions from "../forms/formsActions";
 import * as deepLinkActions from "../deepLink/deepLinkActions";
 
 export {
@@ -17,7 +17,7 @@ export {
 };
 
 function getBranchIndividualLink() {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       dispatch(startApiCall(API.GET_INDIVIDUAL_LINK));
       const branchLinkRes = await campaignsService.getIndividualLink();
@@ -34,7 +34,7 @@ function getBranchIndividualLink() {
 }
 
 function registerBranchLink(deepLink) {
-  return dispatch => {
+  return (dispatch) => {
     const deepLinkParams = deepLink.params;
     dispatch({
       type: ACTIONS.BRANCH_LINK_REGISTERED,
@@ -138,7 +138,7 @@ function registrationPromoCode(onSuccess) {
       dispatch(apiError(API.SUBMIT_PROMO_CODE, err));
       // dispatch(uiActions.showMessage("warning", "Sorry, but this promo code is not valid!"));
       dispatch(
-        setFormErrors({
+        formsActions.setFormErrors({
           promoCode:
             'Uh oh! The referral code you entered is either invalid or can only be redeemed after registration in the "promo code" section of your profile page.',
         })
@@ -166,7 +166,7 @@ function submitPromoCode(onSuccess, onError) {
         if (onSuccess) onSuccess();
       }
     } catch (e) {
-      dispatch(setFormErrors({ promoCodeError: e }));
+      dispatch(formsActions.setFormErrors({ promoCodeError: e }));
       if (onError) onError();
     }
   };
