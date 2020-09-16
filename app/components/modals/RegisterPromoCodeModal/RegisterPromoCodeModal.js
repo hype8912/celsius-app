@@ -272,10 +272,13 @@ class RegisterPromoCodeModal extends Component {
   };
 
   renderConfirmedPromoCode = () => {
+    const { code } = this.props;
+
     const style = RegisterPromoCodeModalStyle();
 
     const title = "Congrats!";
     const subtitle = "You’ve successfully activated your promo code!";
+    const description = code.description || "";
 
     return (
       <View>
@@ -287,6 +290,7 @@ class RegisterPromoCodeModal extends Component {
         >
           {title}
         </CelText>
+
         <CelText
           margin={"0 25 10 25"}
           align={"center"}
@@ -295,6 +299,14 @@ class RegisterPromoCodeModal extends Component {
         >
           {subtitle}
         </CelText>
+
+        <View style={style.cardWrapper}>
+          <Card color={getColor(COLOR_KEYS.BACKGROUND)} noBorder>
+            <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
+              {description}
+            </CelText>
+          </Card>
+        </View>
 
         <View style={style.buttonWrapper}>
           <CelModalButton
