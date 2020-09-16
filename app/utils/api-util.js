@@ -1,11 +1,11 @@
 import axios from "axios";
-import moment from "moment";
 import qs from "qs";
 import r from "jsrsasign";
 import { Platform } from "react-native";
 import { Base64 } from "js-base64";
 import DeviceInfo from "react-native-device-info";
 import CodePush from "react-native-code-push";
+import moment from "moment";
 
 import logger from "./logger-util";
 import Constants from "../../constants";
@@ -383,6 +383,7 @@ async function handle426(err, reqConfig) {
           // PIN || 2FA
           verificationType: err.show,
           hasSixDigitPin: err.has_six_digit_pin,
+          biometrics_enabled: err.biometrics_enabled,
           onSuccess: async () => {
             try {
               // fetch failed request again after verification successful

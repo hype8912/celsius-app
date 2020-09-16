@@ -31,7 +31,6 @@ import { STORYBOOK } from "../../../../dev-settings.json";
 import { createBiometricsSignature } from "../../../utils/biometrics-util";
 import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
 import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
-// import { isBiometricsSensorAvailable, createBiometricsKey, createBiometricsSignature } from "../../../utils/biometrics-util";
 import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
@@ -89,6 +88,7 @@ class VerifyProfile extends Component {
     if (hasSixDigitPin || user.has_six_digit_pin)
       this.setState({ hasSixDigitPin: true });
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
+    await this.showBiometrics();
   };
 
   componentWillUpdate(nextProps) {
@@ -243,22 +243,34 @@ class VerifyProfile extends Component {
     }
   };
   // TODO - Work in progress
-  onPressBiometric = () => {
-    const { actions } = this.props;
+  onPressBiometric = async () => {
+    const { actions, navigation, user } = this.props;
+    const biometricsEnabled =
+      navigation.getParam("biometrics_enabled") || user.biometrics_enabled; // from 426 or Redux // check this!!!!
 
-    const biometricsNotSet = false; // if info in endpoint not set and biometrics is available on device
-    const biometricsNeedReset = false; // From endpoint
+    const biometricsNeedReset = false; // From error????
 
     if (biometricsNeedReset) {
       actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
       return;
     }
 
-    if (biometricsNotSet) {
+    if (!biometricsEnabled) {
       actions.openModal(MODALS.BIOMETRICS_AUTHENTICATION_MODAL);
     } else {
-      createBiometricsSignature(() => {
-        // console.log('go to next screen')
+      await this.showBiometrics();
+    }
+  };
+
+  showBiometrics = async () => {
+    // TODO Check this few more times
+    const { actions, navigation, user } = this.props;
+    const biometricsEnabled =
+      navigation.getParam("biometrics_enabled") || user.biometrics_enabled; // from 426 or Redux // check this!!!!
+    if (biometricsEnabled) {
+      await createBiometricsSignature(() => {
+        this.setState({ loading: true });
+        actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
       }, "Verification required");
     }
   };

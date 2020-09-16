@@ -13,6 +13,7 @@ import CelText from "../../atoms/CelText/CelText";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import Icon from "../../atoms/Icon/Icon";
 import { BIOMETRIC_TYPES } from "../../../constants/UI";
+import { createBiometricsKey } from "../../../utils/biometrics-util";
 
 @connect(
   state => ({
@@ -33,45 +34,48 @@ class BiometricAuthentication extends Component {
     title: "Biometric authentication",
   });
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      biometricActivated: false,
-    };
-  }
-
   componentDidMount() {
     const { actions } = this.props;
     actions.getProfileInfo();
     actions.getSecurityOverview();
-    // TODO set state regarding of biometrics endpoint
-    this.setState({ biometricActivated: false });
   }
 
   rightSwitch = () => {
-    const { biometricActivated } = this.state;
+    const { user } = this.props;
     return (
       <CelSwitch
         onValueChange={this.handleSwitchChangeBiometrics}
-        value={biometricActivated}
+        value={user.biometrics_enabled}
       />
     );
   };
 
   // TODO when complete BiometricActivation screen, modify this function
   handleSwitchChangeBiometrics = () => {
-    const { biometricActivated } = this.state;
-    const { actions } = this.props;
-    if (!biometricActivated) {
+    const { actions, biometrics, user } = this.props;
+
+    const text =
+      biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
+        ? "Touch ID enabled on this device."
+        : "Face ID enabled on this device";
+
+    if (!user.biometrics_enabled) {
       actions.navigateTo("VerifyProfile", {
         onSuccess: async () => {
-          this.setState({ biometricActivated: true });
-          actions.navigateTo("BiometricActivation");
+          await createBiometricsKey(publicKey => {
+            actions.activateBiometrics(publicKey, biometrics.biometryType);
+          });
+          actions.resetToScreen("BiometricAuthentication");
+          actions.showMessage("success", text);
         },
       });
     } else {
       actions.navigateTo("VerifyProfile", {
-        onSuccess: () => this.setState({ biometricActivated: false }),
+        onSuccess: () => {
+          // TODO add delete biometrics here! Text and endpoint
+          actions.resetToScreen("BiometricAuthentication");
+          actions.showMessage("success", text);
+        },
       });
     }
   };

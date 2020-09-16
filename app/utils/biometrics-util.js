@@ -1,12 +1,14 @@
 import ReactNativeBiometrics from "react-native-biometrics";
-import store from "../redux/store";
 import logger from "./logger-util";
+import store from "../redux/store";
+import { updateFormFields } from "../redux/forms/formsActions";
 
 export {
   createBiometricsSignature,
   askUserToProvideBiometrics,
   isBiometricsSensorAvailable,
   createBiometricsKey,
+  deleteBiometricsKey,
 };
 
 async function isBiometricsSensorAvailable() {
@@ -42,15 +44,14 @@ async function askUserToProvideBiometrics(onSuccess) {
   }
 }
 
-async function createBiometricsKey() {
+async function createBiometricsKey(onSuccess) {
   try {
-    const key = await checkBiometricsKey();
-    // console.log('key: ', key)
-    if (!key.keysExist) {
-      await ReactNativeBiometrics.createKeys("Confirm fingerprint");
-      // console.log('bioKey: ', bioKey)
-    }
+    await checkBiometricsKey(); // TODO move to error handling
+    await deleteBiometricsKey();
+    const res = await ReactNativeBiometrics.createKeys("Confirm fingerprint");
+    if (onSuccess) onSuccess(res.publicKey);
   } catch (e) {
+    await logger.err(e);
     // console.log('create biometrics key failed: ', e)
   }
 }
@@ -60,11 +61,9 @@ async function checkBiometricsKey() {
   return resultObject;
 }
 
-// resultObject.signature sent to server, resultObject.success used for check if pass or not.
 async function createBiometricsSignature(onSuccess, msgForUser) {
-  const user = store.getState().user.profile;
   const epochTimeSeconds = Math.round(new Date().getTime() / 1000).toString();
-  const payload = `${epochTimeSeconds}${user.id}`;
+  const payload = `${epochTimeSeconds}`;
 
   try {
     const resultObject = await ReactNativeBiometrics.createSignature({
@@ -72,14 +71,27 @@ async function createBiometricsSignature(onSuccess, msgForUser) {
       payload,
     });
     if (resultObject.success) {
-      // TODO Call endpoint and send signature and payload
-      // verifySignatureWithServer(signature, payload)
+      store.dispatch(
+        updateFormFields({
+          signature: resultObject.signature,
+          payload,
+        })
+      );
       if (onSuccess) onSuccess();
     }
   } catch (e) {
     // TODO better error handling, for now we have 2 errors
     // console.log('error je: ', e)
+    await logger.err(e);
     await ReactNativeBiometrics.deleteKeys();
     await createBiometricsKey();
+  }
+}
+
+async function deleteBiometricsKey() {
+  try {
+    await ReactNativeBiometrics.deleteKeys();
+  } catch (e) {
+    await logger.err(e);
   }
 }

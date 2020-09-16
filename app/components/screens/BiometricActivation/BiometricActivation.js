@@ -11,14 +11,17 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { BIOMETRIC_TYPES } from "../../../constants/UI";
-import { createBiometricsSignature } from "../../../utils/biometrics-util";
+import { createBiometricsKey } from "../../../utils/biometrics-util";
 
 @connect(
   state => ({
     biometrics: state.biometrics.biometrics,
+    formData: state.forms.formData,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
+
+// TODO delete this screen
 class BiometricActivation extends Component {
   static propTypes = {};
   static defaultProps = {};
@@ -29,19 +32,16 @@ class BiometricActivation extends Component {
     hideBack: true,
     gesturesEnabled: false,
   });
-  onPressEnableBiometric = () => {
+  onPressEnableBiometric = async () => {
     const { actions, biometrics } = this.props;
-    const biometryTypeCopy =
-      biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
-        ? "Fingerprint"
-        : "Face recognition";
-    createBiometricsSignature(() => {
-      actions.showMessage(
-        "success",
-        `Successfully enabled ${biometryTypeCopy} authentication`
-      );
-      actions.resetToScreen("BiometricAuthentication");
-    }, "Confirm biometrics");
+    // const biometryTypeCopy =
+    //   biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
+    //     ? "Fingerprint"
+    //     : "Face recognition";
+    await createBiometricsKey(publicKey => {
+      actions.activateBiometrics(publicKey, biometrics.biometryType);
+    });
+    actions.resetToScreen("BiometricAuthentication");
   };
 
   selectedBiometricType = () => {

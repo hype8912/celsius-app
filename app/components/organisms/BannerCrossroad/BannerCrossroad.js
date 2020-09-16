@@ -24,6 +24,7 @@ import {
     bannerProps: state.ui.bannerProps,
     userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
     biometrics: state.biometrics.biometrics,
+    user: state.user.profile,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -72,6 +73,7 @@ class BannerCrossroad extends Component {
       bannerProps,
       userTriggeredActions,
       biometrics,
+      user,
     } = this.props;
     const { bannerSwitch } = this.state;
     const currentDate = moment.utc().format();
@@ -81,7 +83,11 @@ class BannerCrossroad extends Component {
 
     if (!isBannerVisible) return null;
 
-    if (biometrics.available && !this.state.biometricBannerHidden) {
+    if (
+      !user.biometrics_enabled &&
+      biometrics.available &&
+      !this.state.biometricBannerHidden
+    ) {
       return <BiometricsTrigger actions={actions} />;
     }
 
