@@ -8,6 +8,7 @@ import * as appActions from "../../../redux/actions";
 import CounterStyle from "./Counter.styles";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -48,8 +49,11 @@ class Counter extends Component {
   componentDidMount() {
     const { activeScreen } = this.props;
     if (
-      ["CoinDetails", "WalletInterest", "Community"].indexOf(activeScreen) !==
-      -1
+      [
+        SCREENS.COIN_DETAILS,
+        SCREENS.WALLET_INTEREST,
+        SCREENS.COMMUNITY,
+      ].indexOf(activeScreen) !== -1
     ) {
       this.countUp();
     }
@@ -64,8 +68,11 @@ class Counter extends Component {
       formatter.usd(prevProps.walletSummary.total_interest_earned) !==
         formatter.usd(walletSummary.total_interest_earned) ||
       (activeScreen !== prevProps.activeScreen &&
-        ["CoinDetails", "WalletInterest", "Community"].indexOf(activeScreen) !==
-          -1)
+        [
+          SCREENS.COIN_DETAILS,
+          SCREENS.WALLET_INTEREST,
+          SCREENS.COMMUNITY,
+        ].indexOf(activeScreen) !== -1)
     ) {
       this.countUp();
     }

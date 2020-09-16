@@ -13,6 +13,7 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -127,7 +128,7 @@ class InterestPaymentSettings extends Component {
             <IconButton
               margin={"20 0 0 0"}
               onPress={() =>
-                actions.navigateTo("ChoosePaymentMethod", {
+                actions.navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
                   reason: LOAN_PAYMENT_REASONS.INTEREST,
                   id,
                 })

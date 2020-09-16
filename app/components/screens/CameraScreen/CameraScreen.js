@@ -31,6 +31,7 @@ import {
 } from "../../../utils/device-permissions";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const { height, width } = Dimensions.get("window");
 
@@ -104,7 +105,7 @@ class CameraScreen extends Component {
 
   componentDidUpdate() {
     const { actions, activeScreen } = this.props;
-    if (activeScreen === "CameraScreen") {
+    if (activeScreen === SCREENS.CAMERA_SCREEN) {
       actions.setFabType("hide");
     }
   }
@@ -167,7 +168,7 @@ class CameraScreen extends Component {
       if (result.cancelled) {
         return;
       }
-      actions.navigateTo("ConfirmCamera", {
+      actions.navigateTo(SCREENS.CONFIRM_CAMERA, {
         onSave: navigation.getParam("onSave"),
       });
       actions.takeCameraPhoto({ uri: result.path });
@@ -200,7 +201,7 @@ class CameraScreen extends Component {
         const photo = await camera.takePictureAsync(options);
 
         actions.startApiCall(API.TAKE_CAMERA_PHOTO);
-        await actions.navigateTo("ConfirmCamera", {
+        await actions.navigateTo(SCREENS.CONFIRM_CAMERA, {
           documentPicture: hideBack,
           onSave: navigation.getParam("onSave"),
         });

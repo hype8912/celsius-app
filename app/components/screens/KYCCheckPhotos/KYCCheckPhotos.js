@@ -8,6 +8,7 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { isForPrimeTrustKYC } from "../../../utils/user-util/user-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -41,9 +42,9 @@ class KYCCheckPhotos extends Component {
     const { actions, kycDocuments } = this.props;
 
     if (isForPrimeTrustKYC() && kycDocuments.type === "passport") {
-      actions.navigateTo("KYCAddressProof");
+      actions.navigateTo(SCREENS.KYC_ADDRESS_PROOF);
     } else {
-      actions.navigateTo("KYCTaxpayer");
+      actions.navigateTo(SCREENS.KYC_TAXPAYER);
     }
   };
 
@@ -99,7 +100,9 @@ class KYCCheckPhotos extends Component {
           basic
           size="medium"
           onPress={() =>
-            actions.navigateTo("KYCVerifyIdentity", { shouldChangeDoc: true })
+            actions.navigateTo(SCREENS.KYC_VERIFY_IDENTITY, {
+              shouldChangeDoc: true,
+            })
           }
           margin="15 0 30 0"
         >

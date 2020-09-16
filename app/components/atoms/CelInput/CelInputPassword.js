@@ -115,7 +115,7 @@ class CelInputPassword extends Component {
                     position: "absolute",
                     width: 0,
                     height: 0,
-                    marginLeft: (width / 2) - 30,
+                    marginLeft: width / 2 - 30,
                     top: !toolTipPositionTop ? -10 : "auto",
                     bottom: toolTipPositionTop ? -10 : "auto",
                     borderLeftWidth: 10,

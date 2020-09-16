@@ -24,7 +24,7 @@ const navigationProps = {
     label: c.name,
     value: c.short,
   })),
-  field: "coin"
+  field: "coin",
 };
 
 const crypto = () => (
@@ -48,8 +48,8 @@ const fiat = () => (
 const selected = () => {
   const state = _.cloneDeep(initialState);
   state.forms = {
-    formData: { coin: "XRP" }
-  }
+    formData: { coin: "XRP" },
+  };
   return (
     <ScreenStoryWrapper
       screen={SelectCoin}
@@ -57,7 +57,7 @@ const selected = () => {
       state={state}
       navigationProps={navigationProps}
     />
-  )
+  );
 };
 
 export default {

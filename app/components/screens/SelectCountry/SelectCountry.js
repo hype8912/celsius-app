@@ -12,6 +12,7 @@ import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
 import { HIGHLIGHTED_COUNTRIES } from "../../../constants/UI";
 import Separator from "../../atoms/Separator/Separator";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -102,7 +103,7 @@ class SelectCountry extends Component {
       state: null,
       search: "",
     });
-    if (activeScreen === "SelectCountry") {
+    if (activeScreen === SCREENS.SELECT_COUNTRY) {
       actions.navigateBack();
     }
   };

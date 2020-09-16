@@ -18,6 +18,7 @@ import KYCCheckUtilityBill from "../KYCCheckUtilityBill/KYCCheckUtilityBill";
 import { navigateTo } from "../../../redux/nav/navActions";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -34,7 +35,7 @@ class KYCAddressProof extends Component {
     customCenterComponent: { steps: 7, currentStep: 5, flowProgress: false },
     headerSameColor: true,
     customBack: () => {
-      store.dispatch(navigateTo("KYCVerifyIdentity"));
+      store.dispatch(navigateTo(SCREENS.KYC_VERIFY_IDENTITY));
     },
     gesturesEnabled: false,
   });
@@ -55,7 +56,7 @@ class KYCAddressProof extends Component {
       mask: "utility",
     });
 
-    actions.navigateTo("CameraScreen", {
+    actions.navigateTo(SCREENS.CAMERA_SCREEN, {
       onSave: utilityBillPhoto => actions.setUtilityBill(utilityBillPhoto),
     });
   };

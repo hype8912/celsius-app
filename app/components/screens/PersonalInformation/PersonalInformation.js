@@ -14,6 +14,7 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import SocialSecurityNumber from "../../molecules/SocialSecurityNumber/SocialSecurityNumber";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -255,7 +256,7 @@ class PersonalInformation extends Component {
         {!user.cellphone_verified && (
           <CelButton
             margin={"20 0 20 0"}
-            onPress={() => actions.navigateTo("CellphoneEnter")}
+            onPress={() => actions.navigateTo(SCREENS.CELLPHONE_ENTER)}
           >
             Enter Phone Number
           </CelButton>

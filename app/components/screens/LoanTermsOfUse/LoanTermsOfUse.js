@@ -22,6 +22,7 @@ import {
   getFontFamily,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -93,7 +94,7 @@ class LoanTermsOfUse extends Component {
     const { actions } = this.props;
     mixpanelAnalytics.loanToUAgreed();
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () => actions.applyForALoan(),
     });
   };

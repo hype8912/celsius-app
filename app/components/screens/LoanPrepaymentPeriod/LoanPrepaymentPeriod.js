@@ -14,6 +14,7 @@ import formatter from "../../../utils/formatter";
 import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -49,9 +50,9 @@ class LoanPrepaymentPeriod extends Component {
       if (formData.coin === "USD") {
         const amountUsd = formData.prepaidPeriod * loan.monthly_payment;
         actions.updateFormField("amountUsd", amountUsd);
-        actions.navigateTo("WiringBankInformation");
+        actions.navigateTo(SCREENS.WIRING_BANK_INFORMATION);
       } else {
-        actions.navigateTo("VerifyProfile", {
+        actions.navigateTo(SCREENS.VERIFY_PROFILE, {
           onSuccess: () => {
             actions.prepayInterest(id);
             actions.updateFormField("prepayLoanId", id);

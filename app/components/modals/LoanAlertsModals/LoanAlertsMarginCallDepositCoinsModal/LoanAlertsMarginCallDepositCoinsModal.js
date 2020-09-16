@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import InfoModal from "../../InfoModalNew/InfoModal";
 import { MODALS } from "../../../../constants/UI";
 import * as appActions from "../../../../redux/actions";
+import { SCREENS } from "../../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -19,7 +20,7 @@ class LoanAlertsMarginCallDepositCoinsModal extends Component {
 
   depositCoin = () => {
     const { actions, loan } = this.props;
-    actions.navigateTo("Deposit", {
+    actions.navigateTo(SCREENS.DEPOSIT, {
       coin: loan.margin_call.collateral_coin
         ? loan.margin_call.collateral_coin
         : "DAI",

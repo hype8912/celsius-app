@@ -17,6 +17,7 @@ import Constants from "../../../../constants";
 import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import securityUtil from "../../../utils/security-util";
 import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -269,7 +270,7 @@ class RegisterInitial extends Component {
                 align="center"
                 link
                 onPress={() =>
-                  actions.navigateTo("LoginLanding", { type: "login" })
+                  actions.navigateTo(SCREENS.LOGIN_LANDING, { type: "login" })
                 }
               >
                 Log in

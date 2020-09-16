@@ -12,6 +12,7 @@ import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import Card from "../../atoms/Card/Card";
 import WiringBankInfomationStyle from "./WiringBankInformation.styles";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -57,7 +58,7 @@ class WiringBankInformation extends Component {
       "success",
       `You have successfully changed interest payment method to USD`
     );
-    actions.navigateTo("ChoosePaymentMethod", { id, reason });
+    actions.navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, { id, reason });
     this.setState({ isLoading: false });
   };
 

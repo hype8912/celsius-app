@@ -128,6 +128,6 @@ const themed = {
   },
 };
 
-const CelButtonStyle = (theme) => getThemedStyle(base, themed, theme);
+const CelButtonStyle = theme => getThemedStyle(base, themed, theme);
 
 export default CelButtonStyle;

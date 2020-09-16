@@ -20,6 +20,7 @@ import { MODALS } from "../../../constants/UI";
 import TransactionFilterModal from "../../modals/TransactionFilterModal/TransactionFilterModal";
 import Card from "../../atoms/Card/Card";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -105,9 +106,9 @@ class TransactionsHistory extends Component {
     const { actions, additionalFilter } = this.props;
 
     if (additionalFilter) {
-      await actions.navigateTo("AllTransactions", { additionalFilter });
+      await actions.navigateTo(SCREENS.ALL_TRANSACTIONS, { additionalFilter });
     } else {
-      await actions.navigateTo("AllTransactions");
+      await actions.navigateTo(SCREENS.ALL_TRANSACTIONS);
     }
     await actions.getAllTransactions();
   };
@@ -221,7 +222,7 @@ class TransactionsHistory extends Component {
                   index={index}
                   count={transactionsDisplay.length}
                   onPress={() =>
-                    actions.navigateTo("TransactionsIntersection", {
+                    actions.navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
                       id: item.id,
                     })
                   }

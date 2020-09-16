@@ -10,9 +10,13 @@ import { setFormErrors, updateFormField } from "../forms/formsActions";
 import { default as NavActions, navigateTo } from "../nav/navActions";
 import apiUtil from "../../utils/api-util";
 import userDataService from "../../services/user-data-service";
-import { getUserKYCStatus, isUserLoggedIn } from "../../utils/user-util/user-util";
+import {
+  getUserKYCStatus,
+  isUserLoggedIn,
+} from "../../utils/user-util/user-util";
 import { KYC_STATUSES } from "../../constants/DATA";
 import interestUtil from "../../utils/interest-util";
+import { SCREENS } from "../../constants/SCREENS";
 
 export {
   getUserAppSettings,
@@ -62,7 +66,7 @@ function linkBankAccount(bankAccountInfo) {
       const bankRes = await userDataService.linkBankAccount(bankAccountInfo);
       dispatch({ type: ACTIONS.LINK_BANK_ACCOUNT_SUCCESS });
       dispatch(updateFormField("bankInfo", bankRes.data));
-      dispatch(navigateTo("ConfirmYourLoan"));
+      dispatch(navigateTo(SCREENS.CONFIRM_YOUR_LOAN));
     } catch (err) {
       if (err.status === 422) {
         dispatch(setFormErrors(apiUtil.parseValidationErrors(err)));
@@ -284,17 +288,17 @@ function getUserStatus() {
 
       if (newStatus === KYC_STATUSES.permanently_rejected) {
         dispatch(closeModal());
-        return dispatch(NavActions.navigateTo("KYCFinalRejection"));
+        return dispatch(NavActions.navigateTo(SCREENS.KYC_FINAL_REJECTION));
       }
 
       if (newStatus !== status) {
         dispatch(closeModal());
         if (newStatus === KYC_STATUSES.passed) {
-          return dispatch(NavActions.navigateTo("WalletLanding"));
+          return dispatch(NavActions.navigateTo(SCREENS.WALLET_LANDING));
         }
 
         if (newStatus === KYC_STATUSES.rejected) {
-          return dispatch(NavActions.navigateTo("WalletLanding"));
+          return dispatch(NavActions.navigateTo(SCREENS.WALLET_LANDING));
         }
       }
     } catch (err) {

@@ -9,6 +9,7 @@ import API from "../../../constants/API";
 import LoadingState from "../../atoms/LoadingState/LoadingState";
 import * as appActions from "../../../redux/actions";
 import EmptyState from "../../atoms/EmptyState/EmptyState";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -34,7 +35,7 @@ class BuyCoinsPaymentsHistory extends Component {
 
     if (
       activeScreen !== nextProps.activeScreen &&
-      nextProps.activeScreen === "GetCoinsLanding"
+      nextProps.activeScreen === SCREENS.GET_COINS_LANDING
     ) {
       actions.getPaymentRequests();
     }
@@ -72,7 +73,7 @@ class BuyCoinsPaymentsHistory extends Component {
                 index={index}
                 count={buyCoinsPayments.length}
                 onPress={() =>
-                  actions.navigateTo("GetCoinsTransactionDetails", {
+                  actions.navigateTo(SCREENS.GET_COINS_TRANSACTION_DETAILS, {
                     id: item.id,
                   })
                 }

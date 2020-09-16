@@ -14,7 +14,7 @@ const initialState = {
 const regular = () => {
   return (
     <ScreenStoryWrapper
-      screenName="CellphoneEnter"
+      screenName={"CellphoneEnter"}
       screen={CellphoneEnter}
       state={initialState}
     />

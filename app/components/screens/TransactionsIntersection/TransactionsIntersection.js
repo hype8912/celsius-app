@@ -177,7 +177,6 @@ class TransactionsIntersection extends Component {
             cancelWithdrawal={actions.cancelWithdrawal}
             navigateTo={actions.navigateTo}
             callsInProgress={callsInProgress}
-
           />
         );
       case TRANSACTION_TYPES.INTEREST:

@@ -18,6 +18,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import RateInfoCard from "../RateInfoCard/RateInfoCard";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -209,7 +210,7 @@ class PerCoinCelInterestCard extends Component {
 
         <RateInfoCard
           navigateTo={actions.navigateTo}
-          tierButton={activeScreen !== "MyCel"}
+          tierButton={activeScreen !== SCREENS.MY_CEL}
           interestCompliance={interestCompliance}
         />
 

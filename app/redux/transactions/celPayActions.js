@@ -8,6 +8,7 @@ import formatter from "../../utils/formatter";
 import { navigateTo } from "../nav/navActions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { CEL_PAY_TYPES } from "../../constants/UI";
+import { SCREENS } from "../../constants/SCREENS";
 
 export { celPayFriend, celPayShareLink };
 
@@ -55,7 +56,7 @@ function celPayFriend() {
       dispatch(showMessage("success", msg));
       dispatch(clearForm());
       dispatch(
-        navigateTo("TransactionsIntersection", {
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transferData.transaction_id,
           hideBack: true,
         })
@@ -102,7 +103,7 @@ function celPayShareLink() {
       );
       dispatch(clearForm());
       dispatch(
-        navigateTo("TransactionsIntersection", {
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transferData.transaction_id,
           hideBack: true,
         })

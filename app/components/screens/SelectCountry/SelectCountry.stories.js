@@ -63,9 +63,9 @@ const selected = () => {
     formData: {
       country: {
         name: "Taiwan",
-      }
-    }
-  }
+      },
+    },
+  };
 
   return (
     <ScreenStoryWrapper
