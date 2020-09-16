@@ -72,7 +72,7 @@ class RegisterPromoCodeModal extends Component {
 
     actions.updateFormField("promoCode", "");
     this.setState({
-      confirmed: true,
+      confirmed: false,
       loading: false,
       hasError: false,
     });
