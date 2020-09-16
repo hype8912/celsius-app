@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import moment from "moment";
 
 import RegisterPromoCodeModalStyle from "./RegisterPromoCodeModal.styles";
 import CelModal from "../CelModal/CelModal.js";
@@ -22,7 +21,7 @@ const theme = getTheme();
   state => ({
     formData: state.forms.formData,
     formErrors: state.forms.formErrors,
-    promoCode: state.branch.promoCode,
+    code: state.branch.code,
     referralLink: state.branch.registeredLink,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -37,30 +36,53 @@ class RegisterPromoCodeModal extends Component {
     super(props);
     this.state = {
       confirmed: false,
+      loading: false,
+      hasError: false,
     };
   }
 
   componentDidMount() {
     const { actions } = this.props;
-    actions.updateFormFields({ promoCode: null });
+
+    actions.updateFormFields({
+      promoCode: null,
+      code: null,
+    });
   }
+
+  hasError = () => {
+    this.setState({
+      confirmed: false,
+      loading: false,
+      hasError: true,
+    });
+  };
 
   proceed = () => {
     this.setState({
       confirmed: true,
+      loading: false,
+      hasError: false,
     });
   };
 
   closeModal = () => {
     const { actions } = this.props;
-    this.setState({ confirmed: false });
     actions.closeModal();
+
+    actions.updateFormField("promoCode", null);
+    this.setState({
+      confirmed: false,
+      loading: false,
+      hasError: false,
+    });
   };
 
   confirm = () => {
     const { actions, type } = this.props;
+    this.setState({ loading: true });
     if (type === "celsius") {
-      actions.submitProfileCode(this.proceed);
+      actions.submitPromoCode(this.proceed, this.hasError);
     }
 
     if (type === "register") {
@@ -70,6 +92,7 @@ class RegisterPromoCodeModal extends Component {
 
   renderUnconfirmedReferralCode = () => {
     const { formData, formErrors } = this.props;
+    const { loading } = this.state;
     const style = RegisterPromoCodeModalStyle();
 
     return (
@@ -107,6 +130,7 @@ class RegisterPromoCodeModal extends Component {
         <View style={style.buttonWrapper}>
           <CelModalButton
             onPress={() => this.confirm()}
+            loading={loading}
             buttonStyle={
               formData.promoCode === null || formData.promoCode === ""
                 ? "disabled"
@@ -167,7 +191,7 @@ class RegisterPromoCodeModal extends Component {
           {congratsText}
         </CelText>
         <View style={style.cardWrapper}>
-          <Card color={style.messageTextCard.color}>
+          <Card color={style.messageTextCard.color} noBorder>
             <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
               1. Complete KYC (Identity Verification).
             </CelText>
@@ -175,7 +199,7 @@ class RegisterPromoCodeModal extends Component {
               2. Receive confirmation of account verification.
             </CelText>
             <CelText margin={"10 25 10 25"} type={"H6"} weight={"300"}>
-              3. Deposit $200 or more worth of coins to your Celsius wallet.
+              3. Transfer $200 or more worth of coins to your Celsius wallet.
             </CelText>
           </Card>
         </View>
@@ -195,6 +219,7 @@ class RegisterPromoCodeModal extends Component {
 
   renderUnconfirmedPromoCode = () => {
     const { formData, formErrors } = this.props;
+    const { loading } = this.state;
     const style = RegisterPromoCodeModalStyle();
 
     return (
@@ -223,15 +248,15 @@ class RegisterPromoCodeModal extends Component {
             placeholder="Enter Promo Code"
             returnKeyType={"send"}
             value={formData.promoCode}
-            error={formErrors.promoCode}
-            border={theme !== THEMES.DARK}
+            error={formErrors.promoCodeError && formErrors.promoCodeError.msg}
+            border
             onSubmitEditing={() => this.confirm()}
-            basic={theme === THEMES.LIGHT ? true : null}
           />
         </View>
         <View style={style.buttonWrapper}>
           <CelModalButton
             onPress={() => this.confirm()}
+            loading={loading}
             buttonStyle={
               formData.promoCode === null || formData.promoCode === ""
                 ? "disabled"
@@ -246,25 +271,12 @@ class RegisterPromoCodeModal extends Component {
   };
 
   renderConfirmedPromoCode = () => {
-    const { promoCode } = this.props;
-    const code = {};
+    const { code } = this.props;
     const style = RegisterPromoCodeModalStyle();
 
-    code.amount = promoCode.referred_award_amount;
-    code.coin = promoCode.referred_award_coin;
-    code.maximumDays = promoCode.maximum_days_to_claim;
-    code.minimumAmount = promoCode.minimum_deposit_for_reward;
-
-    const congratsText = "You’ve successfully activated your promo code!";
-    const messageText = `You’ll receive $${code.amount} in ${
-      code.coin
-    } when you deposit $${code.minimumAmount} or more within the next ${
-      code.maximumDays
-    } days. Your reward will be locked in your wallet for 30 days. If you withdraw $${
-      code.minimumAmount
-    } or more from your wallet before ${moment()
-      .add(30, "days")
-      .format("DD/MM/YY")}, your reward will be canceled.`;
+    const title = "Congrats!";
+    const subtitle = "You’ve successfully activated your promo code!";
+    const description = code.description || "";
 
     return (
       <View>
@@ -274,7 +286,7 @@ class RegisterPromoCodeModal extends Component {
           type={"H2"}
           weight={"700"}
         >
-          Congrats!
+          {title}
         </CelText>
         <CelText
           margin={"0 25 10 25"}
@@ -282,12 +294,13 @@ class RegisterPromoCodeModal extends Component {
           type={"H4"}
           weight={"300"}
         >
-          {congratsText}
+          {subtitle}
         </CelText>
+
         <View style={style.cardWrapper}>
           <Card color={style.messageTextCard.color}>
             <CelText margin={"10 0 10 0"} type={"H6"} weight={"300"}>
-              {messageText}
+              {description}
             </CelText>
           </Card>
         </View>
@@ -308,6 +321,7 @@ class RegisterPromoCodeModal extends Component {
   renderModal = () => {
     const { confirmed } = this.state;
     const { referralLink, type } = this.props;
+
     // Promo code
     if (type === "celsius") {
       if (confirmed) return this.renderConfirmedPromoCode();
@@ -317,18 +331,18 @@ class RegisterPromoCodeModal extends Component {
     if (type === "register") {
       if (confirmed || referralLink) return this.renderConfirmedReferralCode();
     }
+
     return this.renderUnconfirmedReferralCode();
   };
 
   render() {
     const style = RegisterPromoCodeModalStyle();
+
     return (
       <CelModal
         style={style.container}
         name={MODALS.REGISTER_PROMO_CODE_MODAL}
-        onClose={() => {
-          this.setState({ confirmed: false });
-        }}
+        onClose={this.closeModal}
       >
         {this.renderModal()}
       </CelModal>
