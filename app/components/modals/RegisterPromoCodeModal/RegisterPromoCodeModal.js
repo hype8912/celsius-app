@@ -51,17 +51,6 @@ class RegisterPromoCodeModal extends Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.hasError !== this.state.hasError) {
-      if (this.state.hasError) {
-        const timeout = setTimeout(() => {
-          this.closeModal();
-          clearTimeout(timeout);
-        }, 4500);
-      }
-    }
-  }
-
   hasError = () => {
     this.setState({
       confirmed: false,
