@@ -71,7 +71,7 @@ class RegisterPromoCodeModal extends Component {
     const { actions } = this.props;
     actions.closeModal();
 
-    actions.updateFormField("promoCode", "");
+    actions.updateFormField("promoCode", null);
     this.setState({
       confirmed: false,
       loading: false,
