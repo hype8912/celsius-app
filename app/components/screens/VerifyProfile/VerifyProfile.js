@@ -18,6 +18,7 @@ import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import {
   BIOMETRIC_TYPES,
+  BIOMETRIC_TEXT,
   KEYPAD_PURPOSES,
   MODALS,
 } from "../../../constants/UI";
@@ -386,12 +387,12 @@ class VerifyProfile extends Component {
       if (biometrics.biometryType === BIOMETRIC_TYPES.FACE_ID) {
         biometricCopy = {
           image: require("../../../../assets/images/face-recognition.png"),
-          text: "Face ID",
+          text: BIOMETRIC_TEXT.FACE_ID,
         };
       } else {
         biometricCopy = {
           image: require("../../../../assets/images/fingerprint.png"),
-          text: "Touch ID",
+          text: BIOMETRIC_TEXT.TOUCH_ID,
         };
       }
     }

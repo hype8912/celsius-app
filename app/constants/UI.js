@@ -272,6 +272,12 @@ const BIOMETRIC_TYPES = {
   BIOMETRICS: "Biometrics",
 };
 
+const BIOMETRIC_TEXT = {
+  TOUCH_ID: "Touch ID",
+  FINGERPRINT: "Fingerprint",
+  FACE_ID: "Face ID",
+};
+
 export {
   KEYBOARD_TYPE,
   MODALS,
@@ -293,5 +299,6 @@ export {
   CEL_PAY_TYPES,
   HODL_STATUS,
   BIOMETRIC_TYPES,
+  BIOMETRIC_TEXT,
   DONT_SHOW_AGAIN,
 };

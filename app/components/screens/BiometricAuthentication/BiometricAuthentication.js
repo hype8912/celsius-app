@@ -10,7 +10,7 @@ import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import CelText from "../../atoms/CelText/CelText";
-import { BIOMETRIC_TYPES } from "../../../constants/UI";
+import { BIOMETRIC_TEXT, BIOMETRIC_TYPES } from "../../../constants/UI";
 import {
   createBiometricsKey,
   deleteBiometricsKey,
@@ -57,8 +57,8 @@ class BiometricAuthentication extends Component {
 
     const biometricsType =
       biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
-        ? "Touch ID"
-        : "Face ID";
+        ? BIOMETRIC_TEXT.TOUCH_ID
+        : BIOMETRIC_TEXT.FACE_ID;
     const enableBiometricsText = `${biometricsType} enabled on this device.`;
     const disableBiometricsText = `${biometricsType} disabled on this device.`;
 
@@ -97,9 +97,8 @@ class BiometricAuthentication extends Component {
         : "FaceRecognition";
     const text =
       biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
-        ? "Touch ID"
-        : "Face ID";
-
+        ? BIOMETRIC_TEXT.TOUCH_ID
+        : BIOMETRIC_TEXT.FACE_ID;
     return (
       <RegularLayout>
         <CelText type="H4">

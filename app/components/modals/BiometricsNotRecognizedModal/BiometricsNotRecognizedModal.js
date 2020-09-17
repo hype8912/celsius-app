@@ -2,7 +2,7 @@ import React from "react";
 
 import InfoModal from "../InfoModalNew/InfoModal.js";
 // import BiometricsAuthenticationModalStyle from "./BiometricsAuthenticationModal.styles";
-import { BIOMETRIC_TYPES, MODALS } from "../../../constants/UI";
+import { BIOMETRIC_TEXT, BIOMETRIC_TYPES, MODALS } from "../../../constants/UI";
 
 class BiometricsNotRecognizedModal extends React.Component {
   goNext = () => {
@@ -16,8 +16,8 @@ class BiometricsNotRecognizedModal extends React.Component {
     if (biometrics && biometrics.available) {
       biometricsMethod =
         biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
-          ? "Touch ID"
-          : "Face ID";
+          ? BIOMETRIC_TEXT.TOUCH_ID
+          : BIOMETRIC_TEXT.FACE_ID;
       return biometricsMethod;
     }
     return "biometrics";
