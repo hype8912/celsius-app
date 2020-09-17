@@ -63,7 +63,7 @@ class BiometricAuthentication extends Component {
     const disableBiometricsText = `${biometricsType} disabled on this device.`;
 
     if (!user.biometrics_enabled) {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: async () => {
           await createBiometricsKey(publicKey => {
             actions.activateBiometrics(publicKey, biometrics.biometryType);
@@ -74,7 +74,7 @@ class BiometricAuthentication extends Component {
         hideBiometrics: true,
       });
     } else {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: async () => {
           await deleteBiometricsKey(() => {
             actions.disableBiometrics();
