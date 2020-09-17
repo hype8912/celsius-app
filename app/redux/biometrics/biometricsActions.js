@@ -2,7 +2,7 @@ import ACTIONS from "../../constants/ACTIONS";
 import { isBiometricsSensorAvailable } from "../../utils/biometrics-util";
 import { BIOMETRIC_TYPES } from "../../constants/UI";
 import biometricsService from "../../services/biometrics-service";
-import { startApiCall } from "../api/apiActions";
+import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
 import { showMessage } from "../ui/uiActions";
 import store from "../store";
@@ -44,7 +44,7 @@ function checkBiometrics(onSuccess, onError) {
   const formData = store.getState().forms.formData;
   return async dispatch => {
     try {
-      dispatch(startApiCall(ACTIONS.CHECK_BIOMETRICS));
+      dispatch(startApiCall(API.CHECK_BIOMETRICS));
       await biometricsService.checkBiometrics(
         formData.payload,
         formData.signature
@@ -53,6 +53,7 @@ function checkBiometrics(onSuccess, onError) {
       if (onSuccess) onSuccess();
     } catch (e) {
       dispatch(showMessage("error", e.msg));
+      dispatch(apiError(API.CHECK_BIOMETRICS, e));
       if (onError) onError();
     }
   };
@@ -75,6 +76,7 @@ function activateBiometrics(publicKey, type) {
         biometricsEnabled: true,
       });
     } catch (e) {
+      dispatch(apiError(API.ACTIVATE_BIOMETRICS, e));
       await logger.err(e);
     }
   };
@@ -97,6 +99,7 @@ function disableBiometrics() {
         biometricsEnabled: false,
       });
     } catch (e) {
+      dispatch(apiError(API.DEACTIVATE_BIOMETRICS, e));
       await logger.err(e);
     }
   };
