@@ -8,6 +8,7 @@ export {
   isUSResident,
   isForPrimeTrustKYC,
   hasPassedKYC,
+  isPendingKYC,
   isKYCRejectedForever,
   hasSSN,
   hasAddress,
@@ -86,6 +87,15 @@ function getUserKYCStatus() {
 function hasPassedKYC() {
   const status = getUserKYCStatus();
   return status === KYC_STATUSES.passed || status === KYC_STATUSES.ico_passed;
+}
+
+/**
+ *  get if user is pending KYC verification
+ * @returns {boolean}
+ */
+function isPendingKYC() {
+  const status = getUserKYCStatus();
+  return status === KYC_STATUSES.pending;
 }
 
 /**

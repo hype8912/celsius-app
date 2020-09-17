@@ -52,8 +52,6 @@ function getCoinAddress(coin) {
       dispatch(
         getCoinAddressSuccess({
           [`${coin}Address`]: address.address,
-          [`${coin}AlternateAddress`]:
-            address.address !== address.address_alt && address.address_alt,
           [`${coin}SecondaryAddress`]:
             address.address !== address.address_secondary &&
             address.address_secondary,

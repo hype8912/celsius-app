@@ -6,6 +6,7 @@ import {
   isUSResident,
   isForPrimeTrustKYC,
   hasPassedKYC,
+  isPendingKYC,
   isKYCRejectedForever,
   hasSSN,
   hasAddress,
@@ -152,6 +153,26 @@ describe("hasPassedKYC()", () => {
     notPassedStatuses.forEach(ks => {
       mockState.user.profile.kyc.status = ks;
       expect(hasPassedKYC()).toBeFalsy();
+    });
+  });
+});
+
+describe("isPendingKYC()", () => {
+  beforeEach(() => {
+    mockState = _.cloneDeep(mockState);
+    mockState.user.profile.kyc = {};
+  });
+  it("should return true if KYC status is pending", () => {
+    mockState.user.profile.kyc.status = KYC_STATUSES.pending;
+    expect(isPendingKYC()).toBeTruthy();
+  });
+  it("should return false for other KYC statuses", () => {
+    const notPassedStatuses = Object.values(KYC_STATUSES).filter(
+      ks => ![KYC_STATUSES.pending].includes(ks)
+    );
+    notPassedStatuses.forEach(ks => {
+      mockState.user.profile.kyc.status = ks;
+      expect(isPendingKYC()).toBeFalsy();
     });
   });
 });
