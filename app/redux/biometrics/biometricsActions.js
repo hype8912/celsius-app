@@ -8,7 +8,12 @@ import { showMessage } from "../ui/uiActions";
 import store from "../store";
 import logger from "../../utils/logger-util";
 
-export { getBiometricType, checkBiometrics, activateBiometrics };
+export {
+  getBiometricType,
+  checkBiometrics,
+  activateBiometrics,
+  disableBiometrics,
+};
 
 /**
  * Gets biometrics type available on device
@@ -66,8 +71,30 @@ function activateBiometrics(publicKey, type) {
       await biometricsService.activateBiometrics(publicKey, type, verification);
 
       dispatch({
-        type: ACTIONS.UPDATE_USER_BIOMETRICS_STATUS_SUCCESS, // TODO when disabling, dispatch this too - biometricsEnabled: false
+        type: ACTIONS.UPDATE_USER_BIOMETRICS_STATUS_SUCCESS,
         biometricsEnabled: true,
+      });
+    } catch (e) {
+      await logger.err(e);
+    }
+  };
+}
+
+function disableBiometrics() {
+  const user = store.getState().user.profile;
+  const formData = store.getState().forms.formData;
+  const verification = {
+    type: user.two_factor_enabled ? "twoFactorCode" : "pin",
+    value: user.two_factor_enabled ? formData.code : formData.pin,
+  };
+  return async dispatch => {
+    try {
+      dispatch(startApiCall(API.DEACTIVATE_BIOMETRICS));
+      await biometricsService.deactivateBiometrics(verification);
+
+      dispatch({
+        type: ACTIONS.UPDATE_USER_BIOMETRICS_STATUS_SUCCESS,
+        biometricsEnabled: false,
       });
     } catch (e) {
       await logger.err(e);

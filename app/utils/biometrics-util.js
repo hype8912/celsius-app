@@ -62,8 +62,9 @@ async function checkBiometricsKey() {
 }
 
 async function createBiometricsSignature(onSuccess, msgForUser) {
+  const deviceId = store.getState().app.advertisingId;
   const epochTimeSeconds = Math.round(new Date().getTime() / 1000).toString();
-  const payload = `${epochTimeSeconds}`;
+  const payload = `${epochTimeSeconds}${deviceId}`;
 
   try {
     const resultObject = await ReactNativeBiometrics.createSignature({
@@ -88,9 +89,10 @@ async function createBiometricsSignature(onSuccess, msgForUser) {
   }
 }
 
-async function deleteBiometricsKey() {
+async function deleteBiometricsKey(onSuccess) {
   try {
     await ReactNativeBiometrics.deleteKeys();
+    if (onSuccess) onSuccess();
   } catch (e) {
     await logger.err(e);
   }

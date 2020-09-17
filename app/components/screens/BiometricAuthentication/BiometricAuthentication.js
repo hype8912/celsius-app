@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { Linking } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -10,10 +10,12 @@ import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import CelText from "../../atoms/CelText/CelText";
-import InfoBox from "../../atoms/InfoBox/InfoBox";
-import Icon from "../../atoms/Icon/Icon";
 import { BIOMETRIC_TYPES } from "../../../constants/UI";
-import { createBiometricsKey } from "../../../utils/biometrics-util";
+import {
+  createBiometricsKey,
+  deleteBiometricsKey,
+} from "../../../utils/biometrics-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -50,14 +52,15 @@ class BiometricAuthentication extends Component {
     );
   };
 
-  // TODO when complete BiometricActivation screen, modify this function
   handleSwitchChangeBiometrics = () => {
     const { actions, biometrics, user } = this.props;
 
-    const text =
+    const biometricsType =
       biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
-        ? "Touch ID enabled on this device."
-        : "Face ID enabled on this device";
+        ? "Touch ID"
+        : "Face ID";
+    const enableBiometricsText = `${biometricsType} enabled on this device.`;
+    const disableBiometricsText = `${biometricsType} disabled on this device.`;
 
     if (!user.biometrics_enabled) {
       actions.navigateTo("VerifyProfile", {
@@ -65,23 +68,27 @@ class BiometricAuthentication extends Component {
           await createBiometricsKey(publicKey => {
             actions.activateBiometrics(publicKey, biometrics.biometryType);
           });
-          actions.resetToScreen("BiometricAuthentication");
-          actions.showMessage("success", text);
+          actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
+          actions.showMessage("success", enableBiometricsText);
         },
+        hideBiometrics: true,
       });
     } else {
       actions.navigateTo("VerifyProfile", {
-        onSuccess: () => {
-          // TODO add delete biometrics here! Text and endpoint
-          actions.resetToScreen("BiometricAuthentication");
-          actions.showMessage("success", text);
+        onSuccess: async () => {
+          await deleteBiometricsKey(() => {
+            actions.disableBiometrics();
+          });
+          actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
+          actions.showMessage("success", disableBiometricsText);
         },
+        hideBiometrics: true,
       });
     }
   };
 
   render() {
-    const { actions, biometrics } = this.props;
+    const { biometrics } = this.props;
     const Switcher = this.rightSwitch;
 
     const icon =
@@ -92,7 +99,6 @@ class BiometricAuthentication extends Component {
       biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
         ? "Touch ID"
         : "Face ID";
-    const isBiometricAvailableOnAnotherDevice = true;
 
     return (
       <RegularLayout>
@@ -108,36 +114,13 @@ class BiometricAuthentication extends Component {
           {text}
         </IconButton>
 
-        {isBiometricAvailableOnAnotherDevice && (
-          <InfoBox
-            backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
-            padding={"20 30 20 10"}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <View>
-                <Icon
-                  name={"WarningCircle"}
-                  height="30"
-                  width="30"
-                  fill={getColor(COLOR_KEYS.WHITE)}
-                />
-              </View>
-              <CelText type="H6" color={"white"} margin={"0 10 0 10"}>
-                We notice that you have activated biometrics on another device.
-                Setting biometrics on this device will automatically disable it
-                on any other devices.
-              </CelText>
-            </View>
-          </InfoBox>
-        )}
-
         <CelText align={"center"}>
           By enabling some of the biometrics options you agree with{" "}
           {
             <CelText
               color={getColor(COLOR_KEYS.LINK)}
               onPress={() => {
-                actions.navigateTo("LoanTermsOfUse");
+                Linking.openURL("https://celsius.network/terms-of-use/");
               }}
             >
               Terms and Conditions.
