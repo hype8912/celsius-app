@@ -266,8 +266,9 @@ class VerifyProfile extends Component {
     // TODO Check this few more times
     const { actions, navigation, user } = this.props;
     const biometricsEnabled =
-      navigation.getParam("biometrics_enabled") || user.biometrics_enabled; // from 426 or Redux // check this!!!!
-    if (biometricsEnabled) {
+      navigation.getParam("biometrics_enabled") || user.biometrics_enabled;
+    const hideBiometrics = navigation.getParam("hideBiometrics");
+    if (biometricsEnabled && !hideBiometrics) {
       await createBiometricsSignature(() => {
         this.setState({ loading: true });
         actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
@@ -373,9 +374,14 @@ class VerifyProfile extends Component {
   }
 
   renderBiometrics() {
-    const { biometrics } = this.props;
+    const { biometrics, navigation } = this.props;
     const style = VerifyProfileStyle();
+    const hideBiometrics = navigation.getParam("hideBiometrics");
     let biometricCopy;
+
+    if (hideBiometrics) return;
+    if (!biometrics || !biometrics.available) return;
+
     if (biometrics && biometrics.available) {
       if (biometrics.biometryType === BIOMETRIC_TYPES.FACE_ID) {
         biometricCopy = {
@@ -389,8 +395,6 @@ class VerifyProfile extends Component {
         };
       }
     }
-    // TODO add !biometrics_enabled from bootstrap endpoint
-    if (!biometrics || !biometrics.available) return;
 
     return (
       <TouchableOpacity
