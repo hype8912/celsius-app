@@ -13,7 +13,10 @@ import CelText from "../../atoms/CelText/CelText";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import Icon from "../../atoms/Icon/Icon";
 import { BIOMETRIC_TYPES } from "../../../constants/UI";
-import { createBiometricsKey } from "../../../utils/biometrics-util";
+import {
+  createBiometricsKey,
+  deleteBiometricsKey,
+} from "../../../utils/biometrics-util";
 
 @connect(
   state => ({
@@ -54,10 +57,12 @@ class BiometricAuthentication extends Component {
   handleSwitchChangeBiometrics = () => {
     const { actions, biometrics, user } = this.props;
 
-    const text =
+    const biometricsType =
       biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID
-        ? "Touch ID enabled on this device."
-        : "Face ID enabled on this device";
+        ? "Touch ID"
+        : "Face ID";
+    const enableBiometricsText = `${biometricsType} enabled on this device.`;
+    const disableBiometricsText = `${biometricsType} disabled on this device.`;
 
     if (!user.biometrics_enabled) {
       actions.navigateTo("VerifyProfile", {
@@ -66,15 +71,17 @@ class BiometricAuthentication extends Component {
             actions.activateBiometrics(publicKey, biometrics.biometryType);
           });
           actions.resetToScreen("BiometricAuthentication");
-          actions.showMessage("success", text);
+          actions.showMessage("success", enableBiometricsText);
         },
       });
     } else {
       actions.navigateTo("VerifyProfile", {
-        onSuccess: () => {
-          // TODO add delete biometrics here! Text and endpoint
+        onSuccess: async () => {
+          await deleteBiometricsKey(() => {
+            actions.disableBiometrics();
+          });
           actions.resetToScreen("BiometricAuthentication");
-          actions.showMessage("success", text);
+          actions.showMessage("success", disableBiometricsText);
         },
       });
     }
