@@ -29,7 +29,7 @@ export const SCREENS = {
   CHANGE_PASSWORD: "ChangePassword",
   CHANGE_PIN: "ChangePin",
   CHOOSE_MARGIN_COLLATERAL_COIN: "ChooseMarginCollateralCoin", // NOTE: do we use this?
-  CHOOSE_PAYMENT_METHOD: ":ChoosePaymentMethod",
+  CHOOSE_PAYMENT_METHOD: "ChoosePaymentMethod",
   COIN_DETAILS: "CoinDetails",
   COMMUNITY: "Community",
   CONFIRM_CAMERA: "ConfirmCamera",
@@ -118,4 +118,8 @@ export const SCREENS = {
   WITHDRAW_CREATE_ADDRESS: "WithdrawCreateAddress",
   WITHDRAW_ENTER_AMOUNT: "WithdrawEnterAmount",
   WITHDRAW_NEW_ADDRESS_SETUP: "WithdrawNewAddressSetup",
+  INTEREST_PAYMENT_OVERVIEW: "InterestPaymentOverviewScreen",
+  MARGIN_CALL_OVERVIEW_SCREEN: "MarginCallOverviewScreen",
+  SINGLE_MARGIN_CALL_SCREEN: "SingleMarginCallScreen",
+  EXTEND_LOAN: "ExtendLoanScreen",
 };

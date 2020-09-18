@@ -3,7 +3,7 @@ import moment from "moment";
 import store from "../redux/store";
 import { COIN_CARD_TYPE } from "../constants/UI";
 import formatter from "./formatter";
-import STYLES from "../constants/STYLES";
+import { COLOR_KEYS } from "../constants/COLORS";
 
 const loanPaymentUtil = {
   calculateAdditionalPayment,
@@ -61,7 +61,7 @@ function calculateAdditionalPayment(
 
     if (cardType === COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD) {
       hasEnough = loanCoin.amount_usd.isGreaterThan(loan.loan_amount_usd);
-      color = !hasEnough ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
+      color = !hasEnough ? COLOR_KEYS.NEGATIVE_STATE : COLOR_KEYS.PARAGRAPH;
       additionalCryptoAmount =
         (loan.loan_amount_usd - loanCoin.amount_usd.toNumber()) /
         currencyRatesShort[loanCoin.short.toLowerCase()];
@@ -81,7 +81,7 @@ function calculateAdditionalPayment(
         Number(loan.margin_call.margin_call_usd_amount) -
         loanCoin.amount_usd.toNumber();
       amountUsd = Number(loan.margin_call.margin_call_usd_amount);
-      color = !hasEnough ? STYLES.COLORS.RED : STYLES.COLORS.MEDIUM_GRAY;
+      color = !hasEnough ? COLOR_KEYS.NEGATIVE_STATE : COLOR_KEYS.PARAGRAPH;
     }
   }
 
@@ -102,7 +102,7 @@ function calculateAdditionalPayment(
       isAllowed = loanCoin.amount_usd.isGreaterThanOrEqualTo(
         loan.monthly_payment
       );
-      color = hasEnough ? STYLES.COLORS.MEDIUM_GRAY : STYLES.COLORS.RED;
+      color = hasEnough ? COLOR_KEYS.PARAGRAPH : COLOR_KEYS.NEGATIVE_STATE;
     }
     if (cardType === COIN_CARD_TYPE.COLLATERAL_COIN_CARD) {
       cryptoAmount = formatter.crypto(
@@ -117,8 +117,8 @@ function calculateAdditionalPayment(
       isAllowed = additionalCoin.amount_usd >= collateralAmount;
       color =
         additionalCoin.amount_usd < collateralAmount
-          ? STYLES.COLORS.RED
-          : STYLES.COLORS.MEDIUM_GRAY;
+          ? COLOR_KEYS.NEGATIVE_STATE
+          : COLOR_KEYS.PARAGRAPH;
       if (currency) {
         value =
           (formData.loanAmount * 2 - additionalCoin.amount_usd) /
@@ -140,7 +140,7 @@ function calculateAdditionalPayment(
     collateralAmount: collateralAmount || 0,
     isAllowed,
     cryptoAmount: cryptoAmount || 0,
-    color: color || STYLES.COLORS.CELSIUS_BLUE,
+    color: color || COLOR_KEYS.PRIMARY_BUTTON,
   };
 }
 

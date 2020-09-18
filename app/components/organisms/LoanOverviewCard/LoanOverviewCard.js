@@ -143,13 +143,13 @@ class LoanOverviewCard extends Component {
               <View style={style.status}>
                 <Icon
                   name={"TransactionLoan"}
-                  fill={loan.uiProps.color}
+                  fill={getColor(loan.uiProps.color)}
                   width={"25"}
                   height={"25"}
                 />
                 <CelText
                   type={"H5"}
-                  color={loan.uiProps.color}
+                  color={getColor(loan.uiProps.color)}
                   margin={"0 5 0 0"}
                 >
                   {loan.uiProps.displayText}
@@ -234,7 +234,7 @@ class LoanOverviewCard extends Component {
           {loan.status === LOAN_STATUS.PENDING && (
             <Card
               size={"twoThirds"}
-              color={style.card.color}
+              color={getColor(COLOR_KEYS.BACKGROUND)}
               margin={"20 20 0 20"}
             >
               <CelText type={"H7"}>
@@ -261,16 +261,14 @@ class LoanOverviewCard extends Component {
                 margin={"5 0 5 0"}
                 weight={"300"}
                 type={"H5"}
-                color={COLOR_KEYS.NEGATIVE_STATE}
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
               >
                 {`LTV: ${Math.round(loan.current_ltv)}%`}
               </CelText>
               <CelButton
                 size={"small"}
                 basic
-                textSize={"H6"}
                 color={"red"}
-                textColor={"red"}
                 onPress={() =>
                   navigateTo("SingleMarginCallScreen", { id: loan.id })
                 }
@@ -334,7 +332,7 @@ class LoanOverviewCard extends Component {
               </View>
               <View>
                 <Card
-                  color={style.card.color}
+                  color={getColor(COLOR_KEYS.BACKGROUND)}
                   padding={"5 5 5 5"}
                   size={"twoThirds"}
                   styles={{ alignSelf: "center" }}
@@ -361,7 +359,7 @@ class LoanOverviewCard extends Component {
                     type={"H6"}
                     weight={"400"}
                     align={"left"}
-                    color={COLOR_KEYS.PRIMARY_BUTTON}
+                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                   >
                     Change payment type
                   </CelText>
@@ -441,7 +439,7 @@ class LoanOverviewCard extends Component {
 
         {loan.canPrepayInterest && (
           <Card close>
-            <CelText weight="500">
+            <CelText margin={"20 0 5 0"} weight="500">
               Did you know you can prepay loan interest?
             </CelText>
 

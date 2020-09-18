@@ -14,8 +14,10 @@ import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
 import AdditionalAmountCard from "../../molecules/AdditionalAmountCard/AdditionalAmountCard";
-import STYLES from "../../../constants/STYLES";
 import loanPaymentUtil from "../../../utils/loanPayment-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -36,9 +38,9 @@ class InterestReminderModal extends Component {
     const { navigateTo, activeLoan, loanAlerts } = this.props;
     if (hasEnough) {
       if (loanAlerts.length > 1)
-        return navigateTo("InterestPaymentOverviewScreen");
+        return navigateTo(SCREENS.INTEREST_PAYMENT_OVERVIEW);
 
-      return navigateTo("ChoosePaymentMethod", {
+      return navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
         reason: LOAN_PAYMENT_REASONS.INTEREST,
         id: activeLoan.id,
       });
@@ -116,7 +118,7 @@ class InterestReminderModal extends Component {
             >
               <CelText
                 type={"H6"}
-                color={STYLES.COLORS.CELSIUS_BLUE}
+                color={getColor(COLOR_KEYS.HEADLINE)}
               >{`Active Loan - #${activeLoan.id}`}</CelText>
               <CelText type={"H6"}>{`Interest Owed: ${formatter.fiat(
                 activeLoan.installments_to_be_paid.total,

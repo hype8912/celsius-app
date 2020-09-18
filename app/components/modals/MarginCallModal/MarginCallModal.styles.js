@@ -1,6 +1,5 @@
 // import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -21,17 +20,8 @@ const base = {
 };
 
 const themed = {
-  light: {
-    background: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
-
-  dark: {
-    background: {
-      backgroundColor: STYLES.COLORS.DARK_SECONDARY_BUTTON_GRAY,
-    },
-  },
+  light: {},
+  dark: {},
   celsius: {},
 };
 

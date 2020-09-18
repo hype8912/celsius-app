@@ -13,6 +13,7 @@ import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import formatter from "../../../utils/formatter";
 import STYLES from "../../../constants/STYLES";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -49,11 +50,13 @@ class ConfirmPrepaymentModal extends Component {
   };
 
   render() {
-    const { modalData } = this.props;
+    const { modalData, actions } = this.props;
     const { isLoading } = this.state;
     const style = ConfirmPrepaymentModalStyle();
 
     if (!modalData) return null;
+    if (modalData.coin === "USD")
+      return actions.navigateTo(SCREENS.WIRING_BANK_INFORMATION);
     const content = this.renderContent(modalData.loanId);
 
     const buttonStyle =

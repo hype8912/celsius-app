@@ -9,10 +9,8 @@ import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import Separator from "../../atoms/Separator/Separator";
-// import { COLOR_KEYS } from "../../../constants/COLORS";
-// import { SCREENS } from "../../../constants/SCREENS";
 
 class CollateralCoinCard extends Component {
   static propTypes = {
@@ -68,11 +66,11 @@ class CollateralCoinCard extends Component {
                 <CelText type={"H3"} weight={"500"}>
                   {currency.displayName}
                 </CelText>
-                <CelText weight={"300"} style={{ color }}>
+                <CelText weight={"300"} style={{ color: getColor(color) }}>
                   {cryptoAmount}
-                  <CelText weight={"300"} style={{ color }}>
+                  <CelText weight={"300"} style={{ color: getColor(color) }}>
                     {" | "}
-                    <CelText weight={"300"} style={{ color }}>
+                    <CelText weight={"300"} style={{ color: getColor(color) }}>
                       {formatter.fiat(amountUsd, "USD")}
                     </CelText>
                   </CelText>
@@ -81,15 +79,9 @@ class CollateralCoinCard extends Component {
               {!isAllowed ? (
                 <View>
                   <Separator size={2} margin={"10 0 5 0"} />
-                  <View>
-                    <CelText weight={"300"} align="left">
-                      Additional
-                      <CelText weight={"500"} align="left">
-                        {` ${additionalCryptoAmount} `}
-                        <CelText weight={"300"} align="left">
-                          {`${additionalInfoExplanation}`}
-                        </CelText>
-                      </CelText>
+                  <View style={{ flexWrap: "wrap" }}>
+                    <CelText weight={"500"} align="left">
+                      {`${additionalCryptoAmount} ${additionalInfoExplanation}`}
                     </CelText>
                   </View>
                 </View>

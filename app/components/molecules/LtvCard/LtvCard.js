@@ -8,7 +8,8 @@ import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
 import Separator from "../../atoms/Separator/Separator";
 import formatter from "../../../utils/formatter";
-import STYLES from "../../../constants/STYLES";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class LtvCard extends Component {
   static propTypes = {
@@ -43,6 +44,7 @@ class LtvCard extends Component {
     ];
 
     return content.map((c, i) => {
+      const color = i === 0 ? COLOR_KEYS.NEGATIVE_STATE : COLOR_KEYS.PARAGRAPH;
       return (
         <View>
           <View
@@ -52,18 +54,10 @@ class LtvCard extends Component {
               justifyContent: "space-between",
             }}
           >
-            <CelText
-              color={i === 0 ? STYLES.COLORS.RED : STYLES.COLORS.DARK_GRAY}
-              weight={"500"}
-              type={"H5"}
-            >
+            <CelText color={getColor(color)} weight={"500"} type={"H5"}>
               {c.title}
             </CelText>
-            <CelText
-              color={i === 0 ? STYLES.COLORS.RED : STYLES.COLORS.DARK_GRAY}
-              weight={"500"}
-              type={"H5"}
-            >
+            <CelText color={getColor(color)} weight={"500"} type={"H5"}>
               {c.value}
             </CelText>
           </View>
@@ -77,7 +71,6 @@ class LtvCard extends Component {
     const style = LtvCardStyle();
     const { loan } = this.props;
     const { info } = this.state;
-
     return (
       <Card
         onPress={() => this.setState({ info: !info })}
@@ -95,11 +88,10 @@ class LtvCard extends Component {
             name={info ? "IconChevronDown" : "IconChevronUp"}
             width={15}
             height={15}
-            color={STYLES.COLORS.LIGHT_GRAY}
           />
         </View>
         {info && this.renderContent(loan)}
-        <Card color={style.card.color}>
+        <Card color={getColor(COLOR_KEYS.BACKGROUND)}>
           <CelText>
             If the Margin Call is not resolved, collateral may be deducted from
             your wallet or a portion of your collateral may be liquidated.

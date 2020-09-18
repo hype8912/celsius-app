@@ -11,10 +11,10 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import formatter from "../../../utils/formatter";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import { LOAN_ALERTS, LOAN_PAYMENT_REASONS } from "../../../constants/UI";
-import STYLES from "../../../constants/STYLES";
 import Separator from "../../atoms/Separator/Separator";
 import loanPaymentUtil from "../../../utils/loanPayment-util";
 import AdditionalAmountCard from "../../molecules/AdditionalAmountCard/AdditionalAmountCard";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -52,9 +52,7 @@ class InterestPaymentOverviewScreen extends Component {
           return (
             <View style={style.wrapper}>
               <View style={style.active}>
-                <CelText
-                  color={STYLES.COLORS.CELSIUS_BLUE}
-                >{`Active Loan - #${loan.id}`}</CelText>
+                <CelText>{`Active Loan - #${loan.id}`}</CelText>
                 <Separator margin={"10 0 10 0"} />
                 <CelText>{`Interest Owed: ${formatter.fiat(
                   loan.installments_to_be_paid.total,
@@ -88,7 +86,7 @@ class InterestPaymentOverviewScreen extends Component {
                 <View style={{ marginHorizontal: 10 }}>
                   <AdditionalAmountCard
                     margin={"0 0 10 0"}
-                    color={STYLES.COLORS.RED}
+                    color={COLOR_KEYS.NEGATIVE_STATE}
                     text={" additionally required"}
                     coin={payment.coin.short}
                     additionalUsd={payment.additionalUsdAmount}

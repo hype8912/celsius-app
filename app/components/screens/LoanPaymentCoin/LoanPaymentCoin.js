@@ -16,7 +16,6 @@ import {
   MODALS,
 } from "../../../constants/UI";
 import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
-import STYLES from "../../../constants/STYLES";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import { SCREENS } from "../../../constants/SCREENS";
 
@@ -148,7 +147,7 @@ class LoanPaymentCoin extends Component {
         </Card>
         <CelText margin={"20 0 0 0"}>
           Need help? Contact our{" "}
-          <CelText weight={"500"} color={STYLES.COLORS.CELSIUS_BLUE}>
+          <CelText weight={"500"} link>
             Lending Support
           </CelText>
         </CelText>

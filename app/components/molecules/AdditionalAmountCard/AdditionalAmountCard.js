@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
+import { getColor } from "../../../utils/styles-util";
 
 class AdditionalAmountCard extends Component {
   static propTypes = {
@@ -38,7 +39,7 @@ class AdditionalAmountCard extends Component {
     } = this.props;
 
     return (
-      <Card margin={margin} styles={style} color={color}>
+      <Card margin={margin} styles={style} color={getColor(color)}>
         <CelText
           color={"white"}
           align={"left"}

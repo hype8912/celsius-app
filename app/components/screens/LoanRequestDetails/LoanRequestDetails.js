@@ -43,6 +43,12 @@ class LoanRequestDetails extends Component {
     };
   };
 
+  componentDidMount() {
+    const { navigation, actions } = this.props;
+    const id = navigation.getParam("id");
+    actions.setActiveLoan(id);
+  }
+
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.activeLoan, this.props.activeLoan)) {
       this.props.navigation.setParams({
@@ -200,7 +206,6 @@ class LoanRequestDetails extends Component {
 
   render() {
     const { actions, activeLoan } = this.props;
-
     if (!activeLoan) return <LoadingScreen />;
 
     const style = LoanRequestDetailsStyle();
@@ -219,7 +224,7 @@ class LoanRequestDetails extends Component {
           <View style={style.status}>
             <Icon
               name={"TransactionLoan"}
-              fill={activeLoan.uiProps.color}
+              fill={getColor(activeLoan.uiProps.color)}
               width={"25"}
               height={"25"}
             />

@@ -109,14 +109,14 @@ class ChoosePaymentMethod extends Component {
   resolve = (reason, id, payment, cel, loan) => {
     const { actions } = this.props;
     if (Number(loan.monthly_payment) > cel.amount_usd.toNumber()) {
-      return actions.navigateTo("Deposit", {
+      return actions.navigateTo(SCREENS.DEPOSIT, {
         coin: cel.short,
         reason: LOAN_PAYMENT_REASONS.PRINCIPAL,
         amountUsd: payment.additionalUsdAmount,
         additionalCryptoAmount: payment.additionalCryptoAmount,
       });
     }
-    return actions.navigateTo("PaymentCel", { reason, id });
+    return actions.navigateTo(SCREENS.PAYMENT_CEL, { reason, id });
   };
 
   getCardProps = () => {
@@ -142,7 +142,6 @@ class ChoosePaymentMethod extends Component {
       {
         textButton: `${formatter.capitalize(pay)} with CEL`,
         explanation: `Pay up to ${celDiscount} less interest when you choose to ${pay} your monthly payment in CEL.`,
-        // onPress: () => actions.navigateTo(SCREENS.PAYMENT_CEL, { reason, id }),
         onPress: () => this.resolve(reason, id, payment, cel, loan),
         lightImage: require("../../../../assets/images/icons/cel.png"),
         darkImage: require("../../.././../assets/images/icons/cel-dark.png"),
@@ -165,11 +164,8 @@ class ChoosePaymentMethod extends Component {
         onPress: () => {
           if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
             actions.updateFormField("coin", "USD");
-            actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { id, reason });
-          } else {
-            // actions.navigateTo(SCREENS.WIRING_BANK_INFORMATION, { id, reason });
-            actions.openModal(MODALS.DOLLAR_PAYMENT_MODAL);
           }
+          actions.openModal(MODALS.DOLLAR_PAYMENT_MODAL);
         },
         lightImage: require("../../../../assets/images/icons/dollars.png"),
         darkImage: require("../../../../assets/images/icons/dollars-dark.png"),
@@ -230,10 +226,10 @@ class ChoosePaymentMethod extends Component {
   };
 
   closeModal = () => {
-    const { actions, navigation } = this.props;
-    const id = navigation.getParam("id");
+    const { actions } = this.props;
+
     actions.closeModal();
-    actions.navigateTo("WiringBankInformation", { id });
+    actions.navigateTo(SCREENS.WIRING_BANK_INFORMATION);
   };
 
   render() {
@@ -256,7 +252,6 @@ class ChoosePaymentMethod extends Component {
           ))}
           <Separator margin={"20 0 20 0"} />
           <IconButton
-            padding={"5 10 5 5"}
             right={loading ? <Spinner size={30} /> : <Automatic />}
             hideIconRight
             margin="0 0 20 0"

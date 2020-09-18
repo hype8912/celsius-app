@@ -3,20 +3,17 @@ import { connect } from "react-redux";
 import { Linking } from "react-native";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
-
-// import PaymentCelStyle from "./PaymentCel.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import {
   COIN_CARD_TYPE,
   LOAN_PAYMENT_REASONS,
-  // MODALS,
+  MODALS,
 } from "../../../constants/UI";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import TierCard from "../../organisms/TierCard/TierCard";
 import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
 import CelText from "../../atoms/CelText/CelText";
-import STYLES from "../../../constants/STYLES";
 import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
@@ -94,10 +91,7 @@ class PaymentCel extends Component {
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-        onSuccess: () => actions.payMonthlyInterest(id, "CEL"),
-      });
-      // actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
+      actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
     }
   };
 
@@ -140,7 +134,7 @@ class PaymentCel extends Component {
           <CelText
             weight={"300"}
             type={"H4"}
-            color={STYLES.COLORS.CELSIUS_BLUE}
+            link
             onPress={() => Linking.openURL("mailto:loans@celsius.network")}
           >
             {" Lending Support."}

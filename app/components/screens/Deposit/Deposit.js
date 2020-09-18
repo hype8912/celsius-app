@@ -240,7 +240,7 @@ class Deposit extends Component {
         : COLOR_KEYS.NEGATIVE_STATE;
 
     return (
-      <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+      <View style={{ margin: 20 }}>
         <AdditionalAmountCard
           color={color}
           additionalUsd={usd}

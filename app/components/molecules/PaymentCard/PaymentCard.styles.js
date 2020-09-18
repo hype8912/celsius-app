@@ -1,7 +1,5 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
-
-// import { FONT_SCALE } from "../../../config/constants/style";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -25,7 +23,7 @@ const base = {
     height: 40,
   },
   textContainer: {
-    marginVertical: 5,
+    marginTop: 5,
     flex: 0.8,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -35,7 +33,7 @@ const base = {
     paddingVertical: 2,
     paddingHorizontal: 5,
     borderRadius: 5,
-    backgroundColor: STYLES.COLORS.RED,
+    backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   buttonsWrapper: {
     position: "absolute",
@@ -44,28 +42,15 @@ const base = {
     right: 0,
     height: 50,
   },
+  cardStyle: {
+    color: COLOR_KEYS.CARDS,
+  },
 };
 
 const themed = {
-  light: {
-    card: { color: "#F3F3F3" },
-    cardStyle: {
-      color: STYLES.COLORS.WHITE_OPACITY7,
-    },
-    background: {
-      backgroundColor: STYLES.COLORS.LIGHT_GRAY,
-    },
-  },
+  light: {},
 
-  dark: {
-    card: { color: STYLES.COLORS.MEDIUM_GRAY },
-    cardStyle: {
-      color: STYLES.COLORS.DARK_GRAY_OPACITY,
-    },
-    background: {
-      backgroundColor: STYLES.COLORS.DARK_SECONDARY_BUTTON_GRAY,
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };

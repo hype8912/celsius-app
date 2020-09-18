@@ -28,7 +28,7 @@ function presentTime(time, shouldCalculate = false) {
   let minutes = Math.abs(moment.duration(diff).minutes());
   if (shouldCalculate) {
     hours = 23 - hours;
-    minutes = 60 - minutes;
+    minutes = 59 - minutes;
   }
   if (Number(minutes) < 10) minutes = `0${minutes}`;
   if (Number(hours) < 10) hours = `0${hours}`;

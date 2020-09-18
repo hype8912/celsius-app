@@ -106,7 +106,6 @@ class InterestPaymentSettings extends Component {
           </Card>
           <IconButton
             margin={"20 0 0 0"}
-            padding={"5 10 5 5"}
             right={loading ? <Spinner size={30} /> : <Switcher />}
             hideIconRight
           >

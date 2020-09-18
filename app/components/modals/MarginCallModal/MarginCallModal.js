@@ -9,10 +9,12 @@ import { LOAN_ALERTS, MODALS } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import Separator from "../../atoms/Separator/Separator";
 import * as appActions from "../../../redux/actions";
 import { presentTime } from "../../../utils/ui-util";
+import { SCREENS } from "../../../constants/SCREENS";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -25,9 +27,13 @@ class MarginCallModal extends Component {
   cure = (multipleAlerts, loansOverview) => {
     const { actions } = this.props;
     if (multipleAlerts) {
-      actions.navigateTo("MarginCallOverviewScreen", { allLoans: true });
+      actions.navigateTo(SCREENS.MARGIN_CALL_OVERVIEW_SCREEN, {
+        allLoans: true,
+      });
     } else {
-      actions.navigateTo("SingleMarginCallScreen", { id: loansOverview[0].id });
+      actions.navigateTo(SCREENS.SINGLE_MARGIN_CALL_SCREEN, {
+        id: loansOverview[0].id,
+      });
     }
     actions.closeModal();
   };
@@ -69,24 +75,20 @@ class MarginCallModal extends Component {
             return (
               <View>
                 <View style={style.loanToValue}>
-                  <CelText
-                    weight={"500"}
-                    type={"H5"}
-                    color={STYLES.COLORS.CELSIUS_BLUE}
-                  >
+                  <CelText weight={"500"} type={"H5"}>
                     {`Loan - #${loan.id}`}
                   </CelText>
                   <CelText weight={"500"} type={"H5"}>
                     Current LTV:{" "}
-                    <CelText color={STYLES.COLORS.RED}>{`${Math.round(
-                      loan.current_ltv
-                    )}%`}</CelText>
+                    <CelText
+                      color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
+                    >{`${Math.round(loan.current_ltv)}%`}</CelText>
                   </CelText>
                 </View>
                 <Separator margin={"5 0 0 0"} />
 
                 {!multipleAlerts && time.days < 1 && (
-                  <Card color={style.background.backgroundColor}>
+                  <Card color={getColor(COLOR_KEYS.BACKGROUND)}>
                     <CelText align={"left"} weight={"500"} type={"H6"}>
                       Time remaining to resolve
                     </CelText>

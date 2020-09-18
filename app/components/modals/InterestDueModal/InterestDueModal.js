@@ -20,7 +20,8 @@ import { SCREENS } from "../../../constants/SCREENS";
 // import CelButton from "../../atoms/CelButton/CelButton";
 import LoanCard from "../../molecules/LoanCard/LoanCard";
 import Separator from "../../atoms/Separator/Separator";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -41,7 +42,7 @@ class InterestDueModal extends Component {
   proceedWithInterestPayment = multipleAlerts => {
     const { activeLoan, navigateTo } = this.props;
     if (multipleAlerts) {
-      return navigateTo("InterestPaymentOverviewScreen");
+      return navigateTo(SCREENS.INTEREST_PAYMENT_OVERVIEW);
     }
     return navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
       reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
@@ -120,7 +121,7 @@ class InterestDueModal extends Component {
                   {i !== 0 && <Separator margin={"10 0 10 0"} />}
                   <CelText
                     type={"H6"}
-                    color={STYLES.COLORS.CELSIUS_BLUE}
+                    color={getColor(COLOR_KEYS.HEADLINE)}
                   >{`Active Loan - #${loan.id}`}</CelText>
                   <CelText type={"H6"}>{`Interest Due: ${formatter.usd(
                     loan.installments_to_be_paid.total

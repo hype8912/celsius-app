@@ -2,7 +2,6 @@ import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -54,9 +53,6 @@ const base = {
   },
   additionalInterestStyle: { marginBottom: 8 },
   choose: { opacity: 0.7 },
-  card: {
-    color: COLOR_KEYS.BACKGROUND,
-  },
 };
 
 const themed = {

@@ -149,7 +149,7 @@ class LoanAlertsModalWrapper extends Component {
     const { actions } = this.props;
     const { activeAlert } = this.state;
 
-    // if no money reminder 3 & 7 days, if you have money and manual payment reminder 3 days
+    // if no money reminder 3 & 7 days. If you have money and manual payment set, reminder in 3 days
     const payment = loanPaymentUtil.calculateAdditionalPayment(loan);
     const isSameDay = loanPaymentUtil.isSameInterestDay(loan);
     const hasNoMoney =
@@ -190,8 +190,8 @@ class LoanAlertsModalWrapper extends Component {
     switch (activeAlert.type) {
       case LOAN_ALERTS.INTEREST_ALERT:
         return this.renderInterestModal(loan);
-      // case LOAN_ALERTS.PRINCIPAL_ALERT:
-      //   return this.renderPrincipalModal(loan);
+      case LOAN_ALERTS.PRINCIPAL_ALERT:
+        return this.renderPrincipalModal(loan);
       case LOAN_ALERTS.MARGIN_CALL_ALERT:
         return this.renderMarginCallModal(loan);
     }

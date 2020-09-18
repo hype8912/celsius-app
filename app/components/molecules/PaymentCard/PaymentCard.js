@@ -10,7 +10,7 @@ import {
   MODALS,
 } from "../../../constants/UI";
 
-import { getTheme } from "../../../utils/styles-util";
+import { getColor, getTheme } from "../../../utils/styles-util";
 import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
@@ -21,9 +21,9 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import CollateralCoinCard from "../CollateralCoinCard/CollateralCoinCard";
 import AdditionalAmountCard from "../AdditionalAmountCard/AdditionalAmountCard";
 import loanPaymentUtil from "../../../utils/loanPayment-util";
-import STYLES from "../../../constants/STYLES";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import { presentTime } from "../../../utils/ui-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -239,7 +239,6 @@ class PaymentCard extends Component {
   };
 
   marginCallOptions = () => {
-    const style = PaymentCardStyle();
     const { handleSelectCoin, coin, loan, actions } = this.props;
     const {
       additionalCryptoAmount,
@@ -249,7 +248,7 @@ class PaymentCard extends Component {
 
     return (
       <View>
-        <Card margin={"0 0 10 0"} color={style.card.color}>
+        <Card margin={"0 0 10 0"} color={getColor(COLOR_KEYS.BACKGROUND)}>
           <CelText weight={"300"}>
             Note: These are current estimates. Final values fixed when Margin
             Call is resolved.
@@ -333,7 +332,7 @@ class PaymentCard extends Component {
           amountUsd={amountUsd}
           additionalCryptoAmount={additionalCryptoAmount}
           additionalInfoExplanation={additionalInfoExplanation}
-          cardColor={isAllowed ? null : style.cardStyle.color}
+          cardColor={isAllowed ? null : style.cardStyle}
           color={color}
           coin={coin}
           currency={currency}
@@ -366,164 +365,171 @@ class PaymentCard extends Component {
           onPress={
             isAllowed && hasEnough ? () => handleSelectCoin(coin.short) : null
           }
-          color={isAllowed ? null : style.cardStyle.color}
+          color={isAllowed ? null : style.cardStyle}
           opacity={isLoading ? 0.7 : 1}
         >
-          <View>
-            {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && isOverview && (
-              <View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  {loanNumber ? (
-                    <CelText>{`Margin Call #${loanNumber}`}</CelText>
-                  ) : null}
-                  <CelText
-                    weight={"500"}
-                    type={"H5"}
-                    color={STYLES.COLORS.CELSIUS_BLUE}
-                  >
-                    {`Loan - #${loan.id}`}
-                  </CelText>
-                </View>
-                <Separator margin={"10 0 10 0"} />
+          {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && isOverview && (
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                {loanNumber ? (
+                  <CelText>{`Margin Call #${loanNumber}`}</CelText>
+                ) : null}
+                <CelText>{`Loan - #${loan.id}`}</CelText>
               </View>
-            )}
-            <CelText
-              weight={"300"}
-              type={"H6"}
-              align={"left"}
-              margin={"0 0 10 0"}
-            >
-              {this.getTypeOfPaymentTitle(reason)}
-            </CelText>
-            <View
-              key={coin.name}
-              style={[
-                style.mainContainer,
-                { marginBottom: isOverview ? 50 : 10 },
-              ]}
-            >
-              <View style={style.coinInfo}>
-                <View style={style.iconContainer}>
-                  <CoinIcon
-                    customStyles={[
-                      style.coinImage,
-                      { opacity: isAllowed ? 1 : 0.4 },
-                    ]}
-                    theme={theme}
-                    url={currency.image_url}
-                    coinShort={currency.short}
-                  />
-                </View>
-                {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
-                  <View>
-                    <CelText weight={"600"} align="left" type="H3">
-                      {`${formatter.crypto(
-                        Number(loan.monthly_payment) /
-                          currency.market_quotes_usd.price,
-                        currency.short
-                      )}`}
-                    </CelText>
-                    <CelText weight={"300"} align="left">
-                      {`$ ${loan.monthly_payment} USD`}
-                    </CelText>
-                  </View>
-                ) : (
-                  <View>
-                    <CelText weight={"600"} align="left" type="H3">
-                      {formatter.fiat(amountUsd, "USD")}
-                    </CelText>
-                    <CelText weight={"300"} align="left" type="H5">
-                      {formatter.crypto(collateralAmount, coin.short, {
-                        precision: 2,
-                      })}
-                    </CelText>
-                  </View>
-                )}
+              <Separator margin={"10 0 10 0"} />
+            </View>
+          )}
+          <CelText
+            weight={"300"}
+            type={"H6"}
+            align={"left"}
+            margin={"0 0 10 0"}
+          >
+            {this.getTypeOfPaymentTitle(reason)}
+          </CelText>
+          <View
+            key={coin.name}
+            style={[
+              style.mainContainer,
+              { marginBottom: isOverview ? 50 : 10 },
+            ]}
+          >
+            <View style={style.coinInfo}>
+              <View style={style.iconContainer}>
+                <CoinIcon
+                  customStyles={[
+                    style.coinImage,
+                    { opacity: isAllowed ? 1 : 0.4 },
+                  ]}
+                  theme={theme}
+                  url={currency.image_url}
+                  coinShort={currency.short}
+                />
               </View>
-
-              <Separator margin={"10 0 0 0"} />
-
               {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
-                <View style={[{ flexWrap: "wrap" }, style.textContainer]}>
-                  <CelText weight={"300"} align="left">
-                    In wallet:{" "}
+                <View>
+                  <CelText weight={"600"} align="left" type="H3">
+                    {`${formatter.crypto(
+                      Number(loan.monthly_payment) /
+                        currency.market_quotes_usd.price,
+                      currency.short
+                    )}`}
                   </CelText>
-                  <View>
-                    <CelText weight={"300"} align="right" style={{ color }}>
-                      {formatter.crypto(cryptoAmount, coin.short, {
-                        precision: 2,
-                      })}
-                      <CelText weight={"300"} align="right" style={{ color }}>
-                        {" | "}
-                        <CelText weight={"300"} align="right" style={{ color }}>
-                          {formatter.fiat(amountUsd, "USD")}
-                        </CelText>
-                      </CelText>
-                    </CelText>
-                  </View>
+                  <CelText weight={"300"} align="left">
+                    {`$ ${loan.monthly_payment} USD`}
+                  </CelText>
                 </View>
               ) : (
                 <View>
-                  {!hasEnough && (
-                    <View>
-                      <Separator margin={"10 0 10 0"} />
-                      <CelText weight={"300"} type={"H6"}>
-                        Current available balance in wallet:
-                      </CelText>
-                      <CelText color={color} margin={"5 0 0 0"} type={"H6"}>
-                        {formatter.crypto(cryptoAmount, coin.short, {
-                          precision: 2,
-                        })}
-                      </CelText>
-                      <AdditionalAmountCard
-                        margin={"10 0 10 0"}
-                        additionalCryptoAmount={additionalCryptoAmount}
-                        color={color}
-                        additionalUsd={additionalUsdAmount}
-                        text={additionalInfoExplanation}
-                        coin={coin.short}
-                      />
-                    </View>
-                  )}
+                  <CelText weight={"600"} align="left" type="H3">
+                    {formatter.fiat(amountUsd, "USD")}
+                  </CelText>
+                  <CelText weight={"300"} align="left" type="H5">
+                    {formatter.crypto(collateralAmount, coin.short, {
+                      precision: 2,
+                    })}
+                  </CelText>
                 </View>
               )}
-
-              {amountUsd < loan.monthly_payment ? (
-                <View>
-                  {this.renderAdditionalAmountRequired()}
-                  {this.renderDepositMore()}
-                </View>
-              ) : null}
-              {isOverview &&
-                loan &&
-                loan.margin_call &&
-                type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
-                  <Card margin={"10 0 0 0"} color={style.card.color}>
-                    <CelText align={"left"} type={"H6"}>
-                      Time remaining to resolve Margin Call
-                    </CelText>
-                    <CelText align={"left"} weight={"500"} type={"H3"}>
-                      {time.days >= 1
-                        ? `00h 00m`
-                        : `${time.hours}h ${time.minutes}m`}
-                    </CelText>
-                    {time.days >= 1 && (
-                      <Card color={STYLES.COLORS.RED}>
-                        <CelText weight={"300"} type={"H6"} color={"white"}>
-                          Your loan is now in default and you are at risk of
-                          collateral liquidation. We advise you to contact your
-                          loan manager now.
-                        </CelText>
-                      </Card>
-                    )}
-                  </Card>
-                )}
             </View>
+            <Separator margin={"10 0 10 0"} />
+            {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
+              <View style={[{ flexWrap: "wrap" }, style.textContainer]}>
+                <CelText weight={"300"} align="left">
+                  In wallet:{" "}
+                </CelText>
+                <View>
+                  <CelText
+                    weight={"300"}
+                    align="right"
+                    style={{ color: getColor(color) }}
+                  >
+                    {formatter.crypto(cryptoAmount, coin.short, {
+                      precision: 2,
+                    })}
+                    <CelText
+                      weight={"300"}
+                      align="right"
+                      style={{ color: getColor(color) }}
+                    >
+                      {" | "}
+                      <CelText
+                        weight={"300"}
+                        align="right"
+                        style={{ color: getColor(color) }}
+                      >
+                        {formatter.fiat(amountUsd, "USD")}
+                      </CelText>
+                    </CelText>
+                  </CelText>
+                </View>
+              </View>
+            ) : (
+              <View>
+                {!hasEnough && (
+                  <View>
+                    <CelText weight={"300"} type={"H6"}>
+                      Current available balance in wallet:
+                    </CelText>
+                    <CelText
+                      color={getColor(color)}
+                      margin={"5 0 0 0"}
+                      type={"H6"}
+                    >
+                      {formatter.crypto(cryptoAmount, coin.short, {
+                        precision: 2,
+                      })}
+                    </CelText>
+                    <AdditionalAmountCard
+                      margin={"10 0 10 0"}
+                      additionalCryptoAmount={additionalCryptoAmount}
+                      color={color}
+                      additionalUsd={additionalUsdAmount}
+                      text={additionalInfoExplanation}
+                      coin={coin.short}
+                    />
+                  </View>
+                )}
+              </View>
+            )}
+            {amountUsd < loan.monthly_payment ? (
+              <View>
+                {this.renderAdditionalAmountRequired()}
+                {this.renderDepositMore()}
+              </View>
+            ) : null}
+            {isOverview &&
+              loan &&
+              loan.margin_call &&
+              type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
+                <Card
+                  margin={"10 0 0 0"}
+                  color={getColor(COLOR_KEYS.BACKGROUND)}
+                >
+                  <CelText align={"left"} type={"H6"}>
+                    Time remaining to resolve Margin Call
+                  </CelText>
+                  <CelText align={"left"} weight={"500"} type={"H3"}>
+                    {time.days >= 1
+                      ? `00h 00m`
+                      : `${time.hours}h ${time.minutes}m`}
+                  </CelText>
+                  {time.days >= 1 && (
+                    <Card color={getColor(color)}>
+                      <CelText weight={"300"} type={"H6"} color={"white"}>
+                        Your loan is now in default and you are at risk of
+                        collateral liquidation. We advise you to contact your
+                        loan manager now.
+                      </CelText>
+                    </Card>
+                  )}
+                </Card>
+              )}
           </View>
 
           {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD &&

@@ -44,11 +44,11 @@ class TransactionsIntersection extends Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-    const hideBack = navigation.getParam("hideBack");
+    const hide = navigation.getParam("hideBack");
     return {
       title: "Transaction Details",
       right: "profile",
-      hideBack,
+      hideBack: hide,
     };
   };
 

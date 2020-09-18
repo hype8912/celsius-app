@@ -9,8 +9,8 @@ import {
   MODALS,
 } from "../../../../constants/UI";
 import * as appActions from "../../../../redux/actions";
-// import { SCREENS } from "../../../../constants/SCREENS";
 import loanPaymentUtil from "../../../../utils/loanPayment-util";
+import { SCREENS } from "../../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -28,7 +28,7 @@ class LoanAlertsDepositCoinsModal extends Component {
       loan,
       COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD
     );
-    actions.navigateTo("Deposit", {
+    actions.navigateTo(SCREENS.DEPOSIT, {
       coin: loan.coin_loan_asset,
       reason: LOAN_PAYMENT_REASONS.PRINCIPAL,
       amountUsd: payment.additionalUsdAmount,

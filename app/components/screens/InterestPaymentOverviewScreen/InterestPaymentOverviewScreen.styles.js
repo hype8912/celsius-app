@@ -1,13 +1,13 @@
 // import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
     flex: 1,
   },
   wrapper: {
-    backgroundColor: "white",
+    backgroundColor: COLOR_KEYS.CARDS,
     marginVertical: 10,
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
@@ -17,7 +17,7 @@ const base = {
     borderRadius: 5,
     padding: 10,
     margin: 10,
-    backgroundColor: STYLES.COLORS.LIGHT_GRAY,
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   period: {
     flexDirection: "row",

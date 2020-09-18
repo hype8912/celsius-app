@@ -58,7 +58,7 @@ class LoanAlertsPayoutPrincipalModal extends Component {
         this.setState({
           isLoadingExtend: true,
         });
-        await actions.navigateTo("ExtendLoanScreen", {
+        await actions.navigateTo(SCREENS.EXTEND_LOAN, {
           id: loan.id,
         });
         this.setState({
