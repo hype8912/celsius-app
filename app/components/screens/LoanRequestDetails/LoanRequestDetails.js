@@ -44,13 +44,12 @@ class LoanRequestDetails extends Component {
     };
   };
 
-  constructor(props) {
-    super(props);
-    const { navigation, actions } = props;
+  componentDidMount = async () => {
+    const { navigation, actions } = this.props;
     const id = navigation.getParam("id");
     actions.setActiveLoan(id);
-    actions.getLoanById(id);
-  }
+    await actions.getLoanById(id);
+  };
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.activeLoan, this.props.activeLoan)) {
@@ -211,7 +210,7 @@ class LoanRequestDetails extends Component {
 
   render() {
     const { actions, activeLoan } = this.props;
-    if (!activeLoan) return <LoadingScreen />;
+    if (!activeLoan || !activeLoan.uiProps) return <LoadingScreen />;
 
     const style = LoanRequestDetailsStyle();
 
