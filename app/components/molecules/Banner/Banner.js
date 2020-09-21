@@ -69,9 +69,9 @@ class Banner extends Component {
           </TouchableOpacity>
         )}
         <View style={style.circleWrapper}>
-          <View style={style.halfCircle}>
-            <Image style={style.image} source={image} />
-          </View>
+          <Image style={style.image} source={image} />
+
+          <View style={style.halfCircle} />
         </View>
         <View style={style.textAlignment}>
           <CelText

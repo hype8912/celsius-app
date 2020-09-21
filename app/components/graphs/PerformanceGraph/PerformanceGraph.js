@@ -223,12 +223,7 @@ class PerformanceGraph extends React.Component {
               </View>
             </View>
             <View ref={this.cursor.dashedLine}>
-              <Separator
-                opacity={1}
-                color={styles.labelBoxBackgroundColor}
-                size={1}
-                vertical
-              />
+              <Separator opacity={1} size={1} vertical />
             </View>
           </View>
           <Animated.ScrollView

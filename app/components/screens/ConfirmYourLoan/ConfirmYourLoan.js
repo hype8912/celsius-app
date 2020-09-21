@@ -12,7 +12,6 @@ import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import { LOAN_TYPES } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import apiUtil from "../../../utils/api-util";
@@ -387,7 +386,7 @@ class ConfirmYourLoan extends Component {
                 </View>
               </View>
               {/* // TODO: missing COLOR_KEY */}
-              <Card noBorder color={STYLES.COLORS.WHITE_OPACITY1}>
+              <Card noBorder color={getColor(COLOR_KEYS.CEL_REWARD_BOX)}>
                 <View style={style.horizontalCardContainer}>
                   <View style={style.horizontalCardItem}>
                     <CelText
@@ -446,7 +445,7 @@ class ConfirmYourLoan extends Component {
                 </View>
               </Card>
               {/* // TODO: missing COLOR_KEY */}
-              <Card noBorder color={STYLES.COLORS.WHITE_OPACITY1}>
+              <Card noBorder color={getColor(COLOR_KEYS.CEL_REWARD_BOX)}>
                 <View style={style.horizontalCardContainer}>
                   <View style={style.horizontalCardItem}>
                     <CelText

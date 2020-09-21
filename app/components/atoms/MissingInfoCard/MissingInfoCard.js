@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import { Linking } from "react-native";
 
 import Card from "../Card/Card";
-import STYLES from "../../../constants/STYLES";
-import { hasSSN, hasAddress, hasPassedKYC } from "../../../utils/user-util/user-util";
+import {
+  hasSSN,
+  hasAddress,
+  hasPassedKYC,
+} from "../../../utils/user-util/user-util";
 import CelText from "../CelText/CelText";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -60,7 +63,7 @@ const MissingInfoCard = props => {
             {body}
             <CelText
               onPress={onPress}
-              color={STYLES.COLORS.WHITE_OPACITY7} // TODO: missing COLOR_KEYS
+              color={getColor(COLOR_KEYS.DOT_INDICATOR_ACTIVE)}
               type="H7"
               margin="3 0 0 0"
             >
@@ -75,7 +78,7 @@ const MissingInfoCard = props => {
           </CelText>
           <CelText
             onPress={onPress}
-            color={STYLES.COLORS.WHITE_OPACITY7} // TODO: missing COLOR_KEYS
+            color={getColor(COLOR_KEYS.DOT_INDICATOR_ACTIVE)}
             type="H7"
             margin="3 0 0 0"
           >
