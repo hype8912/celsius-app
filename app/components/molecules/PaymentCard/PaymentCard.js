@@ -471,20 +471,20 @@ class PaymentCard extends Component {
               </View>
             ) : (
               <View>
-                {!hasEnough && (
-                  <View>
-                    <CelText weight={"300"} type={"H6"}>
-                      Current available balance in wallet:
-                    </CelText>
-                    <CelText
-                      color={getColor(color)}
-                      margin={"5 0 0 0"}
-                      type={"H6"}
-                    >
-                      {formatter.crypto(cryptoAmount, coin.short, {
-                        precision: 2,
-                      })}
-                    </CelText>
+                <View>
+                  <CelText weight={"300"} type={"H6"}>
+                    Current available balance in wallet:
+                  </CelText>
+                  <CelText
+                    color={getColor(color)}
+                    margin={"5 0 0 0"}
+                    type={"H6"}
+                  >
+                    {formatter.crypto(cryptoAmount, coin.short, {
+                      precision: 2,
+                    })}
+                  </CelText>
+                  {!hasEnough && (
                     <AdditionalAmountCard
                       margin={"10 0 10 0"}
                       additionalCryptoAmount={additionalCryptoAmount}
@@ -493,8 +493,8 @@ class PaymentCard extends Component {
                       text={additionalInfoExplanation}
                       coin={coin.short}
                     />
-                  </View>
-                )}
+                  )}
+                </View>
               </View>
             )}
             {amountUsd < loan.monthly_payment ? (
