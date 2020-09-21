@@ -3,7 +3,6 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const cursorRadius = heightPercentageToDP("1.06%");
@@ -72,27 +71,14 @@ const base = {
   cursorBackgroundColor: {
     backgroundColor: COLOR_KEYS.CARDS,
   },
-  labelBoxBackgroundColor: {},
 };
 
 const themed = {
-  light: {
-    labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
-    },
-  },
+  light: {},
 
-  dark: {
-    labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_LABEL, // TODO: missing COLOR_KEY
-    },
-  },
+  dark: {},
 
-  unicorn: {
-    labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
-    },
-  },
+  unicorn: {},
 };
 
 const GraphStyle = () => getThemedStyle(base, themed);

@@ -5,7 +5,6 @@ import NoWithdrawalAddressCardStyle from "./NoWithdrawalAddressCard.styles";
 import Card from "../Card/Card";
 import CelText from "../CelText/CelText";
 import CoinIcon from "../CoinIcon/CoinIcon";
-import STYLES from "../../../constants/STYLES";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -42,13 +41,10 @@ const NoWithdrawalAddressCard = ({
           </View>
           <CelText
             margin="5 0 0 0"
+            style={disabledPress && { opacity: 0.5 }}
             type="H6"
             weight="400"
-            color={
-              !disabledPress
-                ? getColor(COLOR_KEYS.PRIMARY_BUTTON)
-                : STYLES.COLORS.CELSIUS_BLUE_OPACITY5 // TODO: Missing COLOR_KEY
-            }
+            color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
             onPress={!disabledPress ? onPress : () => {}}
           >
             Add withdrawal address

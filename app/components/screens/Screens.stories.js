@@ -92,6 +92,7 @@ import KYCFinalRejectionStories from "./KYCFinalRejection/KYCFinalRejection.stor
 import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stories";
 import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
 import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
+import PrincipalPaymentStories from "./PrincipalPayment/PrincipalPayment.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -602,4 +603,9 @@ storiesOf("LoanPrepaymentPeriod", module).add(
 storiesOf("KYCFinalRejection", module).add(
   "KYCFinalRejection",
   KYCFinalRejectionStories.regular
+);
+
+storiesOf("PrincipalPayment", module).add(
+  "PrincipalPayment",
+  PrincipalPaymentStories.regular
 );

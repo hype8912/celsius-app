@@ -1,3 +1,6 @@
+import { COLOR_KEYS } from "./COLORS";
+import { getColor } from "../utils/styles-util";
+
 const COLORS = {
   TRANSPARENT: "rgba(0,0,0,0)",
   WHITE: "#fff",
@@ -30,7 +33,7 @@ const COLORS = {
   GRAY: "#bbbfc2",
   SEMI_GRAY: "#344352",
   DARK_GRAY: "#3d4853",
-  BLUE_GRAY: "#293D51",
+  BLUE_GRAY: "#293d51",
   DARK_GRAY1: "rgba(61, 72, 83, 0.1)",
   DARK_GRAY2: "rgba(61, 72, 83, 0.2)",
   DARK_GRAY3: "rgba(61,72,83,0.3)",
@@ -53,7 +56,6 @@ const COLORS = {
   ORANGE: "#e19f30",
   ORANGE_DARK: "#E87325",
   RED: "rgb(239,70,26)",
-  RED_OPACITY2: "rgba(239,70,26, 0.2)",
 };
 
 const CAMERA_MASK_SIZES = {
@@ -84,7 +86,7 @@ const ANDROID_SHADOW_STYLES = {
 };
 
 const ANDROID_BORDER_STYLES = {
-  borderColor: COLORS.DARK_BACKGROUND,
+  borderColor: getColor(COLOR_KEYS.BORDER_SHADOW_COLOR),
   borderTopWidth: 0.2,
   borderLeftWidth: 0.2,
   borderRightWidth: 0.5,

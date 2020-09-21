@@ -361,6 +361,7 @@ class BorrowCalculator extends Component {
                 </Card>
               ))}
           </View>
+
           <Separator />
           <CelText
             type={"H4"}
