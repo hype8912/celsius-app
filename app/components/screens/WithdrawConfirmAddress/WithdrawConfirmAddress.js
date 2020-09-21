@@ -126,7 +126,7 @@ class WithdrawConfirmAddress extends Component {
             <CelInput
               field={"withdrawAddress"}
               placeholder={"Withdrawal address"}
-              value={addressDisplay.newAddress}
+              value={addressDisplay.base}
               disabled
               type="text-area"
               multiline
@@ -162,7 +162,7 @@ class WithdrawConfirmAddress extends Component {
             {hasTag ? (
               <CelInput
                 placeholder={placeHolderText}
-                value={addressDisplay.newTag}
+                value={addressDisplay.tag}
                 field="coinTag"
                 margin="10 0 10 0"
                 disabled

@@ -50,8 +50,8 @@ class WithdrawNewAddressSetup extends Component {
     const { actions } = this.props;
     const address = addressUtil.splitAddressTag(code);
     actions.updateFormFields({
-      withdrawAddress: address.newAddress,
-      coinTag: address.newTag,
+      withdrawAddress: address.base,
+      coinTag: address.tag,
     });
   };
 

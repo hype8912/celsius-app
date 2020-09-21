@@ -41,6 +41,7 @@ import AccountActivityLogStories from "./AccountActivityLog/AccountActivityLog.s
 import LoginDevicesLogStories from "./LoginDevicesLog/LoginDevicesLog.stories";
 import LoginButtonStories from "./LoginButton/LoginButton.stories";
 import CheckEmailInfoBoxStories from "./CheckEmailInfoBox/CheckEmailInfoBox.stories";
+import LinkToBuyStories from "./LinkToBuy/LinkToBuy.stories";
 // NOTE(fj): plop componentGen importing new stories here
 
 storiesOf("Atoms", module)
@@ -86,5 +87,6 @@ storiesOf("Atoms", module)
   .add("AccountActivityLogStories", AccountActivityLogStories)
   .add("LoginDevicesLogStories", LoginDevicesLogStories)
   .add("LoginButtonStories", LoginButtonStories)
-  .add("CheckEmailInfoBoxStories", CheckEmailInfoBoxStories);
+  .add("CheckEmailInfoBoxStories", CheckEmailInfoBoxStories)
+  .add("LinkToBuyStories", LinkToBuyStories);
 // NOTE(fj): plop componentGen adding new stories here

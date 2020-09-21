@@ -19,15 +19,15 @@ function splitAddressTag(address) {
 
   if (address.indexOf("?dt=") !== -1) {
     addressArray = address.split("?dt=");
-    addressObj.newAddress = addressArray[0];
-    addressObj.newTag = addressArray[1];
+    addressObj.base = addressArray[0];
+    addressObj.tag = addressArray[1];
   } else if (address.indexOf("?memoId=") !== -1) {
     addressArray = address.split("?memoId=");
-    addressObj.newAddress = addressArray[0];
-    addressObj.newTag = addressArray[1];
+    addressObj.base = addressArray[0];
+    addressObj.tag = addressArray[1];
   } else {
-    addressObj.newAddress = address;
-    addressObj.newTag = "";
+    addressObj.base = address;
+    addressObj.tag = "";
   }
 
   return addressObj;

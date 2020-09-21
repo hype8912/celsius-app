@@ -62,8 +62,8 @@ class WithdrawCreateAddress extends Component {
   handleScan = code => {
     const { actions } = this.props;
     const address = addressUtil.splitAddressTag(code);
-    actions.updateFormField("withdrawAddress", address.newAddress);
-    actions.updateFormField("coinTag", address.newTag);
+    actions.updateFormField("withdrawAddress", address.base);
+    actions.updateFormField("coinTag", address.tag);
   };
 
   handleScanClick = async () => {

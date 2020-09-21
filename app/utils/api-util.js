@@ -65,7 +65,7 @@ async function requestInterceptor(req) {
       ...setContentTypeHeaders(req),
       ...setDeviceInfoHeaders(),
       ...(await setAppVersionHeaders()),
-      ...setAppsflyerHeaders(),
+      ...(await setAppsflyerHeaders()),
       ...setGeolocationHeaders(),
       ...(await setAuthHeaders()),
     };
@@ -93,10 +93,23 @@ async function requestInterceptor(req) {
 /**
  * Sets Appsflyer IDs: AFID, IDFA, AAID
  */
-function setAppsflyerHeaders() {
-  const AFID = store.getState().app.appsFlyerUID;
-  const IDFA = Platform.OS === "ios" && store.getState().app.advertisingId;
-  const AAID = Platform.OS === "android" && store.getState().app.advertisingId;
+async function setAppsflyerHeaders() {
+  let AFID = store.getState().app.appsFlyerUID;
+  let IDFA = Platform.OS === "ios" && store.getState().app.advertisingId;
+  let AAID = Platform.OS === "android" && store.getState().app.advertisingId;
+
+  if (!AFID) {
+    await store.dispatch(actions.setAppsFlyerUID());
+    AFID = store.getState().app.appsFlyerUID;
+  }
+  if (Platform.OS === "android" && !AAID) {
+    await store.dispatch(actions.setAdvertisingId());
+    AAID = store.getState().app.advertisingId;
+  }
+  if (Platform.OS === "ios" && !IDFA) {
+    await store.dispatch(actions.setAdvertisingId());
+    IDFA = store.getState().app.advertisingId;
+  }
 
   return {
     "X-Advertising-AFID": AFID,
