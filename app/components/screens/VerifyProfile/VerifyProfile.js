@@ -19,6 +19,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import {
   BIOMETRIC_TYPES,
   BIOMETRIC_TEXT,
+  BIOMETRIC_ERRORS,
   KEYPAD_PURPOSES,
   MODALS,
 } from "../../../constants/UI";
@@ -67,6 +68,7 @@ class VerifyProfile extends Component {
       verificationError: false,
       showLogOutBtn: false,
       hasSixDigitPin: false,
+      disableBiometrics: false,
     };
   }
 
@@ -89,7 +91,7 @@ class VerifyProfile extends Component {
     if (hasSixDigitPin || user.has_six_digit_pin)
       this.setState({ hasSixDigitPin: true });
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
-    await this.showBiometrics();
+    await this.handleBiometrics();
   };
 
   componentWillUpdate(nextProps) {
@@ -117,12 +119,17 @@ class VerifyProfile extends Component {
 
   onCheckSuccess = async () => {
     this.setState({ loading: true });
-
     const { navigation, actions, previousScreen, deepLinkData } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
     const activeScreen = navigation.getParam("activeScreen");
 
     actions.updateFormField("loading", true);
+
+    // If biometrics is changed on device, disable biometrics on BE for user
+    if (this.state.disableBiometrics) {
+      actions.disableBiometrics();
+      this.setState({ disableBiometrics: false });
+    }
 
     // Check if app is opened from DeepLink
     if (!_.isEmpty(deepLinkData)) {
@@ -136,7 +143,6 @@ class VerifyProfile extends Component {
       if (activeScreen === SCREENS.VERIFY_PROFILE) {
         this.setState({ loading: false });
         actions.updateFormField("loading", false);
-
         actions.resetToScreen(previousScreen || SCREENS.WALLET_LANDING);
         return;
       }
@@ -243,37 +249,48 @@ class VerifyProfile extends Component {
       this.setState({ loading: false });
     }
   };
-  // TODO - Work in progress
+
   onPressBiometric = async () => {
     const { actions, navigation, user } = this.props;
     const biometricsEnabled =
       navigation.getParam("biometrics_enabled") || user.biometrics_enabled; // from 426 or Redux // check this!!!!
 
-    const biometricsNeedReset = false; // From error????
-
-    if (biometricsNeedReset) {
-      actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
-      return;
-    }
-
     if (!biometricsEnabled) {
       actions.openModal(MODALS.BIOMETRICS_AUTHENTICATION_MODAL);
     } else {
-      await this.showBiometrics();
+      await this.handleBiometrics();
     }
   };
 
-  showBiometrics = async () => {
-    // TODO Check this few more times
+  handleBiometrics = async () => {
     const { actions, navigation, user } = this.props;
+
     const biometricsEnabled =
       navigation.getParam("biometrics_enabled") || user.biometrics_enabled;
     const hideBiometrics = navigation.getParam("hideBiometrics");
+
     if (biometricsEnabled && !hideBiometrics) {
-      await createBiometricsSignature(() => {
-        this.setState({ loading: true });
-        actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
-      }, "Verification required");
+      await createBiometricsSignature(
+        "Verification required",
+        () => {
+          this.setState({
+            loading: true,
+            disableBiometrics: false,
+          });
+          actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
+        },
+        error => {
+          if (error.message === BIOMETRIC_ERRORS.KEY_PERMANENTLY_INVALIDATED) {
+            actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
+            this.setState({ disableBiometrics: true });
+          } else if (
+            error.message === BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS ||
+            BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED
+          ) {
+            actions.showMessage("error", error.message);
+          } else return;
+        }
+      );
     }
   };
 

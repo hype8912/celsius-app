@@ -5,7 +5,6 @@ import { updateFormFields } from "../redux/forms/formsActions";
 
 export {
   createBiometricsSignature,
-  askUserToProvideBiometrics,
   isBiometricsSensorAvailable,
   createBiometricsKey,
   deleteBiometricsKey,
@@ -16,31 +15,7 @@ async function isBiometricsSensorAvailable() {
     const res = await ReactNativeBiometrics.isSensorAvailable();
     return res;
   } catch (e) {
-    await logger.err(e);
-    // console.log('biometrics failed')
-  }
-}
-
-async function askUserToProvideBiometrics(onSuccess) {
-  try {
-    const biometricsAvailable = await isBiometricsSensorAvailable();
-    if (biometricsAvailable) {
-      const resultObject = await ReactNativeBiometrics.simplePrompt({
-        promptMessage: "Confirm fingerprint",
-      });
-      // console.log('result object: ', resultObject)
-      const { success } = resultObject;
-      if (success) {
-        // console.log('successful biometrics provided')
-        await createBiometricsKey();
-        onSuccess();
-      } else {
-        // console.log('user cancelled biometric prompt')
-        return;
-      }
-    }
-  } catch (e) {
-    // console.log('biometrics failed')
+    await logger.log(e);
   }
 }
 
@@ -51,8 +26,7 @@ async function createBiometricsKey(onSuccess) {
     const res = await ReactNativeBiometrics.createKeys("Confirm fingerprint");
     if (onSuccess) onSuccess(res.publicKey);
   } catch (e) {
-    await logger.err(e);
-    // console.log('create biometrics key failed: ', e)
+    await logger.log(e);
   }
 }
 
@@ -61,7 +35,16 @@ async function checkBiometricsKey() {
   return resultObject;
 }
 
-async function createBiometricsSignature(onSuccess, msgForUser) {
+async function deleteBiometricsKey(onSuccess) {
+  try {
+    await ReactNativeBiometrics.deleteKeys();
+    if (onSuccess) onSuccess();
+  } catch (e) {
+    await logger.log(e);
+  }
+}
+
+async function createBiometricsSignature(msgForUser, onSuccess, onError) {
   const deviceId = store.getState().app.advertisingId;
   const epochTimeSeconds = Math.round(new Date().getTime() / 1000).toString();
   const payload = `${epochTimeSeconds}${deviceId}`;
@@ -82,18 +65,7 @@ async function createBiometricsSignature(onSuccess, msgForUser) {
     }
   } catch (e) {
     // TODO better error handling, for now we have 2 errors
-    // console.log('error je: ', e)
-    await logger.err(e);
-    await ReactNativeBiometrics.deleteKeys();
-    await createBiometricsKey();
-  }
-}
-
-async function deleteBiometricsKey(onSuccess) {
-  try {
-    await ReactNativeBiometrics.deleteKeys();
-    if (onSuccess) onSuccess();
-  } catch (e) {
-    await logger.err(e);
+    await logger.log("message: ", e.message);
+    if (onError) onError(e);
   }
 }

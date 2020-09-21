@@ -6,7 +6,6 @@ import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
 import { showMessage } from "../ui/uiActions";
 import store from "../store";
-import logger from "../../utils/logger-util";
 
 export {
   getBiometricType,
@@ -21,7 +20,6 @@ export {
 function getBiometricType() {
   return async dispatch => {
     const biometrics = await isBiometricsSensorAvailable();
-    // console.log('biometrics: ', biometrics)
     if (biometrics.available) {
       const biometricType =
         biometrics.biometryType ===
@@ -34,6 +32,13 @@ function getBiometricType() {
         biometrics: {
           ...biometrics,
           biometryType: biometricType,
+        },
+      });
+    } else {
+      dispatch({
+        type: ACTIONS.IS_BIOMETRIC_AVAILABLE,
+        biometrics: {
+          ...biometrics,
         },
       });
     }
@@ -60,11 +65,10 @@ function checkBiometrics(onSuccess, onError) {
 }
 
 function activateBiometrics(publicKey, type) {
-  const user = store.getState().user.profile;
   const formData = store.getState().forms.formData;
   const verification = {
-    type: user.two_factor_enabled ? "twoFactorCode" : "pin",
-    value: user.two_factor_enabled ? formData.code : formData.pin,
+    pin: formData.pin,
+    twoFactorCode: formData.code,
   };
   return async dispatch => {
     try {
@@ -77,17 +81,15 @@ function activateBiometrics(publicKey, type) {
       });
     } catch (e) {
       dispatch(apiError(API.ACTIVATE_BIOMETRICS, e));
-      await logger.err(e);
     }
   };
 }
 
 function disableBiometrics() {
-  const user = store.getState().user.profile;
   const formData = store.getState().forms.formData;
   const verification = {
-    type: user.two_factor_enabled ? "twoFactorCode" : "pin",
-    value: user.two_factor_enabled ? formData.code : formData.pin,
+    pin: formData.pin,
+    twoFactorCode: formData.code,
   };
   return async dispatch => {
     try {
@@ -100,7 +102,6 @@ function disableBiometrics() {
       });
     } catch (e) {
       dispatch(apiError(API.DEACTIVATE_BIOMETRICS, e));
-      await logger.err(e);
     }
   };
 }

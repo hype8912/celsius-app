@@ -278,6 +278,17 @@ const BIOMETRIC_TEXT = {
   FACE_ID: "Face ID",
 };
 
+const BIOMETRIC_ERRORS = {
+  TOO_MANY_ATTEMPTS_SENSOR_DISABLED:
+    "Error: Too many attempts. Fingerprint sensor disabled",
+  TOO_MANY_ATTEMPTS: "Too many attempts. Try again later.",
+  KEY_PERMANENTLY_INVALIDATED:
+    "Error generating signature: Key permanently invalidated",
+  NO_HARDWARE: "BIOMETRIC_ERROR_NO_HARDWARE",
+  HW_UNAVAILABLE: "BIOMETRIC_ERROR_HW_UNAVAILABLE",
+  NONE_ENROLLED: "BIOMETRIC_ERROR_NONE_ENROLLED",
+};
+
 export {
   KEYBOARD_TYPE,
   MODALS,
@@ -300,5 +311,6 @@ export {
   HODL_STATUS,
   BIOMETRIC_TYPES,
   BIOMETRIC_TEXT,
+  BIOMETRIC_ERRORS,
   DONT_SHOW_AGAIN,
 };

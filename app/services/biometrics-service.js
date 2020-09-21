@@ -9,16 +9,14 @@ const biometricsService = {
 
 function activateBiometrics(publicKey, type, verification) {
   return axios.post(`${apiUrl}/users/biometrics/activate`, {
-    [`${verification.type}`]: verification.value,
+    ...verification,
     public_key: publicKey,
     type,
   });
 }
 
 function deactivateBiometrics(verification) {
-  return axios.post(`${apiUrl}/users/biometrics/deactivate`, {
-    [`${verification.type}`]: verification.value,
-  });
+  return axios.post(`${apiUrl}/users/biometrics/deactivate`, verification);
 }
 
 function checkBiometrics(payload, signature) {

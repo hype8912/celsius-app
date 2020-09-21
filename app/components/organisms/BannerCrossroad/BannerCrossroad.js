@@ -85,6 +85,7 @@ class BannerCrossroad extends Component {
 
     if (
       !user.biometrics_enabled &&
+      biometrics &&
       biometrics.available &&
       !this.state.biometricBannerHidden
     ) {

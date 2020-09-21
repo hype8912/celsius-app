@@ -75,6 +75,7 @@ function handleAppStateChange(nextAppState) {
         dispatch(actions.getInitialCelsiusData());
         dispatch(actions.getCurrencyRates());
         dispatch(actions.closeModal());
+        dispatch(actions.getBiometricType()); // Get biometric type on Biometric authentication screen when app state changes
 
         if (Platform.OS === "ios") {
           clearTimeout(pinTimeout);
