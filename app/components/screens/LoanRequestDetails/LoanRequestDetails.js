@@ -21,6 +21,7 @@ import TxBasicCardSection from "../../atoms/TxBasicCardSection/TxBasicCardSectio
 import TxCardSection from "../../atoms/TxCardSection/TxCardSection";
 import { getColor } from "../../../utils/styles-util";
 import { SCREENS } from "../../../constants/SCREENS";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -43,12 +44,13 @@ class LoanRequestDetails extends Component {
     };
   };
 
-  componentDidMount = async () => {
-    const { navigation, actions } = this.props;
+  constructor(props) {
+    super(props);
+    const { navigation, actions } = props;
     const id = navigation.getParam("id");
     actions.setActiveLoan(id);
-    await actions.getLoanById(id);
-  };
+    actions.getLoanById(id);
+  }
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.activeLoan, this.props.activeLoan)) {
@@ -227,13 +229,19 @@ class LoanRequestDetails extends Component {
           <View style={style.status}>
             <Icon
               name={"TransactionLoan"}
-              fill={getColor(activeLoan.uiProps.color)}
+              fill={
+                getColor(activeLoan.uiProps.color) ||
+                getColor(COLOR_KEYS.PRIMARY_BUTTON)
+              }
               width={"25"}
               height={"25"}
             />
             <CelText
               type={"H5"}
-              color={getColor(activeLoan.uiProps.color)}
+              color={
+                getColor(activeLoan.uiProps.color) ||
+                getColor(COLOR_KEYS.PRIMARY_BUTTON)
+              }
               margin={"0 5 0 0"}
             >
               {activeLoan.uiProps.displayText}
