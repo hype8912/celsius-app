@@ -55,7 +55,10 @@ class TransactionDetailsLoans extends Component {
             value={moment.utc(transaction.time).format("h:mm A (z)")}
           />
 
-          {transaction.type === TRANSACTION_TYPES.MARGIN_CALL && (
+          {[
+            TRANSACTION_TYPES.MARGIN_CALL,
+            TRANSACTION_TYPES.LOAN_INTEREST,
+          ].includes(transaction.type) && (
             <View>
               <TxBasicSection
                 label={"Spot Price"}
@@ -63,7 +66,11 @@ class TransactionDetailsLoans extends Component {
                   Number(transaction.amount_usd) / Number(transaction.amount)
                 )}
               />
+            </View>
+          )}
 
+          {[TRANSACTION_TYPES.MARGIN_CALL].includes(transaction.type) && (
+            <View>
               <TxBasicSection
                 label={"New Collateral Balance"}
                 value={`     ${formatter.crypto(
