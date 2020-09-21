@@ -46,15 +46,18 @@ function calculateAdditionalPayment(
     currency = currencies.filter(
       c => c.short === loanCoin.short.toUpperCase()
     )[0];
-    hasEnough = loanCoin.amount_usd.isGreaterThan(loan.monthly_payment);
+    hasEnough = loanCoin.amount_usd.isGreaterThan(
+      loan.installments_to_be_paid.total
+    );
     additionalCryptoAmount =
-      Number(loan.monthly_payment) -
+      Number(loan.installments_to_be_paid.total) -
       currency.market_quotes_usd.price * loanCoin.amount;
     additionalUsdAmount =
-      Number(loan.monthly_payment) - loanCoin.amount_usd.toNumber();
+      Number(loan.installments_to_be_paid.total) -
+      loanCoin.amount_usd.toNumber();
     cryptoAmountToPay = loanCoin.amount
       .dividedBy(loanCoin.amount_usd)
-      .multipliedBy(loan.monthly_payment);
+      .multipliedBy(loan.installments_to_be_paid.total);
     isAllowed = loanCoin.amount_usd.isGreaterThan(0);
     cryptoAmount = loanCoin.amount.toNumber();
     amountUsd = loanCoin.amount_usd.toNumber();
@@ -94,13 +97,14 @@ function calculateAdditionalPayment(
     amountUsd = loanCoin.amount_usd.toNumber();
 
     if (cardType === COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD) {
-      additionalUsdAmount = Number(loan.monthly_payment) - amountUsd;
+      additionalUsdAmount =
+        Number(loan.installments_to_be_paid.total) - amountUsd;
       additionalCryptoAmount =
-        Number(loan.monthly_payment) -
+        Number(loan.installments_to_be_paid.total) -
         currency.market_quotes_usd.price * cryptoAmount;
-      hasEnough = amountUsd > loan.monthly_payment;
+      hasEnough = amountUsd > loan.installments_to_be_paid.total;
       isAllowed = loanCoin.amount_usd.isGreaterThanOrEqualTo(
-        loan.monthly_payment
+        loan.installments_to_be_paid.total
       );
       color = hasEnough ? COLOR_KEYS.PARAGRAPH : COLOR_KEYS.NEGATIVE_STATE;
     }
