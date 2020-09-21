@@ -43,17 +43,20 @@ class LoanRequestDetails extends Component {
     };
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const { navigation, actions } = this.props;
     const id = navigation.getParam("id");
     actions.setActiveLoan(id);
-  }
+    await actions.getLoanById(id);
+  };
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.activeLoan, this.props.activeLoan)) {
-      this.props.navigation.setParams({
-        title: `${this.props.activeLoan.uiProps.displayText} Details`,
-      });
+      if (this.props.activeLoan && this.props.activeLoan.uiProps) {
+        this.props.navigation.setParams({
+          title: `${this.props.activeLoan.uiProps.displayText} Details`,
+        });
+      }
     }
   }
 
