@@ -118,9 +118,12 @@ storiesOf("CoinDetails", module)
 storiesOf("Welcome", module).add("Regular", WelcomeStories.regular);
 
 storiesOf("Deposit", module)
-  .add("Loading", DepositStories.btc)
-  .add("Alternate address - BCH", DepositStories.bch)
+  .add("Loading Address", DepositStories.loadingAddress)
+  .add("Not Verified", DepositStories.notVerified)
+  .add("Pending Verification", DepositStories.pendingVerification)
+  .add("Not Compliant", DepositStories.notCompliant)
   .add("ETH", DepositStories.eth)
+  .add("BCH - Segwit Address", DepositStories.bch)
   .add("With Loyalty - CEL", DepositStories.cel)
   .add("With Tag - XRP", DepositStories.xrp)
   .add("With Memo ID - XLM", DepositStories.xlm);
@@ -365,7 +368,7 @@ storiesOf("BorrowCollateral", module).add(
   BorrowCollateralStories.regular
 );
 
-storiesOf("Appearance", module).add("Apearance", AppearanceStories.regular);
+storiesOf("Appearance", module).add("Appearance", AppearanceStories.regular);
 
 storiesOf("TooManyRequests", module).add(
   "Too Many Requests",

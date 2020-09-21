@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { RESULTS } from "react-native-permissions";
 
-import cryptoUtil from "../../../utils/crypto-util";
+import cryptoUtil from "../../../utils/crypto-util/crypto-util";
 import { MODALS } from "../../../constants/UI";
 import addressUtil from "../../../utils/address-util";
 import * as appActions from "../../../redux/actions";
@@ -26,6 +26,7 @@ import {
 } from "../../../utils/device-permissions";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -61,15 +62,15 @@ class WithdrawCreateAddress extends Component {
   handleScan = code => {
     const { actions } = this.props;
     const address = addressUtil.splitAddressTag(code);
-    actions.updateFormField("withdrawAddress", address.newAddress);
-    actions.updateFormField("coinTag", address.newTag);
+    actions.updateFormField("withdrawAddress", address.base);
+    actions.updateFormField("coinTag", address.tag);
   };
 
   handleScanClick = async () => {
     const { actions } = this.props;
     const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
     if (perm === RESULTS.GRANTED) {
-      actions.navigateTo("QRScanner", {
+      actions.navigateTo(SCREENS.QR_SCANNER, {
         onScan: this.handleScan,
       });
     } else {
@@ -86,7 +87,7 @@ class WithdrawCreateAddress extends Component {
     if (!formData.coinTag && ["XRP", "XLM", "EOS"].includes(formData.coin)) {
       actions.openModal(MODALS.WITHDRAW_WARNING_MODAL);
     } else {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: () => actions.setCoinWithdrawalAddress(),
       });
       actions.closeModal();
@@ -96,7 +97,7 @@ class WithdrawCreateAddress extends Component {
   handleConfirmWithdrawalFromModal = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: actions.setCoinWithdrawalAddress,
     });
     actions.closeModal();
@@ -240,7 +241,7 @@ class WithdrawCreateAddress extends Component {
                 <CelButton
                   disabled={!formData.withdrawAddress}
                   onPress={() => {
-                    actions.navigateTo("VerifyProfile", {
+                    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
                       onSuccess: () =>
                         actions.setCoinWithdrawalAddress("wallet"),
                     });

@@ -17,6 +17,7 @@ import { EMPTY_STATES } from "../../../constants/UI";
 import loanUtil from "../../../utils/loan-util";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => {
@@ -176,7 +177,7 @@ class BorrowCalculatorScreen extends Component {
       subtitle: "Calculate your loan interest.",
       bottomParagraph: "",
       buttonCopy: "Get a Loan",
-      onPress: () => actions.navigateTo("BorrowChooseLoan"),
+      onPress: () => actions.navigateTo(SCREENS.BORROW_CHOOSE_LOAN),
     };
 
     switch (purpose) {
@@ -191,7 +192,7 @@ class BorrowCalculatorScreen extends Component {
               )} APR`
             : null,
           buttonCopy: "Verify identity",
-          onPress: () => actions.navigateTo("KYCProfileDetails"),
+          onPress: () => actions.navigateTo(SCREENS.KYC_PROFILE_DETAILS),
         };
 
       case EMPTY_STATES.BORROW_NOT_ENOUGH_FUNDS:
@@ -208,7 +209,7 @@ class BorrowCalculatorScreen extends Component {
             "Deposit more coins to start your first loan application",
           buttonCopy: "Transfer coins",
           onPress: () =>
-            actions.navigateTo("Deposit", {
+            actions.navigateTo(SCREENS.DEPOSIT, {
               coin: loanParams ? loanParams.largestShortCrypto : null,
             }),
         };
@@ -221,7 +222,7 @@ class BorrowCalculatorScreen extends Component {
           bottomHeading: null,
           bottomParagraph: null,
           buttonCopy: "Go to Wallet",
-          onPress: () => actions.navigateTo("WalletLanding"),
+          onPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
         };
 
       case EMPTY_STATES.NO_LOANS:
@@ -231,7 +232,7 @@ class BorrowCalculatorScreen extends Component {
           bottomHeading: null,
           bottomParagraph: null,
           buttonCopy: "Create a loan",
-          onPress: () => actions.navigateTo("BorrowChooseLoan"),
+          onPress: () => actions.navigateTo(SCREENS.BORROW_CHOOSE_LOAN),
         };
 
       default:

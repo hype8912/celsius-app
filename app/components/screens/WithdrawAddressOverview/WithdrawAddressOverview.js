@@ -19,6 +19,7 @@ import StaticScreen from "../StaticScreen/StaticScreen";
 import Separator from "../../atoms/Separator/Separator";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -49,8 +50,8 @@ class WithdrawAddressOverview extends Component {
   handlePress = coin => {
     const { actions } = this.props;
     actions.updateFormField("coin", coin);
-    actions.navigateTo("VerifyProfile", {
-      onSuccess: () => actions.navigateTo("WithdrawNewAddressSetup"),
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+      onSuccess: () => actions.navigateTo(SCREENS.WITHDRAW_NEW_ADDRESS_SETUP),
     });
   };
 
@@ -60,7 +61,7 @@ class WithdrawAddressOverview extends Component {
       withdrawAddressLabel: addressLabel,
       coin,
     });
-    actions.navigateTo("WithdrawAddressLabel");
+    actions.navigateTo(SCREENS.WITHDRAW_ADDRESS_LABEL);
   };
 
   renderFromFixNowFlow = () => {
@@ -73,7 +74,7 @@ class WithdrawAddressOverview extends Component {
           weight="600"
           align="center"
           color={getColor(COLOR_KEYS.BANNER_INFO)}
-          onPress={() => actions.navigateTo("SecurityFixNow")}
+          onPress={() => actions.navigateTo(SCREENS.SECURITY_FIX_NOW)}
         >
           Go back to Fix Now
         </CelText>

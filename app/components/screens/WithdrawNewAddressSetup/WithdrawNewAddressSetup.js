@@ -16,6 +16,7 @@ import {
   ALL_PERMISSIONS,
   requestForPermission,
 } from "../../../utils/device-permissions";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -49,8 +50,8 @@ class WithdrawNewAddressSetup extends Component {
     const { actions } = this.props;
     const address = addressUtil.splitAddressTag(code);
     actions.updateFormFields({
-      withdrawAddress: address.newAddress,
-      coinTag: address.newTag,
+      withdrawAddress: address.base,
+      coinTag: address.tag,
     });
   };
 
@@ -58,7 +59,7 @@ class WithdrawNewAddressSetup extends Component {
     const { actions } = this.props;
     const perm = await requestForPermission(ALL_PERMISSIONS.CAMERA);
     if (perm === RESULTS.GRANTED) {
-      actions.navigateTo("QRScanner", {
+      actions.navigateTo(SCREENS.QR_SCANNER, {
         onScan: this.handleScan,
       });
     } else {

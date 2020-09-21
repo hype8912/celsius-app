@@ -9,6 +9,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
 import SELECT_VALUES from "../../../constants/SELECT_VALUES";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -57,7 +58,7 @@ class SelectState extends Component {
       [field]: state.value,
       search: "",
     });
-    if (activeScreen === "SelectState") {
+    if (activeScreen === SCREENS.SELECT_STATE) {
       actions.navigateBack();
     }
   };

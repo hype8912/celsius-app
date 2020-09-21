@@ -14,6 +14,7 @@ import Icon from "../../atoms/Icon/Icon";
 import * as appActions from "../../../redux/actions";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -46,9 +47,9 @@ class PaymentCard extends Component {
           "success",
           "You have successfully changed interest payment method"
         );
-        return actions.navigateTo("LoanSettings");
+        return actions.navigateTo(SCREENS.LOAN_SETTINGS);
       }
-      actions.navigateTo("LoanPrepaymentPeriod", { coin: coinShort });
+      actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { coin: coinShort });
     }
     return;
   };
@@ -128,7 +129,7 @@ class PaymentCard extends Component {
                     />
                     <CelText
                       onPress={() =>
-                        actions.navigateTo("Deposit", { coin: coinShort })
+                        actions.navigateTo(SCREENS.DEPOSIT, { coin: coinShort })
                       }
                       color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                       type="H5"

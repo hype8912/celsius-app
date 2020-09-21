@@ -7,6 +7,7 @@ import CelText from "../../atoms/CelText/CelText";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { heightPercentageToDP } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const LOADING_INTERVAL = 3 * 1000;
 
@@ -70,7 +71,7 @@ class ContactsLoader extends React.Component {
 
           <CelButton
             margin={"10 0 0 0"}
-            onPress={() => navigateTo("WalletLanding")}
+            onPress={() => navigateTo(SCREENS.WALLET_LANDING)}
           >
             Return to App
           </CelButton>

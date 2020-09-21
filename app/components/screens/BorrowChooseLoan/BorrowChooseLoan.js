@@ -11,6 +11,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { getPadding } from "../../../utils/styles-util";
 import { LOAN_TYPES } from "../../../constants/DATA";
 import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCardButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -55,7 +56,7 @@ class BorrowChooseLoan extends Component {
         darkImage: require("../../../../assets/images/illustration-borrow-stablecoins.png"),
         unicornImage: require("../../../../assets/images/illustration-borrow-stablecoins-unicorn.png"),
         onPress: () => {
-          actions.navigateTo("BorrowEnterAmount");
+          actions.navigateTo(SCREENS.BORROW_ENTER_AMOUNT);
           actions.updateFormFields({
             coin: "USDC",
             loanType: LOAN_TYPES.STABLE_COIN_LOAN,
@@ -72,7 +73,7 @@ class BorrowChooseLoan extends Component {
         darkImage: require("../../../../assets/images/illustration-borrow-dollars.png"),
         unicornImage: require("../../../../assets/images/illustration-borrow-dollars-unicorn.png"),
         onPress: () => {
-          actions.navigateTo("BorrowEnterAmount");
+          actions.navigateTo(SCREENS.BORROW_ENTER_AMOUNT);
           actions.updateFormFields({
             coin: "USD",
             loanType: LOAN_TYPES.USD_LOAN,

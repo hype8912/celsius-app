@@ -1,7 +1,7 @@
 import React from "react";
 
 import {{pascalCase name}} from "../{{pascalCase name}}/{{pascalCase name}}";
-import StoryWrapper from "../StoryWrapper/StoryWrapper";
+import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
 const {{pascalCase name}}Stories = () => (
   <StoryWrapper title="{{pascalCase name}}">

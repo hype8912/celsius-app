@@ -12,6 +12,7 @@ import { setSecureStoreKey } from "../../utils/expo-storage";
 import branchUtil from "../../utils/branch-util";
 import userAuthService from "../../services/user-auth-service";
 import { getInitialCelsiusData } from "../generalData/generalDataActions";
+import { SCREENS } from "../../constants/SCREENS";
 
 const { SECURITY_STORAGE_AUTH_KEY, FACEBOOK_URL } = Constants;
 
@@ -393,7 +394,7 @@ function loginSocialSuccess(network, token) {
     });
 
     await dispatch(getInitialCelsiusData());
-    dispatch(resetToScreen("Home"));
+    dispatch(resetToScreen(SCREENS.HOME));
     // dispatch(claimAllBranchTransfers());
   };
 }
@@ -414,6 +415,6 @@ function registerSocialSuccess(network, token, user) {
       user,
     });
 
-    dispatch(navigateTo("RegisterSetPin"));
+    dispatch(navigateTo(SCREENS.REGISTER_SET_PIN));
   };
 }

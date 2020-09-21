@@ -16,6 +16,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import CheckEmailInfoBox from "../../atoms/CheckEmailInfoBox/CheckEmailInfoBox";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class TransactionDetailsCelPay extends Component {
   static propTypes = {
@@ -137,7 +138,7 @@ class TransactionDetailsCelPay extends Component {
           {shouldRenderCelPayButton ? (
             <CelButton
               margin={"40 0 0 0"}
-              onPress={() => navigateTo("CelPayLanding")}
+              onPress={() => navigateTo(SCREENS.CEL_PAY_LANDING)}
             >
               Start Another CelPay
             </CelButton>
@@ -159,7 +160,7 @@ class TransactionDetailsCelPay extends Component {
           {type === TRANSACTION_TYPES.CELPAY_RECEIVED ? (
             <CelButton
               margin={"40 0 0 0"}
-              onPress={() => navigateTo("Deposit")}
+              onPress={() => navigateTo(SCREENS.DEPOSIT)}
             >
               Transfer Coins
             </CelButton>
@@ -169,7 +170,7 @@ class TransactionDetailsCelPay extends Component {
             <CelButton
               margin={"20 0 0 0"}
               basic
-              onPress={() => navigateTo("WalletLanding")}
+              onPress={() => navigateTo(SCREENS.WALLET_LANDING)}
             >
               Go Back to Wallet
             </CelButton>
@@ -183,7 +184,7 @@ class TransactionDetailsCelPay extends Component {
               basic
               onPress={async () => {
                 await cancelTransfer(transaction);
-                navigateTo("CelPayLanding");
+                navigateTo(SCREENS.CEL_PAY_LANDING);
               }}
             >
               Cancel CelPay

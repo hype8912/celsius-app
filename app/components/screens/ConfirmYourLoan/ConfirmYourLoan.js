@@ -18,6 +18,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -554,7 +555,7 @@ class ConfirmYourLoan extends Component {
             </Card>
 
             <CelButton
-              onPress={() => actions.navigateTo("LoanTermsOfUse")}
+              onPress={() => actions.navigateTo(SCREENS.LOAN_TERMS_OF_USE)}
               margin="22 0 0 0"
             >
               Continue

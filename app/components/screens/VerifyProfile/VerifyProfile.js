@@ -18,6 +18,7 @@ import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { STORYBOOK } from "../../../../dev-settings.json";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -78,7 +79,7 @@ class VerifyProfile extends Component {
 
     if (
       activeScreen !== nextProps.activeScreen &&
-      nextProps.activeScreen === "VerifyProfile"
+      nextProps.activeScreen === SCREENS.VERIFY_PROFILE
     ) {
       this.setState({ value: "" });
     }
@@ -114,11 +115,11 @@ class VerifyProfile extends Component {
     }
 
     if (activeScreen) {
-      if (activeScreen === "VerifyProfile") {
+      if (activeScreen === SCREENS.VERIFY_PROFILE) {
         this.setState({ loading: false });
         actions.updateFormField("loading", false);
 
-        actions.resetToScreen(previousScreen || "WalletLanding");
+        actions.resetToScreen(previousScreen || SCREENS.WALLET_LANDING);
         return;
       }
 
@@ -205,10 +206,10 @@ class VerifyProfile extends Component {
     this.setState({ value: newValue });
     actions.updateFormField("code", newValue);
     if (newValue.length === 6) {
-      this.setState({ loading: true })
+      this.setState({ loading: true });
       actions.toggleKeypad();
       await actions.checkTwoFactor(this.onCheckSuccess, this.onCheckError);
-      this.setState({ loading: false })
+      this.setState({ loading: false });
     }
   };
 

@@ -13,6 +13,7 @@ import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import UI from "../../../constants/STYLES";
 import Spinner from "../../atoms/Spinner/Spinner";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -54,7 +55,7 @@ class TwoFaAuthAppConfirmationCode extends Component {
             title: "2FA email confirmation!",
             message: "Open your email app to confirm 2FA activation",
           });
-          actions.navigateTo("SecuritySettings");
+          actions.navigateTo(SCREENS.SECURITY_SETTINGS);
         }
         this.setState({ loading: false });
       }

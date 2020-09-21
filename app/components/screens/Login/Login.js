@@ -14,6 +14,7 @@ import GoogleReCaptcha from "../../../utils/recaptcha-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -106,7 +107,7 @@ class Login extends Component {
             <CelButton
               margin="35 0 25 0"
               basic
-              onPress={() => actions.navigateTo("ForgotPassword")}
+              onPress={() => actions.navigateTo(SCREENS.FORGOT_PASSWORD)}
             >
               Forgot password?
             </CelButton>
@@ -115,7 +116,7 @@ class Login extends Component {
               <CelButton
                 basic
                 margin="0 0 25 0"
-                onPress={() => actions.navigateTo("Storybook")}
+                onPress={() => actions.navigateTo(SCREENS.STORYBOOK)}
               >
                 Open Storybook
               </CelButton>
@@ -129,7 +130,9 @@ class Login extends Component {
                 align="center"
                 link
                 onPress={() =>
-                  actions.navigateTo("LoginLanding", { type: "register" })
+                  actions.navigateTo(SCREENS.LOGIN_LANDING, {
+                    type: "register",
+                  })
                 }
               >
                 {` Sign up`}

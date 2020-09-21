@@ -16,6 +16,7 @@ import Icon from "../../atoms/Icon/Icon";
 import CollateralCoinCardStyle from "./CollateralCoinCard.styles";
 import Separator from "../../atoms/Separator/Separator";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -236,7 +237,9 @@ class CollateralCoinCard extends Component {
     const { coin, actions } = this.props;
     return (
       <TouchableOpacity
-        onPress={() => actions.navigateTo("Deposit", { coin: coin.short })}
+        onPress={() =>
+          actions.navigateTo(SCREENS.DEPOSIT, { coin: coin.short })
+        }
       >
         <View
           style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}

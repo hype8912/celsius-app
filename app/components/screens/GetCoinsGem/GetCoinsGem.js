@@ -7,7 +7,6 @@ import qs from "qs";
 import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
-import { getDepositEligibleCoins } from "../../../redux/custom-selectors";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
@@ -30,7 +29,6 @@ const GemMessages = {
 
 @connect(
   state => ({
-    eligibleCoins: getDepositEligibleCoins(state),
     formData: state.forms.formData,
     walletGemAddresses: state.buyCoins.walletGemAddresses,
     user: state.user.profile,
@@ -113,12 +111,14 @@ class GetCoinsGem extends Component {
     const styles = GetCoinsGemStyle();
     return (
       <View style={styles.container}>
-        <WebView
-          source={{
-            uri: gemOnrampSrc,
-          }}
-          onMessage={this.finishGemFlow}
-        />
+        <View style={styles.wrapper}>
+          <WebView
+            source={{
+              uri: gemOnrampSrc,
+            }}
+            onMessage={this.finishGemFlow}
+          />
+        </View>
       </View>
     );
   }

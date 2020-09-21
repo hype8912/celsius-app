@@ -16,6 +16,7 @@ import API from "../../../constants/API";
 import { navigateTo, navigateBack } from "../../../redux/nav/navActions";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -32,7 +33,7 @@ class ConfirmCamera extends Component {
   static navigationOptions = ({ navigation }) => {
     const documentPicture = navigation.getParam("documentPicture");
     const navigate = documentPicture
-      ? navigateTo("KYCVerifyIdentity")
+      ? navigateTo(SCREENS.KYC_VERIFY_IDENTITY)
       : navigateBack();
     return {
       transparent: true,

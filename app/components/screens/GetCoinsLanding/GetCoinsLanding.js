@@ -15,6 +15,7 @@ import { KYC_STATUSES } from "../../../constants/DATA";
 import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import store from "../../../redux/store";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -57,13 +58,13 @@ class GetCoinsLanding extends Component {
         paymentMethod: "Credit Card",
       },
     });
-    actions.navigateTo("GetCoinsEnterAmount");
+    actions.navigateTo(SCREENS.GET_COINS_ENTER_AMOUNT);
     mixpanelAnalytics.choseBuyCoinsType("CARD");
   };
 
   pressBankWire = () => {
     const { actions } = this.props;
-    actions.navigateTo("GetCoinsGem");
+    actions.navigateTo(SCREENS.GET_COINS_GEM);
     mixpanelAnalytics.choseBuyCoinsType("WIRE");
   };
 

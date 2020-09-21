@@ -7,7 +7,7 @@ const base = {
   },
   half: {
     width: "46%",
-  }
+  },
 };
 
 const themed = {

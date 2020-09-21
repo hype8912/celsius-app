@@ -25,8 +25,8 @@ const regular = () => {
 const selected = () => {
   const state = _.cloneDeep(initialState);
   state.forms = {
-    formData: { state: "California" }
-  }
+    formData: { state: "California" },
+  };
 
   return (
     <ScreenStoryWrapper

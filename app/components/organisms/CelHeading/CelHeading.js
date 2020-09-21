@@ -22,6 +22,7 @@ import Loader from "../../atoms/Loader/Loader";
 import fromatter from "../../../utils/formatter";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { STORYBOOK } from "../../../../dev-settings.json";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -134,7 +135,7 @@ class CelHeading extends Component {
         <CelButton
           basic
           onPress={() => {
-            this.props.actions.navigateTo("RegisterInitial");
+            this.props.actions.navigateTo(SCREENS.REGISTER_INITIAL);
           }}
         >
           Sign up
@@ -144,7 +145,7 @@ class CelHeading extends Component {
         <CelButton
           basic
           onPress={() => {
-            this.props.actions.navigateTo("Login");
+            this.props.actions.navigateTo(SCREENS.LOGIN);
           }}
         >
           Log in
@@ -159,7 +160,7 @@ class CelHeading extends Component {
       profile: (
         <TouchableOpacity
           onPress={() => {
-            this.props.actions.navigateTo("Profile");
+            this.props.actions.navigateTo(SCREENS.PROFILE);
           }}
         >
           {profilePicture ? (
@@ -197,7 +198,7 @@ class CelHeading extends Component {
           Close
         </CelButton>
       ), // TODO(sb):
-      cancel: scene.state.routeName !== "VerifyProfile" && (
+      cancel: scene.state.routeName !== SCREENS.VERIFY_PROFILE && (
         <CelButton
           basic
           onPress={() => {
@@ -236,7 +237,8 @@ class CelHeading extends Component {
     let screenTitle;
 
     if (
-      (activeScreen === "WalletLanding" || activeScreen === "BalanceHistory") &&
+      (activeScreen === SCREENS.WALLET_LANDING ||
+        activeScreen === SCREENS.BALANCE_HISTORY) &&
       changeWalletHeader
     ) {
       screenTitle = walletSummary
@@ -245,7 +247,7 @@ class CelHeading extends Component {
       return screenTitle;
     }
 
-    if (activeScreen === "WalletInterest" && changeInterestHeader) {
+    if (activeScreen === SCREENS.WALLET_INTEREST && changeInterestHeader) {
       screenTitle = walletSummary
         ? fromatter.usd(walletSummary.total_interest_earned)
         : title;
@@ -295,9 +297,9 @@ class CelHeading extends Component {
     const { activeScreen } = this.props;
 
     let text = "Search";
-    if (activeScreen === "SelectCoin") text = "Search assets";
-    if (activeScreen === "SelectCountry") text = "Search countries";
-    if (activeScreen === "SelectState") text = "Search US States";
+    if (activeScreen === SCREENS.SELECT_COIN) text = "Search assets";
+    if (activeScreen === SCREENS.SELECT_COUNTRY) text = "Search countries";
+    if (activeScreen === SCREENS.SELECT_STATE) text = "Search US States";
 
     return text;
   };

@@ -16,6 +16,7 @@ import CheckWithdrawalAddressesCard from "../../organisms/CheckWithdrawalAddress
 import SeparatorInfoModal from "../../modals/SeparatorInfoModal/SeparatorInfoModal";
 import { MODALS } from "../../../constants/UI";
 import SecurityOverviewStyle from "./SecurityOverview.styles";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -55,8 +56,8 @@ class SecurityOverview extends Component {
   onPress2fa = () => {
     const { actions, twoFAStatus } = this.props;
     if (!twoFAStatus.isActive) {
-      actions.navigateTo("VerifyProfile", {
-        onSuccess: () => actions.navigateTo("TwoFactorSettings"),
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+        onSuccess: () => actions.navigateTo(SCREENS.TWO_FACTOR_SETTINGS),
       });
     }
   };
@@ -66,7 +67,7 @@ class SecurityOverview extends Component {
     const fixNowContent = securityOverview.score_parameters.filter(
       c => c.fixable && c.name !== "hodl_mode"
     );
-    actions.navigateTo("SecurityFixNow", {
+    actions.navigateTo(SCREENS.SECURITY_FIX_NOW, {
       fixNowContentLength: fixNowContent.length,
     });
   };
@@ -180,7 +181,7 @@ class SecurityOverview extends Component {
           </TouchableOpacity>
           <ToggleInfoCard
             subtitle={"HODL mode is"}
-            onPress={() => actions.navigateTo("HodlLanding")}
+            onPress={() => actions.navigateTo(SCREENS.HODL_LANDING)}
             enabled={securityOverview.hodl_mode_active}
           />
 
@@ -198,7 +199,7 @@ class SecurityOverview extends Component {
                   ) && "Change Password"
                 }
                 onPressEnhance={() => {
-                  actions.navigateTo("ChangePassword");
+                  actions.navigateTo(SCREENS.CHANGE_PASSWORD);
                 }}
               />
             </>
@@ -218,8 +219,8 @@ class SecurityOverview extends Component {
                   ) && "Change PIN"
                 }
                 onPressEnhance={() => {
-                  actions.navigateTo("VerifyProfile", {
-                    onSuccess: () => actions.navigateTo("ChangePin"),
+                  actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+                    onSuccess: () => actions.navigateTo(SCREENS.CHANGE_PIN),
                   });
                 }}
               />

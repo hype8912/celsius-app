@@ -7,6 +7,7 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -34,7 +35,7 @@ class CellphoneVerify extends Component {
     if (response.success) {
       actions.showMessage("success", "Phone number verified!");
       actions.getProfileInfo();
-      actions.navigateTo("Profile");
+      actions.navigateTo(SCREENS.PROFILE);
     }
   };
 

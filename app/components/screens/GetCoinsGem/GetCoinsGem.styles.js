@@ -1,14 +1,24 @@
-import DeviceInfo from "react-native-device-info";
-import { getThemedStyle } from "../../../utils/styles-util";
+import {
+  getThemedStyle,
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-
-const hasNotch = DeviceInfo.hasNotch();
 
 const base = {
   container: {
     flex: 1,
-    backgroundColor: COLOR_KEYS.DOT_INDICATOR_INACTIVE,
-    paddingTop: hasNotch ? 60 : 30,
+    backgroundColor: COLOR_KEYS.CARDS,
+    paddingTop: 60,
+  },
+  wrapper: {
+    marginHorizontal: 20,
+    flex: 1,
+    borderRadius: 8,
+    width: widthPercentageToDP("90%"),
+    marginBottom: heightPercentageToDP("4%"),
+    maxHeight: heightPercentageToDP("90%"),
+    overflow: "hidden",
   },
 };
 

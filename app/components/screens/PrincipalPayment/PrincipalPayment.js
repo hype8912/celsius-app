@@ -11,6 +11,7 @@ import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import Spinner from "../../atoms/Spinner/Spinner";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -140,7 +141,9 @@ class PrincipalPayment extends Component {
         {!payOutPrincipalFromCollateral ? (
           <IconButton
             margin="10 0 10 0"
-            onPress={() => actions.navigateTo("PrincipalPaymentType", { id })}
+            onPress={() =>
+              actions.navigateTo(SCREENS.PRINCIPAL_PAYMENT_TYPE, { id })
+            }
           >
             Change Principal Payment Type
           </IconButton>

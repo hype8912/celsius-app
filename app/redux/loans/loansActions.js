@@ -11,6 +11,7 @@ import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import appsFlyerUtil from "../../utils/appsflyer-util";
 import loggerUtil from "../../utils/logger-util";
 import analyticsService from "../../services/analytics-service";
+import { SCREENS } from "../../constants/SCREENS";
 
 export {
   applyForALoan,
@@ -70,7 +71,7 @@ function applyForALoan() {
       });
 
       dispatch(
-        navigateTo("LoanRequestDetails", {
+        navigateTo(SCREENS.LOAN_REQUEST_DETAILS, {
           id: res.data.loan.id,
           hideBack: true,
         })
@@ -337,7 +338,7 @@ function prepayInterest(id) {
         type: ACTIONS.PREPAY_LOAN_INTEREST_SUCCESS,
       });
       dispatch(
-        navigateTo("TransactionsIntersection", {
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transactionId,
           loanPayment: true,
         })
@@ -346,7 +347,7 @@ function prepayInterest(id) {
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.PREPAY_LOAN_INTEREST, err));
-      dispatch(navigateTo("BorrowLanding"));
+      dispatch(navigateTo(SCREENS.BORROW_LANDING));
     }
   };
 }
@@ -376,7 +377,7 @@ function payPrincipal(id) {
       const transactionId = res.data.transaction_id;
       dispatch(showMessage("success", "Payment successful"));
       dispatch(
-        navigateTo("TransactionsIntersection", {
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transactionId,
           loanPayment: true,
         })
@@ -408,7 +409,9 @@ function lockMarginCallCollateral(id, coin) {
       );
 
       const transactionId = res.data.transaction_id;
-      dispatch(navigateTo("TransactionsIntersection", { id: transactionId }));
+      dispatch(
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, { id: transactionId })
+      );
 
       apiCallName = API.GET_ALL_LOANS;
       startApiCall(API.GET_ALL_LOANS);
@@ -447,7 +450,7 @@ function payMonthlyInterest(id, coin) {
       dispatch({ type: ACTIONS.PAY_LOAN_INTEREST_SUCCESS });
       dispatch(showMessage("success", "Payment successful"));
       dispatch(
-        navigateTo("TransactionsIntersection", {
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transactionId,
           loanPayment: true,
         })

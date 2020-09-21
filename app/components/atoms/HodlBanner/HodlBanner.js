@@ -6,6 +6,7 @@ import * as moment from "moment";
 import { HODL_STATUS } from "../../../constants/UI";
 import HodlBannerStyle from "./HodlBanner.styles";
 import CelText from "../../atoms/CelText/CelText";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class HodlBanner extends Component {
   static propTypes = {
@@ -19,7 +20,8 @@ class HodlBanner extends Component {
   render() {
     const style = HodlBannerStyle();
     const { status, actions, activeScreen } = this.props;
-    if (!status.isActive || activeScreen === "VerifyProfile") return null;
+    if (!status.isActive || activeScreen === SCREENS.VERIFY_PROFILE)
+      return null;
 
     const now = moment.utc();
     const deactivatedAt = moment.utc(status.deactivated_at);
@@ -32,7 +34,7 @@ class HodlBanner extends Component {
 
     const isDisabled =
       status.state !== HODL_STATUS.ACTIVATED ||
-      activeScreen === "VerifyProfile";
+      activeScreen === SCREENS.VERIFY_PROFILE;
 
     return (
       <TouchableOpacity
@@ -40,7 +42,7 @@ class HodlBanner extends Component {
         disabled={isDisabled}
         onPress={() => {
           actions.setHodlProps(true);
-          actions.navigateTo("HodlLanding", { deactivation: true });
+          actions.navigateTo(SCREENS.HODL_LANDING, { deactivation: true });
         }}
       >
         {status.state === HODL_STATUS.ACTIVATED ? (

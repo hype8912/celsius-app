@@ -19,6 +19,7 @@ import BorrowEnterAmountStyle from "./BorrowEnterAmount.styles";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 let timeout;
 
@@ -140,7 +141,7 @@ class BorrowEnterAmount extends Component {
           </CelText>
           <CelButton
             onPress={() => {
-              actions.navigateTo("Deposit");
+              actions.navigateTo(SCREENS.DEPOSIT);
             }}
             margin="40 0 0 0"
           >
@@ -157,7 +158,7 @@ class BorrowEnterAmount extends Component {
           !formData.coin
         }
         onPress={async () => {
-          actions.navigateTo("BorrowCollateral");
+          actions.navigateTo(SCREENS.BORROW_COLLATERAL);
           actions.toggleKeypad();
           actions.getLinkedBankAccount();
           await mixpanelAnalytics.loanType(formData.loanType);
@@ -182,13 +183,7 @@ class BorrowEnterAmount extends Component {
           $
         </CelText>
       );
-    return (
-      <Icon
-        name={`Icon${formData.coin}`}
-        width="40"
-        height="40"
-      />
-    );
+    return <Icon name={`Icon${formData.coin}`} width="40" height="40" />;
   };
 
   render() {

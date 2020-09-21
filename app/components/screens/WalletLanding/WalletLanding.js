@@ -36,6 +36,7 @@ import animationsUtil from "../../../utils/animations-util";
 import { COMING_SOON_COINS } from "../../../constants/DATA";
 import IntroduceNewThemeModal from "../../modals/IntroduceNewThemeModal/IntroduceNewThemeModal";
 import { getTheme } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => {
@@ -248,7 +249,7 @@ class WalletLanding extends Component {
           <View style={style.depositWrapper}>
             <View>
               <CelButton
-                onPress={() => actions.navigateTo("GetCoinsLanding")}
+                onPress={() => actions.navigateTo(SCREENS.GET_COINS_LANDING)}
                 style={{ alignSelf: "flex-start" }}
                 margin="10 0 2 0"
                 size="small"

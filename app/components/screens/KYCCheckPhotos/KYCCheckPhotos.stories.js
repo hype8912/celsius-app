@@ -26,8 +26,8 @@ const initialState = {
 
 const singlePhoto = () => {
   const state = _.cloneDeep(initialState);
-  state.kyc.kycDocuments.type = "passport"
-  state.kyc.kycDocuments.back = null
+  state.kyc.kycDocuments.type = "passport";
+  state.kyc.kycDocuments.back = null;
 
   return (
     <ScreenStoryWrapper
