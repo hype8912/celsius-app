@@ -65,7 +65,7 @@ async function createBiometricsSignature(msgForUser, onSuccess, onError) {
     }
   } catch (e) {
     // TODO better error handling, for now we have 2 errors
-    await logger.log("message: ", e.message);
+    await logger.log("createBiometricsSignature error: ", e.message);
     if (onError) onError(e);
   }
 }

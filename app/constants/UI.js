@@ -284,6 +284,7 @@ const BIOMETRIC_ERRORS = {
   TOO_MANY_ATTEMPTS: "Too many attempts. Try again later.",
   KEY_PERMANENTLY_INVALIDATED:
     "Error generating signature: Key permanently invalidated",
+  KEY_NOT_FOUND: "Key not found: -128",
   NO_HARDWARE: "BIOMETRIC_ERROR_NO_HARDWARE",
   HW_UNAVAILABLE: "BIOMETRIC_ERROR_HW_UNAVAILABLE",
   NONE_ENROLLED: "BIOMETRIC_ERROR_NONE_ENROLLED",

@@ -34,6 +34,7 @@ import { createBiometricsSignature } from "../../../utils/biometrics-util";
 import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
 import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
 import { SCREENS } from "../../../constants/SCREENS";
+import logger from "../../../utils/logger-util";
 
 @connect(
   state => ({
@@ -285,10 +286,13 @@ class VerifyProfile extends Component {
             this.setState({ disableBiometrics: true });
           } else if (
             error.message === BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS ||
-            BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED
+            error.message === BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED
           ) {
             actions.showMessage("error", error.message);
-          } else return;
+          } else {
+            logger.log(error);
+            return;
+          }
         }
       );
     }
