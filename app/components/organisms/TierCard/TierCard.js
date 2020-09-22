@@ -47,7 +47,7 @@ class TierCard extends Component {
       : Number(loan.installments_to_be_paid.total);
     const discountedInterest =
       (1 - loyaltyInfo.tier.loanInterestBonus) * monthly;
-    const savedAmount = monthly - discountedInterest;
+    const savedAmount = -1 * (monthly - discountedInterest);
 
     let title;
     let color;
@@ -67,7 +67,10 @@ class TierCard extends Component {
     return (
       <Card padding={"0 0 0 0"}>
         <View
-          style={[{ borderRadius: isTransaction ? 8 : null }, style.wrapper]}
+          style={[
+            { borderRadius: isTransaction ? 8 : null, backgroundColor: color },
+            style.wrapper,
+          ]}
         >
           <PieProgressBar
             size={"card"}

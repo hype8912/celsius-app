@@ -1,6 +1,5 @@
 // import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -14,7 +13,6 @@ const base = {
     flexDirection: "row",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    backgroundColor: STYLES.COLORS.CELSIUS_BLUE,
   },
   tierText: { flex: 0.9 },
   discount: { padding: 12 },
