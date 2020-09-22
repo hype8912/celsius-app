@@ -91,9 +91,10 @@ async function requestInterceptor(req) {
 }
 
 /**
- * Sets Appsflyer IDs: AFID, IDFA, AAID
+ * Sets Appsflyer IDs: AFID, IDFA, AAID and device id
  */
 async function setAppsflyerHeaders() {
+  let deviceId = store.getState().app.deviceId;
   let AFID = store.getState().app.appsFlyerUID;
   let IDFA = Platform.OS === "ios" && store.getState().app.advertisingId;
   let AAID = Platform.OS === "android" && store.getState().app.advertisingId;
@@ -102,10 +103,17 @@ async function setAppsflyerHeaders() {
     await store.dispatch(actions.setAppsFlyerUID());
     AFID = store.getState().app.appsFlyerUID;
   }
+
+  if (!deviceId) {
+    store.dispatch(actions.setDeviceId());
+    deviceId = store.getState().app.deviceId;
+  }
+
   if (Platform.OS === "android" && !AAID) {
     await store.dispatch(actions.setAdvertisingId());
     AAID = store.getState().app.advertisingId;
   }
+
   if (Platform.OS === "ios" && !IDFA) {
     await store.dispatch(actions.setAdvertisingId());
     IDFA = store.getState().app.advertisingId;
@@ -115,6 +123,7 @@ async function setAppsflyerHeaders() {
     "X-Advertising-AFID": AFID,
     "X-Advertising-IDFA": IDFA,
     "X-Advertising-AAID": AAID,
+    "X-Advertising-DEVICE-ID": deviceId,
   };
 }
 

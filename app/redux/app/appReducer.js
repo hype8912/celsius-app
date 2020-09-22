@@ -51,6 +51,11 @@ export default function appReducer(state = initialState(), action) {
         ...newState,
         advertisingId: action.advertisingId,
       };
+    case ACTIONS.SET_DEVICE_ID:
+      return {
+        ...newState,
+        deviceId: action.deviceId,
+      };
     case ACTIONS.SET_DEVICE_APPSFLYER_UID:
       return {
         ...newState,
