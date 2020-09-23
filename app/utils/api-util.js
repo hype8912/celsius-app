@@ -65,7 +65,7 @@ async function requestInterceptor(req) {
       ...setContentTypeHeaders(req),
       ...setDeviceInfoHeaders(),
       ...(await setAppVersionHeaders()),
-      ...(await setAppsflyerHeaders()),
+      ...(await setDeviceIds()),
       ...setGeolocationHeaders(),
       ...(await setAuthHeaders()),
     };
@@ -91,9 +91,9 @@ async function requestInterceptor(req) {
 }
 
 /**
- * Sets Appsflyer IDs: AFID, IDFA, AAID and device id
+ * Sets marketing and Device IDs: AFID, IDFA, AAID and device id
  */
-async function setAppsflyerHeaders() {
+async function setDeviceIds() {
   let deviceId = store.getState().app.deviceId;
   let AFID = store.getState().app.appsFlyerUID;
   let IDFA = Platform.OS === "ios" && store.getState().app.advertisingId;
