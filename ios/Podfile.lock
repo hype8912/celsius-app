@@ -471,8 +471,12 @@ PODS:
     - React
   - RNSVG (9.13.6):
     - React
+  - RNUxcam (5.2.0):
+    - React
+    - UXCam (~> 3.2.4)
   - RSKImageCropper (2.2.3)
   - SSZipArchive (2.2.3)
+  - UXCam (3.2.5)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -543,6 +547,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNUxcam (from `../node_modules/react-native-ux-cam`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -581,6 +586,7 @@ SPEC REPOS:
     - QBImagePickerController
     - RSKImageCropper
     - SSZipArchive
+    - UXCam
 
 EXTERNAL SOURCES:
   appcenter-analytics:
@@ -709,6 +715,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNUxcam:
+    :path: "../node_modules/react-native-ux-cam"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -808,10 +816,12 @@ SPEC CHECKSUMS:
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
+  RNUxcam: 5fda8c568f9788b78eefc6637d5c95450086d077
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
+  UXCam: 2a1547b070cd8aaef946a954142befe02fa1acb9
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f
 
-PODFILE CHECKSUM: a981a1ef5beaa61a94a8f3f0dfec42f28bcb4895
+PODFILE CHECKSUM: 7edb85c040b255e0224ac8b33020f5e435ce9453
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3
