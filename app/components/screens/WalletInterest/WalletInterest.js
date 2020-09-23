@@ -149,7 +149,6 @@ class WalletInterest extends Component {
 
         <View style={style.container}>
           <PerCoinCelInterestCard />
-
           <TransactionsHistory
             hasFilter={false}
             additionalFilter={{ type: ["interest"], limit: 5 }}

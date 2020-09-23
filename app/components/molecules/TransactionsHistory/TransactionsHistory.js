@@ -37,10 +37,12 @@ class TransactionsHistory extends Component {
     filterOptions: PropTypes.instanceOf(Array),
     additionalFilter: PropTypes.instanceOf(Object),
     hasFilter: PropTypes.bool,
+    hasTitle: PropTypes.bool,
   };
   static defaultProps = {
     margin: "20 0 0 0",
     hasFilter: true,
+    hasTitle: true,
   };
 
   constructor(props) {
@@ -162,13 +164,13 @@ class TransactionsHistory extends Component {
       hasFilter,
       transactions,
       additionalFilter,
+      hasTitle,
       // navigation
     } = this.props;
     const style = TransactionsHistoryStyle();
     const margins = getMargins(margin);
     // const transactionType = navigation.getParam('transactionType') || null
     const transactionsDisplay = this.prepTransactions();
-
     const emptyStateText =
       additionalFilter &&
       additionalFilter.type &&
@@ -201,9 +203,11 @@ class TransactionsHistory extends Component {
           ]}
         >
           <View>
-            <CelText weight="medium" type="H6" margin="0 0 0 0">
-              Transaction history
-            </CelText>
+            {hasTitle && (
+              <CelText weight="medium" type="H6" margin="0 0 0 0">
+                Transaction history
+              </CelText>
+            )}
           </View>
           {hasFilter && this.renderPickerSelect()}
         </View>

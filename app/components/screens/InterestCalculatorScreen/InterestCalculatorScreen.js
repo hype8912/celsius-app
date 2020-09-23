@@ -21,7 +21,7 @@ import { SCREENS } from "../../../constants/SCREENS";
 )
 class InterestCalculatorScreen extends Component {
   static navigationOptions = () => ({
-    title: "Interest calculator",
+    title: "Reward calculator",
     right: "profile",
   });
 
@@ -34,7 +34,7 @@ class InterestCalculatorScreen extends Component {
     switch (purpose) {
       case EMPTY_STATES.COMPLIANCE:
         return {
-          heading: "Calculate a total interest you may earn.",
+          heading: "Calculate a total reward you may earn.",
           text:
             "We apologize for any inconvenience, but due to local laws and regulations, we are unable to work with users from your region.",
         };

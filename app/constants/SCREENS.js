@@ -30,7 +30,7 @@ export const SCREENS = {
   CHANGE_PASSWORD: "ChangePassword",
   CHANGE_PIN: "ChangePin",
   CHOOSE_MARGIN_COLLATERAL_COIN: "ChooseMarginCollateralCoin", // NOTE: do we use this?
-  CHOOSE_PAYMENT_METHOD: ":ChoosePaymentMethod",
+  CHOOSE_PAYMENT_METHOD: "ChoosePaymentMethod",
   COIN_DETAILS: "CoinDetails",
   COMMUNITY: "Community",
   CONFIRM_CAMERA: "ConfirmCamera",
