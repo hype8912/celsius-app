@@ -84,10 +84,10 @@ class ConfirmPrepaymentModal extends Component {
             <CelText align={"center"} margin={"20 0 0 0"} type={"H5"}>
               You are about to pay
             </CelText>
-            <CelText color={buttonStyle.color} align={"center"} type={"H1"}>
+            <CelText align={"center"} type={"H1"}>
               {formatter.crypto(modalData.cryptoAmountToPay, modalData.coin)}
             </CelText>
-            <CelText color={buttonStyle.color} align={"center"}>
+            <CelText align={"center"}>
               {formatter.fiat(modalData.sumToPay, "USD")}
             </CelText>
             <View>

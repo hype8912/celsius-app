@@ -76,11 +76,11 @@ class ConfirmPaymentModal extends Component {
     const amountUsd = walletCoin ? walletCoin.amount_usd : 0;
 
     const sumToPay = cryptoType
-      ? loan.monthly_payment -
-        (loan.monthly_payment -
+      ? loan.installments_to_be_paid.total -
+        (loan.installments_to_be_paid.total -
           (1 - loyaltyInfo.tier.loanInterestBonus) *
-            Number(loan.monthly_payment))
-      : loan.monthly_payment;
+            Number(loan.installments_to_be_paid.total))
+      : loan.installments_to_be_paid.total;
     const cryptoAmountToPay = walletCoin
       ? (walletCoin.amount.toNumber() / walletCoin.amount_usd.toNumber()) *
         sumToPay

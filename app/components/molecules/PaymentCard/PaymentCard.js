@@ -204,12 +204,17 @@ class PaymentCard extends Component {
     );
   };
 
-  getTypeOfPaymentTitle = reason => {
+  getTypeOfPaymentTitle = (reason, loan) => {
+    const amountOfInstalments =
+      loan.installments_to_be_paid.installments.length;
+    const text =
+      amountOfInstalments > 1 ? `${amountOfInstalments} Months` : `Monthly`;
+
     switch (reason) {
       case LOAN_PAYMENT_REASONS.INTEREST:
       case LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT:
       case LOAN_PAYMENT_REASONS.MANUAL_INTEREST:
-        return "Monthly Interest Payment Amount: ";
+        return `${text} Interest Payment Amount: `;
       case LOAN_PAYMENT_REASONS.MARGIN_CALL:
         return "Collateral Amount Due: ";
       case LOAN_PAYMENT_REASONS.PRINCIPAL:
@@ -390,7 +395,7 @@ class PaymentCard extends Component {
             align={"left"}
             margin={"0 0 10 0"}
           >
-            {this.getTypeOfPaymentTitle(reason)}
+            {this.getTypeOfPaymentTitle(reason, loan)}
           </CelText>
           <View
             key={coin.name}
@@ -415,13 +420,13 @@ class PaymentCard extends Component {
                 <View>
                   <CelText weight={"600"} align="left" type="H3">
                     {`${formatter.crypto(
-                      Number(loan.monthly_payment) /
+                      Number(loan.installments_to_be_paid.total) /
                         currency.market_quotes_usd.price,
                       currency.short
                     )}`}
                   </CelText>
                   <CelText weight={"300"} align="left">
-                    {`$ ${loan.monthly_payment} USD`}
+                    {`$ ${loan.installments_to_be_paid.total} USD`}
                   </CelText>
                 </View>
               ) : (

@@ -43,11 +43,11 @@ class TierCard extends Component {
 
     const isTransaction = !_.isEmpty(transaction);
     const monthly = isTransaction
-      ? Number(transaction.loan_data.monthly_interest_payment)
-      : Number(loan.monthly_payment);
+      ? Number(transaction.amount_usd)
+      : Number(loan.installments_to_be_paid.total);
     const discountedInterest =
       (1 - loyaltyInfo.tier.loanInterestBonus) * monthly;
-    const savedAmount = monthly - discountedInterest;
+    const savedAmount = -1 * (monthly - discountedInterest);
 
     let title;
     let color;
@@ -67,7 +67,10 @@ class TierCard extends Component {
     return (
       <Card padding={"0 0 0 0"}>
         <View
-          style={[{ borderRadius: isTransaction ? 8 : null }, style.wrapper]}
+          style={[
+            { borderRadius: isTransaction ? 8 : null, backgroundColor: color },
+            style.wrapper,
+          ]}
         >
           <PieProgressBar
             size={"card"}
@@ -111,7 +114,7 @@ class TierCard extends Component {
             <CelText weight={"300"}>
               Your monthly interest payment will decrease from{" "}
               <CelText style={{ textDecorationLine: "line-through" }}>
-                {formatter.usd(loan.monthly_payment)}
+                {formatter.usd(loan.installments_to_be_paid.total)}
               </CelText>{" "}
               to <CelText>{formatter.usd(discountedInterest)}</CelText> when
               paying with CEL.

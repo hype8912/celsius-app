@@ -84,7 +84,7 @@ class TransactionDetailsLoans extends Component {
             </View>
           )}
 
-          {transaction.type.includes("UNLOCKED") ? (
+          {TRANSACTION_TYPES.COLLATERAL_UNLOCKED.includes(transaction.type) ? (
             <Card>
               <CelText align={"left"} type={"H5"} weight={"600"}>
                 Successfully Completed Loan
@@ -95,7 +95,7 @@ class TransactionDetailsLoans extends Component {
             </Card>
           ) : null}
 
-          {transaction.type.includes("LOCKED") ? (
+          {TRANSACTION_TYPES.COLLATERAL_LOCKED.includes(transaction.type) ? (
             <View style={{ marginTop: 20 }}>
               <View>
                 <View
