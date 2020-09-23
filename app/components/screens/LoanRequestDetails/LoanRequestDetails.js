@@ -21,7 +21,6 @@ import TxBasicCardSection from "../../atoms/TxBasicCardSection/TxBasicCardSectio
 import TxCardSection from "../../atoms/TxCardSection/TxCardSection";
 import { getColor } from "../../../utils/styles-util";
 import { SCREENS } from "../../../constants/SCREENS";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -228,19 +227,13 @@ class LoanRequestDetails extends Component {
           <View style={style.status}>
             <Icon
               name={"TransactionLoan"}
-              fill={
-                getColor(activeLoan.uiProps.color) ||
-                getColor(COLOR_KEYS.PRIMARY_BUTTON)
-              }
+              fill={getColor(activeLoan.uiProps.color)}
               width={"25"}
               height={"25"}
             />
             <CelText
               type={"H5"}
-              color={
-                getColor(activeLoan.uiProps.color) ||
-                getColor(COLOR_KEYS.PRIMARY_BUTTON)
-              }
+              color={getColor(activeLoan.uiProps.color)}
               margin={"0 5 0 0"}
             >
               {activeLoan.uiProps.displayText}
