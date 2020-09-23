@@ -7,7 +7,7 @@ import MyCelInterestTabStyle from "./MyCelInterestTab.styles";
 import CelText from "../../atoms/CelText/CelText";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import PerCoinCellInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
-import { isUSCitizen } from "../../../utils/user-util/user-util";
+import { isUSResident } from "../../../utils/user-util/user-util";
 
 @connect(
   state => ({
@@ -19,13 +19,13 @@ class MyCelInterestTab extends Component {
   rewardsCopy = () => {
     const style = MyCelInterestTabStyle();
 
-    if (isUSCitizen()) {
+    if (isUSResident()) {
       return (
         <View style={{ marginTop: 30 }}>
           <CelText align={"center"} type={"H4"} weight={"300"}>
-            Unfortunately, Americans can not earn in CEL token at this time.
-            Enjoy your in-kind rewards, and HODL CEL to get discounts on your
-            loans!
+            Unfortunately, American residents can not earn in CEL token at this
+            time. Enjoy your in-kind rewards, and HODL CEL to get discounts on
+            your loans!
           </CelText>
         </View>
       );
@@ -66,7 +66,7 @@ class MyCelInterestTab extends Component {
             </View>
             {this.rewardsCopy()}
           </View>
-          {!isUSCitizen() && (
+          {!isUSResident() && (
             <View style={style.wrapper}>
               <CelText align={"center"} type={"H4"} weight={"300"}>
                 Based on your{" "}
