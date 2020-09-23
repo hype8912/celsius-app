@@ -1,8 +1,8 @@
 /* eslint-disable react/no-multi-comp */
 import React from "react";
 import RNUxcam from "react-native-ux-cam";
-import loggerUtil from "./logger-util";
 import Constants from "../../constants";
+import mixpanelAnalytics from "./mixpanel-analytics";
 
 const { UXCAM_APP_KEY } = Constants;
 
@@ -13,7 +13,7 @@ async function initUxCam() {
     await RNUxcam.optIntoSchematicRecordings();
     await RNUxcam.startWithKey(UXCAM_APP_KEY);
   } catch (err) {
-    loggerUtil.log(err);
+    mixpanelAnalytics.logError("initUxCam", err);
   }
 }
 
@@ -23,7 +23,7 @@ async function startRecording() {
   try {
     await RNUxcam.startWithKey(UXCAM_APP_KEY);
   } catch (err) {
-    loggerUtil.log(err);
+    mixpanelAnalytics.logError("startRecording", err);
   }
 }
 
@@ -33,7 +33,7 @@ async function urlForCurrentUser() {
   try {
     url = await RNUxcam.urlForCurrentUser();
   } catch (err) {
-    loggerUtil.log(err);
+    mixpanelAnalytics.logError("urlForCurrentUser", err);
   }
 
   return url;
@@ -45,7 +45,7 @@ async function urlForCurrentSession() {
   try {
     url = await RNUxcam.urlForCurrentSession();
   } catch (err) {
-    loggerUtil.log(err);
+    mixpanelAnalytics.logError("urlForCurrentSession", err);
   }
 
   return url;
@@ -55,7 +55,7 @@ async function stopRecordingAndUploadData() {
   try {
     await RNUxcam.stopSessionAndUploadData();
   } catch (err) {
-    loggerUtil.log(err);
+    mixpanelAnalytics.logError("stopRecordingAndUploadData", err);
   }
 }
 
