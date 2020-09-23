@@ -7,11 +7,11 @@
 Open the Xcode project file, and drag MF_Base64Additions.m/.h into your project.
 
 In files where you want to use Base64 encoding/decoding, simply include the header file and use one of the provided NSData or NSString additions.
-  
+
 Example use:
 #import "MF_Base64Additions.h"
-  
- NSString *helloWorld = @"Hello World";
+
+NSString *helloWorld = @"Hello World";
 NSString *helloInBase64 = [helloWorld base64String];
 NSString \*helloDecoded = [NSString stringFromBase64String:helloInBase64];
 

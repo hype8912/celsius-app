@@ -69,7 +69,12 @@ class Home extends Component {
       }
 
       const hasAlreadyVerified = apiUtil.wereSuccessfulInHistory(
-        [API.CHECK_PIN, API.CHECK_TWO_FACTOR, API.SET_PIN],
+        [
+          API.CHECK_PIN,
+          API.CHECK_TWO_FACTOR,
+          API.SET_PIN,
+          API.CHECK_BIOMETRICS,
+        ],
         15
       );
       if (hasAlreadyVerified) {

@@ -23,6 +23,7 @@ export * from "./compliance/complianceActions";
 export * from "./contacts/contactsActions";
 export * from "./user/userDataActions";
 export * from "./userSecurity/userSecurityActions";
+export * from "./biometrics/biometricsActions";
 export * from "./user/userProfileActions";
 export * from "./hodl/hodlActions";
 export * from "./animations/animationsActions";

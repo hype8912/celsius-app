@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Clipboard, BackHandler } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Clipboard,
+  BackHandler,
+  Image,
+} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationEvents } from "react-navigation";
@@ -10,7 +16,13 @@ import VerifyProfileStyle from "./VerifyProfile.styles";
 import CelText from "../../atoms/CelText/CelText";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { KEYPAD_PURPOSES } from "../../../constants/UI";
+import {
+  BIOMETRIC_TYPES,
+  BIOMETRIC_TEXT,
+  BIOMETRIC_ERRORS,
+  KEYPAD_PURPOSES,
+  MODALS,
+} from "../../../constants/UI";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -18,6 +30,9 @@ import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { STORYBOOK } from "../../../../dev-settings.json";
+import { createBiometricsSignature } from "../../../utils/biometrics-util";
+import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
+import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
 import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
@@ -28,6 +43,8 @@ import { SCREENS } from "../../../constants/SCREENS";
     previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
     theme: state.user.appSettings.theme,
+    biometrics: state.biometrics.biometrics,
+    deviceId: state.app.deviceId,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -52,6 +69,7 @@ class VerifyProfile extends Component {
       verificationError: false,
       showLogOutBtn: false,
       hasSixDigitPin: false,
+      disableBiometrics: false,
     };
   }
 
@@ -62,16 +80,19 @@ class VerifyProfile extends Component {
     );
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { navigation, actions, user } = this.props;
     const activeScreen = navigation.getParam("activeScreen");
     const hasSixDigitPin = navigation.getParam("hasSixDigitPin");
 
     actions.updateFormField("loading", false);
     actions.getPreviousPinScreen(activeScreen);
+    actions.getBiometricType();
+
     if (hasSixDigitPin || user.has_six_digit_pin)
       this.setState({ hasSixDigitPin: true });
     if (activeScreen) this.props.navigation.setParams({ hideBack: true });
+    await this.handleBiometrics();
   };
 
   componentWillUpdate(nextProps) {
@@ -99,12 +120,17 @@ class VerifyProfile extends Component {
 
   onCheckSuccess = async () => {
     this.setState({ loading: true });
-
     const { navigation, actions, previousScreen, deepLinkData } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
     const activeScreen = navigation.getParam("activeScreen");
 
     actions.updateFormField("loading", true);
+
+    // If biometrics is changed on device, disable biometrics on BE for user
+    if (this.state.disableBiometrics) {
+      actions.disableBiometrics();
+      this.setState({ disableBiometrics: false });
+    }
 
     // Check if app is opened from DeepLink
     if (!_.isEmpty(deepLinkData)) {
@@ -118,7 +144,6 @@ class VerifyProfile extends Component {
       if (activeScreen === SCREENS.VERIFY_PROFILE) {
         this.setState({ loading: false });
         actions.updateFormField("loading", false);
-
         actions.resetToScreen(previousScreen || SCREENS.WALLET_LANDING);
         return;
       }
@@ -226,6 +251,52 @@ class VerifyProfile extends Component {
     }
   };
 
+  onPressBiometric = async () => {
+    const { actions, navigation, user } = this.props;
+    const biometricsEnabled =
+      navigation.getParam("biometrics_enabled") || user.biometrics_enabled; // from 426 or Redux // check this!!!!
+
+    if (!biometricsEnabled) {
+      actions.openModal(MODALS.BIOMETRICS_AUTHENTICATION_MODAL);
+    } else {
+      await this.handleBiometrics();
+    }
+  };
+
+  handleBiometrics = async () => {
+    const { actions, navigation, user } = this.props;
+
+    const biometricsEnabled =
+      navigation.getParam("biometrics_enabled") || user.biometrics_enabled;
+    const hideBiometrics = navigation.getParam("hideBiometrics");
+
+    if (biometricsEnabled && !hideBiometrics) {
+      await createBiometricsSignature(
+        "Verification required",
+        () => {
+          this.setState({
+            loading: true,
+            disableBiometrics: false,
+          });
+          actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
+        },
+        error => {
+          if (error.message === BIOMETRIC_ERRORS.KEY_PERMANENTLY_INVALIDATED) {
+            actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
+            this.setState({ disableBiometrics: true });
+          } else if (
+            error.message === BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS ||
+            error.message === BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED
+          ) {
+            actions.showMessage("error", error.message);
+          } else {
+            return;
+          }
+        }
+      );
+    }
+  };
+
   renderDots = length => {
     const { actions } = this.props;
     const { verificationError, value } = this.state;
@@ -265,6 +336,7 @@ class VerifyProfile extends Component {
         </CelText>
 
         {this.renderDots()}
+        {this.renderBiometrics()}
 
         {loading ? (
           <View
@@ -302,6 +374,7 @@ class VerifyProfile extends Component {
         </CelText>
 
         {this.renderDots(hasSixDigitPin ? 6 : 4)}
+        {this.renderBiometrics()}
         <View>
           <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
         </View>
@@ -321,9 +394,45 @@ class VerifyProfile extends Component {
     );
   }
 
+  renderBiometrics() {
+    const { biometrics, navigation, deviceId } = this.props;
+    const style = VerifyProfileStyle();
+    const hideBiometrics = navigation.getParam("hideBiometrics");
+    let biometricCopy;
+
+    if (hideBiometrics || !deviceId) return;
+    if (!biometrics || !biometrics.available) return;
+
+    if (biometrics && biometrics.available) {
+      if (biometrics.biometryType === BIOMETRIC_TYPES.FACE_ID) {
+        biometricCopy = {
+          image: require("../../../../assets/images/face-recognition.png"),
+          text: BIOMETRIC_TEXT.FACE_ID,
+        };
+      } else {
+        biometricCopy = {
+          image: require("../../../../assets/images/fingerprint.png"),
+          text: BIOMETRIC_TEXT.TOUCH_ID,
+        };
+      }
+    }
+
+    return (
+      <TouchableOpacity
+        style={style.biometricsWrapper}
+        onPress={this.onPressBiometric}
+      >
+        <Image source={biometricCopy.image} style={style.biometricsImage} />
+        <CelText margin="0 0 0 10" align="center" type="H4">
+          {biometricCopy.text}
+        </CelText>
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     const { value } = this.state;
-    const { actions, navigation, appState } = this.props;
+    const { actions, navigation, appState, biometrics } = this.props;
     const hideBack = navigation.getParam("hideBack");
 
     const shouldShow2FA = this.shouldShow2FA();
@@ -353,6 +462,11 @@ class VerifyProfile extends Component {
             purpose={KEYPAD_PURPOSES.VERIFICATION}
           />
         </View>
+        <BiometricsAuthenticationModal actions={actions} />
+        <BiometricsNotRecognizedModal
+          actions={actions}
+          biometrics={biometrics}
+        />
       </RegularLayout>
     );
   }

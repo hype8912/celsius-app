@@ -169,7 +169,7 @@ const getData = item => {
   if (item.action === "withdraw-info") {
     return {
       name: "CaretUp",
-      color: `${getColor(COLOR_KEYS.NEGATIVE_STATE)}`,
+      color: getColor(COLOR_KEYS.NEGATIVE_STATE),
       action: "Withdraw",
     };
   }
@@ -183,15 +183,29 @@ const getData = item => {
   if (item.action === "confirm-withdrawal-request") {
     return {
       name: "CaretUp",
-      color: `${getColor(COLOR_KEYS.POSITIVE_STATE)}`,
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
       action: "Withdraw confirm request",
     };
   }
   if (item.action === "withdrawal-address-change") {
     return {
       name: "QrCode",
-      color: `${getColor(COLOR_KEYS.PRIMARY_BUTTON)}`,
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
       action: "Withdrawal address change",
+    };
+  }
+  if (item.action === "biometrics-activated") {
+    return {
+      name: "Fingerprint",
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+      action: "Biometrics activated",
+    };
+  }
+  if (item.action === "biometrics-deactivated") {
+    return {
+      name: "Fingerprint",
+      color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+      action: "Biometrics deactivated",
     };
   }
 };

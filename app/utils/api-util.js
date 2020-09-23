@@ -1,11 +1,11 @@
 import axios from "axios";
-import moment from "moment";
 import qs from "qs";
 import r from "jsrsasign";
 import { Platform } from "react-native";
 import { Base64 } from "js-base64";
 import DeviceInfo from "react-native-device-info";
 import CodePush from "react-native-code-push";
+import moment from "moment";
 
 import Constants from "../../constants";
 import { getSecureStoreKey } from "../utils/expo-storage";
@@ -64,7 +64,7 @@ async function requestInterceptor(req) {
       ...setContentTypeHeaders(req),
       ...setDeviceInfoHeaders(),
       ...(await setAppVersionHeaders()),
-      ...(await setAppsflyerHeaders()),
+      ...(await setDeviceIds()),
       ...setGeolocationHeaders(),
       ...(await setAuthHeaders()),
     };
@@ -90,9 +90,10 @@ async function requestInterceptor(req) {
 }
 
 /**
- * Sets Appsflyer IDs: AFID, IDFA, AAID
+ * Sets marketing and Device IDs: AFID, IDFA, AAID and device id
  */
-async function setAppsflyerHeaders() {
+async function setDeviceIds() {
+  let deviceId = store.getState().app.deviceId;
   let AFID = store.getState().app.appsFlyerUID;
   let IDFA = Platform.OS === "ios" && store.getState().app.advertisingId;
   let AAID = Platform.OS === "android" && store.getState().app.advertisingId;
@@ -101,10 +102,17 @@ async function setAppsflyerHeaders() {
     await store.dispatch(actions.setAppsFlyerUID());
     AFID = store.getState().app.appsFlyerUID;
   }
+
+  if (!deviceId) {
+    store.dispatch(actions.setDeviceId());
+    deviceId = store.getState().app.deviceId;
+  }
+
   if (Platform.OS === "android" && !AAID) {
     await store.dispatch(actions.setAdvertisingId());
     AAID = store.getState().app.advertisingId;
   }
+
   if (Platform.OS === "ios" && !IDFA) {
     await store.dispatch(actions.setAdvertisingId());
     IDFA = store.getState().app.advertisingId;
@@ -114,6 +122,7 @@ async function setAppsflyerHeaders() {
     "X-Advertising-AFID": AFID,
     "X-Advertising-IDFA": IDFA,
     "X-Advertising-AAID": AAID,
+    "X-Advertising-DEVICE-ID": deviceId,
   };
 }
 
@@ -382,6 +391,7 @@ async function handle426(err, reqConfig) {
           // PIN || 2FA
           verificationType: err.show,
           hasSixDigitPin: err.has_six_digit_pin,
+          biometrics_enabled: err.biometrics_enabled,
           onSuccess: async () => {
             try {
               // fetch failed request again after verification successful

@@ -9,7 +9,7 @@ import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { HODL_STATUS } from "../../../constants/UI";
+import { BIOMETRIC_ERRORS, HODL_STATUS } from "../../../constants/UI";
 import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
@@ -26,6 +26,8 @@ import { SCREENS } from "../../../constants/SCREENS";
     kycStatus: state.user.profile.kyc,
     formData: state.forms.formData,
     hodlStatus: state.hodl.hodlStatus,
+    biometrics: state.biometrics.biometrics,
+    deviceId: state.app.deviceId,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -164,11 +166,18 @@ class SecuritySettings extends Component {
       user,
       kycStatus,
       securityOverview,
+      biometrics,
+      deviceId,
     } = this.props;
 
     const Switcher2FA = this.rightSwitch2FA;
     const SwitcherHodl = this.rightSwitchHodl;
     const rightText = this.securityOverallScore();
+    const shouldRenderBiometrics = !!(
+      deviceId &&
+      ((biometrics && biometrics.available) ||
+        (biometrics && biometrics.error === BIOMETRIC_ERRORS.NONE_ENROLLED))
+    );
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
 
     return (
@@ -211,6 +220,17 @@ class SecuritySettings extends Component {
             }
           >
             Change PIN
+          </IconButton>
+        )}
+
+        {shouldRenderBiometrics && (
+          <IconButton
+            margin="0 0 20 0"
+            onPress={() =>
+              actions.navigateTo(SCREENS.BIOMETRICS_AUTHENTICATION)
+            }
+          >
+            Biometric Authentication
           </IconButton>
         )}
 

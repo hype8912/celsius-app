@@ -355,6 +355,8 @@ PODS:
   - react-native-appsflyer (1.4.7):
     - AppsFlyerFramework (~> 4.10.4)
     - React
+  - react-native-biometrics (2.1.4):
+    - React
   - react-native-blur (0.8.0):
     - React
   - react-native-branch (4.2.1):
@@ -396,7 +398,7 @@ PODS:
   - react-native-mixpanel (1.2.4):
     - Mixpanel (= 3.6.0)
     - React
-  - react-native-netinfo (4.7.0):
+  - react-native-netinfo (5.8.1):
     - React
   - react-native-slider (2.0.9):
     - React
@@ -508,6 +510,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-appsflyer (from `../node_modules/react-native-appsflyer`)
+  - react-native-biometrics (from `../node_modules/react-native-biometrics`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-branch (from `../node_modules/react-native-branch`)
   - react-native-camera (from `../node_modules/react-native-camera`)
@@ -640,6 +643,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-appsflyer:
     :path: "../node_modules/react-native-appsflyer"
+  react-native-biometrics:
+    :path: "../node_modules/react-native-biometrics"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
   react-native-branch:
@@ -775,6 +780,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 8dfb73b987afa9324e4009bdce62a18ce23d983c
   React-jsinspector: d15478d0a8ada19864aa4d1cc1c697b41b3fa92f
   react-native-appsflyer: b601a021165240426b58d3e67cfeb503ecde1c3f
+  react-native-biometrics: 9d3306e5d29c3bc4e6a3c912d759a94e76a2f683
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-branch: cc611a2d0e7e6c7c4cafebc8e59065b89c38002b
   react-native-camera: 44202c8bde2c927560e80444740602ff746028c6
@@ -785,7 +791,7 @@ SPEC CHECKSUMS:
   react-native-idfa: 7a029b76f4d5dff76efa6fe4b86be8fadd71c49f
   react-native-image-editor: 2a796811bc48babcf2f1594b15d6bfe6968e7e63
   react-native-mixpanel: 4a339265cdbf30b4b3c3dd63f154cf5a073d073b
-  react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
+  react-native-netinfo: 73d0d151215683d128908796063e344030ef20fa
   react-native-slider: e51492f1264d882a8815b71c5870f8978e52887d
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-webview: db4682f1698ab4b17a5e88f951031d203ff8aea8

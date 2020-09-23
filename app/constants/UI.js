@@ -42,6 +42,8 @@ const MODALS = {
   SEPARATOR_INFO_MODAL: "SEPARATOR_INFO_MODAL",
   POA_WARNING_MODAL: "POA_WARNING_MODAL",
   INTRODUCE_NEW_THEME_MODAL: "INTRODUCE_NEW_THEME_MODAL",
+  BIOMETRICS_AUTHENTICATION_MODAL: "BIOMETRICS_AUTHENTICATION_MODAL",
+  BIOMETRICS_NOT_RECOGNIZED_MODAL: "BIOMETRICS_NOT_RECOGNIZED_MODAL",
   PICKER_MODAL: "PICKER_MODAL",
 };
 
@@ -120,6 +122,10 @@ const WALLET_LANDING_VIEW_TYPES = {
 };
 
 const FAB_TYPE = ["main", "support", "hide"];
+
+const DONT_SHOW_AGAIN = {
+  BIOMETRIC_BANNER: "BIOMETRIC_BANNER",
+};
 
 const WELCOME_MESSAGES = [
   {
@@ -260,6 +266,32 @@ const CEL_PAY_TYPES = {
   FRIEND: "FRIEND",
 };
 
+const BIOMETRIC_TYPES = {
+  TOUCH_ID: "TouchID",
+  FACE_ID: "FaceID",
+  BIOMETRICS: "Biometrics",
+};
+
+const BIOMETRIC_TEXT = {
+  TOUCH_ID: "Touch ID",
+  FINGERPRINT: "Fingerprint",
+  FACE_ID: "Face ID",
+};
+
+const BIOMETRIC_ERRORS = {
+  TOO_MANY_ATTEMPTS_SENSOR_DISABLED:
+    "Error: Too many attempts. Fingerprint sensor disabled",
+  TOO_MANY_ATTEMPTS: "Too many attempts. Try again later.",
+  KEY_PERMANENTLY_INVALIDATED:
+    "Error generating signature: Key permanently invalidated",
+  NO_IDENTITIES_ARE_ENROLLED:
+    'Error Domain=com.apple.LocalAuthentication Code=-7 "No identities are enrolled." UserInfo={NSLocalizedDescription=No identities are enrolled.}',
+  KEY_NOT_FOUND: "Key not found: -128",
+  NO_HARDWARE: "BIOMETRIC_ERROR_NO_HARDWARE",
+  HW_UNAVAILABLE: "BIOMETRIC_ERROR_HW_UNAVAILABLE",
+  NONE_ENROLLED: "BIOMETRIC_ERROR_NONE_ENROLLED",
+};
+
 export {
   KEYBOARD_TYPE,
   MODALS,
@@ -280,4 +312,8 @@ export {
   TRANSACTION_FILTER_TYPE,
   CEL_PAY_TYPES,
   HODL_STATUS,
+  BIOMETRIC_TYPES,
+  BIOMETRIC_TEXT,
+  BIOMETRIC_ERRORS,
+  DONT_SHOW_AGAIN,
 };
