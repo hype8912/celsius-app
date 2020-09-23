@@ -50,7 +50,7 @@ class CoinGridCard extends Component {
 
   coinCardEmpty = () => (
     <View>
-      <CelText weight="600" type="H3" margin="3 0 3 0">
+      <CelText hideFromRecording weight="600" type="H3" margin="3 0 3 0">
         {formatter.usd(0)}
       </CelText>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -70,6 +70,7 @@ class CoinGridCard extends Component {
   coinCardFull = coin => (
     <Fragment>
       <Counter
+        hideFromRecording
         color={getColor(COLOR_KEYS.HEADLINE)}
         weight="600"
         type="H3"
@@ -77,7 +78,7 @@ class CoinGridCard extends Component {
         number={coin.amount_usd}
         usd
       />
-      <CelText weight="300" type="H7">
+      <CelText hideFromRecording weight="300" type="H7">
         {formatter.crypto(coin.amount, coin.short)}
       </CelText>
     </Fragment>
@@ -121,6 +122,7 @@ class CoinGridCard extends Component {
                 </CelText>
                 {!_.isEmpty(interestRate) && interestRate.eligible && (
                   <CelText
+                    hideFromRecording
                     color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                     type="H7"
                   >

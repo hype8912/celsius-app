@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import CelInputStyle from "./CelInput.styles";
+import { hideComponentWithRefFromRecording } from "../../../utils/uxcam-util";
 
 @connect(
   () => ({}),
@@ -24,7 +25,6 @@ class CelInput extends Component {
       "text-area",
     ]),
     autoFocus: PropTypes.bool,
-    // autoComplete: // android only
     disabled: PropTypes.bool,
     maxLenght: PropTypes.number,
     placeholder: PropTypes.string,
@@ -58,6 +58,7 @@ class CelInput extends Component {
     multiline: PropTypes.bool,
     numberOfLines: PropTypes.number,
     debounce: PropTypes.bool,
+    hideFromRecording: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -72,6 +73,7 @@ class CelInput extends Component {
     multiline: false,
     numberOfLines: 1,
     debounce: false,
+    hideFromRecording: false,
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -193,4 +195,4 @@ class CelInput extends Component {
   }
 }
 
-export default CelInput;
+export default hideComponentWithRefFromRecording(CelInput);

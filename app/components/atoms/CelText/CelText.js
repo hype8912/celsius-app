@@ -10,6 +10,7 @@ import {
 } from "../../../utils/styles-util";
 import CelTextStyle from "./CelText.styles";
 import { THEMES } from "../../../constants/UI";
+import { hideComponentFromRecording } from "../../../utils/uxcam-util";
 
 class CelText extends Component {
   static propTypes = {
@@ -50,7 +51,9 @@ class CelText extends Component {
     theme: PropTypes.oneOf(Object.values(THEMES)),
     link: PropTypes.bool,
     underline: PropTypes.bool,
+    hideFromRecording: PropTypes.bool,
   };
+
   static defaultProps = {
     type: "H5",
     margin: "0 0 0 0",
@@ -61,13 +64,13 @@ class CelText extends Component {
     strikethrough: false,
     link: false,
     underline: false,
+    hideFromRecording: false,
   };
 
   getFontSize = () => {
     const { type, font, size } = this.props;
     const baseFontFamily = font || getThemeFontFamily();
 
-    // NOTE(fj): Check usage of size
     const fontSize = size
       ? { fontSize: getScaledFont(size), lineHeight: getScaledFont(size) }
       : { fontSize: getFontSize(type, baseFontFamily) };
@@ -86,7 +89,6 @@ class CelText extends Component {
     const fontWeightType = weight || this.getFontWeightForType(type);
     let fontFamily = getFontFamily(fontWeightType, font);
 
-    // NOTE(fj): Pangram doesn't have italic text
     if (italic && getThemeFontFamily() === "Barlow") {
       fontFamily =
         fontFamily !== "Barlow-Regular"
@@ -144,7 +146,6 @@ class CelText extends Component {
     ];
   };
 
-  // Greatest Bolognese Ever! CN-4818
   parseText() {
     const { children } = this.props;
 
@@ -164,13 +165,14 @@ class CelText extends Component {
   render() {
     const { style, allCaps, onPress } = this.props;
     const fontStyle = this.getFontStyle();
+    const text = allCaps ? this.parseText().toUpperCase() : this.parseText();
 
     return (
       <Text style={[fontStyle, style]} onPress={onPress}>
-        {allCaps ? this.parseText().toUpperCase() : this.parseText()}
+        {text}
       </Text>
     );
   }
 }
 
-export default CelText;
+export default hideComponentFromRecording(CelText);

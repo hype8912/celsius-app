@@ -16,6 +16,10 @@ import {
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { navigateBack, navigateTo } from "../nav/navActions";
 import { SCREENS } from "../../constants/SCREENS";
+import {
+  startRecording,
+  stopRecordingAndUploadData,
+} from "../../utils/uxcam-util";
 
 export {
   loadCelsiusAssets,
@@ -97,8 +101,7 @@ function handleAppStateChange(nextAppState) {
           );
         }
         mixpanelAnalytics.sessionStarted("Foreground");
-        // Fix for CN-4253, CN-4235, CN-4205
-        // dispatch(getGeolocation());
+        startRecording();
       }
 
       if (
@@ -125,6 +128,7 @@ function handleAppStateChange(nextAppState) {
         }
 
         mixpanelAnalytics.sessionEnded("Background");
+        stopRecordingAndUploadData();
       }
     }
 
