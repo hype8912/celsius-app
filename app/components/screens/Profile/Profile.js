@@ -12,11 +12,10 @@ import ReferralSendModal from "../../modals/ReferralSendModal/ReferralSendModal"
 import RegisterPromoCodeModal from "../../modals/RegisterPromoCodeModal/RegisterPromoCodeModal";
 import CelButton from "../../atoms/CelButton/CelButton";
 import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
-import appUtil from "../../../utils/app-util";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
-import { hasPassedKYC } from "../../../utils/user-util";
+import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import ProfileStyle from "./Profile.styles";
 import Icon from "../../atoms/Icon/Icon";
 import Constants from "../../../../constants";
@@ -24,6 +23,8 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
+import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -49,7 +50,6 @@ class Profile extends Component {
     super(props);
     this.state = {
       updatingTaxInfo: false,
-      revisionId: "",
     };
   }
 
@@ -58,9 +58,6 @@ class Profile extends Component {
     actions.profileTaxpayerInfo();
     actions.getUserAppSettings();
     this.initForm(user);
-
-    const appVersion = await appUtil.getRevisionId();
-    this.setState({ revisionId: appVersion.revisionId });
   }
 
   componentDidUpdate(prevProps) {
@@ -105,7 +102,6 @@ class Profile extends Component {
       kycStatus,
       callsInProgress,
     } = this.props;
-    const { revisionId } = this.state;
     const style = ProfileStyle();
     const { ENV } = Constants;
 
@@ -158,7 +154,7 @@ class Profile extends Component {
                 {user.last_name}
               </CelText>
               <TouchableOpacity
-                onPress={() => actions.navigateTo("ChangeAvatar")}
+                onPress={() => actions.navigateTo(SCREENS.CHANGE_AVATAR)}
               >
                 <CelText link margin="10 0 0 0">
                   Change photo
@@ -186,14 +182,14 @@ class Profile extends Component {
 
           <IconButton
             icon={"Couple"}
-            onPress={() => actions.navigateTo("PersonalInformation")}
+            onPress={() => actions.navigateTo(SCREENS.PERSONAL_INFORMATION)}
           >
             Personal Information
           </IconButton>
 
           <ExpandableItem heading={"SETTINGS"} isExpanded margin={"0 0 10 0"}>
             <IconButton
-              onPress={() => actions.navigateTo("SecuritySettings")}
+              onPress={() => actions.navigateTo(SCREENS.SECURITY_SETTINGS)}
               margin="20 0 20 0"
               icon="Security"
             >
@@ -201,7 +197,7 @@ class Profile extends Component {
             </IconButton>
             {hasPassedKYC() && (
               <IconButton
-                onPress={() => actions.navigateTo("WalletSettings")}
+                onPress={() => actions.navigateTo(SCREENS.WALLET_SETTINGS)}
                 margin="0 0 20 0"
                 icon="WalletSettings"
               >
@@ -210,7 +206,7 @@ class Profile extends Component {
             )}
             {hasPassedKYC() && (
               <IconButton
-                onPress={() => actions.navigateTo("ApiAuthorization")}
+                onPress={() => actions.navigateTo(SCREENS.API_AUTHORIZATION)}
                 margin="0 0 20 0"
                 icon="Api"
               >
@@ -218,7 +214,7 @@ class Profile extends Component {
               </IconButton>
             )}
             <IconButton
-              onPress={() => actions.navigateTo("Appearance")}
+              onPress={() => actions.navigateTo(SCREENS.APPEARANCE)}
               margin="0 0 20 0"
               icon="Appearance"
             >
@@ -317,16 +313,14 @@ class Profile extends Component {
             >
               See Terms of Use
             </CelButton>
-            <CelText weight="light" align="center" type="H7">
-              {`App Version: ${revisionId}`}
-            </CelText>
+            <BuildVersion />
           </View>
 
           {ENV === "STAGING" ? (
             <CelButton
               margin="10 0 0 0"
               basic
-              onPress={() => actions.navigateTo("Storybook")}
+              onPress={() => actions.navigateTo(SCREENS.STORYBOOK)}
             >
               Open Storybook
             </CelButton>

@@ -1,5 +1,5 @@
 import { AsyncStorage } from "react-native";
-import loggerUtil from "./logger-util";
+import mixpanelAnalytics from "./mixpanel-analytics";
 
 export { setSecureStoreKey, getSecureStoreKey, deleteSecureStoreKey };
 
@@ -16,7 +16,7 @@ async function setSecureStoreKey(key, value) {
   try {
     return await AsyncStorage.setItem(key, value);
   } catch (error) {
-    loggerUtil.err(error);
+    mixpanelAnalytics.logError("setSecureStoreKey", error);
     return null;
   }
 }
@@ -33,7 +33,7 @@ async function getSecureStoreKey(key) {
   try {
     return await AsyncStorage.getItem(key);
   } catch (error) {
-    loggerUtil.err(error);
+    mixpanelAnalytics.logError("getSecureStoreKey", error);
     return null;
   }
 }
@@ -49,7 +49,7 @@ async function deleteSecureStoreKey(key) {
   try {
     return await AsyncStorage.removeItem(key);
   } catch (error) {
-    loggerUtil.err(error);
+    mixpanelAnalytics.logError("deleteSecureStoreKey", error);
     return null;
   }
 }

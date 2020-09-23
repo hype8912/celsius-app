@@ -3,11 +3,15 @@ import PropTypes from "prop-types";
 import { Linking } from "react-native";
 
 import Card from "../Card/Card";
-import STYLES from "../../../constants/STYLES";
-import { hasSSN, hasAddress, hasPassedKYC } from "../../../utils/user-util";
+import {
+  hasSSN,
+  hasAddress,
+  hasPassedKYC,
+} from "../../../utils/user-util/user-util";
 import CelText from "../CelText/CelText";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const MissingInfoCard = props => {
   const { user, navigateTo } = props;
@@ -41,13 +45,13 @@ const MissingInfoCard = props => {
     body =
       "Taxpayer details are required in order to receive rewards on your crypto. Enter your SSN link to profile details.";
     cta = "Enter your SSN";
-    onPress = () => navigateTo("PersonalInformation");
+    onPress = () => navigateTo(SCREENS.PERSONAL_INFORMATION);
   }
 
   return (
     <Card color={getColor(COLOR_KEYS.LINK)} close>
       <CelText
-        color={getColor(COLOR_KEYS.HEADLINE)}
+        color={getColor(COLOR_KEYS.WHITE)}
         type="H6"
         weight="bold"
         margin="0 10 3 0"
@@ -56,11 +60,11 @@ const MissingInfoCard = props => {
       </CelText>
       {hasNoAddress ? (
         <Fragment>
-          <CelText color={getColor(COLOR_KEYS.HEADLINE)} type="H7">
+          <CelText color={getColor(COLOR_KEYS.WHITE)} type="H7">
             {body}
             <CelText
               onPress={onPress}
-              color={STYLES.COLORS.WHITE_OPACITY7} // TODO: missing COLOR_KEYS
+              color={getColor(COLOR_KEYS.DOT_INDICATOR_ACTIVE)}
               type="H7"
               margin="3 0 0 0"
             >
@@ -70,16 +74,16 @@ const MissingInfoCard = props => {
         </Fragment>
       ) : (
         <Fragment>
-          <CelText color={getColor(COLOR_KEYS.HEADLINE)} type="H7">
+          <CelText color={getColor(COLOR_KEYS.WHITE)} type="H7">
             {body}
           </CelText>
           <CelText
             onPress={onPress}
-            color={STYLES.COLORS.WHITE_OPACITY7} // TODO: missing COLOR_KEYS
+            color={getColor(COLOR_KEYS.DOT_INDICATOR_ACTIVE)}
             type="H7"
             margin="3 0 0 0"
           >
-            {cta}
+            {cta} >
           </CelText>
         </Fragment>
       )}

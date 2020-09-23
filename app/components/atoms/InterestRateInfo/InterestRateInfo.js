@@ -9,9 +9,12 @@ import CelText from "../CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Card from "../Card/Card";
 import CoinIcon from "../CoinIcon/CoinIcon";
-import cryptoUtil from "../../../utils/crypto-util";
+import cryptoUtil from "../../../utils/crypto-util/crypto-util";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -61,9 +64,16 @@ class InterestRateInfo extends Component {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
+              flexWrap: "wrap",
             }}
           >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                maxWidth: "60%",
+              }}
+            >
               <View style={styles.imageWrapper}>
                 <CoinIcon
                   customStyles={styles.currencyImage}
@@ -76,21 +86,23 @@ class InterestRateInfo extends Component {
               </CelText>
             </View>
 
-            {cryptoUtil.buyInApp(currencyInfo.short) ? (
+            {cryptoUtil.buyInApp(currencyInfo.short) && (
               <CelText
                 align={"center"}
                 link
                 type={"H7"}
                 weight={"300"}
                 onPress={() =>
-                  actions.navigateTo("GetCoinsLanding", {
+                  actions.navigateTo(SCREENS.GET_COINS_LANDING, {
                     coin: currencyInfo.short,
                   })
                 }
               >
                 {`Buy ${currencyInfo.short}`}
               </CelText>
-            ) : (
+            )}
+
+            {cryptoUtil.provideLink(currencyInfo.short) && (
               <CelText
                 align={"center"}
                 link
@@ -125,11 +137,19 @@ class InterestRateInfo extends Component {
             {currencyInfo.short === "CEL" ||
             (isUSCitizen() && !interestRate.rate_us) ? null : (
               <View style={styles.celRateWrapper}>
-                <CelText type={"H7"} color="white" margin="0 5 0 0">
+                <CelText
+                  type={"H7"}
+                  color={getColor(COLOR_KEYS.WHITE)}
+                  margin="0 5 0 0"
+                >
                   {!isUSCitizen() ? "CEL" : " "}
                 </CelText>
-                <CelText type={"H7"} weight="bold" style="white">
-                  {formatter.percentageDisplay(interestRate.rateInCel)}
+                <CelText
+                  type={"H7"}
+                  weight="bold"
+                  color={getColor(COLOR_KEYS.WHITE)}
+                >
+                  {formatter.percentageDisplay(interestRate.specialRate)}
                 </CelText>
               </View>
             )}

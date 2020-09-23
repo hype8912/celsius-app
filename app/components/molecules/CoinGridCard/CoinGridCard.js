@@ -16,7 +16,7 @@ import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 
 const GraphLight = require("../../../../assets/images/placeholders/graph-light.png");
 const GraphDark = require("../../../../assets/images/placeholders/graph-dark.png");
@@ -104,11 +104,11 @@ class CoinGridCard extends Component {
 
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
 
-    let isInCel;
-    isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
-    if (isUSCitizen()) isInCel = interestRate.rateInCel;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
 
     return (
@@ -126,7 +126,7 @@ class CoinGridCard extends Component {
                     color={getColor(COLOR_KEYS.POSITIVE_STATE)}
                     type="H7"
                   >
-                    {formatter.percentageDisplay(isInCel)}
+                    {formatter.percentageDisplay(rate)}
                   </CelText>
                 )}
               </View>

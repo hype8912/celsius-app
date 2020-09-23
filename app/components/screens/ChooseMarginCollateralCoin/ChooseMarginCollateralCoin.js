@@ -11,6 +11,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Icon from "../../atoms/Icon/Icon";
 import CollateralCoinCard from "../../molecules/CollateralCoinCard/CollateralCoinCard";
 import { COIN_CARD_TYPE } from "../../../constants/UI";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -32,7 +33,7 @@ class ChooseMarginCollateralCoin extends Component {
     const { actions, navigation } = this.props;
     const loan = navigation.getParam("loan");
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () => actions.lockMarginCallCollateral(loan.id, coin),
     });
   };
@@ -75,7 +76,7 @@ class ChooseMarginCollateralCoin extends Component {
           <TouchableOpacity
             style={style.addMoreCoinsList}
             onPress={() =>
-              actions.navigateTo("Deposit", {
+              actions.navigateTo(SCREENS.DEPOSIT, {
                 coin: loan.margin_call.collateral_coin,
                 loan,
                 isMarginWarning: true,

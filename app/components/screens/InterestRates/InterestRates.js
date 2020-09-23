@@ -7,6 +7,7 @@ import InterestRatesStyle from "./InterestRates.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import InterestRateInfoTable from "../../molecules/InterestRateInfoTable/InterestRateInfoTable";
 import CelText from "../../atoms/CelText/CelText";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -17,7 +18,7 @@ class InterestRates extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Interest rates",
+    title: "Reward rates",
     right: "profile",
   });
 
@@ -34,7 +35,10 @@ class InterestRates extends Component {
           style={style.explanation}
         >
           Rates in green are available to users who choose to earn in CEL.{" "}
-          <CelText onPress={() => actions.navigateTo("LoyaltyProgram")} link>
+          <CelText
+            onPress={() => actions.navigateTo(SCREENS.LOYALTY_PROGRAM)}
+            link
+          >
             Learn more
           </CelText>
         </CelText>

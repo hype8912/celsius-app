@@ -3,7 +3,6 @@ import {
   widthPercentageToDP,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -27,13 +26,7 @@ const base = {
 
 const themed = {
   light: {},
-
-  dark: {
-    wrapper: {
-      backgroundColor: COLOR_KEYS.HEADER, // note: dark theme specific
-    },
-  },
-
+  dark: {},
   unicorn: {},
 };
 

@@ -10,6 +10,7 @@ import formatter from "../../../utils/formatter";
 import * as appActions from "../../../redux/actions";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelPayReceivedModalStyle from "../CelPayReceivedModal/CelPayReceivedModal.styles";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -48,7 +49,7 @@ class CelPayReceivedModal extends Component {
             position={"single"}
             onPress={() => {
               actions.closeModal();
-              actions.navigateTo("WalletLanding");
+              actions.navigateTo(SCREENS.WALLET_LANDING);
             }}
           >
             Go to wallet

@@ -117,11 +117,7 @@ class ChangePin extends Component {
               >
                 {headingText}
               </CelText>
-              <CelText
-                color="rgba(61,72,83,0.7)"
-                align="center"
-                margin="10 0 30 0"
-              >
+              <CelText align="center" margin="10 0 30 0">
                 {subheadingText}
               </CelText>
 

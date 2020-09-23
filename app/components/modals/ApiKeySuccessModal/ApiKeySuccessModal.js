@@ -14,6 +14,7 @@ import { MODALS } from "../../../constants/UI";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -87,7 +88,7 @@ class ApiKeySuccessModal extends Component {
           <CelModalButton
             margin={"20 0 20 0"}
             onPress={() => {
-              actions.navigateTo("ApiAuthorization");
+              actions.navigateTo(SCREENS.API_AUTHORIZATION);
               actions.updateFormFields({
                 readWalletBalance: false,
                 readTransactions: false,

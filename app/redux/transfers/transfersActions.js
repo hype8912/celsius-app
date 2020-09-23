@@ -10,6 +10,7 @@ import { getAllTransactions } from "../transactions/transactionsActions";
 import { MODALS } from "../../constants/UI";
 import formatter from "../../utils/formatter";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import { SCREENS } from "../../constants/SCREENS";
 
 export {
   getAllTransfers,
@@ -96,7 +97,9 @@ function cancelTransfer(transaction) {
       dispatch(cancelTransferSuccess(res.data));
       dispatch(showMessage("error", "CelPay Canceled"));
       dispatch(getAllTransactions());
-      dispatch(navigateTo("TransactionsIntersection", { id: transaction.id }));
+      dispatch(
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, { id: transaction.id })
+      );
       mixpanelAnalytics.canceledCelPay();
     } catch (err) {
       dispatch(showMessage("error", err.msg));

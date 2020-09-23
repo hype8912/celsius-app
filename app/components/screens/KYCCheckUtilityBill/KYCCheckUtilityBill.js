@@ -10,6 +10,7 @@ import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import STYLES from "../../../constants/STYLES";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -32,7 +33,7 @@ class KYCCheckUtilityBill extends Component {
       mask: "utility",
     });
 
-    actions.navigateTo("CameraScreen", {
+    actions.navigateTo(SCREENS.CAMERA_SCREEN, {
       onSave: utilityBillPhoto => actions.setUtilityBill(utilityBillPhoto),
     });
   };
@@ -77,7 +78,7 @@ class KYCCheckUtilityBill extends Component {
         </View>
 
         <CelButton
-          onPress={() => actions.navigateTo("KYCTaxpayer")}
+          onPress={() => actions.navigateTo(SCREENS.KYC_TAXPAYER)}
           margin="15 0 20 0"
           iconRight="IconArrowRight"
         >

@@ -1,5 +1,3 @@
-import { Platform } from "react-native";
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -32,18 +30,7 @@ const base = {
 
 const themed = {
   light: {},
-  dark: {
-    container: {
-      ...Platform.select({
-        android: {
-          ...STYLES.ANDROID_BORDER_STYLES,
-        },
-        ios: {
-          ...STYLES.SHADOW_STYLES,
-        },
-      }),
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };

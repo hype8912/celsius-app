@@ -1,5 +1,4 @@
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
@@ -16,12 +15,12 @@ const base = {
   },
   inputCel: {
     borderRadius: 10,
-    backgroundColor: COLOR_KEYS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     flex: 1,
   },
   taxID: {
     borderRadius: 10,
-    backgroundColor: COLOR_KEYS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     flex: 1,
     height: 50,
     justifyContent: "space-around",
@@ -30,7 +29,7 @@ const base = {
   },
   nationalID: {
     borderRadius: 10,
-    backgroundColor: COLOR_KEYS.WHITE,
+    backgroundColor: COLOR_KEYS.CARDS,
     flex: 1,
     height: 50,
     justifyContent: "space-around",
@@ -40,23 +39,8 @@ const base = {
 };
 
 const themed = {
-  light: {
-    nationalID: {
-      backgroundColor: STYLES.COLORS.WHITE,
-    },
-  },
-  dark: {
-    taxID: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER, // TODO: missing COLOR_KEYS
-    },
-    nationalID: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER, // TODO: missing COLOR_KEYS
-    },
-    inputCel: {
-      backgroundColor: STYLES.COLORS.DARK_HEADER, // TODO: missing COLOR_KEYS
-    },
-  },
-
+  light: {},
+  dark: {},
   unicorn: {},
 };
 

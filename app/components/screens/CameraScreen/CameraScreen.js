@@ -11,7 +11,6 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-// TODO(sb): RN update dependencies fixes
 import { RESULTS } from "react-native-permissions";
 import { withNavigationFocus } from "react-navigation";
 import { RNCamera } from "react-native-camera";
@@ -23,7 +22,6 @@ import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import API from "../../../constants/API";
 import CelText from "../../atoms/CelText/CelText";
-import loggerUtil from "../../../utils/logger-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import {
   ALL_PERMISSIONS,
@@ -31,6 +29,8 @@ import {
 } from "../../../utils/device-permissions";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 const { height, width } = Dimensions.get("window");
 
@@ -104,7 +104,7 @@ class CameraScreen extends Component {
 
   componentDidUpdate() {
     const { actions, activeScreen } = this.props;
-    if (activeScreen === "CameraScreen") {
+    if (activeScreen === SCREENS.CAMERA_SCREEN) {
       actions.setFabType("hide");
     }
   }
@@ -167,13 +167,13 @@ class CameraScreen extends Component {
       if (result.cancelled) {
         return;
       }
-      actions.navigateTo("ConfirmCamera", {
+      actions.navigateTo(SCREENS.CONFIRM_CAMERA, {
         onSave: navigation.getParam("onSave"),
       });
       actions.takeCameraPhoto({ uri: result.path });
     } catch (err) {
       if (err.message === "User cancelled image selection") return;
-      loggerUtil.err(err);
+      mixpanelAnalytics.logError("pickImage", err);
     }
   };
 
@@ -200,7 +200,7 @@ class CameraScreen extends Component {
         const photo = await camera.takePictureAsync(options);
 
         actions.startApiCall(API.TAKE_CAMERA_PHOTO);
-        await actions.navigateTo("ConfirmCamera", {
+        await actions.navigateTo(SCREENS.CONFIRM_CAMERA, {
           documentPicture: hideBack,
           onSave: navigation.getParam("onSave"),
         });
@@ -236,7 +236,7 @@ class CameraScreen extends Component {
 
         actions.takeCameraPhoto({ uri: croppedImage });
       } catch (err) {
-        loggerUtil.err(err);
+        mixpanelAnalytics.logError("takePhoto", err);
       }
     }
   };

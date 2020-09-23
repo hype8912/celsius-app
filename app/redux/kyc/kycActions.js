@@ -11,7 +11,8 @@ import appsFlyerUtil from "../../utils/appsflyer-util";
 import complianceService from "../../services/compliance-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import userKYCService from "../../services/user-kyc-service";
-import { isForPrimeTrustKYC } from "../../utils/user-util";
+import { isForPrimeTrustKYC } from "../../utils/user-util/user-util";
+import { SCREENS } from "../../constants/SCREENS";
 
 export {
   updateProfileInfo,
@@ -101,7 +102,7 @@ function updateProfileAddressInfo(profileAddressInfo) {
           )
         );
       } else {
-        dispatch(NavActions.navigateTo("KYCVerifyIdentity"));
+        dispatch(NavActions.navigateTo(SCREENS.KYC_VERIFY_IDENTITY));
       }
       mixpanelAnalytics.kycAddressInfo();
       return {
@@ -282,7 +283,7 @@ function startKYC() {
       await userKYCService.startKYC();
 
       dispatch(showMessage("success", "KYC data successfully submitted!"));
-      dispatch(NavActions.navigateTo("WalletLanding"));
+      dispatch(NavActions.navigateTo(SCREENS.WALLET_LANDING));
 
       dispatch(startKYCSuccess());
 
@@ -343,7 +344,7 @@ function setUtilityBill(utilityBillPhoto) {
       await userKYCService.setUtilityBill(utilityBillPhoto);
 
       dispatch(setUtilityBillSuccess());
-      dispatch(NavActions.navigateTo("KYCTaxpayer"));
+      dispatch(NavActions.navigateTo(SCREENS.KYC_TAXPAYER));
       dispatch(showMessage("success", "Utility bill submitted successfully!"));
 
       mixpanelAnalytics.kycUtilityBillSubmitted();
@@ -514,9 +515,9 @@ function saveKYCDocuments() {
       dispatch(showMessage("success", "Successfully submitted KYC Documents!"));
 
       if (isForPrimeTrustKYC() && formData.documentType === "passport") {
-        dispatch(NavActions.navigateTo("KYCAddressProof"));
+        dispatch(NavActions.navigateTo(SCREENS.KYC_ADDRESS_PROOF));
       } else {
-        dispatch(NavActions.navigateTo("KYCTaxpayer"));
+        dispatch(NavActions.navigateTo(SCREENS.KYC_TAXPAYER));
       }
 
       mixpanelAnalytics.kycDocumentsSubmitted();

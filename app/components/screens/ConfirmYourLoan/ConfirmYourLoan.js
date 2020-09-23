@@ -5,20 +5,20 @@ import { bindActionCreators } from "redux";
 import { countries } from "country-data";
 
 import * as appActions from "../../../redux/actions";
-import ConfirmYourLoanStyle from "./BorrowLoanConfirm.styles";
+import ConfirmYourLoanStyle from "./ConfirmYourLoan.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import { LOAN_TYPES } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -28,7 +28,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
-class BorrowLoanConfirm extends Component {
+class ConfirmYourLoan extends Component {
   static propTypes = {};
   static defaultProps = {};
 
@@ -387,7 +387,7 @@ class BorrowLoanConfirm extends Component {
                 </View>
               </View>
               {/* // TODO: missing COLOR_KEY */}
-              <Card noBorder color={STYLES.COLORS.WHITE_OPACITY1}>
+              <Card noBorder color={getColor(COLOR_KEYS.CEL_REWARD_BOX)}>
                 <View style={style.horizontalCardContainer}>
                   <View style={style.horizontalCardItem}>
                     <CelText
@@ -446,7 +446,7 @@ class BorrowLoanConfirm extends Component {
                 </View>
               </Card>
               {/* // TODO: missing COLOR_KEY */}
-              <Card noBorder color={STYLES.COLORS.WHITE_OPACITY1}>
+              <Card noBorder color={getColor(COLOR_KEYS.CEL_REWARD_BOX)}>
                 <View style={style.horizontalCardContainer}>
                   <View style={style.horizontalCardItem}>
                     <CelText
@@ -555,7 +555,7 @@ class BorrowLoanConfirm extends Component {
             </Card>
 
             <CelButton
-              onPress={() => actions.navigateTo("LoanTermsOfUse")}
+              onPress={() => actions.navigateTo(SCREENS.LOAN_TERMS_OF_USE)}
               margin="22 0 0 0"
             >
               Continue
@@ -584,4 +584,4 @@ class BorrowLoanConfirm extends Component {
   }
 }
 
-export default BorrowLoanConfirm;
+export default ConfirmYourLoan;

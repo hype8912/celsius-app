@@ -1,5 +1,4 @@
 import { Dimensions, Platform } from "react-native";
-import STYLES from "../../../constants/STYLES";
 import {
   getThemedStyle,
   widthPercentageToDP,
@@ -58,26 +57,17 @@ const base = {
   text: {
     marginTop: 10,
   },
+  shadowStyle: {
+    shadowColor: COLOR_KEYS.FAB_BUTTON_SHADOW,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+  },
 };
 
 const themed = {
-  light: {
-    shadowStyle: {
-      shadowColor: STYLES.COLORS.FAB_BUTTON_LIGHT_MODE_SHADOW, // TODO: missing color
-      shadowOffset: { width: 0, height: 6 },
-      shadowOpacity: 0.8,
-      shadowRadius: 3,
-    },
-  },
-  dark: {
-    shadowStyle: {
-      shadowColor: STYLES.COLORS.FAB_BUTTON_DARK_MODE_SHADOW, // TODO: missing color
-      shadowOffset: { width: 0, height: 8 },
-      shadowOpacity: 0.6,
-      shadowRadius: 3,
-    },
-  },
-
+  light: {},
+  dark: {},
   unicorn: {},
 };
 

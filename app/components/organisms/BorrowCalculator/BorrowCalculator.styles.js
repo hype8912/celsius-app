@@ -1,4 +1,3 @@
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -39,7 +38,6 @@ const base = {
     justifyContent: "space-between",
   },
   interestCardWrapper: {
-    backgroundColor: STYLES.COLORS.SEMI_GRAY, // TODO: find dark theme color
     borderRadius: 8,
     padding: 5,
     marginVertical: 5,

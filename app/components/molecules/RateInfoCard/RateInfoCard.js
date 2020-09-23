@@ -10,10 +10,11 @@ import CelText from "../../atoms/CelText/CelText";
 import interestUtil from "../../../utils/interest-util";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import * as appActions from "../../../redux/actions";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -126,7 +127,7 @@ class RateInfoCard extends Component {
         {this.renderContent(interestRate, coin, rate)}
         {tierButton && (
           <CelButton
-            onPress={() => navigateTo("MyCel")}
+            onPress={() => navigateTo(SCREENS.MY_CEL)}
             basic
             margin={"10 0 10 0"}
           >
@@ -137,11 +138,11 @@ class RateInfoCard extends Component {
           coin.amount_usd.isGreaterThan(0) &&
           !isUSCitizen() && (
             <CelButton
-              onPress={() => navigateTo("WalletSettings")}
+              onPress={() => navigateTo(SCREENS.WALLET_SETTINGS)}
               basic
               margin={"10 0 10 0"}
             >
-              Earn interest in Cel
+              Earn rewards in Cel
             </CelButton>
           )}
       </View>

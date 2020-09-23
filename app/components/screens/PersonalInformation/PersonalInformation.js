@@ -6,13 +6,14 @@ import moment from "moment";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 import CelButton from "../../atoms/CelButton/CelButton";
 import Separator from "../../atoms/Separator/Separator";
 import CelInput from "../../atoms/CelInput/CelInput";
 import SocialSecurityNumber from "../../molecules/SocialSecurityNumber/SocialSecurityNumber";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -269,7 +270,7 @@ class PersonalInformation extends Component {
         {!user.cellphone_verified && (
           <CelButton
             margin={"20 0 20 0"}
-            onPress={() => actions.navigateTo("CellphoneEnter")}
+            onPress={() => actions.navigateTo(SCREENS.CELLPHONE_ENTER)}
           >
             Enter Phone Number
           </CelButton>

@@ -7,10 +7,10 @@ import { navigateTo, navigateBack } from "../nav/navActions";
 import userSecurityService from "../../services/user-security-service";
 import userAuthService from "../../services/user-auth-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
-import logger from "../../utils/logger-util";
 import { logoutUser } from "../userAuth/authActions";
 import { setSecureStoreKey } from "../../utils/expo-storage";
 import Constants from "../../../constants";
+import { SCREENS } from "../../constants/SCREENS";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -74,7 +74,7 @@ function disableTwoFactor() {
       dispatch(startApiCall(API.DISABLE_TWO_FACTOR));
       await userSecurityService.disableTwoFactor(code);
       dispatch({ type: ACTIONS.DISABLE_TWO_FACTOR_SUCCESS });
-      dispatch(navigateTo("SecuritySettings"));
+      dispatch(navigateTo(SCREENS.SECURITY_SETTINGS));
       dispatch(
         showMessage(
           "success",
@@ -187,7 +187,7 @@ function changePin(onSuccess) {
 
     if (profile.two_factor_enabled) {
       await dispatch(
-        navigateTo("VerifyProfile", {
+        navigateTo(SCREENS.VERIFY_PROFILE, {
           hideBack: true,
           onSuccess: async () => {
             dispatch(updateFormField("loading", true));
@@ -232,7 +232,7 @@ function completePinChange(pinData, onSuccess) {
         return;
       }
 
-      dispatch(navigateTo("SecuritySettings"));
+      dispatch(navigateTo(SCREENS.SECURITY_SETTINGS));
       dispatch(updateFormField("loading", false));
       return;
     } catch (err) {
@@ -275,7 +275,7 @@ function resetPassword(currentPassword, newPassword) {
       if (securityOverview.fromFixNow) {
         dispatch(toFixNow());
       } else {
-        dispatch(navigateTo("SecuritySettings"));
+        dispatch(navigateTo(SCREENS.SECURITY_SETTINGS));
       }
       dispatch(resetPasswordSuccess());
       mixpanelAnalytics.changePassword();
@@ -313,7 +313,9 @@ function logoutFromAllDevices() {
       );
       await dispatch(logoutUser());
     } catch (err) {
-      logger.err(err);
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.LOGOUT_FROM_ALL_DEVICES, err));
+      mixpanelAnalytics.logError("logoutFromAllDevices", err);
     }
   };
 }
@@ -391,7 +393,7 @@ function toFixNow() {
       type: ACTIONS.TO_FIX_NOW,
       toFixNow: true,
     });
-    dispatch(navigateTo("SecurityFixNow"));
+    dispatch(navigateTo(SCREENS.SECURITY_FIX_NOW));
     dispatch(clearFromFixNow());
   };
 }
@@ -448,7 +450,7 @@ function fixNowNextItem() {
       dispatch(clearToFixNow());
 
       if (index === content.length - 1) {
-        dispatch(navigateBack("SecurityOverview"));
+        dispatch(navigateBack(SCREENS.SECURITY_OVERVIEW));
         return;
       }
 

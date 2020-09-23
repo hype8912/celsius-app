@@ -14,7 +14,7 @@ import { getColor, widthPercentageToDP } from "../../../utils/styles-util";
 import Counter from "../Counter/Counter";
 import animationsUtil from "../../../utils/animations-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { isUSCitizen } from "../../../utils/user-util";
+import { isUSCitizen } from "../../../utils/user-util/user-util";
 
 class CoinListCard extends Component {
   static propTypes = {
@@ -65,11 +65,11 @@ class CoinListCard extends Component {
 
   renderInterestRate = coin => {
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
-    let isInCel;
-    isInCel = !interestRate.inCEL
+    let rate;
+    rate = !interestRate.inCEL
       ? interestRate.compound_rate
-      : interestRate.rateInCel;
-    if (isUSCitizen()) isInCel = interestRate.rateInCel;
+      : interestRate.specialRate;
+    if (isUSCitizen()) rate = interestRate.specialRate;
     if (_.isEmpty(interestRate)) return null;
     return (
       <CelText
@@ -79,7 +79,7 @@ class CoinListCard extends Component {
         color={getColor(COLOR_KEYS.POSITIVE_STATE)}
         margin="0 0 0 3"
       >
-        {formatter.percentageDisplay(isInCel)} APY
+        {formatter.percentageDisplay(rate)} APY
       </CelText>
     );
   };

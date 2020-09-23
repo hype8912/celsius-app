@@ -18,7 +18,7 @@ const base = {
     height: 50,
     ...Platform.select({
       android: {
-        borderColor: COLOR_KEYS.INPUT_BORDER,
+        borderColor: COLOR_KEYS.BORDER_SHADOW_COLOR,
         borderTopWidth: 0.2,
         borderLeftWidth: 0.2,
         borderRightWidth: 0.5,

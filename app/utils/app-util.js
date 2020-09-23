@@ -17,8 +17,9 @@ import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { initMixpanel } from "./mixpanel-util";
-import { isUserLoggedIn } from "./user-util";
 import { initUxCam } from "./uxcam-util";
+import { isUserLoggedIn } from "./user-util/user-util";
+import mixpanelAnalytics from "./mixpanel-analytics";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -71,20 +72,26 @@ async function updateCelsiusApp() {
   if (deepLinkData && !_.isEmpty(deepLinkData) && deepLinkData.type)
     return false;
 
-  if (await shouldUpdateCelsiusApp()) {
-    store.dispatch(
-      actions.showMessage(
-        "info",
-        "Please wait while Celsius app is being updated."
-      )
-    );
-    await CodePush.sync({
-      updateDialog: false,
-      installMode: CodePush.InstallMode.IMMEDIATE,
-    });
-    return true;
+  try {
+    if (await shouldUpdateCelsiusApp()) {
+      store.dispatch(
+        actions.showMessage(
+          "info",
+          "Please wait while Celsius app is being updated."
+        )
+      );
+      await CodePush.sync({
+        updateDialog: false,
+        installMode: CodePush.InstallMode.IMMEDIATE,
+      });
+      return true;
+    }
+
+    return false;
+  } catch (err) {
+    mixpanelAnalytics.logError("updateCelsiusApp", err);
+    return false;
   }
-  return false;
 }
 
 /**
@@ -130,10 +137,10 @@ async function pollBackendStatus() {
  *
  * @param {string} token - auth token from storage
  */
-async function checkAndRefreshAuthToken(token) {
+async function checkAndRefreshAuthToken(token, expiresInHours) {
   if (iteration % 30 !== 0) return;
 
-  const EXPIRES_IN_HOURS = 24;
+  const EXPIRES_IN_HOURS = expiresInHours || 6;
   const storageToken =
     token || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
   if (!storageToken) return;
@@ -145,7 +152,6 @@ async function checkAndRefreshAuthToken(token) {
   const isAboutToExpire = moment()
     .add(EXPIRES_IN_HOURS, "hours")
     .isAfter(moment(expirationDate));
-
   if (isAboutToExpire) {
     const refreshTokenError = await store.dispatch(actions.refreshAuthToken());
     return refreshTokenError;

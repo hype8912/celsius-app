@@ -6,6 +6,7 @@ import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -44,14 +45,18 @@ class LoanSettings extends Component {
       <RegularLayout>
         <IconButton
           margin={"20 0 0 0"}
-          onPress={() => actions.navigateTo("InterestPaymentSettings", { id })}
+          onPress={() =>
+            actions.navigateTo(SCREENS.INTEREST_PAYMENT_SETTINGS, { id })
+          }
         >
           Interest Payment
         </IconButton>
         {false && (
           <IconButton
             margin={"20 0 0 0"}
-            onPress={() => actions.navigateTo("PrincipalPayment", { id })}
+            onPress={() =>
+              actions.navigateTo(SCREENS.PRINCIPAL_PAYMENT, { id })
+            }
           >
             Principal Payment
           </IconButton>

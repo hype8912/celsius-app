@@ -6,6 +6,7 @@ import Banner from "../Banner/Banner";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class LoanTrigger extends Component {
   static propTypes = {
@@ -21,13 +22,13 @@ class LoanTrigger extends Component {
 
   render() {
     const { actions } = this.props;
-    const content = `Did you know you can get all the cash you need? Every Celsian is pre-approved.`;
+    const content = `Need funds? With Celsius you can borrow against your crypto. No credit check required!`;
     return (
       <Banner
         backgroundColor={getColor(COLOR_KEYS.LINK)}
         image={require("../../../../assets/images/illustration-borrow-dollars_white.png")}
         action={() => {
-          actions.navigateTo("BorrowChooseLoan");
+          actions.navigateTo(SCREENS.BORROW_CHOOSE_LOAN);
           mixpanelAnalytics.userInitiatingLoanOnWallet();
         }}
         buttonText={"Get a loan"}

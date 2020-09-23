@@ -22,6 +22,7 @@ import {
   getFontFamily,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -46,7 +47,9 @@ class LoanTermsOfUse extends Component {
   getToUProps = () => {
     const { loanTermsOfUse } = this.props;
 
-    const textArray = loanTermsOfUse.split("\n");
+    let textArray = loanTermsOfUse.split("\n");
+    if (textArray.length === 1) textArray = loanTermsOfUse.split("↵");
+
     const textArrayParsed = textArray.map(s => ({
       text: s,
       type: s.includes("## ") ? "heading" : "paragraph",
@@ -91,7 +94,7 @@ class LoanTermsOfUse extends Component {
     const { actions } = this.props;
     mixpanelAnalytics.loanToUAgreed();
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () => actions.applyForALoan(),
     });
   };
@@ -185,7 +188,7 @@ class LoanTermsOfUse extends Component {
                 <Icon
                   name="Share"
                   height="24"
-                  fill={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
+                  fill={getColor(COLOR_KEYS.PARAGRAPH)}
                   style={styles.iconStyle}
                 />
                 <CelText align={"center"}>Download</CelText>

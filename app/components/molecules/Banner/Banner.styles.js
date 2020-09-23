@@ -2,7 +2,7 @@ import {
   getThemedStyle,
   heightPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -18,7 +18,8 @@ const base = {
     flex: 0.2,
   },
   halfCircle: {
-    backgroundColor: STYLES.COLORS.WHITE_OPACITY2, // TODO: missing COLOR_KEY
+    backgroundColor: COLOR_KEYS.WHITE,
+    opacity: 0.15,
     paddingHorizontal: 10,
     marginLeft: -10,
     marginRight: 10,
@@ -34,6 +35,8 @@ const base = {
     marginLeft: 10,
     width: 40,
     height: 40,
+    position: "absolute",
+    top: "40%",
   },
   textAlignment: {
     flex: 0.8,

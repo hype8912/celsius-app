@@ -15,13 +15,13 @@ import BalanceView from "../../atoms/BalanceView/BalanceView";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { PREDIFINED_AMOUNTS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
-import cryptoUtil from "../../../utils/crypto-util";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -240,13 +240,12 @@ class CelPayEnterAmount extends Component {
       amountCrypto = amountCrypto[1];
     }
 
-    if (cryptoUtil.isGreaterThan(amountCrypto, balanceCrypto.toFixed(8))) {
+    if (new BigNumber(amountCrypto).isGreaterThan(balanceCrypto.toFixed(8))) {
       return actions.showMessage("warning", "Insufficient funds!");
     }
 
     if (
-      cryptoUtil.isGreaterThan(
-        amountUsd,
+      new BigNumber(amountUsd).isGreaterThan(
         celPaySettings.maximum_transfer_amount
       )
     ) {
@@ -300,9 +299,9 @@ class CelPayEnterAmount extends Component {
     const celPayType = navigation.getParam("celPayType");
 
     if (celPayType === CEL_PAY_TYPES.FRIEND) {
-      actions.navigateTo("CelPayChooseFriend");
+      actions.navigateTo(SCREENS.CEL_PAY_CHOOSE_FRIEND);
     } else {
-      actions.navigateTo("VerifyProfile", {
+      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: () => {
           actions.celPayShareLink();
         },

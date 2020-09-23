@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import CelText from "../../atoms/CelText/CelText";
-import { getColor, getTheme } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
 import ToggleInfoCardStyle from "./ToggleInfoCard.styles";
 import Icon from "../../atoms/Icon/Icon";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
@@ -46,17 +45,13 @@ class ToggleInfoCard extends Component {
   getCardProps = () => {
     const { enabled } = this.state;
     const { titleText } = this.props;
-    const theme = getTheme();
 
     if (enabled) {
       return {
         name: "Checked",
         colors: {
-          circleColor:
-            theme === "light"
-              ? STYLES.COLORS.GREEN_OPACITY // TODO: missing COLOR_KEYS
-              : STYLES.COLORS.WHITE_OPACITY1, // TODO: missing COLOR_KEYS
-          fill: getColor(COLOR_KEYS.POSITIVE_STATE),
+          circleColor: getColor(COLOR_KEYS.SECURITY_FIX_CIRCLE),
+          fill: getColor(COLOR_KEYS.SECURITY_FIX_ICON),
           textTitle: getColor(COLOR_KEYS.POSITIVE_STATE),
         },
         titleText: titleText || "ENABLED",
@@ -66,7 +61,7 @@ class ToggleInfoCard extends Component {
     }
     return {
       colors: {
-        circleColor: STYLES.COLORS.RED_OPACITY2, // TODO: missing COLOR_KEYS
+        circleColor: getColor(COLOR_KEYS.SECURITY_FIX_NEGATIVE_CIRCLE),
         fill: getColor(COLOR_KEYS.NEGATIVE_STATE),
         textTitle: getColor(COLOR_KEYS.NEGATIVE_STATE),
       },

@@ -9,11 +9,14 @@ import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockCom
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
+import addressUtil from "../../../utils/address-util";
+import walletUtil from "../../../utils/wallet-util";
+import { KYC_STATUSES } from "../../../constants/DATA";
 
 const initialState = {
   forms: { formData: { coin: "ETH" } },
   wallet: {
-    summary: mockWalletStore.summary.postman13,
+    summary: walletUtil.mapWalletSummary(mockWalletStore.summary.postman13),
     addresses: mockWalletStore.addresses,
   },
   currencies: {
@@ -31,28 +34,78 @@ const initialState = {
 
 const depositCoin = coinShort => {
   const state = _.cloneDeep(initialState);
-  state.forms = { formData: { selectedCoin: coinShort } };
+  const { addresses } = state.wallet;
+  const coinAddress = addresses[`${coinShort}Address`];
+  state.forms = {
+    formData: {
+      selectedCoin: coinShort,
+      displayAddress:
+        coinAddress && addressUtil.splitAddressTag(coinAddress).base,
+    },
+  };
+
   return (
     <ScreenStoryWrapper screen={Deposit} screenName="Deposit" state={state} />
   );
 };
 
-const btc = () => depositCoin("BTC");
-const bch = () => depositCoin("BCH");
+const loadingAddress = () => {
+  const state = _.cloneDeep(initialState);
+  state.forms = {
+    formData: {
+      selectedCoin: "SGA",
+    },
+  };
+
+  return (
+    <ScreenStoryWrapper screen={Deposit} screenName="Deposit" state={state} />
+  );
+};
+
+const notVerified = () => {
+  const state = _.cloneDeep(initialState);
+  state.user.profile.kyc.status = KYC_STATUSES.collecting;
+
+  return (
+    <ScreenStoryWrapper screen={Deposit} screenName="Deposit" state={state} />
+  );
+};
+
+const pendingVerification = () => {
+  const state = _.cloneDeep(initialState);
+  state.user.profile.kyc.status = KYC_STATUSES.pending;
+
+  return (
+    <ScreenStoryWrapper screen={Deposit} screenName="Deposit" state={state} />
+  );
+};
+
+const notCompliant = () => {
+  const state = _.cloneDeep(initialState);
+  state.compliance.deposit.allowed = false;
+
+  return (
+    <ScreenStoryWrapper screen={Deposit} screenName="Deposit" state={state} />
+  );
+};
+
 const eth = () => depositCoin("ETH");
+const bch = () => depositCoin("BCH");
 const cel = () => depositCoin("CEL");
-const omg = () => depositCoin("OMG");
 const xrp = () => depositCoin("XRP");
 const xlm = () => depositCoin("XLM");
-const eos = () => depositCoin("EOS");
 
 export default {
+  loadingAddress,
+  notVerified,
+  pendingVerification,
+  notCompliant,
   eth,
-  xrp,
-  btc,
   bch,
   cel,
-  omg,
+  xrp,
   xlm,
-  eos,
+  // btc,
+  // omg,
+  // eos,
 };

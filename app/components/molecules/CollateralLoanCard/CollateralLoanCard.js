@@ -12,6 +12,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 function getPropsFromTransaction(transaction) {
   switch (transaction.type) {
@@ -121,7 +122,7 @@ const CollateralLoanCard = ({ transaction, navigateTo }) => {
           <CelButton
             basic
             onPress={() =>
-              navigateTo("LoanRequestDetails", {
+              navigateTo(SCREENS.LOAN_REQUEST_DETAILS, {
                 id: transaction.loan_data.loan_number,
               })
             }

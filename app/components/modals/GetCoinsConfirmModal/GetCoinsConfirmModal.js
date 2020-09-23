@@ -11,6 +11,7 @@ import Separator from "../../atoms/Separator/Separator";
 import * as appActions from "../../../redux/actions";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import formatter from "../../../utils/formatter";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -27,10 +28,10 @@ class GetCoinsConfirmModal extends Component {
   onButtonPress = () => {
     const { actions } = this.props;
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: async () => {
         await actions.createSimplexPayment();
-        actions.navigateTo("Simplex");
+        actions.navigateTo(SCREENS.SIMPLEX);
       },
     });
     actions.closeModal();

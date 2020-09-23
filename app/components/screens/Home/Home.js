@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { isKYCRejectedForever } from "../../../utils/user-util";
+import { isKYCRejectedForever } from "../../../utils/user-util/user-util";
 import API from "../../../constants/API";
 import apiUtil from "../../../utils/api-util";
 import SplashScreen from "../SplashScreen/SplashScreen";
 import CelsiusLoadingScreen from "../CelsiusLoadingScreen/CelsiusLoadingScreen";
 import appsFlyerUtil from "../../../utils/appsflyer-util";
 import { registerMixpanelUser } from "../../../utils/mixpanel-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -31,8 +32,11 @@ class Home extends Component {
   async componentDidMount() {
     const { actions } = this.props;
 
-    await actions.getWalletSummary();
     await actions.getUserAppBootstrap();
+    // must be first endpoint to be called
+
+    await actions.getCurrencyRates();
+    await actions.getWalletSummary();
 
     mixpanelAnalytics.sessionStarted("Init app");
     await actions.setBannerProps();
@@ -41,11 +45,11 @@ class Home extends Component {
 
     const { user } = this.props;
     if (user && user.id && !user.has_pin) {
-      return actions.resetToScreen("RegisterSetPin");
+      return actions.resetToScreen(SCREENS.REGISTER_SET_PIN);
     }
 
     if (isKYCRejectedForever()) {
-      return actions.resetToScreen("KYCFinalRejection");
+      return actions.resetToScreen(SCREENS.KYC_FINAL_REJECTION);
     }
 
     if (user && user.id && user.has_pin) {
@@ -56,7 +60,7 @@ class Home extends Component {
           API.REGISTER_USER_GOOGLE,
           API.REGISTER_USER_TWITTER,
         ],
-        5
+        15
       );
       if (newRegistration) {
         appsFlyerUtil.registrationCompleted(user);
@@ -71,7 +75,7 @@ class Home extends Component {
       if (hasAlreadyVerified) {
         return this.goToWalletLanding();
       }
-      return actions.resetToScreen("VerifyProfile", {
+      return actions.resetToScreen(SCREENS.VERIFY_PROFILE, {
         hideBack: true,
         onSuccess: this.goToWalletLanding,
       });
@@ -93,7 +97,7 @@ class Home extends Component {
       sessionCount: bannerProps.sessionCount + 1,
     });
 
-    actions.resetToScreen("WalletLanding");
+    actions.resetToScreen(SCREENS.WALLET_LANDING);
     actions.handleDeepLink();
   };
 

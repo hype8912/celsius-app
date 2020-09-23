@@ -158,7 +158,7 @@ class DepositInfoModal extends Component {
       image: { uri: coinName.image_url },
       title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
       description:
-        "Sending any other digital asset to this specific address, will result in permanent loss.",
+        "Sending any other digital asset to this specific address will result in permanent loss.",
       buttonText: "I Understand",
       coinName,
     };

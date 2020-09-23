@@ -2,7 +2,7 @@ import Branch from "react-native-branch";
 
 import store from "../redux/store";
 import * as actions from "../redux/actions";
-import logger from "../utils/logger-util";
+import mixpanelAnalytics from "./mixpanel-analytics";
 
 export default {
   initBranch,
@@ -32,7 +32,7 @@ function initBranch() {
         dispatch(actions.addDeepLinkData(deepLinkData));
       });
     } catch (error) {
-      logger.err(error);
+      mixpanelAnalytics.logError("branchUtil.initBranch", error);
     }
   };
 }

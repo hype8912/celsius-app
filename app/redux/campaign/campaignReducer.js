@@ -14,6 +14,7 @@ export default function campaignReducer(state = initialState, action) {
         registeredLink: action.link,
         transferHash: action.link.hash,
       };
+
     case ACTIONS.GET_LINK_BY_URL_SUCCESS:
       return {
         ...state,
@@ -27,6 +28,7 @@ export default function campaignReducer(state = initialState, action) {
       return {
         ...state,
         code: action.code,
+        registeredLink: action.branchLink,
       };
 
     case ACTIONS.CHECK_PROFILE_PROMO_CODE_SUCCESS:

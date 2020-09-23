@@ -8,6 +8,7 @@ import CelText from "../../atoms/CelText/CelText";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -48,7 +49,7 @@ class CellphoneEnter extends Component {
     });
     if (response.success) {
       actions.sendVerificationSMS(user.cellphone);
-      actions.navigateTo("CellphoneVerify");
+      actions.navigateTo(SCREENS.CELLPHONE_VERIFY);
     }
   };
 

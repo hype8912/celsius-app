@@ -11,6 +11,7 @@ import CelText from "../../atoms/CelText/CelText";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelButton from "../../atoms/CelButton/CelButton";
 import * as appActions from "../../../redux/actions";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -51,7 +52,7 @@ class PrepaymentSuccessfulModal extends Component {
           basic
           onPress={() => {
             actions.updateFormField("prepayLoanId", null);
-            actions.navigateTo("BorrowLanding");
+            actions.navigateTo(SCREENS.BORROW_LANDING);
             actions.closeModal();
           }}
         >

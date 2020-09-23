@@ -4,9 +4,10 @@ import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
-import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
+import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelInput from "../../atoms/CelInput/CelInput";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -34,7 +35,7 @@ class CellphoneVerify extends Component {
     if (response.success) {
       actions.showMessage("success", "Phone number verified!");
       actions.getProfileInfo();
-      actions.navigateTo("Profile");
+      actions.navigateTo(SCREENS.PROFILE);
     }
   };
 
@@ -42,7 +43,7 @@ class CellphoneVerify extends Component {
     const { actions, formData, user } = this.props;
 
     return (
-      <AuthLayout>
+      <RegularLayout>
         <CelText margin="0 0 14 0" type="H1" align="center">
           Verify your phone number
         </CelText>
@@ -70,7 +71,7 @@ class CellphoneVerify extends Component {
         >
           Resend code
         </CelButton>
-      </AuthLayout>
+      </RegularLayout>
     );
   }
 }

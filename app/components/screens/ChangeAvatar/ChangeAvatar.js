@@ -18,6 +18,7 @@ import {
 } from "../../../utils/device-permissions";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 const { API_URL } = Constants;
 
@@ -134,7 +135,7 @@ class ChangeAvatar extends Component {
       lastCompletedCall !== nextProps.lastCompletedCall &&
       nextProps.lastCompletedCall === API.UPLOAD_PLOFILE_IMAGE
     ) {
-      actions.navigateTo("Profile");
+      actions.navigateTo(SCREENS.PROFILE);
     }
   }
 
@@ -165,7 +166,7 @@ class ChangeAvatar extends Component {
 
     await requestForPermission(ALL_PERMISSIONS.CAMERA);
     await requestForPermission(ALL_PERMISSIONS.LIBRARY);
-    actions.navigateTo("CameraScreen", { onSave: this.saveCameraPhoto });
+    actions.navigateTo(SCREENS.CAMERA_SCREEN, { onSave: this.saveCameraPhoto });
   };
 
   saveCameraPhoto = photo => {
@@ -173,7 +174,7 @@ class ChangeAvatar extends Component {
 
     actions.updateProfilePicture(photo);
     actions.updateFormField("profileImage", photo);
-    actions.navigateTo("Profile");
+    actions.navigateTo(SCREENS.PROFILE);
   };
 
   renderImage = imgSrc => {

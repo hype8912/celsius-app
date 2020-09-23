@@ -10,6 +10,7 @@ import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
 import { DEEP_LINKS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class ReferralReceivedModal extends Component {
   static propTypes = {
@@ -23,7 +24,7 @@ class ReferralReceivedModal extends Component {
     const { closeModal, navigateTo } = this.props;
 
     closeModal();
-    navigateTo("RegisterInitial");
+    navigateTo(SCREENS.REGISTER_INITIAL);
     mixpanelAnalytics.userReferred(owner);
   };
 

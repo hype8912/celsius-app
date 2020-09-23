@@ -6,52 +6,12 @@ import appUtil from "./app-util";
 import mixpanelAnalytics from "./mixpanel-analytics";
 import { navigateTo } from "../redux/nav/navActions";
 import { showMessage } from "../redux/ui/uiActions";
-
-const { ENV } = Constants;
+import { SCREENS } from "../constants/SCREENS";
 
 export default {
   logme,
-  log,
-  warn,
-  info,
   err,
 };
-
-/**
- * Blocks console.log in production
- *
- * @param {any} content
- */
-function log(content) {
-  if (["STAGING"].indexOf(ENV) !== -1) {
-    // eslint-disable-next-line no-console
-    console.log(content);
-  }
-}
-
-/**
- * Blocks console.info in production
- *
- * @param {any} content
- */
-function info(content) {
-  if ([].indexOf(ENV) !== -1) {
-    // eslint-disable-next-line no-console
-    console.info(content);
-  }
-}
-
-/**
- * Blocks console.warn in production
- *
- * @param {any} content
- */
-function warn(content) {
-  if ([].indexOf(ENV) !== -1) {
-    // eslint-disable-next-line no-console
-    console.warn(content);
-  }
-}
 
 /**
  * Logs stuff on graylog, used for debugging standalone applications
@@ -101,22 +61,24 @@ async function err(e, isFatal = false) {
       name: e.name,
       stack: e.stack,
       message: e.message,
+      where: e.where,
     };
 
     const errorObject = {
-      err: error,
+      ...error,
       user: userData,
       active_screen: activeScreen,
       is_fatal: isFatal && typeof isFatal === "string" && isFatal === "true",
       app_version: revisionId,
       platform: Constants.platform,
       lastTenActions,
-      message: error.message,
     };
 
     mixpanelAnalytics.appCrushed(errorObject);
 
-    store.dispatch(navigateTo(profile.id ? "WalletLanding" : "Welcome"));
+    store.dispatch(
+      navigateTo(profile.id ? SCREENS.WALLET_LANDING : SCREENS.WELCOME)
+    );
     const action = {
       text: "Open ticket",
       action: () =>

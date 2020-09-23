@@ -18,7 +18,10 @@ import Fab from "../../molecules/Fab/Fab";
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import { THEMES } from "../../../constants/UI";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import { hasPassedKYC, isKYCRejectedForever } from "../../../utils/user-util";
+import {
+  hasPassedKYC,
+  isKYCRejectedForever,
+} from "../../../utils/user-util/user-util";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import Icon from "../../atoms/Icon/Icon";
@@ -30,6 +33,7 @@ import {
 import CircleButtonStyle from "../../atoms/CircleButton/CircleButton.styles";
 import animationsUtil from "../../../utils/animations-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -100,7 +104,7 @@ class FabMenuAnimated extends Component {
       kycStatus,
     } = this.props;
     const main = [
-      [{ iconName: "Wallet", label: "Wallet", screen: "WalletLanding" }],
+      [{ iconName: "Wallet", label: "Wallet", screen: SCREENS.WALLET_LANDING }],
       [],
       [],
     ];
@@ -108,41 +112,41 @@ class FabMenuAnimated extends Component {
       main[1].push({
         iconName: "Deposit",
         label: "Transfer",
-        screen: "Deposit",
+        screen: SCREENS.DEPOSIT,
       });
     if (kycStatus && hasPassedKYC() && withdrawCompliance.allowed)
       main[2].push({
         iconName: "Withdraw",
         label: "Withdraw",
-        screen: "WithdrawEnterAmount",
+        screen: SCREENS.WITHDRAW_ENTER_AMOUNT,
       });
     if (celpayCompliance.allowed)
       main[0].push({
         iconName: "CelPay",
         label: "CelPay",
-        screen: "CelPayLanding",
+        screen: SCREENS.CEL_PAY_LANDING,
       });
     main[0].push({
       iconName: "Community",
       label: "Community Info",
-      screen: "Community",
+      screen: SCREENS.COMMUNITY,
     });
     main[1].push({
       iconName: "Borrow",
-      label: "Borrow",
-      screen: "BorrowLanding",
+      label: "Borrow $",
+      screen: SCREENS.BORROW_LANDING,
     });
     main[2].splice(1, 0, {
       iconName: "Profile",
       label: "Profile",
-      screen: "Profile",
+      screen: SCREENS.PROFILE,
     });
     // TODO change borrow landing to new screen
     if (user)
       main[1].push({
         iconName: "MyCel",
         label: "My CEL",
-        screen: "MyCel",
+        screen: SCREENS.MY_CEL,
       });
 
     return {
@@ -199,14 +203,14 @@ class FabMenuAnimated extends Component {
     const { actions } = this.props;
     if (
       [
-        "MyCel",
-        "Profile",
-        "CelPayLanding",
-        "WalletLanding",
-        "Deposit",
-        "WithdrawEnterAmount",
-        "Community",
-        "BorrowLanding",
+        SCREENS.MY_CEL,
+        SCREENS.PROFILE,
+        SCREENS.CEL_PAY_LANDING,
+        SCREENS.WALLET_LANDING,
+        SCREENS.DEPOSIT,
+        SCREENS.WITHDRAW_ENTER_AMOUNT,
+        SCREENS.COMMUNITY,
+        SCREENS.BORROW_LANDING,
       ].indexOf(screen) !== -1
     )
       actions.resetToScreen(screen);
@@ -236,7 +240,7 @@ class FabMenuAnimated extends Component {
         this.setState({
           showBackground: false,
         });
-        if (screen !== "WalletLanding")
+        if (screen !== SCREENS.WALLET_LANDING)
           animationsUtil.animateClosure(this.state.fabSpring);
         actions.closeFabMenu();
       }
@@ -402,7 +406,7 @@ class FabMenuAnimated extends Component {
           styles={style.helpCard}
           size={"half"}
           onPress={() => {
-            actions.navigateTo("Support");
+            actions.navigateTo(SCREENS.SUPPORT);
             this.fabAction();
           }}
         >

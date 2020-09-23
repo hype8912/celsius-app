@@ -13,6 +13,7 @@ import { LOAN_TYPES } from "../../../constants/DATA";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -68,7 +69,7 @@ class BorrowLoanTerm extends Component {
         <CelButton
           margin="50 0 30 0"
           onPress={() => {
-            actions.navigateTo("ConfirmYourLoan");
+            actions.navigateTo(SCREENS.CONFIRM_YOUR_LOAN);
             mixpanelAnalytics.loanTerms(formData.termOfLoan);
           }}
           iconRight="IconArrowRight"
@@ -81,7 +82,7 @@ class BorrowLoanTerm extends Component {
       <CelButton
         margin="50 0 30 0"
         onPress={() => {
-          actions.navigateTo("BorrowBankAccount");
+          actions.navigateTo(SCREENS.BORROW_BANK_ACCOUNT);
           mixpanelAnalytics.loanTerms(formData.termOfLoan);
         }}
         iconRight="IconArrowRight"

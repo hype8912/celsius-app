@@ -3,7 +3,6 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const cursorRadius = heightPercentageToDP("1.06%");
@@ -36,8 +35,13 @@ const base = {
     height: heightPercentageToDP("4%"),
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: COLOR_KEYS.CARDS,
     padding: 2,
+  },
+  regularLabelBackground: {
+    backgroundColor: COLOR_KEYS.CARDS,
+  },
+  cardLabelBackground: {
+    backgroundColor: COLOR_KEYS.BACKGROUND,
   },
   triangle: {
     width: 0,
@@ -49,8 +53,13 @@ const base = {
     borderBottomWidth: widthPercentageToDP("1.5%"),
     borderLeftColor: COLOR_KEYS.TRANSPARENT,
     borderRightColor: COLOR_KEYS.TRANSPARENT,
-    borderBottomColor: COLOR_KEYS.CARDS,
     transform: [{ rotate: "180deg" }],
+  },
+  regularTriangleBackground: {
+    borderBottomColor: COLOR_KEYS.CARDS,
+  },
+  cardTriangleBackground: {
+    borderBottomColor: COLOR_KEYS.BACKGROUND,
   },
   scrollPointer: {
     position: "absolute",
@@ -62,27 +71,14 @@ const base = {
   cursorBackgroundColor: {
     backgroundColor: COLOR_KEYS.CARDS,
   },
-  labelBoxBackgroundColor: {},
 };
 
 const themed = {
-  light: {
-    labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
-    },
-  },
+  light: {},
 
-  dark: {
-    labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_LABEL, // TODO: missing COLOR_KEY
-    },
-  },
+  dark: {},
 
-  unicorn: {
-    labelBoxBackgroundColor: {
-      backgroundColor: STYLES.COLORS.DARK_GRAY, // TODO: missing COLOR_KEY
-    },
-  },
+  unicorn: {},
 };
 
 const GraphStyle = () => getThemedStyle(base, themed);

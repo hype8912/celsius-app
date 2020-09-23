@@ -1,5 +1,4 @@
-import STYLES from "../../../constants/STYLES";
-import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import { getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
@@ -17,10 +16,10 @@ const base = {
     borderBottomRightRadius: 30,
   },
   colored: {
-    backgroundColor: getColor(COLOR_KEYS.POSITIVE_STATE),
+    backgroundColor: COLOR_KEYS.POSITIVE_STATE,
   },
   nonColor: {
-    backgroundColor: STYLES.COLORS.GREEN_OPACITY, // TODO: missing color keys
+    backgroundColor: COLOR_KEYS.PROGRESS_BAR_OPACITY,
   },
 };
 

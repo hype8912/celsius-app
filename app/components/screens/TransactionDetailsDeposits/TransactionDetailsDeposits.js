@@ -8,6 +8,7 @@ import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
 import TxAddressSection from "../../atoms/TxAddressSection/TxAddressSection";
 import CelButton from "../../atoms/CelButton/CelButton";
+import { SCREENS } from "../../../constants/SCREENS";
 
 class TransactionDetailsDeposits extends Component {
   static propTypes = {
@@ -42,13 +43,16 @@ class TransactionDetailsDeposits extends Component {
             label={"Time"}
             value={moment.utc(transaction.time).format("h:mm A (z)")}
           />
-          <CelButton margin={"40 0 0 0"} onPress={() => navigateTo("Deposit")}>
+          <CelButton
+            margin={"40 0 0 0"}
+            onPress={() => navigateTo(SCREENS.DEPOSIT)}
+          >
             Deposit new coins
           </CelButton>
           <CelButton
             margin={"20 0 0 0"}
             basic
-            onPress={() => navigateTo("WalletLanding")}
+            onPress={() => navigateTo(SCREENS.WALLET_LANDING)}
           >
             Go Back to Wallet
           </CelButton>

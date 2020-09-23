@@ -37,35 +37,45 @@ class RegisterPromoCodeModal extends Component {
     this.state = {
       confirmed: false,
       loading: false,
+      hasError: false,
     };
   }
 
   componentDidMount() {
     const { actions } = this.props;
+
     actions.updateFormFields({
       promoCode: null,
       code: null,
     });
   }
 
+  hasError = () => {
+    this.setState({
+      confirmed: false,
+      loading: false,
+      hasError: true,
+    });
+  };
+
   proceed = () => {
     this.setState({
       confirmed: true,
       loading: false,
+      hasError: false,
     });
-  };
-
-  hasError = () => {
-    this.setState({ loading: false });
   };
 
   closeModal = () => {
     const { actions } = this.props;
+    actions.closeModal();
+
+    actions.updateFormField("promoCode", null);
     this.setState({
       confirmed: false,
       loading: false,
+      hasError: false,
     });
-    actions.closeModal();
   };
 
   confirm = () => {
@@ -240,9 +250,8 @@ class RegisterPromoCodeModal extends Component {
             returnKeyType={"send"}
             value={formData.promoCode}
             error={formErrors.promoCodeError && formErrors.promoCodeError.msg}
-            border={theme !== THEMES.DARK}
+            border
             onSubmitEditing={() => this.confirm()}
-            basic={theme === THEMES.LIGHT ? true : null}
           />
         </View>
         <View style={style.buttonWrapper}>
@@ -264,10 +273,12 @@ class RegisterPromoCodeModal extends Component {
 
   renderConfirmedPromoCode = () => {
     const { code } = this.props;
+
     const style = RegisterPromoCodeModalStyle();
-    const title = "Hooray!";
-    const subtitle = "Promo code has been added to your profile!";
-    const description = code.description;
+
+    const title = "Congrats!";
+    const subtitle = "You’ve successfully activated your promo code!";
+    const description = code.description || "";
 
     return (
       <View>
@@ -279,8 +290,9 @@ class RegisterPromoCodeModal extends Component {
         >
           {title}
         </CelText>
+
         <CelText
-          margin={"0 25 15 25"}
+          margin={"0 25 10 25"}
           align={"center"}
           type={"H4"}
           weight={"300"}
@@ -312,6 +324,7 @@ class RegisterPromoCodeModal extends Component {
   renderModal = () => {
     const { confirmed } = this.state;
     const { referralLink, type } = this.props;
+
     // Promo code
     if (type === "celsius") {
       if (confirmed) return this.renderConfirmedPromoCode();
@@ -321,6 +334,7 @@ class RegisterPromoCodeModal extends Component {
     if (type === "register") {
       if (confirmed || referralLink) return this.renderConfirmedReferralCode();
     }
+
     return this.renderUnconfirmedReferralCode();
   };
 

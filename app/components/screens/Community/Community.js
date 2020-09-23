@@ -102,7 +102,7 @@ class Community extends Component {
 
     return (
       <>
-        <Separator text={"MOST DEPOSITED COIN"} margin={"30 0 20 0"} />
+        <Separator text={"Most Popular Coin"} margin={"30 0 20 0"} />
         <View style={style.image}>
           <Image
             source={{
@@ -269,7 +269,7 @@ class Community extends Component {
           info
           buttonTypes={[
             {
-              buttonType: "Total AUM",
+              buttonType: "Total Assets",
               icon: "Total",
             },
           ]}

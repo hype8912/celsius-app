@@ -20,6 +20,7 @@ import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 import TxBasicCardSection from "../../atoms/TxBasicCardSection/TxBasicCardSection";
 import TxCardSection from "../../atoms/TxCardSection/TxCardSection";
 import { getColor } from "../../../utils/styles-util";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -42,33 +43,22 @@ class LoanRequestDetails extends Component {
     };
   };
 
-  constructor(props) {
-    super(props);
-
-    const { navigation, actions } = props;
+  componentDidMount = async () => {
+    const { navigation, actions } = this.props;
     const loanId = navigation.getParam("id");
     actions.setActiveLoan(loanId);
-    actions.getLoanById(loanId);
-  }
+    await actions.getLoanById(loanId);
+  };
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.activeLoan, this.props.activeLoan)) {
-      this.props.navigation.setParams({
-        title: `${this.props.activeLoan.uiProps.displayText} Details`,
-      });
+      if (this.props.activeLoan && this.props.activeLoan.uiProps) {
+        this.props.navigation.setParams({
+          title: `${this.props.activeLoan.uiProps.displayText} Details`,
+        });
+      }
     }
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const { navigation, activeLoan, actions } = this.props
-  //   const loanId = nextProps.navigation.getParam("id");
-  //
-  //   if (activeLoan) {}
-  //
-  //   actions.setActiveLoan(loanId)
-  //
-  //
-  // }
 
   renderSection = sectionType => {
     const { activeLoan } = this.props;
@@ -223,8 +213,7 @@ class LoanRequestDetails extends Component {
 
   render() {
     const { actions, activeLoan } = this.props;
-
-    if (!activeLoan) return <LoadingScreen />;
+    if (!activeLoan || !activeLoan.uiProps) return <LoadingScreen />;
 
     const style = LoanRequestDetailsStyle();
 
@@ -243,7 +232,7 @@ class LoanRequestDetails extends Component {
           <View style={style.status}>
             <Icon
               name={"TransactionLoan"}
-              fill={activeLoan.uiProps.color}
+              fill={getColor(activeLoan.uiProps.color)}
               width={"25"}
               height={"25"}
             />
@@ -264,7 +253,7 @@ class LoanRequestDetails extends Component {
 
         <CelButton
           basic
-          onPress={() => actions.navigateTo("WalletLanding")}
+          onPress={() => actions.resetToScreen(SCREENS.WALLET_LANDING)}
           margin={"20 0 0 0"}
         >
           Go back to the wallet

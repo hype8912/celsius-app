@@ -10,6 +10,7 @@ import CelText from "../../../atoms/CelText/CelText";
 import CelModalButton from "../../../atoms/CelModalButton/CelModalButton";
 import CelModal from "../../CelModal/CelModal";
 import CelButton from "../../../atoms/CelButton/CelButton";
+import { SCREENS } from "../../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -24,7 +25,7 @@ class LoanAlertsMarginCallLockCoinModal extends Component {
   lockAdditionalCollateral = () => {
     const { actions, loan } = this.props;
 
-    actions.navigateTo("VerifyProfile", {
+    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () =>
         actions.lockMarginCallCollateral(
           loan.id,

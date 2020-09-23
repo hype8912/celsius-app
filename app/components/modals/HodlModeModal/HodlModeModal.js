@@ -9,6 +9,7 @@ import InfoModal from "../InfoModalNew/InfoModal";
 import CelText from "../../atoms/CelText/CelText";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   () => ({}),
@@ -38,7 +39,7 @@ class HodlModeModal extends Component {
             would to exit HODL Mode, please
             <CelText
               color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-              onPress={() => actions.navigateTo("Support")}
+              onPress={() => actions.navigateTo(SCREENS.SUPPORT)}
             >
               {" "}
               contact our support team

@@ -14,6 +14,7 @@ import {
 } from "../../utils/device-permissions";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { navigateBack, navigateTo } from "../nav/navActions";
+import { SCREENS } from "../../constants/SCREENS";
 import {
   startRecording,
   stopRecordingAndUploadData,
@@ -48,11 +49,11 @@ function loadCelsiusAssets() {
  * @param {string} nextAppState - one of active|inactive|background
  */
 const SCREENS_WITH_LATER_VERIFICATION = [
-  "Simplex",
-  "TwoFactorSettings",
-  "RegisterSetPin",
-  "ChangePin",
-  "KYCVerifyIdentity",
+  SCREENS.SIMPLEX,
+  SCREENS.TWO_FACTOR_SETTINGS,
+  SCREENS.REGISTER_SET_PIN,
+  SCREENS.CHANGE_PIN,
+  SCREENS.KYC_VERIFY_IDENTITY,
 ];
 const ASK_FOR_PIN_SHORT = 5 * 60 * 1000;
 const ASK_FOR_PIN_LONG = 10 * 60 * 1000;
@@ -89,7 +90,7 @@ function handleAppStateChange(nextAppState) {
         ) {
           startOfBackgroundTimer = null;
           dispatch(
-            actions.navigateTo("VerifyProfile", {
+            actions.navigateTo(SCREENS.VERIFY_PROFILE, {
               hideBack: true,
               activeScreen,
               showLogOutBtn: true,
@@ -109,7 +110,7 @@ function handleAppStateChange(nextAppState) {
         if (Platform.OS === "ios") {
           pinTimeout = setTimeout(() => {
             dispatch(
-              actions.navigateTo("VerifyProfile", {
+              actions.navigateTo(SCREENS.VERIFY_PROFILE, {
                 hideBack: true,
                 activeScreen,
                 showLogOutBtn: true,
@@ -217,7 +218,7 @@ function toggleMaintenanceMode(title, explanation) {
     if (backendStatus && backendStatus.maintenance && !title) {
       dispatch(navigateBack());
     } else {
-      dispatch(navigateTo("Maintenance"));
+      dispatch(navigateTo(SCREENS.MAINTENANCE));
     }
   };
 }

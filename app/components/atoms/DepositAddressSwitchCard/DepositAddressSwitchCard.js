@@ -1,9 +1,10 @@
 import React from "react";
 
 import Card from "../Card/Card";
-import STYLES from "../../../constants/STYLES";
 import CelButton from "../CelButton/CelButton";
 import CelText from "../CelText/CelText";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const DepositAddressSwitchCard = ({
   coin,
@@ -61,14 +62,14 @@ const DepositAddressSwitchCard = ({
   if (!addressToDisplay) return null;
 
   return (
-    <Card color={STYLES.COLORS.CELSIUS_BLUE} padding="20 20 20 20">
+    <Card color={getColor(COLOR_KEYS.LINK)} padding="20 20 20 20">
       <CelText weight="300" alignItems="center" color="#FFFFFF">
         {explanationText}
       </CelText>
 
       <CelButton
-        size={"medium"}
-        margin="20 0 10 0"
+        size={"small"}
+        margin="20 0 0 0"
         onPress={() => {
           setAddress(addressToDisplay);
         }}

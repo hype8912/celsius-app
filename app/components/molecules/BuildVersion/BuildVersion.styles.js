@@ -1,3 +1,4 @@
+// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
@@ -14,6 +15,6 @@ const themed = {
   unicorn: {},
 };
 
-const WalletStyle = () => getThemedStyle(base, themed);
+const BuildVersionStyle = () => getThemedStyle(base, themed);
 
-export default WalletStyle;
+export default BuildVersionStyle;
