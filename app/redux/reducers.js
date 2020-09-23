@@ -24,6 +24,7 @@ import kyc from "./kyc/kycReducer";
 import contacts from "./contacts/contactsReducer";
 import loyalty from "./loyalty/loyaltyReducer";
 import security from "./userSecurity/userSecurityReducer";
+import biometrics from "./biometrics/biometricsReducer";
 import auth from "./userAuth/userAuthReducer";
 import hodl from "./hodl/hodlReducer";
 import animations from "./animations/animationsReducer";
@@ -54,6 +55,7 @@ const appReducers = combineReducers({
   contacts,
   loyalty,
   security,
+  biometrics,
   auth,
   hodl,
   animations,

@@ -1556,10 +1556,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/image-editor/-/image-editor-2.2.0.tgz#484d0a935d0c9120a81aac2bad58fc92e0a86352"
   integrity sha512-cMCbGJBe/D5WqRqFkLmkPcotOx2FXFrA7/UoVzTWC0nBmtqqEa36Rpax2jTJkJrqNMqmbbuXPQiwKXBny0gMPw==
 
-"@react-native-community/netinfo@^4.6.0":
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-4.7.0.tgz#7482d36836cac69d0a0ae25581f65bc472639930"
-  integrity sha512-a/sDB+AsLEUNmhAUlAaTYeXKyQdFGBUfatqKkX5jluBo2CB3OAuTHfm7rSjcaLB9EmG5iSq3fOTpync2E7EYTA==
+"@react-native-community/netinfo@^5.8.1":
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-5.8.1.tgz#deeb447aa21bf040ce07f307f131e47dee7a5017"
+  integrity sha512-tG6JsEvpdgQuI6C8j/JbTrd6RYTLNl0aYhOqfaHqoIJ3mVkc/ExCLjHsZMqtjyZ/6WrPrKDCaBZkctYugwT2Ag==
 
 "@react-native-community/push-notification-ios@1.0.6":
   version "1.0.6"
@@ -12281,6 +12281,11 @@ react-native-appsflyer@^1.4.6:
   resolved "https://registry.yarnpkg.com/react-native-appsflyer/-/react-native-appsflyer-1.4.7.tgz#c5a8520fcdd5f368b7bae13f4b71ac29aee405b4"
   integrity sha512-0t+kieeW8BFxIqLkD5Qj69I9rO7BBtPKXjNF/tHJ0okOAJQFAPkgIBn9M1v8iu50S88Jks7KObP1hxLH5eWeVQ==
 
+react-native-biometrics@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-biometrics/-/react-native-biometrics-2.1.4.tgz#e201e9f18baeb560eeaba8d41fbd4f90d04152fe"
+  integrity sha512-Ek7NmzgHB4rot2DdzV9Q3pzxFjnEFipGSFsmWZw5vcM9vkMoebhz8d8UYgsp0efroyeLITDNHwcFGEzq8XW9Kg==
+
 react-native-branch@4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-4.2.1.tgz#3ed1a071c053b420d11af8aa368142b19e2d5129"
@@ -12374,6 +12379,14 @@ react-native-markdown-renderer@^3.2.8:
 react-native-mixpanel@lorenc-tomasz/react-native-mixpanel:
   version "1.2.4"
   resolved "https://codeload.github.com/lorenc-tomasz/react-native-mixpanel/tar.gz/38cc7150c03e7d174e0d8ac73220a1706fcef4b6"
+
+react-native-modal@^11.5.6:
+  version "11.5.6"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.5.6.tgz#bb25a78c35a5e24f45de060e5f64284397d38a87"
+  integrity sha512-APGNfbvgC4hXbJqcSADu79GLoMKIHUmgR3fDQ7rCGZNBypkStSP8imZ4PKK/OzIZZfjGU9aP49jhMgGbhY9KHA==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-animatable "1.3.3"
 
 react-native-modal@^11.5.6:
   version "11.5.6"

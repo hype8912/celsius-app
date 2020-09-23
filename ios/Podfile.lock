@@ -4,14 +4,14 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
-  - appcenter (2.5.0):
-    - AppCenterReactNativeShared
-    - React
-  - appcenter-analytics (2.5.0):
+  - appcenter-analytics (3.1.1):
     - AppCenter/Analytics
     - AppCenterReactNativeShared
     - React
-  - appcenter-crashes (2.5.0):
+  - appcenter-core (3.1.1):
+    - AppCenterReactNativeShared
+    - React
+  - appcenter-crashes (3.1.1):
     - AppCenter/Crashes
     - AppCenterReactNativeShared
     - React
@@ -160,6 +160,10 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - Onfido (18.3.0)
+  - onfido-react-native-sdk (1.2.3):
+    - Onfido (= 18.3.0)
+    - React
   - Permission-Camera (2.0.10):
     - RNPermissions
   - Permission-Contacts (2.0.10):
@@ -351,6 +355,8 @@ PODS:
   - react-native-appsflyer (1.4.7):
     - AppsFlyerFramework (~> 4.10.4)
     - React
+  - react-native-biometrics (2.1.4):
+    - React
   - react-native-blur (0.8.0):
     - React
   - react-native-branch (4.2.1):
@@ -392,7 +398,7 @@ PODS:
   - react-native-mixpanel (1.2.4):
     - Mixpanel (= 3.6.0)
     - React
-  - react-native-netinfo (4.7.0):
+  - react-native-netinfo (5.8.1):
     - React
   - react-native-slider (2.0.9):
     - React
@@ -470,8 +476,8 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
-  - appcenter (from `../node_modules/appcenter/ios`)
   - appcenter-analytics (from `../node_modules/appcenter-analytics/ios`)
+  - appcenter-core (from `../node_modules/appcenter/ios`)
   - appcenter-crashes (from `../node_modules/appcenter-crashes/ios`)
   - CodePush (from `../node_modules/react-native-code-push`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -480,6 +486,7 @@ DEPENDENCIES:
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - Mixpanel
+  - "onfido-react-native-sdk (from `../node_modules/@onfido/react-native-sdk`)"
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera.podspec`)
   - Permission-Contacts (from `../node_modules/react-native-permissions/ios/Contacts.podspec`)
   - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse.podspec`)
@@ -499,6 +506,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-appsflyer (from `../node_modules/react-native-appsflyer`)
+  - react-native-biometrics (from `../node_modules/react-native-biometrics`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-branch (from `../node_modules/react-native-branch`)
   - react-native-camera (from `../node_modules/react-native-camera`)
@@ -567,6 +575,7 @@ SPEC REPOS:
     - JWT
     - Mixpanel
     - nanopb
+    - Onfido
     - PromisesObjC
     - Protobuf
     - QBImagePickerController
@@ -574,10 +583,10 @@ SPEC REPOS:
     - SSZipArchive
 
 EXTERNAL SOURCES:
-  appcenter:
-    :path: "../node_modules/appcenter/ios"
   appcenter-analytics:
     :path: "../node_modules/appcenter-analytics/ios"
+  appcenter-core:
+    :path: "../node_modules/appcenter/ios"
   appcenter-crashes:
     :path: "../node_modules/appcenter-crashes/ios"
   CodePush:
@@ -592,6 +601,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  onfido-react-native-sdk:
+    :path: "../node_modules/@onfido/react-native-sdk"
   Permission-Camera:
     :path: "../node_modules/react-native-permissions/ios/Camera.podspec"
   Permission-Contacts:
@@ -626,6 +637,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-appsflyer:
     :path: "../node_modules/react-native-appsflyer"
+  react-native-biometrics:
+    :path: "../node_modules/react-native-biometrics"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
   react-native-branch:
@@ -702,9 +715,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   AppCenter: aba7de06e4c2184f90dc84f7866bd07f82427d69
-  appcenter: bde9923b687332a25607fc1aa9577c9361cfed85
-  appcenter-analytics: 0ee7a35def715d4bce58ec435f54161770195166
-  appcenter-crashes: 9f9c5647dba19026ff09509576fb7233f69697ff
+  appcenter-analytics: bce201b504c8138d235e6f42de1f36d30d2cd7f5
+  appcenter-core: 086ab16077baef60368c6a119af6e9e127406286
+  appcenter-crashes: 10790bf670f79150f1654d79f76c10a8b4936688
   AppCenterReactNativeShared: b9fa50d999e830e03f086f487b1aa0f9772088c1
   AppsFlyerFramework: aeb793095c1b33170ae30bef66652c0645f409be
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
@@ -737,6 +750,8 @@ SPEC CHECKSUMS:
   JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
   Mixpanel: 446b6e7713aa34a9a3516ff7648d56551384fc94
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  Onfido: 572cb9c1ab40277318528584363cac22cc1ada21
+  onfido-react-native-sdk: 4ab04228e18a80ca50f4cbb1453d1bce67731a7c
   Permission-Camera: a8f6007d17b02ed8a2d6bac1c37c2fd5df9b4e8a
   Permission-Contacts: ac39cd8b11b8931482bf68fc3fa08dbd7ece909d
   Permission-LocationWhenInUse: 4a2764d2efe09a1f6c7a00dfbbb863149240311a
@@ -757,6 +772,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 8dfb73b987afa9324e4009bdce62a18ce23d983c
   React-jsinspector: d15478d0a8ada19864aa4d1cc1c697b41b3fa92f
   react-native-appsflyer: b601a021165240426b58d3e67cfeb503ecde1c3f
+  react-native-biometrics: 9d3306e5d29c3bc4e6a3c912d759a94e76a2f683
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-branch: cc611a2d0e7e6c7c4cafebc8e59065b89c38002b
   react-native-camera: 44202c8bde2c927560e80444740602ff746028c6
@@ -767,7 +783,7 @@ SPEC CHECKSUMS:
   react-native-idfa: 7a029b76f4d5dff76efa6fe4b86be8fadd71c49f
   react-native-image-editor: 2a796811bc48babcf2f1594b15d6bfe6968e7e63
   react-native-mixpanel: 4a339265cdbf30b4b3c3dd63f154cf5a073d073b
-  react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
+  react-native-netinfo: 73d0d151215683d128908796063e344030ef20fa
   react-native-slider: e51492f1264d882a8815b71c5870f8978e52887d
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-webview: db4682f1698ab4b17a5e88f951031d203ff8aea8
