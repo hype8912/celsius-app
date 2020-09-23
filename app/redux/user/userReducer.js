@@ -120,7 +120,8 @@ export default (state = initialState, action) => {
         },
       };
 
-    case ACTIONS.UPDATE_USER_BIOMETRICS_STATUS_SUCCESS:
+    case ACTIONS.ACTIVATE_BIOMETRICS_SUCCESS:
+    case ACTIONS.DEACTIVATE_BIOMETRICS_SUCCESS:
       return {
         ...state,
         profile: {
