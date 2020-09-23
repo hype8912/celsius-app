@@ -255,7 +255,6 @@ class VerifyProfile extends Component {
     const { actions, navigation, user } = this.props;
     const biometricsEnabled =
       navigation.getParam("biometrics_enabled") || user.biometrics_enabled; // from 426 or Redux // check this!!!!
-
     if (!biometricsEnabled) {
       actions.openModal(MODALS.BIOMETRICS_AUTHENTICATION_MODAL);
     } else {
@@ -281,16 +280,16 @@ class VerifyProfile extends Component {
           actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
         },
         error => {
-          if (error.message === BIOMETRIC_ERRORS.KEY_PERMANENTLY_INVALIDATED) {
-            actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
-            this.setState({ disableBiometrics: true });
-          } else if (
-            error.message === BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS ||
-            error.message === BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED
+          if (
+            [
+              BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS,
+              BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED,
+            ].includes(error.message)
           ) {
             actions.showMessage("error", error.message);
           } else {
-            return;
+            actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
+            this.setState({ disableBiometrics: true });
           }
         }
       );
