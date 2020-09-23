@@ -87,8 +87,8 @@ class CustomSplashScreen extends Component {
     const { history } = this.props;
     const { shouldUpdate } = this.state;
     const logoImage = this.state.shouldShowBlueLogo
-      ? require("../../../../assets/images/icons/cel.png")
-      : require("../../../../assets/images/icons/cel-white.png");
+      ? require("../../../../assets/images/icons/cel-logo-blue.png")
+      : require("../../../../assets/images/icons/cel-logo-white.png");
     const style = SplashScreenStyle();
 
     if (!history.length || shouldUpdate) {
@@ -97,7 +97,7 @@ class CustomSplashScreen extends Component {
           <Image
             resizeMode="contain"
             style={[style.logoStaticImage]}
-            source={require("../../../../assets/images/icons/cel-white.png")}
+            source={require("../../../../assets/images/icons/cel-logo-white.png")}
           />
         </View>
       );
@@ -152,7 +152,7 @@ class CustomSplashScreen extends Component {
           <Image
             resizeMode="contain"
             style={[style.celsiusNetworkImage]}
-            source={require("../../../../assets/images/celsiusnetwork.png")}
+            source={require("../../../../assets/images/icons/cel-text-blue.png")}
           />
         </Animated.View>
       </View>
