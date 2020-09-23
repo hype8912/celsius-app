@@ -1,8 +1,8 @@
 import ACTIONS from "../../constants/ACTIONS";
-import { startApiCall } from "../api/apiActions";
+import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
-import logger from "../../utils/logger-util";
 import contactsService from "../../services/contacts-service";
+import { showMessage } from "../ui/uiActions";
 
 export { connectPhoneContacts, getContacts };
 
@@ -24,7 +24,8 @@ function connectPhoneContacts(contacts, opts) {
         contacts: res.data.contacts,
       });
     } catch (err) {
-      logger.err(err);
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.CONNECT_PHONE_CONTACTS, err));
     }
   };
 }
@@ -40,7 +41,8 @@ function getContacts() {
       const res = await contactsService.getContacts();
       dispatch(getConnectedContactsSuccess(res.data.contacts));
     } catch (err) {
-      logger.err(err);
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_CONNECT_CONTACTS, err));
     }
   };
 }

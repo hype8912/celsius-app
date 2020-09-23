@@ -6,8 +6,8 @@ import appUtil from "./app-util";
 import loggerUtil from "./logger-util";
 import Constants from "../../constants";
 import { getSecureStoreKey } from "./expo-storage";
-// import { deletePushNotificationToken } from "./push-notifications-util";
 import { NOTIFICATION_TOKEN } from "../constants/DATA";
+import mixpanelAnalytics from "./mixpanel-analytics";
 
 let userData = {};
 
@@ -84,7 +84,7 @@ async function sendEvent(event, data = {}) {
       appInfo.revisionId = revisionId;
       appInfo.appVersion = version;
     } catch (error) {
-      loggerUtil.err(error);
+      mixpanelAnalytics.logError("mixpanelUtil.sendEvent", error);
     }
   }
   if (!userData.id) {

@@ -18,6 +18,7 @@ const generalAnalytics = {
   apiError,
   appCrushed,
   appsflyerEvent,
+  logError,
 };
 
 let sessionTime = new moment();
@@ -119,6 +120,16 @@ async function appCrushed(error) {
  */
 async function appsflyerEvent(eventProps) {
   await sendEvent("Appsflyer event", eventProps);
+}
+
+/**
+ * Fires an event when something goes wrong with a third party service or a rn library
+ *
+ * @param {String} method - method in the code where the error occurred
+ * @param {Object} error - thrown error
+ */
+async function logError(method, error) {
+  await sendEvent("Log app error event", { method, ...error });
 }
 
 export default generalAnalytics;

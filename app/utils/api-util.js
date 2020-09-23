@@ -7,7 +7,6 @@ import { Base64 } from "js-base64";
 import DeviceInfo from "react-native-device-info";
 import CodePush from "react-native-code-push";
 
-import logger from "./logger-util";
 import Constants from "../../constants";
 import { getSecureStoreKey } from "../utils/expo-storage";
 import store from "../redux/store";
@@ -192,7 +191,7 @@ async function setAuthHeaders() {
     const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
     if (token !== storageToken) token = storageToken;
   } catch (err) {
-    logger.err(err);
+    mixpanelAnalytics.logError("setAuthHeaders", err);
   }
   return {
     authorization: token && `Bearer ${token}`,

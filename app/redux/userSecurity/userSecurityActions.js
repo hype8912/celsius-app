@@ -7,7 +7,6 @@ import { navigateTo, navigateBack } from "../nav/navActions";
 import userSecurityService from "../../services/user-security-service";
 import userAuthService from "../../services/user-auth-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
-import logger from "../../utils/logger-util";
 import { logoutUser } from "../userAuth/authActions";
 import { setSecureStoreKey } from "../../utils/expo-storage";
 import Constants from "../../../constants";
@@ -314,7 +313,9 @@ function logoutFromAllDevices() {
       );
       await dispatch(logoutUser());
     } catch (err) {
-      logger.err(err);
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.LOGOUT_FROM_ALL_DEVICES, err));
+      mixpanelAnalytics.logError("logoutFromAllDevices", err);
     }
   };
 }

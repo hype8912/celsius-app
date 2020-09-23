@@ -5,7 +5,6 @@ import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage, closeModal } from "../ui/uiActions";
-import logger from "../../utils/logger-util";
 import { setFormErrors, updateFormField } from "../forms/formsActions";
 import { default as NavActions, navigateTo } from "../nav/navActions";
 import apiUtil from "../../utils/api-util";
@@ -42,7 +41,8 @@ function getLinkedBankAccount() {
         bankAccountInfo: res.data,
       });
     } catch (err) {
-      logger.err(err);
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.GET_LINKED_BANK_ACCOUNT, err));
     }
   };
 }

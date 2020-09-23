@@ -9,7 +9,10 @@ class ErrorBoundary extends React.Component {
       message: error.message,
       stack: error.stack,
     };
-    loggerUtil.err(err);
+    loggerUtil.err({
+      ...err,
+      where: "getDerivedStateFromError",
+    });
   }
 
   constructor(props) {
@@ -23,7 +26,10 @@ class ErrorBoundary extends React.Component {
       message: error.message,
       stack: info.componentStack || error.stack,
     };
-    loggerUtil.err(err);
+    loggerUtil.err({
+      ...err,
+      where: "componentDidCatch",
+    });
   }
 
   render() {

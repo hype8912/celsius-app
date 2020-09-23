@@ -15,7 +15,6 @@ import {
 } from "../../utils/expo-storage";
 import userAuthService from "../../services/user-auth-service";
 import apiUtil from "../../utils/api-util";
-import logger from "../../utils/logger-util";
 import { setFormErrors } from "../forms/formsActions";
 import branchUtil from "../../utils/branch-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
@@ -145,6 +144,7 @@ function sendResetLink() {
 function logoutUser() {
   return async dispatch => {
     try {
+      dispatch(startApiCall(API.INVALIDATE_SESSION));
       dispatch(resetToScreen(SCREENS.WELCOME));
       await logoutUserMixpanel();
       await userSecurityService.invalidateSession();
@@ -154,7 +154,9 @@ function logoutUser() {
         type: ACTIONS.LOGOUT_USER,
       });
     } catch (err) {
-      logger.err(err);
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.INVALIDATE_SESSION, err));
+      mixpanelAnalytics.logError("logoutUser", err);
     }
   };
 }
@@ -181,7 +183,7 @@ function logoutFormDevice(type, reason, msg) {
         type: ACTIONS.LOGOUT_USER,
       });
     } catch (err) {
-      logger.err(err);
+      mixpanelAnalytics.logError("logoutFormDevice", err);
     }
   };
 }
@@ -190,14 +192,8 @@ function logoutFormDevice(type, reason, msg) {
  * Expires the session for the user
  */
 function expireSession() {
-  return async dispatch => {
-    try {
-      dispatch({
-        type: ACTIONS.EXPIRE_SESSION,
-      });
-    } catch (err) {
-      logger.err(err);
-    }
+  return {
+    type: ACTIONS.EXPIRE_SESSION,
   };
 }
 
