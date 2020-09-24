@@ -146,7 +146,7 @@ const WELCOME_MESSAGES = [
   {
     title: "Unity in Community",
     text:
-      "Celsius Network’s promise is to only act in the best interest of our community by offering unmatched financial services that are safe, secure, and rewarding.",
+      "Celsius’s promise is to only act in the best interest of our community by offering unmatched financial services that are safe, secure, and rewarding.",
   },
   {
     title: "Join the CEL-ebration!",

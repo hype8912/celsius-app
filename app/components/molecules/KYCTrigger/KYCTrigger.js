@@ -62,7 +62,7 @@ class KYCTrigger extends Component {
       default:
         title = "Verify Your Profile";
         content =
-          "Complete verification to have full access your to Celsius Network wallet.";
+          "Complete verification to have full access your to Celsius Wallet.";
     }
 
     return { title, content, info };
