@@ -53,7 +53,7 @@ class TransactionRow extends Component {
             </View>
             <View style={style.amounts}>
               <View>
-                <CelText weight="600" type="H3">
+                <CelText hideFromRecording weight="600" type="H3">
                   {transaction.amount_usd
                     ? formatter.usd(transaction.amount_usd)
                     : formatter.fiat(
@@ -63,7 +63,7 @@ class TransactionRow extends Component {
                 </CelText>
               </View>
               <View>
-                <CelText type="H6" weight="200">
+                <CelText hideFromRecording type="H6" weight="200">
                   {formatter.crypto(
                     transaction.amount,
                     transaction.coin.toUpperCase(),

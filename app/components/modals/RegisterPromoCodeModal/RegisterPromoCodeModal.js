@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
 import RegisterPromoCodeModalStyle from "./RegisterPromoCodeModal.styles";
 import CelModal from "../CelModal/CelModal.js";
 import { MODALS, THEMES } from "../../../constants/UI";
@@ -244,6 +243,7 @@ class RegisterPromoCodeModal extends Component {
         </CelText>
         <View style={style.inputWrapper}>
           <CelInput
+            hideFromRecording
             type="text"
             field="promoCode"
             placeholder="Enter Promo Code"

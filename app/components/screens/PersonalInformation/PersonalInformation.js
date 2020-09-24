@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Linking, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
 import moment from "moment";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
@@ -172,7 +171,12 @@ class PersonalInformation extends Component {
             <CelText margin={"0 0 10 0"} type={"H4"} weight={"300"}>
               First name
             </CelText>
-            <CelInput field={"profileFirst"} disabled value={user.first_name} />
+            <CelInput
+              hideFromRecording
+              field={"profileFirst"}
+              disabled
+              value={user.first_name}
+            />
           </View>
         )}
 
@@ -181,7 +185,12 @@ class PersonalInformation extends Component {
             <CelText margin={"0 0 10 0"} type={"H4"} weight={"300"}>
               Last name
             </CelText>
-            <CelInput field={"profileLast"} disabled value={user.last_name} />
+            <CelInput
+              hideFromRecording
+              field={"profileLast"}
+              disabled
+              value={user.last_name}
+            />
           </View>
         )}
 
@@ -191,6 +200,7 @@ class PersonalInformation extends Component {
               Email
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileEmail"}
               disabled
               type="text"
@@ -205,6 +215,7 @@ class PersonalInformation extends Component {
               Date of birth
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileDOB"}
               disabled
               type="text"
@@ -219,6 +230,7 @@ class PersonalInformation extends Component {
               Gender
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileGender"}
               disabled
               type="text"
@@ -233,6 +245,7 @@ class PersonalInformation extends Component {
               Citizenship
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileCitizenship"}
               disabled
               type="text"
@@ -243,6 +256,7 @@ class PersonalInformation extends Component {
 
         {!!user.cellphone && (
           <CelInput
+            hideFromRecording
             type="text"
             field="profileCellphone"
             disabled
@@ -270,6 +284,7 @@ class PersonalInformation extends Component {
               Street address
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileStreet"}
               disabled
               type="text"
@@ -284,6 +299,7 @@ class PersonalInformation extends Component {
               Building number
             </CelText>
             <CelInput
+              hideFromRecording
               field={"buildingNumber"}
               disabled
               type="text"
@@ -298,6 +314,7 @@ class PersonalInformation extends Component {
               Apartment number
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileApartment"}
               disabled
               type="text"
@@ -312,6 +329,7 @@ class PersonalInformation extends Component {
               City
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileCity"}
               disabled
               type="text"
@@ -326,6 +344,7 @@ class PersonalInformation extends Component {
               ZIP / Postal Code
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileZip"}
               disabled
               type="text"
@@ -340,6 +359,7 @@ class PersonalInformation extends Component {
               Country
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileCountry"}
               disabled
               type="text"
@@ -354,6 +374,7 @@ class PersonalInformation extends Component {
               State
             </CelText>
             <CelInput
+              hideFromRecording
               field={"profileState"}
               disabled
               type="text"
