@@ -69,7 +69,7 @@ class VerifyProfile extends Component {
       verificationError: false,
       showLogOutBtn: false,
       hasSixDigitPin: false,
-      disableBiometrics: false,
+      disableBiometricsForUser: false,
     };
   }
 
@@ -127,9 +127,9 @@ class VerifyProfile extends Component {
     actions.updateFormField("loading", true);
 
     // If biometrics is changed on device, disable biometrics on BE for user
-    if (this.state.disableBiometrics) {
+    if (this.state.disableBiometricsForUser) {
       actions.disableBiometrics();
-      this.setState({ disableBiometrics: false });
+      this.setState({ disableBiometricsForUser: false });
     }
 
     // Check if app is opened from DeepLink
@@ -254,7 +254,7 @@ class VerifyProfile extends Component {
   onPressBiometric = async () => {
     const { actions, navigation, user } = this.props;
     const biometricsEnabled =
-      navigation.getParam("biometrics_enabled") || user.biometrics_enabled; // from 426 or Redux // check this!!!!
+      navigation.getParam("biometrics_enabled") || user.biometrics_enabled;
     if (!biometricsEnabled) {
       actions.openModal(MODALS.BIOMETRICS_AUTHENTICATION_MODAL);
     } else {
@@ -275,7 +275,8 @@ class VerifyProfile extends Component {
         () => {
           this.setState({
             loading: true,
-            disableBiometrics: false,
+            disableBiometricsForUser: false,
+            value: "******",
           });
           actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
         },
@@ -289,7 +290,7 @@ class VerifyProfile extends Component {
             actions.showMessage("error", error.message);
           } else {
             actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
-            this.setState({ disableBiometrics: true });
+            this.setState({ disableBiometricsForUser: true });
           }
         }
       );
