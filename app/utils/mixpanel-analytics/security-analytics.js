@@ -4,9 +4,10 @@ const securityAnalytics = {
   changePassword,
   changePin,
   forgottenPassword,
-  loggedOutOfAllSessions
-}
-
+  loggedOutOfAllSessions,
+  biometricsActivated,
+  biometricsDeactivated,
+};
 
 /**
  * Fires an event when a user change his password
@@ -26,14 +27,24 @@ async function changePin() {
  * Fires an event when a user requests password change
  */
 async function forgottenPassword() {
-  await sendEvent("Sent Forgotten Password Request")
+  await sendEvent("Sent Forgotten Password Request");
 }
 
 /**
  * Fires an event when a user logs out on security screen
  */
 async function loggedOutOfAllSessions() {
-  await sendEvent("Logged Out of all Sessions")
+  await sendEvent("Logged Out of all Sessions");
 }
 
-export default securityAnalytics
+async function biometricsActivated(type) {
+  await sendEvent("Biometrics activated", {
+    type,
+  });
+}
+
+async function biometricsDeactivated() {
+  await sendEvent("Biometrics deactivated");
+}
+
+export default securityAnalytics;

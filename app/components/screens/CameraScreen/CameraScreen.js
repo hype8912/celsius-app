@@ -11,7 +11,6 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-// TODO(sb): RN update dependencies fixes
 import { RESULTS } from "react-native-permissions";
 import { withNavigationFocus } from "react-navigation";
 import { RNCamera } from "react-native-camera";
@@ -23,7 +22,6 @@ import Icon from "../../atoms/Icon/Icon";
 import STYLES from "../../../constants/STYLES";
 import API from "../../../constants/API";
 import CelText from "../../atoms/CelText/CelText";
-import loggerUtil from "../../../utils/logger-util";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import {
   ALL_PERMISSIONS,
@@ -32,6 +30,7 @@ import {
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 const { height, width } = Dimensions.get("window");
 
@@ -174,7 +173,7 @@ class CameraScreen extends Component {
       actions.takeCameraPhoto({ uri: result.path });
     } catch (err) {
       if (err.message === "User cancelled image selection") return;
-      loggerUtil.err(err);
+      mixpanelAnalytics.logError("pickImage", err);
     }
   };
 
@@ -237,7 +236,7 @@ class CameraScreen extends Component {
 
         actions.takeCameraPhoto({ uri: croppedImage });
       } catch (err) {
-        loggerUtil.err(err);
+        mixpanelAnalytics.logError("takePhoto", err);
       }
     }
   };

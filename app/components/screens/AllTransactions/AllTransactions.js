@@ -34,8 +34,11 @@ class AllTransactions extends Component {
         <View style={style.container}>
           <TransactionsHistory
             hasFilter={!(additionalFilter.type || additionalFilter.coin)}
+            hasTitle={false}
             additionalFilter={
-              additionalFilter.type || additionalFilter.coin ? { coin: additionalFilter.coin, type: additionalFilter.type } : null
+              additionalFilter.type || additionalFilter.coin
+                ? { coin: additionalFilter.coin, type: additionalFilter.type }
+                : null
             }
           />
         </View>

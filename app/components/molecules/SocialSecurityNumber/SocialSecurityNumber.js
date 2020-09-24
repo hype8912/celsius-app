@@ -3,7 +3,6 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
 import * as appActions from "../../../redux/actions";
 import SocialSecurityNumberStyle from "./SocialSecurityNumber.styles";
 import CelText from "../../atoms/CelText/CelText";
@@ -59,6 +58,7 @@ class SocialSecurityNumber extends Component {
             <View style={style.ssnInput}>
               <View style={style.inputCel}>
                 <CelInput
+                  hideFromRecording
                   onFocus={this.ssnField}
                   large={false}
                   maxLenght={3}
@@ -82,6 +82,7 @@ class SocialSecurityNumber extends Component {
               <CelText style={{ paddingHorizontal: 10 }}>{"-"}</CelText>
               <View style={style.inputCel}>
                 <CelInput
+                  hideFromRecording
                   large={false}
                   maxLenght={2}
                   keyboardType={"phone-pad"}
@@ -104,6 +105,7 @@ class SocialSecurityNumber extends Component {
               <CelText style={{ paddingHorizontal: 10 }}>{"-"}</CelText>
               <View style={style.inputCel}>
                 <CelInput
+                  hideFromRecording
                   large={false}
                   maxLenght={4}
                   keyboardType={"phone-pad"}
@@ -162,6 +164,7 @@ class SocialSecurityNumber extends Component {
           <React.Fragment>
             <View style={style.taxID}>
               <CelInput
+                hideFromRecording
                 margin="20 0 20 0"
                 type="text"
                 field="itin"
@@ -173,6 +176,7 @@ class SocialSecurityNumber extends Component {
             </View>
             <View style={style.nationalID}>
               <CelInput
+                hideFromRecording
                 margin="20 0 20 0"
                 type="text"
                 field="national_id"

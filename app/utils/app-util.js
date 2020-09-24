@@ -17,7 +17,9 @@ import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import { initMixpanel } from "./mixpanel-util";
+import { initUxCam } from "./uxcam-util";
 import { isUserLoggedIn } from "./user-util/user-util";
+import mixpanelAnalytics from "./mixpanel-analytics";
 
 const {
   SECURITY_STORAGE_AUTH_KEY,
@@ -48,6 +50,7 @@ async function initializeThirdPartyServices() {
 
   twitter.setConsumerKey(TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY);
   await initMixpanel();
+  await initUxCam();
 }
 
 /**
@@ -69,20 +72,26 @@ async function updateCelsiusApp() {
   if (deepLinkData && !_.isEmpty(deepLinkData) && deepLinkData.type)
     return false;
 
-  if (await shouldUpdateCelsiusApp()) {
-    store.dispatch(
-      actions.showMessage(
-        "info",
-        "Please wait while Celsius app is being updated."
-      )
-    );
-    await CodePush.sync({
-      updateDialog: false,
-      installMode: CodePush.InstallMode.IMMEDIATE,
-    });
-    return true;
+  try {
+    if (await shouldUpdateCelsiusApp()) {
+      store.dispatch(
+        actions.showMessage(
+          "info",
+          "Please wait while Celsius app is being updated."
+        )
+      );
+      await CodePush.sync({
+        updateDialog: false,
+        installMode: CodePush.InstallMode.IMMEDIATE,
+      });
+      return true;
+    }
+
+    return false;
+  } catch (err) {
+    mixpanelAnalytics.logError("updateCelsiusApp", err);
+    return false;
   }
-  return false;
 }
 
 /**

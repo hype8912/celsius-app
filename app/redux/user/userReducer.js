@@ -120,6 +120,16 @@ export default (state = initialState, action) => {
         },
       };
 
+    case ACTIONS.ACTIVATE_BIOMETRICS_SUCCESS:
+    case ACTIONS.DEACTIVATE_BIOMETRICS_SUCCESS:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          biometrics_enabled: action.biometricsEnabled,
+        },
+      };
+
     case ACTIONS.TWITTER_GET_ACCESS_TOKEN:
       return {
         ...state,

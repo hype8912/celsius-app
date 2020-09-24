@@ -1,4 +1,3 @@
-import STYLES from "../../../constants/STYLES";
 import { getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
@@ -16,7 +15,7 @@ const base = {
     backgroundColor: COLOR_KEYS.POSITIVE_STATE,
   },
   nonColor: {
-    backgroundColor: STYLES.COLORS.GREEN_OPACITY, // TODO: missing COLOR_KEY
+    backgroundColor: COLOR_KEYS.PROGRESS_BAR_OPACITY,
   },
 };
 

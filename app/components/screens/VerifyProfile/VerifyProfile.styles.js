@@ -11,6 +11,15 @@ const base = {
   wrapper: {
     paddingHorizontal: 20,
   },
+  biometricsWrapper: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 30,
+  },
+  biometricsImage: {
+    width: 20,
+    height: 20,
+  },
 };
 
 const themed = {

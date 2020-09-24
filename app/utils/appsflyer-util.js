@@ -49,7 +49,7 @@ async function initSDK() {
         loggerUtil.log(result);
       },
       error => {
-        loggerUtil.err(error);
+        mixpanelAnalytics.logError("appsflyerUtil.initSDK", error);
       }
     );
   }
@@ -89,7 +89,7 @@ async function appsFlyerEvent(event, payload) {
         appInfo.revisionId = revisionId;
         appInfo.appVersion = version;
       } catch (error) {
-        loggerUtil.err(error);
+        mixpanelAnalytics.logError("appsflyerUtil.appsFlyerEvent", error);
       }
     }
     const response = await appsFlyer.trackEvent(event, {

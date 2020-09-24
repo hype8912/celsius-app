@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 import { IDFA } from "react-native-idfa";
 import appsFlyer from "react-native-appsflyer";
+import * as DeviceInfo from "react-native-device-info";
 import Geolocation from "@react-native-community/geolocation";
 import { RESULTS } from "react-native-permissions";
 
@@ -15,6 +16,10 @@ import {
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { navigateBack, navigateTo } from "../nav/navActions";
 import { SCREENS } from "../../constants/SCREENS";
+import {
+  startRecording,
+  stopRecordingAndUploadData,
+} from "../../utils/uxcam-util";
 
 export {
   loadCelsiusAssets,
@@ -23,6 +28,7 @@ export {
   getGeolocation,
   setAdvertisingId,
   setAppsFlyerUID,
+  setDeviceId,
   toggleMaintenanceMode,
 };
 
@@ -75,6 +81,7 @@ function handleAppStateChange(nextAppState) {
         dispatch(actions.getInitialCelsiusData());
         dispatch(actions.getCurrencyRates());
         dispatch(actions.closeModal());
+        dispatch(actions.getBiometricType()); // Get biometric type on Biometric authentication screen when app state changes
 
         if (Platform.OS === "ios") {
           clearTimeout(pinTimeout);
@@ -94,8 +101,7 @@ function handleAppStateChange(nextAppState) {
           );
         }
         mixpanelAnalytics.sessionStarted("Foreground");
-        // Fix for CN-4253, CN-4235, CN-4205
-        // dispatch(getGeolocation());
+        startRecording();
       }
 
       if (
@@ -122,6 +128,7 @@ function handleAppStateChange(nextAppState) {
         }
 
         mixpanelAnalytics.sessionEnded("Background");
+        stopRecordingAndUploadData();
       }
     }
 
@@ -149,11 +156,21 @@ function setInternetConnection(connection) {
 function setAdvertisingId() {
   return async dispatch => {
     const userAID = await IDFA.getIDFA();
-
     dispatch({
       type: ACTIONS.SET_ADVERTISING_ID,
       advertisingId: userAID,
     });
+  };
+}
+
+/**
+ * Set Device ID
+ */
+function setDeviceId() {
+  const deviceId = DeviceInfo.getUniqueId();
+  return {
+    type: ACTIONS.SET_DEVICE_ID,
+    deviceId,
   };
 }
 

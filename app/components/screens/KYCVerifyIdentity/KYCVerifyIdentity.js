@@ -116,7 +116,7 @@ class KYCVerifyIdentity extends Component {
       });
       actions.saveKYCDocuments();
     } catch (err) {
-      mixpanelAnalytics.onfidoSDKError(err);
+      mixpanelAnalytics.logError("selectDocument", err);
     }
   };
 

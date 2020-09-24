@@ -8,7 +8,6 @@ const kycAnalytics = {
   kycUtilityBillSubmitted,
   kycTaxPayerInfo,
   kycStarted,
-  onfidoSDKError,
 };
 
 /**
@@ -62,13 +61,6 @@ async function kycStarted() {
     document_type: documentType || document,
     taxpayer_info: taxpayerInfo,
   });
-}
-
-/**
- * Fires an event when OnfidoSDK throws an error
- */
-async function onfidoSDKError(error) {
-  await sendEvent("OnfidoSDK error", { error });
 }
 
 export default kycAnalytics;

@@ -10,6 +10,7 @@ import LoadingState from "../../atoms/LoadingState/LoadingState";
 import * as appActions from "../../../redux/actions";
 import EmptyState from "../../atoms/EmptyState/EmptyState";
 import { SCREENS } from "../../../constants/SCREENS";
+import CelText from "../../atoms/CelText/CelText";
 
 @connect(
   state => ({
@@ -53,6 +54,9 @@ class BuyCoinsPaymentsHistory extends Component {
 
     return (
       <View>
+        <CelText weight="medium" type="H6" margin="20 0 0 0">
+          Transaction history
+        </CelText>
         {!buyCoinsPayments.length && (
           <View>
             <EmptyState

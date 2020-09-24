@@ -8,6 +8,7 @@ export const SCREENS = {
   APPEARANCE: "Appearance",
   BALANCE_HISTORY: "BalanceHistory",
   BITWALA: "BitWala",
+  BIOMETRICS_AUTHENTICATION: "BiometricAuthentication",
   BORROW_BANK_ACCOUNT: "BorrowBankAccount",
   BORROW_CALCULATOR_SCREEN: "BorrowCalculatorScreen",
   BORROW_CHOOSE_LOAN: "BorrowChooseLoan",

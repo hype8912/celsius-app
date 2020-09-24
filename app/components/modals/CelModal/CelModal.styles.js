@@ -28,6 +28,10 @@ const base = {
     left: 0,
     position: "absolute",
     zIndex: 0,
+    backgroundColor:
+      Platform.OS === "android"
+        ? COLOR_KEYS.MODAL_ANDROID__OUTSIDE_BACKGROUND_COLOR
+        : null,
   },
   pictureWrapper: {
     height: 80,
@@ -64,23 +68,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    outsideCloseModal: {
-      backgroundColor:
-        Platform.OS === "android"
-          ? STYLES.COLORS.LIGHT_MODAL_ANDROID__OUTSIDE_BACKGROUND_COLOR // TODO: Get rid of this, and find different way to handle modal overlay on Android platform
-          : null,
-    },
-  },
+  light: {},
 
-  dark: {
-    outsideCloseModal: {
-      backgroundColor:
-        Platform.OS === "android"
-          ? STYLES.COLORS.DARK_MODAL_ANDROID_OUTSIDE_BACKGROUND_COLOR
-          : null,
-    },
-  },
+  dark: {},
 
   unicorn: {},
 };

@@ -123,7 +123,6 @@ class GetCoinsLanding extends Component {
             onPress={this.pressBankWire}
           />
         )}
-
         <BuyCoinsPaymentsHistory />
 
         <GetCoinsInfoModal actions={actions} />

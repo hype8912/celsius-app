@@ -109,7 +109,7 @@ class WalletSettings extends Component {
           </IconButton>
         </RNPickerSelect>
 
-        {!isUSCitizen() && <Separator text="INTEREST" margin="0 0 10 0" />}
+        {!isUSCitizen() && <Separator text="REWARD" margin="0 0 10 0" />}
         <PerCoinCelInterestCard />
       </RegularLayout>
     );

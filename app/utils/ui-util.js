@@ -2,8 +2,10 @@ import moment from "moment";
 import { Platform } from "react-native";
 import store from "../redux/store";
 import { hasPassedKYC } from "./user-util/user-util";
+import { getSecureStoreKey } from "./expo-storage";
+import { DONT_SHOW_AGAIN } from "../constants/UI";
 
-export { isLoanBannerVisible, isIos, presentTime };
+export { isLoanBannerVisible, isBiometricsBannerVisible, isIos, presentTime };
 
 function isIos() {
   return Platform.OS === "ios";
@@ -17,6 +19,13 @@ function isLoanBannerVisible() {
   const hasLoans = !!allLoans.length;
 
   return !!(hasPassedKYC() && loan.allowed && !hasLoans && isBannerVisible);
+}
+
+async function isBiometricsBannerVisible() {
+  const dontShow = JSON.parse(
+    await getSecureStoreKey(DONT_SHOW_AGAIN.BIOMETRIC_BANNER)
+  );
+  return dontShow;
 }
 
 function presentTime(time, shouldCalculate = false) {

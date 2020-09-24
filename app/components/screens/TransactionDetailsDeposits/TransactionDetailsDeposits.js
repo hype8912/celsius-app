@@ -37,7 +37,7 @@ class TransactionDetailsDeposits extends Component {
           />
           <TxBasicSection
             label={"Date"}
-            value={moment(transaction.time).format("D MMM YYYY")}
+            value={moment.utc(transaction.time).format("D MMM YYYY")}
           />
           <TxBasicSection
             label={"Time"}

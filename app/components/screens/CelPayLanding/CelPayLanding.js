@@ -123,7 +123,6 @@ class CelPayLanding extends Component {
           lightImage={require("../../../../assets/images/money-currency-union.png")}
           onPress={this.sendToFriend}
         />
-
         <TransactionsHistory
           hasFilter={false}
           additionalFilter={{ type: ["celpay"], limit: 5 }}
