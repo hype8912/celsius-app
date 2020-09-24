@@ -27,7 +27,7 @@ class CelsiusLoadingScreen extends Component {
   render() {
     const style = CelsiusLoadingScreenStyle();
 
-    const logoImage = require("../../../../assets/images/icons/logo-blue.png");
+    const logoImage = require("../../../../assets/images/icons/cel-logo-blue.png");
 
     const spin = this.state.spinValue.interpolate({
       inputRange: [0, 1],
