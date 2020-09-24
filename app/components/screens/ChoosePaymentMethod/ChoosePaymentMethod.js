@@ -233,12 +233,11 @@ class ChoosePaymentMethod extends Component {
   };
 
   render() {
-    const { actions, loanSettings, navigation } = this.props;
+    const { actions, loanSettings } = this.props;
     const { loading } = this.state;
     if (!loanSettings) return <LoadingScreen />;
     const Automatic = this.automaticSwitch;
     const style = ChoosePaymentMethodStyle();
-    const id = navigation.getParam("id");
 
     const cardProps = this.getCardProps();
 
@@ -266,7 +265,7 @@ class ChoosePaymentMethod extends Component {
             })
           }
         />
-        <DollarPaymentModal loanId={id} close={() => this.closeModal()} />
+        <DollarPaymentModal close={() => this.closeModal()} />
       </View>
     );
   }

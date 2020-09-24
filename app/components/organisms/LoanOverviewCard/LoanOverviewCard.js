@@ -308,18 +308,18 @@ class LoanOverviewCard extends Component {
                     <View
                       style={[style.interest, style.additionalInterestStyle]}
                     >
-                      <CelText align={"left"} type={"H6"} weight={"300"}>
+                      <CelText type={"H6"} weight={"300"}>
                         Monthly interest
                       </CelText>
-                      <CelText align={"left"} type={"H3"} weight={"600"}>
+                      <CelText type={"H3"} weight={"600"}>
                         {formatter.usd(loan.monthly_payment)}
                       </CelText>
                     </View>
                     <View style={style.interest}>
-                      <CelText align={"left"} type={"H6"} weight={"300"}>
+                      <CelText type={"H6"} weight={"300"}>
                         Total interest
                       </CelText>
-                      <CelText align={"left"} type={"H3"} weight={"600"}>
+                      <CelText type={"H3"} weight={"600"}>
                         {formatter.usd(loan.total_interest)}
                       </CelText>
                     </View>
@@ -340,12 +340,7 @@ class LoanOverviewCard extends Component {
                   size={"twoThirds"}
                   styles={{ alignSelf: "center" }}
                 >
-                  <CelText
-                    margin={"5 5 5 5"}
-                    type={"H6"}
-                    weight={"300"}
-                    align={"left"}
-                  >
+                  <CelText margin={"5 5 5 5"} type={"H6"} weight={"300"}>
                     {`You could have saved ${formatter.fiat(
                       savedAmount,
                       "USD"
@@ -353,7 +348,7 @@ class LoanOverviewCard extends Component {
                   </CelText>
                   <CelText
                     onPress={() =>
-                      navigateTo("ChoosePaymentMethod", {
+                      navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
                         id: loan.id,
                         reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
                       })
@@ -361,7 +356,6 @@ class LoanOverviewCard extends Component {
                     margin={"5 5 5 5"}
                     type={"H6"}
                     weight={"400"}
-                    align={"left"}
                     color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                   >
                     Change payment type

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
@@ -55,5 +56,9 @@ class LoanAlertsDepositCoinsModal extends Component {
     );
   }
 }
+
+LoanAlertsDepositCoinsModal.propTypes = {
+  loan: PropTypes.instanceOf(Object),
+};
 
 export default LoanAlertsDepositCoinsModal;

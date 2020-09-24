@@ -8,9 +8,10 @@ import Card from "../../atoms/Card/Card";
 import Separator from "../../atoms/Separator/Separator";
 import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 class LoanCard extends Component {
   static propTypes = {
@@ -26,20 +27,22 @@ class LoanCard extends Component {
     super(props);
     let data;
 
-    if (props.transaction) {
+    const { transaction, loan } = props;
+
+    if (transaction) {
       data = {
-        interestAmount: props.transaction.loan_data.loan_amount,
-        loanAssetShort: props.transaction.loan_data.loan_asset_short,
-        loanTransactionTime: props.transaction.time,
-        loanNumber: props.transaction.loan_data.loan_number,
+        interestAmount: transaction.loan_data.loan_amount,
+        loanAssetShort: transaction.loan_data.loan_asset_short,
+        loanTransactionTime: transaction.time,
+        loanNumber: transaction.loan_data.loan_number,
       };
     }
-    if (props.loan) {
+    if (loan) {
       data = {
-        interestAmount: props.loan.loan_amount,
-        loanAssetShort: props.loan.coin_loan_asset,
-        loanTransactionTime: props.loan.created_at,
-        loanNumber: props.loan.id,
+        interestAmount: loan.loan_amount,
+        loanAssetShort: loan.coin_loan_asset,
+        loanTransactionTime: loan.created_at,
+        loanNumber: loan.id,
       };
     }
     this.state = {
@@ -52,68 +55,68 @@ class LoanCard extends Component {
       case TRANSACTION_TYPES.MARGIN_CALL:
         return {
           status: "Active Loan",
-          color: STYLES.COLORS.CELSIUS_BLUE,
+          color: getColor(COLOR_KEYS.BANNER_INFO),
         };
       case TRANSACTION_TYPES.COLLATERAL_PENDING:
         return {
           status: "Pending Loan",
-          color: STYLES.COLORS.ORANGE,
+          color: getColor(COLOR_KEYS.FAIR),
         };
       case TRANSACTION_TYPES.COLLATERAL_LOCKED:
         return {
           status: "Active Loan",
-          color: STYLES.COLORS.CELSIUS_BLUE,
+          color: getColor(COLOR_KEYS.BANNER_INFO),
         };
       case TRANSACTION_TYPES.LOAN_INTEREST:
         return {
           status: "Active Loan",
-          color: STYLES.COLORS.CELSIUS_BLUE,
+          color: getColor(COLOR_KEYS.BANNER_INFO),
         };
       case TRANSACTION_TYPES.LOAN_PRINCIPAL_RECEIVED:
         return {
           status: "Active Loan",
-          color: STYLES.COLORS.CELSIUS_BLUE,
+          color: getColor(COLOR_KEYS.BANNER_INFO),
         };
       case TRANSACTION_TYPES.LOAN_PRINCIPAL_PAYMENT:
         return {
           status: "Completed Loan",
-          color: STYLES.COLORS.GREEN,
+          color: getColor(COLOR_KEYS.POSITIVE_STATE),
         };
       case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
         if (transaction.loan_data.status === "active") {
           return {
             status: "Active Loan",
-            color: STYLES.COLORS.CELSIUS_BLUE,
+            color: getColor(COLOR_KEYS.BANNER_INFO),
           };
         }
         if (transaction.loan_data.status === "rejected") {
           return {
             status: "Rejected Loan",
-            color: STYLES.COLORS.RED,
+            color: getColor(COLOR_KEYS.NEGATIVE_STATE),
           };
         }
         if (transaction.loan_data.status === "completed") {
           return {
             status: "Completed Loan",
-            color: STYLES.COLORS.GREEN,
+            color: getColor(COLOR_KEYS.POSITIVE_STATE),
           };
         }
         if (transaction.loan_data.status === "cancelled") {
           return {
             status: "Cancelled Loan",
-            color: STYLES.COLORS.RED,
+            color: getColor(COLOR_KEYS.NEGATIVE_STATE),
           };
         }
         break;
       case TRANSACTION_TYPES.COLLATERAL_LIQUIDATED:
         return {
           status: "Completed Loan",
-          color: STYLES.COLORS.RED,
+          color: getColor(COLOR_KEYS.NEGATIVE_STATE),
         };
       default: {
         return {
           status: "",
-          color: STYLES.COLORS.CELSIUS_BLUE,
+          color: getColor(COLOR_KEYS.BANNER_INFO),
         };
       }
     }
@@ -123,7 +126,7 @@ class LoanCard extends Component {
     const { transaction, navigateTo, closeModal } = this.props;
     const { data } = this.state;
     let status = "Active Loan";
-    let color = STYLES.COLORS.CELSIUS_BLUE;
+    let color = getColor(COLOR_KEYS.BANNER_INFO);
     if (transaction && transaction.type) {
       status = this.getPropsFromTransaction(transaction).status;
       color = this.getPropsFromTransaction(transaction).color;
@@ -203,7 +206,7 @@ class LoanCard extends Component {
             <Separator margin="12 0 12 0" />
 
             <CelText
-              color={STYLES.COLORS.CELSIUS_BLUE}
+              color={getColor(COLOR_KEYS.BANNER_INFO)}
               align={"left"}
               onPress={() => {
                 navigateTo("LoanRequestDetails", {

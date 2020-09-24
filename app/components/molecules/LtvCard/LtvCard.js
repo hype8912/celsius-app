@@ -24,11 +24,6 @@ class LtvCard extends Component {
     };
   }
 
-  set = () => {
-    const { info } = this.state;
-    this.setState({ info: !info });
-  };
-
   renderContent = loan => {
     const content = [
       { title: "Current LTV:", value: `${Math.round(loan.current_ltv)}%` },

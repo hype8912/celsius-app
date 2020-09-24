@@ -64,10 +64,8 @@ class SingleMarginCallScreen extends Component {
           <CelText type={"H4"} weight={"500"}>{`Loan - #${loan.id}`}</CelText>
         </Card>
         <Card margin={"10 0 10 0"}>
-          <CelText align={"left"} type={"H6"}>
-            Time remaining to resolve Margin Call
-          </CelText>
-          <CelText align={"left"} weight={"500"} type={"H3"}>
+          <CelText type={"H6"}>Time remaining to resolve Margin Call</CelText>
+          <CelText weight={"500"} type={"H3"}>
             {time.days >= 1 ? `00h 00m` : `${time.hours}h ${time.minutes}m`}
           </CelText>
           {time.days >= 1 && (

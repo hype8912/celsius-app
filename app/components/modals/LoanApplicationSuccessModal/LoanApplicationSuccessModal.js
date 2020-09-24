@@ -21,15 +21,6 @@ class LoanApplicationSuccessModal extends Component {
   };
   static defaultProps = {};
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      noLoading: false,
-      yesLoading: false,
-    };
-  }
-
   handlePrepayModal = () => {
     const { actions, loanId } = this.props;
 
@@ -40,28 +31,8 @@ class LoanApplicationSuccessModal extends Component {
     actions.closeModal();
   };
 
-  // setupAutomaticInterestPayment = async m => {
-  //   const { actions, loanId } = this.props;
-  //   let automatic = true;
-  //   if (m === "manual") {
-  //     automatic = false;
-  //     this.setState({
-  //       noLoading: true,
-  //     });
-  //   } else {
-  //     this.setState({
-  //       yesLoading: true,
-  //     });
-  //   }
-  //   await actions.updateLoanSettings(loanId, {
-  //     automatic_interest_payment: automatic,
-  //   });
-  //   actions.closeModal();
-  // };
-
   render() {
     const { actions } = this.props;
-    const { yesLoading } = this.state;
 
     return (
       <InfoModal
@@ -74,7 +45,6 @@ class LoanApplicationSuccessModal extends Component {
         ]}
         yesCopy={"Continue"}
         onYes={() => actions.closeModal()}
-        yesloading={yesLoading}
       />
     );
   }

@@ -18,6 +18,7 @@ import {
 import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import { SCREENS } from "../../../constants/SCREENS";
+import { PAYMENT_TYPE } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -80,9 +81,6 @@ class LoanPaymentCoin extends Component {
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
       await actions.updateFormFields({ coin: coinShort });
       actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
-      // actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-      //   onSuccess: () => actions.payMonthlyInterest(id, coinShort),
-      // });
     }
   };
 
@@ -151,7 +149,7 @@ class LoanPaymentCoin extends Component {
             Lending Support
           </CelText>
         </CelText>
-        <ConfirmPaymentModal loanId={id} type={"CRYPTO"} />
+        <ConfirmPaymentModal loanId={id} type={PAYMENT_TYPE.CRYPTO} />
       </RegularLayout>
     );
   }

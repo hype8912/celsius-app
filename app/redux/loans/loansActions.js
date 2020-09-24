@@ -65,7 +65,7 @@ function applyForALoan() {
       dispatch({ type: ACTIONS.APPLY_FOR_LOAN_SUCCESS });
 
       dispatch(
-        navigateTo("LoanRequestDetails", {
+        navigateTo(SCREENS.LOAN_REQUEST_DETAILS, {
           id: res.data.loan.id,
           hideBack: true,
         })
@@ -401,14 +401,11 @@ function lockMarginCallCollateral(id, coin) {
 
       dispatch(closeModal());
       const transactionId = res.data.transaction_id;
-      // dispatch(
-      //   navigateTo("TransactionsIntersection", {
-      //     id: transactionId,
-      //     hideBack: true,
-      //   })
-      // );
       dispatch(
-        navigateTo(SCREENS.TRANSACTION_INTERSECTION, { id: transactionId })
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
+          id: transactionId,
+          hideBack: true,
+        })
       );
 
       apiCallName = API.GET_ALL_LOANS;
@@ -593,13 +590,14 @@ function extendLoan(id, numberOfMonths) {
     try {
       await loansService.extendLoan(id, numberOfMonths);
       getAllLoans();
-      dispatch(navigateTo("BorrowLanding"));
+      dispatch(navigateTo(SCREENS.BORROW_LANDING));
       dispatch(
         showMessage(
           "success",
           `You have successfully extended loan for additional ${numberOfMonths} months`
         )
       );
+      dispatch({ type: ACTIONS.EXTEND_LOAN_SUCCESS });
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.EXTEND_LOAN, err));

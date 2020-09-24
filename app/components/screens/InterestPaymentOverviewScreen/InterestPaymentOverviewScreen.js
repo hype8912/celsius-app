@@ -15,6 +15,7 @@ import Separator from "../../atoms/Separator/Separator";
 import loanPaymentUtil from "../../../utils/loanPayment-util";
 import AdditionalAmountCard from "../../molecules/AdditionalAmountCard/AdditionalAmountCard";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -98,7 +99,7 @@ class InterestPaymentOverviewScreen extends Component {
               <View style={style.buttonWrapper}>
                 <CelModalButton
                   onPress={() => {
-                    actions.navigateTo("ChoosePaymentMethod", {
+                    actions.navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
                       reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
                       id: loan.id,
                     });

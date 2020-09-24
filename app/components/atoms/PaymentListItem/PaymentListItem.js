@@ -7,7 +7,9 @@ import PaymentListItemStyle from "./PaymentListItem.styles";
 import CelText from "../CelText/CelText";
 import Separator from "../Separator/Separator";
 import formatter from "../../../utils/formatter";
-import STYLES from "../../../constants/STYLES";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
+import { LOAN_PAYMENT_TYPES } from "../../../constants/DATA";
 
 const PaymentListItem = ({ payment, upperText, type }) => {
   const style = PaymentListItemStyle();
@@ -25,14 +27,18 @@ const PaymentListItem = ({ payment, upperText, type }) => {
 
   let paymentType;
 
-  if (payment.type === "monthly_interest")
+  if (payment.type === LOAN_PAYMENT_TYPES.MONTHLY_INTEREST)
     paymentType = {
       type: "Loan Interest",
-      color: STYLES.COLORS.RED,
+      color: getColor(COLOR_KEYS.NEGATIVE_STATE),
       sign: "-",
     };
-  if (payment.type === "receiving_principal_back")
-    paymentType = { type: "Principal", color: STYLES.COLORS.RED, sign: "-" };
+  if (payment.type === LOAN_PAYMENT_TYPES.RECEIVING_PRINCIPAL_BACK)
+    paymentType = {
+      type: "Principal",
+      color: getColor(COLOR_KEYS.NEGATIVE_STATE),
+      sign: "-",
+    };
 
   return (
     <View>

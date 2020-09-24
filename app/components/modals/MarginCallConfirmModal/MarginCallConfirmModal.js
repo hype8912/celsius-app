@@ -70,7 +70,7 @@ class MarginCallConfirmModal extends Component {
           <CelText align={"center"}>
             {formatter.fiat(modalData.amountUsd, "USD")}
           </CelText>
-          <Card styles={style.card.color}>
+          <Card styles={style.card}>
             <CelText weight={"500"} type={"H5"}>
               Current Collateral Balance
             </CelText>

@@ -22,6 +22,7 @@ import { SCREENS } from "../../../constants/SCREENS";
 @connect(
   state => ({
     loanAlerts: state.loans.loanAlerts,
+    loanSettings: state.loans.loanSettings,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -45,7 +46,7 @@ class InterestReminderModal extends Component {
         id: activeLoan.id,
       });
     }
-    return navigateTo("Deposit", {
+    return navigateTo(SCREENS.DEPOSIT, {
       coin: coin.short,
       reason: LOAN_PAYMENT_REASONS.INTEREST,
       amountUsd: additionalUsd,
@@ -54,15 +55,14 @@ class InterestReminderModal extends Component {
   };
 
   render() {
-    const { activeLoan, closeModal, isSameDay } = this.props;
+    const { activeLoan, closeModal, isSameDay, loanSettings } = this.props;
     const style = InterestReminderModalStyle();
     const payment = loanPaymentUtil.calculateAdditionalPayment(activeLoan);
     if (!activeLoan || !activeLoan.installments_to_be_paid) return null;
     const instalmentsToBePaid = activeLoan.installments_to_be_paid;
     const isDay = isSameDay.sevenDays || isSameDay.threeDays;
-    const isAutomatic = true;
     const buttonTitle = payment.hasEnough ? "Pay Interest" : "Deposit More";
-    const content = isAutomatic
+    const content = loanSettings.automatic_interest_payment
       ? `Automatic Interest Payment Due is in ${isDay} Days`
       : `Interest Payment Due is in ${isDay} Days`;
 

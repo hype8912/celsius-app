@@ -8,11 +8,11 @@ import * as appActions from "../../../redux/actions";
 // import ExtendLoanScreenStyle from "./ExtendLoanScreen.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import STYLES from "../../../constants/STYLES";
 import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
 import CelButton from "../../atoms/CelButton/CelButton";
 import formatter from "../../../utils/formatter";
 import { heightPercentageToDP } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -62,9 +62,7 @@ class ExtendLoanScreen extends Component {
           <CelText
             type="H6"
             weight="bold"
-            color={
-              formData.extendPeriod === m ? STYLES.COLORS.CELSIUS_BLUE : null
-            }
+            color={formData.extendPeriod === m ? COLOR_KEYS.BANNER_INFO : null}
           >
             {m} MONTHS
           </CelText>

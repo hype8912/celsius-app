@@ -1,6 +1,4 @@
-// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import STYLES from "../../../constants/STYLES";
 
 const base = {
   container: {
@@ -9,13 +7,9 @@ const base = {
 };
 
 const themed = {
-  light: {
-    card: { color: "#F3F3F3" },
-  },
+  light: {},
 
-  dark: {
-    card: { color: STYLES.COLORS.MEDIUM_GRAY },
-  },
+  dark: {},
 
   celsius: {},
 };

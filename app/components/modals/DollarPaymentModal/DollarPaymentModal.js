@@ -4,8 +4,7 @@ import React from "react";
 import { MODALS } from "../../../constants/UI";
 import InfoModal from "../InfoModalNew/InfoModal";
 
-const DollarPaymentModal = props => {
-  const { close } = props;
+const DollarPaymentModal = ({ close }) => {
   return (
     <InfoModal
       name={MODALS.DOLLAR_PAYMENT_MODAL}

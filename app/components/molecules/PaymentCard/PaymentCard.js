@@ -24,6 +24,7 @@ import loanPaymentUtil from "../../../utils/loanPayment-util";
 import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import { presentTime } from "../../../utils/ui-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
@@ -44,11 +45,11 @@ class PaymentCard extends Component {
     marginCall: PropTypes.instanceOf(Object),
     amountNeededUsd: PropTypes.string,
     reason: PropTypes.oneOf(
-      "MANUAL_INTEREST",
-      "INTEREST",
-      "INTEREST_PREPAYMENT",
-      "PRINCIPAL",
-      "MARGIN_CALL"
+      LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
+      LOAN_PAYMENT_REASONS.INTEREST,
+      LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT,
+      LOAN_PAYMENT_REASONS.PRINCIPAL,
+      LOAN_PAYMENT_REASONS.MARGIN_CALL
     ),
     loan: PropTypes.instanceOf(Object),
     number: PropTypes.number,
@@ -181,7 +182,7 @@ class PaymentCard extends Component {
         <CelButton
           margin={"20 0 10 0"}
           onPress={() =>
-            actions.navigateTo("Deposit", {
+            actions.navigateTo(SCREENS.DEPOSIT, {
               coin: coin.short,
               reason,
               amountUsd: additionalUsdAmount,
@@ -193,7 +194,9 @@ class PaymentCard extends Component {
         </CelButton>
         {marginCall ? (
           <CelButton
-            onPress={() => actions.navigateTo("Deposit", { coin: coin.short })}
+            onPress={() =>
+              actions.navigateTo(SCREENS.DEPOSIT, { coin: coin.short })
+            }
             basic
             margin={"10 0 10 0"}
           >
@@ -233,7 +236,9 @@ class PaymentCard extends Component {
             buttonStyle={"secondary"}
             position={"single"}
             onPress={() =>
-              actions.navigateTo("SingleMarginCallScreen", { id: loanId })
+              actions.navigateTo(SCREENS.SINGLE_MARGIN_CALL_SCREEN, {
+                id: loanId,
+              })
             }
           >
             Resolve Margin Call
@@ -272,7 +277,7 @@ class PaymentCard extends Component {
         ) : (
           <CelButton
             onPress={() => {
-              actions.navigateTo("Deposit", {
+              actions.navigateTo(SCREENS.DEPOSIT, {
                 reason: LOAN_PAYMENT_REASONS.MARGIN_CALL,
                 coin: coin.short,
                 amountUsd: additionalUsdAmount,
@@ -289,7 +294,7 @@ class PaymentCard extends Component {
           margin={"0 0 10 0"}
           onPress={() => {
             actions.updateFormField("cryptoCoin", coin.short);
-            actions.navigateTo("GetCoinsEnterAmount");
+            actions.navigateTo(SCREENS.GET_COINS_ENTER_AMOUNT);
           }}
           basic
         >

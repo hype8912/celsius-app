@@ -8,9 +8,10 @@ import CoinIcon from "../../atoms/CoinIcon/CoinIcon";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
-import STYLES from "../../../constants/STYLES";
 import { getColor, getTheme } from "../../../utils/styles-util";
 import Separator from "../../atoms/Separator/Separator";
+import { SCREENS } from "../../../constants/SCREENS";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 class CollateralCoinCard extends Component {
   static propTypes = {
@@ -89,7 +90,9 @@ class CollateralCoinCard extends Component {
               {!isAllowed ? (
                 <TouchableOpacity
                   onPress={() =>
-                    actions.navigateTo("Deposit", { coin: currency.short })
+                    actions.navigateTo(SCREENS.DEPOSIT, {
+                      coin: currency.short,
+                    })
                   }
                   style={{
                     flexDirection: "row",
@@ -101,9 +104,9 @@ class CollateralCoinCard extends Component {
                     name={"CirclePlus"}
                     width={20}
                     height={20}
-                    fill={STYLES.COLORS.CELSIUS_BLUE}
+                    fill={getColor(COLOR_KEYS.BANNER_INFO)}
                   />
-                  <CelText color={STYLES.COLORS.CELSIUS_BLUE} type={"H5"}>
+                  <CelText color={getColor(COLOR_KEYS.BANNER_INFO)} type={"H5"}>
                     {" "}
                     Deposit More
                   </CelText>

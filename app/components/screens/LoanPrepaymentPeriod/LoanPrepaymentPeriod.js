@@ -57,12 +57,6 @@ class LoanPrepaymentPeriod extends Component {
         actions.navigateTo(SCREENS.WIRING_BANK_INFORMATION);
       } else {
         actions.openModal(MODALS.CONFIRM_INTEREST_PREPAYMENT);
-        // actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-        //   onSuccess: () => {
-        //     actions.prepayInterest(id);
-        //     actions.updateFormField("prepayLoanId", id);
-        //   },
-        // });
       }
     }
   };

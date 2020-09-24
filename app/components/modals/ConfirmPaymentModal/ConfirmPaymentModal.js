@@ -12,6 +12,7 @@ import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import formatter from "../../../utils/formatter";
+import { PAYMENT_TYPE } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -25,11 +26,12 @@ import formatter from "../../../utils/formatter";
 class ConfirmPaymentModal extends Component {
   static propTypes = {
     loanId: PropTypes.number,
-    cryptoType: PropTypes.string,
+    coin: PropTypes.string,
     reason: PropTypes.string,
+    type: PropTypes.string,
   };
   static defaultProps = {
-    type: "CRYPTO",
+    type: PAYMENT_TYPE.CRYPTO,
   };
 
   constructor(props) {
@@ -42,9 +44,9 @@ class ConfirmPaymentModal extends Component {
   }
 
   renderContent = () => {
-    const { actions, loanId, cryptoType, formData } = this.props;
+    const { actions, loanId, coin, formData } = this.props;
 
-    const crypto = cryptoType || formData.coin;
+    const crypto = coin || formData.coin;
     return {
       heading: "Confirm Monthly Interest Payment",
       buttonText: "Pay Monthly Interest",
@@ -62,7 +64,7 @@ class ConfirmPaymentModal extends Component {
   };
 
   render() {
-    const { cryptoType, formData, walletSummary, loyaltyInfo } = this.props;
+    const { coin, formData, walletSummary, loyaltyInfo } = this.props;
     const { loan, isLoading } = this.state;
     const style = ConfirmPaymentModalStyle();
 
@@ -70,12 +72,12 @@ class ConfirmPaymentModal extends Component {
 
     if (!loan) return null;
 
-    const crypto = cryptoType || formData.coin;
+    const crypto = coin || formData.coin;
     const walletCoin = walletSummary.coins.find(c => c.short === crypto);
 
     const amountUsd = walletCoin ? walletCoin.amount_usd : 0;
 
-    const sumToPay = cryptoType
+    const sumToPay = coin
       ? loan.installments_to_be_paid.total -
         (loan.installments_to_be_paid.total -
           (1 - loyaltyInfo.tier.loanInterestBonus) *

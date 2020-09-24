@@ -15,6 +15,7 @@ import TierCard from "../../organisms/TierCard/TierCard";
 import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
 import CelText from "../../atoms/CelText/CelText";
 import { SCREENS } from "../../../constants/SCREENS";
+import { PAYMENT_TYPE } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -140,7 +141,11 @@ class PaymentCel extends Component {
             {" Lending Support."}
           </CelText>
         </CelText>
-        <ConfirmPaymentModal loanId={id} type={"CRYPTO"} cryptoType={"CEL"} />
+        <ConfirmPaymentModal
+          loanId={id}
+          type={PAYMENT_TYPE.CRYPTO}
+          coin={"CEL"}
+        />
       </RegularLayout>
     );
   }
