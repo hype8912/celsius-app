@@ -14,8 +14,11 @@ class VerticalSlider extends Component {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func,
     updateFormField: PropTypes.func,
+    marginTop: PropTypes.number,
   };
-  static defaultProps = {};
+  static defaultProps = {
+    marginTop: 0,
+  };
 
   constructor(props) {
     super(props);
@@ -40,7 +43,7 @@ class VerticalSlider extends Component {
     }
   };
   render() {
-    const { items } = this.props;
+    const { items, marginTop } = this.props;
     const { sliderValue } = this.state;
     const style = VerticalSliderStyle();
 
@@ -50,7 +53,13 @@ class VerticalSlider extends Component {
     return (
       <View style={style.container}>
         <View
-          style={{ height, width: 40, paddingVertical: 10, marginRight: 15 }}
+          style={{
+            height,
+            width: 40,
+            paddingVertical: 10,
+            marginRight: 15,
+            marginTop,
+          }}
         >
           <View style={{ transform: [{ rotate: "90deg" }] }}>
             <Slider

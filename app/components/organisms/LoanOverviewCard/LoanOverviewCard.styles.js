@@ -2,7 +2,6 @@ import {
   getThemedStyle,
   widthPercentageToDP,
 } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
@@ -28,17 +27,32 @@ const base = {
   status: {
     flexDirection: "row",
     alignItems: "center",
+    marginVertical: 10,
   },
   info: {
-    alignItems: "center",
     padding: 12,
   },
   progress: {
     justifyContent: "center",
   },
-  card: {
-    color: COLOR_KEYS.BACKGROUND,
+  loanTitle: {
+    flex: 1,
+    alignItems: "center",
+    marginHorizontal: 10,
   },
+  loanInfo: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+  },
+  loanInfoAdditional: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+    marginTop: 10,
+  },
+  additionalInterestStyle: { marginBottom: 8 },
+  choose: { opacity: 0.7 },
 };
 
 const themed = {

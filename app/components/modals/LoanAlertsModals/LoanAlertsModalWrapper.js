@@ -6,9 +6,11 @@ import { LOAN_ALERTS } from "../../../constants/UI";
 import * as appActions from "../../../redux/actions";
 import LoanAlertsPayoutPrincipalModal from "./LoanAlertsPayoutPrincipalModal/LoanAlertsPayoutPrincipalModal";
 import LoanAlertsDepositCoinsModal from "./LoanAlertsDepositCoinsModal/LoanAlertsDepositCoinsModal";
-import LoanAlertsMarginCallLockCoinModal from "./LoanAlertsMarginCallLockCoinModal/LoanAlertsMarginCallLockCoinModal";
-import LoanAlertsMarginCallDepositCoinsModal from "./LoanAlertsMarginCallDepositCoinsModal/LoanAlertsMarginCallDepositCoinsModal";
 import InterestDueModal from "../InterestDueModal/InterestDueModal";
+import InterestReminderModal from "../InterestReminderModal/InterestReminderModal";
+import loanPaymentUtil from "../../../utils/loanPayment-util";
+import MarginCallModal from "../MarginCallModal/MarginCallModal";
+import PrincipalAlertModal from "../PrincipalAlertModal/PrincipalAlertModal";
 
 @connect(
   state => ({
@@ -24,17 +26,15 @@ class LoanAlertsModalWrapper extends Component {
 
     if (nextProps.loanAlerts && nextProps.loanAlerts.length) {
       activeAlert = nextProps.loanAlerts.find(
-        la => la.type === LOAN_ALERTS.INTEREST_ALERT
+        la => la.type === LOAN_ALERTS.MARGIN_CALL_ALERT
       );
+      activeAlert =
+        activeAlert ||
+        nextProps.loanAlerts.find(la => la.type === LOAN_ALERTS.INTEREST_ALERT);
       activeAlert =
         activeAlert ||
         nextProps.loanAlerts.find(
           la => la.type === LOAN_ALERTS.PRINCIPAL_ALERT
-        );
-      activeAlert =
-        activeAlert ||
-        nextProps.loanAlerts.find(
-          la => la.type === LOAN_ALERTS.MARGIN_CALL_ALERT
         );
     } else {
       activeAlert = null;
@@ -55,6 +55,7 @@ class LoanAlertsModalWrapper extends Component {
       );
       return { activeAlert, loan, principalCoinWallet, collateralCoinWallet };
     }
+
     return { activeAlert, loan };
   }
 
@@ -63,9 +64,14 @@ class LoanAlertsModalWrapper extends Component {
     return loan;
   };
   static getPrincipalCoinWallet = (walletSummary, loan) => {
-    const principalCoinWallet = walletSummary.coins.find(
-      p => p.short === loan.coin_loan_asset
-    );
+    let principalCoinWallet;
+    if (loan.coin_loan_asset === "USD") {
+      principalCoinWallet = "USD";
+    } else {
+      principalCoinWallet = walletSummary.coins.find(
+        p => p.short === loan.coin_loan_asset
+      );
+    }
     return principalCoinWallet;
   };
 
@@ -83,7 +89,7 @@ class LoanAlertsModalWrapper extends Component {
     this.state = { activeAlert, loan };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { walletSummary } = this.props;
     const { loan } = this.state;
     if (loan) {
@@ -97,20 +103,30 @@ class LoanAlertsModalWrapper extends Component {
       );
       this.setState({ loan, principalCoinWallet, collateralCoinWallet });
     }
-  }
+  };
 
   getFirstAlert = loanAlerts => {
     if (!loanAlerts || !loanAlerts.length) return null;
     let activeAlert;
-    loanAlerts.forEach(la => {
-      if (la.type === LOAN_ALERTS.MARGIN_CALL_ALERT) activeAlert = la;
-    });
+    loanAlerts
+      .sort((a, b) => b.id - a.id)
+      .forEach(la => {
+        if (la.type === LOAN_ALERTS.MARGIN_CALL_ALERT) activeAlert = la;
+      });
     return activeAlert || loanAlerts[0];
   };
 
   renderPrincipalModal = loan => {
+    const { actions } = this.props;
     const { principalCoinWallet } = this.state;
     const canPayPrincipal = loan.can_pay_principal;
+    if (principalCoinWallet === "USD") {
+      actions.showMessage("error", "Can't pay principal in USD");
+      return null;
+    }
+    const isPrincipalWeekAway = loanPaymentUtil.isPrincipalWeekAway(loan);
+    if (isPrincipalWeekAway)
+      return <PrincipalAlertModal actions={actions} loan={loan} />;
     if (canPayPrincipal) {
       if (Number(loan.loan_amount) <= principalCoinWallet.amount.toNumber()) {
         return <LoanAlertsPayoutPrincipalModal loan={loan} />;
@@ -121,33 +137,48 @@ class LoanAlertsModalWrapper extends Component {
   };
 
   renderMarginCallModal = loan => {
-    const { collateralCoinWallet } = this.state;
     const activatedMarginCall = loan.margin_call_activated;
-    const couldCoverMarginCallInCollateralCoin =
-      loan.margin_call_amount <= collateralCoinWallet.amount;
 
     if (activatedMarginCall) {
-      if (couldCoverMarginCallInCollateralCoin) {
-        return <LoanAlertsMarginCallLockCoinModal loan={loan} />;
-      }
-      return (
-        <LoanAlertsMarginCallDepositCoinsModal
-          loan={loan}
-          yesCopy={"Transfer coins"}
-        />
-      );
+      return <MarginCallModal />;
     }
     return null;
   };
 
   renderInterestModal = loan => {
     const { actions } = this.props;
+    const { activeAlert } = this.state;
+
+    // if no money reminder 3 & 7 days. If you have money and manual payment set, reminder in 3 days
+    const payment = loanPaymentUtil.calculateAdditionalPayment(loan);
+    const isSameDay = loanPaymentUtil.isSameInterestDay(loan);
+    const hasNoMoney =
+      !payment.hasEnough &&
+      isSameDay &&
+      (isSameDay.sevenDays || isSameDay.threeDays);
+    const manuelPaymentNoMoney =
+      payment.hasEnough &&
+      !loan.loanPaymentSettings.automatic_interest_payment &&
+      isSameDay &&
+      isSameDay.threeDays;
+
+    if (hasNoMoney || manuelPaymentNoMoney) {
+      return (
+        <InterestReminderModal
+          closeModal={actions.closeModal}
+          navigateTo={actions.navigateTo}
+          activeLoan={loan}
+          isSameDay={isSameDay}
+        />
+      );
+    }
+
     return (
       <InterestDueModal
         closeModal={actions.closeModal}
-        activeLoan={loan}
         navigateTo={actions.navigateTo}
-        alert
+        activeLoan={loan}
+        alert={activeAlert}
       />
     );
   };
@@ -159,8 +190,8 @@ class LoanAlertsModalWrapper extends Component {
     switch (activeAlert.type) {
       case LOAN_ALERTS.INTEREST_ALERT:
         return this.renderInterestModal(loan);
-      // case LOAN_ALERTS.PRINCIPAL_ALERT:
-      //   return this.renderPrincipalModal(loan);
+      case LOAN_ALERTS.PRINCIPAL_ALERT:
+        return this.renderPrincipalModal(loan);
       case LOAN_ALERTS.MARGIN_CALL_ALERT:
         return this.renderMarginCallModal(loan);
     }

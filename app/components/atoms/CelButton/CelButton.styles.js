@@ -60,20 +60,25 @@ const base = {
   ghostredButton: {
     backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 1,
+    paddingHorizontal: 35,
     borderColor: COLOR_KEYS.NEGATIVE_STATE,
   },
   ghostgreenButton: {
     backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 1,
-    borderColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
+    borderColor: COLOR_KEYS.POSITIVE_STATE,
   },
   ghostwhiteButton: {
     backgroundColor: COLOR_KEYS.TRANSPARENT,
     borderWidth: 1,
     borderColor: COLOR_KEYS.WHITE,
+    paddingHorizontal: 35,
+    borderRadius: 60,
+    height: 35,
   },
   basicredButton: {
     margin: 20,
+    backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
   basicgreenButton: {
     backgroundColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
@@ -84,7 +89,17 @@ const base = {
   ghostColorTitle: {
     color: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
+  greenghostTitle: {
+    color: COLOR_KEYS.POSITIVE_STATE,
+  },
+  redghostTitle: {
+    color: COLOR_KEYS.NEGATIVE_STATE,
+  },
   greenButton: {
+    borderRadius: 60,
+    paddingLeft: 35,
+    paddingRight: 35,
+    height: 35,
     backgroundColor: COLOR_KEYS.POSITIVE_STATE,
   },
   redButton: {
@@ -106,6 +121,7 @@ const base = {
   basicgreenTitleButton: {
     paddingHorizontal: 10,
     paddingVertical: 5,
+    color: COLOR_KEYS.POSITIVE_STATE,
   },
   basicTitle: {
     color: COLOR_KEYS.PRIMARY_BUTTON,

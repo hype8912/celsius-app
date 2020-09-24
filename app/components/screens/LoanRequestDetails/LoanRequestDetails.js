@@ -45,9 +45,9 @@ class LoanRequestDetails extends Component {
 
   componentDidMount = async () => {
     const { navigation, actions } = this.props;
-    const loanId = navigation.getParam("id");
-    actions.setActiveLoan(loanId);
-    await actions.getLoanById(loanId);
+    const id = navigation.getParam("id");
+    actions.setActiveLoan(id);
+    await actions.getLoanById(id);
   };
 
   componentDidUpdate(prevProps) {
@@ -193,10 +193,6 @@ class LoanRequestDetails extends Component {
             />
           )
         );
-      // case "firstInterest":
-      //   return  <TxBasicSection key={sectionType} label={"First Interest Payment Due"} value={moment(transaction.loan_data.first_interest).format("D MMM YYYY")}/>;
-      // case "nextInterest":
-      //   return  <TxBasicSection key={sectionType} label={"Next Interest Payment Due"} value={moment(transaction.loan_data.next_interest).format("D MMM YYYY")}/>;
       case "maturity":
         return (
           <TxBasicSection
@@ -225,7 +221,6 @@ class LoanRequestDetails extends Component {
           });
 
     const sections = activeLoan.uiSections;
-
     return (
       <RegularLayout>
         <View style={style.container}>

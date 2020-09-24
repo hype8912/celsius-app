@@ -17,6 +17,7 @@ const loansService = {
   payMonthlyInterest,
   sendBankDetailsEmail,
   getLoanAlerts,
+  extendLoan,
 };
 
 /**
@@ -142,11 +143,10 @@ function getLoanSettings(loanId) {
 
  * @returns {Promise}
  */
-function prepayInterest(numberOfInstallments, coin, id, verification) {
+function prepayInterest(numberOfInstallments, coin, id) {
   return axios.post(`${apiUrl}/loans/${id}/payment/prepayment`, {
     numberOfInstallments,
     coin,
-    ...verification,
   });
 }
 
@@ -159,11 +159,8 @@ function prepayInterest(numberOfInstallments, coin, id, verification) {
 
  * @returns {Promise}
  */
-function payPrincipal(id, verification) {
-  return axios.post(
-    `${apiUrl}/loans/${id}/payment/receiving_principal_back`,
-    verification
-  );
+function payPrincipal(id) {
+  return axios.post(`${apiUrl}/loans/${id}/payment/receiving_principal_back`);
 }
 
 /**
@@ -172,9 +169,8 @@ function payPrincipal(id, verification) {
  * @param {string} verification.pin - eg '1234'
  * @param {string} verification.twoFactorCode - eg '123456'
  */
-function lockMarginCallCollateral(id, coin, verification) {
+function lockMarginCallCollateral(id, coin) {
   return axios.post(`${apiUrl}/loans/${id}/payment/margin_call_collateral`, {
-    ...verification,
     coin,
   });
 }
@@ -189,9 +185,8 @@ function lockMarginCallCollateral(id, coin, verification) {
 
  * @returns {Promise}
  */
-function payMonthlyInterest(id, coin, verification) {
+function payMonthlyInterest(id, coin) {
   return axios.post(`${apiUrl}/loans/${id}/payment/monthly_interest`, {
-    ...verification,
     coin,
   });
 }
@@ -212,6 +207,17 @@ function sendBankDetailsEmail() {
  */
 function getLoanAlerts() {
   return axios.get(`${apiUrl}/loans/alerts`);
+}
+
+/**
+ *
+ * @param id
+ * @returns {Promise}
+ */
+function extendLoan(id, numberOfMonths) {
+  return axios.put(`${apiUrl}/loans/${id}/extend-loan`, {
+    months: numberOfMonths,
+  });
 }
 
 export default loansService;

@@ -1,25 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Linking } from "react-native";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
-
-// import PaymentCelStyle from "./PaymentCel.styles";
-import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import Card from "../../atoms/Card/Card";
-import Separator from "../../atoms/Separator/Separator";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
-import formatter from "../../../utils/formatter";
-import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
+import {
+  COIN_CARD_TYPE,
+  LOAN_PAYMENT_REASONS,
+  MODALS,
+} from "../../../constants/UI";
+import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
+import TierCard from "../../organisms/TierCard/TierCard";
+import ConfirmPaymentModal from "../../modals/ConfirmPaymentModal/ConfirmPaymentModal";
+import CelText from "../../atoms/CelText/CelText";
 import { SCREENS } from "../../../constants/SCREENS";
+import { PAYMENT_TYPE } from "../../../constants/DATA";
 
 @connect(
   state => ({
     loyaltyInfo: state.loyalty.loyaltyInfo,
     loanSettings: state.loans.loanSettings,
     allLoans: state.loans.allLoans,
+    currencyRates: state.currencies.rates,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -89,61 +92,60 @@ class PaymentCel extends Component {
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-        onSuccess: () => actions.payMonthlyInterest(id, "CEL"),
-      });
+      actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
     }
   };
 
   render() {
     // const style = PaymentCelCelStyle();
-    const { actions, loyaltyInfo, navigation, allLoans } = this.props;
+    const { navigation } = this.props;
+    const { allLoans, currencyRates } = this.props;
     const { isLoading } = this.state;
+    const reason = navigation.getParam("reason");
     const id = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === id);
-    const celDiscount = formatter.percentageDisplay(
-      loyaltyInfo.tier.loanInterestBonus
-    );
-    const discountedInterest =
-      (1 - loyaltyInfo.tier.loanInterestBonus) * Number(loan.monthly_payment);
+
+    const coin = currencyRates.find(c => c.short === "CEL");
 
     return (
       <RegularLayout fabType={"hide"}>
-        <Card>
-          <CelText align={"center"}>
-            Based on your current{" "}
-            <CelText
-              onPress={() => actions.navigateTo(SCREENS.LOYALTY_PROGRAM)}
-              style={{ color: getColor(COLOR_KEYS.LINK) }}
-            >
-              Loyalty Level
-            </CelText>
-            , your next interest payment would be:
-          </CelText>
-          <CelText type={"H1"} weight={"700"} align={"center"}>
-            {celDiscount} less
-          </CelText>
-          <Separator margin={"10 0 12 0"} />
-          <CelText>
-            Decrease your monthly interest payment from{" "}
-            <CelText weight={"500"}>
-              {formatter.usd(loan.monthly_payment)}
-            </CelText>{" "}
-            to{" "}
-            <CelText weight={"500"}>
-              {formatter.usd(discountedInterest)}
-            </CelText>{" "}
-            when paying with CEL.
-          </CelText>
-        </Card>
+        <PaymentCard
+          handleSelectCoin={this.payInCel}
+          coin={coin}
+          loan={loan}
+          reason={reason}
+          type={COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD}
+        />
+        <TierCard loanId={id} />
         <CelButton
           margin={"20 0 0 0"}
           onPress={this.payInCel}
           loading={isLoading}
           disabled={isLoading}
         >
-          Pay with CEL
+          Confirm Payment
         </CelButton>
+        <CelText
+          margin={"20 0 20 0"}
+          align={"center"}
+          weight={"300"}
+          type={"H4"}
+        >
+          Need help? Contact our
+          <CelText
+            weight={"300"}
+            type={"H4"}
+            link
+            onPress={() => Linking.openURL("mailto:loans@celsius.network")}
+          >
+            {" Lending Support."}
+          </CelText>
+        </CelText>
+        <ConfirmPaymentModal
+          loanId={id}
+          type={PAYMENT_TYPE.CRYPTO}
+          coin={"CEL"}
+        />
       </RegularLayout>
     );
   }

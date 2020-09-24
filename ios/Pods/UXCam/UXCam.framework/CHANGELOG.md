@@ -19,9 +19,9 @@
 | 3.2.0                                                                                                                           | Refactored network code to a more modern library to give better control over uploads                                                       |
 | Improved handling of cancelled sessions                                                                                         |
 | Improved rendering of long text strings in schematic captures                                                                   |
-|  |
+|                                                                                                                                 |
 | NB: Xcode 11 is required to use the UXCam framework from 3.2.0 onwards                                                          |
-|  |
+|                                                                                                                                 |
 | 3.1.15                                                                                                                          | Fixing more issues with some hybrid platforms                                                                                              |
 | 3.1.14                                                                                                                          | Fixing a problem with newer Flutter SDKs                                                                                                   |
 | 3.1.13                                                                                                                          | Fixed a problem with occlusion rects on certain devices                                                                                    |
@@ -58,8 +58,8 @@
 | Opt In changes to split out screen recording as specific option - **screen recording off by default**                           |
 | Fix session video when starting up with occluded screen                                                                         |
 | Add reasons why screen video hasn't been recorded                                                                               |
-|  |
-|  |
+|                                                                                                                                 |
+|                                                                                                                                 |
 | 3.0.6                                                                                                                           | Add `occludeSensitiveViewWithoutGesture` and `occludeSensitiveScreen:hideGestures:` API methods                                            |
 | Adjust work queues for event capture                                                                                            |
 | Add nullable decoration to session and user url methods                                                                         |
@@ -79,7 +79,7 @@
 | Re-factored the UXCam API on iOS and Android to be more similar and iOS to better conform with standard naming practices        |
 | Re-factored the event recording system to include user and session events as well as general timeline events                    |
 | Note: Sep 2018: Several v3 features require using the new dashboard that is coming soon - talk to support to get preview access |
-|  |
+|                                                                                                                                 |
 | 2.5.18                                                                                                                          | Adding `unOccludeSensitiveView` method                                                                                                     |
 | Fixing a problem that exposed sensitives views for their first frame on screen in some circumstances                            |
 | 2.5.17                                                                                                                          | Fixing a problem with tag collection from multiple threads                                                                                 |

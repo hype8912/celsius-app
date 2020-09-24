@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View } from "react-native";
+import BigNumber from "bignumber.js";
+import moment from "moment";
 
 import * as appActions from "../../../redux/actions";
 import formatter from "../../../utils/formatter";
@@ -36,6 +38,20 @@ class BorrowLoanTerm extends Component {
     props.actions.updateFormField("termOfLoan", 6);
   }
 
+  calculateSliderItems = m => {
+    const { formData } = this.props;
+
+    const originatingDate = moment();
+    const maturityDate = originatingDate.clone().add(m, "month");
+    const loanTermInDays = maturityDate.diff(originatingDate, "days");
+    const monthlyInterest = new BigNumber(formData.interest)
+      .dividedBy(365)
+      .multipliedBy(loanTermInDays)
+      .multipliedBy(formData.loanAmount)
+      .toNumber();
+    return monthlyInterest;
+  };
+
   handleSliderItems = () => {
     const { formData } = this.props;
     const months = [6, 12, 18, 24, 30, 36];
@@ -52,8 +68,7 @@ class BorrowLoanTerm extends Component {
             {m} MONTHS
           </CelText>
           <CelText style={{ marginBottom: 10 }} type="H6">
-            Total interest: {formatter.usd(Number(formData.monthlyPayment * m))}{" "}
-            USD
+            Total interest: {formatter.usd(this.calculateSliderItems(m))} USD
           </CelText>
         </>
       ),

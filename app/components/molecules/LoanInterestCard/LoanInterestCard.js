@@ -103,11 +103,6 @@ class LoanInterestCard extends Component {
         <View style={style.textContainer}>
           <View style={{ opacity: this.isAllowed ? 1 : 0.4 }}>
             <CelText
-              weight={"300"}
-              type={"H6"}
-              margin={"0 0 4 0"}
-            >{`$${formatter.round(this.monthlyPayment)} per month`}</CelText>
-            <CelText
               weight={"600"}
               type={"H3"}
               margin={"0 0 4 0"}

@@ -9,8 +9,8 @@ import CelText from "../../atoms/CelText/CelText";
 
 const { Surface, Group, Shape } = ART;
 
-const width = heightPercentageToDP("23.5%");
-const height = heightPercentageToDP("23.5%");
+let width = heightPercentageToDP("24.5%");
+let height = heightPercentageToDP("24.5%");
 const tierLevels = [
   {
     title: "SILVER",
@@ -37,8 +37,11 @@ class PieProgressBar extends Component {
     tier: PropTypes.string,
     level: PropTypes.number,
     color: PropTypes.string,
+    size: PropTypes.oneOf(["header", "card"]),
   };
-  static defaultProps = {};
+  static defaultProps = {
+    size: "header",
+  };
 
   constructor(props) {
     super(props);
@@ -46,7 +49,12 @@ class PieProgressBar extends Component {
   }
 
   render() {
-    const { tier, level, color } = this.props;
+    const { tier, level, color, size } = this.props;
+    const isCard = size === "card";
+    if (isCard) {
+      width = heightPercentageToDP("16%");
+      height = heightPercentageToDP("16%");
+    }
     const style = PieProgressBarStyle();
     // TODO when pie progress is introduced again uncomment //
     // const percentage = (amount - min) * 100 / (max - min);
@@ -64,8 +72,22 @@ class PieProgressBar extends Component {
     if (level === 2) clr = "rgba(186, 129, 35, 0.5)";
     if (level === 1) clr = "rgba(134, 137, 140, 0.5)";
 
+    const fontSize = isCard
+      ? { tier: "H7", level: "H8" }
+      : { tier: "H4", level: "H5" };
+
     return (
-      <View style={[style.outerCircle, { backgroundColor: color }]}>
+      <View
+        style={[
+          style.outerCircle,
+          {
+            backgroundColor: color,
+            width,
+            height,
+            borderRadius: isCard ? height / 2 : null,
+          },
+        ]}
+      >
         <Surface width={width} height={height}>
           <Group x={width / 2} y={height / 2}>
             {sectionAngles.map(sec => {
@@ -98,12 +120,11 @@ class PieProgressBar extends Component {
             })}
           </Group>
         </Surface>
-        <View style={[style.innerCircle, { backgroundColor: color }]} />
         <View style={style.contentCircle}>
-          <CelText color={"white"} type={"H4"} weight={"700"}>
+          <CelText color={"white"} type={fontSize.tier} weight={"700"}>
             {tier}
           </CelText>
-          <CelText color={"white"} type={"H5"} weight={"300"}>
+          <CelText color={"white"} type={fontSize.level} weight={"300"}>
             LEVEL
           </CelText>
         </View>

@@ -9,7 +9,7 @@ import ChooseMarginCollateralCoinStyle from "./ChooseMarginCollateralCoin.styles
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Icon from "../../atoms/Icon/Icon";
-import CollateralCoinCard from "../../molecules/CollateralCoinCard/CollateralCoinCard";
+import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import { COIN_CARD_TYPE } from "../../../constants/UI";
 import { SCREENS } from "../../../constants/SCREENS";
 
@@ -63,7 +63,7 @@ class ChooseMarginCollateralCoin extends Component {
 
           <View style={style.wrapper}>
             {availableCoins.map(coin => (
-              <CollateralCoinCard
+              <PaymentCard
                 key={coin.short}
                 handleSelectCoin={this.handleSelectCoin}
                 coin={coin}

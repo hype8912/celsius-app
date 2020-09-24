@@ -3,13 +3,11 @@ import PropTypes from "prop-types";
 import { View } from "react-native";
 
 import BadgeStyle from "./Badge.styles";
-import STYLES from "../../../constants/STYLES";
-import { getPadding, getMargins } from "../../../utils/styles-util";
-
-const { COLORS } = STYLES;
+import { getPadding, getMargins, getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const Badge = ({
-  color = COLORS.GREEN,
+  color = getColor(COLOR_KEYS.POSITIVE_STATE),
   margin = "5 5 5 5",
   padding = "5 5 5 5",
   children,

@@ -350,8 +350,6 @@ class BorrowLanding extends Component {
       );
     if (!loanCompliance.allowed) return this.renderNoCompliance();
 
-    if (hasLoans) return this.renderDefaultView();
-
     if (!hasLoans) return this.renderNoLoans();
 
     return this.renderDefaultView();

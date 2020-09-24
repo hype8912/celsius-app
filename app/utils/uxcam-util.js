@@ -70,7 +70,7 @@ function hideComponentFromRecording(WrappedComponent) {
         <WrappedComponent
           {...this.props}
           ref={view => {
-            if (view) RNUxcam.occludeSensitiveView(view)
+            if (view) RNUxcam.occludeSensitiveView(view);
           }}
         />
       );
@@ -104,7 +104,7 @@ function hideComponentWithRefFromRecording(Component) {
         {...props}
         forwardedRef={ref}
         ref={view => {
-          if (view) RNUxcam.occludeSensitiveView(view)
+          if (view) RNUxcam.occludeSensitiveView(view);
         }}
       />
     );

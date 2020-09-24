@@ -119,4 +119,8 @@ export const SCREENS = {
   WITHDRAW_CREATE_ADDRESS: "WithdrawCreateAddress",
   WITHDRAW_ENTER_AMOUNT: "WithdrawEnterAmount",
   WITHDRAW_NEW_ADDRESS_SETUP: "WithdrawNewAddressSetup",
+  INTEREST_PAYMENT_OVERVIEW: "InterestPaymentOverviewScreen",
+  MARGIN_CALL_OVERVIEW_SCREEN: "MarginCallOverviewScreen",
+  SINGLE_MARGIN_CALL_SCREEN: "SingleMarginCallScreen",
+  EXTEND_LOAN: "ExtendLoanScreen",
 };
