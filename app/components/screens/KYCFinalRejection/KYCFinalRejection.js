@@ -40,7 +40,7 @@ class KYCFinalRejection extends Component {
 
           <CelText align="center" margin="20 0 20 0">
             Due to global compliance and regulations, we are unable to approve
-            your Celsius Network account and we cannot provide you with access
+            your Celsius Wallet and we cannot provide you with access
             to Celsius services.
           </CelText>
 

@@ -162,7 +162,7 @@ function getProps(purpose, componentProps) {
         ...props,
         heading: "Withdraw",
         paragraphs: [
-          "Withdraw pain (and fee!) free with Celsius Network. Complete your KYC verification to take full advantage.",
+          "Withdraw pain (and fee!) free with Celsius Wallet. Complete your KYC verification to take full advantage.",
         ],
         onPress: () => actions.navigateTo(SCREENS.KYC_PROFILE_DETAILS),
       };

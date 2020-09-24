@@ -58,7 +58,7 @@ class Community extends Component {
               type={"H6"}
               color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
             >
-              Celsius Network counts
+              Celsius counts
             </CelText>
             <Counter
               weight={"600"}
