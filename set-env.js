@@ -12,6 +12,7 @@ const ALL_CONFIGS = {
   STAGING: "STAGING",
   PRODUCTION: "PRODUCTION",
   RESKINNING: "RESKINNING",
+  BETA: "BETA",
 };
 
 const ENV_FILES = {
@@ -94,6 +95,13 @@ function copyFileFromCelsiusCreds(fileKey) {
       src = path.resolve(
         __dirname,
         `${directoryPath}/reskinning/${pathToFile}`
+      );
+      break;
+
+    case ALL_CONFIGS.BETA:
+      src = path.resolve(
+        __dirname,
+        `${directoryPath}/beta/${pathToFile}`
       );
       break;
 

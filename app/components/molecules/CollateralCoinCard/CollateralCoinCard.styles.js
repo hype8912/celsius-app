@@ -1,36 +1,23 @@
+// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
-  container: {
-    flex: 1,
-  },
   mainContainer: {
     flex: 1,
+  },
+  coinInfo: {
     flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
-    flex: 0.2,
+    marginRight: 10,
   },
   coinImage: {
     width: 40,
     height: 40,
-  },
-  textContainer: {
-    marginVertical: 5,
-    flex: 0.8,
-  },
-  marginRequired: {
-    marginTop: 5,
-    paddingVertical: 2,
-    paddingHorizontal: 5,
-    borderRadius: 5,
-    backgroundColor: COLOR_KEYS.CARDS,
-  },
-  cardStyle: {
-    color: COLOR_KEYS.CARDS,
   },
 };
 
@@ -42,6 +29,6 @@ const themed = {
   unicorn: {},
 };
 
-const CoinCardStyle = () => getThemedStyle(base, themed);
+const CollateralCoinCardStyle = () => getThemedStyle(base, themed);
 
-export default CoinCardStyle;
+export default CollateralCoinCardStyle;

@@ -71,8 +71,9 @@ class CelButton extends Component {
     if (disabled) titleStyle.push(style.disabledTitleColor);
     if (basic) titleStyle.push(style.basicTitle);
     if (ghost) titleStyle.push(style.ghostTitle);
-    if (basic && color) titleStyle.push(style[`basic${color}TitleButton`]);
     if (textColor) titleStyle.push({ color: textColor });
+    if (ghost && color) titleStyle.push(style[`${color}ghostTitle`]);
+    if (basic && color) titleStyle.push(style[`basic${color}TitleButton`]);
 
     return titleStyle;
   };

@@ -6,7 +6,6 @@ import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage, closeModal } from "../ui/uiActions";
 import { setFormErrors, updateFormField } from "../forms/formsActions";
-import { default as NavActions, navigateTo } from "../nav/navActions";
 import apiUtil from "../../utils/api-util";
 import userDataService from "../../services/user-data-service";
 import {
@@ -16,6 +15,7 @@ import {
 import { KYC_STATUSES } from "../../constants/DATA";
 import interestUtil from "../../utils/interest-util";
 import { SCREENS } from "../../constants/SCREENS";
+import { navigateTo } from "../nav/navActions";
 
 export {
   getUserAppSettings,
@@ -288,17 +288,17 @@ function getUserStatus() {
 
       if (newStatus === KYC_STATUSES.permanently_rejected) {
         dispatch(closeModal());
-        return dispatch(NavActions.navigateTo(SCREENS.KYC_FINAL_REJECTION));
+        return dispatch(navigateTo(SCREENS.KYC_FINAL_REJECTION));
       }
 
       if (newStatus !== status) {
         dispatch(closeModal());
         if (newStatus === KYC_STATUSES.passed) {
-          return dispatch(NavActions.navigateTo(SCREENS.WALLET_LANDING));
+          return dispatch(navigateTo(SCREENS.WALLET_LANDING));
         }
 
         if (newStatus === KYC_STATUSES.rejected) {
-          return dispatch(NavActions.navigateTo(SCREENS.WALLET_LANDING));
+          return dispatch(navigateTo(SCREENS.WALLET_LANDING));
         }
       }
     } catch (err) {

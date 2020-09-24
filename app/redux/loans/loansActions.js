@@ -32,6 +32,8 @@ export {
   lockMarginCallCollateral,
   getLoanAlerts,
   startedLoanApplication,
+  extendLoan,
+  setLoanAlert,
 };
 
 /**
@@ -62,6 +64,14 @@ function applyForALoan() {
       const res = await loansService.apply(loanApplication, verification);
       dispatch({ type: ACTIONS.APPLY_FOR_LOAN_SUCCESS });
 
+      dispatch(
+        navigateTo(SCREENS.LOAN_REQUEST_DETAILS, {
+          id: res.data.loan.id,
+          hideBack: true,
+        })
+      );
+      dispatch(showMessage("success", "Loan created successfully!"));
+
       const allLoans = await loansService.getAllLoans();
 
       dispatch({
@@ -70,6 +80,7 @@ function applyForALoan() {
         allLoans,
       });
 
+      dispatch(setActiveLoan(res.data.loan.id));
       dispatch(
         navigateTo(SCREENS.LOAN_REQUEST_DETAILS, {
           id: res.data.loan.id,
@@ -321,16 +332,11 @@ function prepayInterest(id) {
 
     try {
       const { formData } = getState().forms;
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-      };
 
       const res = await loansService.prepayInterest(
         formData.prepaidPeriod,
         formData.coin,
-        id,
-        verification
+        id
       );
       const transactionId = res.data.transaction_id;
 
@@ -341,6 +347,7 @@ function prepayInterest(id) {
         navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transactionId,
           loanPayment: true,
+          hideBack: true,
         })
       );
       dispatch(openModal(MODALS.PREPAYMENT_SUCCESSFUL_MODAL));
@@ -359,20 +366,14 @@ function prepayInterest(id) {
  */
 
 function payPrincipal(id) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     startApiCall(API.PAY_LOAN_PRINCIPAL);
 
     return;
 
     // eslint-disable-next-line no-unreachable
     try {
-      const { formData } = getState().forms;
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-      };
-
-      const res = await loansService.payPrincipal(id, verification);
+      const res = await loansService.payPrincipal(id);
 
       const transactionId = res.data.transaction_id;
       dispatch(showMessage("success", "Payment successful"));
@@ -380,6 +381,7 @@ function payPrincipal(id) {
         navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transactionId,
           loanPayment: true,
+          hideBack: true,
         })
       );
     } catch (err) {
@@ -390,27 +392,20 @@ function payPrincipal(id) {
 }
 
 function lockMarginCallCollateral(id, coin) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     let apiCallName;
     try {
-      const { formData } = getState().forms;
-
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-      };
-
       apiCallName = API.PAY_MARGIN_CALL;
       startApiCall(apiCallName);
-      const res = await loansService.lockMarginCallCollateral(
-        id,
-        coin,
-        verification
-      );
+      const res = await loansService.lockMarginCallCollateral(id, coin);
 
+      dispatch(closeModal());
       const transactionId = res.data.transaction_id;
       dispatch(
-        navigateTo(SCREENS.TRANSACTION_INTERSECTION, { id: transactionId })
+        navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
+          id: transactionId,
+          hideBack: true,
+        })
       );
 
       apiCallName = API.GET_ALL_LOANS;
@@ -436,16 +431,11 @@ function lockMarginCallCollateral(id, coin) {
  * @param {string} coin - BTC|ETH coin in which interest should be paid
  */
 function payMonthlyInterest(id, coin) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     startApiCall(API.PAY_LOAN_INTEREST);
 
     try {
-      const { formData } = getState().forms;
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-      };
-      const res = await loansService.payMonthlyInterest(id, coin, verification);
+      const res = await loansService.payMonthlyInterest(id, coin);
       const transactionId = res.data.transaction_id;
       dispatch({ type: ACTIONS.PAY_LOAN_INTEREST_SUCCESS });
       dispatch(showMessage("success", "Payment successful"));
@@ -453,6 +443,7 @@ function payMonthlyInterest(id, coin) {
         navigateTo(SCREENS.TRANSACTION_INTERSECTION, {
           id: transactionId,
           loanPayment: true,
+          hideBack: true,
         })
       );
     } catch (err) {
@@ -472,6 +463,7 @@ function checkForLoanAlerts() {
 
     const loanAlerts = [];
     allLoans.forEach(l => {
+      // const currentDay = moment.utc();
       if (
         l.installments_to_be_paid &&
         Number(l.installments_to_be_paid.total)
@@ -483,6 +475,16 @@ function checkForLoanAlerts() {
         loanAlerts.push({ id: l.id, type: LOAN_ALERTS.MARGIN_CALL_ALERT });
       }
 
+      // if (
+      //   (l.can_pay_principal && l.coin_loan_asset !== "USD") ||
+      //   (l.can_pay_principal &&
+      //     l.coin_loan_asset !== "USD" &&
+      //     moment(l.maturity_date)
+      //       .utc()
+      //       .isSame(currentDay.add(7, "days"), "day"))
+      // ) {
+      //   loanAlerts.push({ id: l.id, type: LOAN_ALERTS.PRINCIPAL_ALERT });
+      // }
       // if (l.can_pay_principal && l.coin_loan_asset !== "USD") {
       //   loanAlerts.push({ id: l.id, type: LOAN_ALERTS.PRINCIPAL_ALERT });
       // }
@@ -496,6 +498,24 @@ function checkForLoanAlerts() {
     if (loanAlerts.length) {
       dispatch(openModal(MODALS.LOAN_ALERT_MODAL));
     }
+  };
+}
+
+/**
+ * Sets loan alert for which you wish to open modal
+ */
+
+function setLoanAlert(loanId, alertType) {
+  return dispatch => {
+    const loanAlerts = [];
+
+    loanAlerts.push({ id: loanId, type: alertType });
+
+    dispatch({
+      type: ACTIONS.CHECK_LOAN_ALERTS,
+      loanAlerts,
+    });
+    dispatch(openModal(MODALS.LOAN_ALERT_MODAL));
   };
 }
 
@@ -560,6 +580,27 @@ function startedLoanApplication() {
       await analyticsService.startedLoanApplicationService(userData);
     } catch (e) {
       loggerUtil.log(e);
+    }
+  };
+}
+
+function extendLoan(id, numberOfMonths) {
+  return async dispatch => {
+    dispatch(startApiCall(API.EXTEND_LOAN));
+    try {
+      await loansService.extendLoan(id, numberOfMonths);
+      getAllLoans();
+      dispatch(navigateTo(SCREENS.BORROW_LANDING));
+      dispatch(
+        showMessage(
+          "success",
+          `You have successfully extended loan for additional ${numberOfMonths} months`
+        )
+      );
+      dispatch({ type: ACTIONS.EXTEND_LOAN_SUCCESS });
+    } catch (err) {
+      dispatch(showMessage("error", err.msg));
+      dispatch(apiError(API.EXTEND_LOAN, err));
     }
   };
 }

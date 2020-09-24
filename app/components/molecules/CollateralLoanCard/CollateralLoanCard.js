@@ -9,7 +9,7 @@ import CelText from "../../atoms/CelText/CelText";
 import Icon from "../../atoms/Icon/Icon";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { TRANSACTION_TYPES } from "../../../constants/DATA";
+import { LOAN_STATUS, TRANSACTION_TYPES } from "../../../constants/DATA";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
@@ -47,25 +47,31 @@ function getPropsFromTransaction(transaction) {
         color: getColor(COLOR_KEYS.POSITIVE_STATE),
       };
     case TRANSACTION_TYPES.COLLATERAL_UNLOCKED:
-      if (transaction.loan_data.unlock_reason === "rejected") {
+      if (transaction.loan_data.status === LOAN_STATUS.REJECTED) {
         return {
           status: "Rejected Loan",
           color: getColor(COLOR_KEYS.NEGATIVE_STATE),
         };
       }
-      if (transaction.loan_data.unlock_reason === "finished") {
+      if (transaction.loan_data.status === LOAN_STATUS.ACTIVE) {
+        return {
+          status: "Active Loan",
+          color: COLOR_KEYS.PRIMARY_BUTTON,
+        };
+      }
+      if (transaction.loan_data.status === LOAN_STATUS.COMPLETED) {
         return {
           status: "Completed Loan",
           color: getColor(COLOR_KEYS.POSITIVE_STATE),
         };
       }
-      if (transaction.loan_data.unlock_reason === "cancelled") {
+      if (transaction.loan_data.status === LOAN_STATUS.CANCELED) {
         return {
           status: "Cancelled Loan",
           color: getColor(COLOR_KEYS.NEGATIVE_STATE),
         };
       }
-      if (!transaction.loan_data.unlock_reason) {
+      if (!transaction.loan_data.status) {
         return {
           status: "Loan",
           color: getColor(COLOR_KEYS.PRIMARY_BUTTON),

@@ -17,13 +17,16 @@ const InfoModal = props => {
     heading,
     paragraphs,
     yesButtonPosition,
+    noButtonPosition,
     yesButtonStyle,
     onYes,
     yesCopy,
     onNo,
     noCopy,
     coin,
-    loading,
+    yesLoading,
+    noLoading,
+    noButtonStyle,
   } = props;
 
   const style = InfoModalStyle();
@@ -67,9 +70,20 @@ const InfoModal = props => {
               buttonStyle={yesButtonStyle}
               onPress={onYes}
               position={yesButtonPosition}
-              loading={loading}
+              loading={yesLoading}
             >
               {yesCopy}
+            </CelModalButton>
+          ) : null}
+
+          {noCopy ? (
+            <CelModalButton
+              buttonStyle={noButtonStyle}
+              onPress={onNo}
+              position={noButtonPosition}
+              loading={noLoading}
+            >
+              {noCopy}
             </CelModalButton>
           ) : null}
         </View>
@@ -94,6 +108,7 @@ InfoModal.propTypes = {
   noCopy: PropTypes.string,
   onNo: PropTypes.func,
   coin: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 export default InfoModal;

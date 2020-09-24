@@ -44,7 +44,7 @@ class LoanApplicationSuccessModal extends Component {
           "Thank you for initiating your loan with Celsius. Once approved, your funds will be transferred to your Celsius wallet.",
         ]}
         yesCopy={"Continue"}
-        onYes={actions.closeModal}
+        onYes={() => actions.closeModal()}
       />
     );
   }

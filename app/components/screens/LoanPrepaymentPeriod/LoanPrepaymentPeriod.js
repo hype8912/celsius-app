@@ -11,7 +11,8 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import VerticalSlider from "../../atoms/VerticalSlider/VerticalSlider";
 import CelButton from "../../atoms/CelButton/CelButton";
 import formatter from "../../../utils/formatter";
-import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
+import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
+import ConfirmPrepaymentModal from "../../modals/ConfirmPrepaymentModal/ConfirmPrepaymentModal";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
@@ -21,6 +22,9 @@ import { SCREENS } from "../../../constants/SCREENS";
     formData: state.forms.formData,
     allLoans: state.loans.allLoans,
     loanSettings: state.loans.loanSettings,
+    currencyRates: state.currencies.currencyRatesShort,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
+    walletSummary: state.wallet.summary,
     currencyRatesShort: state.currencies.currencyRatesShort,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -52,12 +56,7 @@ class LoanPrepaymentPeriod extends Component {
         actions.updateFormField("amountUsd", amountUsd);
         actions.navigateTo(SCREENS.WIRING_BANK_INFORMATION);
       } else {
-        actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-          onSuccess: () => {
-            actions.prepayInterest(id);
-            actions.updateFormField("prepayLoanId", id);
-          },
-        });
+        actions.openModal(MODALS.CONFIRM_INTEREST_PREPAYMENT);
       }
     }
   };
@@ -78,8 +77,54 @@ class LoanPrepaymentPeriod extends Component {
     return monthValues;
   };
 
+  calculateModalData = () => {
+    const {
+      formData,
+      navigation,
+      loyaltyInfo,
+      walletSummary,
+      allLoans,
+    } = this.props;
+    const loanId = navigation.getParam("id");
+    const loan = allLoans.find(l => l.id === loanId);
+    const walletCoin = walletSummary.coins.find(c => c.short === formData.coin);
+    const amountUsd = walletCoin ? walletCoin.amount_usd : 0;
+    const prepaymentAmount =
+      Number(loan.monthly_payment) * Number(formData.prepaidPeriod);
+
+    const sumToPay =
+      formData.coin === "CEL"
+        ? prepaymentAmount -
+          (prepaymentAmount -
+            (1 - loyaltyInfo.tier.loanInterestBonus) * prepaymentAmount)
+        : prepaymentAmount;
+    const cryptoAmountToPay = walletCoin
+      ? (walletCoin.amount.toNumber() / walletCoin.amount_usd.toNumber()) *
+        sumToPay
+      : 0;
+
+    const newBalanceCrypto =
+      walletCoin && walletCoin.amount.minus(cryptoAmountToPay);
+    const newBalanceUsd = amountUsd && amountUsd.minus(sumToPay);
+
+    return {
+      coin: formData.coin,
+      sumToPay,
+      cryptoAmountToPay,
+      newBalanceCrypto,
+      newBalanceUsd,
+      loanId,
+    };
+  };
+
   calculatePrepaidValue = (usdValue, coinRate, coin) => {
+    const { formData, loyaltyInfo } = this.props;
     const rate = coin === "USD" ? 1 : coinRate;
+    if (formData.coin === "CEL")
+      return formatter.crypto(
+        ((1 - loyaltyInfo.tier.loanInterestBonus) * usdValue) / rate,
+        coin
+      );
     return formatter.crypto(usdValue / rate, coin);
   };
 
@@ -145,6 +190,8 @@ class LoanPrepaymentPeriod extends Component {
       formData.coin
     );
 
+    const modalData = this.calculateModalData();
+
     return (
       <RegularLayout>
         <CelText type="H3" weight="bold" align="center" margin="50 0 15 0">
@@ -161,6 +208,7 @@ class LoanPrepaymentPeriod extends Component {
         >
           Continue
         </CelButton>
+        <ConfirmPrepaymentModal modalData={modalData} />
       </RegularLayout>
     );
   };
@@ -169,8 +217,9 @@ class LoanPrepaymentPeriod extends Component {
     const style = LoanPrepaymentPeriodStyle();
     const verticalSlider = this.renderSlider();
     const monthValues = this.getMonthValues();
-
     if (monthValues.length === 1) return this.renderWhenOnly6Months();
+
+    const modalData = this.calculateModalData();
 
     return (
       <View style={style.container}>
@@ -192,6 +241,7 @@ class LoanPrepaymentPeriod extends Component {
           >
             Continue
           </CelButton>
+          <ConfirmPrepaymentModal modalData={modalData} />
         </RegularLayout>
       </View>
     );

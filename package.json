@@ -16,6 +16,7 @@
     "set:env:staging": "yarn creds:update && CONFIG=STAGING yarn set:env",
     "set:env:production": "yarn creds:update && CONFIG=PRODUCTION yarn set:env",
     "set:env:reskinning": "yarn creds:update && CONFIG=RESKINNING yarn set:env",
+    "set:env:beta": "yarn creds:update && CONFIG=BETA yarn set:env",
     "set:version": "yarn plop version",
     "lint": "eslint app *.js",
     "plop": "plop",

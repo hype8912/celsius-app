@@ -8,11 +8,13 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
 import TxBasicSection from "../../atoms/TxBasicSection/TxBasicSection";
 import CelButton from "../../atoms/CelButton/CelButton";
-import CollateralLoanCard from "../../molecules/CollateralLoanCard/CollateralLoanCard";
+import LoanCard from "../../molecules/LoanCard/LoanCard";
 import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
+import TierCard from "../../organisms/TierCard/TierCard";
+import { TRANSACTION_TYPES } from "../../../constants/DATA";
 import { SCREENS } from "../../../constants/SCREENS";
 
 class TransactionDetailsLoans extends Component {
@@ -36,10 +38,12 @@ class TransactionDetailsLoans extends Component {
             transactionProps={transactionProps}
           />
 
-          <CollateralLoanCard
-            navigateTo={navigateTo}
-            transaction={transaction}
-          />
+          <LoanCard navigateTo={navigateTo} transaction={transaction} />
+
+          {transaction.type === TRANSACTION_TYPES.LOAN_INTEREST &&
+            transaction.coin === "cel" && (
+              <TierCard transaction={transaction} />
+            )}
 
           <TxBasicSection
             label={"Date"}
@@ -51,7 +55,36 @@ class TransactionDetailsLoans extends Component {
             value={moment.utc(transaction.time).format("h:mm A (z)")}
           />
 
-          {transaction.type.includes("UNLOCKED") ? (
+          {[
+            TRANSACTION_TYPES.MARGIN_CALL,
+            TRANSACTION_TYPES.LOAN_INTEREST,
+          ].includes(transaction.type) && (
+            <View>
+              <TxBasicSection
+                label={"Spot Price"}
+                value={formatter.usd(
+                  Number(transaction.amount_usd) / Number(transaction.amount)
+                )}
+              />
+            </View>
+          )}
+
+          {[TRANSACTION_TYPES.MARGIN_CALL].includes(transaction.type) && (
+            <View>
+              <TxBasicSection
+                label={"New Collateral Balance"}
+                value={`     ${formatter.crypto(
+                  Number(transaction.loan_data.loan_collateral_crypto),
+                  transaction.coin.toUpperCase()
+                )} 
+            ${formatter.usd(
+              Number(transaction.loan_data.loan_collateral_usd)
+            )}`}
+              />
+            </View>
+          )}
+
+          {TRANSACTION_TYPES.COLLATERAL_UNLOCKED.includes(transaction.type) ? (
             <Card>
               <CelText align={"left"} type={"H5"} weight={"600"}>
                 Successfully Completed Loan
@@ -62,7 +95,7 @@ class TransactionDetailsLoans extends Component {
             </Card>
           ) : null}
 
-          {transaction.type.includes("LOCKED") ? (
+          {TRANSACTION_TYPES.COLLATERAL_LOCKED.includes(transaction.type) ? (
             <View style={{ marginTop: 20 }}>
               <View>
                 <View
@@ -111,6 +144,17 @@ class TransactionDetailsLoans extends Component {
               </View>
             </View>
           ) : null}
+
+          <CelButton
+            margin={"20 0 0 0"}
+            onPress={() =>
+              navigateTo("LoanRequestDetails", {
+                id: transaction.loan_data.loan_number,
+              })
+            }
+          >
+            Loan Overview
+          </CelButton>
 
           <CelButton
             margin={"20 0 0 0"}

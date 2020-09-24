@@ -505,6 +505,11 @@ const BLOCKEXPLORER_NAME = {
   ERC20: "etherscan",
 };
 
+const PAYMENT_TYPE = {
+  CRYPTO: "CRYPTO",
+  FIAT: "FIAT",
+};
+
 export {
   BLOCKEXPLORERS,
   KYC_STATUSES,
@@ -530,4 +535,5 @@ export {
   ERC_20_COINS,
   LINKS_FOR_COINS,
   BLOCKEXPLORER_NAME,
+  PAYMENT_TYPE,
 };
