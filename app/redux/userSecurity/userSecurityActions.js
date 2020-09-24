@@ -99,6 +99,7 @@ function checkPIN(onSuccess, onError) {
       const { pin } = getState().forms.formData;
 
       dispatch(startApiCall(API.CHECK_PIN));
+      dispatch(toggleKeypad());
 
       await userSecurityService.checkPin(pin);
 
@@ -125,6 +126,7 @@ function checkTwoFactor(onSuccess, onError) {
       const { code } = getState().forms.formData;
 
       dispatch(startApiCall(API.CHECK_TWO_FACTOR));
+      dispatch(toggleKeypad());
 
       await userSecurityService.checkTwoFactor(code);
 
