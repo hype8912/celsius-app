@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
@@ -9,7 +9,6 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import PrepayDollarInterestModal from "../../modals/PrepayDollarInterestModal/PrepayDollarInterestModal";
 import {
   LOAN_PAYMENT_REASONS,
-  THEMES,
   MODALS,
   COIN_CARD_TYPE,
 } from "../../../constants/UI";
@@ -19,8 +18,6 @@ import MultiInfoCardButton from "../../molecules/MultiInfoCardButton/MultiInfoCa
 import { SCREENS } from "../../../constants/SCREENS";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
-import STYLES from "../../../constants/STYLES";
-import { getTheme } from "../../../utils/styles-util";
 import Separator from "../../atoms/Separator/Separator";
 import Spinner from "../../atoms/Spinner/Spinner";
 import DollarPaymentModal from "../../modals/DollarPaymentModal/DollarPaymentModal";
@@ -202,25 +199,10 @@ class ChoosePaymentMethod extends Component {
 
   automaticSwitch = () => {
     const { isAutomaticInterestPaymentEnabled } = this.state;
-
-    const isIos = Platform.OS === "ios";
-    const falseColor = isIos ? "transparent" : STYLES.COLORS.DARK_GRAY3;
-    const theme = getTheme();
     return (
       <CelSwitch
         onValueChange={this.handleSwitchChange}
         value={isAutomaticInterestPaymentEnabled}
-        iosBackgroundColor={
-          theme === THEMES.LIGHT
-            ? STYLES.COLORS.DARK_GRAY3
-            : STYLES.COLORS.DARK_TOGGLE_BACKGROUND
-        }
-        thumbColor={
-          theme === THEMES.LIGHT
-            ? STYLES.COLORS.WHITE
-            : STYLES.COLORS.DARK_TOGGLE_FOREGROUND
-        }
-        trackColor={{ false: falseColor, true: STYLES.COLORS.GREEN }}
       />
     );
   };

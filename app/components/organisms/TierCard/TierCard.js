@@ -9,9 +9,10 @@ import * as appActions from "../../../redux/actions";
 import TierCardStyle from "./TierCard.styles";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import formatter from "../../../utils/formatter";
 import PieProgressBar from "../../graphs/PieProgressBar/PieProgressBar";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -52,15 +53,15 @@ class TierCard extends Component {
     let title;
     let color;
     if (loyaltyInfo.tier_level === 1) {
-      color = STYLES.COLORS.GRAY;
+      color = getColor(COLOR_KEYS.SECTION_TITLE);
       title = "Silver";
     }
     if (loyaltyInfo.tier_level === 2) {
-      color = STYLES.COLORS.ORANGE;
+      color = getColor(COLOR_KEYS.ALERT_STATE);
       title = "Gold";
     }
     if (loyaltyInfo.tier_level === 3) {
-      color = STYLES.COLORS.CELSIUS_BLUE;
+      color = getColor(COLOR_KEYS.LINK);
       title = "Platinum";
     }
 
