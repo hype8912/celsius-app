@@ -288,6 +288,12 @@ class VerifyProfile extends Component {
             ].includes(error.message)
           ) {
             actions.showMessage("error", error.message);
+          } else if (
+            [BIOMETRIC_ERRORS.NO_IDENTITIES_ARE_ENROLLED].includes(
+              error.message
+            )
+          ) {
+            return;
           } else {
             actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
             this.setState({ disableBiometricsForUser: true });
