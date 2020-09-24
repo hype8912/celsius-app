@@ -69,7 +69,9 @@ function hideComponentFromRecording(WrappedComponent) {
       return (
         <WrappedComponent
           {...this.props}
-          ref={view => RNUxcam.occludeSensitiveView(view)}
+          ref={view => {
+            if (view) RNUxcam.occludeSensitiveView(view)
+          }}
         />
       );
     };
@@ -101,7 +103,9 @@ function hideComponentWithRefFromRecording(Component) {
       <CellInputHide
         {...props}
         forwardedRef={ref}
-        ref={view => RNUxcam.occludeSensitiveView(view)}
+        ref={view => {
+          if (view) RNUxcam.occludeSensitiveView(view)
+        }}
       />
     );
   });
