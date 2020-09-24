@@ -32,9 +32,9 @@ class LoadingState extends Component {
     const style = LoadingStateStyle();
     const theme = getTheme();
 
-    let logoImage = require("../../../../assets/images/icons/logo-blue.png");
+    let logoImage = require("../../../../assets/images/icons/cel-logo-blue.png");
     if (theme === THEMES.DARK) {
-      logoImage = require("../../../../assets/images/icons/logo-white.png");
+      logoImage = require("../../../../assets/images/icons/cel-logo-white.png");
     }
 
     const spin = this.state.spinValue.interpolate({
