@@ -12,12 +12,14 @@ import { getColor, getTheme } from "../../../utils/styles-util";
 import Separator from "../../atoms/Separator/Separator";
 import { SCREENS } from "../../../constants/SCREENS";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 
 class CollateralCoinCard extends Component {
   static propTypes = {
     amountUsd: PropTypes.string,
     additionalCryptoAmount: PropTypes.string,
     additionalInfoExplanation: PropTypes.string,
+    additionalUsdAmount: PropTypes.string,
     cardColor: PropTypes.string,
     coin: PropTypes.string,
     currency: PropTypes.string,
@@ -46,6 +48,7 @@ class CollateralCoinCard extends Component {
       opacity,
       color,
       actions,
+      additionalUsdAmount,
     } = this.props;
     return (
       <Card onPress={onPress} color={cardColor} opacity={opacity}>
@@ -82,7 +85,11 @@ class CollateralCoinCard extends Component {
                   <Separator size={2} margin={"10 0 5 0"} />
                   <View style={{ flexWrap: "wrap" }}>
                     <CelText weight={"500"} align="left">
-                      {`${additionalCryptoAmount} ${additionalInfoExplanation}`}
+                      {`${formatter.crypto(
+                        additionalCryptoAmount,
+                        currency.short,
+                        { precision: 2 }
+                      )} ${additionalInfoExplanation}`}
                     </CelText>
                   </View>
                 </View>
@@ -91,7 +98,10 @@ class CollateralCoinCard extends Component {
                 <TouchableOpacity
                   onPress={() =>
                     actions.navigateTo(SCREENS.DEPOSIT, {
+                      reason: LOAN_PAYMENT_REASONS.COLLATERAL,
                       coin: currency.short,
+                      amountUsd: additionalUsdAmount,
+                      additionalCryptoAmount,
                     })
                   }
                   style={{

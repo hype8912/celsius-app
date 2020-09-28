@@ -112,34 +112,34 @@ class LoanOverviewCard extends Component {
           getMargins(this.getMarginForIndex(index, length)),
         ]}
       >
-        {loan.can_pay_principal && (
-          <Card>
-            <CelText>You have completed all of your interest payments</CelText>
-            {/* <CelButton*/}
-            {/*  margin={"10 0 0 0"}*/}
-            {/*  size={"small"}*/}
-            {/*  color={"green"}*/}
-            {/*  onPress={() =>*/}
-            {/*    navigateTo("ExtendLoanScreen", {*/}
-            {/*      id: loan.id,*/}
-            {/*    })*/}
-            {/*  }*/}
-            {/* >*/}
-            {/*  Extend the Loan*/}
-            {/* </CelButton>*/}
-            <CelButton
-              margin={"10 0 0 0"}
-              size={"small"}
-              ghost
-              color={"green"}
-              onPress={this.payPrincipal}
-              loading={isLoading}
-              disabled={isLoading}
-            >
-              Close Loan
-            </CelButton>
-          </Card>
-        )}
+        {/* {loan.can_pay_principal && (*/}
+        {/*  <Card>*/}
+        {/*    <CelText>You have completed all of your interest payments</CelText>*/}
+        {/*     <CelButton*/}
+        {/*      margin={"10 0 0 0"}*/}
+        {/*      size={"small"}*/}
+        {/*      color={"green"}*/}
+        {/*      onPress={() =>*/}
+        {/*        navigateTo("ExtendLoanScreen", {*/}
+        {/*          id: loan.id,*/}
+        {/*        })*/}
+        {/*      }*/}
+        {/*     >*/}
+        {/*      Extend the Loan*/}
+        {/*     </CelButton>*/}
+        {/*    <CelButton*/}
+        {/*      margin={"10 0 0 0"}*/}
+        {/*      size={"small"}*/}
+        {/*      ghost*/}
+        {/*      color={"green"}*/}
+        {/*      onPress={this.payPrincipal}*/}
+        {/*      loading={isLoading}*/}
+        {/*      disabled={isLoading}*/}
+        {/*    >*/}
+        {/*      Close Loan*/}
+        {/*    </CelButton>*/}
+        {/*  </Card>*/}
+        {/* )}*/}
         <Card padding={"0 0 0 0"}>
           {loan && loan.uiProps && (
             <View style={style.loanTitle}>
@@ -395,20 +395,21 @@ class LoanOverviewCard extends Component {
             )}
           </View>
 
-          {loan.can_pay_principal && (
-            <View>
-              <Separator margin={"0 0 0 0"} />
-              <CelButton
-                onPress={this.payPrincipal}
-                margin={"15 0 15 0"}
-                color="green"
-                loading={isLoading}
-                disabled={isLoading}
-              >
-                Payout Principal
-              </CelButton>
-            </View>
-          )}
+          {/* {loan.can_pay_principal && (*/}
+          {/*  <View>*/}
+          {/*    <Separator margin={"0 0 0 0"} />*/}
+          {/*    <CelButton*/}
+          {/*      onPress={this.payPrincipal}*/}
+          {/*      margin={"15 0 15 0"}*/}
+          {/*      color="green"*/}
+          {/*      loading={isLoading}*/}
+          {/*      disabled={isLoading}*/}
+          {/*    >*/}
+          {/*      Payout Principal*/}
+          {/*    </CelButton>*/}
+          {/*  </View>*/}
+          {/* )}*/}
+
           {loan.can_pay_interest && (
             <View>
               <Separator margin={"0 0 0 0"} />

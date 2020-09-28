@@ -3,12 +3,10 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { getColor } from "../../../utils/styles-util";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import DepositStyle from "./Deposit.styles";
-import Card from "../../atoms/Card/Card";
 import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
@@ -20,7 +18,6 @@ import { hasPassedKYC, isPendingKYC } from "../../../utils/user-util/user-util";
 import formatter from "../../../utils/formatter";
 import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/DestinationInfoTagModal";
 import RateInfoCard from "../../molecules/RateInfoCard/RateInfoCard";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 import DepositAddressSwitchCard from "../../atoms/DepositAddressSwitchCard/DepositAddressSwitchCard";
 import { SCREENS } from "../../../constants/SCREENS";
 import LinkToBuy from "../../atoms/LinkToBuy/LinkToBuy";
@@ -28,6 +25,8 @@ import DepositAddressCard from "../../organisms/DepositAddressCard/DepositAddres
 import addressUtil from "../../../utils/address-util";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
+import AdditionalAmountCard from "../../molecules/AdditionalAmountCard/AdditionalAmountCard";
+import { renderAdditionalDepositCardContent } from "../../../utils/ui-util";
 
 @connect(
   state => ({
@@ -102,50 +101,28 @@ class Deposit extends Component {
   };
 
   renderPayCard = () => {
-    const {
-      formData,
-      walletSummary,
-      navigation,
-      currencyRatesShort,
-    } = this.props;
-    const initialCollateral = navigation.getParam("coin");
-    const loan = navigation.getParam("loan");
-    const collateralCoin = formData.selectedCoin || initialCollateral;
-
-    let collateralMissing;
-    const collateralObj =
-      walletSummary &&
-      walletSummary.coins.find(c => c.short === formData.selectedCoin);
-
-    if (collateralObj) {
-      collateralMissing = formatter.crypto(
-        loan.margin_call.margin_call_usd_amount /
-          currencyRatesShort[collateralCoin.toLowerCase()],
-        collateralCoin,
-        { precision: 4 }
-      );
-    }
+    const { navigation } = this.props;
+    const coin = navigation.getParam("coin");
+    const amountUsd = navigation.getParam("amountUsd");
+    const additionalCryptoAmount = navigation.getParam(
+      "additionalCryptoAmount"
+    );
+    const reason = navigation.getParam("reason");
+    const additional = renderAdditionalDepositCardContent(
+      reason,
+      amountUsd,
+      additionalCryptoAmount
+    );
 
     return (
-      <View style={{ alignSelf: "center" }}>
-        <Card color={getColor(COLOR_KEYS.PRIMARY_BUTTON)} size={"twoThirds"}>
-          <CelText
-            align={"center"}
-            weight={"300"}
-            type={"H6"}
-            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-          >
-            {collateralMissing}{" "}
-          </CelText>
-          <CelText
-            weight={"300"}
-            align={"center"}
-            type={"H6"}
-            color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-          >
-            required to cover the margin call
-          </CelText>
-        </Card>
+      <View style={{ margin: 20 }}>
+        <AdditionalAmountCard
+          color={additional.color}
+          additionalUsd={additional.usd}
+          additionalCryptoAmount={additional.crypto}
+          text={additional.text}
+          coin={coin}
+        />
       </View>
     );
   };
@@ -163,6 +140,8 @@ class Deposit extends Component {
     const { address, secondaryAddress, tag } = this.getAddress(
       formData.selectedCoin
     );
+    const isMarginCall = navigation.getParam("isMarginCall");
+    const reason = navigation.getParam("reason");
     const { coinSelectItems } = this.state;
     const styles = DepositStyle();
 
@@ -191,6 +170,7 @@ class Deposit extends Component {
 
     return (
       <RegularLayout padding={"20 20 100 20"}>
+        {isMarginCall ? this.renderPayCard() : null}
         <CelText align="center" weight="regular" type="H4">
           Choose coin to transfer
         </CelText>
@@ -203,8 +183,6 @@ class Deposit extends Component {
           availableCoins={coinSelectItems}
           navigateTo={actions.navigateTo}
         />
-
-        {navigation.getParam("isMarginWarning") ? this.renderPayCard() : null}
 
         {(isFetching || !formData.displayAddress) && (
           <View style={styles.loader}>
@@ -239,12 +217,18 @@ class Deposit extends Component {
           </View>
         ) : null}
 
-        <RateInfoCard
-          style={styles.rateInfoCard}
-          coin={coinInfo}
-          navigateTo={actions.navigateTo}
-          celInterestButton
-        />
+        {reason ? (
+          <View>{!isMarginCall && this.renderPayCard()}</View>
+        ) : (
+          <View>
+            <RateInfoCard
+              style={styles.rateInfoCard}
+              coin={coinInfo}
+              navigateTo={actions.navigateTo}
+              celInterestButton
+            />
+          </View>
+        )}
 
         {formData.selectedCoin === "CEL" ? (
           <View style={{ marginLeft: 20, marginRight: 20 }}>

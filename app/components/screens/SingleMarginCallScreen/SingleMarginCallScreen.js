@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-// import { View } from 'react-native';
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -8,7 +6,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import Card from "../../atoms/Card/Card";
-import STYLES from "../../../constants/STYLES";
 import { presentTime } from "../../../utils/ui-util";
 import {
   COIN_CARD_TYPE,
@@ -18,6 +15,8 @@ import {
 import PaymentCard from "../../molecules/PaymentCard/PaymentCard";
 import LtvCard from "../../molecules/LtvCard/LtvCard";
 import MarginCallConfirmModal from "../../modals/MarginCallConfirmModal/MarginCallConfirmModal";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -69,7 +68,7 @@ class SingleMarginCallScreen extends Component {
             {time.days >= 1 ? `00h 00m` : `${time.hours}h ${time.minutes}m`}
           </CelText>
           {time.days >= 1 && (
-            <Card color={STYLES.COLORS.RED}>
+            <Card color={getColor(COLOR_KEYS.NEGATIVE_STATE)}>
               <CelText weight={"300"} type={"H6"} color={"white"}>
                 Your loan is now in default and you are at risk of collateral
                 liquidation. We advise you to contact your loan manager now.

@@ -29,7 +29,6 @@ function calculateAdditionalPayment(
   let cryptoAmountToPay;
   let amountUsd;
   let isAllowed;
-  let value;
   let collateralAmount;
   let cryptoAmount;
   let color;
@@ -124,13 +123,12 @@ function calculateAdditionalPayment(
           ? COLOR_KEYS.NEGATIVE_STATE
           : COLOR_KEYS.PARAGRAPH;
       if (currency) {
-        value =
+        additionalCryptoAmount =
           (formData.loanAmount * 2 - additionalCoin.amount_usd) /
           currency.market_quotes_usd.price;
+        additionalUsdAmount =
+          additionalCryptoAmount * currency.market_quotes_usd.price;
       }
-      additionalCryptoAmount = formatter.crypto(value, additionalCoin.short, {
-        precision: 2,
-      });
     }
   }
 

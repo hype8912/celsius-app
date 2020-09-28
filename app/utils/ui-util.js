@@ -3,9 +3,16 @@ import { Platform } from "react-native";
 import store from "../redux/store";
 import { hasPassedKYC } from "./user-util/user-util";
 import { getSecureStoreKey } from "./expo-storage";
-import { DONT_SHOW_AGAIN } from "../constants/UI";
+import { DONT_SHOW_AGAIN, LOAN_PAYMENT_REASONS } from "../constants/UI";
+import { COLOR_KEYS } from "../constants/COLORS";
 
-export { isLoanBannerVisible, isBiometricsBannerVisible, isIos, presentTime };
+export {
+  isLoanBannerVisible,
+  isBiometricsBannerVisible,
+  isIos,
+  presentTime,
+  renderAdditionalDepositCardContent,
+};
 
 function isIos() {
   return Platform.OS === "ios";
@@ -46,5 +53,56 @@ function presentTime(time, shouldCalculate = false) {
     days,
     hours,
     minutes,
+  };
+}
+
+function renderAdditionalDepositCardContent(
+  reason,
+  amountUsd,
+  additionalCryptoAmount
+) {
+  const color =
+    reason !== LOAN_PAYMENT_REASONS.MARGIN_CALL
+      ? COLOR_KEYS.PRIMARY_BUTTON
+      : COLOR_KEYS.NEGATIVE_STATE;
+
+  let text;
+  let usd;
+  let crypto;
+
+  switch (reason) {
+    case LOAN_PAYMENT_REASONS.COLLATERAL:
+      text = "required for loan collateral.";
+      usd = amountUsd;
+      crypto = additionalCryptoAmount;
+      break;
+    case LOAN_PAYMENT_REASONS.MANUAL_INTEREST:
+    case LOAN_PAYMENT_REASONS.INTEREST:
+    case LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT:
+      text = "required for the next interest payment.";
+      usd = amountUsd;
+      crypto = additionalCryptoAmount;
+      break;
+    case LOAN_PAYMENT_REASONS.PRINCIPAL:
+      text = "required for the principal payment.";
+      usd = amountUsd;
+      crypto = additionalCryptoAmount;
+      break;
+    case LOAN_PAYMENT_REASONS.MARGIN_CALL:
+      text = "required to close the Margin Call";
+      usd = amountUsd;
+      crypto = additionalCryptoAmount;
+      break;
+    default:
+      text = "required";
+      usd = 0;
+      crypto = 0;
+  }
+
+  return {
+    color,
+    text,
+    usd,
+    crypto,
   };
 }
