@@ -16,7 +16,7 @@ const KYC_STATUSES = {
 
 const BLOCKEXPLORERS_STAGING = {
   ltc: "https://chain.so/tx/LTCTEST/",
-  zec: "https://chain.so/tx/ZECTEST/",
+  zec: "https://explorer.zcha.in/transactions/",
   btc: "https://chain.so/tx/BTCTEST/",
   dash: "https://chain.so/tx/DASHTEST/",
   bch: "https://explorer.bitcoin.com/tbch/tx/",
@@ -30,12 +30,12 @@ const BLOCKEXPLORERS_STAGING = {
 };
 const BLOCKEXPLORERS_PRODUCTION = {
   btc: "https://blockexplorer.com/tx/",
+  zec: "https://explorer.testnet.z.cash/tx/",
   bch: "https://www.blockchain.com/bch/tx/",
   ltc: "https://chainz.cryptoid.info/ltc/tx.dws?",
   xrp: "https://xrpcharts.ripple.com/#/transactions/",
   xlm: "https://steexp.com/tx/",
   dash: "https://chainz.cryptoid.info/dash/tx.dws?",
-  zec: "https://zcash.blockexplorer.com/tx/",
   btg: "https://btgexplorer.com/tx/",
   eth: "https://etherscan.io/tx/",
   eos: "https://bloks.io/transaction/",
