@@ -95,6 +95,8 @@ function disableBiometrics() {
   const verification = {
     pin: formData.pin,
     twoFactorCode: formData.code,
+    payload: formData.payload,
+    signature: formData.signature,
   };
   return async dispatch => {
     try {

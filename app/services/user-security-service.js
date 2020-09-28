@@ -65,9 +65,9 @@ function enableTwoFactor(code) {
  * @param {string|number} twoFactorCode
  * @return {Promise}
  */
-function disableTwoFactor(twoFactorCode) {
+function disableTwoFactor(verification) {
   return axios.post(`${apiUrl}/users/two_factor/deactivate`, {
-    twoFactorCode,
+    ...verification,
   });
 }
 

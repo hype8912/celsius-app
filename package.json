@@ -96,6 +96,7 @@
     "react-native-gesture-handler": "^1.5.0",
     "react-native-idfa": "^4.1.0",
     "react-native-image-crop-picker": "^0.26.1",
+    "react-native-keychain": "^6.2.0",
     "react-native-markdown-renderer": "^3.2.8",
     "react-native-mixpanel": "lorenc-tomasz/react-native-mixpanel",
     "react-native-modal": "^11.5.6",
@@ -147,6 +148,7 @@
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "react-dom": "^16.11.0",
+    "react-native-rsa-native": "^2.0.1",
     "react-test-renderer": "^16.13.1",
     "remote-redux-devtools": "^0.5.16"
   }
