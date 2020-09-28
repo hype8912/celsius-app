@@ -12365,11 +12365,6 @@ react-native-image-crop-picker@^0.26.1:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.26.2.tgz#c70985ff6740e63569f90b185be0516d83f5933b"
   integrity sha512-KnPtSJklwXr/BNdcyAlDp9xkDCQyJ5ZA4dM10elBc2aIXac/4CndbiPFZrwu4GlAYYYKlkiTTwTYW+h4RyGLaw==
 
-react-native-keychain@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-keychain/-/react-native-keychain-6.2.0.tgz#8f4cff503aad367141db5aea0189ead9240c28ff"
-  integrity sha512-U6fnOQRJPq+c0Abl+FoYy9v0H3kQU587tMamU/o+MoBSUScFLE3DQpkyT1PW4NF5IObgiGuqQdmjC2KgtBpjGA==
-
 react-native-markdown-renderer@^3.2.8:
   version "3.2.8"
   resolved "https://registry.yarnpkg.com/react-native-markdown-renderer/-/react-native-markdown-renderer-3.2.8.tgz#217046cf198eca632a65f93cdf7dd7766f718070"
@@ -12424,11 +12419,6 @@ react-native-reanimated@^1.4.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.7.0.tgz#896db2576552ac59d288a1f6c7f00afc171f240c"
   integrity sha512-FQWSqP605eQVJumuK2HpR+7heF0ZI+qfy4jNguv3Xv8nPFHeIgZaRTXHCEQL2AcuSIj50zy8jGJf5l134QMQWQ==
-
-react-native-rsa-native@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-rsa-native/-/react-native-rsa-native-2.0.1.tgz#72308db00704a0d811f46e97065e432ce03c4e21"
-  integrity sha512-DCshTLC0qg6QDvo1VimTFyW3If2FbV1lLVGMYl+WhM+3D1stccGvrgeIMrlM3Ra4CQNqnjURIUNMOgkhKv++CA==
 
 react-native-safe-area-view@^0.14.8:
   version "0.14.8"

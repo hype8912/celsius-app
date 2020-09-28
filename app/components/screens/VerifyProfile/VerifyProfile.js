@@ -260,6 +260,8 @@ class VerifyProfile extends Component {
     } else {
       await this.handleBiometrics();
     }
+
+    // RSAGenerateKeys()
   };
 
   handleBiometrics = async () => {
