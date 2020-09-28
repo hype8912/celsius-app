@@ -84,12 +84,15 @@ class BiometricAuthentication extends Component {
       actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: async () => {
           try {
-            await createBiometricsKey(publicKey => {
-              actions.activateBiometrics(publicKey, biometrics.biometryType);
-            });
-            actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
+            const publicKey = await createBiometricsKey();
+            await actions.activateBiometrics(
+              publicKey,
+              biometrics.biometryType
+            );
             actions.showMessage("success", enableBiometricsText);
+            actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
           } catch (e) {
+            actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
             mixpanelAnalytics.logError(
               "handleSwitchChangeBiometrics - enable",
               e

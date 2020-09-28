@@ -10,6 +10,7 @@ export {
   createBiometricsKey,
   deleteBiometricsKey,
   biometricNonEnrolled,
+  // simplePrompt
 };
 
 /**
@@ -27,14 +28,15 @@ async function isBiometricsSensorAvailable() {
 /**
  * Onetime Biometric key creation
  */
-async function createBiometricsKey(onSuccess) {
+async function createBiometricsKey() {
   try {
     const key = await checkBiometricsKey();
     if (key.keysExist) await deleteBiometricsKey();
     const res = await ReactNativeBiometrics.createKeys();
-    if (onSuccess) onSuccess(res.publicKey);
+    return res.publicKey;
   } catch (e) {
     mixpanelAnalytics.logError("createBiometricsKey", e);
+    throw e;
   }
 }
 
@@ -106,3 +108,20 @@ function biometricNonEnrolled() {
   }
   return false;
 }
+
+// function simplePrompt() {
+//   ReactNativeBiometrics.simplePrompt({promptMessage: 'Confirm fingerprint'})
+//     .then((resultObject) => {
+//       const { success } = resultObject
+//
+//       if (success) {
+//         console.log('successful biometrics provided')
+//       } else {
+//         console.log('user cancelled biometric prompt')
+//       }
+//     })
+//     .catch(() => {
+//       console.log('biometrics failed')
+//     })
+//
+// }

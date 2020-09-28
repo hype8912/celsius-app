@@ -284,6 +284,7 @@ const BIOMETRIC_TYPES = {
 
 const BIOMETRIC_TEXT = {
   TOUCH_ID: "Touch ID",
+  BIOMETRICS: "Biometrics",
   FINGERPRINT: "Fingerprint",
   FACE_ID: "Face ID",
 };
@@ -296,6 +297,7 @@ const BIOMETRIC_ERRORS = {
     "Error generating signature: Key permanently invalidated",
   NO_IDENTITIES_ARE_ENROLLED:
     'Error Domain=com.apple.LocalAuthentication Code=-7 "No identities are enrolled." UserInfo={NSLocalizedDescription=No identities are enrolled.}',
+  ERROR_GENERATING_PUBLIC_KEYS: "Error generating public private keys",
   KEY_NOT_FOUND: "Key not found: -128",
   NO_HARDWARE: "BIOMETRIC_ERROR_NO_HARDWARE",
   HW_UNAVAILABLE: "BIOMETRIC_ERROR_HW_UNAVAILABLE",

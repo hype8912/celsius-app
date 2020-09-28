@@ -411,10 +411,15 @@ class VerifyProfile extends Component {
           image: require("../../../../assets/images/face-recognition.png"),
           text: BIOMETRIC_TEXT.FACE_ID,
         };
-      } else {
+      } else if (biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID) {
         biometricCopy = {
           image: require("../../../../assets/images/fingerprint.png"),
           text: BIOMETRIC_TEXT.TOUCH_ID,
+        };
+      } else {
+        biometricCopy = {
+          image: require("../../../../assets/images/fingerprint.png"),
+          text: BIOMETRIC_TEXT.BIOMETRICS,
         };
       }
     }
