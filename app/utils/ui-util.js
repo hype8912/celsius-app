@@ -2,8 +2,9 @@ import moment from "moment";
 import { Platform } from "react-native";
 import store from "../redux/store";
 import { hasPassedKYC } from "./user-util/user-util";
-import { getSecureStoreKey } from "./expo-storage";
-import { DONT_SHOW_AGAIN, LOAN_PAYMENT_REASONS } from "../constants/UI";
+import { getSecureStoreKey } from "./storage-util";
+import { STORAGE_KEYS } from "../constants/DATA";
+import { LOAN_PAYMENT_REASONS } from "../constants/UI";
 import { COLOR_KEYS } from "../constants/COLORS";
 
 export {
@@ -30,7 +31,7 @@ function isLoanBannerVisible() {
 
 async function isBiometricsBannerVisible() {
   const dontShow = JSON.parse(
-    await getSecureStoreKey(DONT_SHOW_AGAIN.BIOMETRIC_BANNER)
+    await getSecureStoreKey(STORAGE_KEYS.BIOMETRIC_BANNER)
   );
   return dontShow;
 }

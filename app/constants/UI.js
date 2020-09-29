@@ -132,10 +132,6 @@ const WALLET_LANDING_VIEW_TYPES = {
 
 const FAB_TYPE = ["main", "support", "hide"];
 
-const DONT_SHOW_AGAIN = {
-  BIOMETRIC_BANNER: "BIOMETRIC_BANNER",
-};
-
 const WELCOME_MESSAGES = [
   {
     title: "Rewards Income",
@@ -326,5 +322,4 @@ export {
   BIOMETRIC_TYPES,
   BIOMETRIC_TEXT,
   BIOMETRIC_ERRORS,
-  DONT_SHOW_AGAIN,
 };

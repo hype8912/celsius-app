@@ -8,13 +8,14 @@ import { startApiCall, apiError } from "../api/apiActions";
 import { navigateTo, resetToScreen } from "../nav/navActions";
 import { showMessage } from "../ui/uiActions";
 import { updateFormFields } from "../forms/formsActions";
-import { setSecureStoreKey } from "../../utils/expo-storage";
+import { setSecureStoreKey } from "../../utils/storage-util";
 import branchUtil from "../../utils/branch-util";
 import userAuthService from "../../services/user-auth-service";
 import { getInitialCelsiusData } from "../generalData/generalDataActions";
 import { SCREENS } from "../../constants/SCREENS";
+import { STORAGE_KEYS } from "../../constants/DATA";
 
-const { SECURITY_STORAGE_AUTH_KEY, FACEBOOK_URL } = Constants;
+const { FACEBOOK_URL } = Constants;
 
 export {
   authTwitter,
@@ -387,7 +388,7 @@ function loginGoogle(googleUser) {
  */
 function loginSocialSuccess(network, token) {
   return async dispatch => {
-    await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, token);
+    await setSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY, token);
 
     dispatch({
       type: ACTIONS[`LOGIN_USER_${network.toUpperCase()}_SUCCESS`],
@@ -408,7 +409,7 @@ function loginSocialSuccess(network, token) {
  */
 function registerSocialSuccess(network, token, user) {
   return async dispatch => {
-    await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, token);
+    await setSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY, token);
 
     dispatch({
       type: ACTIONS[`REGISTER_USER_${network.toUpperCase()}_SUCCESS`],

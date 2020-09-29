@@ -8,11 +8,9 @@ import userSecurityService from "../../services/user-security-service";
 import userAuthService from "../../services/user-auth-service";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { logoutUser } from "../userAuth/authActions";
-import { setSecureStoreKey } from "../../utils/expo-storage";
-import Constants from "../../../constants";
+import { setSecureStoreKey } from "../../utils/storage-util";
 import { SCREENS } from "../../constants/SCREENS";
-
-const { SECURITY_STORAGE_AUTH_KEY } = Constants;
+import { STORAGE_KEYS } from "../../constants/DATA";
 
 export {
   getTwoFactorSecret,
@@ -271,7 +269,10 @@ function resetPassword(currentPassword, newPassword) {
         auth0: { id_token: newAuthToken },
       } = data;
 
-      await setSecureStoreKey(SECURITY_STORAGE_AUTH_KEY, newAuthToken);
+      await setSecureStoreKey(
+        STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY,
+        newAuthToken
+      );
 
       dispatch(showMessage("success", "Password successfully changed."));
       if (securityOverview.fromFixNow) {

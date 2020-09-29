@@ -12,7 +12,7 @@ import {
 import {
   deleteSecureStoreKey,
   setSecureStoreKey,
-} from "../../utils/expo-storage";
+} from "../../utils/storage-util";
 import userAuthService from "../../services/user-auth-service";
 import apiUtil from "../../utils/api-util";
 import { setFormErrors } from "../forms/formsActions";
@@ -22,6 +22,7 @@ import { logoutUserMixpanel } from "../../utils/mixpanel-util";
 import userSecurityService from "../../services/user-security-service";
 import { getInitialCelsiusData } from "../generalData/generalDataActions";
 import { SCREENS } from "../../constants/SCREENS";
+import { STORAGE_KEYS } from "../../constants/DATA";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -54,7 +55,7 @@ function loginUser() {
 
       // add token to expo storage
       await setSecureStoreKey(
-        SECURITY_STORAGE_AUTH_KEY,
+        STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY,
         res.data.auth0.id_token
       );
 
@@ -95,7 +96,7 @@ function registerUser() {
 
       // add token to expo storage
       await setSecureStoreKey(
-        SECURITY_STORAGE_AUTH_KEY,
+        STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY,
         res.data.auth0.id_token
       );
 
@@ -148,7 +149,7 @@ function logoutUser() {
       dispatch(resetToScreen(SCREENS.WELCOME));
       await logoutUserMixpanel();
       await userSecurityService.invalidateSession();
-      await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+      await deleteSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY);
       mixpanelAnalytics.sessionEnded("Logout user");
       dispatch({
         type: ACTIONS.LOGOUT_USER,
@@ -178,7 +179,7 @@ function logoutFormDevice(type, reason, msg) {
       else await dispatch(resetToScreen(SCREENS.WELCOME));
 
       await logoutUserMixpanel();
-      await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+      await deleteSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY);
       dispatch({
         type: ACTIONS.LOGOUT_USER,
       });
@@ -231,7 +232,7 @@ function refreshAuthToken() {
       dispatch(startApiCall(API.REFRESH_AUTH_TOKEN));
       const res = await userAuthService.refreshAuthToken();
       await setSecureStoreKey(
-        SECURITY_STORAGE_AUTH_KEY,
+        STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY,
         res.data[SECURITY_STORAGE_AUTH_KEY]
       );
 

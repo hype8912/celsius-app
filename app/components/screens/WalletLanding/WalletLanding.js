@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  TouchableOpacity,
-  BackHandler,
-  AsyncStorage,
-} from "react-native";
+import { View, TouchableOpacity, BackHandler } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withNavigationFocus } from "react-navigation";
@@ -33,10 +28,11 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import { assignPushNotificationToken } from "../../../utils/push-notifications-util";
 import HodlModeModal from "../../modals/HodlModeModal/HodlModeModal";
 import animationsUtil from "../../../utils/animations-util";
-import { COMING_SOON_COINS } from "../../../constants/DATA";
+import { STORAGE_KEYS, COMING_SOON_COINS } from "../../../constants/DATA";
 import IntroduceNewThemeModal from "../../modals/IntroduceNewThemeModal/IntroduceNewThemeModal";
 import { getTheme } from "../../../utils/styles-util";
 import { SCREENS } from "../../../constants/SCREENS";
+import { getSecureStoreKey } from "../../../utils/storage-util";
 
 @connect(
   state => {
@@ -111,8 +107,8 @@ class WalletLanding extends Component {
     actions.getLoanAlerts();
     this.setWalletFetchingInterval();
 
-    const dontShowIntroduceNewTheme = await AsyncStorage.getItem(
-      "DONT_SHOW_INTRODUCE_NEW_THEME"
+    const dontShowIntroduceNewTheme = await getSecureStoreKey(
+      STORAGE_KEYS.DONT_SHOW_INTRODUCE_NEW_THEME
     );
     setTimeout(() => {
       if (
