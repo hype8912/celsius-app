@@ -12,7 +12,6 @@ import { isUSCitizen } from "../../../utils/user-util/user-util";
 import API from "../../../constants/API";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { WALLET_LANDING_VIEW_TYPES } from "../../../constants/UI";
-import { deleteSecureStoreKey } from "../../../utils/expo-storage";
 import PerCoinCelInterestCard from "../../molecules/PerCoinCelInterestCard/PerCoinCelInterestCard";
 
 @connect(
@@ -63,10 +62,9 @@ class WalletSettings extends Component {
     const { actions, appSettings } = this.props;
     const changesInterestEarn = !appSettings.interest_in_cel;
     if (!changesInterestEarn)
-      await deleteSecureStoreKey("HIDE_MODAL_INTEREST_IN_CEL");
-    await actions.setUserAppSettings({
-      interest_in_cel: changesInterestEarn,
-    });
+      await actions.setUserAppSettings({
+        interest_in_cel: changesInterestEarn,
+      });
     this.setState({ interestInCel: changesInterestEarn });
   };
 

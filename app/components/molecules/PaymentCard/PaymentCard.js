@@ -97,6 +97,7 @@ class PaymentCard extends Component {
         COIN_CARD_TYPE.COLLATERAL_COIN_CARD,
         coin
       );
+
       this.setState({
         additionalInfoExplanation: "required.",
         cryptoAmount: collateralPayment.cryptoAmount,
@@ -105,6 +106,7 @@ class PaymentCard extends Component {
         color: collateralPayment.color,
         isAllowed: collateralPayment.isAllowed,
         hasEnough: collateralPayment.hasEnough,
+        additionalUsdAmount: collateralPayment.additionalUsdAmount,
       });
     } else if (type === COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD) {
       const principalPayment = loanPaymentUtil.calculateAdditionalPayment(
@@ -340,6 +342,7 @@ class PaymentCard extends Component {
         <CollateralCoinCard
           actions={actions}
           amountUsd={amountUsd}
+          additionalUsdAmount={additionalUsdAmount}
           additionalCryptoAmount={additionalCryptoAmount}
           additionalInfoExplanation={additionalInfoExplanation}
           cardColor={isAllowed ? null : style.cardStyle}

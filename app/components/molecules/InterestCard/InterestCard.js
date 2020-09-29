@@ -41,8 +41,6 @@ class InterestCard extends Component {
   handleValueChange = async value => {
     const { setUserAppSettings, coin, interestInCoins } = this.props;
     this.setState({ loading: true });
-    // // TODO see if needed
-    // if(!value) await deleteSecureStoreKey('HIDE_MODAL_INTEREST_IN_CEL')
 
     await setUserAppSettings({
       interest_in_cel: true,

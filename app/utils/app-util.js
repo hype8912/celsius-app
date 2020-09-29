@@ -12,7 +12,7 @@ import {
   deleteSecureStoreKey,
   getSecureStoreKey,
   setSecureStoreKey,
-} from "./expo-storage";
+} from "./storage-util";
 import baseUrl from "../services/api-url";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
@@ -20,12 +20,9 @@ import { initMixpanel } from "./mixpanel-util";
 import { initUxCam } from "./uxcam-util";
 import { isUserLoggedIn } from "./user-util/user-util";
 import mixpanelAnalytics from "./mixpanel-analytics";
+import { STORAGE_KEYS } from "../constants/DATA";
 
-const {
-  SECURITY_STORAGE_AUTH_KEY,
-  TWITTER_CUSTOMER_KEY,
-  TWITTER_SECRET_KEY,
-} = Constants;
+const { TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY } = Constants;
 
 export default {
   initializeThirdPartyServices,
@@ -57,10 +54,10 @@ async function initializeThirdPartyServices() {
  * Logs the user out on environment change, helps developers when switching from development to production
  */
 async function logoutOnEnvChange() {
-  const previousBaseUrl = await getSecureStoreKey("BASE_URL");
+  const previousBaseUrl = await getSecureStoreKey(STORAGE_KEYS.BASE_URL);
   if (previousBaseUrl !== baseUrl) {
-    await deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
-    await setSecureStoreKey("BASE_URL", baseUrl);
+    await deleteSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY);
+    await setSecureStoreKey(STORAGE_KEYS.BASE_URL, baseUrl);
   }
 }
 
@@ -136,13 +133,14 @@ async function pollBackendStatus() {
  * Check every 15min, or every 30 poll iterations
  *
  * @param {string} token - auth token from storage
+ * @param {number} expiresInHours - number of hours
  */
 async function checkAndRefreshAuthToken(token, expiresInHours) {
   if (iteration % 30 !== 0) return;
 
   const EXPIRES_IN_HOURS = expiresInHours || 6;
   const storageToken =
-    token || (await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY));
+    token || (await getSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY));
   if (!storageToken) return;
 
   const decodedToken = jwtDecode(storageToken);

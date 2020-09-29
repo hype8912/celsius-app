@@ -1,13 +1,11 @@
-import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
 import { showMessage } from "../ui/uiActions";
 import userProfileService from "../../services/user-profile-service";
-import { deleteSecureStoreKey } from "../../utils/expo-storage";
+import { deleteSecureStoreKey } from "../../utils/storage-util";
 import { SCREENS } from "../../constants/SCREENS";
-
-const { SECURITY_STORAGE_AUTH_KEY } = Constants;
+import { STORAGE_KEYS } from "../../constants/DATA";
 
 export {
   getProfileInfo,
@@ -29,7 +27,7 @@ function getProfileInfo() {
       dispatch(getUserPersonalInfoSuccess(personalInfo));
     } catch (err) {
       if (err.status === 422) {
-        deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+        deleteSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY);
       }
       if (
         err.msg !==

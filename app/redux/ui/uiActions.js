@@ -1,7 +1,8 @@
 import DeviceInfo from "react-native-device-info";
-import { AsyncStorage } from "react-native";
 import ACTIONS from "../../constants/ACTIONS";
-import loggerUtil from "../../utils/logger-util";
+import { STORAGE_KEYS } from "../../constants/DATA";
+import mixpanelAnalytics from "../../utils/mixpanel-analytics";
+import { getSecureStoreKey, setSecureStoreKey } from "../../utils/storage-util";
 
 export {
   openFabMenu,
@@ -207,7 +208,7 @@ function setBannerProps(newBannerProps = null) {
 
       if (!newBannerProps) {
         bannerProps =
-          JSON.parse(await AsyncStorage.getItem("bannerProps")) || {};
+          JSON.parse(await getSecureStoreKey(STORAGE_KEYS.BANNER_PROPS)) || {};
       } else {
         bannerProps = {
           ...bannerProps,
@@ -219,9 +220,12 @@ function setBannerProps(newBannerProps = null) {
         ? Number(bannerProps.sessionCount)
         : 0;
 
-      await AsyncStorage.setItem("bannerProps", JSON.stringify(bannerProps));
+      await setSecureStoreKey(
+        STORAGE_KEYS.BANNER_PROPS,
+        JSON.stringify(bannerProps)
+      );
     } catch (err) {
-      loggerUtil.log(err);
+      mixpanelAnalytics.logError("setBannerProps", err);
     }
 
     dispatch({

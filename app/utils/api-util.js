@@ -8,19 +8,14 @@ import CodePush from "react-native-code-push";
 import moment from "moment";
 
 import Constants from "../../constants";
-import { getSecureStoreKey } from "../utils/expo-storage";
+import { getSecureStoreKey } from "./storage-util";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import mixpanelAnalytics from "./mixpanel-analytics";
 import { SCREENS } from "../constants/SCREENS";
+import { STORAGE_KEYS } from "../constants/DATA";
 
-const {
-  SECURITY_STORAGE_AUTH_KEY,
-  CLIENT_VERSION,
-  ENV,
-  PUBLIC_KEY,
-  API_URL,
-} = Constants;
+const { CLIENT_VERSION, ENV, PUBLIC_KEY, API_URL } = Constants;
 let token;
 let deviceModel;
 let osVersion;
@@ -197,7 +192,9 @@ async function setAppVersionHeaders() {
  */
 async function setAuthHeaders() {
   try {
-    const storageToken = await getSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+    const storageToken = await getSecureStoreKey(
+      STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY
+    );
     if (token !== storageToken) token = storageToken;
   } catch (err) {
     mixpanelAnalytics.logError("setAuthHeaders", err);
@@ -463,7 +460,7 @@ function parseValidationErrors(serverError) {
  * Checks if some endpoints were successful in history
  *
  * @param {Array} callNames - array of calls from API
- * @params {Number} numberOfCallsInHistory - number of calls to look into history
+ * @param {Number} numberOfCallsInHistory - number of calls to look into history
  * @return {Boolean}
  */
 function wereSuccessfulInHistory(callNames, numberOfCallsInHistory = 5) {

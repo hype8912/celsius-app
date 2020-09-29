@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import PropTypes from 'prop-types';
-import { AsyncStorage, Image, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Modal from "react-native-modal";
@@ -17,6 +17,8 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import Spinner from "../../atoms/Spinner/Spinner";
+import { STORAGE_KEYS } from "../../../constants/DATA";
+import { setSecureStoreKey } from "../../../utils/storage-util";
 
 @connect(
   state => ({
@@ -127,7 +129,10 @@ class IntroduceNewThemeModal extends Component {
 
   onPress = async shouldSetTheme => {
     const { actions } = this.props;
-    await AsyncStorage.setItem("DONT_SHOW_INTRODUCE_NEW_THEME", "DONT_SHOW");
+    await setSecureStoreKey(
+      STORAGE_KEYS.DONT_SHOW_INTRODUCE_NEW_THEME,
+      "DONT_SHOW"
+    );
 
     if (shouldSetTheme) {
       await actions.setUserAppSettings({ theme: THEMES.UNICORN });

@@ -1,14 +1,12 @@
-import Constants from "../../../constants";
 import ACTIONS from "../../constants/ACTIONS";
 import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
-import { deleteSecureStoreKey } from "../../utils/expo-storage";
+import { deleteSecureStoreKey } from "../../utils/storage-util";
 import { showMessage } from "../ui/uiActions";
 import complianceService from "../../services/compliance-service";
 import { navigateTo } from "../nav/navActions";
 import { SCREENS } from "../../constants/SCREENS";
-
-const { SECURITY_STORAGE_AUTH_KEY } = Constants;
+import { STORAGE_KEYS } from "../../constants/DATA";
 
 export { getComplianceInfo };
 
@@ -28,7 +26,7 @@ function getComplianceInfo() {
         dispatch(navigateTo(SCREENS.MAINTENANCE));
     } catch (err) {
       if (err.status === 422) {
-        deleteSecureStoreKey(SECURITY_STORAGE_AUTH_KEY);
+        deleteSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY);
       }
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.GET_COMPLIANCE_INFO, err));

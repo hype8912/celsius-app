@@ -5,8 +5,8 @@ import PushNotification from "react-native-push-notification";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import constants from "../../constants";
 import notificationService from "../services/notifications-service";
-import { getSecureStoreKey, setSecureStoreKey } from "./expo-storage";
-import { NOTIFICATION_TOKEN } from "../constants/DATA";
+import { getSecureStoreKey, setSecureStoreKey } from "./storage-util";
+import { STORAGE_KEYS } from "../constants/DATA";
 import API from "../constants/API";
 import ACTIONS from "../constants/ACTIONS";
 import store from "../redux/store";
@@ -25,7 +25,7 @@ async function getNotificationToken() {
   let token;
   if (Platform.OS === "android") {
     token = await messaging().getToken();
-    setSecureStoreKey(NOTIFICATION_TOKEN, token);
+    setSecureStoreKey(STORAGE_KEYS.NOTIFICATION_TOKEN, token);
   } else {
     await getIOSPushNotificationToken();
   }
@@ -39,7 +39,7 @@ async function getIOSPushNotificationToken() {
 
   if (perm && perm.alert === 1) {
     PushNotificationIOS.addEventListener("register", token => {
-      setSecureStoreKey(NOTIFICATION_TOKEN, token);
+      setSecureStoreKey(STORAGE_KEYS.NOTIFICATION_TOKEN, token);
     });
   }
 }
@@ -101,7 +101,7 @@ async function assignPushNotificationToken() {
   store.dispatch(startApiCall(API.SET_PUSH_NOTIFICATIONS_TOKEN));
 
   try {
-    const token = await getSecureStoreKey(NOTIFICATION_TOKEN);
+    const token = await getSecureStoreKey(STORAGE_KEYS.NOTIFICATION_TOKEN);
     if (token) await notificationService.setNotificationToken(token);
 
     store.dispatch({
