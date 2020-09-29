@@ -25,6 +25,8 @@ function celPayFriend() {
         code,
         pin,
         message,
+        signature,
+        payload,
       } = getState().forms.formData;
 
       const transfer = {
@@ -34,7 +36,7 @@ function celPayFriend() {
         message,
       };
 
-      const verification = { twoFactorCode: code, pin };
+      const verification = { twoFactorCode: code, pin, signature, payload };
 
       dispatch(startApiCall(API.CREATE_TRANSFER));
       const transferRes = await transfersService.create(transfer, verification);
@@ -77,14 +79,21 @@ function celPayFriend() {
 function celPayShareLink() {
   return async (dispatch, getState) => {
     try {
-      const { amountCrypto, coin, code, pin } = getState().forms.formData;
+      const {
+        amountCrypto,
+        coin,
+        code,
+        pin,
+        signature,
+        payload,
+      } = getState().forms.formData;
 
       const transfer = {
         amount: amountCrypto,
         coin: coin.toUpperCase(),
       };
 
-      const verification = { twoFactorCode: code, pin };
+      const verification = { twoFactorCode: code, pin, signature, payload };
 
       dispatch(startApiCall(API.CREATE_TRANSFER));
       const transferRes = await transfersService.create(transfer, verification);

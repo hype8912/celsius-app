@@ -64,6 +64,8 @@ function cancel(transferHash) {
  * @param {Object} verification
  * @param {string} verification.pin - eg '1234'
  * @param {string} verification.twoFactorCode - eg '123456'
+ * @param {string} verification.payload - biometric payload string
+ * @param {string} verification.signature - biometric signature string
  *
  * @returns {Promise}
  *

@@ -10,6 +10,7 @@ export {
   createBiometricsKey,
   deleteBiometricsKey,
   biometricNonEnrolled,
+  // simplePrompt
 };
 
 /**
@@ -27,14 +28,15 @@ async function isBiometricsSensorAvailable() {
 /**
  * Onetime Biometric key creation
  */
-async function createBiometricsKey(onSuccess) {
+async function createBiometricsKey() {
   try {
     const key = await checkBiometricsKey();
     if (key.keysExist) await deleteBiometricsKey();
     const res = await ReactNativeBiometrics.createKeys();
-    if (onSuccess) onSuccess(res.publicKey);
+    return res.publicKey;
   } catch (e) {
     mixpanelAnalytics.logError("createBiometricsKey", e);
+    throw e;
   }
 }
 
@@ -65,7 +67,7 @@ async function deleteBiometricsKey(onSuccess) {
 /**
  * Create biometrics signature needed to verify user
  */
-async function createBiometricsSignature(msgForUser, onSuccess, onError) {
+async function createBiometricsSignature(msgForUser) {
   const deviceId = store.getState().app.deviceId;
   const epochTimeSeconds = Math.round(new Date().getTime() / 1000).toString();
   const payload = `${epochTimeSeconds}${deviceId}`;
@@ -82,11 +84,12 @@ async function createBiometricsSignature(msgForUser, onSuccess, onError) {
           payload,
         })
       );
-      if (onSuccess) onSuccess();
+      return true;
     }
+    return false;
   } catch (e) {
     mixpanelAnalytics.logError("createBiometricsSignature", e);
-    if (onError) onError(e);
+    throw e;
   }
 }
 
@@ -106,3 +109,20 @@ function biometricNonEnrolled() {
   }
   return false;
 }
+
+// function simplePrompt() {
+//   ReactNativeBiometrics.simplePrompt({promptMessage: 'Confirm fingerprint'})
+//     .then((resultObject) => {
+//       const { success } = resultObject
+//
+//       if (success) {
+//         console.log('successful biometrics provided')
+//       } else {
+//         console.log('user cancelled biometric prompt')
+//       }
+//     })
+//     .catch(() => {
+//       console.log('biometrics failed')
+//     })
+//
+// }

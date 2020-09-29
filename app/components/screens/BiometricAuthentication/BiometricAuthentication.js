@@ -10,7 +10,12 @@ import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import CelText from "../../atoms/CelText/CelText";
-import { BIOMETRIC_TEXT, BIOMETRIC_TYPES } from "../../../constants/UI";
+import {
+  BIOMETRIC_ERRORS,
+  BIOMETRIC_TEXT,
+  BIOMETRIC_TYPES,
+  MODALS,
+} from "../../../constants/UI";
 import {
   biometricNonEnrolled,
   createBiometricsKey,
@@ -20,6 +25,7 @@ import { SCREENS } from "../../../constants/SCREENS";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 import Icon from "../../atoms/Icon/Icon";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import BiometricsActivateFingerprintModal from "../../modals/BiometricsActivateFingerprintModal/BiometricsActivateFingerprintModal";
 
 @connect(
   state => ({
@@ -84,12 +90,21 @@ class BiometricAuthentication extends Component {
       actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: async () => {
           try {
-            await createBiometricsKey(publicKey => {
-              actions.activateBiometrics(publicKey, biometrics.biometryType);
-            });
-            actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
+            const publicKey = await createBiometricsKey();
+            await actions.activateBiometrics(
+              publicKey,
+              biometrics.biometryType
+            );
             actions.showMessage("success", enableBiometricsText);
+            actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
           } catch (e) {
+            actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
+            if (
+              e &&
+              e.message === BIOMETRIC_ERRORS.ERROR_GENERATING_PUBLIC_KEYS
+            ) {
+              actions.openModal(MODALS.BIOMETRICS_ACTIVATE_FINGERPRINT_MODAL);
+            }
             mixpanelAnalytics.logError(
               "handleSwitchChangeBiometrics - enable",
               e
@@ -120,7 +135,7 @@ class BiometricAuthentication extends Component {
   };
 
   render() {
-    const { biometrics, user } = this.props;
+    const { biometrics, user, actions } = this.props;
     const noBiometricsEnrolled = biometricNonEnrolled();
 
     const Switcher = this.rightSwitch;
@@ -179,6 +194,7 @@ class BiometricAuthentication extends Component {
             </CelText>
           }
         </CelText>
+        <BiometricsActivateFingerprintModal actions={actions} />
       </RegularLayout>
     );
   }

@@ -260,6 +260,7 @@ class VerifyProfile extends Component {
     } else {
       await this.handleBiometrics();
     }
+    // RSAGenerateKeys()
   };
 
   handleBiometrics = async () => {
@@ -270,32 +271,34 @@ class VerifyProfile extends Component {
     const hideBiometrics = navigation.getParam("hideBiometrics");
 
     if (biometricsEnabled && !hideBiometrics) {
-      await createBiometricsSignature(
-        "Verification required",
-        () => {
+      actions.toggleKeypad(false);
+      try {
+        const successfulBiometrics = await createBiometricsSignature(
+          "Verification required"
+        );
+        if (successfulBiometrics) {
           this.setState({
             loading: true,
             disableBiometricsForUser: false,
             value: "******",
           });
           actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
-        },
-        error => {
-          if (
-            [
-              BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS,
-              BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED,
-            ].includes(error.message)
-          ) {
-            actions.showMessage("error", error.message);
-          } else if ([BIOMETRIC_ERRORS.KEY_NOT_FOUND].includes(error.message)) {
-            return;
-          } else {
-            actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
-            this.setState({ disableBiometricsForUser: true });
-          }
         }
-      );
+      } catch (error) {
+        if (
+          [
+            BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS,
+            BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED,
+          ].includes(error.message)
+        ) {
+          actions.showMessage("error", error.message);
+        } else if ([BIOMETRIC_ERRORS.KEY_NOT_FOUND].includes(error.message)) {
+          return;
+        } else {
+          actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
+          this.setState({ disableBiometricsForUser: true });
+        }
+      }
     }
   };
 
@@ -411,10 +414,15 @@ class VerifyProfile extends Component {
           image: require("../../../../assets/images/face-recognition.png"),
           text: BIOMETRIC_TEXT.FACE_ID,
         };
-      } else {
+      } else if (biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID) {
         biometricCopy = {
           image: require("../../../../assets/images/fingerprint.png"),
           text: BIOMETRIC_TEXT.TOUCH_ID,
+        };
+      } else {
+        biometricCopy = {
+          image: require("../../../../assets/images/fingerprint.png"),
+          text: BIOMETRIC_TEXT.BIOMETRICS,
         };
       }
     }

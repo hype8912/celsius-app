@@ -59,6 +59,8 @@ function applyForALoan() {
       const verification = {
         pin: formData.pin,
         twoFactorCode: formData.code,
+        payload: formData.payload,
+        signature: formData.signature,
       };
 
       const res = await loansService.apply(loanApplication, verification);

@@ -120,6 +120,8 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
       const verification = {
         pin: formData.pin,
         twoFactorCode: formData.code,
+        payload: formData.payload,
+        signature: formData.signature,
       };
 
       dispatch(startApiCall(API.SET_COIN_WITHDRAWAL_ADDRESS));

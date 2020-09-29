@@ -24,6 +24,8 @@ function getHodlCode() {
       const verification = {
         pin: formData.pin,
         twoFactorCode: formData.code,
+        payload: formData.payload,
+        signature: formData.signature,
       };
       const result = await hodlService.getHodlCode(verification);
 
@@ -54,6 +56,8 @@ function activateHodlMode() {
       const verification = {
         pin: formData.pin,
         twoFactorCode: formData.code,
+        payload: formData.payload,
+        signature: formData.signature,
       };
       const response = await hodlService.activateHodlMode(verification);
       dispatch({ type: ACTIONS.ACTIVATE_HODL_MODE_SUCCESS });
@@ -83,6 +87,8 @@ function deactivateHodlMode() {
       const verification = {
         pin: formData.pin,
         twoFactorCode: formData.code,
+        payload: formData.payload,
+        signature: formData.signature,
         code: formData.hodlCode,
       };
 

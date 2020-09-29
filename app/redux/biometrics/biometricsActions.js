@@ -1,6 +1,5 @@
 import ACTIONS from "../../constants/ACTIONS";
 import { isBiometricsSensorAvailable } from "../../utils/biometrics-util";
-import { BIOMETRIC_TYPES } from "../../constants/UI";
 import biometricsService from "../../services/biometrics-service";
 import { apiError, startApiCall } from "../api/apiActions";
 import API from "../../constants/API";
@@ -22,18 +21,11 @@ function getBiometricType() {
   return async dispatch => {
     const biometrics = await isBiometricsSensorAvailable();
     if (biometrics.available) {
-      const biometricType = [
-        BIOMETRIC_TYPES.BIOMETRICS,
-        BIOMETRIC_TYPES.TOUCH_ID,
-      ].includes(biometrics.biometryType)
-        ? BIOMETRIC_TYPES.TOUCH_ID
-        : BIOMETRIC_TYPES.FACE_ID;
-
       dispatch({
         type: ACTIONS.IS_BIOMETRIC_AVAILABLE,
         biometrics: {
           ...biometrics,
-          biometryType: biometricType,
+          biometryType: biometrics.biometryType,
         },
       });
     } else {
@@ -103,6 +95,8 @@ function disableBiometrics() {
   const verification = {
     pin: formData.pin,
     twoFactorCode: formData.code,
+    payload: formData.payload,
+    signature: formData.signature,
   };
   return async dispatch => {
     try {

@@ -86,8 +86,6 @@ function createSimplexPayment() {
       const { formData } = getState().forms;
       const { simplexData } = getState().buyCoins;
 
-      const { pin, code } = formData;
-
       dispatch(startApiCall(API.CREATE_SIMPLEX_PAYMENT));
 
       const payment = {
@@ -99,12 +97,16 @@ function createSimplexPayment() {
         fiat_base_amount: simplexData.fiat_money.base_amount,
       };
 
+      const verification = {
+        pin: formData.pin,
+        twoFactorCode: formData.code,
+        payload: formData.payload,
+        signature: formData.signature,
+      };
+
       const paymentRequest = await buyCoinsService.createSimplexPayment(
         payment,
-        {
-          pin,
-          twoFactorCode: code,
-        }
+        verification
       );
 
       dispatch({

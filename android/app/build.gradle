@@ -131,8 +131,8 @@ android {
         applicationId "network.celsius.wallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 65
-        versionName "4.5.0"
+        versionCode 67
+        versionName "4.6.0"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
     }
@@ -161,12 +161,12 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-ux-cam')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 //     implementation 'com.google.firebase:firebase-analytics:17.2.2' //<-- app crashes
     implementation 'com.google.firebase:firebase-messaging:20.2.0'
     implementation 'com.mixpanel.android:mixpanel-android:5.5.0'
+    implementation project(':react-native-ux-cam')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
