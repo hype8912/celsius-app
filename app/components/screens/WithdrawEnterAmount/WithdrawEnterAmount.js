@@ -119,6 +119,7 @@ class WithdrawEnterAmount extends Component {
       amount = formData.isUsd
         ? walletSummaryObj.amount_usd.toString()
         : walletSummaryObj.amount.toString();
+      actions.updateFormField("withdrawAll", true);
     } else {
       amount = formData.isUsd ? value : (Number(value) / coinRate).toString();
     }
@@ -252,7 +253,6 @@ class WithdrawEnterAmount extends Component {
   navigateToNextStep = modal => {
     const { withdrawalAddresses, formData, actions } = this.props;
     const coinAddress = withdrawalAddresses[formData.coin.toUpperCase()];
-
     if (coinAddress) {
       actions.navigateTo(SCREENS.WITHDRAW_CONFIRM_ADDRESS);
     } else {
