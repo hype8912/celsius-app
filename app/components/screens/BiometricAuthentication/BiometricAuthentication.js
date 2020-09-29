@@ -99,8 +99,10 @@ class BiometricAuthentication extends Component {
             actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
           } catch (e) {
             actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
-            if (e === BIOMETRIC_ERRORS.ERROR_GENERATING_PUBLIC_KEYS) {
-              // TODO check this. Error.msg or Error.error
+            if (
+              e &&
+              e.message === BIOMETRIC_ERRORS.ERROR_GENERATING_PUBLIC_KEYS
+            ) {
               actions.openModal(MODALS.BIOMETRICS_ACTIVATE_FINGERPRINT_MODAL);
             }
             mixpanelAnalytics.logError(

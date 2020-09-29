@@ -67,7 +67,7 @@ async function deleteBiometricsKey(onSuccess) {
 /**
  * Create biometrics signature needed to verify user
  */
-async function createBiometricsSignature(msgForUser, onSuccess, onError) {
+async function createBiometricsSignature(msgForUser) {
   const deviceId = store.getState().app.deviceId;
   const epochTimeSeconds = Math.round(new Date().getTime() / 1000).toString();
   const payload = `${epochTimeSeconds}${deviceId}`;
@@ -84,11 +84,12 @@ async function createBiometricsSignature(msgForUser, onSuccess, onError) {
           payload,
         })
       );
-      if (onSuccess) onSuccess();
+      return true;
     }
+    return false;
   } catch (e) {
     mixpanelAnalytics.logError("createBiometricsSignature", e);
-    if (onError) onError(e);
+    throw e;
   }
 }
 

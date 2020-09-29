@@ -260,7 +260,6 @@ class VerifyProfile extends Component {
     } else {
       await this.handleBiometrics();
     }
-
     // RSAGenerateKeys()
   };
 
@@ -272,32 +271,34 @@ class VerifyProfile extends Component {
     const hideBiometrics = navigation.getParam("hideBiometrics");
 
     if (biometricsEnabled && !hideBiometrics) {
-      await createBiometricsSignature(
-        "Verification required",
-        () => {
+      actions.toggleKeypad(false);
+      try {
+        const successfulBiometrics = await createBiometricsSignature(
+          "Verification required"
+        );
+        if (successfulBiometrics) {
           this.setState({
             loading: true,
             disableBiometricsForUser: false,
             value: "******",
           });
           actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
-        },
-        error => {
-          if (
-            [
-              BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS,
-              BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED,
-            ].includes(error.message)
-          ) {
-            actions.showMessage("error", error.message);
-          } else if ([BIOMETRIC_ERRORS.KEY_NOT_FOUND].includes(error.message)) {
-            return;
-          } else {
-            actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
-            this.setState({ disableBiometricsForUser: true });
-          }
         }
-      );
+      } catch (error) {
+        if (
+          [
+            BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS,
+            BIOMETRIC_ERRORS.TOO_MANY_ATTEMPTS_SENSOR_DISABLED,
+          ].includes(error.message)
+        ) {
+          actions.showMessage("error", error.message);
+        } else if ([BIOMETRIC_ERRORS.KEY_NOT_FOUND].includes(error.message)) {
+          return;
+        } else {
+          actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
+          this.setState({ disableBiometricsForUser: true });
+        }
+      }
     }
   };
 
