@@ -216,6 +216,7 @@ class SecuritySettings extends Component {
             onPress={() =>
               actions.navigateTo(SCREENS.VERIFY_PROFILE, {
                 onSuccess: () => actions.navigateTo(SCREENS.CHANGE_PIN),
+                hideBiometrics: true,
               })
             }
           >
