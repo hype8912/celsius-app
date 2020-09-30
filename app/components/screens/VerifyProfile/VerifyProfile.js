@@ -17,8 +17,6 @@ import CelText from "../../atoms/CelText/CelText";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import {
-  BIOMETRIC_TYPES,
-  BIOMETRIC_TEXT,
   BIOMETRIC_ERRORS,
   KEYPAD_PURPOSES,
   MODALS,
@@ -30,7 +28,10 @@ import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
 import { DEEP_LINKS } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { STORYBOOK } from "../../../../dev-settings.json";
-import { createBiometricsSignature } from "../../../utils/biometrics-util";
+import {
+  createBiometricsSignature,
+  getBiometricTypeInformations,
+} from "../../../utils/biometrics-util";
 import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
 import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
 import { SCREENS } from "../../../constants/SCREENS";
@@ -403,29 +404,11 @@ class VerifyProfile extends Component {
     const { biometrics, navigation, deviceId } = this.props;
     const style = VerifyProfileStyle();
     const hideBiometrics = navigation.getParam("hideBiometrics");
-    let biometricCopy;
 
     if (hideBiometrics || !deviceId) return;
     if (!biometrics || !biometrics.available) return;
 
-    if (biometrics && biometrics.available) {
-      if (biometrics.biometryType === BIOMETRIC_TYPES.FACE_ID) {
-        biometricCopy = {
-          image: require("../../../../assets/images/face-recognition.png"),
-          text: BIOMETRIC_TEXT.FACE_ID,
-        };
-      } else if (biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID) {
-        biometricCopy = {
-          image: require("../../../../assets/images/fingerprint.png"),
-          text: BIOMETRIC_TEXT.TOUCH_ID,
-        };
-      } else {
-        biometricCopy = {
-          image: require("../../../../assets/images/fingerprint.png"),
-          text: BIOMETRIC_TEXT.BIOMETRICS,
-        };
-      }
-    }
+    const biometricCopy = getBiometricTypeInformations();
 
     return (
       <TouchableOpacity

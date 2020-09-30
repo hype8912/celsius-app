@@ -10,16 +10,12 @@ import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import CelText from "../../atoms/CelText/CelText";
-import {
-  BIOMETRIC_ERRORS,
-  BIOMETRIC_TEXT,
-  BIOMETRIC_TYPES,
-  MODALS,
-} from "../../../constants/UI";
+import { BIOMETRIC_ERRORS, MODALS } from "../../../constants/UI";
 import {
   biometricNonEnrolled,
   createBiometricsKey,
   deleteBiometricsKey,
+  getBiometricTypeInformations,
 } from "../../../utils/biometrics-util";
 import { SCREENS } from "../../../constants/SCREENS";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
@@ -52,24 +48,6 @@ class BiometricAuthentication extends Component {
     actions.getProfileInfo();
   }
 
-  getBiometricsTextAndIcon = () => {
-    const { biometrics } = this.props;
-    const biometricsType = {
-      text: "Biometric authentication",
-      icon: "Fingerprint",
-    };
-
-    if (biometrics && biometrics.biometryType === BIOMETRIC_TYPES.FACE_ID) {
-      biometricsType.icon = "FaceRecognition";
-      biometricsType.text = BIOMETRIC_TEXT.FACE_ID;
-    }
-    if (biometrics && biometrics.biometryType === BIOMETRIC_TYPES.TOUCH_ID) {
-      biometricsType.icon = "Fingerprint";
-      biometricsType.text = BIOMETRIC_TEXT.TOUCH_ID;
-    }
-    return biometricsType;
-  };
-
   rightSwitch = () => {
     const { user } = this.props;
     return (
@@ -82,7 +60,7 @@ class BiometricAuthentication extends Component {
 
   handleSwitchChangeBiometrics = () => {
     const { actions, biometrics, user } = this.props;
-    const biometricsType = this.getBiometricsTextAndIcon();
+    const biometricsType = getBiometricTypeInformations();
     const enableBiometricsText = `${biometricsType.text} enabled on this device.`;
     const disableBiometricsText = `${biometricsType.text} disabled on this device.`;
 
@@ -139,7 +117,8 @@ class BiometricAuthentication extends Component {
     const noBiometricsEnrolled = biometricNonEnrolled();
 
     const Switcher = this.rightSwitch;
-    const biometricsType = this.getBiometricsTextAndIcon();
+    const biometricsType = getBiometricTypeInformations();
+
     const enableOrDisable = user.biometrics_enabled ? "Disable" : "Enable";
     return (
       <RegularLayout>
