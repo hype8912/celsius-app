@@ -55,11 +55,13 @@ function cancelWithdrawalService(withdrawalId) {
  * @param {Object} verification
  * @param {string} verification.pin - eg '1234'
  * @param {string} verification.twoFactorCode - eg '123456'
+ * @param {boolean} withdrawAll
  * @return {Promise}
  */
-function withdrawCrypto(coin, amount, verification) {
+function withdrawCrypto(coin, amount, withdrawAll, verification) {
   return axios.post(`${apiUrl}/wallet/${coin.toLowerCase()}/withdraw`, {
     amount,
+    withdraw_all: withdrawAll,
     ...verification,
   });
 }
