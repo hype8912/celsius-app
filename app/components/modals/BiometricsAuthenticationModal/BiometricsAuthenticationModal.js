@@ -14,10 +14,10 @@ class BiometricsAuthenticationModal extends React.Component {
     return (
       <InfoModal
         name={MODALS.BIOMETRICS_AUTHENTICATION_MODAL}
-        heading={"Biometrics Authentication"}
+        heading={"Biometric Authentication"}
         paragraphs={[
           "We have detected that you haven't used biometric on this device so far.",
-          "If you want to set your Biometrics on this device please go to Biometrics authentication settings screen under Security settings",
+          "If you want to set your Biometric on this device please go to Biometric authentication settings screen under Security settings",
         ]}
         yesCopy={"I understand"}
         onYes={this.goNext}

@@ -31,7 +31,7 @@ class BiometricsNotRecognizedModal extends React.Component {
         heading={"Not recognized"}
         paragraphs={[
           "We have detected a change in your biometric authentication.",
-          `If you want to reset your ${biometricsMethod} settings, please go to your Biometrics authentication settings screen under Security settings`,
+          `If you want to reset your ${biometricsMethod} settings, please go to your Biometric authentication settings screen under Security settings`,
         ]}
         yesCopy={"I understand"}
         onYes={this.goNext}
