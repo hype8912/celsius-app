@@ -26,6 +26,7 @@ class BiometricsTrigger extends Component {
       <Banner
         backgroundColor={getColor(COLOR_KEYS.LINK)}
         image={require("../../../../assets/images/biometrics.png")}
+        imageStyle={{ width: 55, height: 55, marginLeft: 5 }}
         buttonText={"Enable biometrics"}
         action={() => {
           actions.navigateTo("BiometricAuthentication");
