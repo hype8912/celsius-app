@@ -76,15 +76,6 @@ class LoanOverviewCard extends Component {
     actions.openModal(MODALS.INTEREST_DUE_MODAL);
   };
 
-  payPrincipal = async () => {
-    const { actions, loan } = this.props;
-    this.setState({ isLoading: true });
-    await actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-      onSuccess: () => actions.payPrincipal(loan.id),
-    });
-    this.setState({ isLoading: false });
-  };
-
   depositCoin = () => {
     const { actions, loan } = this.props;
     actions.navigateTo(SCREENS.DEPOSIT, {
@@ -346,21 +337,6 @@ class LoanOverviewCard extends Component {
               </CelButton>
             )}
           </View>
-
-          {loan.can_pay_principal && (
-            <View>
-              <Separator margin={"0 0 0 0"} />
-              <CelButton
-                onPress={this.payPrincipal}
-                margin={"15 0 15 0"}
-                color="green"
-                loading={isLoading}
-                disabled={isLoading}
-              >
-                Payout Principal
-              </CelButton>
-            </View>
-          )}
           {loan.can_pay_interest && (
             <View>
               <Separator margin={"0 0 0 0"} />
