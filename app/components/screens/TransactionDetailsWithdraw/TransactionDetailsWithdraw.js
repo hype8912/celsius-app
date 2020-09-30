@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
+import BigNumber from "bignumber.js";
+
 import TransactionWithdrawDetailsStyle from "./TransactionDetailsWithdraw.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import TxInfoSection from "../../atoms/TxInfoSection/TxInfoSection";
@@ -25,6 +27,7 @@ class TransactionDetailsWithdraw extends Component {
     callsInProgress: PropTypes.instanceOf(Array),
     navigateTo: PropTypes.func,
     cancelWithdrawal: PropTypes.func,
+    withdrawalSettings: PropTypes.instanceOf(Object),
   };
   static defaultProps = {};
 
@@ -35,6 +38,7 @@ class TransactionDetailsWithdraw extends Component {
       navigateTo,
       cancelWithdrawal,
       callsInProgress,
+      withdrawalSettings,
     } = this.props;
     const transactionProps = transaction.uiProps;
     const style = TransactionWithdrawDetailsStyle();
@@ -58,20 +62,41 @@ class TransactionDetailsWithdraw extends Component {
             transactionProps={transactionProps}
           />
 
-          {transaction.type === TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW && (
-            <InfoBox
-              backgroundColor={getColor(COLOR_KEYS.LINK)}
-              padding={"20 30 20 10"}
-            >
-              <View style={style.direction}>
-                <Icon name={"Info"} height="25" width="25" fill="#FFFFFF" />
-                <CelText color="#FFFFFF" margin={"0 10 0 10"}>
-                  Due to the larger amount of funds being sent, this transaction
-                  may take a little bit longer.
-                </CelText>
-              </View>
-            </InfoBox>
-          )}
+          {transaction.type === TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW &&
+            new BigNumber(transaction.amount_usd)
+              .abs()
+              .isLessThan(withdrawalSettings.maximum_withdrawal_amount) && (
+              <InfoBox
+                backgroundColor={getColor(COLOR_KEYS.LINK)}
+                padding={"20 30 20 10"}
+              >
+                <View style={style.direction}>
+                  <Icon name={"Info"} height="25" width="25" fill="#FFFFFF" />
+                  <CelText color="#FFFFFF" margin={"0 10 0 10"}>
+                    Due to your recent volume of withdrawals, this transaction
+                    may be delayed up to 24 hours for security reasons.
+                  </CelText>
+                </View>
+              </InfoBox>
+            )}
+
+          {transaction.type === TRANSACTION_TYPES.WITHDRAWAL_PENDING_REVIEW &&
+            new BigNumber(transaction.amount_usd)
+              .abs()
+              .isGreaterThan(withdrawalSettings.maximum_withdrawal_amount) && (
+              <InfoBox
+                backgroundColor={getColor(COLOR_KEYS.LINK)}
+                padding={"20 30 20 10"}
+              >
+                <View style={style.direction}>
+                  <Icon name={"Info"} height="25" width="25" fill="#FFFFFF" />
+                  <CelText color="#FFFFFF" margin={"0 10 0 10"}>
+                    Due to the larger amount of funds being sent, this
+                    transaction may take a little bit longer.
+                  </CelText>
+                </View>
+              </InfoBox>
+            )}
 
           {transaction.type ===
             TRANSACTION_TYPES.WITHDRAWAL_PENDING_VERIFICATION && (
