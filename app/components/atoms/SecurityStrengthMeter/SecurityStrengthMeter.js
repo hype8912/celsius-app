@@ -121,7 +121,7 @@ class SecurityStrengthMeter extends Component {
             <CelText
               type="H6"
               weight="600"
-              onPress={onPressEnhance}
+              onPress={enhanceText && onPressEnhance}
               color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
               align={"right"}
             >
