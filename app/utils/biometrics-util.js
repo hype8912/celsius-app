@@ -14,7 +14,7 @@ export {
   createBiometricsKey,
   deleteBiometricsKey,
   biometricNonEnrolled,
-  getBiometricTypeInformations,
+  getBiometricTypeData,
   // simplePrompt
 };
 
@@ -118,7 +118,7 @@ function biometricNonEnrolled() {
 /**
  * Get Biometric Text, Icon, Image and used it in Modals, banners, etc
  */
-function getBiometricTypeInformations() {
+function getBiometricTypeData() {
   const { biometrics } = store.getState().biometrics;
   if (biometrics && biometrics.available) {
     switch (biometrics.biometryType) {

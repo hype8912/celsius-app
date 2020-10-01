@@ -30,7 +30,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { STORYBOOK } from "../../../../dev-settings.json";
 import {
   createBiometricsSignature,
-  getBiometricTypeInformations,
+  getBiometricTypeData,
 } from "../../../utils/biometrics-util";
 import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
 import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
@@ -408,7 +408,7 @@ class VerifyProfile extends Component {
     if (hideBiometrics || !deviceId) return;
     if (!biometrics || !biometrics.available) return;
 
-    const biometricCopy = getBiometricTypeInformations();
+    const biometricCopy = getBiometricTypeData();
 
     return (
       <TouchableOpacity

@@ -15,7 +15,7 @@ import {
   biometricNonEnrolled,
   createBiometricsKey,
   deleteBiometricsKey,
-  getBiometricTypeInformations,
+  getBiometricTypeData,
 } from "../../../utils/biometrics-util";
 import { SCREENS } from "../../../constants/SCREENS";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
@@ -60,7 +60,7 @@ class BiometricAuthentication extends Component {
 
   handleSwitchChangeBiometrics = () => {
     const { actions, biometrics, user } = this.props;
-    const biometricsType = getBiometricTypeInformations();
+    const biometricsType = getBiometricTypeData();
     const enableBiometricsText = `${biometricsType.text} enabled on this device.`;
     const disableBiometricsText = `${biometricsType.text} disabled on this device.`;
 
@@ -117,7 +117,7 @@ class BiometricAuthentication extends Component {
     const noBiometricsEnrolled = biometricNonEnrolled();
 
     const Switcher = this.rightSwitch;
-    const biometricsType = getBiometricTypeInformations();
+    const biometricsType = getBiometricTypeData();
 
     const enableOrDisable = user.biometrics_enabled ? "Disable" : "Enable";
     return (

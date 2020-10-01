@@ -3,7 +3,7 @@ import React from "react";
 import InfoModal from "../InfoModalNew/InfoModal.js";
 // import BiometricsAuthenticationModalStyle from "./BiometricsAuthenticationModal.styles";
 import { MODALS } from "../../../constants/UI";
-import { getBiometricTypeInformations } from "../../../utils/biometrics-util";
+import { getBiometricTypeData } from "../../../utils/biometrics-util";
 
 class BiometricsAuthenticationModal extends React.Component {
   goNext = () => {
@@ -12,7 +12,7 @@ class BiometricsAuthenticationModal extends React.Component {
   };
 
   render() {
-    const biometricsMethod = getBiometricTypeInformations();
+    const biometricsMethod = getBiometricTypeData();
     if (!biometricsMethod) return null;
     return (
       <InfoModal
