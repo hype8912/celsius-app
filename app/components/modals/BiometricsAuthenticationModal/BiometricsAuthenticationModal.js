@@ -20,7 +20,7 @@ class BiometricsAuthenticationModal extends React.Component {
         heading={"Biometric Authentication"}
         paragraphs={[
           `We have detected that you haven't used ${biometricsMethod.text} on this device so far.`,
-          `If you want to set your ${biometricsMethod.text} on this device please go to Biometric authentication settings screen under Security settings`,
+          `If you want to set your ${biometricsMethod.text} on this device please go to Biometric authentication settings screen under Security settings.`,
         ]}
         yesCopy={"I understand"}
         onYes={this.goNext}
