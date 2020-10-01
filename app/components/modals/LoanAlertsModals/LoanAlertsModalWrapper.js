@@ -158,7 +158,8 @@ class LoanAlertsModalWrapper extends Component {
       (isSameDay.sevenDays || isSameDay.threeDays);
     const manuelPaymentNoMoney =
       payment.hasEnough &&
-      !loan.loanPaymentSettings.automatic_interest_payment &&
+      loan.loanPaymentSettings &&
+        !loan.loanPaymentSettings.automatic_interest_payment &&
       isSameDay &&
       isSameDay.threeDays;
 

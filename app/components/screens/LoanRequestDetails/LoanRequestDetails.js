@@ -167,31 +167,27 @@ class LoanRequestDetails extends Component {
         );
       case "marginCall":
         return (
-          activeLoan.margin_call && (
-            <TxCardSection
-              key={sectionType}
-              title={`${activeLoan.coin} Margin Call At:`}
-              amount={activeLoan.margin_call_price}
-              cardText={`If ${activeLoan.coin} drops below ${formatter.fiat(
-                activeLoan.margin_call_price,
-                "USD"
-              )} you will get a notification asking for additional collateral.`}
-            />
-          )
+          <TxCardSection
+            key={sectionType}
+            title={`${activeLoan.coin} Margin Call At:`}
+            amount={activeLoan.margin_call_price}
+            cardText={`If ${activeLoan.coin} drops below ${formatter.fiat(
+              activeLoan.margin_call_price,
+              "USD"
+            )} you will get a notification asking for additional collateral.`}
+          />
         );
       case "liquidation":
         return (
-          activeLoan.margin_call && (
-            <TxCardSection
-              key={sectionType}
-              title={"Liquidation At:"}
-              amount={activeLoan.liquidation_call_price}
-              cardText={`If ${activeLoan.coin} drops below ${formatter.fiat(
-                activeLoan.liquidation_call_price,
-                "USD"
-              )} we will sell some of your collateral to cover the margin.`}
-            />
-          )
+          <TxCardSection
+            key={sectionType}
+            title={"Liquidation At:"}
+            amount={activeLoan.liquidation_call_price}
+            cardText={`If ${activeLoan.coin} drops below ${formatter.fiat(
+              activeLoan.liquidation_call_price,
+              "USD"
+            )} we will sell some of your collateral to cover the margin.`}
+          />
         );
       case "maturity":
         return (

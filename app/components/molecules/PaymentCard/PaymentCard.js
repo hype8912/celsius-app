@@ -533,7 +533,7 @@ class PaymentCard extends Component {
                       : `${time.hours}h ${time.minutes}m`}
                   </CelText>
                   {time.days >= 1 && (
-                    <Card color={getColor(color)}>
+                    <Card color={getColor(COLOR_KEYS.NEGATIVE_STATE)}>
                       <CelText weight={"300"} type={"H6"} color={"white"}>
                         Your loan is now in default and you are at risk of
                         collateral liquidation. We advise you to contact your

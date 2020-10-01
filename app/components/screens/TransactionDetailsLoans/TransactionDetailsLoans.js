@@ -95,55 +95,51 @@ class TransactionDetailsLoans extends Component {
             </Card>
           ) : null}
 
-          {TRANSACTION_TYPES.COLLATERAL_LOCKED.includes(transaction.type) ? (
-            <View style={{ marginTop: 20 }}>
-              <View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginBottom: 10,
-                  }}
-                >
-                  <CelText>
-                    {transaction.coin.toUpperCase()} margin call at:
-                  </CelText>
-                  <CelText>
-                    {formatter.usd(transaction.loan_data.margin)}
-                  </CelText>
-                </View>
-                <Card>
-                  <CelText type="H6" style={{ opacity: 0.7 }}>
-                    If {transaction.coin.toUpperCase()} drops below{" "}
-                    {formatter.usd(transaction.loan_data.margin)} you will get a
-                    notification asking for additional collateral.
-                  </CelText>
-                </Card>
-                <Separator margin="20 0 20 0" />
+          <View style={{ marginTop: 20 }}>
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: 10,
+                }}
+              >
+                <CelText>
+                  {transaction.coin.toUpperCase()} margin call at:
+                </CelText>
+                <CelText>{formatter.usd(transaction.loan_data.margin)}</CelText>
               </View>
-              <View style={{ marginBottom: 20 }}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginBottom: 10,
-                  }}
-                >
-                  <CelText>Liquidation at:</CelText>
-                  <CelText>
-                    {formatter.usd(transaction.loan_data.liquidation)}
-                  </CelText>
-                </View>
-                <Card>
-                  <CelText type="H6" style={{ opacity: 0.7 }}>
-                    If {transaction.coin.toUpperCase()} drops below{" "}
-                    {formatter.usd(transaction.loan_data.liquidation)} we will
-                    sell some of your collateral to cover the margin.
-                  </CelText>
-                </Card>
-              </View>
+              <Card>
+                <CelText type="H6" style={{ opacity: 0.7 }}>
+                  If {transaction.coin.toUpperCase()} drops below{" "}
+                  {formatter.usd(transaction.loan_data.margin)} you will get a
+                  notification asking for additional collateral.
+                </CelText>
+              </Card>
+              <Separator margin="20 0 20 0" />
             </View>
-          ) : null}
+            <View style={{ marginBottom: 20 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: 10,
+                }}
+              >
+                <CelText>Liquidation at:</CelText>
+                <CelText>
+                  {formatter.usd(transaction.loan_data.liquidation)}
+                </CelText>
+              </View>
+              <Card>
+                <CelText type="H6" style={{ opacity: 0.7 }}>
+                  If {transaction.coin.toUpperCase()} drops below{" "}
+                  {formatter.usd(transaction.loan_data.liquidation)} we will
+                  sell some of your collateral to cover the margin.
+                </CelText>
+              </Card>
+            </View>
+          </View>
 
           <CelButton
             margin={"20 0 0 0"}
