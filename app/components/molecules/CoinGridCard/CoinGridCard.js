@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { View, Animated } from "react-native";
 import PropTypes from "prop-types";
 import _ from "lodash";
@@ -68,7 +68,7 @@ class CoinGridCard extends Component {
   );
 
   coinCardFull = coin => (
-    <Fragment>
+    <>
       <Counter
         hideFromRecording
         color={getColor(COLOR_KEYS.HEADLINE)}
@@ -81,7 +81,7 @@ class CoinGridCard extends Component {
       <CelText hideFromRecording weight="300" type="H7">
         {formatter.crypto(coin.amount, coin.short)}
       </CelText>
-    </Fragment>
+    </>
   );
 
   render = () => {
@@ -110,11 +110,15 @@ class CoinGridCard extends Component {
       : interestRate.specialRate;
     if (isUSCitizen()) rate = interestRate.specialRate;
     const coinPriceChange = currencyRates.price_change_usd["1d"];
-
     return (
       <Animated.View style={this.animate()}>
         <Card size="half" padding={"12 0 0 0"} onPress={onCardPress}>
-          <View style={style.cardInnerView}>
+          <View
+            style={[
+              style.cardInnerView,
+              { height: heightPercentageToDP("13,5%") },
+            ]}
+          >
             <View style={style.wrapper}>
               <View style={style.coinTextWrapper}>
                 <CelText weight="300" type="H6">

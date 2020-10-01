@@ -1,9 +1,7 @@
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
-  container: {
-    flex: 1,
-  },
+  container: {},
   balance: {
     flex: 1,
   },
@@ -16,7 +14,6 @@ const base = {
   },
   coinTextWrapper: {
     flexWrap: "wrap",
-    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
     width: "100%",

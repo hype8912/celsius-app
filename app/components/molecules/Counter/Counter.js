@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
-import { View } from "react-native";
 import * as appActions from "../../../redux/actions";
 
-import CounterStyle from "./Counter.styles";
 import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
 import { SCREENS } from "../../../constants/SCREENS";
@@ -118,7 +116,6 @@ class Counter extends Component {
       align,
       hideFromRecording,
     } = this.props;
-    const style = CounterStyle();
 
     const amount = shouldCount ? value : number;
     const valueToShow = usd
@@ -126,18 +123,16 @@ class Counter extends Component {
       : formatter.round(amount, { noPrecision: true });
 
     return (
-      <View style={style.container}>
-        <CelText
-          hideFromRecording={hideFromRecording}
-          weight={weight}
-          type={type}
-          align={align}
-          margin={margin}
-          color={color}
-        >
-          {valueToShow}
-        </CelText>
-      </View>
+      <CelText
+        hideFromRecording={hideFromRecording}
+        weight={weight}
+        type={type}
+        align={align}
+        margin={margin}
+        color={color}
+      >
+        {valueToShow}
+      </CelText>
     );
   }
 }
