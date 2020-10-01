@@ -113,12 +113,7 @@ class CoinGridCard extends Component {
     return (
       <Animated.View style={this.animate()}>
         <Card size="half" padding={"12 0 0 0"} onPress={onCardPress}>
-          <View
-            style={[
-              style.cardInnerView,
-              { height: heightPercentageToDP("13,5%") },
-            ]}
-          >
+          <View style={[style.cardInnerView, { height: 90 }]}>
             <View style={style.wrapper}>
               <View style={style.coinTextWrapper}>
                 <CelText weight="300" type="H6">
