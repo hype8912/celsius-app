@@ -225,6 +225,7 @@ class SecurityOverview extends Component {
                 onPressEnhance={() => {
                   actions.navigateTo(SCREENS.VERIFY_PROFILE, {
                     onSuccess: () => actions.navigateTo(SCREENS.CHANGE_PIN),
+                    hideBiometrics: true,
                   });
                 }}
               />

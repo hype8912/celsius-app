@@ -10,8 +10,11 @@ const biometricsService = {
 
 function activateBiometrics(publicKey, type, verification) {
   let bioType;
-  if ([BIOMETRIC_TYPES.TOUCH_ID, BIOMETRIC_TYPES.BIOMETRICS].includes(type))
+  if ([BIOMETRIC_TYPES.TOUCH_ID, BIOMETRIC_TYPES.BIOMETRICS].includes(type)) {
     bioType = BIOMETRIC_TYPES.TOUCH_ID;
+  } else {
+    bioType = BIOMETRIC_TYPES.FACE_ID;
+  }
 
   return axios.post(`${apiUrl}/users/biometrics/activate`, {
     ...verification,

@@ -1,7 +1,11 @@
 import ReactNativeBiometrics from "react-native-biometrics";
 import store from "../redux/store";
 import { updateFormFields } from "../redux/forms/formsActions";
-import { BIOMETRIC_ERRORS } from "../constants/UI";
+import {
+  BIOMETRIC_ERRORS,
+  BIOMETRIC_TEXT,
+  BIOMETRIC_TYPES,
+} from "../constants/UI";
 import mixpanelAnalytics from "./mixpanel-analytics";
 
 export {
@@ -10,6 +14,7 @@ export {
   createBiometricsKey,
   deleteBiometricsKey,
   biometricNonEnrolled,
+  getBiometricTypeData,
   // simplePrompt
 };
 
@@ -110,19 +115,32 @@ function biometricNonEnrolled() {
   return false;
 }
 
-// function simplePrompt() {
-//   ReactNativeBiometrics.simplePrompt({promptMessage: 'Confirm fingerprint'})
-//     .then((resultObject) => {
-//       const { success } = resultObject
-//
-//       if (success) {
-//         console.log('successful biometrics provided')
-//       } else {
-//         console.log('user cancelled biometric prompt')
-//       }
-//     })
-//     .catch(() => {
-//       console.log('biometrics failed')
-//     })
-//
-// }
+/**
+ * Get Biometric Text, Icon, Image and used it in Modals, banners, etc
+ */
+function getBiometricTypeData() {
+  const { biometrics } = store.getState().biometrics;
+  if (biometrics && biometrics.available) {
+    switch (biometrics.biometryType) {
+      case BIOMETRIC_TYPES.TOUCH_ID:
+        return {
+          text: BIOMETRIC_TEXT.TOUCH_ID,
+          icon: "Fingerprint",
+          image: require("../../assets/images/fingerprint.png"),
+        };
+      case BIOMETRIC_TYPES.FACE_ID:
+        return {
+          text: BIOMETRIC_TEXT.FACE_ID,
+          icon: "FaceRecognition",
+          image: require("../../assets/images/face-recognition.png"),
+        };
+      default: {
+        return {
+          text: BIOMETRIC_TEXT.BIOMETRICS,
+          icon: "Fingerprint",
+          image: require("../../assets/images/fingerprint.png"),
+        };
+      }
+    }
+  }
+}

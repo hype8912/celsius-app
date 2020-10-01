@@ -283,7 +283,7 @@ const BIOMETRIC_TYPES = {
 
 const BIOMETRIC_TEXT = {
   TOUCH_ID: "Touch ID",
-  BIOMETRICS: "Biometrics",
+  BIOMETRICS: "Biometric",
   FINGERPRINT: "Fingerprint",
   FACE_ID: "Face ID",
 };

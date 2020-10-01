@@ -182,6 +182,7 @@ class SecurityFixNow extends Component {
                     actions.navigateTo(content.navigateToScreen);
                     actions.fromFixNow();
                   },
+                  hideBiometrics: true,
                 });
               }}
             />

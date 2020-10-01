@@ -836,7 +836,7 @@ export default {
     </G>
   ),
 
-  FaceRecognitionViewBox: "0 0 52 49",
+  FaceRecognitionViewBox: "0 0 53 49",
   FaceRecognition: (
     <G
       id="Biometrics"
@@ -847,42 +847,19 @@ export default {
     >
       <G
         id="Biometrics---Explanation-screen---Enable-Face-recognition"
-        transform="translate(-162.000000, -210.000000)"
+        transform="translate(-161.000000, -209.000000)"
       >
         <G id="Group-2" transform="translate(21.000000, 180.000000)">
           <G
             id="icon/biometric/face-recognition-copy"
-            transform="translate(142.000000, 30.000000)"
+            transform="translate(141.000000, 30.000000)"
           >
-            <G id="face-24px" transform="translate(0.200000, 0.200000)">
-              <Polygon id="Path" points="1 0 49 0 49 48 1 48" />
-              <G
-                id="Group-3"
-                transform="translate(0.000000, 1.000000)"
-                stroke="#4156A6"
-                stroke-width="2"
-              >
-                <Polyline id="Path" points="49 10 49 0 39 0" />
-                <Polyline
-                  id="Path"
-                  transform="translate(5.000000, 5.000000) scale(-1, 1) translate(-5.000000, -5.000000) "
-                  points="10 10 10 0 0 0"
-                />
-                <Polyline
-                  id="Path"
-                  transform="translate(44.000000, 40.000000) scale(1, -1) translate(-44.000000, -40.000000) "
-                  points="49 45 49 35 39 35"
-                />
-                <Polyline
-                  id="Path"
-                  transform="translate(5.000000, 40.000000) scale(-1, -1) translate(-5.000000, -40.000000) "
-                  points="10 45 10 35 0 35"
-                />
-              </G>
-            </G>
-            <G id="Group-4" transform="translate(5.800000, 3.800000)">
+            <G
+              id="icon/biometric/face-recognition"
+              transform="translate(0.800000, 0.800000)"
+            >
               <Path
-                d="M19.00026,0.80052 C29.49301,0.80052 38.00026,9.30777 38.00026,19.80052 C38.00026,30.29327 29.49301,38.80052 19.00026,38.80052 C8.50751,38.80052 0.00026,30.29327 0.00026,19.80052 C0.00026,9.30777 8.50751,0.80052 19.00026,0.80052 Z"
+                d="M25.00026,3.80052 C35.49301,3.80052 44.00026,12.30777 44.00026,22.80052 C44.00026,33.29327 35.49301,41.80052 25.00026,41.80052 C14.50751,41.80052 6.00026,33.29327 6.00026,22.80052 C6.00026,12.30777 14.50751,3.80052 25.00026,3.80052 Z"
                 id="Stroke-1"
                 stroke="#4156A6"
                 stroke-width="2"
@@ -890,34 +867,61 @@ export default {
               <Path d="" id="Path-5" stroke="#979797" />
               <Path d="" id="Path-6" stroke="#979797" />
               <Line
-                x1="10.6559783"
-                y1="13.7183904"
-                x2="10.6559783"
-                y2="18.7183904"
+                x1="16.6559783"
+                y1="16.7183904"
+                x2="16.6559783"
+                y2="21.7183904"
                 id="Path-7"
                 stroke="#4156A6"
                 stroke-width="2"
               />
               <Line
-                x1="26.6559783"
-                y1="13.7183904"
-                x2="26.6559783"
-                y2="18.7183904"
+                x1="32.6559783"
+                y1="16.7183904"
+                x2="32.6559783"
+                y2="21.7183904"
                 id="Path-7"
                 stroke="#4156A6"
                 stroke-width="2"
               />
               <Path
-                d="M19.4059783,13.7183904 L19.4059783,21.7183904 C19.4059783,22.8229599 18.5105478,23.7183904 17.4059783,23.7183904 L17.4059783,23.7183904 L17.4059783,23.7183904"
+                d="M25.4059783,16.7183904 L25.4059783,24.7183904 C25.4059783,25.8229599 24.5105478,26.7183904 23.4059783,26.7183904 L23.4059783,26.7183904 L23.4059783,26.7183904"
                 id="Path-8"
                 stroke="#4156A6"
                 stroke-width="2"
               />
               <Path
-                d="M12.4059783,27.7183904 C14.5793614,29.0517237 16.6370674,29.7183904 18.5790964,29.7183904 C20.5211254,29.7183904 22.4634194,29.0517237 24.4059783,27.7183904"
+                d="M18.4059783,30.7183904 C20.5793614,32.0517237 22.6370674,32.7183904 24.5790964,32.7183904 C26.5211254,32.7183904 28.4634194,32.0517237 30.4059783,30.7183904"
                 id="Path-9"
                 stroke="#4156A6"
                 stroke-width="2"
+              />
+              <Polyline
+                id="Path"
+                stroke="#4156A6"
+                stroke-width="2"
+                points="49.4 10.4 49.4 0.4 39.4 0.4"
+              />
+              <Polyline
+                id="Path"
+                stroke="#4156A6"
+                stroke-width="2"
+                transform="translate(5.400000, 5.400000) scale(-1, 1) translate(-5.400000, -5.400000) "
+                points="10.4 10.4 10.4 0.4 0.4 0.4"
+              />
+              <Polyline
+                id="Path"
+                stroke="#4156A6"
+                stroke-width="2"
+                transform="translate(44.400000, 40.400000) scale(1, -1) translate(-44.400000, -40.400000) "
+                points="49.4 45.4 49.4 35.4 39.4 35.4"
+              />
+              <Polyline
+                id="Path"
+                stroke="#4156A6"
+                stroke-width="2"
+                transform="translate(5.400000, 40.400000) scale(-1, -1) translate(-5.400000, -40.400000) "
+                points="10.4 45.4 10.4 35.4 0.4 35.4"
               />
             </G>
           </G>

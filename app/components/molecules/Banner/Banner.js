@@ -19,7 +19,8 @@ class Banner extends Component {
     buttonText: PropTypes.string,
     textButtonAction: PropTypes.func,
     backgroundColor: PropTypes.string,
-    image: PropTypes.number,
+    image: PropTypes.string,
+    imageStyle: PropTypes.instanceOf(Object),
     close: PropTypes.func,
     noClose: PropTypes.bool,
   };
@@ -42,6 +43,7 @@ class Banner extends Component {
       textButtonAction,
       backgroundColor,
       image,
+      imageStyle,
       close,
       noClose,
     } = this.props;
@@ -69,7 +71,7 @@ class Banner extends Component {
           </TouchableOpacity>
         )}
         <View style={style.circleWrapper}>
-          <Image style={style.image} source={image} />
+          <Image style={[style.image, imageStyle]} source={image} />
 
           <View style={style.halfCircle} />
         </View>
