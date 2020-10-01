@@ -118,7 +118,6 @@ class BiometricAuthentication extends Component {
 
     const Switcher = this.rightSwitch;
     const biometricsType = getBiometricTypeData();
-
     return (
       <RegularLayout>
         <CelText type="H4">
