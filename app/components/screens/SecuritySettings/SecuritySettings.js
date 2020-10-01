@@ -99,10 +99,12 @@ class SecuritySettings extends Component {
               "If you remove authentication application you will lose a second step of verification. Are you sure you want to proceed?",
           });
         },
+        hideBiometrics: true,
       });
     } else {
       actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: () => actions.navigateTo(SCREENS.TWO_FACTOR_SETTINGS),
+        hideBiometrics: true,
       });
     }
   };

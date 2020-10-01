@@ -113,18 +113,15 @@ class BiometricAuthentication extends Component {
   };
 
   render() {
-    const { biometrics, user, actions } = this.props;
+    const { biometrics, actions } = this.props;
     const noBiometricsEnrolled = biometricNonEnrolled();
 
     const Switcher = this.rightSwitch;
     const biometricsType = getBiometricTypeData();
-
-    const enableOrDisable = user.biometrics_enabled ? "Disable" : "Enable";
     return (
       <RegularLayout>
         <CelText type="H4">
-          {enableOrDisable} Biometric authentication which is available on this
-          device.
+          Enable Biometric authentication which is available on this device.
         </CelText>
         {biometrics.available && (
           <IconButton
