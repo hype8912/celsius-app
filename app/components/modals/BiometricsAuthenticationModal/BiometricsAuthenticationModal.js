@@ -25,7 +25,6 @@ class BiometricsAuthenticationModal extends React.Component {
         yesCopy={"I understand"}
         onYes={this.goNext}
         picture={biometricsMethod.image}
-        darkPicture={biometricsMethod.image}
         pictureDimensions={{ height: 40, width: 40 }}
       />
     );

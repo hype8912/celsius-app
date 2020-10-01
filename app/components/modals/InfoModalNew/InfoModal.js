@@ -34,7 +34,7 @@ const InfoModal = props => {
     <CelModal
       name={name}
       picture={picture}
-      darkPicture={darkPicture}
+      darkPicture={darkPicture || picture}
       pictureDimensions={pictureDimensions}
       coin={coin}
     >
