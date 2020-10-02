@@ -130,7 +130,15 @@ function withdrawCrypto() {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
-      const { coin, amountCrypto, pin, code, withdrawAll } = formData;
+      const {
+        coin,
+        amountCrypto,
+        pin,
+        code,
+        payload,
+        signature,
+        withdrawAll,
+      } = formData;
       dispatch(startApiCall(API.WITHDRAW_CRYPTO));
 
       const res = await transactionsService.withdrawCrypto(
@@ -140,6 +148,8 @@ function withdrawCrypto() {
         {
           pin,
           twoFactorCode: code,
+          payload,
+          signature,
         }
       );
 
