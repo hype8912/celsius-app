@@ -293,7 +293,12 @@ class VerifyProfile extends Component {
           ].includes(error.message)
         ) {
           actions.showMessage("error", error.message);
-        } else if ([BIOMETRIC_ERRORS.KEY_NOT_FOUND].includes(error.message)) {
+        } else if (
+          [
+            BIOMETRIC_ERRORS.KEY_NOT_FOUND,
+            BIOMETRIC_ERRORS.AUTHENTICATION_CANCELLED,
+          ].includes(error.message)
+        ) {
           return;
         } else {
           actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);

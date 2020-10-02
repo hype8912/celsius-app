@@ -212,7 +212,7 @@ async function responseInterceptor(res) {
   const sign = res.headers["x-cel-sign"];
   const data = res.data;
 
-  // NOTE: logs API call duration to console
+  // NOTE: logs API call duration to // console
   if (shouldLogDurations) {
     durations[res.config.url] = moment().diff(
       durations[res.config.url],
