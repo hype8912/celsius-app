@@ -31,17 +31,27 @@ class LoginLanding extends Component {
 
   loginViaGoogleHandle = (type, navigateTo) => {
     const { actions } = this.props;
+    this.clearSocialIds();
     actions.authGoogle(type, navigateTo);
   };
 
   loginViaFacebookHandle = (type, navigateTo) => {
     const { actions } = this.props;
+    this.clearSocialIds();
     actions.authFacebook(type, navigateTo);
   };
 
   loginViaEmailHandle = navigateTo => {
     const { actions } = this.props;
+    this.clearSocialIds();
     actions.navigateTo(navigateTo);
+  };
+
+  clearSocialIds = () => {
+    const { actions } = this.props;
+    actions.updateFormField("facebookId", null);
+    actions.updateFormField("twitterId", null);
+    actions.updateFormField("googleId", null);
   };
 
   onTwitterSuccess = twitterUser => {
