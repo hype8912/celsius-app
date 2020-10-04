@@ -49,7 +49,7 @@ class LoanAlertsPayoutPrincipalModal extends Component {
         this.setState({
           isLoadingClose: true,
         });
-        await actions.payPrincipal(loan.id);
+        actions.navigateTo(SCREENS.PRINCIPAL_OVERVIEW_SCREEN, { id: loan.id });
         this.setState({
           isLoadingClose: false,
         });

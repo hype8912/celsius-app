@@ -80,7 +80,7 @@ class LoanPaymentCoin extends Component {
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
       await actions.updateFormFields({ coin: coinShort });
-      actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
+      actions.openModal(MODALS.CONFIRM_PAYMENT);
     }
   };
 

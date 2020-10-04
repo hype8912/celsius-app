@@ -92,7 +92,7 @@ class PaymentCel extends Component {
     }
 
     if (reason === LOAN_PAYMENT_REASONS.MANUAL_INTEREST) {
-      actions.openModal(MODALS.CONFIRM_INTEREST_PAYMENT);
+      actions.openModal(MODALS.CONFIRM_PAYMENT);
     }
   };
 

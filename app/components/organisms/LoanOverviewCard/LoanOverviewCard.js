@@ -16,11 +16,7 @@ import {
   widthPercentageToDP,
 } from "../../../utils/styles-util";
 import { LOAN_STATUS } from "../../../constants/DATA";
-import {
-  LOAN_ALERTS,
-  LOAN_PAYMENT_REASONS,
-  MODALS,
-} from "../../../constants/UI";
+import { LOAN_PAYMENT_REASONS, MODALS } from "../../../constants/UI";
 import PaymentListItem from "../../atoms/PaymentListItem/PaymentListItem";
 import CircularProgressBar from "../../graphs/CircularProgressBar/CircularProgressBar";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -80,14 +76,6 @@ class LoanOverviewCard extends Component {
       reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
       id: loan.id,
     });
-  };
-
-  payPrincipal = async () => {
-    const { actions, loan } = this.props;
-    this.setState({ isLoading: true });
-
-    await actions.setLoanAlert(loan.id, LOAN_ALERTS.PRINCIPAL_ALERT);
-    this.setState({ isLoading: false });
   };
 
   render() {
@@ -395,20 +383,22 @@ class LoanOverviewCard extends Component {
             )}
           </View>
 
-          {/* {loan.can_pay_principal && (*/}
-          {/*  <View>*/}
-          {/*    <Separator margin={"0 0 0 0"} />*/}
-          {/*    <CelButton*/}
-          {/*      onPress={this.payPrincipal}*/}
-          {/*      margin={"15 0 15 0"}*/}
-          {/*      color="green"*/}
-          {/*      loading={isLoading}*/}
-          {/*      disabled={isLoading}*/}
-          {/*    >*/}
-          {/*      Payout Principal*/}
-          {/*    </CelButton>*/}
-          {/*  </View>*/}
-          {/* )}*/}
+          {loan.can_pay_principal && (
+            <View>
+              <Separator margin={"0 0 0 0"} />
+              <CelButton
+                onPress={() =>
+                  navigateTo(SCREENS.PRINCIPAL_OVERVIEW_SCREEN, { id: loan.id })
+                }
+                margin={"15 0 15 0"}
+                color="green"
+                loading={isLoading}
+                disabled={isLoading}
+              >
+                Payout Principal
+              </CelButton>
+            </View>
+          )}
 
           {loan.can_pay_interest && (
             <View>

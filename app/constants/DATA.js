@@ -257,6 +257,7 @@ const LOAN_TYPES = {
 const LOAN_PAYMENT_TYPES = {
   MONTHLY_INTEREST: "monthly_interest",
   RECEIVING_PRINCIPAL_BACK: "receiving_principal_back",
+  PRINCIPAL_PAYMENT: "principal_payment",
 };
 
 const PRIMETRUST_KYC_STATES = ["New York", "Washington"];

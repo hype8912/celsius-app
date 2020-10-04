@@ -97,7 +97,6 @@ class PaymentCard extends Component {
         COIN_CARD_TYPE.COLLATERAL_COIN_CARD,
         coin
       );
-
       this.setState({
         additionalInfoExplanation: "required.",
         cryptoAmount: collateralPayment.cryptoAmount,
@@ -121,6 +120,7 @@ class PaymentCard extends Component {
         color: principalPayment.color,
         additionalCryptoAmount: principalPayment.additionalCryptoAmount,
         hasEnough: principalPayment.hasEnough,
+        additionalUsdAmount: principalPayment.additionalUsdAmount,
       });
     } else if (type === COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD) {
       const loanPayment = loanPaymentUtil.calculateAdditionalPayment(
@@ -424,7 +424,10 @@ class PaymentCard extends Component {
                   coinShort={currency.short}
                 />
               </View>
-              {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
+              {[
+                COIN_CARD_TYPE.COLLATERAL_COIN_CARD,
+                COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD,
+              ].includes(type) && (
                 <View>
                   <CelText weight={"600"} align="left" type="H3">
                     {`${formatter.crypto(
@@ -437,7 +440,27 @@ class PaymentCard extends Component {
                     {`$ ${loan.installments_to_be_paid.total} USD`}
                   </CelText>
                 </View>
-              ) : (
+              )}
+              {type === COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD && (
+                <View>
+                  <CelText weight={"600"} align="left" type="H3">
+                    {formatter.fiat(
+                      Number(amountUsd) + Number(additionalUsdAmount),
+                      "USD"
+                    )}
+                  </CelText>
+                  <CelText weight={"300"} align="left" type="H5">
+                    {formatter.crypto(
+                      Number(cryptoAmount) + Number(additionalCryptoAmount),
+                      coin.short,
+                      {
+                        precision: 2,
+                      }
+                    )}
+                  </CelText>
+                </View>
+              )}
+              {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
                 <View>
                   <CelText weight={"600"} align="left" type="H3">
                     {formatter.fiat(amountUsd, "USD")}
@@ -510,7 +533,8 @@ class PaymentCard extends Component {
                 </View>
               </View>
             )}
-            {amountUsd < loan.monthly_payment ? (
+            {amountUsd < loan.monthly_payment ||
+            amountUsd < Number(loan.loan_amount_usd) ? (
               <View>
                 {this.renderAdditionalAmountRequired()}
                 {this.renderDepositMore()}

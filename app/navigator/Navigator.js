@@ -116,6 +116,7 @@ import ExtendLoanScreen from "../components/screens/ExtendLoanScreen/ExtendLoanS
 import MarginCallOverviewScreen from "../components/screens/MarginCallOverviewScreen/MarginCallOverviewScreen";
 import SingleMarginCallScreen from "../components/screens/SingleMarginCallScreen/SingleMarginCallScreen";
 import BitWala from "../components/screens/BitWala/BitWala";
+import PrincipalOverviewScreen from "../components/screens/PrincipalOverviewScreen/PrincipalOverviewScreen";
 
 export const screens = {
   /**
@@ -220,6 +221,7 @@ export const screens = {
   InterestPaymentOverviewScreen,
   MarginCallOverviewScreen,
   SingleMarginCallScreen,
+  PrincipalOverviewScreen,
 
   /**
    * MyCel

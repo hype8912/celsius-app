@@ -33,7 +33,6 @@ function calculateAdditionalPayment(
   let cryptoAmount;
   let color;
   let coin;
-
   if (!additionalCoin) {
     if (cardType === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD) {
       coin = loan.coin;
@@ -69,6 +68,9 @@ function calculateAdditionalPayment(
         currencyRatesShort[loanCoin.short.toLowerCase()];
       additionalUsdAmount =
         loan.loan_amount_usd - loanCoin.amount_usd.toNumber();
+      cryptoAmount = loanCoin.amount.toNumber();
+      amountUsd = loanCoin.amount_usd.toNumber();
+      cryptoAmountToPay = loan.loan_amount;
     }
 
     if (cardType === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD) {

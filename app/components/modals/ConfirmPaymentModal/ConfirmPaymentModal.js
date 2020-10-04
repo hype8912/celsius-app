@@ -12,7 +12,7 @@ import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import formatter from "../../../utils/formatter";
-import { PAYMENT_TYPE } from "../../../constants/DATA";
+import { LOAN_PAYMENT_TYPES, PAYMENT_TYPE } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -29,9 +29,11 @@ class ConfirmPaymentModal extends Component {
     coin: PropTypes.string,
     reason: PropTypes.string,
     type: PropTypes.string,
+    paymentType: PropTypes.string,
   };
   static defaultProps = {
     type: PAYMENT_TYPE.CRYPTO,
+    paymentType: LOAN_PAYMENT_TYPES.MONTHLY_INTEREST,
   };
 
   constructor(props) {
@@ -44,9 +46,25 @@ class ConfirmPaymentModal extends Component {
   }
 
   renderContent = () => {
-    const { actions, loanId, coin, formData } = this.props;
+    const { actions, loanId, coin, formData, paymentType } = this.props;
 
     const crypto = coin || formData.coin;
+    if (paymentType === LOAN_PAYMENT_TYPES.PRINCIPAL_PAYMENT) {
+      return {
+        heading: "Confirm Principal Payment",
+        buttonText: "Pay Principal",
+        onPress: async () => {
+          this.setState({
+            isLoading: true,
+          });
+          await actions.payPrincipal(loanId);
+          this.setState({
+            isLoading: false,
+          });
+          actions.closeModal();
+        },
+      };
+    }
     return {
       heading: "Confirm Monthly Interest Payment",
       buttonText: "Pay Monthly Interest",
@@ -64,36 +82,45 @@ class ConfirmPaymentModal extends Component {
   };
 
   render() {
-    const { coin, formData, walletSummary, loyaltyInfo } = this.props;
+    const {
+      coin,
+      formData,
+      walletSummary,
+      loyaltyInfo,
+      paymentType,
+    } = this.props;
     const { loan, isLoading } = this.state;
     const style = ConfirmPaymentModalStyle();
-
     const content = this.renderContent();
-
+    let sumToPay;
+    let cryptoAmountToPay;
     if (!loan) return null;
 
     const crypto = coin || formData.coin;
     const walletCoin = walletSummary.coins.find(c => c.short === crypto);
-
     const amountUsd = walletCoin ? walletCoin.amount_usd : 0;
-
-    const sumToPay = coin
-      ? loan.installments_to_be_paid.total -
-        (loan.installments_to_be_paid.total -
-          (1 - loyaltyInfo.tier.loanInterestBonus) *
-            Number(loan.installments_to_be_paid.total))
-      : loan.installments_to_be_paid.total;
-    const cryptoAmountToPay = walletCoin
-      ? (walletCoin.amount.toNumber() / walletCoin.amount_usd.toNumber()) *
-        sumToPay
-      : 0;
+    if (paymentType === LOAN_PAYMENT_TYPES.MONTHLY_INTEREST) {
+      sumToPay = coin
+        ? loan.installments_to_be_paid.total -
+          (loan.installments_to_be_paid.total -
+            (1 - loyaltyInfo.tier.loanInterestBonus) *
+              Number(loan.installments_to_be_paid.total))
+        : loan.installments_to_be_paid.total;
+      cryptoAmountToPay = walletCoin
+        ? (walletCoin.amount.toNumber() / walletCoin.amount_usd.toNumber()) *
+          sumToPay
+        : 0;
+    } else {
+      sumToPay = loan.loan_amount_usd;
+      cryptoAmountToPay = loan.loan_amount;
+    }
 
     const newBalanceCrypto =
       walletCoin && walletCoin.amount.minus(cryptoAmountToPay);
     const newBalanceUsd = amountUsd && amountUsd.minus(sumToPay);
 
     return (
-      <CelModal style={style.container} name={MODALS.CONFIRM_INTEREST_PAYMENT}>
+      <CelModal style={style.container} name={MODALS.CONFIRM_PAYMENT}>
         <View
           style={{
             alignItems: "center",
