@@ -66,7 +66,6 @@ import SelectStateStories from "./SelectState/SelectState.stories";
 import LoanRequestDetailsStories from "./LoanRequestDetails/LoanRequestDetails.stories";
 import LoanSettingsStories from "./LoanSettings/LoanSettings.stories";
 import BorrowLoanTermStories from "./BorrowLoanTerm/BorrowLoanTerm.stories";
-import ChangeAvatarStories from "./ChangeAvatar/ChangeAvatar.stories";
 import ChoosePaymentMethodStories from "./ChoosePaymentMethod/ChoosePaymentMethod.stories";
 import ActionsByUserStories from "./ActionsByUser/ActionsByUser.stories";
 import CelPayChooseFriendStories from "./CelPayChooseFriend/CelPayChooseFriend.stories";
@@ -469,11 +468,6 @@ storiesOf("LoanSettings", module).add("Regular", LoanSettingsStories.regular);
 storiesOf("BorrowLoanTerm", module)
   .add("Stable coin", BorrowLoanTermStories.stable)
   .add("USD", BorrowLoanTermStories.usd);
-
-storiesOf("ChangeAvatar", module).add(
-  "Change Avatar",
-  ChangeAvatarStories.regular
-);
 
 storiesOf("ChoosePaymentMethod", module)
   .add("Prepayment", ChoosePaymentMethodStories.prepayment)

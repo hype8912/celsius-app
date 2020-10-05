@@ -1,7 +1,3 @@
-import Constants from "../../constants";
-
-const { API_URL } = Constants;
-
 const FONTS = [
   { "Barlow-Thin": require("../../assets/fonts/Barlow/Barlow-Thin.ttf") },
   {
@@ -116,45 +112,6 @@ const CACHE_IMAGES = [
   require("../../assets/images/PartnerLogos/prime-trust-llc-vector-logo.png"),
   require("../../assets/images/community/frenchie.png"),
   require("../../assets/images/community/frenchie-dark.png"),
-  `${API_URL.replace(
-    "/api/v3",
-    ""
-  )}/profile-images/avatar/bear/profile-bear.png`,
-  `${API_URL.replace("/api/v3", "")}/profile-images/avatar/cat/profile-cat.png`,
-  `${API_URL.replace(
-    "/api/v3",
-    ""
-  )}/profile-images/avatar/deer/profile-deer.png`,
-  `${API_URL.replace(
-    "/api/v3",
-    ""
-  )}/profile-images/avatar/diane/profile-diane.png`,
-  `${API_URL.replace("/api/v3", "")}/profile-images/avatar/dog/profile-dog.png`,
-  `${API_URL.replace("/api/v3", "")}/profile-images/avatar/fox/profile-fox.png`,
-  `${API_URL.replace(
-    "/api/v3",
-    ""
-  )}/profile-images/avatar/hyppo/profile-hyppo.png`,
-  `${API_URL.replace(
-    "/api/v3",
-    ""
-  )}/profile-images/avatar/monkeyboy/profile-monkeyboy.png`,
-  `${API_URL.replace(
-    "/api/v3",
-    ""
-  )}/profile-images/avatar/monkeygirl/profile-monkeygirl.png`,
-  `${API_URL.replace(
-    "/api/v3",
-    ""
-  )}/profile-images/avatar/shark/profile-shark.png`,
-  `${API_URL.replace(
-    "/api/v3",
-    ""
-  )}/profile-images/avatar/sheep/profile-sheep.png`,
-  `${API_URL.replace(
-    "/api/v3",
-    ""
-  )}/profile-images/avatar/unicorn/profile-unicorn.png`,
   require("../../assets/images/icons/antenna.png"),
   require("../../assets/images/icons/tool.png"),
   require("../../assets/images/email-sent.png"),

@@ -23,6 +23,7 @@ import fromatter from "../../../utils/formatter";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { STORYBOOK } from "../../../../dev-settings.json";
 import { SCREENS } from "../../../constants/SCREENS";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(
   state => ({
@@ -122,7 +123,6 @@ class CelHeading extends Component {
     const { right, onInfo } = sceneProps;
     const { profilePicture, actions } = this.props;
     const scene = this.props.scene.descriptor;
-
     const style = CelHeadingStyle();
 
     return {
@@ -174,9 +174,11 @@ class CelHeading extends Component {
               resizeMode="cover"
             />
           ) : (
-            <Image
+            <ThemedImage
               style={style.profilePicture}
-              source={require("../../../../assets/images/empty-profile/empty-profile.png")}
+              lightSource={require("../../../../assets/images/avatar-empty/avatar-empty-light.png")}
+              darkSource={require("../../../../assets/images/avatar-empty/avatar-empty-light.png")}
+              unicornSource={require("../../../../assets/images/avatar-empty/avatar-empty-new.png")}
               resizeMethod="resize"
               resizeMode="cover"
             />

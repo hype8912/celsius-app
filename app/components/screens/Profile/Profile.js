@@ -22,9 +22,13 @@ import Constants from "../../../../constants";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { getColor } from "../../../utils/styles-util";
 import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 import { SCREENS } from "../../../constants/SCREENS";
+import {
+  ALL_PERMISSIONS,
+  requestForPermission,
+} from "../../../utils/device-permissions";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(
   state => ({
@@ -69,6 +73,22 @@ class Profile extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { actions, lastCompletedCall, profileImage } = this.props;
+
+    // set image after camera
+    if (nextProps.profileImage !== profileImage) {
+      this.setState({ activeImage: nextProps.profileImage });
+    }
+
+    if (
+      lastCompletedCall !== nextProps.lastCompletedCall &&
+      nextProps.lastCompletedCall === API.UPLOAD_PLOFILE_IMAGE
+    ) {
+      actions.navigateTo(SCREENS.PROFILE);
+    }
+  }
+
   initForm = user => {
     const { actions } = this.props;
     if (user) {
@@ -92,6 +112,30 @@ class Profile extends Component {
   sendCsvRequest = async () => {
     const { actions } = this.props;
     await actions.sendCsvEmail();
+  };
+
+  saveCameraPhoto = photo => {
+    const { actions } = this.props;
+
+    actions.updateProfilePicture(photo);
+    actions.navigateTo(SCREENS.PROFILE);
+  };
+
+  goToCamera = async () => {
+    const { actions } = this.props;
+
+    actions.activateCamera({
+      cameraField: "profileImage",
+      cameraHeading: "Profile photo",
+      cameraCopy:
+        "Please center your face in the circle and take a selfie, to use as your profile photo.",
+      cameraType: "front",
+      mask: "circle",
+    });
+
+    await requestForPermission(ALL_PERMISSIONS.CAMERA);
+    await requestForPermission(ALL_PERMISSIONS.LIBRARY);
+    actions.navigateTo(SCREENS.CAMERA_SCREEN, { onSave: this.saveCameraPhoto });
   };
 
   render() {
@@ -119,13 +163,7 @@ class Profile extends Component {
           <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
             {profilePicture ? (
               <Image
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 50,
-                  borderWidth: 4,
-                  borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
-                }}
+                style={style.avatar}
                 hideFromRecording
                 source={{
                   uri: profilePicture,
@@ -134,17 +172,15 @@ class Profile extends Component {
                 resizeMethod="resize"
               />
             ) : (
-              <Image
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 50,
-                  borderWidth: 4,
-                  borderColor: getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND),
-                }}
-                source={require("../../../../assets/images/empty-profile/empty-profile.png")}
-                resizeMethod="resize"
-              />
+              <View style={style.emptyAvatarWrapper}>
+                <ThemedImage
+                  style={style.emptyAvatar}
+                  lightSource={require("../../../../assets/images/avatar-empty/avatar-empty-light.png")}
+                  darkSource={require("../../../../assets/images/avatar-empty/avatar-empty-dark.png")}
+                  unicornSource={require("../../../../assets/images/avatar-empty/avatar-empty-new.png")}
+                  resizeMethod="resize"
+                />
+              </View>
             )}
             <View style={{ marginLeft: 20 }}>
               <CelText hideFromRecording weight="600" type="H2">
@@ -153,9 +189,7 @@ class Profile extends Component {
               <CelText hideFromRecording weight="600" type="H2">
                 {user.last_name}
               </CelText>
-              <TouchableOpacity
-                onPress={() => actions.navigateTo(SCREENS.CHANGE_AVATAR)}
-              >
+              <TouchableOpacity onPress={this.goToCamera}>
                 <CelText link margin="10 0 0 0">
                   Change photo
                 </CelText>

@@ -26,7 +26,6 @@ export const SCREENS = {
   CEL_PAY_LANDING: "CelPayLanding",
   CEL_PAY_MESSAGE: "CelPayMessage",
   CELSIUS_LOADING_SCREEN: "CelsiusLoadingScreen", // NOTE: not calling in js code
-  CHANGE_AVATAR: "ChangeAvatar",
   CHANGE_PASSWORD: "ChangePassword",
   CHANGE_PIN: "ChangePin",
   CHOOSE_MARGIN_COLLATERAL_COIN: "ChooseMarginCollateralCoin", // NOTE: do we use this?

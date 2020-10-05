@@ -87,7 +87,6 @@ import BiometricAuthentication from "../components/screens/BiometricAuthenticati
 import BiometricActivation from "../components/screens/BiometricActivation/BiometricActivation";
 import TwoFactorSettings from "../components/screens/TwoFactorSettings/TwoFactorSettings";
 import TwoFaAuthAppConfirmationCode from "../components/screens/TwoFaAuthAppConfirmationCode/TwoFaAuthAppConfirmationCode";
-import ChangeAvatar from "../components/screens/ChangeAvatar/ChangeAvatar";
 import CameraScreen from "../components/screens/CameraScreen/CameraScreen";
 import ConfirmCamera from "../components/screens/ConfirmCamera/ConfirmCamera";
 import LoyaltyProgram from "../components/screens/LoyaltyProgram/LoyaltyProgram";
@@ -249,7 +248,6 @@ export const screens = {
    */
 
   Profile,
-  ChangeAvatar,
   CellphoneEnter,
   CellphoneVerify,
   SelectCountry,
