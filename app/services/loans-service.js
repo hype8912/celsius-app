@@ -146,7 +146,7 @@ function getLoanSettings(loanId) {
  * @returns {Promise}
  */
 function prepayInterest(numberOfInstallments, coin, id) {
-  return axios.post(`${apiUrl}/loans/${id}/payment/prepayment`, {
+  return axios.post(`${apiUrl}/loans/${id}/loan-payment/prepayment`, {
     numberOfInstallments,
     coin,
   });
@@ -162,7 +162,9 @@ function prepayInterest(numberOfInstallments, coin, id) {
  * @returns {Promise}
  */
 function payPrincipal(id) {
-  return axios.post(`${apiUrl}/loans/${id}/payment/receiving_principal_back`);
+  return axios.post(
+    `${apiUrl}/loans/${id}/loan-payment/receiving_principal_back`
+  );
 }
 
 /**
@@ -172,9 +174,12 @@ function payPrincipal(id) {
  * @param {string} verification.twoFactorCode - eg '123456'
  */
 function lockMarginCallCollateral(id, coin) {
-  return axios.post(`${apiUrl}/loans/${id}/payment/margin_call_collateral`, {
-    coin,
-  });
+  return axios.post(
+    `${apiUrl}/loans/${id}/loan-payment/margin_call_collateral`,
+    {
+      coin,
+    }
+  );
 }
 
 /**
@@ -188,7 +193,7 @@ function lockMarginCallCollateral(id, coin) {
  * @returns {Promise}
  */
 function payMonthlyInterest(id, coin) {
-  return axios.post(`${apiUrl}/loans/${id}/payment/monthly_interest`, {
+  return axios.post(`${apiUrl}/loans/${id}/loan-payment/monthly_interest`, {
     coin,
   });
 }
