@@ -27,6 +27,7 @@
 		25D2D68315084CD48AEB2F05 /* Barlow-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 74B26A742359401699D7D2E4 /* Barlow-SemiBold.ttf */; };
 		290426F05B6C4CB7AE76250D /* BarlowSemiCondensed-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CD435F8DF33E4A0D903CF670 /* BarlowSemiCondensed-BlackItalic.otf */; };
 		2AE8F293C9534CD981F88954 /* Barlow-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 023A7AE11FCD42A79527E53A /* Barlow-ExtraLightItalic.ttf */; };
+		2CA1EC452528599500FD3549 /* UDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA1EC442528599500FD3549 /* UDID.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -114,6 +115,13 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = celsius;
 		};
+		2CA1EC40252771D400FD3549 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CA1EC3C252771D400FD3549 /* RCTDeviceUUID.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
+			remoteInfo = RCTDeviceUUID;
+		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -146,6 +154,9 @@
 		25A2D4734C286DEE9074B6BA /* libPods-celsius-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-celsius-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		276A294C6A4A401A91AD1FB4 /* Barlow-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Barlow-Italic.ttf"; path = "../assets/fonts/Barlow/Barlow-Italic.ttf"; sourceTree = "<group>"; };
 		281D4E07A8D35935BA4AFE02 /* Pods-celsius-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-celsius-tvOS.release.xcconfig"; path = "Target Support Files/Pods-celsius-tvOS/Pods-celsius-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		2CA1EC3C252771D400FD3549 /* RCTDeviceUUID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTDeviceUUID.xcodeproj; path = "../node_modules/react-native-device-uuid/RCTDeviceUUID.xcodeproj"; sourceTree = "<group>"; };
+		2CA1EC432528599400FD3549 /* UDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDID.h; sourceTree = "<group>"; };
+		2CA1EC442528599500FD3549 /* UDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UDID.m; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* celsius-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "celsius-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* celsius-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "celsius-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D4FC982D5CC4EDB80545D03 /* Pangram-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pangram-ExtraBold.otf"; path = "../assets/fonts/Pangram/Pangram-ExtraBold.otf"; sourceTree = "<group>"; };
@@ -295,6 +306,7 @@
 		13B07FAE1A68108700A75B9A /* celsius */ = {
 			isa = PBXGroup;
 			children = (
+				2CA1EC472528634200FD3549 /* NativeModules */,
 				A2DEC500237EB2FE002537E9 /* fonts */,
 				A25E3D7F237AF18600B3EDEA /* Celsius Network.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -309,6 +321,23 @@
 				1AFC217E24D03ADD00C4C796 /* celsius-Bridging-Header.h */,
 			);
 			name = celsius;
+			sourceTree = "<group>";
+		};
+		2CA1EC3D252771D400FD3549 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2CA1EC41252771D400FD3549 /* libRCTDeviceUUID.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2CA1EC472528634200FD3549 /* NativeModules */ = {
+			isa = PBXGroup;
+			children = (
+				2CA1EC432528599400FD3549 /* UDID.h */,
+				2CA1EC442528599500FD3549 /* UDID.m */,
+			);
+			name = NativeModules;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -342,6 +371,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				2CA1EC3C252771D400FD3549 /* RCTDeviceUUID.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -594,6 +624,12 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2CA1EC3D252771D400FD3549 /* Products */;
+					ProjectRef = 2CA1EC3C252771D400FD3549 /* RCTDeviceUUID.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* celsius */,
@@ -603,6 +639,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		2CA1EC41252771D400FD3549 /* libRCTDeviceUUID.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTDeviceUUID.a;
+			remoteRef = 2CA1EC40252771D400FD3549 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -734,7 +780,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -970,6 +1016,7 @@
 				1AFC218024D03ADE00C4C796 /* SwiftVersion.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				2CA1EC452528599500FD3549 /* UDID.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

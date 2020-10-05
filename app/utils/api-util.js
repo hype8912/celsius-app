@@ -88,10 +88,12 @@ async function requestInterceptor(req) {
  * Sets marketing and Device IDs: AFID, IDFA, AAID and device id
  */
 async function setDeviceIds() {
-  let deviceId = store.getState().app.deviceId;
-  let AFID = store.getState().app.appsFlyerUID;
-  let IDFA = Platform.OS === "ios" && store.getState().app.advertisingId;
-  let AAID = Platform.OS === "android" && store.getState().app.advertisingId;
+  let deviceId = await store.getState().app.deviceId;
+  let AFID = await store.getState().app.appsFlyerUID;
+  let IDFA =
+    Platform.OS === "ios" && (await store.getState().app.advertisingId);
+  let AAID =
+    Platform.OS === "android" && (await store.getState().app.advertisingId);
 
   if (!AFID) {
     await store.dispatch(actions.setAppsFlyerUID());
@@ -100,7 +102,7 @@ async function setDeviceIds() {
 
   if (!deviceId) {
     store.dispatch(actions.setDeviceId());
-    deviceId = store.getState().app.deviceId;
+    deviceId = await store.getState().app.deviceId;
   }
 
   if (Platform.OS === "android" && !AAID) {

@@ -167,10 +167,15 @@ function setAdvertisingId() {
  * Set Device ID
  */
 function setDeviceId() {
-  const deviceId = DeviceInfo.getUniqueId();
-  return {
-    type: ACTIONS.SET_DEVICE_ID,
-    deviceId,
+  return async dispatch => {
+    const deviceId =
+      Platform.OS === "ios"
+        ? await appUtil.getUniqueDeviceIdentifier()
+        : DeviceInfo.getUniqueId();
+    dispatch({
+      type: ACTIONS.SET_DEVICE_ID,
+      deviceId,
+    });
   };
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, NativeModules } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import twitter from "react-native-simple-twitter";
 import CodePush from "react-native-code-push";
@@ -36,6 +36,7 @@ export default {
   updateCelsiusApp,
   shouldUpdateCelsiusApp,
   checkAndRefreshAuthToken,
+  getUniqueDeviceIdentifier,
 };
 
 /**
@@ -244,4 +245,18 @@ async function getRevisionId() {
     codePushVersion,
     revisionId: `${codePushVersion.version}@${codePushVersion.label}`,
   };
+}
+
+/**
+ * Get Unique Device Identifier for iOS device from UDID.m/h files.
+ */
+async function getUniqueDeviceIdentifier() {
+  const UDID = NativeModules.UDID;
+  try {
+    const uniqueIdentifier = await UDID.get();
+    return uniqueIdentifier;
+  } catch (e) {
+    mixpanelAnalytics.logError("getUniqueDeviceIdentifier", e);
+    return null;
+  }
 }
