@@ -228,7 +228,6 @@ class WalletLanding extends Component {
     if (!walletSummary || !user || !currenciesRates) {
       return <LoadingScreen fabType="hide" />;
     }
-
     return (
       <RegularLayout
         pullToRefresh={() => actions.getWalletSummary()}

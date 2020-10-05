@@ -9,7 +9,7 @@ import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletS
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
-import walletUtil from "../../../utils/wallet-util";
+import walletUtil from "../../../utils/wallet-util/wallet-util";
 import mockUIStore from "../../../../celsius-app-creds/mock-data/mockUIStore";
 import { KYC_STATUSES } from "../../../constants/DATA";
 

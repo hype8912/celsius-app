@@ -1,5 +1,5 @@
 import ACTIONS from "../../constants/ACTIONS";
-import walletUtil from "../../utils/wallet-util";
+import walletUtil from "../../utils/wallet-util/wallet-util";
 
 function initialState() {
   return {

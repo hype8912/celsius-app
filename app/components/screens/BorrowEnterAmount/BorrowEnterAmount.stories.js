@@ -4,7 +4,7 @@ import _ from "lodash";
 import BorrowEnterAmount from "./BorrowEnterAmount";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
-import walletUtil from "../../../utils/wallet-util";
+import walletUtil from "../../../utils/wallet-util/wallet-util";
 import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
 import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
 import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";

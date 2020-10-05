@@ -9,7 +9,7 @@ import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGe
 import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
 import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
 
-import walletUtil from "../../../utils/wallet-util";
+import walletUtil from "../../../utils/wallet-util/wallet-util";
 
 const initialState = {
   user: {

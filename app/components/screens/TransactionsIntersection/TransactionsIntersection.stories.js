@@ -9,7 +9,7 @@ import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore
 import mockTransactionsStore from "../../../../celsius-app-creds/mock-data/mockTransactionsStore";
 import TransactionsIntersection from "./TransactionsIntersection";
 import { TRANSACTION_TYPES } from "../../../constants/DATA";
-import walletUtil from "../../../utils/wallet-util";
+import walletUtil from "../../../utils/wallet-util/wallet-util";
 import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
 
 const initialState = {

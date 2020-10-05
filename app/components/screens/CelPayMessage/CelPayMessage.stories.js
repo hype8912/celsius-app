@@ -4,7 +4,7 @@ import CelPayMessage from "./CelPayMessage";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockWalletStore from "../../../../celsius-app-creds/mock-data/mockWalletStore";
-import walletUtil from "../../../utils/wallet-util";
+import walletUtil from "../../../utils/wallet-util/wallet-util";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
 import mockComplianceStore from "../../../../celsius-app-creds/mock-data/mockComplianceStore";
 import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";

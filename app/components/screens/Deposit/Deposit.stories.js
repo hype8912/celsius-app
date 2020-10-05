@@ -10,7 +10,7 @@ import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore
 import mockLoyaltyStore from "../../../../celsius-app-creds/mock-data/mockLoyaltyStore";
 import mockGeneralDataStore from "../../../../celsius-app-creds/mock-data/mockGeneralDataStore";
 import addressUtil from "../../../utils/address-util";
-import walletUtil from "../../../utils/wallet-util";
+import walletUtil from "../../../utils/wallet-util/wallet-util";
 import { KYC_STATUSES } from "../../../constants/DATA";
 
 const initialState = {

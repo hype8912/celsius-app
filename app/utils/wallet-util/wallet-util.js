@@ -7,7 +7,7 @@ const walletUtil = {
 /**
  * Maps wallet summary from server
  *
- * @param {Object} wallet summary
+ * @param {Object} summary - wallet summary
  * @returns {Object}
  */
 function mapWalletSummary(summary) {
