@@ -838,95 +838,37 @@ export default {
 
   FaceRecognitionViewBox: "0 0 53 49",
   FaceRecognition: (
-    <G
-      id="Biometrics"
-      stroke="none"
-      stroke-width="1"
-      fill="none"
-      fill-rule="evenodd"
-    >
-      <G
-        id="Biometrics---Explanation-screen---Enable-Face-recognition"
-        transform="translate(-161.000000, -209.000000)"
-      >
-        <G id="Group-2" transform="translate(21.000000, 180.000000)">
-          <G
-            id="icon/biometric/face-recognition-copy"
-            transform="translate(141.000000, 30.000000)"
-          >
-            <G
-              id="icon/biometric/face-recognition"
-              transform="translate(0.800000, 0.800000)"
-            >
-              <Path
-                d="M25.00026,3.80052 C35.49301,3.80052 44.00026,12.30777 44.00026,22.80052 C44.00026,33.29327 35.49301,41.80052 25.00026,41.80052 C14.50751,41.80052 6.00026,33.29327 6.00026,22.80052 C6.00026,12.30777 14.50751,3.80052 25.00026,3.80052 Z"
-                id="Stroke-1"
-                stroke="#4156A6"
-                stroke-width="2"
-              />
-              <Path d="" id="Path-5" stroke="#979797" />
-              <Path d="" id="Path-6" stroke="#979797" />
-              <Line
-                x1="16.6559783"
-                y1="16.7183904"
-                x2="16.6559783"
-                y2="21.7183904"
-                id="Path-7"
-                stroke="#4156A6"
-                stroke-width="2"
-              />
-              <Line
-                x1="32.6559783"
-                y1="16.7183904"
-                x2="32.6559783"
-                y2="21.7183904"
-                id="Path-7"
-                stroke="#4156A6"
-                stroke-width="2"
-              />
-              <Path
-                d="M25.4059783,16.7183904 L25.4059783,24.7183904 C25.4059783,25.8229599 24.5105478,26.7183904 23.4059783,26.7183904 L23.4059783,26.7183904 L23.4059783,26.7183904"
-                id="Path-8"
-                stroke="#4156A6"
-                stroke-width="2"
-              />
-              <Path
-                d="M18.4059783,30.7183904 C20.5793614,32.0517237 22.6370674,32.7183904 24.5790964,32.7183904 C26.5211254,32.7183904 28.4634194,32.0517237 30.4059783,30.7183904"
-                id="Path-9"
-                stroke="#4156A6"
-                stroke-width="2"
-              />
-              <Polyline
-                id="Path"
-                stroke="#4156A6"
-                stroke-width="2"
-                points="49.4 10.4 49.4 0.4 39.4 0.4"
-              />
-              <Polyline
-                id="Path"
-                stroke="#4156A6"
-                stroke-width="2"
-                transform="translate(5.400000, 5.400000) scale(-1, 1) translate(-5.400000, -5.400000) "
-                points="10.4 10.4 10.4 0.4 0.4 0.4"
-              />
-              <Polyline
-                id="Path"
-                stroke="#4156A6"
-                stroke-width="2"
-                transform="translate(44.400000, 40.400000) scale(1, -1) translate(-44.400000, -40.400000) "
-                points="49.4 45.4 49.4 35.4 39.4 35.4"
-              />
-              <Polyline
-                id="Path"
-                stroke="#4156A6"
-                stroke-width="2"
-                transform="translate(5.400000, 40.400000) scale(-1, -1) translate(-5.400000, -40.400000) "
-                points="10.4 45.4 10.4 35.4 0.4 35.4"
-              />
-            </G>
-          </G>
-        </G>
-      </G>
+    <G>
+      <Path
+        className="cls-1"
+        d="M26.8,4.6a20,20,0,1,0,20,20A20,20,0,0,0,26.8,4.6Zm0,38a18,18,0,1,1,18-18A18,18,0,0,1,26.8,42.6Z"
+      />
+      <Rect className="cls-1" x="17.46" y="18.52" width="2" height="5" />
+      <Rect className="cls-1" x="33.46" y="18.52" width="2" height="5" />
+      <Path
+        className="cls-1"
+        d="M28.21,26.52v-8h-2v8a1,1,0,0,1-1,1v2A3,3,0,0,0,28.21,26.52Z"
+      />
+      <Path
+        className="cls-1"
+        d="M26.38,33.52a10.94,10.94,0,0,1-5.65-1.85l-1.05,1.7a12.91,12.91,0,0,0,6.7,2.15,11.2,11.2,0,0,0,6.39-2.18l-1.13-1.65A9.31,9.31,0,0,1,26.38,33.52Z"
+      />
+      <Polygon
+        className="cls-1"
+        points="41.2 1.2 41.2 3.2 50.2 3.2 50.2 12.2 52.2 12.2 52.2 1.2 41.2 1.2"
+      />
+      <Polygon
+        className="cls-1"
+        points="3.2 3.2 12.2 3.2 12.2 1.2 1.2 1.2 1.2 12.2 3.2 12.2 3.2 3.2"
+      />
+      <Polygon
+        className="cls-1"
+        points="50.2 46.2 41.2 46.2 41.2 48.2 52.2 48.2 52.2 37.2 50.2 37.2 50.2 46.2"
+      />
+      <Polygon
+        className="cls-1"
+        points="3.2 37.2 1.2 37.2 1.2 48.2 12.2 48.2 12.2 46.2 3.2 46.2 3.2 37.2"
+      />
     </G>
   ),
 };
