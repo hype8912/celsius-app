@@ -15,8 +15,10 @@ import Card from "../../atoms/Card/Card";
 import CopyButton from "../../atoms/CopyButton/CopyButton";
 import Separator from "../../atoms/Separator/Separator";
 import loggerUtil from "../../../utils/logger-util";
-import { STORYBOOK } from "../../../../dev-settings.json";
 import { SCREENS } from "../../../constants/SCREENS";
+import Constants from "../../../../constants";
+
+const { STORYBOOK } = Constants;
 
 @connect(
   state => ({

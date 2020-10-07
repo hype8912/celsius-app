@@ -2,7 +2,7 @@
 
 # Celsius Mobile App
 
->The Celsius mobile app enables you to calculate loan and interest rate based on your crypto holdings.
+> The Celsius mobile app enables you to calculate loan and interest rate based on your crypto holdings.
 
 [celsius.network](celsius.network)
 
@@ -13,30 +13,46 @@
 
 ### Dev commands
 
-**Starting the project**
-
-- `$ yarn start` - starts expo project (use one of `yarn start:dev` commands instead) 
-- `$ yarn start:dev` - starts expo project with the existing environment settings 
-- `$ yarn start:dev:staging` - sets staging environment and starts the project
-- `$ yarn start:dev:production` - sets production environment and starts the project
-
 **Running the app in dev environment**
 
+- `$ yarn start` - starts metro bundler project
 - `$ yarn ios` - starts ios simulator and react native debugger
 - `$ yarn android` - starts android simulator and react native debugger
+- `$ yarn test` - runs unit tests
 
 **Environment variables setup**
-- `$ yarn set:env` - runs `set-env` script 
-- `$ yarn set:env:staging` - sets staging environment variables
-- `$ yarn set:env:production` - sets production environment variables
+
+- `$ yarn creds:init` - clones credentials repo
+- `$ yarn creds:update` - pulls the latest creds
+- `$ yarn set:env`\
+  pulls the latest creds and runs `set-env` script\
+  Use `env` parameter to specify environment. One of `BETA`, `BETA_LOZA`, `BETA_SLJIVA`, `BETA_TRAVARICA`, `BETA_STORYBOOK`, `PRODUCTION`. Defaults to `BETA`\
+  eg. `yarn set:env env=BETA`
+
+**Deploy App**
+
+- `$ yarn deploy`\
+  Runs `deploy-app` script\
+  Use `env` parameter to specify environment. One of `BETA`, `BETA_LOZA`, `BETA_SLJIVA`, `BETA_TRAVARICA`, `BETA_STORYBOOK`, `PRODUCTION`. Defaults to `BETA`\
+  eg. `yarn deploy env=BETA_TRAVARICA`\
+  Use `android-only` or `ios-only` parameters to update only one platform\
+  eg. `yarn deploy env=BETA_TRAVARICA ios-only`
+
+**Code Styling**
+
+- `$ yarn lint` - checks the code for linting errors
+- `$ yarn prettier:format` - formats code according to [prettier](https://prettier.io/)
+- `$ yarn prettier:hook` - prettier hook for `pre:commit`
+
+**Hooks**
+
+- `$ yarn pre:commit` - checks code style before every commit
 
 **Other**
-- `$ yarn set:version` - for setting version and build numbers in `Info/plist` and `bundle.gradle`
-- `$ yarn lint` - checks the code for linting errors
-- `$ yarn plop` - runs plop [More...](https://github.com/amwmedia/plop). Available plops for: _TODO_
 
-### Tools
-* [React Native Debugger](https://github.com/jhen0409/react-native-debugger)
-* [API Docs v1](https://documenter.getpostman.com/view/4207695/celsius/RW1aHzQg#bf6e3009-2736-4a6e-b1a0-c0928c704550) 
-* [API Docs v3](https://documenter.getpostman.com/view/4207695/S11RLvpb) 
-* Testflight for iPhone
+- `$ yarn plop` - runs plop [More...](https://github.com/amwmedia/plop).
+
+### Useful Links
+
+- [Celsius Handbook](https://sites.google.com/mvpworkshop.co/celsius-devs-handbook/home)
+- [Celsius App Links](https://sites.google.com/mvpworkshop.co/celsius-devs-handbook/app-links)

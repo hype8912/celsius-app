@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 
 import appUtil from "../../../utils/app-util";
 import CelText from "../../atoms/CelText/CelText";
+import Constants from "../../../../constants";
+
+const { ENV } = Constants;
 
 class BuildVersion extends Component {
   static propTypes = {
@@ -42,6 +45,17 @@ class BuildVersion extends Component {
         >
           App version: {revisionId}
         </CelText>
+        {ENV !== "PRODUCTION" && (
+          <CelText
+            weight="light"
+            align="center"
+            type="H7"
+            margin={margin}
+            color={color}
+          >
+            Environment: {ENV}
+          </CelText>
+        )}
       </>
     );
   }

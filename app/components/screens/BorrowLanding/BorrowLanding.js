@@ -27,11 +27,12 @@ import CancelLoanModal from "../../modals/CancelLoanModal/CancelLoanModal";
 import InterestDueModal from "../../modals/InterestDueModal/InterestDueModal";
 import LoanAlertsModalWrapper from "../../modals/LoanAlertsModals/LoanAlertsModalWrapper";
 import Spinner from "../../atoms/Spinner/Spinner";
-import { STORYBOOK } from "../../../../dev-settings.json";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
+import Constants from "../../../../constants";
 
+const { STORYBOOK } = Constants;
 const cardWidth = widthPercentageToDP("70%");
 
 @connect(

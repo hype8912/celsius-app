@@ -159,7 +159,7 @@ class LoanAlertsModalWrapper extends Component {
     const manuelPaymentNoMoney =
       payment.hasEnough &&
       loan.loanPaymentSettings &&
-        !loan.loanPaymentSettings.automatic_interest_payment &&
+      !loan.loanPaymentSettings.automatic_interest_payment &&
       isSameDay &&
       isSameDay.threeDays;
 

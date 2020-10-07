@@ -18,10 +18,12 @@ import appUtil from "./utils/app-util";
 import branchUtil from "./utils/branch-util";
 import { disableAccessibilityFontScaling } from "./utils/styles-util";
 import { getSecureStoreKey } from "./utils/storage-util";
-import { STORYBOOK } from "../dev-settings";
+import Constants from "../constants";
 import StoryBook from "./components/screens/Storybook/Storybook";
 import { SCREENS } from "./constants/SCREENS";
 import { STORAGE_KEYS } from "./constants/DATA";
+
+const { STORYBOOK } = Constants;
 
 // eslint-disable-next-line no-console
 console.disableYellowBox = true;
@@ -43,6 +45,10 @@ class App extends Component {
     // Hide Splashscreen immediately when in STORYBOOK mode
     if (STORYBOOK) {
       SplashScreen.hide();
+
+      const updateInProgress = await appUtil.updateCelsiusApp();
+      if (updateInProgress) return;
+
       return;
     }
 

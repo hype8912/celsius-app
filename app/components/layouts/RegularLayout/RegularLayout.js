@@ -10,7 +10,6 @@ import PropTypes from "prop-types";
 import { withNavigationFocus } from "react-navigation";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { STORYBOOK } from "../../../../dev-settings.json";
 import * as appActions from "../../../redux/actions";
 
 import RegularLayoutStyle from "./RegularLayout.styles";
@@ -21,6 +20,9 @@ import OfflineMode from "../../atoms/OfflineMode/OfflineMode";
 import Spinner from "../../atoms/Spinner/Spinner";
 import animationsUtil from "../../../utils/animations-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import Constants from "../../../../constants";
+
+const { STORYBOOK } = Constants;
 
 @connect(
   state => ({

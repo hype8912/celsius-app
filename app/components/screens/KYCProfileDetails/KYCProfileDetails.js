@@ -12,10 +12,12 @@ import CelSelect from "../../molecules/CelSelect/CelSelect";
 import CelButton from "../../atoms/CelButton/CelButton";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { STORYBOOK } from "../../../../dev-settings.json";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
+import Constants from "../../../../constants";
+
+const { STORYBOOK } = Constants;
 
 @connect(
   state => ({

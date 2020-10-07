@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 
-import { STORYBOOK } from "../../dev-settings";
 import api from "./api/apiReducer";
 import ui from "./ui/uiReducer";
 import user from "./user/userReducer";
@@ -30,7 +29,10 @@ import hodl from "./hodl/hodlReducer";
 import animations from "./animations/animationsReducer";
 import deepLink from "./deepLink/deepLinkReducer";
 import buyCoins from "./buyCoins/buyCoinsReducer";
+import Constants from "../../constants";
 // NOTE(fj): plop reduxGen importing new Reducer here
+
+const { STORYBOOK } = Constants;
 
 const appReducers = combineReducers({
   api,

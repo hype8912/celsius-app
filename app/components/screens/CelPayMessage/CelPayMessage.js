@@ -9,8 +9,10 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../../components/atoms/CelButton/CelButton";
 import CelInput from "../../atoms/CelInput/CelInput";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { STORYBOOK } from "../../../../dev-settings.json";
 import { SCREENS } from "../../../constants/SCREENS";
+import Constants from "../../../../constants";
+
+const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
