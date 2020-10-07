@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Linking, View } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -154,20 +154,6 @@ class BiometricAuthentication extends Component {
             </View>
           </InfoBox>
         )}
-
-        <CelText align={"center"}>
-          By enabling some of the biometrics options you agree with{" "}
-          {
-            <CelText
-              color={getColor(COLOR_KEYS.LINK)}
-              onPress={() => {
-                Linking.openURL("https://celsius.network/terms-of-use/");
-              }}
-            >
-              Terms and Conditions.
-            </CelText>
-          }
-        </CelText>
         <BiometricsActivateFingerprintModal actions={actions} />
       </RegularLayout>
     );
