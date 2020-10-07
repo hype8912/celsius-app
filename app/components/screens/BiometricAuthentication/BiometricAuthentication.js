@@ -25,9 +25,7 @@ import BiometricsActivateFingerprintModal from "../../modals/BiometricsActivateF
 
 @connect(
   state => ({
-    securityOverview: state.security.securityOverview,
     user: state.user.profile,
-    formData: state.forms.formData,
     biometrics: state.biometrics.biometrics,
     appState: state.app.appState,
   }),

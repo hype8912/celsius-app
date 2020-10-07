@@ -92,6 +92,7 @@ import BorrowBankAccountStories from "./BorrowBankAccount/BorrowBankAccount.stor
 import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
 import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
 import PrincipalPaymentStories from "./PrincipalPayment/PrincipalPayment.stories";
+import BiometricAuthentication from "./BiometricAuthentication/BiometricAuthentication.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -603,3 +604,7 @@ storiesOf("PrincipalPayment", module).add(
   "PrincipalPayment",
   PrincipalPaymentStories.regular
 );
+
+storiesOf("BiometricAuthentication", module)
+  .add("TouchID", BiometricAuthentication.touchId)
+  .add("FaceID", BiometricAuthentication.faceId);
