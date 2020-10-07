@@ -25,6 +25,7 @@ import { SCREENS } from "../../../constants/SCREENS";
     twoFAStatus: state.security.twoFAStatus,
     is2FAEnabled: state.user.profile.two_factor_enabled,
     hodlStatus: state.hodl.hodlStatus,
+    user: state.user.profile,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -135,10 +136,16 @@ class SecurityOverview extends Component {
   };
 
   render() {
-    const { actions, securityOverview, twoFAStatus } = this.props;
+    const { actions, securityOverview, twoFAStatus, user } = this.props;
+
     const style = SecurityOverviewStyle();
+
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
+
     const fixNowParams = this.getFixNowParams();
+    const isChangePasswordVisible =
+      securityOverview.is_using_password_auth && !user.registered_with_social;
+
     return (
       <RegularLayout>
         <View style={style.container}>
@@ -186,7 +193,7 @@ class SecurityOverview extends Component {
             enabled={securityOverview.hodl_mode_active}
           />
 
-          {securityOverview.is_using_password_auth && (
+          {isChangePasswordVisible && (
             <>
               <Separator text="PASSWORD" />
               <SecurityStrengthMeter
