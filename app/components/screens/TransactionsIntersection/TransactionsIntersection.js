@@ -26,6 +26,7 @@ import TransactionDetailsCelPay from "../TransactionDetailsCelPay/TransactionDet
     callsInProgress: state.api.callsInProgress,
     totalInterestEarned: state.wallet.summary.total_interest_earned,
     currencies: state.currencies.rates,
+    withdrawalSettings: state.generalData.withdrawalSettings,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -99,6 +100,7 @@ class TransactionsIntersection extends Component {
       navigation,
       totalInterestEarned,
       actions,
+      withdrawalSettings,
     } = this.props;
     const transactionId = navigation.getParam("id");
     // const transactionType = navigation.getParam("type");
@@ -177,6 +179,7 @@ class TransactionsIntersection extends Component {
             cancelWithdrawal={actions.cancelWithdrawal}
             navigateTo={actions.navigateTo}
             callsInProgress={callsInProgress}
+            withdrawalSettings={withdrawalSettings}
           />
         );
       case TRANSACTION_TYPES.INTEREST:
