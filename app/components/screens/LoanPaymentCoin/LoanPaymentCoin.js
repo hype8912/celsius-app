@@ -12,7 +12,6 @@ import Icon from "../../atoms/Icon/Icon";
 import Card from "../../atoms/Card/Card";
 import { COIN_CARD_TYPE, LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 import CollateralCoinCard from "../../molecules/CollateralCoinCard/CollateralCoinCard";
-import { LOAN_INTEREST_COINS } from "../../../constants/DATA";
 import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
@@ -80,13 +79,22 @@ class LoanPaymentCoin extends Component {
   };
 
   render() {
-    const { walletSummary, currencyRates, actions } = this.props;
+    const {
+      walletSummary,
+      currencyRates,
+      actions,
+      loanCompliance,
+    } = this.props;
     const { isLoading } = this.state;
     const style = LoanPaymentCoinStyle();
 
     const availableCoins = walletSummary.coins
       .filter(coin => coin.amount_usd > 0)
-      .filter(coin => LOAN_INTEREST_COINS.includes(coin.short))
+      .filter(
+        coin =>
+          loanCompliance.loan_interest_coins.includes(coin.short) &&
+          coin.short !== "CEL"
+      )
       .sort((a, b) => Number(b.amount_usd) - Number(a.amount_usd));
 
     return (
