@@ -53,7 +53,7 @@ class CommunityDashboard extends Component {
     if (name === "REWARDS") {
       this.setState({
         primaryNumber: formatter.usd(communityStats.total_interests_usd),
-        explanation: `Average user earnings in the last 12 months`,
+        explanation: "Total community earn in the last 12 months",
       });
     }
     if (name === `ASSETS AS OF ${communityStats.community_settings.date}`) {
