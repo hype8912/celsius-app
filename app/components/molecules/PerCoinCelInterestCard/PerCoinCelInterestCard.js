@@ -203,7 +203,7 @@ class PerCoinCelInterestCard extends Component {
           onChange={this.toggleAll}
           value={formData.interestInCel}
           fillColor={style.fillColor.color}
-          rightText="Earn rewards in CEL"
+          rightText="Earn all rewards in CEL"
           textWeight="400"
           checkedImage={this.renderImage()}
         />

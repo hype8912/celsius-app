@@ -115,7 +115,7 @@ class GetCoinsConfirmModal extends Component {
             <View style={style.transferDataItem}>
               <View>
                 <CelText type={"H6"} align={"left"}>
-                  Fee:
+                  Provider Fee:
                 </CelText>
                 <CelText type={"H7"} align={"left"} italic margin="5 0 0 0">
                   3.5% or $10.00 minimum
