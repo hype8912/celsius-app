@@ -60,10 +60,10 @@ async function checkBiometricsKey() {
 /**
  * Delete biometrics key from device
  */
-async function deleteBiometricsKey(onSuccess) {
+async function deleteBiometricsKey() {
   try {
-    await ReactNativeBiometrics.deleteKeys();
-    if (onSuccess) onSuccess();
+    const resultObject = await ReactNativeBiometrics.deleteKeys();
+    return resultObject;
   } catch (e) {
     mixpanelAnalytics.logError("deleteBiometricsKey", e);
   }

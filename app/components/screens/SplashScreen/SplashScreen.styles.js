@@ -1,5 +1,9 @@
 import { Dimensions } from "react-native";
-import { getColor, getThemedStyle } from "../../../utils/styles-util";
+import {
+  getColor,
+  getThemedStyle,
+  heightPercentageToDP,
+} from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { THEMES } from "../../../constants/UI";
 
@@ -53,6 +57,7 @@ const base = {
     zIndex: 2,
     // width: "100%",
     height: 65,
+    marginBottom: heightPercentageToDP("8%"),
   },
   celsiusNetworkImage: {
     // width: "100%",

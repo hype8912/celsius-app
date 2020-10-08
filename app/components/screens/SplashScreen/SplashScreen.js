@@ -6,6 +6,7 @@ import SplashScreen from "react-native-splash-screen";
 import SplashScreenStyle from "./SplashScreen.styles";
 import * as appActions from "../../../redux/actions";
 import appUtil from "../../../utils/app-util";
+import { widthPercentageToDP } from "../../../utils/styles-util";
 
 @connect(
   state => ({
@@ -43,7 +44,7 @@ class CustomSplashScreen extends Component {
 
   moveLogo = () => {
     Animated.timing(this.state.logoAnimation, {
-      toValue: -80,
+      toValue: -widthPercentageToDP("17%"),
       duration: this.animationDuration / 2,
       useNativeDriver: true,
     }).start();
@@ -57,7 +58,7 @@ class CustomSplashScreen extends Component {
         useNativeDriver: true,
       }),
       Animated.timing(this.state.textTranslateAnimation, {
-        toValue: 50,
+        toValue: widthPercentageToDP("13%"),
         duration: this.animationDuration / 2,
         useNativeDriver: true,
       }),

@@ -74,12 +74,12 @@ function activateBiometrics(publicKey, type) {
     try {
       dispatch(startApiCall(API.ACTIVATE_BIOMETRICS));
       await biometricsService.activateBiometrics(publicKey, type, verification);
-
       dispatch({
         type: ACTIONS.ACTIVATE_BIOMETRICS_SUCCESS,
         biometricsEnabled: true,
       });
       mixpanelAnalytics.biometricsActivated(type);
+      return true;
     } catch (e) {
       dispatch(showMessage("error", e.msg));
       dispatch(apiError(API.ACTIVATE_BIOMETRICS, e));
@@ -108,6 +108,7 @@ function disableBiometrics() {
         biometricsEnabled: false,
       });
       mixpanelAnalytics.biometricsDeactivated();
+      return true;
     } catch (e) {
       dispatch(showMessage("error", e.msg));
       dispatch(apiError(API.DEACTIVATE_BIOMETRICS, e));

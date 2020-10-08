@@ -98,7 +98,7 @@ class WiringBankInformation extends Component {
         </View>
         <View style={{ marginBottom: 30 }}>
           <CelText weight={"bold"}>Beneficiary Bank Address:</CelText>
-          <CelText>565 Fifth Avenue, New York, NY 10017</CelText>
+          <CelText>1 Bartholomew Lane, London, UK, EC2N 2AX</CelText>
         </View>
 
         <View style={{ marginBottom: 30 }}>
