@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -17,6 +17,10 @@ import {
   requestForPermission,
 } from "../../../utils/device-permissions";
 import { SCREENS } from "../../../constants/SCREENS";
+import Card from "../../atoms/Card/Card";
+import { getColor } from "../../../utils/styles-util";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import Icon from "../../atoms/Icon/Icon";
 
 @connect(
   state => ({
@@ -109,7 +113,28 @@ class WithdrawNewAddressSetup extends Component {
             Scan QR Code
           </CelText>
         </TouchableOpacity>
-
+        <Card color={getColor(COLOR_KEYS.BANNER_INFO)}>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 1, paddingRight: 5 }}>
+              <Icon
+                name={"Info"}
+                width="25"
+                height="25"
+                fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+              />
+            </View>
+            <View style={{ flex: 6 }}>
+              <CelText
+                type={"H5"}
+                weight={"300"}
+                color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
+              >
+                For your security, if changes are made to a withdrawal address,
+                withdrawals of that coin will be unavailable for 24 hours.
+              </CelText>
+            </View>
+          </View>
+        </Card>
         <CelButton
           margin={"20 0 20 0"}
           onPress={() =>

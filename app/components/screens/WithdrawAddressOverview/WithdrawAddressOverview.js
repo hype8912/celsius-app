@@ -7,8 +7,6 @@ import formatter from "../../../utils/formatter";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import Card from "../../atoms/Card/Card";
-import Icon from "../../atoms/Icon/Icon";
 import NoWithdrawalAddressCard from "../../atoms/NoWithdrawalAddressCard/NoWithdrawalAddressCard";
 import WithdrawalAddressCard from "../../atoms/WithdrawalAddressCard/WithdrawalAddressCard";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
@@ -197,30 +195,6 @@ class WithdrawAddressOverview extends Component {
     return (
       <RegularLayout>
         <View>
-          <Card color={getColor(COLOR_KEYS.BANNER_INFO)}>
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ flex: 1, paddingRight: 5 }}>
-                <Icon
-                  name={"Info"}
-                  width="25"
-                  height="25"
-                  fill={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                />
-              </View>
-              <View style={{ flex: 6 }}>
-                <CelText
-                  type={"H5"}
-                  weight={"300"}
-                  color={getColor(COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND)}
-                >
-                  For your security, if changes are made to a withdrawal
-                  address, withdrawals of that coin will be unavailable for 24
-                  hours.
-                </CelText>
-              </View>
-            </View>
-          </Card>
-
           {this.renderFromFixNowFlow()}
 
           {noWithdrawalAddresses && noWithdrawalAddresses.length > 0 && (
