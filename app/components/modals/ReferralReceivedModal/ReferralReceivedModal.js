@@ -49,8 +49,8 @@ class ReferralReceivedModal extends Component {
                 {referralLink.referred_award_amount}{" "}
                 {referralLink.referred_award_base_currency}{" "}
               </CelText>
-              once you complete identity verification and deposit an amount
-              equal or greater than 200 USD.
+              once you complete identity verification and transfer an amount
+              equal to or greater than 200 USD.
             </CelText>
           )}
 
