@@ -23,6 +23,8 @@ import getCoinsUtil from "../../../utils/get-coins-util";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import store from "../../../redux/store";
+import GetCoinsEnterAmountInfoModal from "../../modals/GetCoinsEnterAmountInfoModal/GetCoinsEnterAmountInfoModal";
 
 @connect(
   state => ({
@@ -44,7 +46,12 @@ class GetCoinsEnterAmount extends Component {
 
   static navigationOptions = () => ({
     title: "Buy Coins",
-    right: "profile",
+    right: "info",
+    onInfo: () => {
+      store.dispatch(
+        appActions.openModal(MODALS.GET_COINS_ENTER_AMOUNT_INFO_MODAL)
+      );
+    },
   });
 
   constructor(props) {
@@ -434,6 +441,7 @@ class GetCoinsEnterAmount extends Component {
           purpose={KEYPAD_PURPOSES.BUY_COINS}
           autofocus
         />
+        <GetCoinsEnterAmountInfoModal close={actions.closeModal} />
         <GetCoinsConfirmModal />
       </RegularLayout>
     );
