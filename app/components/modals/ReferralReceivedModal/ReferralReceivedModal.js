@@ -46,11 +46,11 @@ class ReferralReceivedModal extends Component {
               The referral code has been successfully activated. You will
               receive a reward of{" "}
               <CelText weight="bold">
+                {"$"}
                 {referralLink.referred_award_amount}{" "}
-                {referralLink.referred_award_base_currency}{" "}
               </CelText>
               once you complete identity verification and transfer an amount
-              equal to or greater than 200 USD.
+              equal to or greater than $200.
             </CelText>
           )}
 
