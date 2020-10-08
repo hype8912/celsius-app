@@ -103,7 +103,7 @@ class CoinGridCard extends Component {
       graphData && dateArray.length > 0 && priceArray.length > 0;
 
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
-    const fontSize = displayName.length < 24 ? "H6" : "H7";
+    const fontSize = displayName.length < 20 ? "H6" : "H7";
     let rate;
     rate = !interestRate.inCEL
       ? interestRate.compound_rate
