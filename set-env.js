@@ -30,6 +30,8 @@ const ENV_FILES = {
   // These will be removed when we fix google packages
   GOOGLE_SERVICES_FALLBACK: "google-services.json",
   GOOGLE_INFO_PLIST_FALLBACK: "GoogleService-Info.plist",
+  // On iOS 14 images are not showing. This temp fix will be removed when we increase version of RN to min 0.64
+  RCT_UI_IMAGE_VIEW_ANIMATED: "RCTUIImageViewAnimated.m",
 };
 
 let env = process.argv.find(a => a.includes("env="));
@@ -75,6 +77,12 @@ function getDestination(fileKey) {
 
     case "GOOGLE_INFO_PLIST":
       return path.resolve(__dirname, `ios/${pathToFile}`);
+
+    case "RCT_UI_IMAGE_VIEW_ANIMATED":
+      return path.resolve(
+        __dirname,
+        `node_modules/react-native/Libraries/Image/${pathToFile}`
+      );
 
     default:
       return path.resolve(__dirname, pathToFile);
