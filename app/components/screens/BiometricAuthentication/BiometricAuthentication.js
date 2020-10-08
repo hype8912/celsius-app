@@ -67,14 +67,15 @@ class BiometricAuthentication extends Component {
         onSuccess: async () => {
           try {
             const publicKey = await createBiometricsKey();
-            await actions.activateBiometrics(
+            const changeSuccessful = await actions.activateBiometrics(
               publicKey,
               biometrics.biometryType
             );
-            actions.showMessage("success", enableBiometricsText);
-            actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
+            if (changeSuccessful)
+              actions.showMessage("success", enableBiometricsText);
+            actions.navigateTo(SCREENS.BIOMETRICS_AUTHENTICATION);
           } catch (e) {
-            actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
+            actions.navigateTo(SCREENS.BIOMETRICS_AUTHENTICATION);
             if (
               e &&
               e.message === BIOMETRIC_ERRORS.ERROR_GENERATING_PUBLIC_KEYS
@@ -93,11 +94,11 @@ class BiometricAuthentication extends Component {
       actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: async () => {
           try {
-            await deleteBiometricsKey(() => {
-              actions.disableBiometrics();
-            });
-            actions.resetToScreen(SCREENS.BIOMETRICS_AUTHENTICATION);
-            actions.showMessage("success", disableBiometricsText);
+            const biometricDisabled = await actions.disableBiometrics();
+            if (biometricDisabled)
+              actions.showMessage("success", disableBiometricsText);
+            await deleteBiometricsKey();
+            actions.navigateTo(SCREENS.BIOMETRICS_AUTHENTICATION);
           } catch (e) {
             mixpanelAnalytics.logError(
               "handleSwitchChangeBiometrics - disable",
