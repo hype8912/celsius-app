@@ -51,11 +51,9 @@ const base = {
     alignItems: "center",
     justifyContent: "center",
     zIndex: 2,
-    // width: "100%",
     height: 65,
   },
   celsiusNetworkImage: {
-    // width: "100%",
     height: 65,
   },
 };

@@ -43,7 +43,7 @@ class CustomSplashScreen extends Component {
 
   moveLogo = () => {
     Animated.timing(this.state.logoAnimation, {
-      toValue: -80,
+      toValue: -70,
       duration: this.animationDuration / 2,
       useNativeDriver: true,
     }).start();
@@ -57,7 +57,7 @@ class CustomSplashScreen extends Component {
         useNativeDriver: true,
       }),
       Animated.timing(this.state.textTranslateAnimation, {
-        toValue: 50,
+        toValue: 40,
         duration: this.animationDuration / 2,
         useNativeDriver: true,
       }),
