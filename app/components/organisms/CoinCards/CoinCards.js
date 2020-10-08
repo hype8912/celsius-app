@@ -55,6 +55,7 @@ class CoinCards extends Component {
 
         if (
           !depositCompliance.coins.includes(coin.short) &&
+          coin.amount_usd &&
           coin.amount_usd.isGreaterThan(0)
         ) {
           allowedCoins.push(coin);
