@@ -1387,10 +1387,10 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@onfido/react-native-sdk@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@onfido/react-native-sdk/-/react-native-sdk-1.2.3.tgz#3b7424fdf554c22aa5f56de2e90a67041cb6c345"
-  integrity sha512-JY6ac/Be4qpywH4rFyUcyKihPOb9tI8FhbcMt6a3SnzcHHj0vvtStqust9PHQdY3JnkhKEQkQb5ZvdHo1aDL9g==
+"@onfido/react-native-sdk@1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@onfido/react-native-sdk/-/react-native-sdk-1.3.2.tgz#664607ff3da309603e27be30e49841abddf819a8"
+  integrity sha512-xU57cZttPkvL0vteqSX9vMV9hx63whTxML7y4oZ1B7zWtTfbScmXGsXrufxyk85QDFKdWTtSLdTUDYLvqcemDQ==
 
 "@reach/router@^1.2.1":
   version "1.3.3"
