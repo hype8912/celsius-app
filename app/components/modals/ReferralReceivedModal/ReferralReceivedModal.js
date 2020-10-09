@@ -33,9 +33,6 @@ class ReferralReceivedModal extends Component {
     const style = ReferralReceivedModalStyle();
 
     if (!referralLink) return null;
-    const owner = referralLink.owner
-      ? referralLink.owner.display_name
-      : "a friend";
 
     return (
       <CelModal name={MODALS.REFERRAL_RECEIVED_MODAL}>
@@ -46,13 +43,14 @@ class ReferralReceivedModal extends Component {
 
           {referralLink.link_type === DEEP_LINKS.INDIVIDUAL_REFERRAL && (
             <CelText align="center">
-              You have been referred by {owner} and received{" "}
+              The referral code has been successfully activated. You will
+              receive a reward of{" "}
               <CelText weight="bold">
+                {"$"}
                 {referralLink.referred_award_amount}{" "}
-                {referralLink.referred_award_base_currency}{" "}
               </CelText>
-              as a reward. To see it in your wallet, please sign up and verify
-              your profile.
+              once you complete identity verification and transfer an amount
+              equal to or greater than $200.
             </CelText>
           )}
 
