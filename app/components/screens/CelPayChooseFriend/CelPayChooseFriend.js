@@ -140,7 +140,9 @@ class CelPayChooseFriend extends Component {
     const { actions } = this.props;
 
     actions.updateFormField("friend", undefined);
-    actions.navigateTo(SCREENS.CEL_PAY_ENTER_AMOUNT);
+    actions.navigateTo(SCREENS.CEL_PAY_ENTER_AMOUNT, {
+      celPayType: CEL_PAY_TYPES.LINK,
+    });
 
     mixpanelAnalytics.choseCelPayType(CEL_PAY_TYPES.LINK);
   };
