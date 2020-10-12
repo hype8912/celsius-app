@@ -10,6 +10,7 @@ import { SCREENS } from "../constants/SCREENS";
 
 export default {
   logme,
+  log,
   err,
 };
 
@@ -21,6 +22,11 @@ export default {
 function logme(payload) {
   axios.post("https://api.staging.celsius.network/api/v1/logme", payload);
 }
+
+/**
+ * NOTE should remove with CN-8094
+ */
+function log() {}
 
 function errorValidation(error) {
   const stringIgnore = [

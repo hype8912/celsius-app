@@ -34,13 +34,18 @@ async function getNotificationToken() {
 /**
  * On iOS platform, ask for notification permissions, get notification token and store it to storage
  */
+let fetchingToken = false
 async function getIOSPushNotificationToken() {
-  const perm = await PushNotificationIOS.requestPermissions();
+  if (!fetchingToken) {
+    fetchingToken = true
+    const perm = await PushNotificationIOS.requestPermissions();
 
-  if (perm && perm.alert === 1) {
-    PushNotificationIOS.addEventListener("register", token => {
-      setSecureStoreKey(STORAGE_KEYS.NOTIFICATION_TOKEN, token);
-    });
+    if (perm && perm.alert === 1) {
+      PushNotificationIOS.addEventListener("register", token => {
+        setSecureStoreKey(STORAGE_KEYS.NOTIFICATION_TOKEN, token);
+      });
+    }
+    fetchingToken = false
   }
 }
 
