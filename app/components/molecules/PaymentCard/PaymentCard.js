@@ -84,72 +84,67 @@ class PaymentCard extends Component {
 
   setValues = async () => {
     const { type, coin, currencies, loan } = this.props;
-    // constant values
     const name = formatter.capitalize(coin.name);
     const currency = currencies.filter(
       c => c.short === coin.short.toUpperCase()
     )[0];
     this.setState({ name, currency });
 
-    if (type === COIN_CARD_TYPE.COLLATERAL_COIN_CARD) {
+    if (type === COIN_CARD_TYPE.COLLATERAL) {
       const collateralPayment = loanPaymentUtil.calculateAdditionalPayment(
         loan,
-        COIN_CARD_TYPE.COLLATERAL_COIN_CARD,
+        COIN_CARD_TYPE.COLLATERAL,
         coin
       );
-
       this.setState({
         additionalInfoExplanation: "required.",
         cryptoAmount: collateralPayment.cryptoAmount,
-        amountUsd: collateralPayment.amountUsd,
+        usdAmount: collateralPayment.usdAmount,
         additionalCryptoAmount: collateralPayment.additionalCryptoAmount,
         color: collateralPayment.color,
         isAllowed: collateralPayment.isAllowed,
         hasEnough: collateralPayment.hasEnough,
         additionalUsdAmount: collateralPayment.additionalUsdAmount,
       });
-    } else if (type === COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD) {
+    } else if (type === COIN_CARD_TYPE.PRINCIPAL) {
       const principalPayment = loanPaymentUtil.calculateAdditionalPayment(
         loan,
-        COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD
+        COIN_CARD_TYPE.PRINCIPAL
       );
       this.setState({
         additionalInfoExplanation: "required for a principal payout.",
         cryptoAmount: principalPayment.cryptoAmount,
-        amountUsd: principalPayment.amountUsd,
-        isAllowed: principalPayment.isAllowed,
+        usdAmount: principalPayment.usdAmount,
         color: principalPayment.color,
         additionalCryptoAmount: principalPayment.additionalCryptoAmount,
         hasEnough: principalPayment.hasEnough,
       });
-    } else if (type === COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD) {
+    } else if (type === COIN_CARD_TYPE.INTEREST) {
       const loanPayment = loanPaymentUtil.calculateAdditionalPayment(
         loan,
-        COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD,
+        COIN_CARD_TYPE.INTEREST,
         coin
       );
       this.setState({
         additionalInfoExplanation:
           "required for a first month of loan interest payment.",
         cryptoAmount: loanPayment.cryptoAmount,
-        amountUsd: loanPayment.amountUsd,
-        isAllowed: loanPayment.isAllowed,
+        usdAmount: loanPayment.usdAmount,
         color: loanPayment.color,
         additionalCryptoAmount: loanPayment.additionalCryptoAmount,
         additionalUsdAmount: loanPayment.additionalUsdAmount,
         hasEnough: loanPayment.hasEnough,
         // TODO when API is completed add state: additionalCryptoAmount
       });
-    } else if (type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD) {
+    } else if (type === COIN_CARD_TYPE.MARGIN_CALL) {
       const marginCallPayment = loanPaymentUtil.calculateAdditionalPayment(
         loan,
-        COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD
+        COIN_CARD_TYPE.MARGIN_CALL
       );
       this.setState({
         additionalInfoExplanation: "additionally required.",
         cryptoAmount: marginCallPayment.cryptoAmount,
-        amountUsd: marginCallPayment.amountUsd,
-        isAllowed: marginCallPayment.isAllowed,
+        usdAmount: marginCallPayment.usdAmount,
         additionalCryptoAmount: marginCallPayment.additionalCryptoAmount,
         color: marginCallPayment.color,
         hasEnough: marginCallPayment.hasEnough,
@@ -187,7 +182,7 @@ class PaymentCard extends Component {
             actions.navigateTo(SCREENS.DEPOSIT, {
               coin: coin.short,
               reason,
-              amountUsd: additionalUsdAmount,
+              usdAmount: additionalUsdAmount,
               additionalCryptoAmount,
             })
           }
@@ -214,7 +209,6 @@ class PaymentCard extends Component {
       loan.installments_to_be_paid.installments.length;
     const text =
       amountOfInstalments > 1 ? `${amountOfInstalments} Months` : `Monthly`;
-
     switch (reason) {
       case LOAN_PAYMENT_REASONS.INTEREST:
       case LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT:
@@ -282,7 +276,7 @@ class PaymentCard extends Component {
               actions.navigateTo(SCREENS.DEPOSIT, {
                 reason: LOAN_PAYMENT_REASONS.MARGIN_CALL,
                 coin: coin.short,
-                amountUsd: additionalUsdAmount,
+                usdAmount: additionalUsdAmount,
                 additionalCryptoAmount,
                 isMarginCall: loan.margin_call.margin_call_detected,
               });
@@ -320,7 +314,7 @@ class PaymentCard extends Component {
     } = this.props;
     const {
       cryptoAmount,
-      amountUsd,
+      usdAmount,
       color,
       currency,
       isAllowed,
@@ -333,25 +327,21 @@ class PaymentCard extends Component {
     const style = PaymentCardStyle();
     const theme = getTheme();
 
-    if (
-      currency &&
-      cryptoAmount &&
-      type === COIN_CARD_TYPE.COLLATERAL_COIN_CARD
-    ) {
+    if (currency && cryptoAmount && type === COIN_CARD_TYPE.COLLATERAL) {
       return (
         <CollateralCoinCard
           actions={actions}
-          amountUsd={amountUsd}
+          usdAmount={usdAmount}
           additionalUsdAmount={additionalUsdAmount}
           additionalCryptoAmount={additionalCryptoAmount}
           additionalInfoExplanation={additionalInfoExplanation}
-          cardColor={isAllowed ? null : style.cardStyle}
+          cardColor={!isAllowed ? null : style.cardStyle}
           color={color}
           coin={coin}
           currency={currency}
           cryptoAmount={cryptoAmount}
-          isAllowed={isAllowed}
-          onPress={isAllowed ? () => handleSelectCoin(coin.short) : null}
+          hasEnough={hasEnough}
+          onPress={hasEnough ? () => handleSelectCoin(coin.short) : null}
           opacity={isLoading ? 0.7 : 1}
         />
       );
@@ -361,27 +351,17 @@ class PaymentCard extends Component {
     let time;
     const loanNumber = number + 1;
 
-    if (
-      loan &&
-      loan.margin_call &&
-      type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD
-    )
+    if (loan && loan.margin_call && type === COIN_CARD_TYPE.MARGIN_CALL)
       time = presentTime(loan.margin_call.margin_call_detected, true);
 
-    if (
-      currency &&
-      cryptoAmount &&
-      type !== COIN_CARD_TYPE.COLLATERAL_COIN_CARD
-    ) {
+    if (currency && cryptoAmount && type !== COIN_CARD_TYPE.COLLATERAL) {
       return (
         <Card
-          onPress={
-            isAllowed && hasEnough ? () => handleSelectCoin(coin.short) : null
-          }
-          color={isAllowed ? null : style.cardStyle}
+          onPress={hasEnough ? () => handleSelectCoin(coin.short) : null}
+          color={hasEnough ? null : style.cardStyle}
           opacity={isLoading ? 0.7 : 1}
         >
-          {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && isOverview && (
+          {type === COIN_CARD_TYPE.MARGIN_CALL && isOverview && (
             <View>
               <View
                 style={{
@@ -417,14 +397,14 @@ class PaymentCard extends Component {
                 <CoinIcon
                   customStyles={[
                     style.coinImage,
-                    { opacity: isAllowed ? 1 : 0.4 },
+                    { opacity: hasEnough ? 1 : 0.4 },
                   ]}
                   theme={theme}
                   url={currency.image_url}
                   coinShort={currency.short}
                 />
               </View>
-              {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
+              {type !== COIN_CARD_TYPE.MARGIN_CALL ? (
                 <View>
                   <CelText weight={"600"} align="left" type="H3">
                     {`${formatter.crypto(
@@ -440,7 +420,7 @@ class PaymentCard extends Component {
               ) : (
                 <View>
                   <CelText weight={"600"} align="left" type="H3">
-                    {formatter.fiat(amountUsd, "USD")}
+                    {formatter.fiat(usdAmount, "USD")}
                   </CelText>
                   <CelText weight={"300"} align="left" type="H5">
                     {formatter.crypto(collateralAmount, coin.short, {
@@ -451,7 +431,7 @@ class PaymentCard extends Component {
               )}
             </View>
             <Separator margin={"10 0 10 0"} />
-            {type !== COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD ? (
+            {type !== COIN_CARD_TYPE.MARGIN_CALL ? (
               <View style={[{ flexWrap: "wrap" }, style.textContainer]}>
                 <CelText weight={"300"} align="left">
                   In wallet:{" "}
@@ -476,7 +456,7 @@ class PaymentCard extends Component {
                         align="right"
                         style={{ color: getColor(color) }}
                       >
-                        {formatter.fiat(amountUsd, "USD")}
+                        {formatter.fiat(usdAmount, "USD")}
                       </CelText>
                     </CelText>
                   </CelText>
@@ -510,7 +490,7 @@ class PaymentCard extends Component {
                 </View>
               </View>
             )}
-            {amountUsd < loan.monthly_payment ? (
+            {usdAmount.isLessThan(loan.monthly_payment) ? (
               <View>
                 {this.renderAdditionalAmountRequired()}
                 {this.renderDepositMore()}
@@ -519,7 +499,7 @@ class PaymentCard extends Component {
             {isOverview &&
               loan &&
               loan.margin_call &&
-              type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD && (
+              type === COIN_CARD_TYPE.MARGIN_CALL && (
                 <Card
                   margin={"10 0 0 0"}
                   color={getColor(COLOR_KEYS.BACKGROUND)}
@@ -545,8 +525,7 @@ class PaymentCard extends Component {
               )}
           </View>
 
-          {type === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD &&
-            this.marginResolve(loan.id)}
+          {type === COIN_CARD_TYPE.MARGIN_CALL && this.marginResolve(loan.id)}
         </Card>
       );
     }

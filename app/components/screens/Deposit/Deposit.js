@@ -103,14 +103,14 @@ class Deposit extends Component {
   renderPayCard = () => {
     const { navigation } = this.props;
     const coin = navigation.getParam("coin");
-    const amountUsd = navigation.getParam("amountUsd");
+    const usdAmount = navigation.getParam("usdAmount");
     const additionalCryptoAmount = navigation.getParam(
       "additionalCryptoAmount"
     );
     const reason = navigation.getParam("reason");
     const additional = renderAdditionalDepositCardContent(
       reason,
-      amountUsd,
+      usdAmount,
       additionalCryptoAmount
     );
 

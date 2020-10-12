@@ -85,7 +85,7 @@ class PrincipalPaymentType extends Component {
               key={coin.short}
               handleSelectCoin={this.handleSelectCoin}
               coin={coin}
-              type={COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD}
+              type={COIN_CARD_TYPE.PRINCIPAL}
               amountNeededUsd={activeLoan.loan_amount_usd}
             />
           ))}

@@ -51,7 +51,7 @@ class MarginCallConfirmModal extends Component {
     if (!loan) return null;
     const modalData = loanPaymentUtil.calculateAdditionalPayment(
       loan,
-      COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD
+      COIN_CARD_TYPE.MARGIN_CALL
     );
 
     return (
@@ -61,14 +61,10 @@ class MarginCallConfirmModal extends Component {
             You are about to add
           </CelText>
           <CelText align={"center"} type={"H1"}>
-            {formatter.crypto(
-              modalData.collateralAmount,
-              modalData.coin.short,
-              { precision: 2 }
-            )}
+            {formatter.crypto(modalData.collateralAmount, modalData.coin.short)}
           </CelText>
           <CelText align={"center"}>
-            {formatter.fiat(modalData.amountUsd, "USD")}
+            {formatter.fiat(modalData.usdAmount, "USD")}
           </CelText>
           <Card styles={style.card}>
             <CelText weight={"500"} type={"H5"}>
@@ -94,7 +90,7 @@ class MarginCallConfirmModal extends Component {
             <CelText weight={"300"} type={"H4"}>
               {formatter.fiat(
                 Number(loan.amount_collateral_usd) +
-                  Number(modalData.amountUsd),
+                  Number(modalData.usdAmount),
                 "USD"
               )}
             </CelText>

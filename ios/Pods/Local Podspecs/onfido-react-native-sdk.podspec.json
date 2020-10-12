@@ -19,11 +19,7 @@
   "exclude_files": "ios/OnfidoSdkTests/",
   "requires_arc": true,
   "dependencies": {
-    "React": [
-
-    ],
-    "Onfido": [
-      "18.6.0"
-    ]
+    "React": [],
+    "Onfido": ["18.6.0"]
   }
 }

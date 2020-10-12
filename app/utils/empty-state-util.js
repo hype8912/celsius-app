@@ -149,11 +149,11 @@ function getProps(purpose, componentProps) {
         paragraphs: [
           "Get a USD or stablecoin loan at the best interest rates on the block!",
         ],
-        onPress: () => actions.navigateTo(SCREENS.BORROW_CHOOSE_LOAN),
-        button: "Get Cash",
-        secondaryOnPress: () =>
-          actions.navigateTo(SCREENS.BORROW_CALCULATOR_SCREEN),
-        secondaryButton: "Calculate Loan Interest",
+        // onPress: () => actions.navigateTo(SCREENS.BORROW_CHOOSE_LOAN),
+        // button: "Get Cash",
+        // secondaryOnPress: () =>
+        //   actions.navigateTo(SCREENS.BORROW_CALCULATOR_SCREEN),
+        // secondaryButton: "Calculate Loan Interest",
       };
 
     // Not KYC Verified Empty States

@@ -117,7 +117,7 @@ class LoanPaymentCoin extends Component {
             key={coin.short}
             handleSelectCoin={this.handleSelectCoin}
             coin={currencyRates.find(cr => cr.short === coin.short)}
-            type={COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD}
+            type={COIN_CARD_TYPE.INTEREST}
             isLoading={isLoading[coin.short]}
             reason={reason}
             loan={loan}

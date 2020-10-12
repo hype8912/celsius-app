@@ -16,7 +16,7 @@ import { LOAN_PAYMENT_REASONS } from "../../../constants/UI";
 
 class CollateralCoinCard extends Component {
   static propTypes = {
-    amountUsd: PropTypes.string,
+    usdAmount: PropTypes.string,
     additionalCryptoAmount: PropTypes.string,
     additionalInfoExplanation: PropTypes.string,
     additionalUsdAmount: PropTypes.string,
@@ -24,7 +24,7 @@ class CollateralCoinCard extends Component {
     coin: PropTypes.string,
     currency: PropTypes.string,
     cryptoAmount: PropTypes.string,
-    isAllowed: PropTypes.bool,
+    hasEnough: PropTypes.bool,
     onPress: PropTypes.func,
     opacity: PropTypes.number,
     color: PropTypes.string,
@@ -36,14 +36,14 @@ class CollateralCoinCard extends Component {
     const style = CollateralCoinCardStyle();
     const theme = getTheme();
     const {
-      amountUsd,
+      usdAmount,
       additionalCryptoAmount,
       additionalInfoExplanation,
       cardColor,
       coin,
       currency,
       cryptoAmount,
-      isAllowed,
+      hasEnough,
       onPress,
       opacity,
       color,
@@ -58,7 +58,7 @@ class CollateralCoinCard extends Component {
               <CoinIcon
                 customStyles={[
                   style.coinImage,
-                  { opacity: isAllowed ? 1 : 0.4 },
+                  { opacity: hasEnough ? 1 : 0.4 },
                 ]}
                 theme={theme}
                 url={currency.image_url}
@@ -66,7 +66,7 @@ class CollateralCoinCard extends Component {
               />
             </View>
             <View>
-              <View style={{ opacity: isAllowed ? 1 : 0.4 }}>
+              <View style={{ opacity: hasEnough ? 1 : 0.4 }}>
                 <CelText type={"H3"} weight={"500"}>
                   {currency.displayName}
                 </CelText>
@@ -75,12 +75,12 @@ class CollateralCoinCard extends Component {
                   <CelText weight={"300"} style={{ color: getColor(color) }}>
                     {" | "}
                     <CelText weight={"300"} style={{ color: getColor(color) }}>
-                      {formatter.fiat(amountUsd, "USD")}
+                      {formatter.fiat(usdAmount, "USD")}
                     </CelText>
                   </CelText>
                 </CelText>
               </View>
-              {!isAllowed ? (
+              {!hasEnough ? (
                 <View>
                   <Separator size={2} margin={"10 0 5 0"} />
                   <View style={{ flexWrap: "wrap" }}>
@@ -94,13 +94,13 @@ class CollateralCoinCard extends Component {
                   </View>
                 </View>
               ) : null}
-              {!isAllowed ? (
+              {!hasEnough ? (
                 <TouchableOpacity
                   onPress={() =>
                     actions.navigateTo(SCREENS.DEPOSIT, {
                       reason: LOAN_PAYMENT_REASONS.COLLATERAL,
                       coin: currency.short,
-                      amountUsd: additionalUsdAmount,
+                      usdAmount: additionalUsdAmount,
                       additionalCryptoAmount,
                     })
                   }

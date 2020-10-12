@@ -78,7 +78,7 @@ class SingleMarginCallScreen extends Component {
         </Card>
         <PaymentCard
           coin={currencyRates.find(cr => cr.short === loan.coin)}
-          type={COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD}
+          type={COIN_CARD_TYPE.MARGIN_CALL}
           loan={loan}
           reason={LOAN_PAYMENT_REASONS.MARGIN_CALL}
           handleSelectCoin={() => this.onPress(loan)}

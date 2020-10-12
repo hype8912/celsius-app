@@ -11,15 +11,16 @@
 
 - [Introduction](#introduction)
 - [Installation](#installation)
-    - [CocoaPods](#cocoapods)
-    - [Carthage](#carthage)
-    - [Manual Installation](#manual-installation)
+  - [CocoaPods](#cocoapods)
+  - [Carthage](#carthage)
+  - [Manual Installation](#manual-installation)
 - [Integrate](#integrate)
 - [Start tracking](#start-tracking)
 
 <!-- /MarkdownTOC -->
 
 <a name="introduction"></a>
+
 # Introduction
 
 The Mixpanel library for iOS is an open source project, and we'd love to see your contributions! We'd also love for you to come and work with us! Check out https://mixpanel.com/jobs/#openings for details.
@@ -27,18 +28,22 @@ The Mixpanel library for iOS is an open source project, and we'd love to see you
 If you are using Swift, we recommend our **[Swift Library](https://github.com/mixpanel/mixpanel-swift)**.
 
 <a name="installation"></a>
+
 # Installation
 
 <a name="cocoapods"></a>
+
 ## CocoaPods
 
 Mixpanel supports `CocoaPods` for easy installation.
 To Install, see our **[full documentation »](https://mixpanel.com/help/reference/ios)**
 
-#### iOS, tvOS, watchOS, macOS: 
+#### iOS, tvOS, watchOS, macOS:
+
 `pod 'Mixpanel'`
 
 <a name="carthage"></a>
+
 ## Carthage
 
 Mixpanel also supports `Carthage` to package your dependencies as a framework.
@@ -53,6 +58,7 @@ github "mixpanel/mixpanel-iphone"
 Run `carthage update` to build the framework and drag the built `Mixpanel.framework` into your Xcode project.
 
 <a name="manual-installation"></a>
+
 ## Manual Installation
 
 To help users stay up to date with the latests version of our iOS SDK, we always recommend integrating our SDK via CocoaPods, which simplifies version updates and dependency management. However, there are cases where users can't use CocoaPods. Not to worry, just follow these manual installation steps and you'll be all set.
@@ -77,8 +83,8 @@ Drag and drop Mixpanel.xcodeproj from the mixpanel-iphone folder into your Xcode
 
 Select your app .xcodeproj file. Under "General", add the Mixpanel framework as an embedded binary. Once added, please make sure `Mixpanel.framework` shows under both "Linked Frameworks and Libaries" and "Embedded Binaries".
 
-
 <a name="integrate"></a>
+
 # Integrate
 
 Import <Mixpanel/Mixpanel.h> into AppDelegate.m, and initialize Mixpanel within `application:didFinishLaunchingWithOptions:`
@@ -97,6 +103,7 @@ Import <Mixpanel/Mixpanel.h> into AppDelegate.m, and initialize Mixpanel within 
 You initialize your Mixpanel instance with the token provided to you on mixpanel.com.
 
 <a name="start-tracking"></a>
+
 # Start tracking
 
 After installing the library into your iOS app, Mixpanel will <a href="https://mixpanel.com/help/questions/articles/which-common-mobile-events-can-mixpanel-collect-on-my-behalf-automatically" target="_blank">automatically collect common mobile events</a>. You can enable/ disable automatic collection through your <a href="https://mixpanel.com/help/questions/articles/how-do-i-enable-common-mobile-events-if-i-have-already-implemented-mixpanel" target="_blank">project settings</a>.

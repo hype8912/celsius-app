@@ -26,6 +26,7 @@ import TransactionDetailsCelPay from "../TransactionDetailsCelPay/TransactionDet
     callsInProgress: state.api.callsInProgress,
     totalInterestEarned: state.wallet.summary.total_interest_earned,
     currencies: state.currencies.rates,
+    activeScreen: state.nav.activeScreen,
     withdrawalSettings: state.generalData.withdrawalSettings,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -35,12 +36,6 @@ class TransactionsIntersection extends Component {
   static defaultProps = {};
   constructor(props) {
     super(props);
-    const { actions, navigation, transaction } = this.props;
-    const id = navigation.getParam("id");
-
-    if (id || transaction.id) {
-      actions.getTransactionDetails(id || transaction.id);
-    }
     this.interval = null;
   }
 
@@ -54,17 +49,28 @@ class TransactionsIntersection extends Component {
   };
 
   componentDidMount = async () => {
-    const { actions, navigation, transaction } = this.props;
+    const { actions, navigation } = this.props;
     const loanPayment = navigation.getParam("loanPayment");
     const id = navigation.getParam("id");
-    actions.getAllTransactions();
     if (loanPayment) await actions.getAllLoans();
     this.interval = setInterval(() => {
-      if (id || transaction.id) {
-        actions.getTransactionDetails(id || transaction.id);
+      if (id) {
+        actions.getTransactionDetails(id);
       }
     }, 15000);
   };
+
+  componentDidUpdate(prevProps) {
+    const { navigation, transaction, actions, activeScreen } = this.props;
+    const id = navigation.getParam("id");
+    if (
+      prevProps.activeScreen !== activeScreen &&
+      transaction &&
+      transaction.id !== id
+    ) {
+      actions.getTransactionDetails(id);
+    }
+  }
 
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -116,10 +122,9 @@ class TransactionsIntersection extends Component {
     );
 
     if (
-      !transaction ||
-      (loadingTransactionDetails &&
-        transactionId &&
-        transaction.id !== transactionId)
+      loadingTransactionDetails ||
+      (transaction && transaction.id !== transactionId) ||
+      !transaction
     )
       return (
         <RegularLayout padding="0 0 0 0">

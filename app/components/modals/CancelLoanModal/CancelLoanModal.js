@@ -37,7 +37,7 @@ class CancelLoanModal extends React.Component {
         yesButtonStyle={"red"}
         yesCopy={"Cancel Loan Request"}
         onYes={this.cancelLoan}
-        loading={isLoading}
+        yesLoading={isLoading}
       />
     );
   }

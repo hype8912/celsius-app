@@ -71,6 +71,7 @@ const InfoModal = props => {
               onPress={onYes}
               position={yesButtonPosition}
               loading={yesLoading}
+              disabled={noLoading}
             >
               {yesCopy}
             </CelModalButton>
@@ -82,6 +83,7 @@ const InfoModal = props => {
               onPress={onNo}
               position={noButtonPosition}
               loading={noLoading}
+              disabled={yesLoading}
             >
               {noCopy}
             </CelModalButton>
