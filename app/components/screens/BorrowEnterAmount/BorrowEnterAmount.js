@@ -94,7 +94,7 @@ class BorrowEnterAmount extends Component {
   onPressPredefinedAmount = ({ label, value }) => {
     const { formData, minimumLoanAmount, actions } = this.props;
     let amount;
-    if (value === "max") amount = formatter.floor10(formData.maxAmount, 0);
+    if (value === "max") amount = formatter.floor10(formData.maxAmount, 0).toString();
     if (value === "min") amount = minimumLoanAmount.toString();
     this.handleAmountChange(amount, label);
     actions.toggleKeypad(false);

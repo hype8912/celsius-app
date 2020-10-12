@@ -103,7 +103,7 @@ class CoinGridCard extends Component {
       graphData && dateArray.length > 0 && priceArray.length > 0;
 
     const interestRate = interestUtil.getUserInterestForCoin(coin.short);
-
+    const fontSize = displayName.length < 20 ? "H6" : "H7";
     let rate;
     rate = !interestRate.inCEL
       ? interestRate.compound_rate
@@ -113,10 +113,10 @@ class CoinGridCard extends Component {
     return (
       <Animated.View style={this.animate()}>
         <Card size="half" padding={"12 0 0 0"} onPress={onCardPress}>
-          <View style={[style.cardInnerView, { height: 90 }]}>
+          <View style={[style.cardInnerView, { height: 70 }]}>
             <View style={style.wrapper}>
               <View style={style.coinTextWrapper}>
-                <CelText weight="300" type="H6">
+                <CelText weight="300" type={fontSize}>
                   {displayName}
                 </CelText>
                 {!_.isEmpty(interestRate) && interestRate.eligible && (

@@ -1,59 +1,54 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/hyperium/hyper/master/LICENSE)
 
-# Branch Metrics iOS SDK Reference
+# Branch Metrics iOS SDK Reference 
 
 This is a repository of our open source iOS SDK, and the information presented here serves as a reference manual for our iOS SDK. See the table of contents below for a complete list of the content featured in this document.
 
----
+___
 
 ## iOS Reference
 
 1. External resources
-
-- [Full integration guide](https://dev.branch.io/getting-started/sdk-integration-guide/guide/ios/)
-- [Change log](https://github.com/BranchMetrics/ios-branch-deep-linking/blob/master/ChangeLog.md)
-- [Testing resources](https://dev.branch.io/getting-started/integration-testing/guide/ios/)
-- [Support portal](http://support.branch.io)
-- [Test app resources](#get-the-demo-app)
+  + [Full integration guide](https://dev.branch.io/getting-started/sdk-integration-guide/guide/ios/)
+  + [Change log](https://github.com/BranchMetrics/ios-branch-deep-linking/blob/master/ChangeLog.md)
+  + [Testing resources](https://dev.branch.io/getting-started/integration-testing/guide/ios/)
+  + [Support portal](http://support.branch.io)
+  + [Test app resources](#get-the-demo-app)
 
 2. Getting started
-
-- [Library installation](#installation)
-- [Register for Branch key](#register-your-app)
-- [Add your Branch key](#add-your-branch-key-to-your-project)
-- [Register a URI scheme](#register-a-uri-scheme)
-- [Support Universal Links](#support-universal-linking-ios-9-and-above)
+  + [Library installation](#installation)
+  + [Register for Branch key](#register-your-app)
+  + [Add your Branch key](#add-your-branch-key-to-your-project)
+  + [Register a URI scheme](#register-a-uri-scheme)
+  + [Support Universal Links](#support-universal-linking-ios-9-and-above)
 
 3. Branch general methods
-
-- [Get a Branch singleton](#get-a-singleton-branch-instance)
-- [Initialize Branch and register deep link router](#init-branch-session-and-deep-link-routing-function)
-- [Register view controller for auto deep linking](#register-a-deep-link-controller)
-- [Retrieve latest deep linking params](#retrieve-session-install-or-open-parameters)
-- [Retrieve the user's first deep linking params](#retrieve-install-install-only-parameters)
-- [Setting the user id for tracking influencers](#persistent-identities)
-- [Logging a user out](#logout)
-- [Tracking user actions and events](#tracking-user-actions-and-events)
-- [Apple Search Ad Attribution](#apple-search-ads)
-- [Enable or Disable User Tracking](#enable-or-disable-user-tracking)
+  + [Get a Branch singleton](#get-a-singleton-branch-instance)
+  + [Initialize Branch and register deep link router](#init-branch-session-and-deep-link-routing-function)
+  + [Register view controller for auto deep linking](#register-a-deep-link-controller)
+  + [Retrieve latest deep linking params](#retrieve-session-install-or-open-parameters)
+  + [Retrieve the user's first deep linking params](#retrieve-install-install-only-parameters)
+  + [Setting the user id for tracking influencers](#persistent-identities)
+  + [Logging a user out](#logout)
+  + [Tracking user actions and events](#tracking-user-actions-and-events)
+  + [Apple Search Ad Attribution](#apple-search-ads)
+  + [Enable or Disable User Tracking](#enable-or-disable-user-tracking)
 
 4. Branch Universal Objects
-
-- [Instantiate a Branch Universal Object](#branch-universal-object)
-- [Tracking user interactions with an object](#tracking-user-interactions-with-an-object)
-- [List content on Spotlight](#list-content-on-spotlight)
-- [Configuring link properties](link-properties-parameters)
-- [Creating a short link referencing the object](#shortened-links)
-- [Triggering a share sheet to share a link](#uiactivityview-share-sheet)
+  + [Instantiate a Branch Universal Object](#branch-universal-object)
+  + [Tracking user interactions with an object](#tracking-user-interactions-with-an-object)
+  + [List content on Spotlight](#list-content-on-spotlight)
+  + [Configuring link properties](link-properties-parameters)
+  + [Creating a short link referencing the object](#shortened-links)
+  + [Triggering a share sheet to share a link](#uiactivityview-share-sheet)
 
 5. Referral rewards methods
+  + [Get reward balance](#get-reward-balance)
+  + [Redeem rewards](#redeem-all-or-some-of-the-reward-balance-store-state)
+  + [Get credit history](#get-credit-history)
 
-- [Get reward balance](#get-reward-balance)
-- [Redeem rewards](#redeem-all-or-some-of-the-reward-balance-store-state)
-- [Get credit history](#get-credit-history)
-
----
+___
 
 ## Get the Demo App
 
@@ -80,7 +75,7 @@ pod update
 
 to install the Branch pod and update it to the latest version of the SDK.
 
-Make sure to do the `pod update`. CocoaPods may not use the latest version of the SDK otherwise!
+Make sure to do the `pod update`.  CocoaPods may not use the latest version of the SDK otherwise!
 
 ### Carthage
 
@@ -94,11 +89,11 @@ github "BranchMetrics/ios-branch-deep-linking"
 
 You can also install by downloading the raw files below.
 
-- Download code from here:
-  [https://s3-us-west-1.amazonaws.com/branchhost/Branch-iOS-SDK.zip](https://s3-us-west-1.amazonaws.com/branchhost/Branch-iOS-SDK.zip)
+* Download code from here:
+[https://s3-us-west-1.amazonaws.com/branchhost/Branch-iOS-SDK.zip](https://s3-us-west-1.amazonaws.com/branchhost/Branch-iOS-SDK.zip)
 
-- The testbed project:
-  [https://s3-us-west-1.amazonaws.com/branchhost/Branch-iOS-TestBed.zip](https://s3-us-west-1.amazonaws.com/branchhost/Branch-iOS-TestBed.zip)
+* The testbed project:
+[https://s3-us-west-1.amazonaws.com/branchhost/Branch-iOS-TestBed.zip](https://s3-us-west-1.amazonaws.com/branchhost/Branch-iOS-TestBed.zip)
 
 ##### Adding the Raw Files Branch SDK to Your Project
 
@@ -112,21 +107,21 @@ I'll add Branch to the project 'BareBones' as an example:
 
 3. In the Xcode project navigator view, select your project, right click, and select 'Add files to "\<your project name\>"...'
 
-   ![Add Files...](docs/images/AddBranchProject-1-AddFiles.png "Add Files...")
+    ![Add Files...](docs/images/AddBranchProject-1-AddFiles.png "Add Files...")
 
-4. The 'Add' file chooser will open. Navigate to your 'ios-branch-deep-linking > carthage-files' directory and select the BranchSDK.xcodeproj project.
+4. The 'Add' file chooser will open.  Navigate to your 'ios-branch-deep-linking > carthage-files' directory and select the BranchSDK.xcodeproj project.
 
-   ![Add BranchSDK.xcodeproj](docs/images/AddBranchProject-2-Choose-BranchSDK.png "Add BranchSDK.xcodeproj")
+    ![Add BranchSDK.xcodeproj](docs/images/AddBranchProject-2-Choose-BranchSDK.png "Add BranchSDK.xcodeproj")
 
-   Xcode will add BranchSDK.xcodeproj to your project.
+    Xcode will add BranchSDK.xcodeproj to your project.
 
 5. In your project, reveal the 'BranchSDK.xcodeproj > Products' hierarchy. Then drag the Branch.framework product to the 'Embedded Binaries' section of your build product.
 
-   ![Embed Binary](docs/images/AddBranchProject-3-Add-Framework.gif "Embed Binary")
+    ![Embed Binary](docs/images/AddBranchProject-3-Add-Framework.gif "Embed Binary")
 
 6. Done! You can click on Build Phases of your project to make sure that Branch was added as a Target Dependency and is copied as an Embedded Framework.
 
-   ![Check Build Phase](docs/images/AddBranchProject-4-BuildPhase.png "Check Build Phase")
+    ![Check Build Phase](docs/images/AddBranchProject-4-BuildPhase.png "Check Build Phase")
 
 ### Register Your App
 
@@ -143,7 +138,6 @@ After you register your app, your Branch Key can be retrieved on the [Settings](
 
 ![Branch Key Demo](docs/images/branch-key-plist.png)
 If you want to add a key for both your live and test apps at the same time, you need change the type column to Dictionary, and add two entries inside:
-
 1. For live app, use "live" (without double quotes) for key, String for type, and your live branch key for value.
 2. For test app, use "test" (without double quotes) for key, String for type, and your test branch key for value.
 
@@ -166,6 +160,7 @@ Register your app to respond to direct deep links (yourapp:// in a mobile browse
    If you have multiple schemes defined, such as a Facebook login URI, make your app's URI scheme the first one in the list so the Branch SDK knows the URI specific to your app.
 
 ![URL Scheme Demo](https://s3-us-west-1.amazonaws.com/branchhost/urlScheme.png)
+
 
 Alternatively, you can add the URI scheme in your project's Info page.
 
@@ -262,8 +257,9 @@ Branch.useTestBranchKey = true
 
 #### Parameters
 
-**Branch key** (NSString \*) _optional_
+**Branch key** (NSString *) _optional_
 : If you don't store the Branch key in the plist file, you have the option of passing this key as an argument.
+
 
 ### Init Branch Session and Deep Link Routing Function
 
@@ -272,7 +268,6 @@ To deep link, Branch must initialize a session to check if the user originated f
 #### Methods
 
 ###### Objective-C
-
 ```objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     Branch *branch = [Branch getInstance];
@@ -308,7 +303,6 @@ To deep link, Branch must initialize a session to check if the user originated f
 ```
 
 ###### Swift
-
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
   let branch: Branch = Branch.getInstance()
@@ -347,7 +341,8 @@ func application(_ application: UIApplication, didReceiveRemoteNotification laun
 }
 ```
 
-Note: If your application delegate declares the method:
+
+Note:  If your application delegate declares the method:
 
 ```
 - (BOOL) application:willFinishLaunchingWithOptions:
@@ -359,43 +354,46 @@ In Swift:
 optional func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool
 ```
 
-it must return `YES` for Branch to work.
+it must return ```YES``` for Branch to work.
+
 
 #### Parameters
 
 ###### initSession
 
-**launchOptions** (NSDictionary \*) _required_
+**launchOptions** (NSDictionary *) _required_
 : These launch options are passed to Branch through didFinishLaunchingWithOptions and will notify us if the user originated from a URI call or not. If the app was opened from a URI like myapp://, we need to follow a special initialization routine.
 
 **deepLinkHandler** ^(NSDictionary *params, NSError *error) _optional_
 : This is the callback block that Branch will execute after a network call to determine where the user comes from. It is called 100% of the time the app opens up since Branch registers for lifecycle notifications.
 
-- _NSDictionary \*params_ : These params will contain any data associated with the Branch link that was clicked before the app session began. There are a few keys which are always present: - '+is_first_session' Denotes whether this is the first session (install) or any other session (open) - '+clicked_branch_link' Denotes whether or not the user clicked a Branch link that triggered this session
-- _NSError \*error_ : This error will be nil unless there is an error such as connectivity or otherwise. Check !error to confirm it was a valid link.
-  - BNCServerProblemError There was an issue connecting to the Branch service
-  - BNCBadRequestError The request was improperly formatted
+- _NSDictionary *params_ : These params will contain any data associated with the Branch link that was clicked before the app session began. There are a few keys which are always present:
+	- '+is_first_session' Denotes whether this is the first session (install) or any other session (open)
+	- '+clicked_branch_link' Denotes whether or not the user clicked a Branch link that triggered this session
+- _NSError *error_ : This error will be nil unless there is an error such as connectivity or otherwise. Check !error to confirm it was a valid link.
+    - BNCServerProblemError There was an issue connecting to the Branch service
+    - BNCBadRequestError The request was improperly formatted
 
 Branch returns explicit parameters every time. Here is a list, and a description of what each represents.
 
-- `~` denotes analytics
-- `+` denotes information added by Branch
-- (for the curious, `$` denotes reserved keywords used for controlling how the Branch service behaves)
+* `~` denotes analytics
+* `+` denotes information added by Branch
+* (for the curious, `$` denotes reserved keywords used for controlling how the Branch service behaves)
 
-| **Parameter**        | **Meaning**                                                                                    |
-| -------------------- | ---------------------------------------------------------------------------------------------- |
-| ~channel             | The channel on which the link was shared, specified at link creation time                      |
-| ~feature             | The feature, such as `invite` or `share`, specified at link creation time                      |
-| ~tags                | Any tags, specified at link creation time                                                      |
-| ~campaign            | The campaign the link is associated with, specified at link creation time                      |
-| ~stage               | The stage, specified at link creation time                                                     |
-| ~creation_source     | Where the link was created ('API', 'Dashboard', 'SDK', 'iOS SDK', 'Android SDK', or 'Web SDK') |
-| +match_guaranteed    | True or false as to whether the match was made with 100% accuracy                              |
-| +referrer            | The referrer for the link click, if a link was clicked                                         |
-| +phone_number        | The phone number of the user, if the user texted himself/herself the app                       |
-| +is_first_session    | Denotes whether this is the first session (install) or any other session (open)                |
-| +clicked_branch_link | Denotes whether or not the user clicked a Branch link that triggered this session              |
-| +click_timestamp     | Epoch timestamp of when the click occurred                                                     |
+| **Parameter** | **Meaning**
+| --- | ---
+| ~channel | The channel on which the link was shared, specified at link creation time
+| ~feature | The feature, such as `invite` or `share`, specified at link creation time
+| ~tags | Any tags, specified at link creation time
+| ~campaign | The campaign the link is associated with, specified at link creation time
+| ~stage | The stage, specified at link creation time
+| ~creation_source | Where the link was created ('API', 'Dashboard', 'SDK', 'iOS SDK', 'Android SDK', or 'Web SDK')
+| +match_guaranteed | True or false as to whether the match was made with 100% accuracy
+| +referrer | The referrer for the link click, if a link was clicked
+| +phone_number | The phone number of the user, if the user texted himself/herself the app
+| +is_first_session | Denotes whether this is the first session (install) or any other session (open)
+| +clicked_branch_link | Denotes whether or not the user clicked a Branch link that triggered this session
+| +click_timestamp | Epoch timestamp of when the click occurred
 
 **isReferrable** (BOOL) _optional_
 : This boolean lets you control whether or not the user is eligible to be 'referred'. This is applicable for credits and influencer tracking. If isReferrable is set to NO | false, and the user clicks a link before entering the app, deep link parameters will appear, but that user will _not_ be considered referred. If isReferrable is set to YES | true, and the user clicks a link, deep link params will appear and the user _will_ be considered referred. Remove this argument to access the default, which only allows the user to be referred on a _fresh install_, but not on opens.
@@ -405,12 +403,12 @@ Branch returns explicit parameters every time. Here is a list, and a description
 
 ###### handleDeepLink
 
-**url** (NSString \*) _required_
+**url** (NSString *) _required_
 : This argument passes us the URI string so that we can parse the extra parameters. For example, 'myapp://open?link_click_id=12345'.
 
 ###### continueUserActivity
 
-**userActivity** (NSUserActivity \*) _required_
+**userActivity** (NSUserActivity *) _required_
 : This argument passes us the user activity so that we can parse the originating URL.
 
 #### Returns
@@ -449,10 +447,10 @@ Branch.getInstance().registerDeepLinkController(myController forKey:"my-key" wit
 
 #### Parameters
 
-**controller** (UIViewController <BranchDeepLinkingController> \*) _required_
+**controller** (UIViewController <BranchDeepLinkingController> *) _required_
 : The controller to display when the key is present in the dictionary.
 
-**key** (NSString \*) _required_
+**key** (NSString *) _required_
 : The key checked for in open / install dictionaries.
 
 **Option** (BNCViewControllerPresentationOption) _required_
@@ -470,9 +468,9 @@ Nothing
 
 These session parameters will be available at any point later on with this command. If no parameters are available then Branch will return an empty dictionary. This refreshes with every new session (app installs AND app opens).
 
-Warning: If the Branch SDK is retrieving the latest session parameters via a network call, this method will return the _previous_ session's parameters. The best practice is to set a callback deep link handler at Branch initialization. That handler will be called when a Branch deep link is handled and the most recent session parameters are available.
+Warning: If the Branch SDK is retrieving the latest session parameters via a network call, this method will return the *previous* session's parameters.  The best practice is to set a callback deep link handler at Branch initialization.  That handler will be called when a Branch deep link is handled and the most recent session parameters are available.
 
-Otherwise, use the `getLatestReferringParamsSynchronous` method. This method always returns the latest session parameters. The downside is that is may block the calling thread until the current results are available.
+Otherwise, use the `getLatestReferringParamsSynchronous` method. This method always returns the latest session parameters.  The downside is that is may block the calling thread until the current results are available.
 
 #### Methods
 
@@ -556,7 +554,7 @@ Branch.getInstance().setIdentity(your user id)  // your user id should not excee
 
 #### Parameters
 
-**identity** (NSString \*) _required_
+**identity** (NSString *) _required_
 : This is the alias you'd like to label your user in the Branch system. Note that we only support a single alias per user.
 
 ### Logout
@@ -707,6 +705,7 @@ Some example events you might want to track:
 
 #### Parameters
 
+
 **event** `(NSString *)` _required_
 : This is the event string you'd like to send to Branch. You can view the attribution of which links drove events to occur in the analytics.
 
@@ -716,61 +715,55 @@ Some example events you might want to track:
 ### Apple Search Ads
 
 Branch can help track your Apple Search Ad campaigns by fetching the search ad attribution from
-Apple at app install. You can then use the parameters you've set in the Apple Search Ad dashboard,
+Apple at app install.  You can then use the parameters you've set in the Apple Search Ad dashboard,
 parameters such as the campaign name, and take special action in you app after an install, or simply
 track the effectiveness of a campaign in the Branch dashboard, along with other your other Branch
 statistics, such as total installs, referrals, and app link statistics.
 
-- External resources
+* External resources
+  + [Apple Search Ads](https://searchads.apple.com/)
+  + [Apple Search Ads for Developers](https://developer.apple.com/app-store/search-ads/)
+  + [Apple Search Ads WWDC](https://developer.apple.com/videos/play/wwdc2016/302/)
 
-  - [Apple Search Ads](https://searchads.apple.com/)
-  - [Apple Search Ads for Developers](https://developer.apple.com/app-store/search-ads/)
-  - [Apple Search Ads WWDC](https://developer.apple.com/videos/play/wwdc2016/302/)
-
-- Important: You must add the iAd.framework to your project to enable Apple Search Ad checking.
+* Important: You must add the iAd.framework to your project to enable Apple Search Ad checking.
 
 #### Methods
 
 ##### `- (void) delayInitToCheckForSearchAds`
 
-Call this method to enable checking for Apple Search Ads before Branch initialization. This method
+Call this method to enable checking for Apple Search Ads before Branch initialization.  This method
 must be called before you initialize your Branch session.
 
 Note that this can add up to 10 seconds from call to initSession to callback due to Apple's latency.
 
 ###### Objective-C
-
 ```objc
 [[Branch getInstance] delayInitToCheckForSearchAds];
 ```
 
 ###### Swift
-
 ```swift
 Branch.getInstance().delayInitToCheckForSearchAds
 ```
 
 ##### `- (void) setAppleSearchAdsDebugMode`
 
-The `setAppleSearchAdsDebugMode` method sets the SDK into Apple Search Ad debug mode. In this mode
-fake campaign params are returned 100% of the time. This is for testing only.
+The `setAppleSearchAdsDebugMode` method sets the SDK into Apple Search Ad debug mode.  In this mode
+fake campaign params are returned 100% of the time.  This is for testing only.
 
 Warning: This should not be used in production.
 
 ###### Objective-C
-
 ```objc
 [[Branch getInstance] setAppleSearchAdsDebugMode];
 ```
 
 ###### Swift
-
 ```swift
 Branch.getInstance().setAppleSearchAdsDebugMode
 ```
 
 ### Enable or Disable User Tracking
-
 In order to comply with tracking requirements, you can disable tracking at the SDK level. Simply call:
 
 ```objc
@@ -803,7 +796,6 @@ Here are a set of best practices to ensure that your analytics are correct, and 
 Note: Content indexed using `CSSearchableItem` could be removed from Spotlight but cannot be removed if indexed using `NSUserActivity`.
 
 Practices to _avoid_:
-
 1. Don't set the same `title`, `contentDescription` and `imageUrl` across all objects.
 2. Don't wait to initialize the object and register views until the user goes to share.
 3. Don't wait to initialize the object until you conveniently need a link.
@@ -863,7 +855,7 @@ branchUniversalObject.contentMetadata.customMetadata["property2"] = "red"
 
 #### BranchUniversalObject.contentMetadata
 
-The `BranchUniversalObject.contentMetadata` properties further describe your content. These properties are trackable in the Branch dashboard and will be automatically exported to your connected third-party app intelligence partners like Adjust or Mixpanel.
+The `BranchUniversalObject.contentMetadata` properties further describe  your content. These properties are trackable in the Branch dashboard and will be automatically exported to your connected third-party app intelligence partners like Adjust or Mixpanel.
 
 Set the properties of this sub-object depending on the type of content that is relevant to your content. The `BranchUniversalObject.contentMetadata.contentSchema` property describes the type of object content. Set other properties as is relevant to the type.
 
@@ -901,14 +893,14 @@ Set the properties of this sub-object depending on the type of content that is r
 
 We've added a series of custom events that you'll want to start tracking for rich analytics and targeting. Here's a list below with a sample snippet that calls the register view event.
 
-| Key                                 | Value                                   |
-| ----------------------------------- | --------------------------------------- |
-| BranchStandardEventViewItem         | User viewed the object                  |
-| BranchStandardEventAddToWishlist    | User added the object to their wishlist |
-| BranchStandardEventAddToCart        | User added object to cart               |
-| BranchStandardEventInitiatePurchase | User started to check out               |
-| BranchStandardEventPurchase         | User purchased the item                 |
-| BranchStandardEventShare            | User completed a share                  |
+| Key | Value
+| --- | ---
+| BranchStandardEventViewItem | User viewed the object
+| BranchStandardEventAddToWishlist | User added the object to their wishlist
+| BranchStandardEventAddToCart | User added object to cart
+| BranchStandardEventInitiatePurchase | User started to check out
+| BranchStandardEventPurchase | User purchased the item
+| BranchStandardEventShare | User completed a share
 
 #### Methods
 
@@ -992,24 +984,24 @@ branchUniversalObject.getShortUrl(with: linkProperties) { (url, error) in
 
 You can do custom redirection by inserting the following _optional keys in the dictionary_:
 
-| Key                   | Value                                                                                                                                                                 |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| "\$fallback_url"      | Where to send the user for all platforms when app is not installed. Note that Branch will forward all robots to this URL, overriding any OG tags entered in the link. |
-| "\$desktop_url"       | Where to send the user on a desktop or laptop. By default it is the Branch-hosted text-me service.                                                                    |
-| "\$android_url"       | The replacement URL for the Play Store to send the user if they don't have the app. _Only necessary if you want a mobile web splash_.                                 |
-| "\$ios_url"           | The replacement URL for the App Store to send the user if they don't have the app. _Only necessary if you want a mobile web splash_.                                  |
-| "\$ipad_url"          | Same as above, but for iPad Store.                                                                                                                                    |
-| "\$fire_url"          | Same as above, but for Amazon Fire Store.                                                                                                                             |
-| "\$blackberry_url"    | Same as above, but for Blackberry Store.                                                                                                                              |
-| "\$windows_phone_url" | Same as above, but for Windows Store.                                                                                                                                 |
-| "\$after_click_url"   | When a user returns to the browser after going to the app, take them to this URL. _iOS only; Android coming soon_.                                                    |
+| Key | Value
+| --- | ---
+| "$fallback_url" | Where to send the user for all platforms when app is not installed. Note that Branch will forward all robots to this URL, overriding any OG tags entered in the link.
+| "$desktop_url" | Where to send the user on a desktop or laptop. By default it is the Branch-hosted text-me service.
+| "$android_url" | The replacement URL for the Play Store to send the user if they don't have the app. _Only necessary if you want a mobile web splash_.
+| "$ios_url" | The replacement URL for the App Store to send the user if they don't have the app. _Only necessary if you want a mobile web splash_.
+| "$ipad_url" | Same as above, but for iPad Store.
+| "$fire_url" | Same as above, but for Amazon Fire Store.
+| "$blackberry_url" | Same as above, but for Blackberry Store.
+| "$windows_phone_url" | Same as above, but for Windows Store.
+| "$after_click_url" | When a user returns to the browser after going to the app, take them to this URL. _iOS only; Android coming soon_.
 
 You have the ability to control the direct deep linking of each link by inserting the following _optional keys in the dictionary_:
 
-| Key                 | Value                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| "\$deeplink_path"   | The value of the deep link path that you'd like us to append to your URI. For example, you could specify "\$deeplink_path": "radio/station/456" and we'll open the app with the URI "yourapp://radio/station/456?link_click_id=branch-identifier". This is primarily for supporting legacy deep linking infrastructure.                                                                                                                       |
-| "\$always_deeplink" | true or false. (default is not to deep link first) This key can be specified to have our linking service force try to open the app, even if we're not sure the user has the app installed. If the app is not installed, we fall back to the respective app store or \$platform_url key. By default, we only open the app if we've seen a user initiate a session in your app from a Branch link (has been cookied and deep linked by Branch). |
+| Key | Value
+| --- | ---
+| "$deeplink_path" | The value of the deep link path that you'd like us to append to your URI. For example, you could specify "$deeplink_path": "radio/station/456" and we'll open the app with the URI "yourapp://radio/station/456?link_click_id=branch-identifier". This is primarily for supporting legacy deep linking infrastructure.
+| "$always_deeplink" | true or false. (default is not to deep link first) This key can be specified to have our linking service force try to open the app, even if we're not sure the user has the app installed. If the app is not installed, we fall back to the respective app store or $platform_url key. By default, we only open the app if we've seen a user initiate a session in your app from a Branch link (has been cookied and deep linked by Branch).
 
 **alias**: The alias for a link. Eg. `myapp.com/customalias`
 
@@ -1114,18 +1106,16 @@ linkProperties.addControlParam("$email_html_link_text", withValue: "Tap here")
 
 #### Changing share text on the fly
 
-You can change the link shareText and other link parameters based on the choice the user makes on the sharesheet activity. First, set the `BranchShareLink` delegate with an object that follows the `BranchShareLinkDelegate` protocol.
+You can change the link shareText and other link parameters based on the choice the user makes on the sharesheet activity.  First, set the `BranchShareLink` delegate with an object that follows the `BranchShareLinkDelegate` protocol.
 
 The optional `- (void) branchShareLinkWillShare:` delegate method will be called just after the user selects a share action, like share by email for instance, and before the share action is shown to the user, like when the email composer is shown to the user with the share text. This is an ideal time to change the share text based on the user action.
 
-The optional `- (void) branchShareLink:didComplete:withError:` delegate method will be called after the user has completed the share action. The `didComplete` boolean will be `YES` if the user shared the item, and `NO` if the user cancelled. The `error` value will indicate any errors that may have occurred.
+The optional `- (void) branchShareLink:didComplete:withError:` delegate method will be called after the user has completed the share action.  The `didComplete` boolean will be `YES` if the user shared the item, and `NO` if the user cancelled.  The `error` value will indicate any errors that may have occurred.
 
 ###### Objective-C
-
 ```objc
 @interface ViewController () <BranchShareLinkDelegate>
 ```
-
 Override the branchShareLinkWillShare function to change your shareText
 
 ```objc
@@ -1138,7 +1128,6 @@ Override the branchShareLinkWillShare function to change your shareText
         [self.dateFormatter stringFromDate:[NSDate date]]];
 }
 ```
-
 ###### Swift
 
 ```swift
@@ -1486,7 +1475,6 @@ The response will return an array that has been parsed from the following JSON:
     }
 ]
 ```
-
 #### Parameters
 
 **referrer**
@@ -1500,5 +1488,5 @@ The response will return an array that has been parsed from the following JSON:
 
 1. _0_ - A reward that was added automatically by the user completing an action or promo.
 1. _1_ - A reward that was added manually.
-1. _2_ - A redemption of credits that occurred through our API or SDKs.
-1. _3_ - This is a very unique case where we will subtract credits automatically when we detect fraud.
+2. _2_ - A redemption of credits that occurred through our API or SDKs.
+3. _3_ - This is a very unique case where we will subtract credits automatically when we detect fraud.
