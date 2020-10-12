@@ -25,7 +25,6 @@ class TransactionDetailsLoans extends Component {
   static defaultProps = {};
 
   render() {
-    // const style = TransactionDetailsLoansStyle();
     const { transaction, navigateTo } = this.props;
     const transactionProps = transaction.uiProps;
 

@@ -2,19 +2,19 @@
 [![Build Status](https://travis-ci.org/openid/AppAuth-iOS.svg?branch=master)](https://travis-ci.org/openid/AppAuth-iOS)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-AppAuth for iOS and macOS is a client SDK for communicating with 
-[OAuth 2.0](https://tools.ietf.org/html/rfc6749) and 
-[OpenID Connect](http://openid.net/specs/openid-connect-core-1_0.html) providers. 
+AppAuth for iOS and macOS is a client SDK for communicating with
+[OAuth 2.0](https://tools.ietf.org/html/rfc6749) and
+[OpenID Connect](http://openid.net/specs/openid-connect-core-1_0.html) providers.
 It strives to
 directly map the requests and responses of those specifications, while following
 the idiomatic style of the implementation language. In addition to mapping the
 raw protocol flows, convenience methods are available to assist with common
 tasks like performing an action with fresh tokens.
 
-It follows the best practices set out in 
+It follows the best practices set out in
 [RFC 8252 - OAuth 2.0 for Native Apps](https://tools.ietf.org/html/rfc8252)
 including using `SFAuthenticationSession` and `SFSafariViewController` on iOS
-for the auth request. `UIWebView` and `WKWebView` are explicitly *not*
+for the auth request. `UIWebView` and `WKWebView` are explicitly _not_
 supported due to the security and usability reasons explained in
 [Section 8.12 of RFC 8252](https://tools.ietf.org/html/rfc8252#section-8.12).
 
@@ -80,7 +80,7 @@ AppAuth supports four options for dependency management.
 
 ### Swift Package Manager
 
-With [Swift Package Manager](https://swift.org/package-manager), 
+With [Swift Package Manager](https://swift.org/package-manager),
 add the following `dependency` to your `Package.swift`:
 
 ```swift
@@ -110,14 +110,14 @@ Then, run `carthage bootstrap`.
 ### Static Library
 
 You can also use AppAuth as a static library. This requires linking the library
-and your project, and including the headers.  Here is a suggested configuration:
+and your project, and including the headers. Here is a suggested configuration:
 
 1. Create an Xcode Workspace.
 2. Add `AppAuth.xcodeproj` to your Workspace.
 3. Include libAppAuth as a linked library for your target (in the "General ->
-Linked Framework and Libraries" section of your target).
+   Linked Framework and Libraries" section of your target).
 4. Add `AppAuth-iOS/Source` to your search paths of your target ("Build Settings ->
-"Header Search Paths").
+   "Header Search Paths").
 
 ## Auth Flow
 
@@ -136,6 +136,7 @@ authorization state of the session.
 You can configure AppAuth by specifying the endpoints directly:
 
 <sub>Objective-C</sub>
+
 ```objc
 NSURL *authorizationEndpoint =
     [NSURL URLWithString:@"https://accounts.google.com/o/oauth2/v2/auth"];
@@ -151,6 +152,7 @@ OIDServiceConfiguration *configuration =
 ```
 
 <sub>Swift</sub>
+
 ```swift
 let authorizationEndpoint = URL(string: "https://accounts.google.com/o/oauth2/v2/auth")!
 let tokenEndpoint = URL(string: "https://www.googleapis.com/oauth2/v4/token")!
@@ -163,6 +165,7 @@ let configuration = OIDServiceConfiguration(authorizationEndpoint: authorization
 Or through discovery:
 
 <sub>Objective-C</sub>
+
 ```objc
 NSURL *issuer = [NSURL URLWithString:@"https://accounts.google.com"];
 
@@ -181,6 +184,7 @@ NSURL *issuer = [NSURL URLWithString:@"https://accounts.google.com"];
 ```
 
 <sub>Swift</sub>
+
 ```swift
 let issuer = URL(string: "https://accounts.google.com")!
 
@@ -204,6 +208,7 @@ a class named `AppDelegate`, if your app's application delegate has a different
 name, please update the class name in samples below accordingly.
 
 <sub>Objective-C</sub>
+
 ```objc
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 // property of the app's AppDelegate
@@ -212,6 +217,7 @@ name, please update the class name in samples below accordingly.
 ```
 
 <sub>Swift</sub>
+
 ```swift
 class AppDelegate: UIResponder, UIApplicationDelegate {
   // property of the app's AppDelegate
@@ -219,22 +225,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-
 And your main class, a property to store the auth state:
 
 <sub>Objective-C</sub>
+
 ```objc
 // property of the containing class
 @property(nonatomic, strong, nullable) OIDAuthState *authState;
 ```
+
 <sub>Swift</sub>
+
 ```swift
 // property of the containing class
 private var authState: OIDAuthState?
 ```
 
-
-Then, initiate the authorization request. By using the 
+Then, initiate the authorization request. By using the
 `authStateByPresentingAuthorizationRequest` convenience method, the token
 exchange will be performed automatically, and everything will be protected with
 PKCE (if the server supports it). AppAuth also lets you perform these
@@ -242,6 +249,7 @@ requests manually. See the `authNoCodeExchange` method in the included Example
 app for a demonstration:
 
 <sub>Objective-C</sub>
+
 ```objc
 // builds authentication request
 OIDAuthorizationRequest *request =
@@ -273,6 +281,7 @@ appDelegate.currentAuthorizationFlow =
 ```
 
 <sub>Swift</sub>
+
 ```swift
 // builds authentication request
 let request = OIDAuthorizationRequest(configuration: configuration,
@@ -301,13 +310,14 @@ appDelegate.currentAuthorizationFlow =
 }
 ```
 
-*Handling the Redirect*
+_Handling the Redirect_
 
 The authorization response URL is returned to the app via the iOS openURL
 app delegate method, so you need to pipe this through to the current
 authorization session (created in the previous session):
 
 <sub>Objective-C</sub>
+
 ```objc
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
@@ -326,6 +336,7 @@ authorization session (created in the previous session):
 ```
 
 <sub>Swift</sub>
+
 ```swift
 func application(_ app: UIApplication,
                  open url: URL,
@@ -354,6 +365,7 @@ processed by the app. AppAuth takes care of managing the local HTTP server
 lifecycle for you.
 
 > #### :bulb: Alternative: Custom URI Schemes
+>
 > Custom URI schemes are also supported on macOS, but some browsers display
 > an interstitial, which reduces the usability. For an example on using custom
 > URI schemes with macOS, See `Example-Mac`.
@@ -363,6 +375,7 @@ to have an instance variable in your main class to retain the HTTP redirect
 handler:
 
 <sub>Objective-C</sub>
+
 ```objc
 OIDRedirectHTTPHandler *_redirectHTTPHandler;
 ```
@@ -372,6 +385,7 @@ before building the authorization request, in order to get the exact redirect
 URI to use:
 
 <sub>Objective-C</sub>
+
 ```objc
 static NSString *const kSuccessURLString =
     @"http://openid.github.io/AppAuth-iOS/redirect/";
@@ -383,7 +397,7 @@ _redirectHTTPHandler = [[OIDRedirectHTTPHandler alloc] initWithSuccessURL:succes
 NSURL *redirectURI = [_redirectHTTPHandler startHTTPListener:nil];
 ```
 
-Then, initiate the authorization request. By using the 
+Then, initiate the authorization request. By using the
 `authStateByPresentingAuthorizationRequest` convenience method, the token
 exchange will be performed automatically, and everything will be protected with
 PKCE (if the server supports it). By assigning the return value to the
@@ -430,6 +444,7 @@ recommend that users of the `OIDAuthState` convenience wrapper use the provided
 needing to worry about token freshness:
 
 <sub>Objective-C</sub>
+
 ```objc
 [_authState performActionWithFreshTokens:^(NSString *_Nonnull accessToken,
                                            NSString *_Nonnull idToken,
@@ -444,6 +459,7 @@ needing to worry about token freshness:
 ```
 
 <sub>Swift</sub>
+
 ```swift
 let userinfoEndpoint = URL(string:"https://openidconnect.googleapis.com/v1/userinfo")!
 self.authState?.performAction() { (accessToken, idToken, error) in
@@ -480,16 +496,16 @@ It is possible to change the user-agent that AppAuth uses, and even write your
 own - all without needing to fork the library.
 
 All implementations of the external user-agent, be they included or created by
-you need to conform to the 
+you need to conform to the
 [`OIDExternalUserAgent`](http://openid.github.io/AppAuth-iOS/docs/latest/protocol_o_i_d_external_user_agent-p.html)
 protocol.
 
 Instances of the `OIDExternalUserAgent`are passed into
 [`OIDAuthState.authStateByPresentingAuthorizationRequest:externalUserAgent:callback`](http://openid.github.io/AppAuth-iOS/docs/latest/interface_o_i_d_auth_state.html#ac762fe2bf95c116f0b437419be211fa1)
-and/or 
+and/or
 [`OIDAuthorizationService.presentAuthorizationRequest:externalUserAgent:callback:`](http://openid.github.io/AppAuth-iOS/docs/latest/interface_o_i_d_authorization_service.html#ae551f8e6887366a46e49b09b37389b8f)
-rather than using the platform-specific convenience methods (which use the 
-default user-agents for their respective platforms), like 
+rather than using the platform-specific convenience methods (which use the
+default user-agents for their respective platforms), like
 [`OIDAuthState.authStateByPresentingAuthorizationRequest:presentingViewController:callback:`](http://openid.github.io/AppAuth-iOS/docs/latest/category_o_i_d_auth_state_07_i_o_s_08.html#ae32fd0732cd3192cd5219f2655a4c85c).
 
 Popular use-cases for writing your own user-agent implementation include needing
@@ -527,6 +543,7 @@ if it's not installed (the default behavior of this user-agent). You only need
 to include the URL scheme of the actual browser you intend to use.
 
 <sub>Objective-C</sub>
+
 ```objc
 // performs authentication request
 AppDelegate *appDelegate =

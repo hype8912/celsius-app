@@ -430,7 +430,7 @@ class VerifyProfile extends Component {
   }
 
   render() {
-    const { value } = this.state;
+    const { value, loading } = this.state;
     const { actions, navigation, appState, biometrics } = this.props;
     const hideBack = navigation.getParam("hideBack");
 
@@ -459,6 +459,7 @@ class VerifyProfile extends Component {
             toggleKeypad={actions.toggleKeypad}
             onPress={onPressFunc}
             purpose={KEYPAD_PURPOSES.VERIFICATION}
+            editable={!loading}
           />
         </View>
         <BiometricsAuthenticationModal actions={actions} />

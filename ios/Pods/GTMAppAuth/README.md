@@ -282,7 +282,7 @@ your own OAuth client ID for use with the example.
 GTMAppAuth uses the browser to present the authorization request, while
 GTMOAuth2 uses an embedded web-view. Migrating to GTMAppAuth will require you
 to change how you authorize the user. Follow the instructions above to get the
-authorization.  You can then create a `GTMAppAuthFetcherAuthorization` object
+authorization. You can then create a `GTMAppAuthFetcherAuthorization` object
 with the `initWithAuthState:authState` initializer.
 
 Once you have the `GTMAppAuthFetcherAuthorization` you can continue to make REST
@@ -294,7 +294,7 @@ GTMAppAuth's error handling is also different. There are no notifications,
 instead you need to inspect NSError in the callback. If the error domain is
 `OIDOAuthTokenErrorDomain`, it indicates an authorization error, you should
 clear your authorization state and consider prompting the user to authorize
-again.  Other errors are generally considered transient, meaning that you should
+again. Other errors are generally considered transient, meaning that you should
 retry the request after a delay.
 
 ### Serialization
@@ -310,17 +310,17 @@ data.
 Typically, GTMOAuth2 clients are registered with Google as type "Other". This is
 correct for macOS, but on iOS clients should be registered with the type "iOS".
 
-If you're migrating an iOS client, in the *same project as your existing client*,
+If you're migrating an iOS client, in the _same project as your existing client_,
 [register a new iOS client](https://console.developers.google.com/apis/credentials?project=_)
 to be used with GTMAppAuth.
 
 ### Changing your Authorization Flows
 
 Both GTMOAuth2 and GTMAppAuth support the `GTMFetcherAuthorizationProtocol`
-allowing you to use the authorization with the session fetcher.  Where you
+allowing you to use the authorization with the session fetcher. Where you
 previously had a property like `GTMOAuth2Authentication *authorization` change the
 type to reference the protocol instead, i.e.:
-`id<GTMFetcherAuthorizationProtocol> authorization`.  This allows you to switch
+`id<GTMFetcherAuthorizationProtocol> authorization`. This allows you to switch
 the authorization implementation under the hood to GTMAppAuth.
 
 Then, follow the instructions above to replace authorization request
@@ -337,7 +337,7 @@ request that resulted in the authorization grant.
 The client ID used for GTMAppAuth is [different](#oauth-client-registration) to
 the one used for GTMOAuth2. In order to keep track of the different client ids
 used for new and old grants, it's recommended to migrate to the new
-serialization format, which will store that for you. 
+serialization format, which will store that for you.
 [GTMOAuth2-compatible serialization](#gtmoauth2-compatible-serialization) is
 also offered, but not fully supported.
 
@@ -350,13 +350,13 @@ using the following example.
                                 toKeychainForName:kNewKeychainName];
 ```
 
-Be sure to use a *new* name for the keychain. Don't reuse your old one!
+Be sure to use a _new_ name for the keychain. Don't reuse your old one!
 
 For deserializing, we can preserve all existing grants (so users who authorized
 your app in GTMOAuth2 don't have to authorize it again). Remember that when
-deserializing the *old* data you need to use your *old* keychain name, and
-the old client id and client secret (if those changed), and that when 
-serializing to the *new* format, use the *new* keychain name.
+deserializing the _old_ data you need to use your _old_ keychain name, and
+the old client id and client secret (if those changed), and that when
+serializing to the _new_ format, use the _new_ keychain name.
 Once again, pay particular care to use the old details when deserializing the
 GTMOAuth2 keychain, and the new details for all other GTMAppAuth calls.
 

@@ -98,7 +98,6 @@ class LoanInterestCard extends Component {
         }
         padding="15 15 15 15"
         margin="5 0 5 0"
-        opacity={this.isAllowed ? 1 : 0.4}
       >
         <View style={style.textContainer}>
           <View style={{ opacity: this.isAllowed ? 1 : 0.4 }}>

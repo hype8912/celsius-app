@@ -66,7 +66,7 @@ class BorrowCollateral extends Component {
                 key={coin.short}
                 handleSelectCoin={this.handleSelectCoin}
                 coin={coin}
-                type={COIN_CARD_TYPE.COLLATERAL_COIN_CARD}
+                type={COIN_CARD_TYPE.COLLATERAL}
               />
             ))}
           </View>

@@ -114,7 +114,7 @@ class PaymentCel extends Component {
           coin={coin}
           loan={loan}
           reason={reason}
-          type={COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD}
+          type={COIN_CARD_TYPE.INTEREST}
         />
         <TierCard loanId={id} />
         <CelButton

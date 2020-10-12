@@ -20,6 +20,7 @@ class CelModalButton extends Component {
       "green",
       "white",
     ]),
+    disabled: PropTypes.bool,
     loading: PropTypes.bool,
   };
   static defaultProps = {
@@ -69,7 +70,7 @@ class CelModalButton extends Component {
   };
 
   render() {
-    const { children, onPress, buttonStyle, loading } = this.props;
+    const { children, onPress, buttonStyle, loading, disabled } = this.props;
     const style = CelModalButtonStyle();
     const borderRadius = this.handleBorderRadius();
     const buttonColor = this.handleButtonStyle();
@@ -79,7 +80,7 @@ class CelModalButton extends Component {
         <TouchableOpacity
           style={[style.buttonStyle, borderRadius, buttonColor]}
           onPress={buttonStyle !== "disabled" ? onPress : null}
-          disabled={buttonStyle === "disabled"}
+          disabled={buttonStyle === "disabled" || loading || disabled}
         >
           {loading ? (
             <Spinner size={25} color={getColor(COLOR_KEYS.CARDS)} />

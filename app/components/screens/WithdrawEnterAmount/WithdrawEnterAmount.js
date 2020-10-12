@@ -236,7 +236,7 @@ class WithdrawEnterAmount extends Component {
 
   handleNextStep = () => {
     const { actions, formData, walletSummary } = this.props;
-    const { activePeriod } = this.state
+    const { activePeriod } = this.state;
     const coinData = walletSummary.coins.find(
       c => c.short === formData.coin.toUpperCase()
     );
@@ -246,7 +246,8 @@ class WithdrawEnterAmount extends Component {
     if (celUtilityUtil.isLosingTier(formData.coin, newBalance)) {
       return actions.openModal(MODALS.LOSE_TIER_MODAL);
     }
-    if (activePeriod.label !== "ALL") actions.updateFormField("withdrawAll", null);
+    if (activePeriod.label !== "ALL")
+      actions.updateFormField("withdrawAll", null);
 
     this.navigateToNextStep();
   };

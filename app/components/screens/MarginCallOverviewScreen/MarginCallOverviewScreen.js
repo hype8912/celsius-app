@@ -63,7 +63,7 @@ class MarginCallOverviewScreen extends Component {
             <View key={loan.id}>
               <PaymentCard
                 coin={currencyRates.find(cr => cr.short === loan.coin)}
-                type={COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD}
+                type={COIN_CARD_TYPE.MARGIN_CALL}
                 loan={loan}
                 reason={LOAN_PAYMENT_REASONS.MARGIN_CALL}
                 handleSelectCoin={() => this.selectCoin(loan)}

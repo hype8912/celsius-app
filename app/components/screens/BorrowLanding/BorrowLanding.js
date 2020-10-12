@@ -192,21 +192,14 @@ class BorrowLanding extends Component {
     );
   };
 
-  renderDefaultView() {
+  renderContent = () => {
     const { xOffset, filterItem, isLoading } = this.state;
-    const { actions, allLoans, loyaltyInfo, activeLoan } = this.props;
+    const { actions, loyaltyInfo, activeLoan } = this.props;
     const style = BorrowLandingStyle();
     const filteredLoans = this.handleFilter();
     const filter = filterItem || "ALL";
-
     return (
-      <RegularLayout
-        padding={"20 0 100 0"}
-        pullToRefresh={() => actions.getAllLoans()}
-      >
-        <View style={{ marginLeft: 20, marginRight: 20 }}>
-          {this.renderCard()}
-        </View>
+      <View>
         {isLoading ? (
           <View
             style={{
@@ -283,7 +276,7 @@ class BorrowLanding extends Component {
                           <LoanOverviewCard
                             loan={loan}
                             index={index}
-                            length={allLoans.length - 1}
+                            length={filteredLoans.length - 1}
                             navigateTo={actions.navigateTo}
                             actions={actions}
                             celDiscount={loyaltyInfo.tier.loanInterestBonus}
@@ -308,16 +301,33 @@ class BorrowLanding extends Component {
             )}
           </View>
         )}
-        <LoanAlertsModalWrapper />
-      </RegularLayout>
+      </View>
     );
-  }
+  };
 
   renderNoLoans = () => (
     <RegularLayout>
       <EmptyState purpose={EMPTY_STATES.NO_LOANS} />
     </RegularLayout>
   );
+
+  renderDefaultView() {
+    const { actions, allLoans } = this.props;
+    const hasLoans = !!allLoans.length;
+
+    return (
+      <RegularLayout
+        padding={"20 0 100 0"}
+        pullToRefresh={() => actions.getAllLoans()}
+      >
+        <View style={{ marginLeft: 20, marginRight: 20 }}>
+          {this.renderCard()}
+        </View>
+        {!hasLoans ? this.renderNoLoans() : this.renderContent()}
+        <LoanAlertsModalWrapper />
+      </RegularLayout>
+    );
+  }
 
   renderNoCompliance = () => (
     <RegularLayout>
@@ -341,9 +351,7 @@ class BorrowLanding extends Component {
 
   // slavija intersection
   renderIntersection() {
-    const { kycStatus, loanCompliance, allLoans } = this.props;
-
-    const hasLoans = !!allLoans.length;
+    const { kycStatus, loanCompliance } = this.props;
 
     if (kycStatus && !hasPassedKYC())
       return (
@@ -351,7 +359,7 @@ class BorrowLanding extends Component {
       );
     if (!loanCompliance.allowed) return this.renderNoCompliance();
 
-    if (!hasLoans) return this.renderNoLoans();
+    // if (!hasLoans) return this.renderNoLoans();
 
     return this.renderDefaultView();
   }

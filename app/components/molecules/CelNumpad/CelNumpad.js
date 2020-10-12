@@ -80,6 +80,7 @@ class CelNumpad extends Component {
     setKeypadInput: PropTypes.func.isRequired,
     toggleKeypad: PropTypes.func.isRequired,
     purpose: PropTypes.string.isRequired,
+    editable: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -159,7 +160,7 @@ class CelNumpad extends Component {
   }
 
   render() {
-    const { purpose, value, isFocused, autofocus } = this.props;
+    const { purpose, value, isFocused, autofocus, editable } = this.props;
     const style = CelNumpadStyle();
     const buttons = BUTTONS[purpose];
 
@@ -209,6 +210,7 @@ class CelNumpad extends Component {
           this.inputRef = input;
         }}
         autoFocus={!STORYBOOK ? autofocus : false}
+        editable={editable}
       />
     );
   }

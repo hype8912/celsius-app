@@ -67,7 +67,7 @@ class ChooseMarginCollateralCoin extends Component {
                 key={coin.short}
                 handleSelectCoin={this.handleSelectCoin}
                 coin={coin}
-                type={COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD}
+                type={COIN_CARD_TYPE.MARGIN_CALL}
                 isMarginCall={loan.margin_call_activated}
                 marginCall={loan.margin_call}
               />

@@ -12,7 +12,7 @@ const loanPaymentUtil = {
 };
 
 function calculateAdditionalPayment(
-  loan,
+  loan = undefined,
   cardType = undefined,
   additionalCoin = undefined
 ) {
@@ -27,63 +27,60 @@ function calculateAdditionalPayment(
   let additionalCryptoAmount;
   let additionalUsdAmount;
   let cryptoAmountToPay;
-  let amountUsd;
+  let usdAmount;
   let isAllowed;
   let collateralAmount;
   let cryptoAmount;
   let color;
   let coin;
+  let amountToPay;
+
+  if (loan) {
+    amountToPay = loan.installments_to_be_paid.total;
+  }
 
   if (!additionalCoin) {
-    if (cardType === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD) {
+    if (cardType === COIN_CARD_TYPE.MARGIN_CALL) {
       coin = loan.coin;
     } else {
       coin = loan.coin_loan_asset !== "USD" ? loan.coin_loan_asset : loan.coin;
     }
-
     loanCoin = walletSummary.coins.find(c => c.short === coin);
     currency = currencies.filter(
       c => c.short === loanCoin.short.toUpperCase()
     )[0];
-    hasEnough = loanCoin.amount_usd.isGreaterThan(
-      loan.installments_to_be_paid.total
-    );
-    additionalCryptoAmount =
-      Number(loan.installments_to_be_paid.total) -
-      currency.market_quotes_usd.price * loanCoin.amount;
-    additionalUsdAmount =
-      Number(loan.installments_to_be_paid.total) -
-      loanCoin.amount_usd.toNumber();
-    cryptoAmountToPay = loanCoin.amount
-      .dividedBy(loanCoin.amount_usd)
-      .multipliedBy(loan.installments_to_be_paid.total);
-    isAllowed = loanCoin.amount_usd.isGreaterThan(0);
+    if (amountToPay) {
+      hasEnough = loanCoin.amount_usd.isGreaterThan(amountToPay);
+      additionalCryptoAmount =
+        Number(amountToPay) -
+        currency.market_quotes_usd.price * loanCoin.amount;
+      additionalUsdAmount =
+        Number(amountToPay) - loanCoin.amount_usd.toNumber();
+      cryptoAmountToPay = loanCoin.amount
+        .dividedBy(loanCoin.amount_usd)
+        .multipliedBy(amountToPay);
+    }
     cryptoAmount = loanCoin.amount.toNumber();
-    amountUsd = loanCoin.amount_usd.toNumber();
+    usdAmount = loanCoin.amount_usd;
+    isAllowed = usdAmount.isGreaterThan(0);
+    const rate = currencyRatesShort[loanCoin.short.toLowerCase()];
 
-    if (cardType === COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD) {
-      hasEnough = loanCoin.amount_usd.isGreaterThan(loan.loan_amount_usd);
+    if (cardType === COIN_CARD_TYPE.PRINCIPAL) {
+      hasEnough = usdAmount.isGreaterThan(loan.loan_amount_usd);
       color = !hasEnough ? COLOR_KEYS.NEGATIVE_STATE : COLOR_KEYS.PARAGRAPH;
       additionalCryptoAmount =
-        (loan.loan_amount_usd - loanCoin.amount_usd.toNumber()) /
-        currencyRatesShort[loanCoin.short.toLowerCase()];
-      additionalUsdAmount =
-        loan.loan_amount_usd - loanCoin.amount_usd.toNumber();
+        (loan.loan_amount_usd - usdAmount.toNumber()) / rate;
+      additionalUsdAmount = loan.loan_amount_usd - usdAmount.toNumber();
     }
 
-    if (cardType === COIN_CARD_TYPE.MARGIN_COLLATERAL_COIN_CARD) {
-      collateralAmount =
-        Number(loan.margin_call.margin_call_usd_amount) /
-        currencyRatesShort[loanCoin.short.toLowerCase()];
-      hasEnough = loanCoin.amount_usd.isGreaterThanOrEqualTo(
-        loan.margin_call.margin_call_usd_amount
-      );
-      additionalCryptoAmount = collateralAmount - loanCoin.amount.toNumber();
-      additionalUsdAmount =
-        Number(loan.margin_call.margin_call_usd_amount) -
-        loanCoin.amount_usd.toNumber();
-      amountUsd = Number(loan.margin_call.margin_call_usd_amount);
+    if (cardType === COIN_CARD_TYPE.MARGIN_CALL) {
+      const marginCallUsdAmount = loan.margin_call.margin_call_usd_amount;
+      hasEnough = usdAmount.isGreaterThanOrEqualTo(marginCallUsdAmount);
       color = !hasEnough ? COLOR_KEYS.NEGATIVE_STATE : COLOR_KEYS.PARAGRAPH;
+      collateralAmount = Number(marginCallUsdAmount) / rate;
+      additionalCryptoAmount = collateralAmount - cryptoAmount;
+      additionalUsdAmount = Number(marginCallUsdAmount) - usdAmount.toNumber();
+      usdAmount = Number(marginCallUsdAmount);
     }
   }
 
@@ -91,23 +88,25 @@ function calculateAdditionalPayment(
     currency = currencies.filter(
       c => c.short === additionalCoin.short.toUpperCase()
     )[0];
+    const marketPriceUsd = currency.market_quotes_usd.price;
     loanCoin = walletSummary.coins.find(c => c.short === additionalCoin.short);
     cryptoAmount = loanCoin.amount.toNumber();
-    amountUsd = loanCoin.amount_usd.toNumber();
-
-    if (cardType === COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD) {
-      additionalUsdAmount =
-        Number(loan.installments_to_be_paid.total) - amountUsd;
-      additionalCryptoAmount =
-        Number(loan.installments_to_be_paid.total) -
-        currency.market_quotes_usd.price * cryptoAmount;
-      hasEnough = amountUsd > loan.installments_to_be_paid.total;
-      isAllowed = loanCoin.amount_usd.isGreaterThanOrEqualTo(
-        loan.installments_to_be_paid.total
-      );
+    usdAmount = loanCoin.amount_usd;
+    if (cardType === COIN_CARD_TYPE.INTEREST) {
+      hasEnough = usdAmount.isGreaterThanOrEqualTo(amountToPay);
       color = hasEnough ? COLOR_KEYS.PARAGRAPH : COLOR_KEYS.NEGATIVE_STATE;
+      additionalUsdAmount = Number(amountToPay) - usdAmount.toNumber();
+      additionalCryptoAmount =
+        Number(amountToPay) - marketPriceUsd * cryptoAmount;
     }
-    if (cardType === COIN_CARD_TYPE.COLLATERAL_COIN_CARD) {
+    if (cardType === COIN_CARD_TYPE.COLLATERAL) {
+      collateralAmount = Number(formData.loanAmount) * 2;
+      hasEnough = additionalCoin.amount_usd.isGreaterThanOrEqualTo(
+        collateralAmount
+      );
+      color = additionalCoin.amount_usd.isLessThan(collateralAmount)
+        ? COLOR_KEYS.NEGATIVE_STATE
+        : COLOR_KEYS.PARAGRAPH;
       cryptoAmount = formatter.crypto(
         additionalCoin.amount,
         additionalCoin.short,
@@ -115,19 +114,11 @@ function calculateAdditionalPayment(
           precision: 2,
         }
       );
-      amountUsd = additionalCoin.amount_usd.toNumber();
-      collateralAmount = Number(formData.loanAmount) * 2;
-      isAllowed = additionalCoin.amount_usd >= collateralAmount;
-      color =
-        additionalCoin.amount_usd < collateralAmount
-          ? COLOR_KEYS.NEGATIVE_STATE
-          : COLOR_KEYS.PARAGRAPH;
+      usdAmount = additionalCoin.amount_usd.toNumber();
       if (currency) {
         additionalCryptoAmount =
-          (formData.loanAmount * 2 - additionalCoin.amount_usd) /
-          currency.market_quotes_usd.price;
-        additionalUsdAmount =
-          additionalCryptoAmount * currency.market_quotes_usd.price;
+          (Number(formData.loanAmount) * 2 - usdAmount) / marketPriceUsd;
+        additionalUsdAmount = additionalCryptoAmount * marketPriceUsd;
       }
     }
   }
@@ -135,14 +126,14 @@ function calculateAdditionalPayment(
   return {
     coin: loanCoin || "ETH",
     hasEnough,
+    isAllowed,
+    color: color || COLOR_KEYS.PRIMARY_BUTTON,
+    usdAmount: usdAmount || 0,
     additionalCryptoAmount: additionalCryptoAmount || 0,
     additionalUsdAmount: additionalUsdAmount || 0,
-    cryptoAmountToPay: cryptoAmountToPay || 0,
-    amountUsd: amountUsd || 0,
-    collateralAmount: collateralAmount || 0,
-    isAllowed,
     cryptoAmount: cryptoAmount || 0,
-    color: color || COLOR_KEYS.PRIMARY_BUTTON,
+    cryptoAmountToPay: cryptoAmountToPay || 0,
+    collateralAmount: collateralAmount || 0,
   };
 }
 

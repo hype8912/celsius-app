@@ -129,7 +129,7 @@ class ChoosePaymentMethod extends Component {
     const cel = walletSummary.coins.find(c => c.short === "CEL");
     const payment = loanPaymentUtil.calculateAdditionalPayment(
       loan,
-      COIN_CARD_TYPE.LOAN_PAYMENT_COIN_CARD,
+      COIN_CARD_TYPE.INTEREST,
       cel
     );
     const pay =

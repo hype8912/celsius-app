@@ -27,7 +27,7 @@ class LoanAlertsDepositCoinsModal extends Component {
     const { actions, loan } = this.props;
     const payment = loanPaymentUtil.calculateAdditionalPayment(
       loan,
-      COIN_CARD_TYPE.PRINCIPAL_PAYMENT_COIN_CARD
+      COIN_CARD_TYPE.PRINCIPAL
     );
     actions.navigateTo(SCREENS.DEPOSIT, {
       coin: loan.coin_loan_asset,
