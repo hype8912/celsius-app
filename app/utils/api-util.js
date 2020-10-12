@@ -56,6 +56,7 @@ async function requestInterceptor(req) {
   if (req.url.includes(API_URL)) {
     newRequest.headers = {
       ...newRequest.headers,
+      ...disableCache(),
       ...setContentTypeHeaders(req),
       ...setDeviceInfoHeaders(),
       ...(await setAppVersionHeaders()),
@@ -82,6 +83,14 @@ async function requestInterceptor(req) {
   /* eslint-enable no-underscore-dangle */
 
   return newRequest;
+}
+
+function disableCache() {
+  return {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    Pragma: "no-cache",
+    Expires: 0,
+  };
 }
 
 /**
