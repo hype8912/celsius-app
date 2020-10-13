@@ -19,7 +19,11 @@
   "requires_arc": true,
   "static_framework": true,
   "dependencies": {
-    "React": [],
-    "UXCam": ["~> 3.2.4"]
+    "React": [
+
+    ],
+    "UXCam": [
+      "~> 3.2.4"
+    ]
   }
 }
