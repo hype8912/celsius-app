@@ -1,9 +1,7 @@
 {
   "name": "Permission-PhotoLibrary",
   "dependencies": {
-    "RNPermissions": [
-
-    ]
+    "RNPermissions": []
   },
   "version": "2.0.10",
   "license": "MIT",

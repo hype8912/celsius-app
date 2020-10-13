@@ -42,13 +42,13 @@ class InterestReminderModal extends Component {
         return navigateTo(SCREENS.INTEREST_PAYMENT_OVERVIEW);
 
       return navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
-        reason: LOAN_PAYMENT_REASONS.INTEREST,
+        reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
         id: activeLoan.id,
       });
     }
     return navigateTo(SCREENS.DEPOSIT, {
       coin: coin.short,
-      reason: LOAN_PAYMENT_REASONS.INTEREST,
+      reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
       amountUsd: additionalUsd,
       additionalCryptoAmount: additionalCrypto,
     });

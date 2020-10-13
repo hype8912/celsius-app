@@ -347,7 +347,7 @@ class LoanOverviewCard extends Component {
                     onPress={() =>
                       navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
                         id: loan.id,
-                        reason: LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
+                        reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
                       })
                     }
                     margin={"5 5 5 5"}
