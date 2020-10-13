@@ -23,8 +23,11 @@ function activateBiometrics(publicKey, type, verification) {
   });
 }
 
-function deactivateBiometrics(verification) {
-  return axios.post(`${apiUrl}/users/biometrics/deactivate`, verification);
+function deactivateBiometrics(verification, invalidated) {
+  return axios.post(`${apiUrl}/users/biometrics/deactivate`, {
+    ...verification,
+    invalidated,
+  });
 }
 
 function checkBiometrics(payload, signature) {

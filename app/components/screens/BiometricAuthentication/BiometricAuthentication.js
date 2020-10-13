@@ -94,7 +94,7 @@ class BiometricAuthentication extends Component {
       actions.navigateTo(SCREENS.VERIFY_PROFILE, {
         onSuccess: async () => {
           try {
-            const biometricDisabled = await actions.disableBiometrics();
+            const biometricDisabled = await actions.disableBiometrics(false);
             if (biometricDisabled)
               actions.showMessage("success", disableBiometricsText);
             await deleteBiometricsKey();
