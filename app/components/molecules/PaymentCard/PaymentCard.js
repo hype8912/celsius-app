@@ -518,7 +518,7 @@ class PaymentCard extends Component {
                 </View>
               </View>
             )}
-            {usdAmount < Number(loan.monthly_payment) &&
+            {usdAmount.isLessThan(loan.monthly_payment) &&
             reason !== LOAN_PAYMENT_REASONS.INTEREST_SETTINGS ? (
               <View>
                 {this.renderAdditionalAmountRequired()}
