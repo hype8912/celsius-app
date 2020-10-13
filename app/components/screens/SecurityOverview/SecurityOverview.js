@@ -14,9 +14,10 @@ import SecurityStrengthMeter from "../../atoms/SecurityStrengthMeter/SecurityStr
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CheckWithdrawalAddressesCard from "../../organisms/CheckWithdrawalAddressesCard/CheckWithdrawalAddressesCard";
 import SeparatorInfoModal from "../../modals/SeparatorInfoModal/SeparatorInfoModal";
-import { MODALS } from "../../../constants/UI";
+import { BIOMETRIC_ERRORS, MODALS } from "../../../constants/UI";
 import SecurityOverviewStyle from "./SecurityOverview.styles";
 import { SCREENS } from "../../../constants/SCREENS";
+import { getBiometricTypeData } from "../../../utils/biometrics-util";
 
 @connect(
   state => ({
@@ -25,6 +26,9 @@ import { SCREENS } from "../../../constants/SCREENS";
     twoFAStatus: state.security.twoFAStatus,
     is2FAEnabled: state.user.profile.two_factor_enabled,
     hodlStatus: state.hodl.hodlStatus,
+    user: state.user.profile,
+    biometrics: state.biometrics.biometrics,
+    deviceId: state.app.deviceId,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -129,13 +133,30 @@ class SecurityOverview extends Component {
           },
         });
         return;
+      case "biometric":
+        this.setState({
+          selectedModalData: {
+            title: "What is Biometric Authentication?",
+            body: [
+              "Biometric Authentication is a method of protecting sensitive information within your app, such as using face recognition or fingerprint recognition. Once activated, it adds a second layer of protection. You can enable biometric option which is available on your device.",
+            ],
+          },
+        });
+        return;
       default:
         return;
     }
   };
 
   render() {
-    const { actions, securityOverview, twoFAStatus } = this.props;
+    const {
+      actions,
+      securityOverview,
+      twoFAStatus,
+      user,
+      biometrics,
+      deviceId,
+    } = this.props;
 
     const style = SecurityOverviewStyle();
 
@@ -143,6 +164,12 @@ class SecurityOverview extends Component {
 
     const fixNowParams = this.getFixNowParams();
     const isChangePasswordVisible = securityOverview.is_using_password_auth;
+    const biometricsType = getBiometricTypeData();
+    const shouldRenderBiometrics = !!(
+      deviceId &&
+      ((biometrics && biometrics.available) ||
+        (biometrics && biometrics.error === BIOMETRIC_ERRORS.NONE_ENROLLED))
+    );
 
     return (
       <RegularLayout>
@@ -190,6 +217,26 @@ class SecurityOverview extends Component {
             onPress={() => actions.navigateTo(SCREENS.HODL_LANDING)}
             enabled={securityOverview.hodl_mode_active}
           />
+
+          {shouldRenderBiometrics && (
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  this.handleModalData("biometric");
+                  actions.openModal(MODALS.SEPARATOR_INFO_MODAL);
+                }}
+              >
+                <Separator text="Biometrics" showInfo />
+              </TouchableOpacity>
+              <ToggleInfoCard
+                subtitle={`${biometricsType.text} is`}
+                onPress={() =>
+                  actions.navigateTo(SCREENS.BIOMETRICS_AUTHENTICATION)
+                }
+                enabled={user.biometrics_enabled}
+              />
+            </>
+          )}
 
           {isChangePasswordVisible && (
             <>

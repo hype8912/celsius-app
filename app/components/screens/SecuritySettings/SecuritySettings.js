@@ -22,7 +22,6 @@ import { SCREENS } from "../../../constants/SCREENS";
   state => ({
     securityOverview: state.security.securityOverview,
     is2FAEnabled: state.user.profile.two_factor_enabled,
-    user: state.user.profile,
     kycStatus: state.user.profile.kyc,
     formData: state.forms.formData,
     hodlStatus: state.hodl.hodlStatus,
@@ -165,7 +164,6 @@ class SecuritySettings extends Component {
     const {
       actions,
       is2FAEnabled,
-      user,
       kycStatus,
       securityOverview,
       biometrics,
@@ -203,7 +201,7 @@ class SecuritySettings extends Component {
           HODL Mode
         </IconButton>
 
-        {!user.registered_with_social && (
+        {securityOverview.is_using_password_auth && (
           <IconButton
             margin="0 0 20 0"
             onPress={() => actions.navigateTo(SCREENS.CHANGE_PASSWORD)}
