@@ -83,7 +83,9 @@ class TransactionDetailsLoans extends Component {
             </View>
           )}
 
-          {TRANSACTION_TYPES.COLLATERAL_UNLOCKED.includes(transaction.type) ? (
+          {[TRANSACTION_TYPES.COLLATERAL_UNLOCKED].includes(
+            transaction.type
+          ) ? (
             <Card>
               <CelText align={"left"} type={"H5"} weight={"600"}>
                 Successfully Completed Loan
@@ -140,16 +142,39 @@ class TransactionDetailsLoans extends Component {
             </View>
           </View>
 
-          <CelButton
-            margin={"20 0 0 0"}
-            onPress={() =>
-              navigateTo("LoanRequestDetails", {
-                id: transaction.loan_data.loan_number,
-              })
-            }
-          >
-            Loan Overview
-          </CelButton>
+          {[TRANSACTION_TYPES.LOAN_INTEREST].includes(transaction.type) && (
+            <CelButton
+              margin={"20 0 0 0"}
+              onPress={() => navigateTo(SCREENS.INTEREST_PAYMENT_OVERVIEW)}
+            >
+              Continue Paying Loan Interests
+            </CelButton>
+          )}
+
+          {[TRANSACTION_TYPES.MARGIN_CALL].includes(transaction.type) && (
+            <CelButton
+              margin={"20 0 0 0"}
+              onPress={() => navigateTo(SCREENS.MARGIN_CALL_OVERVIEW_SCREEN)}
+            >
+              Continue Resolving Margin Calls
+            </CelButton>
+          )}
+
+          {![
+            TRANSACTION_TYPES.MARGIN_CALL,
+            TRANSACTION_TYPES.LOAN_INTEREST,
+          ].includes(transaction.type) && (
+            <CelButton
+              margin={"20 0 0 0"}
+              onPress={() =>
+                navigateTo(SCREENS.LOAN_REQUEST_DETAILS, {
+                  id: transaction.loan_data.loan_number,
+                })
+              }
+            >
+              Loan Overview
+            </CelButton>
+          )}
 
           <CelButton
             margin={"20 0 0 0"}

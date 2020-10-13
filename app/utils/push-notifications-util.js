@@ -34,10 +34,10 @@ async function getNotificationToken() {
 /**
  * On iOS platform, ask for notification permissions, get notification token and store it to storage
  */
-let fetchingToken = false
+let fetchingToken = false;
 async function getIOSPushNotificationToken() {
   if (!fetchingToken) {
-    fetchingToken = true
+    fetchingToken = true;
     const perm = await PushNotificationIOS.requestPermissions();
 
     if (perm && perm.alert === 1) {
@@ -45,7 +45,7 @@ async function getIOSPushNotificationToken() {
         setSecureStoreKey(STORAGE_KEYS.NOTIFICATION_TOKEN, token);
       });
     }
-    fetchingToken = false
+    fetchingToken = false;
   }
 }
 

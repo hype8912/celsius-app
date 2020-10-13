@@ -78,7 +78,6 @@ function renderAdditionalDepositCardContent(
       crypto = additionalCryptoAmount;
       break;
     case LOAN_PAYMENT_REASONS.MANUAL_INTEREST:
-    case LOAN_PAYMENT_REASONS.INTEREST:
     case LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT:
       text = "required for the next interest payment.";
       usd = amountUsd;

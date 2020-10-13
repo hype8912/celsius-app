@@ -37,6 +37,9 @@ class PaymentCel extends Component {
     if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
       title = "Prepay with CEL";
     }
+    if (reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS) {
+      title = "Set Payment Type";
+    }
 
     return {
       title,
@@ -80,7 +83,7 @@ class PaymentCel extends Component {
       actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { id, reason });
     }
 
-    if (reason === LOAN_PAYMENT_REASONS.INTEREST) {
+    if (reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS) {
       this.setState({ isLoading: true });
       await actions.updateLoanSettings(id, { interest_payment_asset: "CEL" });
       actions.showMessage(
@@ -97,7 +100,6 @@ class PaymentCel extends Component {
   };
 
   render() {
-    // const style = PaymentCelCelStyle();
     const { navigation } = this.props;
     const { allLoans, currencyRates } = this.props;
     const { isLoading } = this.state;
@@ -106,6 +108,10 @@ class PaymentCel extends Component {
     const loan = allLoans.find(l => l.id === id);
 
     const coin = currencyRates.find(c => c.short === "CEL");
+    const title =
+      reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS
+        ? "Set Cel"
+        : "Confirm Payment";
 
     return (
       <RegularLayout fabType={"hide"}>
@@ -116,14 +122,16 @@ class PaymentCel extends Component {
           reason={reason}
           type={COIN_CARD_TYPE.INTEREST}
         />
-        <TierCard loanId={id} />
+        {reason !== LOAN_PAYMENT_REASONS.INTEREST_SETTINGS && (
+          <TierCard loanId={id} />
+        )}
         <CelButton
           margin={"20 0 0 0"}
           onPress={this.payInCel}
           loading={isLoading}
           disabled={isLoading}
         >
-          Confirm Payment
+          {title}
         </CelButton>
         <CelText
           margin={"20 0 20 0"}

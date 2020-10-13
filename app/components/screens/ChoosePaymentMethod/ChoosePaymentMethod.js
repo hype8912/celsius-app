@@ -88,7 +88,7 @@ class ChoosePaymentMethod extends Component {
     const { navigation, loanSettings } = this.props;
     const reason = navigation.getParam("reason");
 
-    if (reason === LOAN_PAYMENT_REASONS.INTEREST) {
+    if (reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS) {
       return {
         cel: loanSettings.interest_payment_asset === "CEL",
         coin: !["CEL", "USD"].includes(loanSettings.interest_payment_asset),
@@ -143,7 +143,10 @@ class ChoosePaymentMethod extends Component {
         lightImage: require("../../../../assets/images/icons/cel.png"),
         darkImage: require("../../.././../assets/images/icons/cel-dark.png"),
         unicornImage: require("../../.././../assets/images/icons/cel-unicorn.png"),
-        label: activeCards.cel ? "Currently active" : null,
+        label:
+          loan.loanPaymentSettings.automatic_interest_payment && activeCards.cel
+            ? "Currently Active"
+            : null,
       },
       {
         textButton: `${formatter.capitalize(pay)} with crypto`,
@@ -153,7 +156,11 @@ class ChoosePaymentMethod extends Component {
         lightImage: require("../../../../assets/images/icons/crypto.png"),
         darkImage: require("../../.././../assets/images/icons/crypto-dark.png"),
         unicornImage: require("../../.././../assets/images/icons/crypto-unicorn.png"),
-        label: activeCards.coin ? "Currently active" : null,
+        label:
+          loan.loanPaymentSettings.automatic_interest_payment &&
+          activeCards.coin
+            ? "Currently Active"
+            : null,
       },
       {
         textButton: `${formatter.capitalize(pay)} with Dollars`,
@@ -162,12 +169,21 @@ class ChoosePaymentMethod extends Component {
           if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
             actions.updateFormField("coin", "USD");
           }
+          if (reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS) {
+            return actions.showMessage(
+              "error",
+              `For now, you can't set USD for automatic interest payment.`
+            );
+          }
           actions.openModal(MODALS.DOLLAR_PAYMENT_MODAL);
         },
         lightImage: require("../../../../assets/images/icons/dollars.png"),
         darkImage: require("../../../../assets/images/icons/dollars-dark.png"),
         unicornImage: require("../../../../assets/images/icons/dollars-unicorn.png"),
-        label: activeCards.usd ? "Currently active" : null,
+        label:
+          loan.loanPaymentSettings.automatic_interest_payment && activeCards.usd
+            ? "Currently Active"
+            : null,
       },
     ];
 

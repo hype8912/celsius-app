@@ -25,6 +25,7 @@ import CelModalButton from "../../atoms/CelModalButton/CelModalButton";
 import { presentTime } from "../../../utils/ui-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
+import Badge from "../../atoms/Badge/Badge";
 
 @connect(
   state => ({
@@ -46,7 +47,7 @@ class PaymentCard extends Component {
     amountNeededUsd: PropTypes.string,
     reason: PropTypes.oneOf(
       LOAN_PAYMENT_REASONS.MANUAL_INTEREST,
-      LOAN_PAYMENT_REASONS.INTEREST,
+      LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
       LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT,
       LOAN_PAYMENT_REASONS.PRINCIPAL,
       LOAN_PAYMENT_REASONS.MARGIN_CALL
@@ -210,7 +211,8 @@ class PaymentCard extends Component {
     const text =
       amountOfInstalments > 1 ? `${amountOfInstalments} Months` : `Monthly`;
     switch (reason) {
-      case LOAN_PAYMENT_REASONS.INTEREST:
+      case LOAN_PAYMENT_REASONS.INTEREST_SETTINGS:
+        return "";
       case LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT:
       case LOAN_PAYMENT_REASONS.MANUAL_INTEREST:
         return `${text} Interest Payment Amount: `;
@@ -268,7 +270,7 @@ class PaymentCard extends Component {
             }}
             margin={"10 0 10 0"}
           >
-            Add Collateral From Wallet
+            Add Collateral
           </CelButton>
         ) : (
           <CelButton
@@ -355,6 +357,20 @@ class PaymentCard extends Component {
       time = presentTime(loan.margin_call.margin_call_detected, true);
 
     if (currency && cryptoAmount && type !== COIN_CARD_TYPE.COLLATERAL) {
+      const amountToPay =
+        type !== COIN_CARD_TYPE.MARGIN_CALL
+          ? {
+              crypto: formatter.crypto(
+                Number(loan.installments_to_be_paid.total) /
+                  currency.market_quotes_usd.price,
+                currency.short
+              ),
+              usd: formatter.fiat(loan.installments_to_be_paid.total, "USD"),
+            }
+          : {
+              crypto: formatter.crypto(collateralAmount, coin.short, {}),
+              usd: formatter.fiat(usdAmount, "USD"),
+            };
       return (
         <Card
           onPress={hasEnough ? () => handleSelectCoin(coin.short) : null}
@@ -377,14 +393,16 @@ class PaymentCard extends Component {
               <Separator margin={"10 0 10 0"} />
             </View>
           )}
-          <CelText
-            weight={"300"}
-            type={"H6"}
-            align={"left"}
-            margin={"0 0 10 0"}
-          >
-            {this.getTypeOfPaymentTitle(reason, loan)}
-          </CelText>
+          {reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS ? null : (
+            <CelText
+              weight={"300"}
+              type={"H6"}
+              align={"left"}
+              margin={"0 0 10 0"}
+            >
+              {this.getTypeOfPaymentTitle(reason, loan)}
+            </CelText>
+          )}
           <View
             key={coin.name}
             style={[
@@ -404,29 +422,39 @@ class PaymentCard extends Component {
                   coinShort={currency.short}
                 />
               </View>
-              {type !== COIN_CARD_TYPE.MARGIN_CALL ? (
+              {type && reason !== LOAN_PAYMENT_REASONS.INTEREST_SETTINGS ? (
                 <View>
                   <CelText weight={"600"} align="left" type="H3">
-                    {`${formatter.crypto(
-                      Number(loan.installments_to_be_paid.total) /
-                        currency.market_quotes_usd.price,
-                      currency.short
-                    )}`}
+                    {amountToPay.crypto}
                   </CelText>
-                  <CelText weight={"300"} align="left">
-                    {`$ ${loan.installments_to_be_paid.total} USD`}
+                  <CelText weight={"300"} align="left" type="H5">
+                    {amountToPay.usd}
                   </CelText>
                 </View>
               ) : (
                 <View>
-                  <CelText weight={"600"} align="left" type="H3">
-                    {formatter.fiat(usdAmount, "USD")}
-                  </CelText>
-                  <CelText weight={"300"} align="left" type="H5">
-                    {formatter.crypto(collateralAmount, coin.short, {
-                      precision: 2,
-                    })}
-                  </CelText>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <CelText weight={"600"} align="left" type="H3">
+                      {`Set ${currency.short}`}
+                    </CelText>
+                    {currency.short ===
+                      loan.loanPaymentSettings.interest_payment_asset && (
+                      <Badge
+                        color={getColor(COLOR_KEYS.POSITIVE_STATE)}
+                        style={{ opacity: 1, zIndex: 100 }}
+                      >
+                        <CelText type="H6" color="white">
+                          {`Currently Active`}
+                        </CelText>
+                      </Badge>
+                    )}
+                  </View>
                 </View>
               )}
             </View>
@@ -490,7 +518,8 @@ class PaymentCard extends Component {
                 </View>
               </View>
             )}
-            {usdAmount.isLessThan(loan.monthly_payment) ? (
+            {usdAmount.isLessThan(loan.monthly_payment) &&
+            reason !== LOAN_PAYMENT_REASONS.INTEREST_SETTINGS ? (
               <View>
                 {this.renderAdditionalAmountRequired()}
                 {this.renderDepositMore()}

@@ -40,7 +40,7 @@ const interestCEL = () => {
   const state = _.cloneDeep(initialState);
 
   const navigationProps = {
-    reason: LOAN_PAYMENT_REASONS.INTEREST,
+    reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
   };
 
   return (
@@ -58,7 +58,7 @@ const interestUSD = () => {
   state.loans.loanSettings.interest_payment_asset = "USD";
 
   const navigationProps = {
-    reason: LOAN_PAYMENT_REASONS.INTEREST,
+    reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
   };
 
   return (
@@ -76,7 +76,7 @@ const interestCrytpo = () => {
   state.loans.loanSettings.interest_payment_asset = "BTC";
 
   const navigationProps = {
-    reason: LOAN_PAYMENT_REASONS.INTEREST,
+    reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
   };
 
   return (

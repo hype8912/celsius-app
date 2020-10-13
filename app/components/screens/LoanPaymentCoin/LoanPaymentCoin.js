@@ -40,7 +40,9 @@ class LoanPaymentCoin extends Component {
     if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
       title = "Prepay with Crypto";
     }
-
+    if (reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS) {
+      title = "Set Payment Type";
+    }
     return {
       title,
       right: "profile",
@@ -59,14 +61,14 @@ class LoanPaymentCoin extends Component {
     const { actions, navigation } = this.props;
     const reason = navigation.getParam("reason");
     const id = navigation.getParam("id");
-
     if (reason === LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT) {
       actions.updateFormField("coin", coinShort);
       actions.navigateTo(SCREENS.LOAN_PREPAYMENT_PERIOD, { id, reason });
     }
 
-    if (reason === LOAN_PAYMENT_REASONS.INTEREST) {
+    if (reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS) {
       this.setState({ isLoading: { [coinShort]: true } });
+      actions.navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, { id, reason });
       await actions.updateLoanSettings(id, {
         interest_payment_asset: coinShort,
       });
@@ -74,7 +76,6 @@ class LoanPaymentCoin extends Component {
         "success",
         `You have successfully changed interest payment method to ${coinShort}`
       );
-      actions.navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, { id, reason });
       this.setState({ isLoading: { [coinShort]: false } });
     }
 
@@ -109,9 +110,16 @@ class LoanPaymentCoin extends Component {
 
     return (
       <RegularLayout>
-        <CelText margin={"0 0 10 0"} align={"center"} weight={"300"}>
-          Choose a coin from your wallet to complete your payment
-        </CelText>
+        {reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS ? (
+          <CelText margin={"0 0 10 0"} align={"center"} weight={"300"}>
+            Choose a coin for automatic interest payments
+          </CelText>
+        ) : (
+          <CelText margin={"0 0 10 0"} align={"center"} weight={"300"}>
+            Choose a coin from your wallet to complete your payment
+          </CelText>
+        )}
+
         {availableCoins.map(coin => (
           <PaymentCard
             key={coin.short}

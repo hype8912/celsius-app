@@ -17,6 +17,7 @@ import PrincipalAlertModal from "../PrincipalAlertModal/PrincipalAlertModal";
     allLoans: state.loans.allLoans,
     loanAlerts: state.loans.loanAlerts,
     walletSummary: state.wallet.summary,
+    activeScreen: state.nav.activeScreen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -185,8 +186,10 @@ class LoanAlertsModalWrapper extends Component {
   };
 
   render() {
+    const { activeScreen } = this.props;
     const { activeAlert, loan } = this.state;
     if (!activeAlert || !loan) return null;
+    if (loanPaymentUtil.shouldNotCheckForAlerts(activeScreen)) return null;
 
     switch (activeAlert.type) {
       case LOAN_ALERTS.INTEREST_ALERT:

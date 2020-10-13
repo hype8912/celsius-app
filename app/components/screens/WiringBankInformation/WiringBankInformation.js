@@ -125,7 +125,7 @@ class WiringBankInformation extends Component {
           </View>
         </Card>
 
-        {reason === LOAN_PAYMENT_REASONS.INTEREST && (
+        {reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS && (
           <CelButton
             margin="20 0 0 0"
             onPress={this.setInterestInDollars}

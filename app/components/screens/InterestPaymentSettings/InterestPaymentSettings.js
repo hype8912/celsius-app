@@ -129,7 +129,7 @@ class InterestPaymentSettings extends Component {
               margin={"20 0 0 0"}
               onPress={() =>
                 actions.navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
-                  reason: LOAN_PAYMENT_REASONS.INTEREST,
+                  reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
                   id,
                 })
               }
