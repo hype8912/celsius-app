@@ -22,11 +22,22 @@ class CelPayReceivedModal extends Component {
   };
   static defaultProps = {};
 
+  maskSenderName = () => {
+    const { transfer } = this.props;
+
+    const names = transfer.from.name.split(" ")
+    names.map(n => formatter.hideTextExceptFirstNLetters(n))
+
+    return names.join(" ")
+  }
+
   render() {
     const { actions, transfer } = this.props;
     const style = CelPayReceivedModalStyle();
 
     if (!transfer) return null;
+    const senderName = this.maskSenderName()
+
     return (
       <CelModal name={MODALS.CELPAY_RECEIVED_MODAL}>
         <CelText type="H2" align="center" weight="bold" margin="0 0 15 0">
@@ -34,7 +45,7 @@ class CelPayReceivedModal extends Component {
         </CelText>
 
         <CelText align="center" margin={"0 20 0 20"}>
-          Your friend {transfer.from.name} just sent you
+          Your friend {senderName} just sent you
           <CelText weight="600">
             {" "}
             {formatter.crypto(transfer.amount, transfer.coin)}{" "}
