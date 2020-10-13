@@ -73,7 +73,7 @@ export default function loansReducer(state = initialState(), action) {
         amortizationTable: action.amortizationTable,
       };
 
-    case ACTIONS.CHECK_LOAN_ALERTS:
+    case ACTIONS.CHECK_LOAN_ALERTS_SUCCESS:
       return {
         ...state,
         loanAlerts: action.loanAlerts,

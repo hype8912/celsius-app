@@ -44,7 +44,7 @@ function applyForALoan() {
     const { formData } = getState().forms;
     const { automaticLoanLimit } = getState().generalData;
 
-    startApiCall(API.APPLY_FOR_LOAN);
+    dispatch(startApiCall(API.APPLY_FOR_LOAN));
 
     const loanApplication = {
       coin: formData.collateralCoin,
@@ -144,7 +144,7 @@ function loanApplyPreviewData() {
 function getAllLoans() {
   return async dispatch => {
     try {
-      startApiCall(API.GET_ALL_LOANS);
+      dispatch(startApiCall(API.GET_ALL_LOANS));
       const allLoans = await loansService.getAllLoans();
 
       dispatch({
@@ -165,7 +165,7 @@ function getAllLoans() {
 function getLoanById(id) {
   return async dispatch => {
     try {
-      startApiCall(API.GET_LOAN);
+      dispatch(startApiCall(API.GET_LOAN));
       const res = await loansService.getLoanById(id);
 
       dispatch({
@@ -185,7 +185,7 @@ function getLoanById(id) {
 function confirmLoanInfo(data) {
   return async dispatch => {
     try {
-      startApiCall(API.GET_CONFIRM_LOAN_INFO);
+      dispatch(startApiCall(API.GET_CONFIRM_LOAN_INFO));
       const res = await loansService.setConfirmLoanInfo(data);
       const loanInfo = res.data;
 
@@ -215,7 +215,7 @@ function confirmLoanInfo(data) {
 function lockMarginCollateral(marginCallID, marginCallData) {
   return async dispatch => {
     try {
-      startApiCall(API.LOCK_MARGIN_CALL_COLLATERAL);
+      dispatch(startApiCall(API.LOCK_MARGIN_CALL_COLLATERAL));
 
       await loansService.lockMarginCollateral(marginCallID, marginCallData);
 
@@ -258,8 +258,8 @@ function setActiveLoan(loanId) {
 function cancelLoan() {
   return async (dispatch, getState) => {
     try {
+      dispatch(startApiCall(API.CANCEL_LOAN));
       const { loanId } = getState().forms.formData;
-      startApiCall(API.CANCEL_LOAN);
       await loansService.cancelLoan(loanId);
 
       dispatch(showMessage("success", "Loan successfully canceled!"));
@@ -281,7 +281,7 @@ function cancelLoan() {
 function updateLoanSettings(id, value) {
   return async dispatch => {
     try {
-      startApiCall(API.UPDATE_LOAN_SETTINGS);
+      dispatch(startApiCall(API.UPDATE_LOAN_SETTINGS));
       const res = await loansService.updateLoanSettings(id, value);
       const loanSettings = res.data;
 
@@ -306,7 +306,7 @@ function updateLoanSettings(id, value) {
 function getLoanSettings(id) {
   return async dispatch => {
     try {
-      startApiCall(API.GET_LOAN_SETTINGS);
+      dispatch(startApiCall(API.GET_LOAN_SETTINGS));
       const res = await loansService.getLoanSettings(id);
       const loanSettings = res.data;
 
@@ -330,7 +330,7 @@ function getLoanSettings(id) {
 
 function prepayInterest(id) {
   return async (dispatch, getState) => {
-    startApiCall(API.PREPAY_LOAN_INTEREST);
+    dispatch(startApiCall(API.PREPAY_LOAN_INTEREST));
 
     try {
       const { formData } = getState().forms;
@@ -369,7 +369,7 @@ function prepayInterest(id) {
 
 function payPrincipal(id) {
   return async dispatch => {
-    startApiCall(API.PAY_LOAN_PRINCIPAL);
+    dispatch(startApiCall(API.PAY_LOAN_PRINCIPAL));
 
     return;
 
@@ -397,8 +397,7 @@ function lockMarginCallCollateral(id, coin) {
   return async dispatch => {
     let apiCallName;
     try {
-      apiCallName = API.PAY_MARGIN_CALL;
-      startApiCall(apiCallName);
+      dispatch(startApiCall(API.PAY_MARGIN_CALL));
       const res = await loansService.lockMarginCallCollateral(id, coin);
 
       dispatch(closeModal());
@@ -434,7 +433,7 @@ function lockMarginCallCollateral(id, coin) {
  */
 function payMonthlyInterest(id, coin) {
   return async dispatch => {
-    startApiCall(API.PAY_LOAN_INTEREST);
+    dispatch(startApiCall(API.PAY_LOAN_INTEREST));
 
     try {
       const res = await loansService.payMonthlyInterest(id, coin);
@@ -462,6 +461,7 @@ function payMonthlyInterest(id, coin) {
 function checkForLoanAlerts() {
   return (dispatch, getState) => {
     const { allLoans } = getState().loans;
+    dispatch(startApiCall(API.CHECK_LOAN_ALERTS));
 
     const loanAlerts = [];
     allLoans.forEach(l => {
@@ -493,7 +493,7 @@ function checkForLoanAlerts() {
     });
 
     dispatch({
-      type: ACTIONS.CHECK_LOAN_ALERTS,
+      type: ACTIONS.CHECK_LOAN_ALERTS_SUCCESS,
       loanAlerts,
     });
 
@@ -546,7 +546,7 @@ function getLoanAlerts() {
 function sendBankDetailsEmail() {
   return async dispatch => {
     try {
-      startApiCall(API.SEND_BANK_WIRING_INFO_DETAIL);
+      dispatch(startApiCall(API.SEND_BANK_WIRING_INFO_DETAIL));
 
       await loansService.sendBankDetailsEmail();
       dispatch(
@@ -577,7 +577,7 @@ function startedLoanApplication() {
       email: user.email,
     };
     try {
-      startApiCall(API.STARTED_LOAN_APPLICATION);
+      dispatch(startApiCall(API.STARTED_LOAN_APPLICATION));
 
       await analyticsService.startedLoanApplicationService(userData);
     } catch (e) {

@@ -268,7 +268,7 @@ class PaymentCard extends Component {
             }}
             margin={"10 0 10 0"}
           >
-            Add Collateral From Wallet
+            Add Collateral
           </CelButton>
         ) : (
           <CelButton

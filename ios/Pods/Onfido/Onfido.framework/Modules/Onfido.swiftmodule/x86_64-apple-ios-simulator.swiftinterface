@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.3 effective-4.1.50 (swiftlang-1200.0.29.2 clang-1200.0.30.1)
+// swift-compiler-version: Apple Swift version 5.1.3 effective-4.1.50 (swiftlang-1100.0.282.1 clang-1100.0.33.15)
 // swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 4 -enforce-exclusivity=checked -Onone -module-name Onfido
 import AVFoundation
 import AVKit
@@ -51,8 +51,8 @@ public struct AddressResult : Swift.Decodable, Swift.CustomStringConvertible {
   @objc public init(primaryColor: UIKit.UIColor, primaryTitleColor: UIKit.UIColor, primaryBackgroundPressedColor: UIKit.UIColor, secondaryBackgroundPressedColor: UIKit.UIColor, fontRegular: Swift.String?, fontBold: Swift.String?, supportDarkMode: Swift.Bool = true)
   @objc public init(primaryColor: UIKit.UIColor, primaryTitleColor: UIKit.UIColor, primaryBackgroundPressedColor: UIKit.UIColor, supportDarkMode: Swift.Bool = true)
   @objc public init(supportDarkMode: Swift.Bool)
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 public struct Applicant : Swift.Encodable {
   public static func new(title: Swift.String? = nil, firstName: Swift.String, lastName: Swift.String, middleName: Swift.String? = nil, email: Swift.String? = nil, gender: Onfido.Gender? = nil, dateOfBirth: Foundation.Date? = nil, telephone: Swift.String? = nil, mobile: Swift.String? = nil, country: Swift.String? = nil, mothersMaidenName: Swift.String? = nil, previousLastName: Swift.String? = nil, nationality: Swift.String? = nil, countryOfBirth: Swift.String? = nil, townOfBirth: Swift.String? = nil, idNumbers: [Onfido.IdNumber]? = nil, addresses: [Onfido.Address]? = nil) -> Onfido.Applicant
@@ -119,11 +119,11 @@ public protocol Assembly {
 extension Assembly {
   public func loaded(resolver: Onfido.Resolver)
 }
-@objc @_inheritsConvenienceInitializers public class BaseDocumentConfiguration : ObjectiveC.NSObject {
-  @objc deinit
+@objc public class BaseDocumentConfiguration : ObjectiveC.NSObject {
   @objc override dynamic public init()
+  @objc deinit
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(ONCertificatePinningConfiguration) public class CertificatePinningConfiguration : ObjectiveC.NSObject {
+@objc(ONCertificatePinningConfiguration) public class CertificatePinningConfiguration : ObjectiveC.NSObject {
   @objc final public let hashes: [Swift.String]
   @objc public init(hashes: [Swift.String]) throws
   @objc deinit
@@ -175,7 +175,7 @@ extension Container {
     set(newValue)
   }
 }
-@_hasMissingDesignatedInitializers final public class Container {
+final public class Container {
   public convenience init(parent: Onfido.Container? = nil)
   public convenience init(parent: Onfido.Container? = nil, registeringClosure: (Onfido.Container) -> Swift.Void)
   final public func removeAll()
@@ -237,25 +237,25 @@ public enum DocumentType : Swift.Equatable {
 @objc(DrivingLicenceConfiguration) public class DrivingLicenceConfiguration : Onfido.BaseDocumentConfiguration {
   @objc public init(documentFormat: Onfido.DocumentFormat, country: Swift.String? = nil)
   @objc public init(country: Swift.String)
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc(ONEnterpriseFeatures) final public class EnterpriseFeatures : ObjectiveC.NSObject {
+@objc(ONEnterpriseFeatures) final public class EnterpriseFeatures : ObjectiveC.NSObject {
   @available(*, deprecated, message: "use EnterpriseFeatures.builder().withHideOnfidoLogo(_:).build() instead.")
   @objc public init(hideOnfidoLogo: Swift.Bool)
   @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
   @objc public static func builder() -> Onfido.EnterpriseFeatures.Builder
-  @_inheritsConvenienceInitializers @objc(ONEnterpriseFeaturesBuilder) final public class Builder : ObjectiveC.NSObject {
+  @objc(ONEnterpriseFeaturesBuilder) final public class Builder : ObjectiveC.NSObject {
     @discardableResult
     @objc final public func withHideOnfidoLogo(_ hideOnfidoLogo: Swift.Bool) -> Onfido.EnterpriseFeatures.Builder
     @discardableResult
     @objc final public func withCobrandingText(_ cobrandingText: Swift.String) -> Onfido.EnterpriseFeatures.Builder
     @objc final public func build() -> Onfido.EnterpriseFeatures
-    @objc deinit
     @objc override dynamic public init()
+    @objc deinit
   }
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 public struct FaceResult : Swift.Decodable, Swift.CustomStringConvertible, Swift.Equatable {
   public let id: Swift.String
@@ -287,8 +287,8 @@ public enum Gender : Swift.String {
 }
 @objc(GenericDocumentConfiguration) public class GenericDocumentConfiguration : Onfido.BaseDocumentConfiguration {
   public init(country: Swift.String)
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 public enum IdNumberType : Swift.String, Swift.Encodable {
   case ssn
@@ -344,10 +344,10 @@ final public class WeakStorage : Onfido.InstanceStorage {
 @objc(NationalIdentityConfiguration) public class NationalIdentityConfiguration : Onfido.BaseDocumentConfiguration {
   @objc public init(documentFormat: Onfido.DocumentFormat, country: Swift.String?)
   @objc public init(country: Swift.String)
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc(ONAddressResult) final public class ONAddressResult : ObjectiveC.NSObject {
+@objc(ONAddressResult) final public class ONAddressResult : ObjectiveC.NSObject {
   @objc(flatNumber) final public var flatNumber: Swift.String? {
     @objc get
   }
@@ -384,10 +384,10 @@ final public class WeakStorage : Onfido.InstanceStorage {
   @objc override final public var description: Swift.String {
     @objc get
   }
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc(ONDocumentResult) final public class ONDocumentResult : ObjectiveC.NSObject {
+@objc(ONDocumentResult) final public class ONDocumentResult : ObjectiveC.NSObject {
   @objc(id) final public var id: Swift.String? {
     @objc get
   }
@@ -415,12 +415,12 @@ final public class WeakStorage : Onfido.InstanceStorage {
   @objc override final public var description: Swift.String {
     @objc get
   }
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc(ONDocumentTypeVariantConfig) public class DocumentTypeVariantConfig : ObjectiveC.NSObject {
+@objc(ONDocumentTypeVariantConfig) public class DocumentTypeVariantConfig : ObjectiveC.NSObject {
   @objc public static func builder() -> Onfido.DocumentTypeVariantConfig.DocumentConfigBuilder
-  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class DocumentConfigBuilder : ObjectiveC.NSObject {
+  @objc final public class DocumentConfigBuilder : ObjectiveC.NSObject {
     @discardableResult
     @objc final public func withPassport(config: Onfido.PassportConfiguration? = nil) -> Onfido.DocumentTypeVariantConfig.DocumentConfigBuilder
     @discardableResult
@@ -438,10 +438,10 @@ final public class WeakStorage : Onfido.InstanceStorage {
     @objc final public func build() throws -> Onfido.DocumentTypeVariantConfig
     @objc deinit
   }
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc(ONFaceResult) final public class ONFaceResult : ObjectiveC.NSObject {
+@objc(ONFaceResult) final public class ONFaceResult : ObjectiveC.NSObject {
   @objc(id) final public var id: Swift.String? {
     @objc get
   }
@@ -463,12 +463,12 @@ final public class WeakStorage : Onfido.InstanceStorage {
   @objc override final public var description: Swift.String {
     @objc get
   }
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc(ONFaceStepVariantConfig) public class FaceStepVariantConfig : ObjectiveC.NSObject {
+@objc(ONFaceStepVariantConfig) public class FaceStepVariantConfig : ObjectiveC.NSObject {
   @objc public static func builder() -> Onfido.FaceStepVariantConfig.Builder
-  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class Builder : ObjectiveC.NSObject {
+  @objc final public class Builder : ObjectiveC.NSObject {
     @discardableResult
     @objc final public func withVideoCapture(config: Onfido.VideoStepConfiguration? = nil) -> Onfido.FaceStepVariantConfig.Builder
     @discardableResult
@@ -476,8 +476,8 @@ final public class WeakStorage : Onfido.InstanceStorage {
     @objc final public func build() throws -> Onfido.FaceStepVariantConfig
     @objc deinit
   }
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @objc(ONFlow) final public class ONFlow : ObjectiveC.NSObject {
   @objc public init(withFlowConfiguration flowConfiguration: Onfido.ONFlowConfig)
@@ -488,15 +488,15 @@ final public class WeakStorage : Onfido.InstanceStorage {
   @objc final public func with(responseHandler: @escaping (Onfido.ONFlowResponse) -> Swift.Void, dismissFlowOnCompletion: Swift.Bool) -> Onfido.ONFlow
   @discardableResult
   @objc final public func with(eventHandler: @escaping (Onfido.Event) -> ()) -> Onfido.ONFlow
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc(ONFlowConfig) final public class ONFlowConfig : ObjectiveC.NSObject {
+@objc(ONFlowConfig) final public class ONFlowConfig : ObjectiveC.NSObject {
   @objc(builder) public static func builder() -> Onfido.ONFlowConfigBuilder
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(ONFlowConfigBuilder) final public class ONFlowConfigBuilder : ObjectiveC.NSObject {
+@objc(ONFlowConfigBuilder) final public class ONFlowConfigBuilder : ObjectiveC.NSObject {
   @objc final public func with(token: Swift.String)
   @objc final public func with(sdkToken: Swift.String)
   @objc final public func with(sdkToken: Swift.String, expireHandler: @escaping Onfido.SDKTokenExpirationHandler)
@@ -542,14 +542,14 @@ final public class WeakStorage : Onfido.InstanceStorage {
     get
   }
 }
-@_inheritsConvenienceInitializers @objc(ONFlowResponse) public class ONFlowResponse : ObjectiveC.NSObject {
+@objc(ONFlowResponse) public class ONFlowResponse : ObjectiveC.NSObject {
   @objc public var results: [Onfido.ONFlowResult]?
   @objc public var error: Foundation.NSError?
   @objc public var userCanceled: Swift.Bool
   @objc override dynamic public init()
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc(ONFlowResult) public class ONFlowResult : ObjectiveC.NSObject {
+@objc(ONFlowResult) public class ONFlowResult : ObjectiveC.NSObject {
   @objc final public let type: Onfido.ONFlowResultType
   @objc public var result: Swift.AnyObject
   @objc override dynamic public init()
@@ -564,7 +564,7 @@ final public class WeakStorage : Onfido.InstanceStorage {
     get
   }
 }
-@_hasMissingDesignatedInitializers @objc(ONIdNumberResult) final public class ONIdNumberResult : ObjectiveC.NSObject {
+@objc(ONIdNumberResult) final public class ONIdNumberResult : ObjectiveC.NSObject {
   @objc(type) final public var type: Swift.String? {
     @objc get
   }
@@ -577,8 +577,8 @@ final public class WeakStorage : Onfido.InstanceStorage {
   @objc override final public var description: Swift.String {
     @objc get
   }
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 extension ObjectScope {
   public static var transient: Onfido.ObjectScope
@@ -592,7 +592,7 @@ public protocol ObjectScopeProtocol : AnyObject {
 public class ObjectScope : Onfido.ObjectScopeProtocol, Swift.CustomStringConvertible {
   public var description: Swift.String {
     get
-  }
+    }
   public init(storageFactory: @escaping () -> Onfido.InstanceStorage, description: Swift.String = "")
   public func makeStorage() -> Onfido.InstanceStorage
   @objc deinit
@@ -613,7 +613,7 @@ public struct OnfidoApiError : Swift.Decodable, Swift.CustomStringConvertible {
 public typealias SDKTokenExpirationHandler = ((@escaping (Swift.String) -> Swift.Void) -> Swift.Void)
 public struct OnfidoConfig {
   public static func builder() -> Onfido.OnfidoConfig.Builder
-  @_hasMissingDesignatedInitializers final public class Builder {
+  final public class Builder {
     @available(*, deprecated, message: "Use withSDKToken instead")
     @discardableResult
     final public func withToken(_ token: Swift.String) -> Onfido.OnfidoConfig.Builder
@@ -657,14 +657,14 @@ public enum OnfidoConfigError : Swift.Error {
   }
   public func hash(into hasher: inout Swift.Hasher)
 }
-@_hasMissingDesignatedInitializers @objc public class Event : ObjectiveC.NSObject {
+@objc public class Event : ObjectiveC.NSObject {
   @objc final public let name: Swift.String
   @objc final public let properties: [Swift.String : Any]
   @objc override dynamic public var description: Swift.String {
     @objc get
   }
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 public class OnfidoFlow {
   public typealias ResponseHandler = (Onfido.OnfidoResponse) -> Swift.Void
@@ -698,19 +698,19 @@ public enum OnfidoResult {
   }
 }
 public func == (lhs: Onfido.OnfidoResult, rhs: Onfido.OnfidoResult) -> Swift.Bool
-@_inheritsConvenienceInitializers @objc(PassportConfiguration) public class PassportConfiguration : Onfido.BaseDocumentConfiguration {
-  @objc deinit
+@objc(PassportConfiguration) public class PassportConfiguration : Onfido.BaseDocumentConfiguration {
   @objc override dynamic public init()
+  @objc deinit
 }
-@_inheritsConvenienceInitializers @objc(PhotoStepConfiguration) public class PhotoStepConfiguration : ObjectiveC.NSObject {
+@objc(PhotoStepConfiguration) public class PhotoStepConfiguration : ObjectiveC.NSObject {
   public static func == (lhs: Onfido.PhotoStepConfiguration, rhs: Onfido.PhotoStepConfiguration) -> Swift.Bool
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @objc(ResidencePermitConfiguration) public class ResidencePermitConfiguration : Onfido.BaseDocumentConfiguration {
   @objc public init(country: Swift.String)
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 public protocol Resolver {
   func resolve<Service>(_ serviceType: Service.Type) -> Service?
@@ -734,7 +734,7 @@ public protocol Resolver {
   func resolve<Service, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9>(_ serviceType: Service.Type, arguments arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8, _ arg9: Arg9) -> Service?
   func resolve<Service, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9>(_ serviceType: Service.Type, name: Swift.String?, arguments arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8, _ arg9: Arg9) -> Service?
 }
-@_hasMissingDesignatedInitializers final public class ServiceEntry<Service> {
+final public class ServiceEntry<Service> {
   @discardableResult
   final public func inObjectScope(_ objectScope: Onfido.ObjectScopeProtocol) -> Self
   @discardableResult
@@ -763,19 +763,19 @@ public protocol AssemblyType {
 public protocol ServiceKeyOptionType {
 }
 @objc(VideoStepConfiguration) public class VideoStepConfiguration : ObjectiveC.NSObject {
-  @objc public init(showIntroVideo: Swift.Bool, manualLivenessCapture: Swift.Bool)
-  @objc deinit
+  @objc public init(showIntroVideo: Swift.Bool)
   @objc override dynamic public init()
+  @objc deinit
 }
 @objc(VisaConfiguration) public class VisaConfiguration : Onfido.BaseDocumentConfiguration {
   @objc public init(country: Swift.String)
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @objc(WorkPermitConfiguration) public class WorkPermitConfiguration : Onfido.BaseDocumentConfiguration {
   @objc public init(country: Swift.String)
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 public protocol _Resolver {
   func _resolve<Service, Factory>(name: Swift.String?, option: Onfido.ServiceKeyOption?, invoker: (Factory) -> Service) -> Service?

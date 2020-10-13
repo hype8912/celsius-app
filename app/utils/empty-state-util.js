@@ -155,6 +155,15 @@ function getProps(purpose, componentProps) {
         //   actions.navigateTo(SCREENS.BORROW_CALCULATOR_SCREEN),
         // secondaryButton: "Calculate Loan Interest",
       };
+    case EMPTY_STATES.NO_INTEREST_PAYMENTS:
+    case EMPTY_STATES.NO_MARGIN_CALL_PAYMENTS:
+      return {
+        ...props,
+        heading: "Nothing To Pay",
+        paragraphs: ["You're all good!"],
+        onPress: () => actions.navigateTo(SCREENS.WALLET_LANDING),
+        button: "Go To Wallet",
+      };
 
     // Not KYC Verified Empty States
     case EMPTY_STATES.NON_VERIFIED_WITHDRAW:

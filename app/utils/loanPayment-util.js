@@ -4,11 +4,13 @@ import store from "../redux/store";
 import { COIN_CARD_TYPE } from "../constants/UI";
 import formatter from "./formatter";
 import { COLOR_KEYS } from "../constants/COLORS";
+import { SCREENS } from "../constants/SCREENS";
 
 const loanPaymentUtil = {
   calculateAdditionalPayment,
   isPrincipalWeekAway,
   isSameInterestDay,
+  shouldNotCheckForAlerts,
 };
 
 function calculateAdditionalPayment(
@@ -169,6 +171,17 @@ function isSameInterestDay(activeLoan) {
       sevenDays: isSevenDays ? 7 : false,
     };
   }
+}
+
+function shouldNotCheckForAlerts(activeScreen) {
+  return [
+    SCREENS.MARGIN_CALL_OVERVIEW_SCREEN,
+    SCREENS.INTEREST_PAYMENT_OVERVIEW,
+    SCREENS.SINGLE_MARGIN_CALL_SCREEN,
+    SCREENS.CHOOSE_PAYMENT_METHOD,
+    SCREENS.PAYMENT_CEL,
+    SCREENS.LOAN_PAYMENT_COIN,
+  ].includes(activeScreen);
 }
 
 export default loanPaymentUtil;
