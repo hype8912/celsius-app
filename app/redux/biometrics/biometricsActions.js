@@ -90,7 +90,7 @@ function activateBiometrics(publicKey, type) {
 /**
  * Deactivate biometrics for a user
  */
-function disableBiometrics() {
+function disableBiometrics(invalidated) {
   const formData = store.getState().forms.formData;
   const verification = {
     pin: formData.pin,
@@ -101,7 +101,7 @@ function disableBiometrics() {
   return async dispatch => {
     try {
       dispatch(startApiCall(API.DEACTIVATE_BIOMETRICS));
-      await biometricsService.deactivateBiometrics(verification);
+      await biometricsService.deactivateBiometrics(verification, invalidated);
 
       dispatch({
         type: ACTIONS.DEACTIVATE_BIOMETRICS_SUCCESS,

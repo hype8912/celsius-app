@@ -131,7 +131,7 @@ class VerifyProfile extends Component {
 
     // If biometrics is changed on device, disable biometrics on BE for user
     if (this.state.disableBiometricsForUser) {
-      actions.disableBiometrics();
+      actions.disableBiometrics(true);
       this.setState({ disableBiometricsForUser: false });
     }
 
