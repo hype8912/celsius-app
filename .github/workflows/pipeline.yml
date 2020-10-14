@@ -21,6 +21,8 @@ jobs:
     steps:
     - name: Check out Git repository
       uses: actions/checkout@v2
+      with:
+        repository: CelsiusNetwork/celsius-app
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
