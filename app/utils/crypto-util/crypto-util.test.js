@@ -10,6 +10,7 @@ import {
   LINKS_FOR_COINS,
 } from "../../constants/DATA";
 import mockCurrenciesStore from "../../../celsius-app-creds/mock-data/mockCurrenciesStore";
+import { SCREENS } from "../../constants/SCREENS";
 
 /* eslint-disable no-undef */
 jest.mock("../../redux/store", () => ({
@@ -48,6 +49,11 @@ const nonErc20Coins = _.differenceWith(
   Object.values(ERC_20_COINS),
   _.isEqual
 );
+
+const simplexCoins = ["ETH", "BTC", "BCH", "LTC", "XRP", "XLM", "CEL", "XAUT"];
+const gemCoins = ["ETH", "BTC", "DASH", "BCH", "USDC"];
+const unsupportedCoins = ["TAUD", "THKD", "TCAD", "TGBP", "ORBS", "MATIC"];
+
 describe("isERC20()", () => {
   it(`should return true if coin is ERC20`, () => {
     Object.values(ERC_20_COINS).forEach(c => {
@@ -61,17 +67,37 @@ describe("isERC20()", () => {
     });
   });
 });
-
 describe("buyInApp()", () => {
-  it(`should return true is coin is in simplex or gem compliance`, () => {
-    eligibleToBuyCoins.forEach(c => {
-      expect(cryptoUtil.buyInApp(c)).toBeTruthy();
+  it(`should return true is coins is simplex compliance`, () => {
+    simplex.forEach(c => {
+      expect(cryptoUtil.buyInApp(c).simplex).toBeTruthy();
     });
   });
 
-  it(`should return false if coin is not in simplex or gem compliance`, () => {
-    notEligibleToBuyCoins.forEach(c => {
-      expect(cryptoUtil.buyInApp(c)).toBeFalsy();
+  it(`should return true is coin is in gem compliance`, () => {
+    gem.forEach(c => {
+      expect(cryptoUtil.buyInApp(c).gem).toBeTruthy();
+    });
+  });
+});
+
+describe("simplexOrGem()", () => {
+  const simplexOnly = ["LTC", "XRP", "CEL", "XAUT", "SGA"];
+  const gemOnly = ["DASH", "USDC"];
+  const both = ["BTC", "ETH", "BCH", "XLM"];
+  it("should return `GetCoinsEnterAmount` screen", () => {
+    simplexOnly.forEach(c => {
+      expect(cryptoUtil.simplexOrGem(c)).toBe(SCREENS.GET_COINS_ENTER_AMOUNT);
+    });
+  });
+  it("should return `GetCoinsGem` screen", () => {
+    gemOnly.forEach(c => {
+      expect(cryptoUtil.simplexOrGem(c)).toBe(SCREENS.GET_COINS_GEM);
+    });
+  });
+  it("should return `GetCoinsLanding` screen", () => {
+    both.forEach(c => {
+      expect(cryptoUtil.simplexOrGem(c)).toBe(SCREENS.GET_COINS_LANDING);
     });
   });
 });
@@ -90,67 +116,19 @@ describe("provideLink()", () => {
   });
 });
 
-let coinForText;
 describe("provideText()", () => {
-  beforeEach(() => {
-    coinForText = null;
-  });
-  it(`should return string Buy coin in App"`, () => {
-    coinForText = ["BTC", "BCH", "ETH", "LTC", "XRP", "CEL", "XLM"];
-    coinForText.forEach(c => {
-      expect(cryptoUtil.provideText(c)).toBe(`Buy ${c} in App`);
+  it("should return string `Buy {coin} Coins in App` for supported coins", () => {
+    simplexCoins.forEach(c => {
+      expect(cryptoUtil.provideText(c) === `Buy ${c} in App`).toBeTruthy();
+    });
+    gemCoins.forEach(c => {
+      expect(cryptoUtil.provideText(c) === `Buy ${c} in App`).toBeTruthy();
     });
   });
-
-  it(`should return string "Buy TUSD"`, () => {
-    coinForText = "TUSD";
-    expect(cryptoUtil.provideText(coinForText)).toBe(
-      `Buy ${coinForText} from TrustToken`
-    );
-  });
-
-  it(`should return string "Buy USDC"`, () => {
-    coinForText = "USDC";
-    expect(cryptoUtil.provideText(coinForText)).toBe(
-      `Buy ${coinForText} from Circle`
-    );
-  });
-
-  it(`should return string "Buy PAX"`, () => {
-    coinForText = "PAX";
-    expect(cryptoUtil.provideText(coinForText)).toBe(
-      `Buy ${coinForText} from Paxos`
-    );
-  });
-
-  it(`should return string "Buy PAX"`, () => {
-    coinForText = ["THKD", "TCAD", "TAUD", "TGBP"];
-    coinForText.forEach(c => {
-      expect(cryptoUtil.provideText(c)).toBe(`Buy ${c} from TrustToken`);
+  it("should return string `Buy Coins` for unsupported coins", () => {
+    unsupportedCoins.forEach(c => {
+      expect(cryptoUtil.provideText(c) === `Buy Coins`).toBeTruthy();
     });
-  });
-
-  it(`should return string "Buy DASH"`, () => {
-    coinForText = "DASH";
-    expect(cryptoUtil.provideText(coinForText)).toBe(`Buy ${coinForText}`);
-  });
-
-  it(`should return string "Buy OMG"`, () => {
-    coinForText = "OMG";
-    expect(cryptoUtil.provideText(coinForText)).toBe(
-      `Buy ${coinForText} on MoonPay`
-    );
-  });
-
-  it(`should return string "Buy DAI"`, () => {
-    coinForText = "DAI";
-    expect(cryptoUtil.provideText(coinForText)).toBe(
-      `Buy ${coinForText} on MoonPay`
-    );
-  });
-
-  it(`should return null se default value`, () => {
-    expect(cryptoUtil.provideText()).toBeNull();
   });
 });
 

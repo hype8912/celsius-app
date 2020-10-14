@@ -5,6 +5,7 @@ import {
   LINKS_FOR_COINS,
 } from "../../constants/DATA";
 import store from "../../redux/store";
+import { SCREENS } from "../../constants/SCREENS";
 
 /**
  * Checks if coin is ERC20
@@ -18,62 +19,37 @@ function isERC20(currency) {
 function buyInApp(currency) {
   const { compliance } = store.getState();
   const { simplex, gem } = compliance;
+  const availableCoinsSimplex = [];
+  const availableCoinsGem = [];
+  simplex.coins.forEach(c => availableCoinsSimplex.push(c));
+  gem.coins.forEach(c => availableCoinsGem.push(c));
 
-  const availableCoins = [];
-  simplex.coins.forEach(c => availableCoins.push(c));
-  gem.coins.forEach(c => {
-    if (!availableCoins.includes(c)) availableCoins.push(c);
-  });
+  return {
+    simplex: availableCoinsSimplex.includes(currency),
+    gem: availableCoinsGem.includes(currency),
+  };
+}
 
-  return availableCoins.includes(currency);
+function simplexOrGem(currency) {
+  if (buyInApp(currency).simplex && !buyInApp(currency).gem)
+    return SCREENS.GET_COINS_ENTER_AMOUNT;
+  if (!buyInApp(currency).simplex && buyInApp(currency).gem)
+    return SCREENS.GET_COINS_GEM;
+  if (buyInApp(currency).simplex && buyInApp(currency).gem)
+    return SCREENS.GET_COINS_LANDING;
 }
 
 function provideLink(currency) {
-  if (buyInApp(currency)) return false;
+  if (buyInApp(currency).simplex && buyInApp(currency).gem) return false;
 
   return LINKS_FOR_COINS[currency] || null;
 }
 
 function provideText(currency) {
-  let text;
-  switch (currency) {
-    case "BTC":
-    case "BCH":
-    case "ETH":
-    case "LTC":
-    case "XRP":
-    case "CEL":
-    case "XLM":
-      text = `Buy ${currency} in App`;
-      break;
-    case "TUSD":
-      text = `Buy ${currency} from TrustToken`;
-      break;
-    case "USDC":
-      text = `Buy ${currency} from Circle`;
-      break;
-    case "PAX":
-      text = `Buy ${currency} from Paxos`;
-      break;
-    case "THKD":
-    case "TCAD":
-    case "TAUD":
-    case "TGBP":
-      text = `Buy ${currency} from TrustToken`;
-      break;
-    case "DASH":
-      text = `Buy ${currency}`;
-      break;
-    case "OMG":
-      text = `Buy ${currency} on MoonPay`;
-      break;
-    case "DAI":
-      text = `Buy ${currency} on MoonPay`;
-      break;
-    default:
-      text = null;
-  }
-  return text;
+  if (!buyInApp(currency).simplex && !buyInApp(currency).gem)
+    return `Buy Coins`;
+
+  return `Buy ${currency} in App`;
 }
 
 export function getBlockExplorerLink(transaction) {
@@ -170,4 +146,5 @@ export default {
   provideLink,
   provideText,
   buyInApp,
+  simplexOrGem,
 };
