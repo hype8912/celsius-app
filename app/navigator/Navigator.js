@@ -109,7 +109,6 @@ import HODLViewCode from "../components/screens/HODLViewCode/HODLViewCode";
 import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/HodlDeactivationCode";
 import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
-import WithdrawConfirm from "../components/screens/WithdrawConfirm/WithdrawConfirm";
 import InterestPaymentOverviewScreen from "../components/screens/InterestPaymentOverviewScreen/InterestPaymentOverviewScreen";
 import ExtendLoanScreen from "../components/screens/ExtendLoanScreen/ExtendLoanScreen";
 import MarginCallOverviewScreen from "../components/screens/MarginCallOverviewScreen/MarginCallOverviewScreen";
@@ -161,7 +160,6 @@ export const screens = {
    */
 
   WalletLanding,
-  WithdrawConfirm,
   TransactionsOnHold,
   WalletInterest,
   BalanceHistory,

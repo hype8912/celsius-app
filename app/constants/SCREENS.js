@@ -113,7 +113,6 @@ export const SCREENS = {
   WIRING_BANK_INFORMATION: "WiringBankInformation",
   WITHDRAW_ADDRESS_LABEL: "WithdrawAddressLabel",
   WITHDRAW_ADDRESS_OVERVIEW: "WithdrawAddressOverview",
-  WITHDRAW_CONFIRM: "WithdrawConfirm",
   WITHDRAW_CONFIRM_ADDRESS: "WithdrawConfirmAddress",
   WITHDRAW_CREATE_ADDRESS: "WithdrawCreateAddress",
   WITHDRAW_ENTER_AMOUNT: "WithdrawEnterAmount",

@@ -32,7 +32,6 @@ import BorrowEnterAmountStories from "./BorrowEnterAmount/BorrowEnterAmount.stor
 import BorrowChooseLoanStories from "./BorrowChooseLoan/BorrowChooseLoan.stories";
 import WithdrawAddressOverviewStories from "./WithdrawAddressOverview/WithdrawAddressOverview.stories";
 import CelPayLandingStories from "./CelPayLanding/CelPayLanding.stories";
-import WithdrawConfirmStories from "./WithdrawConfirm/WithdrawConfirm.stories";
 import WithdrawConfirmAddressStories from "./WithdrawConfirmAddress/WithdrawConfirmAddress.stories";
 import KYCVerifyIdentityStories from "./KYCVerifyIdentity/KYCVerifyIdentity.stories";
 import TwoFactorSettingsStories from "./TwoFactorSettings/TwoFactorSettings.stories";
@@ -309,11 +308,6 @@ storiesOf("WithdrawAddressOverview", module).add(
 storiesOf("CelPayLanding", module).add(
   "Cel Pay Landing",
   CelPayLandingStories.regular
-);
-
-storiesOf("WithdrawConfirm", module).add(
-  "Confirm",
-  WithdrawConfirmStories.regular
 );
 
 storiesOf("WithdrawConfirmAddress", module)

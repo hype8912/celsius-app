@@ -45,6 +45,9 @@ const base = {
     width: widthPercentageToDP("20.5%"),
     minWidth: widthPercentageToDP("20.5%"),
   },
+  threeQuarters: {
+    width: widthPercentageToDP("75%"),
+  },
   cardBackground: {
     backgroundColor: COLOR_KEYS.CARDS,
   },

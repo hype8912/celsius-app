@@ -9,7 +9,7 @@ import * as appActions from "../../../redux/actions";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import IconButton from "../../organisms/IconButton/IconButton";
 import CelButton from "../../atoms/CelButton/CelButton";
-import { BIOMETRIC_ERRORS, HODL_STATUS } from "../../../constants/UI";
+import { HODL_STATUS } from "../../../constants/UI";
 import { hasPassedKYC } from "../../../utils/user-util/user-util";
 import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import { SECURITY_STRENGTH_LEVEL } from "../../../constants/DATA";
@@ -17,6 +17,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
+import { biometricNonEnrolled } from "../../../utils/biometrics-util";
 
 @connect(
   state => ({
@@ -174,9 +175,10 @@ class SecuritySettings extends Component {
     const SwitcherHodl = this.rightSwitchHodl;
     const rightText = this.securityOverallScore();
     const shouldRenderBiometrics = !!(
-      deviceId &&
-      ((biometrics && biometrics.available) ||
-        (biometrics && biometrics.error === BIOMETRIC_ERRORS.NONE_ENROLLED))
+      (
+        deviceId &&
+        ((biometrics && biometrics.available) || biometricNonEnrolled())
+      ) // TODO check this on Filips phone
     );
     if (_.isEmpty(securityOverview)) return <LoadingScreen />;
 

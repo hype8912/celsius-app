@@ -799,8 +799,8 @@ export default {
       />
     </G>
   ),
-  IconSGAViewBox: "0 0 37.06 40",
-  IconSGA: (
+  IconSGRViewBox: "0 0 37.06 40",
+  IconSGR: (
     <G>
       <Polygon
         className="cls-1"

@@ -52,7 +52,7 @@ const eligibleForInterestInCEL = () => {
       OMG: false,
       ORBS: false,
       PAX: false,
-      SGA: false,
+      SGR: false,
       TAUD: false,
       TCAD: false,
       TGBP: false,

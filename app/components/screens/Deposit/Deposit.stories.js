@@ -53,7 +53,7 @@ const loadingAddress = () => {
   const state = _.cloneDeep(initialState);
   state.forms = {
     formData: {
-      selectedCoin: "SGA",
+      selectedCoin: "SGR",
     },
   };
 

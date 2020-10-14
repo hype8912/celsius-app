@@ -22,6 +22,7 @@ class Card extends React.Component {
       "halfExtra",
       "thirdExtra",
       "twoThirds",
+      "threeQuarters",
     ]),
     close: PropTypes.bool,
     noBorder: PropTypes.bool,
