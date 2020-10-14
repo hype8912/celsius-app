@@ -29,7 +29,7 @@ jobs:
     - name: Check out Celsius App Creds repository
       uses: actions/checkout@v2
       with:
-        repository: https://github.com/CelsiusNetwork/celsius-app-creds
+        repository: CelsiusNetwork/celsius-app-creds
         token: ${{ secrets.ACCESS_TOKEN }}
     - run: yarn set:env
     - run: npm run lint
