@@ -25,7 +25,7 @@ class Fab extends Component {
     const { fabMenuOpen, type } = this.props;
     if (fabMenuOpen) return "Close";
     return {
-      main: "Celsius",
+      main: "CelLogo",
       support: "Support",
     }[type];
   };
