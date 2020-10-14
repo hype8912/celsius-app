@@ -453,7 +453,7 @@ const ERC_20_COINS = {
   KNC: "knc",
   MATIC: "matic",
   BAT: "bat",
-  SGA: "sga",
+  SGR: "sgr",
   XAUT: "xaut",
   PAXG: "paxg",
 };
