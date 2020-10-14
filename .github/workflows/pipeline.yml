@@ -34,7 +34,7 @@ jobs:
          repository: CelsiusNetwork/celsius-app-creds
          path: celsius-app-creds
          token: ${{ secrets.ACCESS_TOKEN }}
-    - run: ls -la
     - run: yarn set:env
-    - run: npm run lint
+    - run: yarn pre:commit
+    - run: yarn test
     
