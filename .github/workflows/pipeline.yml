@@ -26,5 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn
+    - run: yarn creds:init
+    - run: yarn set:env
     - run: npm run lint
     
