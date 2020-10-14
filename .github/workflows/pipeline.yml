@@ -26,7 +26,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn
-    - run: yarn creds:init
+    - name: Check out Celsius App Creds repository
+      uses: actions/checkout@v2
+      with:
+        repository: ../celsius-app-creds
+        token: e750328f8eda5172058fbe5587a1cd2c2a14303d
     - run: yarn set:env
     - run: npm run lint
     
