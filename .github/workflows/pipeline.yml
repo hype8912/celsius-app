@@ -35,7 +35,6 @@ jobs:
          path: celsius-app-creds
          token: ${{ secrets.ACCESS_TOKEN }}
     - run: ls -la
-    - run: cd celsius-app
     - run: yarn set:env
     - run: npm run lint
     
