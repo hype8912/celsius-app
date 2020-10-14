@@ -3,12 +3,13 @@ import { openInbox } from "react-native-email-link";
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
-import { showMessage } from "../ui/uiActions";
+import { openModal, showMessage } from "../ui/uiActions";
 import { clearForm } from "../forms/formsActions";
 import walletService from "../../services/wallet-service";
 import { navigateBack, navigateTo } from "../nav/navActions";
 import addressUtil from "../../utils/address-util";
 import { SCREENS } from "../../constants/SCREENS";
+import { MODALS } from "../../constants/UI";
 
 export {
   getWalletSummary,
@@ -156,7 +157,8 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
           )
         );
       }
-      if (flow === "withdrawal") dispatch(navigateTo(SCREENS.WITHDRAW_CONFIRM));
+      if (flow === "withdrawal")
+        dispatch(openModal(MODALS.CONFIRM_WITHDRAWAL_DETAILS_MODAL));
     } catch (error) {
       dispatch(showMessage("error", error.msg));
       dispatch(apiError(API.SET_COIN_WITHDRAWAL_ADDRESS, error));

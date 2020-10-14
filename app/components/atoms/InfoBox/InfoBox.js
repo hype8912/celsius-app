@@ -23,7 +23,7 @@ class InfoBox extends Component {
     color: PropTypes.string,
     onPress: PropTypes.func,
     theme: PropTypes.oneOf(Object.values(THEMES)),
-    size: PropTypes.oneOf(["full", "half"]),
+    size: PropTypes.oneOf(["100%", "75%", "50%"]),
     titleText: PropTypes.string,
     boldText: PropTypes.string,
     infoText: PropTypes.string,
@@ -41,6 +41,7 @@ class InfoBox extends Component {
   static defaultProps = {
     padding: "20 20 20 20",
     triangle: false,
+    size: "100%",
   };
 
   constructor(props) {
@@ -71,6 +72,7 @@ class InfoBox extends Component {
       explanationText,
       backgroundColor,
       padding,
+      size,
     } = this.props;
     const { open } = this.state;
     const paddingStyle = getPadding(padding);
@@ -81,7 +83,7 @@ class InfoBox extends Component {
         <TouchableOpacity
           style={[
             {
-              width: "100%",
+              width: size,
               backgroundColor,
               borderRadius: 8,
               marginTop: 10,
@@ -150,7 +152,7 @@ class InfoBox extends Component {
               style={{
                 marginTop: 20,
                 width: "100%",
-                jutifyContetn: "center",
+                justifyContent: "center",
                 alignContent: "center",
                 alignItems: "center",
               }}

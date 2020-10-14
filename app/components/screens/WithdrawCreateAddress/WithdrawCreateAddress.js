@@ -88,7 +88,10 @@ class WithdrawCreateAddress extends Component {
       actions.openModal(MODALS.WITHDRAW_WARNING_MODAL);
     } else {
       actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-        onSuccess: () => actions.setCoinWithdrawalAddress(),
+        onSuccess: async () => {
+          await actions.setCoinWithdrawalAddress();
+          actions.navigateTo(SCREENS.WITHDRAW_ENTER_AMOUNT);
+        },
       });
       actions.closeModal();
     }

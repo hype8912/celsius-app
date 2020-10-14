@@ -20,12 +20,19 @@ import DestinationInfoTagModal from "../../modals/DestinationInfoTagModal/Destin
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
+import ConfirmWithdrawalDetailsModal from "../../modals/ConfirmWithdrawalDetailsModal/ConfirmWithdrawalDetailsModal";
 
 @connect(
   state => ({
     walletSummary: state.wallet.summary,
     formData: state.forms.formData,
     withdrawalAddresses: state.wallet.withdrawalAddresses,
+    user: state.user.profile,
+    loyaltyInfo: state.loyalty.loyaltyInfo,
+    withdrawalSettings: state.generalData.withdrawalSettings,
+    communityStats: state.community.stats,
+    isBannerVisible: state.ui.isBannerVisible,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -36,7 +43,7 @@ class WithdrawConfirmAddress extends Component {
   static defaultProps = {};
 
   static navigationOptions = () => ({
-    title: "Withdrawal address",
+    title: "Withdrawal Address",
     right: "profile",
   });
 
@@ -57,18 +64,15 @@ class WithdrawConfirmAddress extends Component {
     };
   }
 
-  confirmAddress = () => {
+  confirmAddress = async () => {
     const { actions, withdrawalAddresses, formData } = this.props;
 
-    actions.updateFormField(
+    await actions.updateFormField(
       "withdrawAddress",
       formData.coin &&
         withdrawalAddresses[formData.coin.toUpperCase()] &&
         withdrawalAddresses[formData.coin.toUpperCase()].address
     );
-    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-      onSuccess: () => actions.navigateTo(SCREENS.WITHDRAW_CONFIRM),
-    });
   };
 
   navigate = () => {
@@ -79,7 +83,14 @@ class WithdrawConfirmAddress extends Component {
 
   render() {
     const { coin, balanceCrypto, balanceUsd, address } = this.state;
-    const { formData, actions } = this.props;
+    const {
+      formData,
+      actions,
+      walletSummary,
+      callsInProgress,
+      withdrawalSettings,
+      loyaltyInfo,
+    } = this.props;
     let tagText;
     let placeHolderText;
 
@@ -94,7 +105,6 @@ class WithdrawConfirmAddress extends Component {
       placeHolderText = "Memo Id";
     }
 
-    // const address = formData[`${coin}WithdrawConfirmAddress`] ? addressUtil.addressTag(formData[`${coin}WithdrawConfirmAddress`]) : "";
     const style = WithdrawalAddressStyle();
     const hasTag = addressUtil.hasTag(address.address);
     const addressDisplay = addressUtil.splitAddressTag(address.address);
@@ -199,7 +209,12 @@ class WithdrawConfirmAddress extends Component {
             ) : null}
 
             <View style={style.button}>
-              <CelButton onPress={this.confirmAddress}>
+              <CelButton
+                onPress={() => {
+                  this.confirmAddress();
+                  actions.openModal(MODALS.CONFIRM_WITHDRAWAL_DETAILS_MODAL);
+                }}
+              >
                 Confirm withdrawal
               </CelButton>
             </View>
@@ -213,6 +228,14 @@ class WithdrawConfirmAddress extends Component {
             >
               Change withdrawal address
             </CelButton>
+            <ConfirmWithdrawalDetailsModal
+              walletSummary={walletSummary}
+              actions={actions}
+              formData={formData}
+              callsInProgress={callsInProgress}
+              withdrawalSettings={withdrawalSettings}
+              loyaltyInfo={loyaltyInfo}
+            />
             <ChangeWithdrawalAddressModal onPressConfirm={this.navigate} />
             <MemoIdModal coin={formData.coin} closeModal={actions.closeModal} />
             <DestinationInfoTagModal closeModal={actions.closeModal} />

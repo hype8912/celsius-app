@@ -1,3 +1,4 @@
+// import STYLES from '../../../constants/STYLES';
 import { getThemedStyle } from "../../../utils/styles-util";
 
 const base = {
@@ -5,8 +6,8 @@ const base = {
     flex: 1,
   },
   address: {
-    flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
     flexWrap: "wrap",
     paddingVertical: 15,
   },
@@ -16,6 +17,11 @@ const base = {
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
+  },
+  buttonsWrapper: {
+    justifyContent: "flex-end",
+    marginTop: 20,
+    height: 50,
   },
   lineHeight: {
     lineHeight: 23,
@@ -30,6 +36,6 @@ const themed = {
   unicorn: {},
 };
 
-const WithdrawConfirmStyle = () => getThemedStyle(base, themed);
+const ConfirmWithdrawalDetailsModalStyle = () => getThemedStyle(base, themed);
 
-export default WithdrawConfirmStyle;
+export default ConfirmWithdrawalDetailsModalStyle;
