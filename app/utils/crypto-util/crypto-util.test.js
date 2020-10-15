@@ -82,14 +82,14 @@ describe("buyInApp()", () => {
 });
 
 describe("simplexOrGem()", () => {
-  const simplexOnly = ["LTC", "XRP", "CEL", "XAUT", "SGA"];
+  // const simplexOnly = ["LTC", "XRP", "CEL", "XAUT", "SGA"];
   const gemOnly = ["DASH", "USDC"];
   const both = ["BTC", "ETH", "BCH", "XLM"];
-  it("should return `GetCoinsEnterAmount` screen", () => {
-    simplexOnly.forEach(c => {
-      expect(cryptoUtil.simplexOrGem(c)).toBe(SCREENS.GET_COINS_ENTER_AMOUNT);
-    });
-  });
+  // it("should return `GetCoinsEnterAmount` screen", () => {
+  //   simplexOnly.forEach(c => {
+  //     expect(cryptoUtil.simplexOrGem(c)).toBe(SCREENS.GET_COINS_ENTER_AMOUNT);
+  //   });
+  // });
   it("should return `GetCoinsGem` screen", () => {
     gemOnly.forEach(c => {
       expect(cryptoUtil.simplexOrGem(c)).toBe(SCREENS.GET_COINS_GEM);
