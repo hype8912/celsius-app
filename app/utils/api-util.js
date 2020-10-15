@@ -174,8 +174,12 @@ function setContentTypeHeaders(request) {
 async function setAppVersionHeaders() {
   const clientVersion = ENV === "PRODUCTION" ? CLIENT_VERSION : ENV;
   if (!buildVersion) {
-    const metadata = await CodePush.getUpdateMetadata();
-    buildVersion = metadata ? `${clientVersion}@${metadata.label}` : "local";
+    try {
+      const metadata = await CodePush.getUpdateMetadata();
+      buildVersion = metadata ? `${clientVersion}@${metadata.label}` : "local";
+    } catch (e) {
+      buildVersion = "NOT_AVAILABLE";
+    }
   }
 
   return {
