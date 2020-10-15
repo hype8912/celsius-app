@@ -531,12 +531,12 @@ class PaymentCard extends Component {
               type === COIN_CARD_TYPE.MARGIN_CALL && (
                 <Card
                   margin={"10 0 0 0"}
-                  color={getColor(COLOR_KEYS.BACKGROUND)}
+                  color={getColor(COLOR_KEYS.NEGATIVE_STATE)}
                 >
-                  <CelText align={"left"} type={"H6"}>
+                  <CelText color={"white"} align={"left"} type={"H6"}>
                     Time remaining to resolve Margin Call
                   </CelText>
-                  <CelText align={"left"} weight={"500"} type={"H3"}>
+                  <CelText color={"white"} align={"left"} weight={"500"} type={"H3"}>
                     {time.days >= 1
                       ? `00h 00m`
                       : `${time.hours}h ${time.minutes}m`}
