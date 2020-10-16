@@ -69,6 +69,7 @@ class GetCoinsConfirmModal extends Component {
             You are about to purchase
           </CelText>
           <CelText
+            hideFromRecording
             align={"center"}
             weight={"700"}
             type={"H1"}
@@ -107,7 +108,7 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Price:
               </CelText>
-              <CelText type={"H6"} align={"right"} weight="bold">
+              <CelText hideFromRecording type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(baseAmount, formData.fiatCoin)}
               </CelText>
             </View>
@@ -121,7 +122,7 @@ class GetCoinsConfirmModal extends Component {
                   3.5% or $10.00 minimum
                 </CelText>
               </View>
-              <CelText type={"H6"} align={"right"} weight="bold">
+              <CelText hideFromRecording type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(fee, formData.fiatCoin)}
               </CelText>
             </View>
@@ -130,7 +131,7 @@ class GetCoinsConfirmModal extends Component {
               <CelText type={"H6"} align={"left"}>
                 Transfer Amount:
               </CelText>
-              <CelText type={"H6"} align={"right"} weight="bold">
+              <CelText hideFromRecording type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(totalAmount, formData.fiatCoin)}
               </CelText>
             </View>
