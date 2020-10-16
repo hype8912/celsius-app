@@ -89,7 +89,8 @@ class BorrowCalculatorScreen extends Component {
 
     if (
       activeScreen !== prevProps.activeScreen &&
-      activeScreen === "BorrowCalculatorScreen"
+      activeScreen === SCREENS.BORROW_CALCULATOR_SCREEN &&
+      prevProps.activeScreen !== SCREENS.SELECT_COIN
     ) {
       this.initCalculator();
     }
