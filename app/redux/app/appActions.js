@@ -1,7 +1,5 @@
 import { Platform } from "react-native";
 import { IDFA } from "react-native-idfa";
-import appsFlyer from "react-native-appsflyer";
-import * as DeviceInfo from "react-native-device-info";
 import Geolocation from "@react-native-community/geolocation";
 import { RESULTS } from "react-native-permissions";
 
@@ -173,34 +171,23 @@ function setAdvertisingId() {
 /**
  * Set Device ID
  */
-function setDeviceId() {
-  return async dispatch => {
-    const deviceId =
-      Platform.OS === "ios"
-        ? await appUtil.getUniqueDeviceIdentifier()
-        : DeviceInfo.getUniqueId();
-    dispatch({
-      type: ACTIONS.SET_DEVICE_ID,
-      deviceId,
-    });
+function setDeviceId(deviceId) {
+ return {
+    type: ACTIONS.SET_DEVICE_ID,
+    deviceId,
   };
 }
 
 /**
  * Set Apps Flyer device UID
  */
-function setAppsFlyerUID() {
-  return dispatch => {
-    appsFlyer.getAppsFlyerUID((error, appsFlyerUid) => {
-      if (!error) {
-        dispatch({
-          type: ACTIONS.SET_DEVICE_APPSFLYER_UID,
-          appsFlyerUID: appsFlyerUid,
-        });
-      }
-    });
+function setAppsFlyerUID(appsFlyerUID) {
+ return {
+    type: ACTIONS.SET_DEVICE_APPSFLYER_UID,
+    appsFlyerUID,
   };
 }
+
 
 /**
  * Gets geolocation for device

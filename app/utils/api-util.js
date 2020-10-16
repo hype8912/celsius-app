@@ -9,6 +9,7 @@ import moment from "moment";
 
 import Constants from "../../constants";
 import { getSecureStoreKey } from "./storage-util";
+import appUtil from "./app-util";
 import store from "../redux/store";
 import * as actions from "../redux/actions";
 import mixpanelAnalytics from "./mixpanel-analytics";
@@ -105,13 +106,13 @@ async function setDeviceIds() {
     Platform.OS === "android" && (await store.getState().app.advertisingId);
 
   if (!AFID) {
-    await store.dispatch(actions.setAppsFlyerUID());
-    AFID = store.getState().app.appsFlyerUID;
+      AFID = await appUtil.getAppsFlyerId();
+      store.dispatch(actions.setAppsFlyerUID(AFID));
   }
 
   if (!deviceId) {
-    store.dispatch(actions.setDeviceId());
-    deviceId = await store.getState().app.deviceId;
+    deviceId = await appUtil.getDeviceUniqueID();
+    store.dispatch(actions.setDeviceId(deviceId));
   }
 
   if (Platform.OS === "android" && !AAID) {

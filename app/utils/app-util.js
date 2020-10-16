@@ -1,12 +1,13 @@
 import React from "react";
-import { Image, NativeModules } from "react-native";
+import { Image, NativeModules, Platform } from "react-native";
+import appsFlyer from "react-native-appsflyer";
 import NetInfo from "@react-native-community/netinfo";
+import * as DeviceInfo from "react-native-device-info";
 import twitter from "react-native-simple-twitter";
 import CodePush from "react-native-code-push";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
 import _ from "lodash";
-
 import Constants from "../../constants";
 import {
   deleteSecureStoreKey,
@@ -37,6 +38,8 @@ export default {
   shouldUpdateCelsiusApp,
   checkAndRefreshAuthToken,
   getUniqueDeviceIdentifier,
+  getDeviceUniqueID,
+  getAppsFlyerId
 };
 
 /**
@@ -251,12 +254,36 @@ async function getRevisionId() {
  * Get Unique Device Identifier for iOS device from UDID.m/h files.
  */
 async function getUniqueDeviceIdentifier() {
-  const UDID = NativeModules.UDID;
-  try {
+    const UDID = NativeModules.UDID;
     const uniqueIdentifier = await UDID.get();
     return uniqueIdentifier;
+}
+
+async function getDeviceUniqueID () {
+  let deviceId
+  try {
+     deviceId =
+      Platform.OS === "ios"
+        ? await getUniqueDeviceIdentifier()
+        : DeviceInfo.getUniqueId()
+    return deviceId
   } catch (e) {
-    mixpanelAnalytics.logError("getUniqueDeviceIdentifier", e);
-    return null;
+    mixpanelAnalytics.logError('getDeviceUniqueID: ', e)
+    return 'NOT_AVAILABLE'
   }
+}
+
+/**
+ * Get Apps Flyer device UID
+ */
+function getAppsFlyerId() {
+  return new Promise (resolve => {
+    appsFlyer.getAppsFlyerUID((error, id) => {
+      if (!error) resolve(id)
+      else {
+        mixpanelAnalytics.logError('getAppsFlyerId: ', error)
+        resolve ("NOT_AVAILABLE")
+      }
+    })
+  })
 }
