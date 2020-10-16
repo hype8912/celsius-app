@@ -278,7 +278,9 @@ async function errorInterceptor(serverError) {
     raw_error: serverError,
   };
 
-  const err = serverError.response ? serverError.response.data : defaultError;
+  let err = serverError.response ? serverError.response.data : null;
+  err = !err && serverError.msg ? serverError : err;
+  err = err || defaultError;
 
   if (!err.msg) err.msg = defaultMsg;
   if (!err.status)
