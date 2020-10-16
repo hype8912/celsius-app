@@ -155,11 +155,18 @@ function setInternetConnection(connection) {
  */
 function setAdvertisingId() {
   return async dispatch => {
-    const userAID = await IDFA.getIDFA();
-    dispatch({
-      type: ACTIONS.SET_ADVERTISING_ID,
-      advertisingId: userAID,
-    });
+    try {
+      const userAID = await IDFA.getIDFA();
+      dispatch({
+        type: ACTIONS.SET_ADVERTISING_ID,
+        advertisingId: userAID,
+      });
+    } catch (e) {
+      dispatch({
+        type: ACTIONS.SET_ADVERTISING_ID,
+        advertisingId: "NOT_AVAILABLE",
+      });
+    }
   };
 }
 

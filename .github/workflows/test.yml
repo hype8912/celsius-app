@@ -1,0 +1,35 @@
+name: Celsius CI
+
+on:
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+      with:
+        repository: CelsiusNetwork/celsius-app
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: yarn
+    - name: Check out Celsius App Creds repository
+      uses: actions/checkout@v2
+      with:
+         repository: CelsiusNetwork/celsius-app-creds
+         path: celsius-app-creds
+         token: ${{ secrets.ACCESS_TOKEN }}
+    - run: yarn set:env
+    - run: yarn pre:commit
+    - run: yarn test
+    
