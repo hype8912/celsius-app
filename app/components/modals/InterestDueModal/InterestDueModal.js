@@ -67,7 +67,6 @@ class InterestDueModal extends Component {
       !activeLoan.installments_to_be_paid
     )
       return null;
-    const instalmentsToBePaid = activeLoan.installments_to_be_paid;
     const modalName = alert
       ? MODALS.LOAN_ALERT_MODAL
       : MODALS.INTEREST_DUE_MODAL;
@@ -78,7 +77,7 @@ class InterestDueModal extends Component {
             loanAlert.id === loan.id &&
             loanAlert.type === LOAN_ALERTS.INTEREST_ALERT
         )
-      )
+      ).filter(loan => !loan.loanPaymentSettings.automatic_interest_payment)
       .sort((a, b) => a.id - b.id);
     const multipleAlerts = loansOverview.length > 1;
     if (multipleAlerts)
@@ -88,6 +87,8 @@ class InterestDueModal extends Component {
     const alignment = multipleAlerts ? "left" : "center";
     const margin = multipleAlerts ? { marginHorizontal: 20 } : {};
 
+    if (!loansOverview.length) return null;
+
     return (
       <CelModal name={modalName}>
         <View style={margin}>
@@ -95,13 +96,13 @@ class InterestDueModal extends Component {
             Interest Payment
           </CelText>
 
-          {!multipleAlerts ? (
+          {loansOverview.length === 1 ? (
             <View>
               <CelText align="center" margin="10 0 10 0">
                 Interest owed
                 <CelText weight="bold">
                   {" "}
-                  {formatter.usd(instalmentsToBePaid.total)}
+                  {formatter.usd(loansOverview[0].installments_to_be_paid.total)}
                 </CelText>
               </CelText>
             </View>
@@ -131,12 +132,12 @@ class InterestDueModal extends Component {
             })}
         </View>
 
-        {!multipleAlerts && (
+        {loansOverview.length === 1 && (
           <View>
             <LoanCard
               backgroundColor={style.installmentsWrapper.backgroundColor}
               navigateTo={navigateTo}
-              loan={activeLoan}
+              loan={loansOverview[0]}
               closeModal={closeModal}
             />
 
@@ -156,7 +157,7 @@ class InterestDueModal extends Component {
                 </CelText>
               </View>
 
-              {instalmentsToBePaid.installments.map(installment => (
+              {loansOverview[0].installments_to_be_paid.installments.map(installment => (
                 <View
                   style={{
                     flexDirection: "row",

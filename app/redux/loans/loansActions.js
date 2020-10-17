@@ -66,14 +66,6 @@ function applyForALoan() {
       const res = await loansService.apply(loanApplication, verification);
       dispatch({ type: ACTIONS.APPLY_FOR_LOAN_SUCCESS });
 
-      dispatch(
-        navigateTo(SCREENS.LOAN_REQUEST_DETAILS, {
-          id: res.data.loan.id,
-          hideBack: true,
-        })
-      );
-      dispatch(showMessage("success", "Loan created successfully!"));
-
       const allLoans = await loansService.getAllLoans();
 
       dispatch({
@@ -261,9 +253,9 @@ function cancelLoan() {
       dispatch(startApiCall(API.CANCEL_LOAN));
       const { loanId } = getState().forms.formData;
       await loansService.cancelLoan(loanId);
-
       dispatch(showMessage("success", "Loan successfully canceled!"));
       dispatch(closeModal());
+      dispatch(getAllLoans())
     } catch (err) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CANCEL_LOAN, err));
