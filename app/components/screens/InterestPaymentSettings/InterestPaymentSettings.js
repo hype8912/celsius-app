@@ -95,7 +95,7 @@ class InterestPaymentSettings extends Component {
     return (
       <RegularLayout>
         <View>
-          <Card close>
+          <Card>
             <CelText weight={"500"} type={"H5"}>
               Automatic Interest Payment
             </CelText>

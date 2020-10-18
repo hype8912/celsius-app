@@ -57,7 +57,7 @@ class TransactionsIntersection extends Component {
       if (id) {
         actions.getTransactionDetails(id);
       }
-    }, 15000);
+    }, 30000);
   };
 
   componentDidUpdate(prevProps) {

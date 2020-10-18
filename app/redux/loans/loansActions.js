@@ -81,7 +81,7 @@ function applyForALoan() {
           hideBack: true,
         })
       );
-      dispatch(showMessage("success", "Loan created successfully!"));
+      dispatch(showMessage("success", "Loan requested successfully!"));
 
       if (
         Number(formData.loanAmount) <= Number(automaticLoanLimit) &&

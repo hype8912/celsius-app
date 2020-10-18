@@ -111,11 +111,10 @@ class ConfirmWithdrawalDetailsModal extends Component {
           color={getColor(COLOR_KEYS.TAB_SELECTED)}
         >
           <CelText color={COLOR_KEYS.WHITE} weight={"500"} type={"H3"}>
-            Did you know?
+            Borrow like the Billionaires
           </CelText>
           <CelText margin={"0 0 10 0"} color={COLOR_KEYS.WHITE} weight={"200"}>
-            You can borrow instead of withdraw to save on taxes that may occur
-            for selling your assets.
+            Selling crypto can cost up to X% in taxes. Borrow without letting go of your coins and get fast cash without the added tax.
           </CelText>
           <CelButton
             size={"small"}

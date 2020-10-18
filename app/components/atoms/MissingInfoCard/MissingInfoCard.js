@@ -49,7 +49,7 @@ const MissingInfoCard = props => {
   }
 
   return (
-    <Card color={getColor(COLOR_KEYS.LINK)} close>
+    <Card color={getColor(COLOR_KEYS.LINK)}>
       <CelText
         color={getColor(COLOR_KEYS.WHITE)}
         type="H6"
