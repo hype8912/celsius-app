@@ -115,7 +115,7 @@ class ConfirmWithdrawalDetailsModal extends Component {
             Borrow like the Billionaires
           </CelText>
           <CelText margin={"0 0 10 0"} color={COLOR_KEYS.WHITE} weight={"200"} type={"H5"}>
-            Selling crypto can cost up to X% in taxes. Borrow without letting go of your coins and get fast cash without the added tax.
+            Selling crypto can cost you taxes. Borrow without letting go of your coins and get fast cash without the added tax.
           </CelText>
           <CelButton
             size={"small"}
