@@ -80,7 +80,7 @@ class LtvCard extends Component {
         >
           <CelText>LTV Information</CelText>
           <Icon
-            name={info ? "IconChevronDown" : "IconChevronUp"}
+            name={info ? "IconChevronUp" : "IconChevronDown"}
             width={15}
             height={15}
           />

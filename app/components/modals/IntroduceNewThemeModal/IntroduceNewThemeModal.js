@@ -54,6 +54,7 @@ class IntroduceNewThemeModal extends Component {
 
     const isSaving = apiUtil.areCallsInProgress(
       [API.SET_APP_SETTINGS],
+
       callsInProgress
     );
 
@@ -152,7 +153,7 @@ class IntroduceNewThemeModal extends Component {
         <View style={style.contentWrapper}>
           <View style={style.imageWrapper}>
             <Image
-              source={require("../../../../assets/images/sunset-mockup-02.png")}
+              source={require("../../../../assets/images/sunset-mockup-01.png")}
               resizeMode={"contain"}
               style={style.image}
             />
