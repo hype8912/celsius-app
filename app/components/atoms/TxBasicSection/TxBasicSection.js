@@ -11,13 +11,14 @@ const TxBasicSection = ({
   value,
   noSeparator = false,
   color = null,
+  hideFromRecording = false,
 }) => {
   const style = BasicSectionStyle();
   return (
     <View>
       <View style={style.content}>
         <CelText type="H6">{label}:</CelText>
-        <CelText type="H6" color={color}>
+        <CelText hideFromRecording={hideFromRecording} type="H6" color={color}>
           {value}
         </CelText>
       </View>
@@ -31,6 +32,7 @@ TxBasicSection.propTypes = {
   noSeparator: PropTypes.bool,
   value: PropTypes.string,
   color: PropTypes.string,
+  hideFromRecording: PropTypes.bool,
 };
 
 export default TxBasicSection;

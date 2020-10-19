@@ -60,6 +60,7 @@ class TransactionDetailsLoans extends Component {
           ].includes(transaction.type) && (
             <View>
               <TxBasicSection
+                hideFromRecording
                 label={"Spot Price"}
                 value={formatter.usd(
                   Number(transaction.amount_usd) / Number(transaction.amount)
@@ -71,6 +72,7 @@ class TransactionDetailsLoans extends Component {
           {[TRANSACTION_TYPES.MARGIN_CALL].includes(transaction.type) && (
             <View>
               <TxBasicSection
+                hideFromRecording
                 label={"New Collateral Balance"}
                 value={`     ${formatter.crypto(
                   Number(transaction.loan_data.loan_collateral_crypto),
@@ -108,10 +110,10 @@ class TransactionDetailsLoans extends Component {
                 <CelText>
                   {transaction.coin.toUpperCase()} margin call at:
                 </CelText>
-                <CelText>{formatter.usd(transaction.loan_data.margin)}</CelText>
+                <CelText hideFromRecording>{formatter.usd(transaction.loan_data.margin)}</CelText>
               </View>
               <Card>
-                <CelText type="H6" style={{ opacity: 0.7 }}>
+                <CelText hideFromRecording type="H6" style={{ opacity: 0.7 }}>
                   If {transaction.coin.toUpperCase()} drops below{" "}
                   {formatter.usd(transaction.loan_data.margin)} you will get a
                   notification asking for additional collateral.
@@ -128,12 +130,12 @@ class TransactionDetailsLoans extends Component {
                 }}
               >
                 <CelText>Liquidation at:</CelText>
-                <CelText>
+                <CelText hideFromRecording>
                   {formatter.usd(transaction.loan_data.liquidation)}
                 </CelText>
               </View>
               <Card>
-                <CelText type="H6" style={{ opacity: 0.7 }}>
+                <CelText hideFromRecording type="H6" style={{ opacity: 0.7 }}>
                   If {transaction.coin.toUpperCase()} drops below{" "}
                   {formatter.usd(transaction.loan_data.liquidation)} we will
                   sell some of your collateral to cover the margin.
