@@ -7,7 +7,7 @@ import mixpanelAnalytics from "./mixpanel-analytics";
 const { UXCAM_APP_KEY } = Constants;
 
 async function initUxCam() {
-  if (!UXCAM_APP_KEY) return;
+  if (!UXCAM_APP_KEY && false) return;
 
   try {
     await RNUxcam.optIntoSchematicRecordings();
@@ -18,7 +18,7 @@ async function initUxCam() {
 }
 
 async function startRecording() {
-  if (!UXCAM_APP_KEY) return;
+  if (!UXCAM_APP_KEY && false) return;
 
   try {
     await RNUxcam.startWithKey(UXCAM_APP_KEY);
@@ -52,6 +52,8 @@ async function urlForCurrentSession() {
 }
 
 async function stopRecordingAndUploadData() {
+  if (!UXCAM_APP_KEY && false) return;
+  
   try {
     await RNUxcam.stopSessionAndUploadData();
   } catch (err) {

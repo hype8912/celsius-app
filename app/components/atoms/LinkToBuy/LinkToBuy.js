@@ -30,7 +30,7 @@ const LinkToBuy = ({ coin, navigateTo }) => {
       >
         {cryptoUtil.provideText(coin)}
       </CelButton>
-    )
+    );
   }
 
   return null;

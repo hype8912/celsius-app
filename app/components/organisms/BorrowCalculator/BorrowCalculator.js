@@ -14,9 +14,10 @@ import Card from "../../atoms/Card/Card";
 import HorizontalSlider from "../../atoms/HorizontalSlider/HorizontalSlider";
 import Icon from "../../atoms/Icon/Icon";
 import { KYC_STATUSES } from "../../../constants/DATA";
-import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { SCREENS } from "../../../constants/SCREENS";
+import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 
 let timeout;
 
@@ -33,6 +34,7 @@ let timeout;
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
     loyaltyInfo: state.loyalty.loyaltyInfo,
+    activeScreen: state.nav.activeScreen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -45,7 +47,7 @@ class BorrowCalculator extends Component {
   constructor(props) {
     super(props);
 
-    const { currencies, loanCompliance, ltv } = props;
+    const { currencies, loanCompliance } = props;
 
     const coinSelectItems = currencies
       .filter(c => loanCompliance.collateral_coins.includes(c.short))
@@ -67,13 +69,6 @@ class BorrowCalculator extends Component {
       { value: 36, label: <CelText>3Y</CelText> },
     ];
 
-    props.actions.initForm({
-      coin: "BTC",
-      termOfLoan: 6,
-      amount: 0,
-      ltv: ltv[0],
-    });
-
     this.style = BorrowCalculatorStyle();
   }
 
@@ -84,10 +79,21 @@ class BorrowCalculator extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { formData } = this.props;
+    const { formData, activeScreen, ltv, actions } = this.props;
 
     if (!_.isEqual(formData, prevProps.formData)) {
       this.updateSliderItems();
+    }
+    if (
+      activeScreen !== prevProps.activeScreen &&
+      prevProps.activeScreen !== SCREENS.SELECT_COIN
+    ) {
+      actions.initForm({
+        coin: "BTC",
+        termOfLoan: 6,
+        amount: 0,
+        ltv: ltv[0],
+      });
     }
   }
 
@@ -272,18 +278,18 @@ class BorrowCalculator extends Component {
           </CelText>
           <Icon
             name={`Icon${formData.coin}`}
-            width="64"
-            height="64"
+            width="40"
+            height="40"
             fill={themeColors.iconColor}
           />
           <View style={style.selectWrapper}>
-            <SimpleSelect
-              items={coinSelectItems}
-              field="coin"
-              displayValue={formData.coin}
-              value={formData.coin}
+            <CoinPicker
+              type={"basic"}
               updateFormField={actions.updateFormField}
-              placeholder="Choose a coin"
+              coin={formData.coin}
+              field="coin"
+              availableCoins={coinSelectItems}
+              navigateTo={actions.navigateTo}
             />
           </View>
         </View>

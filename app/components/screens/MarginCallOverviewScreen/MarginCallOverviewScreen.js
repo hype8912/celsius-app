@@ -52,7 +52,7 @@ class MarginCallOverviewScreen extends Component {
       prevProps.activeScreen !== activeScreen &&
       _.isEqual(prevProps.loanAlerts[0], this.props.loanAlerts[0])
     ) {
-      actions.checkForLoanAlerts();
+      actions.getLoanAlerts();
     }
   }
 
@@ -73,7 +73,7 @@ class MarginCallOverviewScreen extends Component {
     } = this.props;
 
     const isFetching = apiUtil.areCallsInProgress(
-      [API.CHECK_LOAN_ALERTS],
+      [API.CHECK_LOAN_ALERTS, API.GET_LOAN_ALERTS],
       callsInProgress
     );
 

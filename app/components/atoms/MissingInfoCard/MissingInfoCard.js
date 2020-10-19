@@ -27,7 +27,7 @@ const MissingInfoCard = props => {
   if (!user.email) {
     title = "Your email is missing from your profile.";
     body = "Your email is required in order to receive rewards.";
-    cta = "Contact support";
+    cta = "Contact support >";
     onPress = () => Linking.openURL("mailto:app@celsius.network");
   }
 
@@ -35,7 +35,7 @@ const MissingInfoCard = props => {
     title = "We’re missing your address.";
     body =
       "Residential details are required in order to receive rewards. Please contact Celsius support to update your address.";
-    cta = "Celsius support";
+    cta = "Celsius support >";
     onPress = () => Linking.openURL("mailto:app@celsius.network");
     hasNoAddress = true;
   }
@@ -44,12 +44,12 @@ const MissingInfoCard = props => {
     title = "Your Social Security Number is Missing.";
     body =
       "Taxpayer details are required in order to receive rewards on your crypto. Enter your SSN link to profile details.";
-    cta = "Enter your SSN";
+    cta = "Enter your SSN >";
     onPress = () => navigateTo(SCREENS.PERSONAL_INFORMATION);
   }
 
   return (
-    <Card color={getColor(COLOR_KEYS.LINK)} close>
+    <Card color={getColor(COLOR_KEYS.LINK)}>
       <CelText
         color={getColor(COLOR_KEYS.WHITE)}
         type="H6"
@@ -60,13 +60,13 @@ const MissingInfoCard = props => {
       </CelText>
       {hasNoAddress ? (
         <Fragment>
-          <CelText color={getColor(COLOR_KEYS.WHITE)} type="H7">
+          <CelText margin={"5 0 0 0"} color={getColor(COLOR_KEYS.WHITE)} type="H7">
             {body}
             <CelText
               onPress={onPress}
-              color={getColor(COLOR_KEYS.DOT_INDICATOR_ACTIVE)}
+              color={getColor(COLOR_KEYS.WHITE)}
               type="H7"
-              margin="3 0 0 0"
+              margin="10 0 0 0"
             >
               {` ${cta}`}
             </CelText>
@@ -74,16 +74,16 @@ const MissingInfoCard = props => {
         </Fragment>
       ) : (
         <Fragment>
-          <CelText color={getColor(COLOR_KEYS.WHITE)} type="H7">
+          <CelText margin={"5 0 0 0"} color={getColor(COLOR_KEYS.WHITE)} type="H7">
             {body}
           </CelText>
           <CelText
             onPress={onPress}
-            color={getColor(COLOR_KEYS.DOT_INDICATOR_ACTIVE)}
+            color={getColor(COLOR_KEYS.WHITE)}
             type="H7"
-            margin="3 0 0 0"
+            margin="10 0 0 0"
           >
-            {cta} >
+            {cta}
           </CelText>
         </Fragment>
       )}

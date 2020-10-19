@@ -75,7 +75,7 @@ class TransactionDetailsLoans extends Component {
                 value={`     ${formatter.crypto(
                   Number(transaction.loan_data.loan_collateral_crypto),
                   transaction.coin.toUpperCase()
-                )} 
+                )}
             ${formatter.usd(
               Number(transaction.loan_data.loan_collateral_usd)
             )}`}
@@ -147,7 +147,7 @@ class TransactionDetailsLoans extends Component {
               margin={"20 0 0 0"}
               onPress={() => navigateTo(SCREENS.INTEREST_PAYMENT_OVERVIEW)}
             >
-              Continue Paying Loan Interests
+              Continue Paying
             </CelButton>
           )}
 
@@ -156,7 +156,7 @@ class TransactionDetailsLoans extends Component {
               margin={"20 0 0 0"}
               onPress={() => navigateTo(SCREENS.MARGIN_CALL_OVERVIEW_SCREEN)}
             >
-              Continue Resolving Margin Calls
+              Continue Resolving
             </CelButton>
           )}
 

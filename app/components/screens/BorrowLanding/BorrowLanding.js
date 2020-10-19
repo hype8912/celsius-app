@@ -31,6 +31,8 @@ import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
 import Constants from "../../../../constants";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
 
 const { STORYBOOK } = Constants;
 const cardWidth = widthPercentageToDP("70%");
@@ -68,6 +70,7 @@ const cardWidth = widthPercentageToDP("70%");
       loyaltyInfo: state.loyalty.loyaltyInfo,
       activeLoan: state.loans.activeLoan,
       userTriggeredActions: state.user.appSettings.user_triggered_actions || {},
+      callsInProgress: state.api.callsInProgress,
     };
   },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
@@ -194,13 +197,17 @@ class BorrowLanding extends Component {
 
   renderContent = () => {
     const { xOffset, filterItem, isLoading } = this.state;
-    const { actions, loyaltyInfo, activeLoan } = this.props;
+    const { actions, loyaltyInfo, activeLoan, callsInProgress } = this.props;
     const style = BorrowLandingStyle();
     const filteredLoans = this.handleFilter();
+    const loading = apiUtil.areCallsInProgress(
+      [API.GET_ALL_LOANS],
+      callsInProgress
+    );
     const filter = filterItem || "ALL";
     return (
       <View>
-        {isLoading ? (
+        {isLoading || loading ? (
           <View
             style={{
               marginTop: 20,
@@ -366,7 +373,6 @@ class BorrowLanding extends Component {
 
   render() {
     const { walletSummary } = this.props;
-
     if (!walletSummary) return null;
 
     return <>{this.renderIntersection()}</>;

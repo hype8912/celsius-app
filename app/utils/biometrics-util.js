@@ -15,7 +15,6 @@ export {
   deleteBiometricsKey,
   biometricNonEnrolled,
   getBiometricTypeData,
-  // simplePrompt
 };
 
 /**

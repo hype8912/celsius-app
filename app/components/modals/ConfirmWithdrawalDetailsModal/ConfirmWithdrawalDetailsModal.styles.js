@@ -9,23 +9,18 @@ const base = {
     justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
-    paddingVertical: 15,
+    paddingTop: 10,
   },
-  amountWrapper: {
-    paddingVertical: 20,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
+  amountWrapper: { alignItems: "center" },
   buttonsWrapper: {
     justifyContent: "flex-end",
-    marginTop: 20,
     height: 50,
   },
   lineHeight: {
     lineHeight: 23,
   },
+  separator: { marginHorizontal: 20 },
+  margin: {marginTop: 5}
 };
 
 const themed = {

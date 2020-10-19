@@ -55,6 +55,7 @@ class ConfirmWithdrawalDetailsModal extends Component {
 
   renderInfoBox = () => {
     const { walletSummary, formData, loyaltyInfo, actions } = this.props;
+    const style = ConfirmWithdrawalDetailsModalStyle();
     const coinData =
       formData.coin &&
       walletSummary.coins.filter(
@@ -78,7 +79,7 @@ class ConfirmWithdrawalDetailsModal extends Component {
       newBalance.isLessThan(loyaltyInfo.min_for_tier)
     ) {
       return (
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={style.separator}>
           <InfoBox
             backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
             padding="15 15 15 15"
@@ -101,7 +102,7 @@ class ConfirmWithdrawalDetailsModal extends Component {
       );
     }
     return (
-      <View style={{ alignItems: "center" }}>
+      <View style={[style.amountWrapper, style.margin]}>
         <CelText margin={"0 0 10 0"} align="center">
           {disclaimerText}
         </CelText>
@@ -110,12 +111,11 @@ class ConfirmWithdrawalDetailsModal extends Component {
           styles={{ alignItems: "flex-start" }}
           color={getColor(COLOR_KEYS.TAB_SELECTED)}
         >
-          <CelText color={COLOR_KEYS.WHITE} weight={"500"} type={"H3"}>
-            Did you know?
+          <CelText color={COLOR_KEYS.WHITE} weight={"500"} type={"H4"}>
+            Borrow like the Billionaires
           </CelText>
-          <CelText margin={"0 0 10 0"} color={COLOR_KEYS.WHITE} weight={"200"}>
-            You can borrow instead of withdraw to save on taxes that may occur
-            for selling your assets.
+          <CelText margin={"0 0 10 0"} color={COLOR_KEYS.WHITE} weight={"200"} type={"H5"}>
+            Selling crypto can cost you taxes. Borrow without letting go of your coins and get fast cash without the added tax.
           </CelText>
           <CelButton
             size={"small"}
@@ -182,7 +182,7 @@ class ConfirmWithdrawalDetailsModal extends Component {
               align="center"
               type="H3"
               weight={"600"}
-              margin={"0 0 20 0"}
+              margin={"0 0 10 0"}
             >
               Confirm Withdrawal Details
             </CelText>
@@ -198,10 +198,10 @@ class ConfirmWithdrawalDetailsModal extends Component {
               {formatter.usd(formData.amountUsd)}
             </CelText>
           </View>
-          <View style={{ marginHorizontal: 20 }}>
+          <View style={style.separator}>
             <Separator />
           </View>
-          <View style={{ alignItems: "center" }}>
+          <View style={style.amountWrapper}>
             <View style={style.address}>
               <CelText type="H7">New wallet balance:</CelText>
               <CelText
@@ -220,7 +220,6 @@ class ConfirmWithdrawalDetailsModal extends Component {
             <View style={style.address}>
               <CelText type="H7">Withdrawal address:</CelText>
               <CelText
-                style={[style.lineHeight]}
                 type="H5"
                 weight="bold"
                 margin={"0 5 0 5"}

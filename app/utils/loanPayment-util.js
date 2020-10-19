@@ -181,6 +181,7 @@ function shouldNotCheckForAlerts(activeScreen) {
     SCREENS.CHOOSE_PAYMENT_METHOD,
     SCREENS.PAYMENT_CEL,
     SCREENS.LOAN_PAYMENT_COIN,
+    SCREENS.TRANSACTION_INTERSECTION
   ].includes(activeScreen);
 }
 

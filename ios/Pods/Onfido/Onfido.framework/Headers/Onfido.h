@@ -20,6 +20,7 @@ FOUNDATION_EXPORT const unsigned char OnfidoVersionString[];
 #import <Onfido/GlareDetection.h>
 #import <Onfido/OnfidoEdgeDetection.h>
 #import <Onfido/OnfidoEdgeDetectionResults.h>
+#import <Onfido/MRZExtraction.h>
 #import <Onfido/OnfidoMBProgressHUD.h>
 #import <Onfido/OnfidoBlurDetection.h>
 #import <Onfido/OnfidoSEGAnalytics.h>
