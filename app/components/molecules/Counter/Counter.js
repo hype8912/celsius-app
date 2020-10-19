@@ -12,6 +12,7 @@ import { SCREENS } from "../../../constants/SCREENS";
   state => ({
     activeScreen: state.nav.activeScreen,
     walletSummary: state.wallet.summary,
+    theme: state.user.appSettings.theme,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )

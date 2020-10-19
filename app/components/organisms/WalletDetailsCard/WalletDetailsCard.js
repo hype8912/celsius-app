@@ -16,9 +16,7 @@ import { SCREENS } from "../../../constants/SCREENS";
 @connect(
   state => ({
     currencies: state.currencies.rates,
-    kycStatus: state.user.profile.kyc
-      ? state.user.profile.kyc.status
-      : KYC_STATUSES.collecting,
+    theme: state.user.appSettings.theme,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -29,15 +27,15 @@ class WalletDetailsCard extends PureComponent {
   };
 
   navigateToBalanceHistory = () => {
-    const { actions, currencies } = this.props;
+    const { navigateTo, currencies } = this.props;
     if (!currencies) return;
-    actions.navigateTo(SCREENS.BALANCE_HISTORY);
+    navigateTo(SCREENS.BALANCE_HISTORY);
   };
 
   navigateToDeposit = () => {
-    const { actions, currencies } = this.props;
+    const { navigateTo, currencies } = this.props;
     if (!currencies) return;
-    actions.navigateTo(SCREENS.DEPOSIT);
+    navigateTo(SCREENS.DEPOSIT);
   };
 
   render() {
