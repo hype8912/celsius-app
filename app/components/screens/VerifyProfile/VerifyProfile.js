@@ -35,6 +35,7 @@ import BiometricsAuthenticationModal from "../../modals/BiometricsAuthentication
 import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
 import { SCREENS } from "../../../constants/SCREENS";
 import Constants from "../../../../constants";
+import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 const { STORYBOOK } = Constants;
 
@@ -302,6 +303,7 @@ class VerifyProfile extends Component {
         ) {
           return;
         } else {
+          mixpanelAnalytics.logError("handleBiometrics error", error)
           actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
           this.setState({ disableBiometricsForUser: true });
         }
