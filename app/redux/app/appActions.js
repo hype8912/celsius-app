@@ -160,9 +160,10 @@ function setAdvertisingId() {
         advertisingId: userAID,
       });
     } catch (e) {
+      mixpanelAnalytics.logError("setAdvertisingId", e)
       dispatch({
         type: ACTIONS.SET_ADVERTISING_ID,
-        advertisingId: "NOT_AVAILABLE",
+        advertisingId: null,
       });
     }
   };

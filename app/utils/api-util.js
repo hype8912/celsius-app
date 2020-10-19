@@ -193,7 +193,8 @@ async function setAppVersionHeaders() {
       const metadata = await CodePush.getUpdateMetadata();
       buildVersion = metadata ? `${clientVersion}@${metadata.label}` : "local";
     } catch (e) {
-      buildVersion = "NOT_AVAILABLE";
+      mixpanelAnalytics.logError("setAppVersionHeaders",e)
+      buildVersion = "local";
     }
   }
 

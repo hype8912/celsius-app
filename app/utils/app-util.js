@@ -269,7 +269,7 @@ async function getDeviceUniqueID () {
     return deviceId
   } catch (e) {
     mixpanelAnalytics.logError('getDeviceUniqueID: ', e)
-    return 'NOT_AVAILABLE'
+    return null
   }
 }
 
@@ -282,7 +282,7 @@ function getAppsFlyerId() {
       if (!error) resolve(id)
       else {
         mixpanelAnalytics.logError('getAppsFlyerId: ', error)
-        resolve ("NOT_AVAILABLE")
+        resolve (null)
       }
     })
   })
