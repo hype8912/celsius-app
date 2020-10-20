@@ -367,7 +367,7 @@ class GetCoinsEnterAmount extends Component {
           {((areAmountsCorrect && !isFetchingQuotes && formData.amountFiat) ||
             formData.isFiat) && (
             <View style={{ marginVertical: 10 }}>
-              <CelText style={this.handleAmountTextStyle("fiat")} type={"H2"}>
+              <CelText hideFromRecording style={this.handleAmountTextStyle("fiat")} type={"H2"}>
                 {formatter.fiat(formData.amountFiat, formData.fiatCoin)}
               </CelText>
             </View>
@@ -417,7 +417,7 @@ class GetCoinsEnterAmount extends Component {
           {((areAmountsCorrect && !isFetchingQuotes && formData.amountCrypto) ||
             !formData.isFiat) && (
             <View style={{ marginVertical: 10 }}>
-              <CelText style={this.handleAmountTextStyle("crypto")} type={"H2"}>
+              <CelText hideFromRecording style={this.handleAmountTextStyle("crypto")} type={"H2"}>
                 {formatter.crypto(formData.amountCrypto, formData.cryptoCoin)}
               </CelText>
             </View>
