@@ -13,6 +13,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import formatter from "../../../utils/formatter";
 import { heightPercentageToDP } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 
 @connect(
   state => ({
@@ -33,7 +34,13 @@ class ExtendLoanScreen extends Component {
 
   constructor(props) {
     super(props);
-    props.actions.updateFormField("extendPeriod", 6);
+    props.actions.updateFormField("extendPeriod", "1");
+
+    this.setState({
+      activePeriod: {
+        label: `1 month`, value: "1"
+      }
+    })
   }
 
   calculateAdditionalInterest = (usdValue, coinRate, coin) => {
@@ -41,58 +48,21 @@ class ExtendLoanScreen extends Component {
     return formatter.crypto(usdValue / rate, coin);
   };
 
-  renderSlider = () => {
-    const {
-      actions,
-      formData,
-      allLoans,
-      currencyRates,
-      navigation,
-    } = this.props;
-    const loanId = navigation.getParam("id");
-    const loan = allLoans.find(l => l.id === loanId);
-    const coinRate = currencyRates[loan.coin.toLowerCase()];
-
-    const monthValues = [6, 12];
-
-    const sliderItems = monthValues.map(m => ({
-      value: m,
-      label: (
-        <>
-          <CelText
-            type="H6"
-            weight="bold"
-            color={formData.extendPeriod === m ? COLOR_KEYS.BANNER_INFO : null}
-          >
-            {m} MONTHS
-          </CelText>
-          <CelText type="H6">
-            Additional Interest:{" "}
-            {this.calculateAdditionalInterest(
-              Number(loan.monthly_payment * m),
-              coinRate,
-              loan.coin
-            )}
-          </CelText>
-        </>
-      ),
-    }));
-
-    return (
-      <VerticalSlider
-        items={sliderItems}
-        field="extendPeriod"
-        value={formData.extendPeriod}
-        updateFormField={actions.updateFormField}
-        marginTop={heightPercentageToDP("2%")}
-      />
-    );
-  };
+  // formdata.extendPEriod
 
   render() {
     const { actions, navigation, formData } = this.props;
+    const { activePeriod } = this.state;
     // const style = ExtendLoanScreenStyle();
     const loanId = navigation.getParam("id");
+
+    const predefinedAmount = [
+      { label: `1 month`, value: "1" },
+      {
+        label: `36 months`,
+        value: "36",
+      },
+    ];
 
     return (
       <RegularLayout>
@@ -101,7 +71,11 @@ class ExtendLoanScreen extends Component {
             <CelText align={"center"} weight={"300"}>
               How long would you like to extend loan
             </CelText>
-            {this.renderSlider()}
+            <PredefinedAmounts
+              data={predefinedAmount}
+              onSelect={() => console.log("trt")}
+              activePeriod={activePeriod}
+            />
           </View>
 
           <View>
