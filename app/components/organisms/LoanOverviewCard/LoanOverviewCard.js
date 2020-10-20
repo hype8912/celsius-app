@@ -380,20 +380,25 @@ class LoanOverviewCard extends Component {
             )}
           </View>
 
+          {loan.status === LOAN_STATUS.ACTIVE &&
+          <View style={{margin: 10}}>
+            <CelButton
+              margin={"10 0 0 0"}
+              size={"small"}
+              color={"green"}
+              onPress={() =>
+                navigateTo(SCREENS.EXTEND_LOAN, {
+                  id: loan.id,
+                })
+              }
+            >
+              Extend the Loan
+            </CelButton>
+          </View>
+          }
+
            {loan.can_pay_principal && (
             <View style={{margin: 10}}>
-               <CelButton
-                margin={"10 0 0 0"}
-                size={"small"}
-                color={"green"}
-                onPress={() =>
-                  navigateTo(SCREENS.EXTEND_LOAN, {
-                    id: loan.id,
-                  })
-                }
-               >
-                Extend the Loan
-               </CelButton>
               {/*<CelButton*/}
               {/*  margin={"10 0 0 0"}*/}
               {/*  size={"small"}*/}
