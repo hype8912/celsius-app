@@ -77,8 +77,7 @@ class InterestDueModal extends Component {
             loanAlert.id === loan.id &&
             loanAlert.type === LOAN_ALERTS.INTEREST_ALERT
         )
-      ).filter(loan => loan.loanPaymentSettings && !loan.loanPaymentSettings.automatic_interest_payment)
-      .sort((a, b) => a.id - b.id);
+      ).sort((a, b) => a.id - b.id);
     const multipleAlerts = loansOverview.length > 1;
     if (multipleAlerts)
       totalAmount = loansOverview.reduce((a, b) => {
