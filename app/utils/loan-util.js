@@ -8,6 +8,15 @@ import { COLOR_KEYS } from "../constants/COLORS";
 const loanUtil = {
   mapLoan,
   emitLoanParams,
+  mapLoanAlerts,
+};
+
+function mapLoanAlerts(l) {
+  const newLoan = { ...l };
+  if (!newLoan.loanPaymentSettings){
+    newLoan.loanPaymentSettings = {}
+  }
+  return newLoan
 };
 
 function mapLoan(loan) {

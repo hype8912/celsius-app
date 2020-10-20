@@ -212,8 +212,11 @@ function sendBankDetailsEmail() {
  *
  * @returns {Promise}
  */
-function getLoanAlerts() {
-  return axios.get(`${apiUrl}/loans/alerts`);
+async function getLoanAlerts() {
+  const res = await axios.get(`${apiUrl}/loans/alerts`);
+  const loans = res.data;
+
+  return loans.map(l => loanUtil.mapLoanAlerts(l));
 }
 
 /**
