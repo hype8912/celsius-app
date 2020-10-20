@@ -298,6 +298,7 @@ class VerifyProfile extends Component {
         } else if (
           [
             BIOMETRIC_ERRORS.KEY_NOT_FOUND,
+            BIOMETRIC_ERRORS.KEY_NOT_FOUND_AUTHENTICATION_FAILED,
             BIOMETRIC_ERRORS.AUTHENTICATION_CANCELLED,
           ].includes(error.message)
         ) {
