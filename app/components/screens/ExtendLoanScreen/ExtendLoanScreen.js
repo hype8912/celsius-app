@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -15,6 +15,10 @@ import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmoun
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import Separator from "../../atoms/Separator/Separator";
 import Card from "../../atoms/Card/Card";
+import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
+import { KEYPAD_PURPOSES } from "../../../constants/UI";
+
+let timeout;
 
 @connect(
   state => ({
@@ -44,6 +48,40 @@ class ExtendLoanScreen extends Component {
       months: 6
     }
   }
+
+  handleAmountChange = (newValue) => {
+    const { actions } = this.props;
+    let value;
+    if (timeout) clearTimeout(timeout);
+    if (Number(newValue) < 6) {
+      timeout = setTimeout(() => {
+        actions.showMessage(
+          "warning",
+          `6 months is currently the minimum extendable period. Please adjust your extend period to proceed.`
+        );
+      }, 5000);
+    }
+
+    if (Number(newValue) > 36) {
+
+      timeout = setTimeout(() => {
+        actions.showMessage(
+          "warning",
+          `36 months is currently the maximum extendable period. Please adjust your extend period to proceed.`
+        );
+      }, 5000);
+      return
+    }
+
+    if(newValue === "") {
+      value = 6
+    } else {
+      value = newValue
+    }
+
+    actions.updateFormField("extendPeriod", value);
+    this.setState({ months: Number(value) });
+  };
 
   calculateAdditionalInterest = (usdValue, coinRate, coin) => {
     const rate = coin === "USD" ? 1 : coinRate;
@@ -85,6 +123,13 @@ class ExtendLoanScreen extends Component {
     }
   };
 
+  handleConfirmation = () => {
+  const { actions } = this.props;
+  const { months } = this.state;
+  // navigateTo
+    actions.updateFormField("extendPeriod", `${months}`)
+  }
+
 
   render() {
     const {
@@ -92,6 +137,7 @@ class ExtendLoanScreen extends Component {
       allLoans,
       currencyRates,
       navigation,
+      formData
     } = this.props;
     const { activePeriod, months } = this.state;
     // const style = ExtendLoanScreenStyle();
@@ -128,9 +174,11 @@ class ExtendLoanScreen extends Component {
                 onPress={() => this.decrement()}
               />
               <View style={{alignItems: "center"}}>
+                <TouchableOpacity onPress={actions.toggleKeypad}>
                 <CelText margin={"0 20 0 20"} weight={"600"} type={"H1"}>
-                  {months}
+                  {months || " "}
                 </CelText>
+                </TouchableOpacity>
                 <CelText margin={"0 20 0 20"} weight={"200"} type={"H3"}>
                   {"months"}
                 </CelText>
@@ -154,7 +202,7 @@ class ExtendLoanScreen extends Component {
 
           <View>
             <CelButton
-              onPress={() => actions.updateFormField("extendPeriod", `${months}`)}
+              onPress={() => this.handleConfirmation()}
               margin={"30 0 0 0"}
               iconRight={"IconArrowRight"}
               iconRightWidth={20}
@@ -162,7 +210,18 @@ class ExtendLoanScreen extends Component {
               Confirm
             </CelButton>
           </View>
+          <CelNumpad
+            autofocus={false}
+            toggleKeypad={actions.toggleKeypad}
+            field={"extendPeriod"}
+            value={formData.extendPeriod || ""}
+            updateFormField={actions.updateFormField}
+            setKeypadInput={actions.setKeypadInput}
+            onPress={this.handleAmountChange}
+            purpose={KEYPAD_PURPOSES.BORROW}
+          />
         </View>
+
       </RegularLayout>
     );
   }
