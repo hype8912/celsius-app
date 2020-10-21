@@ -168,7 +168,7 @@ class InterestDueModal extends Component {
                   <CelText weight="light">{`${moment(installment.from).format(
                     "D MMM"
                   )} - ${moment(installment.to).format("D MMM")}`}</CelText>
-                  <CelText weight="light">
+                  <CelText hideFromRecording weight="light">
                     {formatter.usd(installment.amount)}
                   </CelText>
                 </View>

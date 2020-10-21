@@ -114,7 +114,7 @@ class HODLViewCode extends Component {
             <Card margin={"20 0 0 0"}>
               <View style={style.hodlCodeWrapper}>
                 <View style={style.codeWrapper}>
-                  <CelText align={"left"} type={"H2"} weight={"500"}>
+                  <CelText hideFromRecording align={"left"} type={"H2"} weight={"500"}>
                     {showHodlCode ? hodlCode : "XXXXXXXX"}
                   </CelText>
                 </View>
