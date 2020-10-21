@@ -25,6 +25,7 @@ function mapLoan(loan) {
   newLoan.uiSections = getLoanSections(loan);
   newLoan.amortization_table = flagPaidPayments(loan);
 
+
   if (newLoan.id) {
     newLoan.total_interest = Number(newLoan.total_interest).toFixed(2);
     newLoan.total_interest_paid = Number(newLoan.total_interest_paid).toFixed(
@@ -47,8 +48,10 @@ function mapLoan(loan) {
 
     newLoan.margin_call = getMarginCallParams(loan);
     newLoan.margin_call_activated = !!newLoan.margin_call;
+    if (!newLoan.loanPaymentSettings){
+      newLoan.loanPaymentSettings = {}
+    }
   }
-
   return newLoan;
 }
 
