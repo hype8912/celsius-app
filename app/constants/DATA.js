@@ -456,6 +456,7 @@ const ERC_20_COINS = {
   SGR: "sgr",
   XAUT: "xaut",
   PAXG: "paxg",
+  MANA: "mana",
 };
 
 const LINKS_TO_BUY = {
