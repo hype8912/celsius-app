@@ -4,7 +4,6 @@ import { View, TouchableOpacity } from "react-native";
 
 import PredefinedAmountsStyle from "./PredefinedAmounts.styles";
 import CelText from "../../atoms/CelText/CelText";
-import formatter from "../../../utils/formatter";
 
 class PredefinedAmounts extends Component {
   static propTypes = {

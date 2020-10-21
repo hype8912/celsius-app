@@ -399,7 +399,7 @@ class LoanOverviewCard extends Component {
 
            {loan.can_pay_principal && (
             <View style={{margin: 10}}>
-              {/*<CelButton*/}
+              {/* <CelButton*/}
               {/*  margin={"10 0 0 0"}*/}
               {/*  size={"small"}*/}
               {/*  ghost*/}
@@ -407,9 +407,9 @@ class LoanOverviewCard extends Component {
               {/*  onPress={this.payPrincipal}*/}
               {/*  loading={isLoading}*/}
               {/*  disabled={isLoading}*/}
-              {/*>*/}
+              {/* >*/}
               {/*  Close Loan*/}
-              {/*</CelButton>*/}
+              {/* </CelButton>*/}
             </View>
            )}
 
