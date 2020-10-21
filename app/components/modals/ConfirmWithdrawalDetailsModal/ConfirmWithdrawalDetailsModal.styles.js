@@ -1,5 +1,5 @@
 // import STYLES from '../../../constants/STYLES';
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getThemedStyle, widthPercentageToDP } from "../../../utils/styles-util";
 
 const base = {
   container: {
@@ -15,6 +15,9 @@ const base = {
   buttonsWrapper: {
     justifyContent: "flex-end",
     height: 50,
+    width: widthPercentageToDP("90%"),
+    position: "absolute",
+    bottom: 0,
   },
   lineHeight: {
     lineHeight: 23,

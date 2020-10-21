@@ -8,7 +8,6 @@ import Card from "../../atoms/Card/Card";
 import CelText from "../../atoms/CelText/CelText";
 import Separator from "../../atoms/Separator/Separator";
 import WalletDetailsCardStyle from "./WalletDetailsCard.styles";
-import { KYC_STATUSES } from "../../../constants/DATA";
 import * as appActions from "../../../redux/actions";
 import Counter from "../../molecules/Counter/Counter";
 import { SCREENS } from "../../../constants/SCREENS";
