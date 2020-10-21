@@ -41,10 +41,10 @@ const AccountActivityLog = props => {
               >
                 {renderImage(item.country)}
                 <View style={style.accountActionsLog2}>
-                  <CelText type="H5" weight="600">
+                  <CelText hideFromRecording type="H5" weight="600">
                     {item.ip}{" "}
                   </CelText>
-                  <CelText type="H6" weight="300">
+                  <CelText hideFromRecording type="H6" weight="300">
                     {item.country}{" "}
                   </CelText>
                 </View>

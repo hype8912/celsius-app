@@ -20,10 +20,10 @@ const LoginDevicesLog = props => {
             <View style={style.renderDevice}>
               <Icon name="Mobile" viewBox="0 0 29 29" fill="#737A82" />
               <View style={style.renderLeftSide}>
-                <CelText type="H5" weight="600">
+                <CelText hideFromRecording type="H5" weight="600">
                   {item.model}{" "}
                 </CelText>
-                <CelText type="H6" weight="300">
+                <CelText hideFromRecording type="H6" weight="300">
                   {item.city}{item.city && ', '}{item.country}
                 </CelText>
               </View>
