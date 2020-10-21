@@ -69,9 +69,9 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image: { uri: coinName.image_url },
-            title: `Only transfer Ripple (XRP) to this wallet`,
+            title: `Only transfer Ripple (XRP) to this wallet using its native blockchain.`,
             description:
-              "Sending any other asset to this address will result in a permanent loss of funds.",
+              "Sending any other digital asset to this specific address or using any third-party blockchain will result in permanent loss.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
@@ -79,7 +79,7 @@ class DepositInfoModal extends Component {
             image: { uri: coinName.image_url },
             title: "Destination Tag is required to transfer XRP",
             description:
-              "Sending funds without destination tag or with an incorrect one, will result in loss.",
+              "Sending any other digital asset to this specific address or using any third-party blockchain will result in permanent loss.",
             buttonText: "I Understand",
             onPress: () => actions.closeModal(),
           },
@@ -89,9 +89,9 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image: { uri: coinName.image_url },
-            title: `Only transfer Stellar (XLM) to this wallet`,
+            title: `Only transfer Stellar (XLM) to this wallet using its native blockchain.`,
             description:
-              "Sending any other asset to this address will result in a permanent loss of funds.",
+              "Sending any other digital asset to this specific address or using any third-party blockchain will result in permanent loss.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
@@ -109,9 +109,9 @@ class DepositInfoModal extends Component {
         steps = [
           {
             image: { uri: coinName.image_url },
-            title: `Only transfer EOS (EOS) to this wallet`,
+            title: `Only transfer EOS (EOS) to this wallet using its native blockchain.`,
             description:
-              "Sending any other asset to this address will result in a permanent loss of funds.",
+              "Sending any other digital asset to this specific address or using any third-party blockchain will result in permanent loss.",
             buttonText: "Continue",
             onPress: () => multiStepUtil.goToNextStep(),
           },
@@ -135,7 +135,7 @@ class DepositInfoModal extends Component {
     if (type === "USDT ERC20") {
       return {
         image: { uri: coinName.image_url },
-        title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
+        title: `Only transfer ${coinName.displayName} (${type}) to this wallet using its native blockchain.`,
         description:
           "Please ensure only Tether ERC20 tokens are transferred to this address. Sending coins other than USDT ERC20 to this address may result in the permanent loss of funds.",
         buttonText: "I Understand",
@@ -146,7 +146,7 @@ class DepositInfoModal extends Component {
     if (type === "MATIC") {
       return {
         image: { uri: coinName.image_url },
-        title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
+        title: `Only transfer ${coinName.displayName} (${type}) to this wallet using its native blockchain.`,
         description:
           "This address is only for MATIC ERC20 tokens. Sending other MATIC coins to this address may result in a permanent loss of funds.",
         buttonText: "I Understand",
@@ -156,9 +156,9 @@ class DepositInfoModal extends Component {
 
     return {
       image: { uri: coinName.image_url },
-      title: `Only transfer ${coinName.displayName} (${type}) to this wallet`,
+      title: `Only transfer ${coinName.displayName} (${type}) to this wallet using its native blockchain.`,
       description:
-        "Sending any other digital asset to this specific address will result in permanent loss.",
+        "Sending any other digital asset to this specific address or using any third-party blockchain will result in permanent loss.",
       buttonText: "I Understand",
       coinName,
     };
