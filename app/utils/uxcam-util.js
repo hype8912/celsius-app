@@ -3,6 +3,7 @@ import React from "react";
 import RNUxcam from "react-native-ux-cam";
 import Constants from "../../constants";
 import mixpanelAnalytics from "./mixpanel-analytics";
+import { isUserLoggedIn } from "./user-util/user-util";
 
 const { UXCAM_APP_KEY } = Constants;
 
@@ -19,6 +20,7 @@ async function initUxCam() {
 
 async function startRecording() {
   if (!UXCAM_APP_KEY && false) return;
+  if (!isUserLoggedIn()) return;
 
   try {
     await RNUxcam.startWithKey(UXCAM_APP_KEY);
