@@ -28,7 +28,7 @@ const TxCardSection = ({
             {formatter.crypto(coinAmount, coin.toUpperCase())}
           </CelText>
         )}
-        {amount && <CelText type="H6">{formatter.usd(amount)}</CelText>}
+        {amount && <CelText hideFromRecording type="H6">{formatter.usd(amount)}</CelText>}
       </View>
       {cardText && (
         <Card padding="20 10 20 10">
