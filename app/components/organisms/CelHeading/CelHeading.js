@@ -258,12 +258,19 @@ class CelHeading extends Component {
       return screenTitle;
     }
 
-    // if (activeScreen === "CoinDetails" && changeCoinDetailsHeader ) {
-    //   screenTitle = fromatter.usd(walletSummary.total_interest_earned);
-    //   return screenTitle
-    // }
-
     return title;
+  };
+
+  isTotalAmountVisible = ({ walletSummary, activeScreen, changeWalletHeader, changeInterestHeader }) => {
+    if ((activeScreen === SCREENS.WALLET_LANDING || activeScreen === SCREENS.BALANCE_HISTORY) && changeWalletHeader) {
+      return !!walletSummary;
+    }
+
+    if (activeScreen === SCREENS.WALLET_INTEREST && changeInterestHeader) {
+      return !!walletSummary;
+    }
+
+    return false;
   };
 
   getCenterContent = sceneProps => {
@@ -288,7 +295,7 @@ class CelHeading extends Component {
           </View>
         ) : (
           <View>
-            <CelText align="center" weight="medium" type="H3">
+            <CelText hideFromRecording={this.isTotalAmountVisible(this.props)} align="center" weight="medium" type="H3">
               {title || ""}
             </CelText>
           </View>

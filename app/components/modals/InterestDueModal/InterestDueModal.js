@@ -77,7 +77,7 @@ class InterestDueModal extends Component {
             loanAlert.id === loan.id &&
             loanAlert.type === LOAN_ALERTS.INTEREST_ALERT
         )
-      ).filter(loan => !loan.loanPaymentSettings.automatic_interest_payment)
+      ).filter(loan => loan.loanPaymentSettings && !loan.loanPaymentSettings.automatic_interest_payment)
       .sort((a, b) => a.id - b.id);
     const multipleAlerts = loansOverview.length > 1;
     if (multipleAlerts)
@@ -169,7 +169,7 @@ class InterestDueModal extends Component {
                   <CelText weight="light">{`${moment(installment.from).format(
                     "D MMM"
                   )} - ${moment(installment.to).format("D MMM")}`}</CelText>
-                  <CelText weight="light">
+                  <CelText hideFromRecording weight="light">
                     {formatter.usd(installment.amount)}
                   </CelText>
                 </View>

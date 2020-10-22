@@ -438,6 +438,7 @@ class FabMenuAnimated extends Component {
             style.fabButton,
             style.opacityCircle,
             backgroundColor,
+            style.shadowStyle,
             {
               transform: [{ scale: fabSpring }],
               opacity: fabOpacity,
@@ -447,7 +448,6 @@ class FabMenuAnimated extends Component {
         <Animated.View
           style={[
             buttonStyle,
-            style.shadowStyle,
             { transform: [{ scale: fabSpring }] },
           ]}
         >

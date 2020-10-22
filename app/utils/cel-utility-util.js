@@ -18,9 +18,8 @@ function isLosingTier(coin, newBalance) {
     min_for_tier: minForTier,
     tier,
   } = store.getState().loyalty.loyaltyInfo;
-
   const celRatio = calculateCelRatio(newBalance);
-  return celRatio < minForTier && tier.title !== "SILVER";
+  return celRatio < minForTier && tier.title !== "NONE";
 }
 
 /**

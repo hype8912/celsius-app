@@ -8,6 +8,15 @@ import { COLOR_KEYS } from "../constants/COLORS";
 const loanUtil = {
   mapLoan,
   emitLoanParams,
+  mapLoanAlerts,
+};
+
+function mapLoanAlerts(l) {
+  const newLoan = { ...l };
+  if (!newLoan.loanPaymentSettings){
+    newLoan.loanPaymentSettings = {}
+  }
+  return newLoan
 };
 
 function mapLoan(loan) {
@@ -15,6 +24,7 @@ function mapLoan(loan) {
   newLoan.uiProps = getLoanStatusDetails(loan);
   newLoan.uiSections = getLoanSections(loan);
   newLoan.amortization_table = flagPaidPayments(loan);
+
 
   if (newLoan.id) {
     newLoan.total_interest = Number(newLoan.total_interest).toFixed(2);
@@ -38,8 +48,10 @@ function mapLoan(loan) {
 
     newLoan.margin_call = getMarginCallParams(loan);
     newLoan.margin_call_activated = !!newLoan.margin_call;
+    if (!newLoan.loanPaymentSettings){
+      newLoan.loanPaymentSettings = {}
+    }
   }
-
   return newLoan;
 }
 

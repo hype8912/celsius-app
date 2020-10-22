@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import WebView from "react-native-webview";
+import RNUxcam from 'react-native-ux-cam';
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -149,6 +150,7 @@ class SimplexScreen extends Component {
         )}
 
         <WebView
+          ref= {view => RNUxcam.occludeSensitiveView(view)}
           style={{ opacity: webViewLoaded ? 1 : 0 }}
           onMessage={this.onMsg}
           javaScriptEnabled
