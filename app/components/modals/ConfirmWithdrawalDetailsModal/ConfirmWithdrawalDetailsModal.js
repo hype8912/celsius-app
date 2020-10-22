@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
@@ -176,7 +176,7 @@ class ConfirmWithdrawalDetailsModal extends Component {
         style={style.container}
         name={MODALS.CONFIRM_WITHDRAWAL_DETAILS_MODAL}
       >
-        <View style={{ paddingHorizontal: 20, flexWrap: "wrap" }}>
+        <ScrollView style={{ paddingHorizontal: 20, flexWrap: "wrap" }}>
           <View>
             <CelText
               align="center"
@@ -230,8 +230,10 @@ class ConfirmWithdrawalDetailsModal extends Component {
               </CelText>
             </View>
           </View>
-        </View>
-        <InfoBoxCmp />
+          <InfoBoxCmp />
+          <View style={{ height: 70 }}/>
+        </ScrollView>
+
         <View style={style.buttonsWrapper}>
           <CelModalButton
             margin="10 0 0 0"

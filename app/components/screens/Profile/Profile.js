@@ -172,7 +172,7 @@ class Profile extends Component {
                 resizeMethod="resize"
               />
             ) : (
-              <View style={style.emptyAvatarWrapper}>
+              <View>
                 <ThemedImage
                   style={style.emptyAvatar}
                   lightSource={require("../../../../assets/images/avatar-empty/avatar-empty-light.png")}

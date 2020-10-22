@@ -111,7 +111,7 @@ const CollateralLoanCard = ({ transaction, navigateTo }) => {
             <CelText color={color}>{status}</CelText>
           </View>
 
-          <CelText type="H2" align="center" weight="600" margin="10 0 10 0">
+          <CelText hideFromRecording type="H2" align="center" weight="600" margin="10 0 10 0">
             {formatter.crypto(
               transaction.loan_data.loan_amount,
               transaction.loan_data.loan_asset_short,

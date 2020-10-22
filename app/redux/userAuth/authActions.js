@@ -23,6 +23,7 @@ import userSecurityService from "../../services/user-security-service";
 import { getInitialCelsiusData } from "../generalData/generalDataActions";
 import { SCREENS } from "../../constants/SCREENS";
 import { STORAGE_KEYS } from "../../constants/DATA";
+import { startRecording } from "../../utils/uxcam-util";
 
 const { SECURITY_STORAGE_AUTH_KEY } = Constants;
 
@@ -66,6 +67,9 @@ function loginUser() {
       });
 
       await dispatch(getInitialCelsiusData());
+
+      startRecording();
+
       dispatch(resetToScreen(SCREENS.HOME));
     } catch (err) {
       dispatch(showMessage("error", err.msg));
@@ -105,6 +109,8 @@ function registerUser() {
         user: res.data.user,
         tokens: res.data.auth0,
       });
+
+      startRecording();
 
       dispatch(navigateTo(SCREENS.REGISTER_SET_PIN));
     } catch (err) {

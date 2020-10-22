@@ -525,7 +525,7 @@ function getLoanAlerts() {
 
       dispatch({
         type: ACTIONS.GET_LOAN_ALERTS_SUCCESS,
-        allLoans: alertsRes.data,
+        allLoans: alertsRes,
       });
       dispatch(checkForLoanAlerts());
     } catch (err) {

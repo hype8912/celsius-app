@@ -41,10 +41,10 @@ const base = {
   },
   image: {
     width: widthPercentageToDP("80%"),
-    marginLeft: -30,
+    marginRight: -36,
     transform: [
       {
-        translateY: heightPercentageToDP("60%"),
+        translateY: heightPercentageToDP("75%"),
       },
     ],
   },

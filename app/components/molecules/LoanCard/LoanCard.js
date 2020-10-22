@@ -146,7 +146,7 @@ class LoanCard extends Component {
               color={color}
             >{`${status} - #${transaction.loan_data.loan_number}`}</CelText>
           </View>
-          <CelText type="H2" align="left" weight="600">
+          <CelText hideFromRecording type="H2" align="left" weight="600">
             {formatter.crypto(data.interestAmount, data.loanAssetShort, {
               precision: 2,
             })}
@@ -173,7 +173,7 @@ class LoanCard extends Component {
               <CelText color={color}>{status}</CelText>
             </View>
 
-            <CelText type="H2" align="left" weight="600" margin="10 15 10 0">
+            <CelText hideFromRecording type="H2" align="left" weight="600" margin="10 15 10 0">
               {formatter.crypto(data.interestAmount, data.loanAssetShort, {
                 precision: 2,
               })}

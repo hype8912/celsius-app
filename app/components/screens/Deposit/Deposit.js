@@ -115,7 +115,7 @@ class Deposit extends Component {
     );
 
     return (
-      <View style={{ margin: 20 }}>
+      <View>
         <AdditionalAmountCard
           color={additional.color}
           additionalUsd={additional.usd}

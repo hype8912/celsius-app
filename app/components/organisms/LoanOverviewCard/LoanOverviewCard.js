@@ -144,7 +144,7 @@ class LoanOverviewCard extends Component {
                 </CelText>
               </View>
 
-              <CelText type={"H2"} weight={"600"} margin={"0 0 5 0"}>
+              <CelText hideFromRecording type={"H2"} weight={"600"} margin={"0 0 5 0"}>
                 {loan.uiProps.displayAmount}
               </CelText>
             </View>
@@ -296,7 +296,7 @@ class LoanOverviewCard extends Component {
                       <CelText type={"H6"} weight={"300"}>
                         Monthly interest
                       </CelText>
-                      <CelText type={"H3"} weight={"600"}>
+                      <CelText hideFromRecording type={"H3"} weight={"600"}>
                         {formatter.usd(loan.monthly_payment)}
                       </CelText>
                     </View>
@@ -304,7 +304,7 @@ class LoanOverviewCard extends Component {
                       <CelText type={"H6"} weight={"300"}>
                         Total interest
                       </CelText>
-                      <CelText type={"H3"} weight={"600"}>
+                      <CelText hideFromRecording type={"H3"} weight={"600"}>
                         {formatter.usd(loan.total_interest)}
                       </CelText>
                     </View>
@@ -325,7 +325,7 @@ class LoanOverviewCard extends Component {
                   size={"twoThirds"}
                   styles={{ alignSelf: "center" }}
                 >
-                  <CelText margin={"5 5 5 5"} type={"H6"} weight={"300"}>
+                  <CelText hideFromRecording margin={"5 5 5 5"} type={"H6"} weight={"300"}>
                     {`You could have saved ${formatter.fiat(
                       savedAmount,
                       "USD"

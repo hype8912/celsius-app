@@ -70,7 +70,7 @@ const WithdrawalAddressCard = ({
               ) : null}
             </View>
           </View>
-          <CelText margin="5 0 0 0" type="H6" weight="300">
+          <CelText hideFromRecording margin="5 0 0 0" type="H6" weight="300">
             {withdrawalAddress.address}
           </CelText>
           {renderWithdrawalAddressLabel()}

@@ -22,10 +22,6 @@ const base = {
     borderWidth: 4,
     borderColor: COLOR_KEYS.PRIMARY_BUTTON_FOREGROUND,
   },
-  emptyAvatarWrapper: {
-    borderColor: COLOR_KEYS.TOGGLE_ON_FOREGROUND,
-    borderWidth: 4,
-  },
   emptyAvatar: {
     width: 100,
     height: 100,

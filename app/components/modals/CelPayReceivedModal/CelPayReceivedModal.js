@@ -25,8 +25,8 @@ class CelPayReceivedModal extends Component {
   maskSenderName = () => {
     const { transfer } = this.props;
 
-    const names = transfer.from.name.split(" ")
-    names.map(n => formatter.hideTextExceptFirstNLetters(n))
+    let names = transfer.from.name.split(" ")
+    names = names.map(n => formatter.hideTextExceptFirstNLetters(n))
 
     return names.join(" ")
   }

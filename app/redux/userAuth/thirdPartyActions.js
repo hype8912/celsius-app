@@ -14,6 +14,7 @@ import userAuthService from "../../services/user-auth-service";
 import { getInitialCelsiusData } from "../generalData/generalDataActions";
 import { SCREENS } from "../../constants/SCREENS";
 import { STORAGE_KEYS } from "../../constants/DATA";
+import { startRecording } from "../../utils/uxcam-util";
 
 const { FACEBOOK_URL } = Constants;
 
@@ -387,6 +388,8 @@ function loginGoogle(googleUser) {
  * @param {string} token - auth token from social network
  */
 function loginSocialSuccess(network, token) {
+  startRecording();
+
   return async dispatch => {
     await setSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY, token);
 
@@ -408,6 +411,8 @@ function loginSocialSuccess(network, token) {
  * @param {string} user - registered user on Celsius
  */
 function registerSocialSuccess(network, token, user) {
+  startRecording();
+  
   return async dispatch => {
     await setSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY, token);
 
