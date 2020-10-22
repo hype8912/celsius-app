@@ -35,6 +35,11 @@ class InterestReminderModal extends Component {
   };
   static defaultProps = {};
 
+  componentDidMount = async () => {
+    const { actions, activeLoan } = this.props;
+    await actions.getLoanSettings(activeLoan.id)
+  }
+
   handleRequest = (hasEnough, coin, additionalCrypto, additionalUsd) => {
     const { navigateTo, activeLoan, loanAlerts } = this.props;
     if (hasEnough) {
@@ -58,7 +63,7 @@ class InterestReminderModal extends Component {
     const { activeLoan, closeModal, isSameDay, loanSettings } = this.props;
     const style = InterestReminderModalStyle();
     const payment = loanPaymentUtil.calculateAdditionalPayment(activeLoan);
-    if (!activeLoan || !activeLoan.installments_to_be_paid) return null;
+    if (!activeLoan || !activeLoan.installments_to_be_paid || !loanSettings) return null;
     const instalmentsToBePaid = activeLoan.installments_to_be_paid;
     const isDay = isSameDay.sevenDays || isSameDay.threeDays;
     const buttonTitle = payment.hasEnough ? "Pay Interest" : "Deposit More";
