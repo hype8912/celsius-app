@@ -17,6 +17,8 @@ import Separator from "../../atoms/Separator/Separator";
 import Card from "../../atoms/Card/Card";
 import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { KEYPAD_PURPOSES } from "../../../constants/UI";
+import BigNumber from "bignumber.js";
+import moment from "moment";
 
 let timeout;
 
@@ -47,6 +49,11 @@ class ExtendLoanScreen extends Component {
       },
       months: 6
     }
+  }
+
+  inc = (input) => {
+
+    return  input + 1
   }
 
   handleAmountChange = (newValue) => {
@@ -88,7 +95,8 @@ class ExtendLoanScreen extends Component {
     return formatter.crypto(usdValue / rate, coin, {precision: 2});
   };
 
-  decrement = () => {
+  decrementLoanIncrement = () => {
+    // add parameter
     const { months } = this.state;
     if (months === 6 ) return
     this.setState({
@@ -96,7 +104,8 @@ class ExtendLoanScreen extends Component {
     })
   };
 
-  increment = () => {
+  extendLoanIncrement = () => {
+    // parametar
     const { months } = this.state;
     if (months === 36 ) return
     this.setState({
@@ -130,28 +139,46 @@ class ExtendLoanScreen extends Component {
     actions.updateFormField("extendPeriod", `${months}`)
   }
 
+  calculateInterest = (loan) => {
+    const { months } = this.state;
+    const originatingDate = moment();
+    const maturityDate = originatingDate.clone().add(months, "month");
+    const loanTermInDays = maturityDate.diff(originatingDate, "days");
+    const additionalInterest = new BigNumber(loan.interest)
+      .dividedBy(365)
+      .multipliedBy(loanTermInDays)
+      .multipliedBy(loan.loan_amount)
+      .toNumber();
+    const monthlyInterest = additionalInterest / months;
+    const amountLeft = loan.amortization_table.filter(l => l.status === "DUE" && l.type === "monthly_interest" ).reduce((a,b) => {
+      return Number(a) + Number(b.amountToPay)}, 0)
+    const totalNewInterest = additionalInterest + amountLeft;
+
+    return {
+      totalNewInterest,
+      monthlyInterest,
+      additionalInterest
+    }
+  }
 
   render() {
     const {
       actions,
-      allLoans,
-      currencyRates,
-      navigation,
       formData
     } = this.props;
     const { activePeriod, months } = this.state;
+    const { allLoans, navigation, } = this.props;
+    const loanId = navigation.getParam("id");
+    const loan = allLoans.find(l => l.id === loanId);
     // const style = ExtendLoanScreenStyle();
 
     const predefinedAmount = [
       { label: `6 months`, value: "6" },
       { label: `36 months`, value: "36" },
     ];
+    const interest = this.calculateInterest(loan)
 
-    const loanId = navigation.getParam("id");
-    const loan = allLoans.find(l => l.id === loanId);
-    const coinRate = currencyRates[loan.coin_loan_asset.toLowerCase()];
-
-    const additionalInterest = this.calculateAdditionalInterest(Number(loan.monthly_payment * months), coinRate, loan.coin_loan_asset)
+    console.log(loan);
 
     return (
       <RegularLayout>
@@ -171,7 +198,7 @@ class ExtendLoanScreen extends Component {
               <CircleButton
                 icon={"Minus2"}
                 size={30}
-                onPress={() => this.decrement()}
+                onPress={() => this.decrementLoanIncrement()}
               />
               <View style={{alignItems: "center"}}>
                 <TouchableOpacity onPress={actions.toggleKeypad}>
@@ -186,16 +213,16 @@ class ExtendLoanScreen extends Component {
             <CircleButton
               icon={"Plus"}
               size={30}
-              onPress={() => this.increment()}
+              onPress={() => this.extendLoanIncrement()}
             />
           </View>
           <View>
             <Card size={"twoThirds"} color={COLOR_KEYS.BACKGROUND}>
-              <CelText type={"H6"}>{`Additional interest: ${formatter.crypto(loan.monthly_payment, loan.coin_loan_asset, {precision: 2})}`}</CelText>
+              <CelText type={"H6"}>{`Additional interest: ${formatter.crypto(interest.additionalInterest, loan.coin_loan_asset, { precision: 2} )}`}</CelText>
               <Separator margin={"10 0 10 0"}/>
-              <CelText type={"H6"}>{`New monthly interest:`}</CelText>
+              <CelText type={"H6"}>{`New monthly interest: ${formatter.crypto(interest.monthlyInterest, loan.coin_loan_asset, { precision: 2} )}`}</CelText>
               <Separator margin={"10 0 10 0"}/>
-              <CelText type={"H6"}>{`Total interest : ${additionalInterest}`}</CelText>
+              <CelText type={"H6"}>{`Total interest : ${formatter.crypto(interest.totalNewInterest, loan.coin_loan_asset, { precision: 2} )}`}</CelText>
             </Card>
 
           </View>
