@@ -121,4 +121,5 @@ export const SCREENS = {
   MARGIN_CALL_OVERVIEW_SCREEN: "MarginCallOverviewScreen",
   SINGLE_MARGIN_CALL_SCREEN: "SingleMarginCallScreen",
   EXTEND_LOAN: "ExtendLoanScreen",
+  CONFIRM_EXTEND_LOAN : "ConfirmExtendLoan",
 };
