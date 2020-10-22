@@ -10,3 +10,12 @@ describe("extendLoanIncrement()", () => {
     expect(result).toEqual(3)
   })
 })
+
+
+describe("extendLoanCalculateInterest", () => {
+  it("should return total new interest, monthly interest, additional interest", () => {
+    const wrapper = shallow(<ExtendLoanScreen />);
+    const result = wrapper.extendLoanIncrement()
+    expect(result).toEqual()
+  })
+})
