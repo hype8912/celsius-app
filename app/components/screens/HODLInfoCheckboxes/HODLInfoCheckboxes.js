@@ -17,7 +17,6 @@ import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
-    theme: state.user.appSettings.theme,
     formData: state.forms.formData,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })

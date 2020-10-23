@@ -18,9 +18,7 @@ import CoinIconStories from "./CoinIcon/CoinIcon.stories";
 import CoinSwitchStories from "./CoinSwitch/CoinSwitch.stories";
 import ContactRowStories from "./ContactRow/ContactRow.stories";
 import ContactSupportStories from "./ContactSupport/ContactSupport.stories";
-import DotsBarStories from "./DotsBar/DotsBar.stories";
 import EmptyStateStories from "./EmptyState/EmptyState.stories";
-import HeadingProgressBarStories from "./HeadingProgressBar/HeadingProgressBar.stories";
 import HiddenFieldStories from "./HiddenField/HiddenField.stories";
 import HorizontalSliderStories from "./HorizontalSlider/HorizontalSlider.stories";
 import IconStories from "./Icon/Icon.stories";
@@ -65,9 +63,7 @@ storiesOf("Atoms", module)
   .add("CoinSwitch", CoinSwitchStories)
   .add("ContactRow", ContactRowStories)
   .add("ContactSupport", ContactSupportStories)
-  .add("DotsBar", DotsBarStories)
   .add("EmptyState", EmptyStateStories)
-  .add("HeadingProgressBar", HeadingProgressBarStories)
   .add("HiddenField", HiddenFieldStories)
   .add("HorizontalSlider", HorizontalSliderStories)
   .add("Icon", IconStories)

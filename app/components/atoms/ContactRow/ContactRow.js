@@ -20,6 +20,7 @@ class ContactRow extends Component {
       network: PropTypes.string,
     }).isRequired,
     hasApp: PropTypes.bool,
+    onPress: PropTypes.func,
   };
 
   static defaultProps = {

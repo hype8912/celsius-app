@@ -10,9 +10,7 @@ import {
   getColor,
   getScaledFont,
   getFontSize,
-  getTheme,
 } from "../../../utils/styles-util";
-import Spinner from "../Spinner/Spinner";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const CoinSwitch = props => {
@@ -24,8 +22,6 @@ const CoinSwitch = props => {
     coin,
     amountColor,
     doubleTilde,
-    lowerSpinner,
-    theme: inheritTheme,
   } = props;
 
   // `$ ${amountUsd || '0.00'}` format a number to $ 21.32 or set default value as 0.00
@@ -36,8 +32,7 @@ const CoinSwitch = props => {
     ? `$ ${amountUsd || "0.00"} USD`
     : `${formatter.getEllipsisAmount(amountCrypto || "0.00", -5)} ${coin}`;
 
-  const theme = inheritTheme || getTheme();
-  const style = CoinSwitchStyle(theme);
+  const style = CoinSwitchStyle();
 
   return (
     <View style={style.container}>
@@ -80,18 +75,15 @@ const CoinSwitch = props => {
               alignItems: "center",
             }}
           >
-            {lowerSpinner ? (
-              <Spinner size={30} />
-            ) : (
-              <CelText
-                align="center"
-                type="H2"
-                color={getColor(COLOR_KEYS.PARAGRAPH)}
-                size={getFontSize("H2") - lowerValue.length / 2}
-              >
-                {doubleTilde && "≈"} {lowerValue}
-              </CelText>
-            )}
+            <CelText
+              align="center"
+              type="H2"
+              color={getColor(COLOR_KEYS.PARAGRAPH)}
+              size={getFontSize("H2") - lowerValue.length / 2}
+            >
+              {doubleTilde && "≈"} {lowerValue}
+            </CelText>
+
           </View>
         </View>
       ) : (
@@ -156,7 +148,6 @@ CoinSwitch.propTypes = {
   coin: PropTypes.string,
   amountColor: PropTypes.string,
   theme: PropTypes.string,
-  lowerSpinner: PropTypes.bool,
 };
 
 export default CoinSwitch;

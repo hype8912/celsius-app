@@ -21,7 +21,6 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
-    theme: state.user.appSettings.theme,
     formData: state.forms.formData,
     hodlCode: state.hodl.hodlCode,
     callsInProgress: state.api.callsInProgress,

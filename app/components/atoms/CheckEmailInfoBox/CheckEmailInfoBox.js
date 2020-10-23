@@ -12,8 +12,8 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
 
 const CheckEmailInfoBox = props => {
-  const style = CheckEmailInfoBoxStyle(props.theme);
-
+  const style = CheckEmailInfoBoxStyle();
+  const { infoText } = props
   return (
     <View style={style.container}>
       <InfoBox
@@ -30,7 +30,7 @@ const CheckEmailInfoBox = props => {
             />
           </View>
           <CelText color={"white"} margin={"0 20 0 10"}>
-            {props.infoText}
+            {infoText}
           </CelText>
         </View>
 

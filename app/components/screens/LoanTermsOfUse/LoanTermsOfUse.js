@@ -29,7 +29,6 @@ import { SCREENS } from "../../../constants/SCREENS";
     formData: state.forms.formData,
     loanTermsOfUse: state.generalData.loanTermsOfUse,
     pdf: state.generalData.pdf,
-    theme: state.user.appSettings.theme,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
