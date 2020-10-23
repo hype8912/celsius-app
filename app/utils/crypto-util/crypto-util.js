@@ -131,6 +131,9 @@ export function getBlockExplorerLink(transaction) {
     case "snx":
     case "kcn":
     case "matic":
+    case "uni":
+    case "uma":
+    case "mana":
       return {
         link: BLOCKEXPLORERS.eth && `${BLOCKEXPLORERS.eth}${tId}`,
         text: BLOCKEXPLORER_NAME.ERC20,
