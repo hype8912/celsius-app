@@ -50,10 +50,10 @@ class CelButton extends Component {
     buttonStyles.push(getMargins(margin));
     if (color) buttonStyles.push(style[`${color}Button`]);
     if (disabled) buttonStyles.push(style.disabledButton);
-    if (basic) buttonStyles.push(style.basicButton);
     if (ghost) buttonStyles.push(style.ghostButton);
     if (ghost && color) buttonStyles.push(style[`ghost${color}Button`]);
     if (basic && color) buttonStyles.push(style[`basic${color}Button`]);
+    if (basic) buttonStyles.push(style.basicButton);
     return buttonStyles;
   };
 
@@ -124,7 +124,6 @@ class CelButton extends Component {
     const style = CelButtonStyle(theme);
     const buttonStyle = this.getButtonStyle(style);
     const titleStyle = this.getTitleStyle(style);
-
     // extracting color from styles array
     let spinnerColor = "white";
     titleStyle.forEach(ts => {
@@ -143,7 +142,6 @@ class CelButton extends Component {
     const celBtnStyle = CelButtonStyle(theme);
     const buttonStyle = this.getButtonStyle(celBtnStyle);
     const titleStyle = this.getTitleStyle(celBtnStyle);
-
     return (
       <View style={[buttonStyle, style]}>
         {!!children && (

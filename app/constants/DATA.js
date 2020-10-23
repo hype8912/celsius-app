@@ -29,7 +29,7 @@ const BLOCKEXPLORERS_STAGING = {
   bsv: "https://testnet.bitcoincloud.net/tx/",
 };
 const BLOCKEXPLORERS_PRODUCTION = {
-  btc: "https://blockexplorer.com/tx/",
+  btc: "https://blockchain.com/btc/tx/",
   zec: "https://explorer.testnet.z.cash/tx/",
   bch: "https://www.blockchain.com/bch/tx/",
   ltc: "https://chainz.cryptoid.info/ltc/tx.dws?",
