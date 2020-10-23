@@ -36,8 +36,9 @@ class ConfirmExtendLoan extends Component {
   static defaultProps = {}
 
   static navigationOptions = () => ({
-    title: "ConfirmExtendLoan Screen",
-    right: "profile"
+    title: "Confirm Extend Loan",
+    right: "profile",
+    customCenterComponent: {steps: 3, currentStep: 2, flowProgress: true}
   });
 
   componentDidMount = async () => {
@@ -550,7 +551,7 @@ class ConfirmExtendLoan extends Component {
           </Card>
 
           <CelButton
-            onPress={() => actions.navigateTo(SCREENS.LOAN_TERMS_OF_USE)}
+            onPress={() => actions.navigateTo(SCREENS.LOAN_TERMS_OF_USE, {extend: true})}
             margin="22 0 0 0"
           >
             Continue

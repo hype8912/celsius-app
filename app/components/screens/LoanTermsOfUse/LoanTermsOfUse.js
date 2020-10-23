@@ -23,6 +23,8 @@ import {
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
 
 @connect(
   state => ({
@@ -30,14 +32,18 @@ import { SCREENS } from "../../../constants/SCREENS";
     loanTermsOfUse: state.generalData.loanTermsOfUse,
     pdf: state.generalData.pdf,
     theme: state.user.appSettings.theme,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class LoanTermsOfUse extends Component {
-  static navigationOptions = () => ({
-    title: "Terms and Conditions",
-    customCenterComponent: { steps: 8, currentStep: 8, flowProgress: true },
-  });
+    static navigationOptions = ({navigation}) => {
+      const extend = navigation.getParam("extend")
+    return {
+      title: "Terms and Conditions",
+      customCenterComponent: extend ? {steps: 3, currentStep: 3, flowProgress: true} : { steps: 8, currentStep: 8, flowProgress: true },
+    }
+  };
 
   componentDidMount() {
     const { actions } = this.props;
@@ -91,19 +97,32 @@ class LoanTermsOfUse extends Component {
   };
 
   continue = () => {
-    const { actions } = this.props;
+    const { actions, formData, navigation } = this.props;
+    const extend = navigation.getParam("extend");
     mixpanelAnalytics.loanToUAgreed();
 
+    console.log(formData.loanId, formData.termOfLoan);
+
+    if (extend) {
+      return actions.extendLoan(formData.loanId, Number(formData.term_of_loan))
+    }
     actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () => actions.applyForALoan(),
     });
   };
 
   render() {
-    const { formData, pdf, actions, loanTermsOfUse } = this.props;
+    const { formData, pdf, actions, loanTermsOfUse, navigation, callsInProgress } = this.props;
     const styles = LoanTermsOfUseStyle();
+    const extend = navigation.getParam("extend");
 
     if (!loanTermsOfUse || !pdf) return <LoadingScreen />;
+    // API.APPLY_FOR_LOAN
+    const isLoading =
+      apiUtil.areCallsInProgress(
+        [API.EXTEND_LOAN],
+        callsInProgress
+      );
 
     const {
       introSection,
@@ -136,6 +155,8 @@ class LoanTermsOfUse extends Component {
         lineHeight: 40,
       },
     };
+
+    const buttonText = extend ? "Extend Loan" : "Request Loan"
 
     return (
       <RegularLayout fabType={"hide"} padding="0 0 100 0">
@@ -201,8 +222,9 @@ class LoanTermsOfUse extends Component {
           onPress={this.continue}
           style={styles.requestButton}
           disabled={!canContinue}
+          loading={isLoading}
         >
-          Request loan
+          {buttonText}
         </CelButton>
       </RegularLayout>
     );

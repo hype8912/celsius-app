@@ -40,6 +40,7 @@ class ExtendLoanScreen extends Component {
   static navigationOptions = () => ({
     title: "Extend Loan",
     right: "profile",
+    customCenterComponent: {steps: 3, currentStep: 1, flowProgress: true}
   });
 
   constructor(props) {
@@ -91,8 +92,6 @@ class ExtendLoanScreen extends Component {
     } else {
       value = newValue
     }
-
-    actions.updateFormField("term_of_loan", value);
     this.setState({ months: Number(value) });
   };
 
@@ -150,6 +149,7 @@ class ExtendLoanScreen extends Component {
       bankInfo: bankAccountInfo.id ? bankAccountInfo.id : undefined,
       coin: loan.coin_loan_asset,
       loanType: loan.coin_loan_asset !== "USD" ? "STABLE_COIN_LOAN" : "USD_LOAN",
+      loanId: loan.id
     });
     actions.navigateTo(SCREENS.CONFIRM_EXTEND_LOAN, { newTotal })
   }
@@ -186,12 +186,17 @@ class ExtendLoanScreen extends Component {
     const loanId = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === loanId);
     // const style = ExtendLoanScreenStyle();
+    let disabled = false;
 
     const predefinedAmount = [
       { label: `6 months`, value: "6" },
       { label: `36 months`, value: "36" },
     ];
     const interest = this.extendLoanCalculateInterest(loan)
+
+    if (months < 6 || months > 36) {
+      disabled = true
+    }
 
     return (
       <RegularLayout>
@@ -246,6 +251,7 @@ class ExtendLoanScreen extends Component {
               margin={"30 0 0 0"}
               iconRight={"IconArrowRight"}
               iconRightWidth={20}
+              disabled={disabled}
             >
               Confirm
             </CelButton>
