@@ -583,7 +583,6 @@ function extendLoan(id, numberOfMonths) {
     dispatch(startApiCall(API.EXTEND_LOAN));
     try {
       await loansService.extendLoan(id, numberOfMonths);
-      getAllLoans();
       dispatch(navigateTo(SCREENS.BORROW_LANDING));
       dispatch(
         showMessage(
@@ -591,6 +590,7 @@ function extendLoan(id, numberOfMonths) {
           `You have successfully extended loan for additional ${numberOfMonths} months`
         )
       );
+      dispatch(getAllLoans())
       dispatch({ type: ACTIONS.EXTEND_LOAN_SUCCESS });
     } catch (err) {
       dispatch(showMessage("error", err.msg));

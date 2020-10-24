@@ -101,10 +101,8 @@ class LoanTermsOfUse extends Component {
     const extend = navigation.getParam("extend");
     mixpanelAnalytics.loanToUAgreed();
 
-    console.log(formData.loanId, formData.termOfLoan);
-
     if (extend) {
-      return actions.extendLoan(formData.loanId, Number(formData.term_of_loan))
+      return actions.extendLoan(formData.loanId, formData.termOfLoan)
     }
     actions.navigateTo(SCREENS.VERIFY_PROFILE, {
       onSuccess: () => actions.applyForALoan(),
