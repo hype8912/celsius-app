@@ -118,11 +118,6 @@ const KEYPAD_PURPOSES = {
   BUY_COINS: "BUY_COINS",
 };
 
-const PHONES_WITH_CUSTOM_KEYPAD = [
-  "iPhone X",
-  // 'Simulator',
-];
-
 const HIGHLIGHTED_COUNTRIES = [
   "Canada",
   "Germany",
@@ -316,7 +311,6 @@ export {
   THEMES,
   EMPTY_STATES,
   KEYPAD_PURPOSES,
-  PHONES_WITH_CUSTOM_KEYPAD,
   HIGHLIGHTED_COUNTRIES,
   FAB_TYPE,
   WALLET_LANDING_VIEW_TYPES,

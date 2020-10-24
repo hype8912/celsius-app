@@ -1,64 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import DeviceInfo from "react-native-device-info";
-import { View, TouchableOpacity, TextInput } from "react-native";
+import { TextInput } from "react-native";
 import { withNavigationFocus } from "react-navigation";
 
-import CelNumpadStyle from "./CelNumpad.styles";
-import CelText from "../../atoms/CelText/CelText";
 import {
   KEYBOARD_TYPE,
   KEYPAD_PURPOSES,
-  PHONES_WITH_CUSTOM_KEYPAD,
 } from "../../../constants/UI";
-import Icon from "../../atoms/Icon/Icon";
-import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 import Constants from "../../../../constants";
 
 const { STORYBOOK } = Constants;
 
-const BUTTONS = {
-  [KEYPAD_PURPOSES.WITHDRAW]: [
-    ["1", "2", "3"],
-    ["4", "5", "6"],
-    ["7", "8", "9"],
-    [".", "0", "<"],
-  ],
-  [KEYPAD_PURPOSES.CELPAY]: [
-    ["1", "2", "3"],
-    ["4", "5", "6"],
-    ["7", "8", "9"],
-    [".", "0", "<"],
-  ],
-  [KEYPAD_PURPOSES.VERIFICATION]: [
-    ["1", "2", "3"],
-    ["4", "5", "6"],
-    ["7", "8", "9"],
-    ["", "0", "<"],
-  ],
-  [KEYPAD_PURPOSES.AMOUNT]: [
-    ["1", "2", "3"],
-    ["4", "5", "6"],
-    ["7", "8", "9"],
-    [".", "0", "<"],
-  ],
-  [KEYPAD_PURPOSES.BORROW]: [
-    ["1", "2", "3"],
-    ["4", "5", "6"],
-    ["7", "8", "9"],
-    ["", "0", "<"],
-  ],
-  [KEYPAD_PURPOSES.BUY_COINS]: [
-    ["1", "2", "3"],
-    ["4", "5", "6"],
-    ["7", "8", "9"],
-    [".", "0", "<"],
-  ],
-};
-
-const deviceModel = DeviceInfo.getModel();
-const shouldShowCustomKeypad = PHONES_WITH_CUSTOM_KEYPAD.includes(deviceModel);
 
 const KEYBOARDS = {
   [KEYPAD_PURPOSES.WITHDRAW]: KEYBOARD_TYPE.NUMERIC,
@@ -161,44 +113,8 @@ class CelNumpad extends Component {
 
   render() {
     const { purpose, value, isFocused, autofocus, editable } = this.props;
-    const style = CelNumpadStyle();
-    const buttons = BUTTONS[purpose];
 
     if (!isFocused) return null;
-
-    if (
-      shouldShowCustomKeypad &&
-      purpose !== KEYPAD_PURPOSES.INTEREST_CALCULATOR
-    ) {
-      return (
-        <View style={style.container}>
-          <View style={style.buttonsWrapper}>
-            {buttons.map(btns => (
-              <View key={btns[0]} style={style.buttonsRow}>
-                {btns.map(btn => (
-                  <TouchableOpacity
-                    key={btn}
-                    style={style.button}
-                    onPress={() => this.pressButton(btn)}
-                  >
-                    {btn === "<" ? (
-                      <Icon
-                        name="Backspace"
-                        fill={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
-                        width="32"
-                        style={{ marginTop: 10 }}
-                      />
-                    ) : (
-                      <CelText type="H0">{btn}</CelText>
-                    )}
-                  </TouchableOpacity>
-                ))}
-              </View>
-            ))}
-          </View>
-        </View>
-      );
-    }
 
     return (
       <TextInput

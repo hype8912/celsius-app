@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, TextInput } from "react-native";
 import { BigNumber } from "bignumber.js";
 
 import { connect } from "react-redux";
@@ -9,8 +9,6 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { KEYPAD_PURPOSES } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { getColor, getPadding } from "../../../utils/styles-util";
@@ -20,6 +18,7 @@ import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
+import { STORYBOOK } from "../../../../celsius-app-creds/beta-storybook/constants";
 
 let timeout;
 
@@ -79,7 +78,7 @@ class BorrowEnterAmount extends Component {
       }, new BigNumber(0).toNumber()) / 2;
 
     props.actions.initForm({
-      loanAmount: minimumLoanAmount,
+      loanAmount: Number(minimumLoanAmount),
       maxAmount,
       coin: formData.coin,
       loanType: formData.loanType,
@@ -203,7 +202,6 @@ class BorrowEnterAmount extends Component {
       },
     ];
     const CoinIcon = this.renderCoinIcon;
-
     return (
       <RegularLayout padding="0 0 0 0" fabType={"hide"}>
         <View
@@ -240,17 +238,33 @@ class BorrowEnterAmount extends Component {
                 <View style={styles.coinIconWrapper}>
                   <CoinIcon />
                 </View>
-                <CelText
-                  color={this.getAmountColor()}
-                  type="H1"
-                  weight="regular"
-                  align="center"
+                <TextInput
+                  style={{
+                    borderRadius: 8,
+                    flex: 1,
+                    fontSize: 35,
+                    fontWeight: "600",
+                    color: getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                  }}
+                  textAlign={"center"}
+                  allowFontScaling
+                  keyboardType={"decimal-pad"}
+                  autoFocus={STORYBOOK}
+                  onChangeText={amount => actions.updateFormField("loanAmount", formatter.commaToDot(amount))}
                 >
-                  {formatter.usd(formData.loanAmount, {
-                    code: "",
-                    precision: 0,
-                  })}
-                </CelText>
+                  {formData.loanAmount}
+                </TextInput>
+                {/* <CelText*/}
+                {/*  color={this.getAmountColor()}*/}
+                {/*  type="H1"*/}
+                {/*  weight="regular"*/}
+                {/*  align="center"*/}
+                {/* >*/}
+                {/*  {formatter.usd(formData.loanAmount, {*/}
+                {/*    code: "",*/}
+                {/*    precision: 0,*/}
+                {/*  })}*/}
+                {/* </CelText>*/}
                 <View style={styles.coinTextWrapper}>
                   <CelText color={getColor(COLOR_KEYS.PARAGRAPH)} type="H3">
                     {formData.coin}
@@ -275,17 +289,6 @@ class BorrowEnterAmount extends Component {
           </Card> */}
 
           {this.renderButton()}
-
-          <CelNumpad
-            autofocus={false}
-            toggleKeypad={actions.toggleKeypad}
-            field={"loanAmount"}
-            value={formData.loanAmount || ""}
-            updateFormField={actions.updateFormField}
-            setKeypadInput={actions.setKeypadInput}
-            onPress={this.handleAmountChange}
-            purpose={KEYPAD_PURPOSES.BORROW}
-          />
         </View>
       </RegularLayout>
     );

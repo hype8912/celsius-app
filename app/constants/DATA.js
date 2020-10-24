@@ -227,7 +227,7 @@ const CONTACT_NETWORK = {
   TWITTER: "Twitter",
 };
 
-const PREDIFINED_AMOUNTS = [
+const PREDEFINED_AMOUNTS = [
   { label: "$20", value: "20" },
   { label: "$50", value: "50" },
   { label: "$100", value: "100" },
@@ -527,7 +527,7 @@ export {
   TRANSFER_STATUSES,
   TRANSACTION_TYPES,
   CONTACT_NETWORK,
-  PREDIFINED_AMOUNTS,
+  PREDEFINED_AMOUNTS,
   BANK_ACCOUNT_TYPE,
   LOAN_STATUS,
   LOAN_TYPES,

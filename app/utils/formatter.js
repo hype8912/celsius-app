@@ -19,6 +19,7 @@ export default {
   hideTextExceptFirstNLetters,
   maskEmail,
   fiat,
+  commaToDot,
 };
 
 /**
@@ -341,4 +342,20 @@ function maskEmail(email) {
   )}@${hideTextExceptFirstNLetters(splitedEmailProvider[0])}.${
     splitedEmailProvider[1]
   }`;
+}
+
+/**
+ * Changes comma to dot
+ *
+ * @param {number | string} value
+ * @returns {string}
+ */
+function commaToDot(value) {
+  let newValue;
+  if (value.includes(".") && value.includes(",")) {
+    newValue = value;
+  } else {
+    newValue = value.replace(",", ".");
+  }
+  return newValue
 }
