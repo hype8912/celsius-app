@@ -280,7 +280,7 @@ class CelPayEnterAmount extends Component {
   navigateToNextStep = () => {
     const { actions, formData, navigation } = this.props;
     const celPayType = navigation.getParam("celPayType");
-
+    console.log("formData: ", formData);
     if (celPayType === CEL_PAY_TYPES.FRIEND) {
       actions.navigateTo(SCREENS.CEL_PAY_CHOOSE_FRIEND);
     } else {

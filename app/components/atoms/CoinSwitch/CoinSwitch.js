@@ -1,3 +1,5 @@
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, TouchableOpacity, TextInput } from "react-native";
@@ -17,8 +19,16 @@ import { KEYBOARD_TYPE } from "../../../constants/UI";
 import { STORYBOOK } from "../../../../celsius-app-creds/beta-storybook/constants";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { PREDEFINED_AMOUNTS } from "../../../constants/DATA";
+import * as appActions from "../../../redux/actions";
 
-
+@connect(
+  state => ({
+    formData: state.forms.formData,
+    walletSummary: state.wallet.summary,
+    currencyRatesShort: state.currencies.currencyRatesShort,
+  }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
+)
 
 class CoinSwitch extends Component {
   static propTypes = {
@@ -44,35 +54,50 @@ class CoinSwitch extends Component {
       const amountCrypto  = new BigNumber(amount).dividedBy(coinRate)
       updateFormFields({
         "amountUsd": formatter.amountInputFieldFormat(amount),
-        "amountCrypto": amountCrypto
+        "amountCrypto": amountCrypto.toString()
       })
     } else {
       const amountUsd  = new BigNumber(amount).multipliedBy(coinRate)
       updateFormFields({
         "amountCrypto": formatter.amountInputFieldFormat(amount),
-        "amountUsd": amountUsd
+        "amountUsd": amountUsd.toString()
       })
     }
   }
 
   onPressPredefinedAmount = ({ label, value }) => {
     const { formData, walletSummary, currencyRatesShort, actions } = this.props;
-    let amount;
 
     const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
     const walletSummaryObj = walletSummary.coins.find(
       c => c.short === formData.coin.toUpperCase()
     );
-
     if (label === "ALL") {
-      amount = formData.isUsd
-        ? walletSummaryObj.amount_usd.toString()
-        : walletSummaryObj.amount;
-    } else {
-      amount = formData.isUsd ? value : (Number(value) / coinRate).toString();
+      if (formData.isUsd) {
+        actions.updateFormFields({
+          "amountUsd": walletSummaryObj.amount_usd.toString(),
+          "amountCrypto": walletSummaryObj.amount_usd.dividedBy(coinRate).toString()
+      })
+      } else {
+        actions.updateFormFields({
+          "amountCrypto": walletSummaryObj.amount.toString(),
+          "amountUsd": walletSummaryObj.amount.multipliedBy(coinRate).toString()
+        })
+      }
+      return
     }
-    this.handleAmountChange(amount, { label, value });
-    actions.toggleKeypad(false);
+
+    if (formData.isUsd) {
+      actions.updateFormFields({
+        "amountUsd": value,
+        "amountCrypto": new BigNumber(value).dividedBy(coinRate).toString()
+      })
+    } else {
+      actions.updateFormFields({
+        "amountCrypto": new BigNumber(value).dividedBy(coinRate).toString(),
+        "amountUsd": value,
+      })
+    }
   };
 
   render() {
@@ -85,11 +110,11 @@ class CoinSwitch extends Component {
       updateFormField
     } = this.props;
     const upperValue = isUsd
-      ? `${amountUsd.toString() || ""}`
-      : amountCrypto.toString() || ""
+      ? `${amountUsd || ""}`
+      : amountCrypto || ""
     const lowerValue = !isUsd
-      ? `${amountUsd.toString() || ""} USD`
-      : `${amountCrypto.toString() || ""} ${coin}`;
+      ? `${amountUsd || ""} USD`
+      : `${amountCrypto || ""} ${coin}`;
 
     console.log("lowerValue", lowerValue);
     console.log("amountUsd: ", amountUsd.toString());
@@ -130,7 +155,6 @@ class CoinSwitch extends Component {
                     fontWeight: "600",
                     color: getColor(COLOR_KEYS.PRIMARY_BUTTON)
                   }}
-                  editable={!(upperValue.length > 3)}
                   placeholderTextColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                   placeholder={"0.00"}
                   textAlign={"center"}
@@ -176,7 +200,7 @@ class CoinSwitch extends Component {
             <PredefinedAmounts
               data={PREDEFINED_AMOUNTS}
               onSelect={this.onPressPredefinedAmount}
-              // activePeriod={activePeriod}
+              activePeriod={"activePeriod"}
             />
         </View>
 
