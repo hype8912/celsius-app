@@ -254,17 +254,6 @@ class BorrowEnterAmount extends Component {
                 >
                   {formData.loanAmount}
                 </TextInput>
-                {/* <CelText*/}
-                {/*  color={this.getAmountColor()}*/}
-                {/*  type="H1"*/}
-                {/*  weight="regular"*/}
-                {/*  align="center"*/}
-                {/* >*/}
-                {/*  {formatter.usd(formData.loanAmount, {*/}
-                {/*    code: "",*/}
-                {/*    precision: 0,*/}
-                {/*  })}*/}
-                {/* </CelText>*/}
                 <View style={styles.coinTextWrapper}>
                   <CelText color={getColor(COLOR_KEYS.PARAGRAPH)} type="H3">
                     {formData.coin}

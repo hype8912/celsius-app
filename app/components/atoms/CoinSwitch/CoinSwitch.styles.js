@@ -3,6 +3,9 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
   container: {
+    flex: 1,
+  },
+  enterAmount: {
     marginBottom: 10,
     flexDirection: "row",
     justifyContent: "space-between",

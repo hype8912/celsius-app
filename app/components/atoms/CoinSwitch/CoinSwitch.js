@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, TextInput } from "react-native";
+import BigNumber from "bignumber.js";
 
 import CoinSwitchStyle from "./CoinSwitch.styles";
 import CelText from "../CelText/CelText";
@@ -12,142 +13,175 @@ import {
   getFontSize,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import { KEYBOARD_TYPE } from "../../../constants/UI";
+import { STORYBOOK } from "../../../../celsius-app-creds/beta-storybook/constants";
+import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
+import { PREDEFINED_AMOUNTS } from "../../../constants/DATA";
 
-const CoinSwitch = props => {
-  const {
-    isUsd,
-    amountUsd,
-    amountCrypto,
-    updateFormField,
-    coin,
-    amountColor,
-    doubleTilde,
-  } = props;
 
-  // `$ ${amountUsd || '0.00'}` format a number to $ 21.32 or set default value as 0.00
-  const upperValue = isUsd
-    ? `$ ${amountUsd || "0.00"}`
-    : `${formatter.getEllipsisAmount(amountCrypto || "0.00", -5)}`;
-  const lowerValue = !isUsd
-    ? `$ ${amountUsd || "0.00"} USD`
-    : `${formatter.getEllipsisAmount(amountCrypto || "0.00", -5)} ${coin}`;
 
-  const style = CoinSwitchStyle();
+class CoinSwitch extends Component {
+  static propTypes = {
+    isUsd: PropTypes.bool,
+    noUsdDecimals: PropTypes.bool,
+    amountUsd: PropTypes.string,
+    amountCrypto: PropTypes.string,
+    updateFormFields: PropTypes.func.isRequired,
+    onAmountPress: PropTypes.func,
+    coin: PropTypes.string,
+    amountColor: PropTypes.string,
+    theme: PropTypes.string,
+    coinRate: PropTypes.number
+  }
 
-  return (
-    <View style={style.container}>
-      {!isUsd ? (
-        <Icon
-          name={`Icon${coin}`}
-          width="40"
-          height="40"
-          fill={COLOR_KEYS.HEADLINE}
-          style={{ marginBottom: 28 }}
-        />
-      ) : (
-        <View style={{ width: 40 }} />
-      )}
-      {props.onAmountPress ? (
-        <View>
-          <TouchableOpacity disabled={!coin} onPress={props.onAmountPress}>
-            <View
-              style={{
-                height: getScaledFont(getFontSize("H1")),
-                justifyContent: "center",
-                marginVertical: 10,
-              }}
-            >
-              <CelText
-                align="center"
-                type="H1"
-                weight="regular"
-                size={getFontSize("H1") - upperValue.length}
-                color={amountColor}
+  handleEnteringAmount = (amount) => {
+    const {
+      isUsd,
+      updateFormFields,
+      coinRate,
+    } = this.props
+    if (isUsd) {
+      const amountCrypto  = new BigNumber(amount).dividedBy(coinRate)
+      updateFormFields({
+        "amountUsd": formatter.amountInputFieldFormat(amount),
+        "amountCrypto": amountCrypto
+      })
+    } else {
+      const amountUsd  = new BigNumber(amount).multipliedBy(coinRate)
+      updateFormFields({
+        "amountCrypto": formatter.amountInputFieldFormat(amount),
+        "amountUsd": amountUsd
+      })
+    }
+  }
+
+  onPressPredefinedAmount = ({ label, value }) => {
+    const { formData, walletSummary, currencyRatesShort, actions } = this.props;
+    let amount;
+
+    const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
+    const walletSummaryObj = walletSummary.coins.find(
+      c => c.short === formData.coin.toUpperCase()
+    );
+
+    if (label === "ALL") {
+      amount = formData.isUsd
+        ? walletSummaryObj.amount_usd.toString()
+        : walletSummaryObj.amount;
+    } else {
+      amount = formData.isUsd ? value : (Number(value) / coinRate).toString();
+    }
+    this.handleAmountChange(amount, { label, value });
+    actions.toggleKeypad(false);
+  };
+
+  render() {
+    const {
+      coin,
+      isUsd,
+      amountUsd,
+      amountCrypto,
+      doubleTilde,
+      updateFormField
+    } = this.props;
+    const upperValue = isUsd
+      ? `${amountUsd.toString() || ""}`
+      : amountCrypto.toString() || ""
+    const lowerValue = !isUsd
+      ? `${amountUsd.toString() || ""} USD`
+      : `${amountCrypto.toString() || ""} ${coin}`;
+
+    console.log("lowerValue", lowerValue);
+    console.log("amountUsd: ", amountUsd.toString());
+    const style = CoinSwitchStyle();
+    return (
+        <View style={style.container}>
+          <View style={style.enterAmount}>
+            {!isUsd ? (
+              <Icon
+                name={`Icon${coin}`}
+                width="40"
+                height="40"
+                fill={COLOR_KEYS.HEADLINE}
+                style={{ marginBottom: 28 }}
+              />
+            ) : (
+              <View style={{
+                width: 50,
+              }}>
+                <CelText type={"H2"} weight={"600"} margin={"0 0 28 0"}>USD</CelText>
+              </View>
+
+            )}
+            <View>
+              <View
+                style={{
+                  height: getScaledFont(getFontSize("H1")),
+                  width: 180,
+                  justifyContent: "center",
+                  marginVertical: 10,
+                }}
               >
-                {upperValue}
-              </CelText>
+                <TextInput
+                  style={{
+                    borderRadius: 8,
+                    flex: 1,
+                    fontSize: 35,
+                    fontWeight: "600",
+                    color: getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                  }}
+                  editable={!(upperValue.length > 3)}
+                  placeholderTextColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+                  placeholder={"0.00"}
+                  textAlign={"center"}
+                  allowFontScaling
+                  keyboardType={KEYBOARD_TYPE.NUMERIC}
+                  autoFocus={STORYBOOK}
+                  value={upperValue}
+                  onChangeText={(amount) => this.handleEnteringAmount(amount)}
+                />
+              </View>
+              <View
+                style={{
+                  height: getScaledFont(getFontSize("H2")),
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CelText
+                  align="center"
+                  type="H2"
+                  color={getColor(COLOR_KEYS.PARAGRAPH)}
+                  size={getFontSize("H2") - lowerValue.length / 2}
+                >
+                  {doubleTilde && "≈"} {lowerValue}
+                </CelText>
+
+              </View>
             </View>
-          </TouchableOpacity>
-          <View
-            style={{
-              height: getScaledFont(getFontSize("H2")),
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <CelText
-              align="center"
-              type="H2"
-              color={getColor(COLOR_KEYS.PARAGRAPH)}
-              size={getFontSize("H2") - lowerValue.length / 2}
-            >
-              {doubleTilde && "≈"} {lowerValue}
-            </CelText>
+
+
+            <View style={style.switchButton}>
+              <TouchableOpacity onPress={() => updateFormField("isUsd", !isUsd)}>
+                <Icon
+                  name="Switch"
+                  width="25"
+                  height="25"
+                  fill={COLOR_KEYS.HEADLINE}
+                />
+              </TouchableOpacity>
+            </View>
 
           </View>
+            <PredefinedAmounts
+              data={PREDEFINED_AMOUNTS}
+              onSelect={this.onPressPredefinedAmount}
+              // activePeriod={activePeriod}
+            />
         </View>
-      ) : (
-        <View>
-          <View
-            style={{
-              height: getScaledFont(getFontSize("H1")),
-              justifyContent: "center",
-            }}
-          >
-            <CelText
-              align="center"
-              type="H1"
-              style={{ height: getScaledFont(getFontSize("H1")) }}
-              size={getFontSize("H1") - upperValue.length}
-              margin="10 0 10 0"
-              weight="regular"
-              color={amountColor}
-            >
-              {upperValue}
-            </CelText>
-          </View>
-          <View
-            style={{
-              height: getScaledFont(getFontSize("H2")),
-              justifyContent: "center",
-            }}
-          >
-            <CelText
-              align="center"
-              type="H2"
-              color={getColor(COLOR_KEYS.PARAGRAPH)}
-              style={{ height: getScaledFont(getFontSize("H2")) }}
-              size={getFontSize("H2") - lowerValue.length / 2}
-            >
-              {doubleTilde && "≈"} {lowerValue}
-            </CelText>
-          </View>
-        </View>
-      )}
-      <View style={style.switchButton}>
-        <TouchableOpacity onPress={() => updateFormField("isUsd", !isUsd)}>
-          <Icon
-            name="Switch"
-            width="25"
-            height="25"
-            fill={COLOR_KEYS.HEADLINE}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
 
-CoinSwitch.propTypes = {
-  isUsd: PropTypes.bool,
-  noUsdDecimals: PropTypes.bool,
-  amountUsd: PropTypes.string,
-  amountCrypto: PropTypes.string,
-  updateFormField: PropTypes.func.isRequired,
-  onAmountPress: PropTypes.func,
-  coin: PropTypes.string,
-  amountColor: PropTypes.string,
-  theme: PropTypes.string,
-};
+    );
+  };
+}
 
 export default CoinSwitch;

@@ -34,7 +34,7 @@ class PredefinedAmounts extends Component {
             key={label}
             style={[
               style.periodButton,
-              activePeriod.value === value ? style.selectedAmount : null,
+              // activePeriod.value === value ? style.selectedAmount : null,
             ]}
             onPress={() => onSelect({ label, value })}
           >

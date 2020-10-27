@@ -19,7 +19,7 @@ export default {
   hideTextExceptFirstNLetters,
   maskEmail,
   fiat,
-  commaToDot,
+  amountInputFieldFormat,
 };
 
 /**
@@ -350,12 +350,24 @@ function maskEmail(email) {
  * @param {number | string} value
  * @returns {string}
  */
-function commaToDot(value) {
+function amountInputFieldFormat(value) {
   let newValue;
+
   if (value.includes(".") && value.includes(",")) {
     newValue = value;
   } else {
     newValue = value.replace(",", ".");
   }
-  return newValue
+
+  if (newValue[0] === "0" && newValue[1] === "0")
+    newValue = newValue.slice(0, -1);
+
+  if (newValue[0] === "0" && newValue[1] !== "." && newValue[0] !== "0")
+    newValue = newValue.substring(0, 0);
+
+  if ((newValue.match(/[.,]/g) || []).length > 1) {
+    newValue = newValue.slice(0, -1);
+  }
+
+  return newValue.toString()
 }
