@@ -83,3 +83,6 @@ ios/GoogleService-Info.plist
 android/app/src/main/res/values/strings.xml
 ios/celsius/Info.plist
 # android/app/build.gradle
+
+# Pods
+ios/Pods/
