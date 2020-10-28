@@ -222,9 +222,6 @@ class CelPayEnterAmount extends Component {
               />
 
               <CoinSwitch
-                updateFormFields={actions.updateFormFields}
-                updateFormField={actions.updateFormField}
-                onAmountPress={actions.toggleKeypad}
                 amountUsd={formData.amountUsd}
                 amountCrypto={formData.amountCrypto}
                 isUsd={formData.isUsd}

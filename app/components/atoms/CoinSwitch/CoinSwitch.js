@@ -47,18 +47,18 @@ class CoinSwitch extends Component {
   handleEnteringAmount = (amount) => {
     const {
       isUsd,
-      updateFormFields,
+      actions,
       coinRate,
     } = this.props
     if (isUsd) {
       const amountCrypto  = new BigNumber(amount).dividedBy(coinRate)
-      updateFormFields({
+      actions.updateFormFields({
         "amountUsd": formatter.amountInputFieldFormat(amount),
         "amountCrypto": amountCrypto.toString()
       })
     } else {
       const amountUsd  = new BigNumber(amount).multipliedBy(coinRate)
-      updateFormFields({
+      actions.updateFormFields({
         "amountCrypto": formatter.amountInputFieldFormat(amount),
         "amountUsd": amountUsd.toString()
       })
@@ -68,6 +68,9 @@ class CoinSwitch extends Component {
   onPressPredefinedAmount = ({ label, value }) => {
     const { formData, walletSummary, currencyRatesShort, actions } = this.props;
 
+    if (!formData.coin) {
+      return actions.showMessage("info", "Please select a coin to withdraw.");
+    }
     const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
     const walletSummaryObj = walletSummary.coins.find(
       c => c.short === formData.coin.toUpperCase()
@@ -99,7 +102,7 @@ class CoinSwitch extends Component {
       })
     }
   };
-  //
+
   // handleOnBlur = () => {
   //   const { formData, actions, coin } = this.props
   //   actions.updateFormFields({
@@ -115,7 +118,7 @@ class CoinSwitch extends Component {
       amountUsd,
       amountCrypto,
       doubleTilde,
-      updateFormField
+      actions,
     } = this.props;
     const upperValue = isUsd
       ? `${amountUsd || ""}`
@@ -190,7 +193,7 @@ class CoinSwitch extends Component {
 
 
             <View style={style.switchButton}>
-              <TouchableOpacity onPress={() => updateFormField("isUsd", !isUsd)}>
+              <TouchableOpacity onPress={() => actions.updateFormField("isUsd", !isUsd)}>
                 <Icon
                   name="Switch"
                   width="25"
