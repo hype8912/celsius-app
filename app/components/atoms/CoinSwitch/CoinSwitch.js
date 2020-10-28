@@ -99,6 +99,14 @@ class CoinSwitch extends Component {
       })
     }
   };
+  //
+  // handleOnBlur = () => {
+  //   const { formData, actions, coin } = this.props
+  //   actions.updateFormFields({
+  //     "amountUsd": formatter.fiat(formData.amountUsd, "USD", { symbol: "" }),
+  //     "amountCrypto": formatter.crypto(formData.amountCrypto, coin, { symbol: "" })
+  //   })
+  // }
 
   render() {
     const {
@@ -116,8 +124,6 @@ class CoinSwitch extends Component {
       ? `${amountUsd || ""}`
       : `${amountCrypto || ""}`;
 
-    console.log("lowerValue", lowerValue.length);
-    // console.log("amountUsd: ", amountUsd.toString());
     const style = CoinSwitchStyle();
     return (
         <View style={style.container}>
@@ -160,6 +166,7 @@ class CoinSwitch extends Component {
                   keyboardType={KEYBOARD_TYPE.NUMERIC}
                   autoFocus={STORYBOOK}
                   value={upperValue}
+                  // onBlur={() => this.handleOnBlur()}
                   onChangeText={(amount) => this.handleEnteringAmount(amount)}
                 />
               </View>
@@ -200,7 +207,6 @@ class CoinSwitch extends Component {
               activePeriod={"activePeriod"}
             />
         </View>
-
     );
   };
 }

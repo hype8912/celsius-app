@@ -134,120 +134,6 @@ class CelPayEnterAmount extends Component {
     return "Enter amount above";
   };
 
-  // getUsdValue = amountUsd =>
-  //   formatter.removeDecimalZeros(formatter.floor10(amountUsd, -2) || "");
-
-  // handleAmountChange = (newValue, predefined = { label: "" }) => {
-  //   const {
-  //     formData,
-  //     currencyRatesShort,
-  //     actions,
-  //     walletSummary,
-  //     celPaySettings,
-  //   } = this.props;
-  //   const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
-  //   // const splitedValue = newValue.toString().split(".");
-  //
-  //   // if (splitedValue && splitedValue.length > 2) return;
-  //
-  //   const {
-  //     amount_usd: balanceUsd,
-  //     amount: balanceCrypto,
-  //   } = walletSummary.coins.find(c => c.short === formData.coin.toUpperCase());
-  //
-  //   let amountCrypto;
-  //   let amountUsd;
-  //   amountCrypto = new BigNumber(formData.amountUsd).dividedBy(coinRate);
-  //   console.log({ coinRate });
-  //   if (formData.isUsd) {
-  //     actions.updateFormField("amountCrypto", amountCrypto)
-  //   }
-    //
-    // if (formData.isUsd) {
-    //   // if no predefined label is forwarded and the value is in usd
-    //   if (predefined.label.length === 0) {
-    //     amountUsd = formatter.setCurrencyDecimals(newValue, "USD");
-    //     if (amountUsd === "" || amountUsd === ".") {
-    //       amountCrypto = new BigNumber(0).dividedBy(coinRate);
-    //     } else {
-    //       amountCrypto = new BigNumber(amountUsd).dividedBy(coinRate);
-    //     }
-    //   } else {
-    //     amountUsd = predefined.label === "ALL" ? balanceUsd : newValue;
-    //     amountUsd = this.getUsdValue(amountUsd);
-    //     amountCrypto =
-    //       predefined.label === "ALL"
-    //         ? balanceCrypto
-    //         : new BigNumber(amountUsd).dividedBy(coinRate);
-    //     amountCrypto = formatter.removeDecimalZeros(amountCrypto);
-    //   }
-    //   // if no predefined label is forwarded and the value is no in usd (crypto)
-    // } else if (predefined.label.length === 0) {
-    //   if (newValue === ".") {
-    //     amountCrypto = formatter.setCurrencyDecimals(0);
-    //   } else {
-    //     amountCrypto = formatter.setCurrencyDecimals(newValue);
-    //   }
-    //   amountUsd = Number(amountCrypto) * coinRate;
-    //   amountUsd = this.getUsdValue(amountUsd);
-    //   if (amountUsd === "0") amountUsd = "";
-    // } else {
-    //   amountCrypto =
-    //     predefined.label === "ALL"
-    //       ? new BigNumber(balanceCrypto).toFixed(8)
-    //       : newValue;
-    //   amountCrypto = new BigNumber(
-    //     formatter.removeDecimalZeros(amountCrypto)
-    //   ).toFixed(8);
-    //   amountUsd = predefined.label === "ALL" ? balanceUsd : predefined.value;
-    //   amountUsd = this.getUsdValue(amountUsd);
-    // }
-    //
-    // // Change value '.' to '0.'
-    // if (amountUsd[0] === ".") amountUsd = `0${amountUsd}`;
-    // // if the crypto amount is eg. 01 the value will be 1, 00 -> 0
-    // if (amountUsd.length > 1 && amountUsd[0] === "0" && amountUsd[1] !== ".") {
-    //   amountUsd = amountUsd[1];
-    // }
-    //
-    // // if crypto amount is undefined, set it to empty string
-    // // if (!new BigNumber(amountCrypto).toNumber()) amountCrypto = "";
-    // // Change value '.' to '0.'
-    // if (amountCrypto[0] === ".") amountCrypto = `0${amountCrypto}`;
-    // // if the crypto amount is eg. 01 the value will be 1, 00 -> 0
-    // if (
-    //   amountCrypto.length > 1 &&
-    //   amountCrypto[0] === "0" &&
-    //   amountCrypto[1] !== "."
-    // ) {
-    //   amountCrypto = amountCrypto[1];
-    // }
-    //
-    // if (new BigNumber(amountCrypto).isGreaterThan(balanceCrypto.toFixed(8))) {
-    //   return actions.showMessage("warning", "Insufficient funds!");
-    // }
-    //
-    // if (
-    //   new BigNumber(amountUsd).isGreaterThan(
-    //     celPaySettings.maximum_transfer_amount
-    //   )
-    // ) {
-    //   return actions.showMessage(
-    //     "warning",
-    //     `You have surpassed the daily limit of ${formatter.usd(
-    //       celPaySettings.maximum_transfer_amount
-    //     )}. Please enter different amount to continue.`
-    //   );
-    // }
-    //
-    // this.setState({ activePeriod: predefined });
-    //
-    // actions.updateFormFields({
-    //   amountCrypto: amountCrypto.toString(),
-    //   amountUsd,
-    // });
-  // };
-
   handleCoinChange = (field, value) => {
     const { actions } = this.props;
 
@@ -280,7 +166,6 @@ class CelPayEnterAmount extends Component {
   navigateToNextStep = () => {
     const { actions, formData, navigation } = this.props;
     const celPayType = navigation.getParam("celPayType");
-    console.log("formData: ", formData);
     if (celPayType === CEL_PAY_TYPES.FRIEND) {
       actions.navigateTo(SCREENS.CEL_PAY_CHOOSE_FRIEND);
     } else {
@@ -311,7 +196,6 @@ class CelPayEnterAmount extends Component {
 
     const style = CelPayEnterAmountStyle();
     if (!formData.coin) return null;
-    console.log({ formData });
     const coinData = walletSummary.coins.filter(
       c => c.short === formData.coin.toUpperCase()
     )[0];
