@@ -13,19 +13,24 @@ let width = heightPercentageToDP("24.5%");
 let height = heightPercentageToDP("24.5%");
 const tierLevels = [
   {
-    title: "SILVER",
+    title: "BRONZE",
     level: 1,
-    percent: 33,
+    percent: 25,
+  },
+  {
+    title: "SILVER",
+    level: 2,
+    percent: 25,
   },
   {
     title: "GOLD",
-    level: 2,
-    percent: 33,
+    level: 3,
+    percent: 25,
   },
   {
     title: "PLATINUM",
-    level: 3,
-    percent: 33,
+    level: 4,
+    percent: 25,
   },
 ];
 
@@ -68,9 +73,10 @@ class PieProgressBar extends Component {
     // .endAngle(Math.PI * 2)
     // .cornerRadius(8);
     let clr;
-    if (level === 3) clr = "rgba(52, 70, 137, 0.5)";
-    if (level === 2) clr = "rgba(186, 129, 35, 0.5)";
-    if (level === 1) clr = "rgba(134, 137, 140, 0.5)";
+    if (level === 4) clr = "rgba(52, 70, 137, 0.5)";
+    if (level === 3) clr = "rgba(186, 129, 35, 0.5)";
+    if (level === 2) clr = "rgba(134, 137, 140, 0.5)";
+    if (level === 1) clr = "rgba(223, 118, 43, 0.5)";
 
     const fontSize = isCard
       ? { tier: "H7", level: "H8" }
@@ -106,7 +112,14 @@ class PieProgressBar extends Component {
                   colorSection = clr;
                 }
               }
-              if (level === 3) colorSection = "white";
+              if (level === 3) {
+                if (sec.index < 3) {
+                  colorSection = "white";
+                } else {
+                  colorSection = clr;
+                }
+              }
+              if (level === 4) colorSection = "white";
               return (
                 <Shape
                   opacity={colorSection === "white" ? 1 : 0.5}

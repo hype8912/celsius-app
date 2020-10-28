@@ -34,9 +34,11 @@ class MyCelHeader extends Component {
     )[0];
     let color;
     if (loyaltyInfo.tier_level === 1)
+      color = getColor(COLOR_KEYS.BRONZE);
+    if (loyaltyInfo.tier_level === 2)
       color = getColor(COLOR_KEYS.SECTION_TITLE);
-    if (loyaltyInfo.tier_level === 2) color = getColor(COLOR_KEYS.ALERT_STATE);
-    if (loyaltyInfo.tier_level === 3) color = getColor(COLOR_KEYS.LINK);
+    if (loyaltyInfo.tier_level === 3) color = getColor(COLOR_KEYS.ALERT_STATE);
+    if (loyaltyInfo.tier_level === 4) color = getColor(COLOR_KEYS.LINK);
 
     if (loyaltyInfo.tier_level === 0) return null;
 
@@ -74,7 +76,7 @@ class MyCelHeader extends Component {
             </View>
           </View>
 
-          {loyaltyInfo.tier_level !== 3 && (
+          {loyaltyInfo.tier_level !== 4 && (
             <View style={style.bottomContainer}>
               <CelText color={"white"} type={"H5"} weight={"300"}>
                 {"To achieve next level, transfer "}
