@@ -22,9 +22,12 @@ const base = {
     width: "100%",
     justifyContent: "space-evenly",
   },
+  tierBronze: {
+    backgroundColor: COLOR_KEYS.BRONZE,
+    borderTopLeftRadius: 3,
+  },
   tierSilver: {
     backgroundColor: COLOR_KEYS.SECTION_TITLE,
-    borderTopLeftRadius: 3,
   },
   tierGold: {
     backgroundColor: COLOR_KEYS.ALERT_STATE,
