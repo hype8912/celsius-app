@@ -68,7 +68,6 @@ class ExtendLoanScreen extends Component {
 
   handleAmountChange = (newValue) => {
     const { actions } = this.props;
-    let value
     if (timeout) clearTimeout(timeout);
     if (Number(newValue) < 6) {
       // Math.floor(newValue / 10)
@@ -88,13 +87,7 @@ class ExtendLoanScreen extends Component {
         );
       }, 3000);
     }
-
-    if(newValue === "") {
-      value = 6
-    } else {
-      value = newValue
-    }
-    this.setState({ months: Number(value) });
+    this.setState({ months: Number(newValue) });
   };
 
   calculateAdditionalInterest = (usdValue, coinRate, coin) => {
