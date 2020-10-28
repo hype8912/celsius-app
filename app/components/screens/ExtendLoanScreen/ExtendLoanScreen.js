@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TextInput, View } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -7,7 +7,7 @@ import BigNumber from "bignumber.js";
 import moment from "moment";
 
 import * as appActions from "../../../redux/actions";
-// import ExtendLoanScreenStyle from "./ExtendLoanScreen.styles";
+import ExtendLoanScreenStyle from "./ExtendLoanScreen.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -17,16 +17,16 @@ import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmoun
 import CircleButton from "../../atoms/CircleButton/CircleButton";
 import Separator from "../../atoms/Separator/Separator";
 import Card from "../../atoms/Card/Card";
-import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { KEYPAD_PURPOSES } from "../../../constants/UI";
+import { KEYBOARD_TYPE } from "../../../constants/UI";
 import { SCREENS } from "../../../constants/SCREENS";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import { EXTEND_LOAN } from "../../../constants/DATA";
+import { getColor, getFontSize } from "../../../utils/styles-util";
 
 let timeout;
 
 @connect(
   state => ({
-    formData: state.forms.formData,
     currencyRates: state.currencies.currencyRatesShort,
     allLoans: state.loans.allLoans,
     bankAccountInfo: state.user.bankAccountInfo,
@@ -36,6 +36,8 @@ let timeout;
 class ExtendLoanScreen extends Component {
   static propTypes = {};
   static defaultProps = {};
+
+  inputRef = React.createRef();
 
   static navigationOptions = () => ({
     title: "Extend Loan",
@@ -55,6 +57,7 @@ class ExtendLoanScreen extends Component {
 
   componentDidMount = async () => {
     const { actions } = this.props;
+    actions.updateFormField("term_of_loan", 6)
     await actions.getLinkedBankAccount()
   }
 
@@ -65,9 +68,10 @@ class ExtendLoanScreen extends Component {
 
   handleAmountChange = (newValue) => {
     const { actions } = this.props;
-    let value;
+    let value
     if (timeout) clearTimeout(timeout);
     if (Number(newValue) < 6) {
+      // Math.floor(newValue / 10)
       timeout = setTimeout(() => {
         actions.showMessage(
           "warning",
@@ -77,14 +81,12 @@ class ExtendLoanScreen extends Component {
     }
 
     if (Number(newValue) > 36) {
-
       timeout = setTimeout(() => {
         actions.showMessage(
           "warning",
           `36 months is currently the maximum extendable period. Please adjust your extend period to proceed.`
         );
       }, 3000);
-      return
     }
 
     if(newValue === "") {
@@ -118,20 +120,20 @@ class ExtendLoanScreen extends Component {
     })
   };
 
-  onPressPredefinedAmount = ({ label, value }) => {
+  onPressPredefinedAmount = ({ value, label }) => {
      if (value === "6") {
       this.setState({
-        months: 6,
+        months: EXTEND_LOAN.MIN_VALUE,
         activePeriod: {
-          label, value
+          label
         }
       })
     }
     if (value === "36") {
       this.setState({
-        months: 36,
+        months: EXTEND_LOAN.MAX_VALUE,
         activePeriod: {
-          label, value
+          label
         },
       })
     }
@@ -176,31 +178,29 @@ class ExtendLoanScreen extends Component {
   }
 
   render() {
-    const {
-      actions,
-      formData,
-    } = this.props;
-    const { activePeriod, months } = this.state;
     const { allLoans, navigation, bankAccountInfo } = this.props;
-    if (!bankAccountInfo) return <LoadingScreen />;
+    const { activePeriod, months } = this.state;
+    if (!bankAccountInfo)
+      return <LoadingScreen />;
+    const style = ExtendLoanScreenStyle()
     const loanId = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === loanId);
-    // const style = ExtendLoanScreenStyle();
     let disabled = false;
+    let color = "black"
 
     const predefinedAmount = [
       { label: `6 months`, value: "6" },
       { label: `36 months`, value: "36" },
     ];
     const interest = this.extendLoanCalculateInterest(loan)
-
     if (months < 6 || months > 36) {
       disabled = true
+      color = getColor(COLOR_KEYS.NEGATIVE_STATE)
     }
 
     return (
       <RegularLayout>
-        <View style={{ justifyContent: "space-around", alignItems: "center" }}>
+        <View style={style.wrapper}>
           <View>
             <CelText align={"center"} weight={"300"}>
               How long would you like to extend loan
@@ -212,18 +212,23 @@ class ExtendLoanScreen extends Component {
             />
           </View>
 
-          <View style={{marginVertical: 30, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+          <View style={style.circleWrapper}>
               <CircleButton
                 icon={"Minus2"}
                 size={30}
                 onPress={() => this.extendLoanDecrement()}
               />
-              <View style={{alignItems: "center"}}>
-                <TouchableOpacity onPress={actions.toggleKeypad}>
-                <CelText margin={"0 20 0 20"} weight={"600"} type={"H1"}>
-                  {months || " "}
-                </CelText>
-                </TouchableOpacity>
+              <View style={style.input}>
+                <TextInput
+                  keyboardType={KEYBOARD_TYPE.NUMBER_PAD}
+                  autoFocus
+                  onChangeText={newValue => this.handleAmountChange(newValue)}
+                  maxLenght={2}
+                  field={"term_of_loan"}
+                  style={[style.textInput, { fontSize: getFontSize("H1"), color }]}
+                >
+                  {months}
+                </TextInput>
                 <CelText margin={"0 20 0 20"} weight={"200"} type={"H3"}>
                   {"months"}
                 </CelText>
@@ -256,16 +261,6 @@ class ExtendLoanScreen extends Component {
               Confirm
             </CelButton>
           </View>
-          <CelNumpad
-            autofocus={false}
-            toggleKeypad={actions.toggleKeypad}
-            field={"term_of_loan"}
-            value={formData.term_of_loan || ""}
-            updateFormField={actions.updateFormField}
-            setKeypadInput={actions.setKeypadInput}
-            onPress={this.handleAmountChange}
-            purpose={KEYPAD_PURPOSES.BORROW}
-          />
         </View>
 
       </RegularLayout>

@@ -284,6 +284,11 @@ const BUY_COINS_PAYMENT_STATUSES = {
   FAILED: "failed",
 };
 
+const EXTEND_LOAN = {
+  MIN_VALUE: 6,
+  MAX_VALUE: 36
+}
+
 const SIMPLEX_FIAT_CURRENCIES = [
   {
     label: "US Dollar (USD)",
@@ -546,4 +551,5 @@ export {
   BLOCKEXPLORER_NAME,
   PAYMENT_TYPE,
   STORAGE_KEYS,
+  EXTEND_LOAN,
 };
