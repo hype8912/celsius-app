@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Text, Platform } from "react-native";
+import { View, Platform } from "react-native";
 
 import CelTextAreaStyle from "./CelTextArea.styles";
-import Separator from "../Separator/Separator";
 import CelInputText from "../../atoms/CelInput/CelInputText.js";
 
 const CelTextArea = props => {
-  const style = CelTextAreaStyle(props.theme);
+  const style = CelTextAreaStyle();
+  const {numberOfLines} = props
   return (
     <View>
       <View style={style}>
@@ -14,23 +14,13 @@ const CelTextArea = props => {
           style={{
             height:
               Platform.OS === "android"
-                ? props.numberOfLines * 40
-                : props.numberOfLines * 35,
+                ? numberOfLines * 40
+                : numberOfLines * 35,
           }}
           {...props}
           multiline
         />
       </View>
-      {props.emojis && (
-        <View>
-          <Separator color="#737A82" />
-          <View
-            style={{ height: 50, paddingVertical: 20, paaddingHorizontal: 20 }}
-          >
-            <Text> EMOJI </Text>
-          </View>
-        </View>
-      )}
     </View>
   );
 };

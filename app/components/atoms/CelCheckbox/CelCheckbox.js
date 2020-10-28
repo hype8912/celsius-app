@@ -4,7 +4,6 @@ import { TouchableOpacity, View } from "react-native";
 import CheckBox from "react-native-check-box";
 
 import CelText from "../CelText/CelText";
-import { THEMES } from "../../../constants/UI";
 import Spinner from "../Spinner/Spinner";
 import Icon from "../Icon/Icon";
 import { getColor } from "../../../utils/styles-util";
@@ -31,7 +30,6 @@ const CelCheckbox = ({
   unCheckedImage = unchecked,
   textWeight,
   loading,
-  theme,
   fillColor = getColor(COLOR_KEYS.PARAGRAPH),
 }) => {
   const onPress = onChange || updateFormField;
@@ -61,7 +59,6 @@ const CelCheckbox = ({
           weight={textWeight}
           color={fillColor}
           style={{ marginRight: 30 }}
-          theme={theme}
         >
           {rightText}
         </CelText>
@@ -80,7 +77,6 @@ CelCheckbox.propTypes = {
   unChecked: PropTypes.element,
   textWeight: PropTypes.string,
   loading: PropTypes.bool,
-  theme: PropTypes.oneOf(Object.values(THEMES)),
   fillColor: PropTypes.string,
 };
 

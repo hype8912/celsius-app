@@ -27,6 +27,7 @@
 		25D2D68315084CD48AEB2F05 /* Barlow-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 74B26A742359401699D7D2E4 /* Barlow-SemiBold.ttf */; };
 		290426F05B6C4CB7AE76250D /* BarlowSemiCondensed-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CD435F8DF33E4A0D903CF670 /* BarlowSemiCondensed-BlackItalic.otf */; };
 		2AE8F293C9534CD981F88954 /* Barlow-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 023A7AE11FCD42A79527E53A /* Barlow-ExtraLightItalic.ttf */; };
+		2C0C9B502547014400307884 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C0C9B4F2547014400307884 /* AppCenter-Config.plist */; };
 		2CA1EC452528599500FD3549 /* UDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA1EC442528599500FD3549 /* UDID.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -154,6 +155,7 @@
 		25A2D4734C286DEE9074B6BA /* libPods-celsius-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-celsius-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		276A294C6A4A401A91AD1FB4 /* Barlow-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Barlow-Italic.ttf"; path = "../assets/fonts/Barlow/Barlow-Italic.ttf"; sourceTree = "<group>"; };
 		281D4E07A8D35935BA4AFE02 /* Pods-celsius-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-celsius-tvOS.release.xcconfig"; path = "Target Support Files/Pods-celsius-tvOS/Pods-celsius-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		2C0C9B4F2547014400307884 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		2CA1EC3C252771D400FD3549 /* RCTDeviceUUID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTDeviceUUID.xcodeproj; path = "../node_modules/react-native-device-uuid/RCTDeviceUUID.xcodeproj"; sourceTree = "<group>"; };
 		2CA1EC432528599400FD3549 /* UDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDID.h; sourceTree = "<group>"; };
 		2CA1EC442528599500FD3549 /* UDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UDID.m; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				A2FC810F239E50E400193CE5 /* GoogleService-Info.plist */,
+				2C0C9B4F2547014400307884 /* AppCenter-Config.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -665,6 +668,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				A2DEC515237EB337002537E9 /* Barlow-SemiBoldItalic.ttf in Resources */,
 				A2DEC51A237EB337002537E9 /* Barlow-Regular.ttf in Resources */,
+				2C0C9B502547014400307884 /* AppCenter-Config.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				A2DEC519237EB337002537E9 /* Barlow-ExtraBoldItalic.ttf in Resources */,
 				A2DEC51F237EB337002537E9 /* Barlow-ExtraLight.ttf in Resources */,
