@@ -76,7 +76,7 @@ class MyCelHeader extends Component {
             </View>
           </View>
 
-          {loyaltyInfo.tier_level !== 3 && (
+          {loyaltyInfo.tier_level !== 4 && (
             <View style={style.bottomContainer}>
               <CelText color={"white"} type={"H5"} weight={"300"}>
                 {"To achieve next level, transfer "}

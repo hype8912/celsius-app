@@ -430,6 +430,7 @@ storiesOf("WithdrawAddressLabel", module).add(
 
 storiesOf("LoyaltyProgram", module)
   .add("None", LoyaltyProgramStories.none)
+  .add("Bronze", LoyaltyProgramStories.bronze)
   .add("Silver", LoyaltyProgramStories.silver)
   .add("Gold", LoyaltyProgramStories.gold)
   .add("Platinum", LoyaltyProgramStories.platinum);
