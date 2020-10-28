@@ -104,9 +104,7 @@ class LoanTermsOfUse extends Component {
     if (extend) {
       return actions.extendLoan(formData.loanId, formData.termOfLoan)
     }
-    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-      onSuccess: () => actions.applyForALoan(),
-    });
+    actions.applyForALoan()
   };
 
   render() {
