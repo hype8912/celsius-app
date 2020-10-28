@@ -53,14 +53,18 @@ class TierCard extends Component {
     let title;
     let color;
     if (loyaltyInfo.tier_level === 1) {
+      color = getColor(COLOR_KEYS.BRONZE);
+      title = "Bronze";
+    }
+    if (loyaltyInfo.tier_level === 2) {
       color = getColor(COLOR_KEYS.SECTION_TITLE);
       title = "Silver";
     }
-    if (loyaltyInfo.tier_level === 2) {
+    if (loyaltyInfo.tier_level === 3) {
       color = getColor(COLOR_KEYS.ALERT_STATE);
       title = "Gold";
     }
-    if (loyaltyInfo.tier_level === 3) {
+    if (loyaltyInfo.tier_level === 4) {
       color = getColor(COLOR_KEYS.LINK);
       title = "Platinum";
     }
