@@ -23,6 +23,11 @@ const base = {
     borderRadius: 20,
     backgroundColor: COLOR_KEYS.CARDS,
   },
+  inputField: {
+    flex: 1,
+    fontWeight: "600",
+    paddingVertical: 0,
+  },
 };
 
 const themed = {

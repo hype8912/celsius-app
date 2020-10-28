@@ -299,13 +299,12 @@ class CelPayEnterAmount extends Component {
   };
 
   render() {
-    const { coinSelectItems, activePeriod } = this.state;
+    const { coinSelectItems } = this.state;
     const {
       formData,
       actions,
       walletSummary,
       loyaltyInfo,
-      keypadOpen,
       currencyRatesShort
     } = this.props;
     const coinRate = currencyRatesShort[formData.coin && formData.coin.toLowerCase() || "BTC"];

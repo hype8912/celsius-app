@@ -12,7 +12,7 @@ import Icon from "../Icon/Icon";
 import {
   getColor,
   getScaledFont,
-  getFontSize,
+  getFontSize, widthPercentageToDP,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
@@ -113,11 +113,11 @@ class CoinSwitch extends Component {
       ? `${amountUsd || ""}`
       : amountCrypto || ""
     const lowerValue = !isUsd
-      ? `${amountUsd || ""} USD`
-      : `${amountCrypto || ""} ${coin}`;
+      ? `${amountUsd || ""}`
+      : `${amountCrypto || ""}`;
 
-    console.log("lowerValue", lowerValue);
-    console.log("amountUsd: ", amountUsd.toString());
+    console.log("lowerValue", lowerValue.length);
+    // console.log("amountUsd: ", amountUsd.toString());
     const style = CoinSwitchStyle();
     return (
         <View style={style.container}>
@@ -142,23 +142,21 @@ class CoinSwitch extends Component {
               <View
                 style={{
                   height: getScaledFont(getFontSize("H1")),
-                  width: 180,
+                  width: widthPercentageToDP("58%"),
                   justifyContent: "center",
                   marginVertical: 10,
                 }}
               >
                 <TextInput
-                  style={{
-                    borderRadius: 8,
-                    flex: 1,
-                    fontSize: 35,
-                    fontWeight: "600",
-                    color: getColor(COLOR_KEYS.PRIMARY_BUTTON)
-                  }}
+                  style={[style.inputField, {
+                    fontSize: upperValue.length < 10 ? 35 : 25,
+                    color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+                  }]}
                   placeholderTextColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
                   placeholder={"0.00"}
                   textAlign={"center"}
                   allowFontScaling
+                  maxLength={20}
                   keyboardType={KEYBOARD_TYPE.NUMERIC}
                   autoFocus={STORYBOOK}
                   value={upperValue}
@@ -174,11 +172,10 @@ class CoinSwitch extends Component {
               >
                 <CelText
                   align="center"
-                  type="H2"
+                  type={lowerValue.length < 20 ? "H2" : "H5"}
                   color={getColor(COLOR_KEYS.PARAGRAPH)}
-                  size={getFontSize("H2") - lowerValue.length / 2}
                 >
-                  {doubleTilde && "≈"} {lowerValue}
+                  {doubleTilde && "≈"} {isUsd ? formatter.crypto(lowerValue, coin) : formatter.fiat(lowerValue, "USD")}
                 </CelText>
 
               </View>
