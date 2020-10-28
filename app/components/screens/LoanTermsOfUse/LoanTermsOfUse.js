@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Linking } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Markdown from "react-native-markdown-renderer";

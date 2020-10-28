@@ -22,6 +22,7 @@ import { SCREENS } from "../../../constants/SCREENS";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { EXTEND_LOAN } from "../../../constants/DATA";
 import { getColor, getFontSize } from "../../../utils/styles-util";
+import { LOAN_PAYMENT_TYPES } from "../../../constants/DATA";
 
 let timeout;
 
@@ -49,9 +50,18 @@ class ExtendLoanScreen extends Component {
     super(props);
     props.actions.updateFormField("term_of_loan", "1");
 
+    const loan = this.getLoan(props)
     this.state = {
       activePeriod: { label: `6 months`, value: "6" },
-      months: 6
+      months: 6,
+      loan
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const id = this.props.navigation.getParam("id")
+    if ( id && id !== prevState.loan.id) {
+        this.getLoan(this.props)
     }
   }
 
@@ -61,9 +71,11 @@ class ExtendLoanScreen extends Component {
     await actions.getLinkedBankAccount()
   }
 
-  inc = (input) => {
-
-    return  input + 1
+  getLoan = (props) => {
+    const { allLoans, navigation } = props;
+    const loanId = navigation.getParam("id");
+    const loan = allLoans.find(l => l.id === loanId);
+    return loan
   }
 
   handleAmountChange = (newValue) => {
@@ -95,21 +107,29 @@ class ExtendLoanScreen extends Component {
     return formatter.crypto(usdValue / rate, coin, {precision: 2});
   };
 
-  extendLoanDecrement = () => {
-    // add parameter
-    const { months } = this.state;
-    if (months === 6 ) return
-    this.setState({
-      months: months - 1
-    })
+  extendLoanDecrement = (current) => {
+    if(current === 6) return 6
+    return current - 1
   };
 
-  extendLoanIncrement = () => {
-    // parametar
+  onClickDecrement = () => {
     const { months } = this.state;
-    if (months === 36 ) return
+    const data = this.extendLoanDecrement(months)
     this.setState({
-      months: months + 1
+      months: data
+    })
+  }
+
+  extendLoanIncrement = (current) => {
+    if (current === 36 ) return 36
+    return current + 1
+  }
+
+  onClickIncrement = () => {
+    const { months } = this.state;
+    const data = this.extendLoanIncrement(months)
+    this.setState({
+      months: data
     })
   };
 
@@ -149,19 +169,20 @@ class ExtendLoanScreen extends Component {
     actions.navigateTo(SCREENS.CONFIRM_EXTEND_LOAN, { newTotal })
   }
 
-  extendLoanCalculateInterest = (loan) => {
-    const { months } = this.state;
-    const originatingDate = moment();
-    const maturityDate = originatingDate.clone().add(months, "month");
+
+  extendLoanCalculateInterest = (loan, originatingDate, numberOfMonths) => {
+    const maturityDate = originatingDate.clone().add(numberOfMonths, "month");
     const loanTermInDays = maturityDate.diff(originatingDate, "days");
     const additionalInterest = new BigNumber(loan.interest)
       .dividedBy(365)
       .multipliedBy(loanTermInDays)
       .multipliedBy(loan.loan_amount)
       .toNumber();
-    const monthlyInterest = additionalInterest / months;
-    const amountLeft = loan.amortization_table.filter(l => l.status === "DUE" && l.type === "monthly_interest" ).reduce((a,b) => {
-      return Number(a) + Number(b.amountToPay)}, 0)
+    const monthlyInterest = additionalInterest / numberOfMonths;
+    // should be separately covered
+    const amountLeft = loan.amortization_table.filter(l => l.status === "DUE" && l.type === LOAN_PAYMENT_TYPES.MONTHLY_INTEREST ).reduce((a,b) => {
+      return Number(a) + Number(b.amountToPay)
+    }, 0)
     const totalNewInterest = additionalInterest + amountLeft;
     return {
       totalNewInterest,
@@ -170,14 +191,20 @@ class ExtendLoanScreen extends Component {
     }
   }
 
+  extendLoanCalculateInterest = () => {
+    const { months, loan } = this.state;
+    const originatingDate = moment();
+    const interest = this.onExtendLoanCalculateInterest(loan, originatingDate, months);
+    return interest
+  }
+
   render() {
-    const { allLoans, navigation, bankAccountInfo } = this.props;
-    const { activePeriod, months } = this.state;
+    const { bankAccountInfo } = this.props;
+    const { activePeriod, months, loan } = this.state;
     if (!bankAccountInfo)
       return <LoadingScreen />;
     const style = ExtendLoanScreenStyle()
-    const loanId = navigation.getParam("id");
-    const loan = allLoans.find(l => l.id === loanId);
+
     let disabled = false;
     let color = "black"
 
@@ -185,7 +212,7 @@ class ExtendLoanScreen extends Component {
       { label: `6 months`, value: "6" },
       { label: `36 months`, value: "36" },
     ];
-    const interest = this.extendLoanCalculateInterest(loan)
+    const interest = this.extendLoanCalculateInterest()
     if (months < 6 || months > 36) {
       disabled = true
       color = getColor(COLOR_KEYS.NEGATIVE_STATE)
@@ -209,13 +236,13 @@ class ExtendLoanScreen extends Component {
               <CircleButton
                 icon={"Minus2"}
                 size={30}
-                onPress={() => this.extendLoanDecrement()}
+                onPress={() => this.onClickDecrement()}
               />
               <View style={style.input}>
                 <TextInput
                   keyboardType={KEYBOARD_TYPE.NUMBER_PAD}
                   autoFocus
-                  onChangeText={newValue => this.handleAmountChange(newValue)}
+                  onChangeText={this.onhandleAmountChange}
                   maxLenght={2}
                   field={"term_of_loan"}
                   style={[style.textInput, { fontSize: getFontSize("H1"), color }]}
@@ -229,7 +256,7 @@ class ExtendLoanScreen extends Component {
             <CircleButton
               icon={"Plus"}
               size={30}
-              onPress={() => this.extendLoanIncrement()}
+              onPress={() => this.onClickIncrement()}
             />
           </View>
           <View>
