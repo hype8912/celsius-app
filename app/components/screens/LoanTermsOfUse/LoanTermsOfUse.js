@@ -111,10 +111,9 @@ class LoanTermsOfUse extends Component {
     const extend = navigation.getParam("extend");
 
     if (!loanTermsOfUse || !pdf) return <LoadingScreen />;
-    // API.APPLY_FOR_LOAN
     const isLoading =
       apiUtil.areCallsInProgress(
-        [API.EXTEND_LOAN],
+        [API.EXTEND_LOAN, API.APPLY_FOR_LOAN],
         callsInProgress
       );
 

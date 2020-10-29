@@ -95,7 +95,6 @@ class ExtendLoanScreen extends Component {
   };
 
   extendLoanDecrement = () => {
-    // add parameter
     const { months } = this.state;
     if (months === 6 ) return
     this.setState({
@@ -104,7 +103,6 @@ class ExtendLoanScreen extends Component {
   };
 
   extendLoanIncrement = () => {
-    // parametar
     const { months } = this.state;
     if (months === 36 ) return
     this.setState({
