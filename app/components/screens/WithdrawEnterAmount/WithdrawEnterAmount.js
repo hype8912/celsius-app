@@ -13,7 +13,7 @@ import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import { EMPTY_STATES, KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
 import WithdrawalInfoModal from "../../modals/WithdrawalInfoModal/WithdrawalInfoModal";
-import { KYC_STATUSES, PREDIFINED_AMOUNTS } from "../../../constants/DATA";
+import { KYC_STATUSES, PREDIFINED_AMOUNTS, TIER_LEVELS } from "../../../constants/DATA";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { openModal } from "../../../redux/ui/uiActions";
 import store from "../../../redux/store";
@@ -454,7 +454,7 @@ class WithdrawEnterAmount extends Component {
           />
         )}
 
-        {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
+        {loyaltyInfo && loyaltyInfo.tier.title !== TIER_LEVELS.NONE && (
           <LoseTierModal
             navigateToNextStep={() => this.navigateToNextStep(true)}
             tierTitle={loyaltyInfo.tier.title}

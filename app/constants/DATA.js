@@ -364,9 +364,9 @@ const SIMPLEX_FIAT_CURRENCIES = [
 ];
 
 const PIN_STRENGTH_ITEMS = [
-  { copy: "Include at least 4 unique digits" },
-  { copy: "Not be 6 consecutive digits" },
-  { copy: "Not include your birthday" },
+  { copy: "Don't use your birthday" },
+  { copy: "No 6 digits in ascending/descending order" },
+  { copy: "Minimum 4 unique digits" },
 ];
 
 const PASSWORD_STRENGTH_ITEMS = [
@@ -455,9 +455,12 @@ const ERC_20_COINS = {
   KNC: "knc",
   MATIC: "matic",
   BAT: "bat",
-  SGA: "sga",
+  SGR: "sgr",
   XAUT: "xaut",
   PAXG: "paxg",
+  MANA: "mana",
+  UNI: "uni",
+  UMA: "uma",
 };
 
 const LINKS_TO_BUY = {
@@ -505,6 +508,14 @@ const BLOCKEXPLORER_NAME = {
   ERC20: "etherscan",
 };
 
+const TIER_LEVELS = {
+  NONE: "NONE",
+  BRONZE: "BRONZE",
+  SILVER: "SILVER",
+  GOLD: "GOLD",
+  PLATINUM: "PLATINUM",
+};
+
 export {
   BLOCKEXPLORERS,
   KYC_STATUSES,
@@ -530,4 +541,5 @@ export {
   ERC_20_COINS,
   LINKS_FOR_COINS,
   BLOCKEXPLORER_NAME,
+  TIER_LEVELS,
 };
