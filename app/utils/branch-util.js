@@ -1,8 +1,8 @@
 import Branch from "react-native-branch";
 
 import store from "../redux/store";
-import * as actions from "../redux/actions";
 import mixpanelAnalytics from "./mixpanel-analytics";
+import { addDeepLinkData, handleDeepLink } from "./deepLink-util";
 
 export default {
   initBranch,
@@ -13,9 +13,8 @@ export default {
  * Initialize & Subscribe to Branch
  */
 function initBranch() {
-  return dispatch => {
     try {
-      Branch.subscribe(deepLink => {
+      Branch.subscribe(async deepLink => {
         if (
           !deepLink ||
           !deepLink.params["+clicked_branch_link"] ||
@@ -29,12 +28,12 @@ function initBranch() {
           ...deepLink,
           type: deepLink.params.type || deepLink.params.link_type,
         };
-        dispatch(actions.addDeepLinkData(deepLinkData));
+        await addDeepLinkData(deepLinkData)
+        await handleDeepLink()
       });
     } catch (error) {
       mixpanelAnalytics.logError("branchUtil.initBranch", error);
     }
-  };
 }
 
 /**

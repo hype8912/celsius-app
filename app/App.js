@@ -57,7 +57,7 @@ class App extends Component {
     appUtil.logoutOnEnvChange();
     appUtil.initInternetConnectivityListener();
     apiUtil.initInterceptors();
-    store.dispatch(branchUtil.initBranch());
+    // branchUtil.initBranch();
 
     disableAccessibilityFontScaling();
     store.dispatch(actions.isGoodForAnimations());

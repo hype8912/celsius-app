@@ -36,6 +36,7 @@ import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedMo
 import { SCREENS } from "../../../constants/SCREENS";
 import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+import { handleDeepLink } from "../../../utils/deepLink-util";
 
 const { STORYBOOK } = Constants;
 
@@ -139,7 +140,8 @@ class VerifyProfile extends Component {
     // Check if app is opened from DeepLink
     if (!_.isEmpty(deepLinkData)) {
       if (deepLinkData.type === DEEP_LINKS.NAVIGATE_TO) {
-        actions.handleDeepLink();
+        // actions.handleDeepLink();
+        await handleDeepLink()
         return;
       }
     }
