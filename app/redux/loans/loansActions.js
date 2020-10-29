@@ -66,14 +66,6 @@ function applyForALoan() {
       const res = await loansService.apply(loanApplication, verification);
       dispatch({ type: ACTIONS.APPLY_FOR_LOAN_SUCCESS });
 
-      const allLoans = await loansService.getAllLoans();
-
-      dispatch({
-        type: ACTIONS.GET_ALL_LOANS_SUCCESS,
-        callName: API.GET_ALL_LOANS,
-        allLoans,
-      });
-
       dispatch(setActiveLoan(res.data.loan.id));
       dispatch(
         navigateTo(SCREENS.LOAN_REQUEST_DETAILS, {
@@ -82,6 +74,13 @@ function applyForALoan() {
         })
       );
       dispatch(showMessage("success", "Loan requested successfully!"));
+      const allLoans = await loansService.getAllLoans();
+
+      dispatch({
+        type: ACTIONS.GET_ALL_LOANS_SUCCESS,
+        callName: API.GET_ALL_LOANS,
+        allLoans,
+      });
 
       if (
         Number(formData.loanAmount) <= Number(automaticLoanLimit) &&
@@ -583,7 +582,6 @@ function extendLoan(id, numberOfMonths) {
     dispatch(startApiCall(API.EXTEND_LOAN));
     try {
       await loansService.extendLoan(id, numberOfMonths);
-      getAllLoans();
       dispatch(navigateTo(SCREENS.BORROW_LANDING));
       dispatch(
         showMessage(
@@ -591,6 +589,7 @@ function extendLoan(id, numberOfMonths) {
           `You have successfully extended loan for additional ${numberOfMonths} months`
         )
       );
+      dispatch(getAllLoans())
       dispatch({ type: ACTIONS.EXTEND_LOAN_SUCCESS });
     } catch (err) {
       dispatch(showMessage("error", err.msg));

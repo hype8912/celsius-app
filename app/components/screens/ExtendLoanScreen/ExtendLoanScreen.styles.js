@@ -5,6 +5,10 @@ const base = {
   container: {
     flex: 1,
   },
+  textInput: {textAlign: "center"},
+  wrapper: { justifyContent: "space-around", alignItems: "center" },
+  circleWrapper: {marginVertical: 30, flexDirection: "row", justifyContent: "center", alignItems: "center" },
+  input: {alignItems: "center"},
 };
 
 const themed = {

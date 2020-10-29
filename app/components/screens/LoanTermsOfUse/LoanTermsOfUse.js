@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Linking } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Markdown from "react-native-markdown-renderer";
@@ -22,21 +21,27 @@ import {
   getFontFamily,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { SCREENS } from "../../../constants/SCREENS";
+import apiUtil from "../../../utils/api-util";
+import API from "../../../constants/API";
 
 @connect(
   state => ({
     formData: state.forms.formData,
     loanTermsOfUse: state.generalData.loanTermsOfUse,
     pdf: state.generalData.pdf,
+    theme: state.user.appSettings.theme,
+    callsInProgress: state.api.callsInProgress,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class LoanTermsOfUse extends Component {
-  static navigationOptions = () => ({
-    title: "Terms and Conditions",
-    customCenterComponent: { steps: 8, currentStep: 8, flowProgress: true },
-  });
+    static navigationOptions = ({navigation}) => {
+      const extend = navigation.getParam("extend")
+    return {
+      title: "Terms and Conditions",
+      customCenterComponent: extend ? {steps: 3, currentStep: 3, flowProgress: true} : { steps: 8, currentStep: 8, flowProgress: true },
+    }
+  };
 
   componentDidMount() {
     const { actions } = this.props;
@@ -90,19 +95,27 @@ class LoanTermsOfUse extends Component {
   };
 
   continue = () => {
-    const { actions } = this.props;
+    const { actions, formData, navigation } = this.props;
+    const extend = navigation.getParam("extend");
     mixpanelAnalytics.loanToUAgreed();
 
-    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-      onSuccess: () => actions.applyForALoan(),
-    });
+    if (extend) {
+      return actions.extendLoan(formData.loanId, formData.termOfLoan)
+    }
+    actions.applyForALoan()
   };
 
   render() {
-    const { formData, pdf, actions, loanTermsOfUse } = this.props;
+    const { formData, pdf, actions, loanTermsOfUse, navigation, callsInProgress } = this.props;
     const styles = LoanTermsOfUseStyle();
+    const extend = navigation.getParam("extend");
 
     if (!loanTermsOfUse || !pdf) return <LoadingScreen />;
+    const isLoading =
+      apiUtil.areCallsInProgress(
+        [API.EXTEND_LOAN, API.APPLY_FOR_LOAN],
+        callsInProgress
+      );
 
     const {
       introSection,
@@ -135,6 +148,8 @@ class LoanTermsOfUse extends Component {
         lineHeight: 40,
       },
     };
+
+    const buttonText = extend ? "Extend Loan" : "Request Loan"
 
     return (
       <RegularLayout fabType={"hide"} padding="0 0 100 0">
@@ -200,8 +215,9 @@ class LoanTermsOfUse extends Component {
           onPress={this.continue}
           style={styles.requestButton}
           disabled={!canContinue}
+          loading={isLoading}
         >
-          Request loan
+          {buttonText}
         </CelButton>
       </RegularLayout>
     );

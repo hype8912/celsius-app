@@ -99,6 +99,8 @@ class LoanOverviewCard extends Component {
       previous5Payments = previousPayments.slice(-5);
     }
 
+    const canExtend = loan.installments_to_be_paid && loan.installments_to_be_paid.total && Number(loan.installments_to_be_paid.total) === 0;
+
     const discountedInterest = (1 - celDiscount) * loan.monthly_payment;
     const savedAmount = loan.monthly_payment - discountedInterest;
 
@@ -109,35 +111,23 @@ class LoanOverviewCard extends Component {
           getMargins(this.getMarginForIndex(index, length)),
         ]}
       >
-        {/* {loan.can_pay_principal && (*/}
-        {/*  <Card>*/}
-        {/*    <CelText>You have completed all of your interest payments</CelText>*/}
-        {/*     <CelButton*/}
-        {/*      margin={"10 0 0 0"}*/}
-        {/*      size={"small"}*/}
-        {/*      color={"green"}*/}
-        {/*      onPress={() =>*/}
-        {/*        navigateTo("ExtendLoanScreen", {*/}
-        {/*          id: loan.id,*/}
-        {/*        })*/}
-        {/*      }*/}
-        {/*     >*/}
-        {/*      Extend the Loan*/}
-        {/*     </CelButton>*/}
-        {/*    <CelButton*/}
-        {/*      margin={"10 0 0 0"}*/}
-        {/*      size={"small"}*/}
-        {/*      ghost*/}
-        {/*      color={"green"}*/}
-        {/*      onPress={this.payPrincipal}*/}
-        {/*      loading={isLoading}*/}
-        {/*      disabled={isLoading}*/}
-        {/*    >*/}
-        {/*      Close Loan*/}
-        {/*    </CelButton>*/}
-        {/*  </Card>*/}
-        {/* )}*/}
         <Card padding={"0 0 0 0"}>
+          {loan.can_pay_principal &&
+            <View>
+              <View style={{flexDirection: "row",justifyContent: "space-around", alignItems: "center", marginVertical: 10, marginHorizontal: 20 }}>
+                <View style={{marginRight: 25}}>
+                  <Icon
+                    width={widthPercentageToDP("7%")}
+                    height={widthPercentageToDP("7%")}
+                    name={"CheckCircle"}
+                    fill={COLOR_KEYS.POSITIVE_STATE}
+                  />
+                </View>
+                <CelText weight={"600"}>You have completed all of your interest payments</CelText>
+              </View>
+              <Separator />
+            </View>
+          }
           {loan && loan.uiProps && (
             <View style={style.loanTitle}>
               <View style={style.status}>
@@ -391,6 +381,39 @@ class LoanOverviewCard extends Component {
               </CelButton>
             )}
           </View>
+
+          {loan.status === LOAN_STATUS.ACTIVE && canExtend &&
+          <View style={{margin: 10}}>
+            <CelButton
+              margin={"10 0 0 0"}
+              size={"small"}
+              color={"green"}
+              onPress={() =>
+                navigateTo(SCREENS.EXTEND_LOAN, {
+                  id: loan.id,
+                })
+              }
+            >
+              Extend the Loan
+            </CelButton>
+          </View>
+          }
+
+           {loan.can_pay_principal && (
+            <View style={{margin: 10}}>
+              {/* <CelButton*/}
+              {/*  margin={"10 0 0 0"}*/}
+              {/*  size={"small"}*/}
+              {/*  ghost*/}
+              {/*  color={"green"}*/}
+              {/*  onPress={this.payPrincipal}*/}
+              {/*  loading={isLoading}*/}
+              {/*  disabled={isLoading}*/}
+              {/* >*/}
+              {/*  Close Loan*/}
+              {/* </CelButton>*/}
+            </View>
+           )}
 
           {loan.can_pay_interest && (
             <View>
