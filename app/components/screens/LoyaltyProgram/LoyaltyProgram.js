@@ -18,6 +18,7 @@ import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 import CelsiusMembershipTable from "../../organisms/CelsiusMembershipTable/CelsiusMembershipTable";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
+import { TIER_LEVELS } from "../../../constants/DATA";
 
 @connect(
   state => ({
@@ -52,12 +53,12 @@ class LoyaltyProgram extends Component {
       coin => coin.short === "CEL"
     )[0];
     let color;
-    if (loyaltyInfo.tier_level === 1)
+    if (loyaltyInfo.tier.title === TIER_LEVELS.BRONZE)
       color = getColor(COLOR_KEYS.BRONZE);
-    if (loyaltyInfo.tier_level === 2)
+    if (loyaltyInfo.tier.title === TIER_LEVELS.SILVER)
       color = getColor(COLOR_KEYS.SECTION_TITLE);
-    if (loyaltyInfo.tier_level === 3) color = getColor(COLOR_KEYS.ALERT_STATE);
-    if (loyaltyInfo.tier_level === 4)
+    if (loyaltyInfo.tier.title === TIER_LEVELS.GOLD) color = getColor(COLOR_KEYS.ALERT_STATE);
+    if (loyaltyInfo.tier.title === TIER_LEVELS.PLATINUM)
       color = getColor(COLOR_KEYS.PRIMARY_BUTTON);
     return (
       <View>
