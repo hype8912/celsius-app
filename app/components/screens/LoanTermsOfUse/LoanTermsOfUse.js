@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Linking } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Markdown from "react-native-markdown-renderer";
@@ -22,7 +21,6 @@ import {
   getFontFamily,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { SCREENS } from "../../../constants/SCREENS";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 
