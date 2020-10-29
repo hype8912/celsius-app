@@ -31,6 +31,12 @@ class CelsiusMembershipTable extends Component {
       <View style={style.wrapper}>
         <View style={style.tableWrapper}>
           <View style={style.tierWrapper}>
+            <View style={[style.tierCommon, style.tierBronze]}>
+              <CelText type="H6" color="white" weight="600">
+                {" "}
+                {celUtilityTiers.BRONZE.title}{" "}
+              </CelText>
+            </View>
             <View style={[style.tierSilver, style.tierCommon]}>
               <CelText type="H6" color="white" weight="600">
                 {" "}
@@ -52,6 +58,18 @@ class CelsiusMembershipTable extends Component {
           </View>
 
           <View style={style.percentageRow}>
+            <View style={style.tierData}>
+              <CelText type="H7" weight="500" align="center">
+                {formatter.percentage(
+                  celUtilityTiers.BRONZE.minimum_cel_percentage
+                )}
+                -
+                {formatter.percentage(
+                  celUtilityTiers.BRONZE.maximum_cel_percentage
+                )}
+                %
+              </CelText>
+            </View>
             <View style={style.tierData}>
               <CelText type="H7" weight="500" align="center">
                 {formatter.percentage(
@@ -99,6 +117,13 @@ class CelsiusMembershipTable extends Component {
             <View style={style.tierData}>
               <CelText type="H7" weight="500" align="center">
                 {`${formatter.percentage(
+                  celUtilityTiers.BRONZE.interest_bonus
+                )}%`}
+              </CelText>
+            </View>
+            <View style={style.tierData}>
+              <CelText type="H7" weight="500" align="center">
+                {`${formatter.percentage(
                   celUtilityTiers.SILVER.interest_bonus
                 )}%`}
               </CelText>
@@ -131,6 +156,13 @@ class CelsiusMembershipTable extends Component {
           </View>
 
           <View style={style.percentageRow}>
+            <View style={style.tierData}>
+              <CelText type="H7" weight="500" align="center">
+                {`${formatter.percentage(
+                  celUtilityTiers.BRONZE.loan_interest_bonus
+                )}%`}
+              </CelText>
+            </View>
             <View style={style.tierData}>
               <CelText type="H7" weight="500" align="center">
                 {`${formatter.percentage(

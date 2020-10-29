@@ -40,6 +40,7 @@ const setTier = tier => {
 
 export default {
   none: () => setTier("none"),
+  bronze: () => setTier("bronze"),
   silver: () => setTier("silver"),
   gold: () => setTier("gold"),
   platinum: () => setTier("platinum"),

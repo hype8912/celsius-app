@@ -53,9 +53,11 @@ class LoyaltyProgram extends Component {
     )[0];
     let color;
     if (loyaltyInfo.tier_level === 1)
+      color = getColor(COLOR_KEYS.BRONZE);
+    if (loyaltyInfo.tier_level === 2)
       color = getColor(COLOR_KEYS.SECTION_TITLE);
-    if (loyaltyInfo.tier_level === 2) color = getColor(COLOR_KEYS.ALERT_STATE);
-    if (loyaltyInfo.tier_level === 3)
+    if (loyaltyInfo.tier_level === 3) color = getColor(COLOR_KEYS.ALERT_STATE);
+    if (loyaltyInfo.tier_level === 4)
       color = getColor(COLOR_KEYS.PRIMARY_BUTTON);
     return (
       <View>

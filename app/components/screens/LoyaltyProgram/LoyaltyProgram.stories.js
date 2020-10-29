@@ -28,8 +28,8 @@ const initialState = {
   ui: { activeTab: "OVERVIEW" },
 };
 
-const state = _.cloneDeep(initialState);
 const none = () => {
+  const state = _.cloneDeep(initialState);
   state.loyalty = {
     ...mockLoyaltyStore.loyalty.none,
   };
@@ -42,7 +42,22 @@ const none = () => {
   );
 };
 
+const bronze = () => {
+  const state = _.cloneDeep(initialState);
+  state.loyalty = {
+    ...mockLoyaltyStore.loyalty.silver,
+  };
+  return (
+    <ScreenStoryWrapper
+      screenName="LoyaltyProgram"
+      screen={LoyaltyProgram}
+      state={state}
+    />
+  );
+};
+
 const silver = () => {
+  const state = _.cloneDeep(initialState);
   state.loyalty = {
     ...mockLoyaltyStore.loyalty.silver,
   };
@@ -56,6 +71,7 @@ const silver = () => {
 };
 
 const gold = () => {
+  const state = _.cloneDeep(initialState);
   state.loyalty = {
     ...mockLoyaltyStore.loyalty.gold,
   };
@@ -69,6 +85,7 @@ const gold = () => {
 };
 
 const platinum = () => {
+  const state = _.cloneDeep(initialState);
   state.loyalty = {
     ...mockLoyaltyStore.loyalty.platinum,
   };
@@ -83,6 +100,7 @@ const platinum = () => {
 
 export default {
   none,
+  bronze,
   silver,
   gold,
   platinum,

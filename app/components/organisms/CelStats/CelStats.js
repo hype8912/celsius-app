@@ -22,6 +22,8 @@ class CelStats extends Component {
         return getColor(COLOR_KEYS.ALERT_STATE);
       case "silver":
         return getColor(COLOR_KEYS.SECTION_TITLE);
+      case "bronze":
+        return getColor(COLOR_KEYS.BRONZE);
       default:
         return null;
     }
