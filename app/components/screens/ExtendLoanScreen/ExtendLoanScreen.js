@@ -50,7 +50,7 @@ class ExtendLoanScreen extends Component {
     props.actions.updateFormField("term_of_loan", "1");
 
     this.state = {
-      activePeriod: { label: `6 months`, value: "6" },
+      activePeriod: { label: `6 months`, value: 6 },
       months: 6
     }
   }
@@ -70,7 +70,6 @@ class ExtendLoanScreen extends Component {
     const { actions } = this.props;
     if (timeout) clearTimeout(timeout);
     if (Number(newValue) < 6) {
-      // Math.floor(newValue / 10)
       timeout = setTimeout(() => {
         actions.showMessage(
           "warning",
