@@ -13,7 +13,7 @@ import { CEL_PAY_TYPES, KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
 import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
-import { PREDIFINED_AMOUNTS } from "../../../constants/DATA";
+import { PREDIFINED_AMOUNTS, TIER_LEVELS } from "../../../constants/DATA";
 import formatter from "../../../utils/formatter";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
@@ -397,7 +397,7 @@ class CelPayEnterAmount extends Component {
           autofocus={false}
         />
 
-        {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
+        {loyaltyInfo && loyaltyInfo.tier.title !== TIER_LEVELS.NONE && (
           <LoseTierModal
             navigateToNextStep={this.navigateToNextStep}
             tierTitle={loyaltyInfo.tier.title}

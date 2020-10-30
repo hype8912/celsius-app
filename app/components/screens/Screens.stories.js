@@ -163,6 +163,7 @@ storiesOf("WithdrawEnterAmount", module)
 
 storiesOf("MyCel", module)
   .add("None", MyCelStories.none)
+  .add("Bronze", MyCelStories.bronze)
   .add("Silver", MyCelStories.silver)
   .add("Gold", MyCelStories.gold)
   .add("Platinum", MyCelStories.platinum)
@@ -431,6 +432,7 @@ storiesOf("WithdrawAddressLabel", module).add(
 
 storiesOf("LoyaltyProgram", module)
   .add("None", LoyaltyProgramStories.none)
+  .add("Bronze", LoyaltyProgramStories.bronze)
   .add("Silver", LoyaltyProgramStories.silver)
   .add("Gold", LoyaltyProgramStories.gold)
   .add("Platinum", LoyaltyProgramStories.platinum);

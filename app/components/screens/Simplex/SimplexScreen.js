@@ -63,6 +63,12 @@ class SimplexScreen extends Component {
     }, 2000);
 
     actions.setFabType("hide");
+
+    RNUxcam.pauseScreenRecording();
+  }
+
+  componentWillUnmount() {
+    RNUxcam.resumeScreenRecording();
   }
 
   generateWebViewContent = data => {
@@ -150,7 +156,6 @@ class SimplexScreen extends Component {
         )}
 
         <WebView
-          ref= {view => RNUxcam.occludeSensitiveView(view)}
           style={{ opacity: webViewLoaded ? 1 : 0 }}
           onMessage={this.onMsg}
           javaScriptEnabled

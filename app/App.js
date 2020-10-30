@@ -22,6 +22,7 @@ import Constants from "../constants";
 import StoryBook from "./components/screens/Storybook/Storybook";
 import { SCREENS } from "./constants/SCREENS";
 import { STORAGE_KEYS } from "./constants/DATA";
+import { startRecording } from "./utils/uxcam-util";
 
 const { STORYBOOK } = Constants;
 
@@ -93,6 +94,8 @@ class App extends Component {
     const refreshTokenError = await appUtil.checkAndRefreshAuthToken(token, 24);
     // If token is expired go to LoginLanding screen and stop executing actions in App.js
     if (refreshTokenError && refreshTokenError.slug === "Token Expired") return;
+
+    startRecording();
 
     await store.dispatch(actions.getInitialCelsiusData());
     store.dispatch(actions.navigateTo(SCREENS.HOME));
