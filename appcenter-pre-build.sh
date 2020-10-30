@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-# Example: Clone a required repository
+# Clone celsius-app-creds
 git clone https://github.com/CelsiusNetwork/celsius-app-creds
 
-sudo xcode-select --switch /Applications/Xcode.app
-cd ios && pod install && cd ..
+# Pods
+cd ios
+pod install
+cd ..
 
 node set-env.js
 
