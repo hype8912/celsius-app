@@ -12,8 +12,6 @@ export {
   clearMessage,
   openModal,
   closeModal,
-  toggleKeypad,
-  setKeypadInput,
   setActiveTab,
   closeBanner,
   setBannerProps,
@@ -46,68 +44,6 @@ function showMessage(msgType, text, disableClear, action) {
       text,
       action,
     });
-  };
-}
-
-// Custom celsius keypad actions
-/**
- * Sets the keypad input ref
- * @param {Object} input - input ref
- * @param {Object} field - active field for keypad input
- */
-let _keypadInputRef = null;
-function setKeypadInput(input) {
-  return (dispatch, getState) => {
-    const { isKeypadOpen } = getState().ui;
-    const { activeScreen } = getState().nav;
-
-    if (
-      input === false &&
-      _keypadInputRef &&
-      activeScreen === _keypadInputRef.activeScreen
-    ) {
-      // close keypad
-      if (isKeypadOpen) {
-        dispatch({
-          type: ACTIONS.TOGGLE_KEYPAD,
-          isKeypadOpen: false,
-        });
-      }
-
-      _keypadInputRef = null;
-    }
-
-    if (input) {
-      _keypadInputRef = {
-        ...input,
-        activeScreen,
-      };
-    }
-  };
-}
-
-/**
- * Toggles the native device keypad
- *
- * @param {boolean} shouldOpen - if keypad should be turned on or off
- */
-function toggleKeypad(shouldOpen = false) {
-  return dispatch => {
-    if (_keypadInputRef) {
-      const isFocused = _keypadInputRef.isFocused();
-      if (isFocused) {
-        // already opened
-        if (shouldOpen !== true) _keypadInputRef.blur();
-        // closed
-      } else if (_keypadInputRef && shouldOpen !== false) {
-        _keypadInputRef.focus();
-      }
-
-      dispatch({
-        type: ACTIONS.TOGGLE_KEYPAD,
-        isKeypadOpen: !isFocused,
-      });
-    }
   };
 }
 

@@ -2,24 +2,18 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import BigNumber from "bignumber.js";
 
 import * as appActions from "../../../redux/actions";
 import CelPayEnterAmountStyle from "./CelPayEnterAmount.styles";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { CEL_PAY_TYPES, MODALS } from "../../../constants/UI";
-import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
+import CoinSwitch from "../../organisms/CoinSwitch/CoinSwitch";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
-import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
-import { PREDEFINED_AMOUNTS } from "../../../constants/DATA";
-import formatter from "../../../utils/formatter";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { COLOR_KEYS } from "../../../constants/COLORS";
-import { getColor } from "../../../utils/styles-util";
 import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(

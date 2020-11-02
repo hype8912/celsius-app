@@ -21,7 +21,7 @@ function getCircleStyle(props, style, index) {
   return circleStyle;
 }
 
-const HiddenField = ({ value = "", length = 4, error }) => {
+const HiddenField = ({ value = "", length = 6, error }) => {
   const style = HiddenFieldStyle();
   const circles = [];
 

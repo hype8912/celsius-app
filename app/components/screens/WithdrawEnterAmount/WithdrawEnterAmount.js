@@ -8,9 +8,8 @@ import * as appActions from "../../../redux/actions";
 import WithdrawEnterAmountStyle from "./WithdrawEnterAmount.styles";
 import CelButton from "../../atoms/CelButton/CelButton";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { EMPTY_STATES, KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
-import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
+import { EMPTY_STATES, MODALS } from "../../../constants/UI";
+import CoinSwitch from "../../organisms/CoinSwitch/CoinSwitch";
 import WithdrawalInfoModal from "../../modals/WithdrawalInfoModal/WithdrawalInfoModal";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import { openModal } from "../../../redux/ui/uiActions";
@@ -310,20 +309,6 @@ class WithdrawEnterAmount extends Component {
             )}
           </View>
         </View>
-        {!isAddressLocked && (
-          <CelNumpad
-            field={formData.isUsd ? "amountUsd" : "amountCrypto"}
-            value={
-              formData.isUsd ? formData.amountUsd : formData.amountCrypto || ""
-            }
-            toggleKeypad={() => ({})}
-            updateFormField={actions.updateFormField}
-            setKeypadInput={actions.setKeypadInput}
-            onPress={this.handleAmountChange}
-            purpose={KEYPAD_PURPOSES.WITHDRAW}
-            autofocus={false}
-          />
-        )}
 
         {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
           <LoseTierModal

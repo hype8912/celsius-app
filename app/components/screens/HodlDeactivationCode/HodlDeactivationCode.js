@@ -9,8 +9,7 @@ import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelInput from "../../atoms/CelInput/CelInputText";
 import CelButton from "../../atoms/CelButton/CelButton";
-import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { EMPTY_STATES, KEYPAD_PURPOSES } from "../../../constants/UI";
+import { EMPTY_STATES } from "../../../constants/UI";
 import Card from "../../atoms/Card/Card";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
@@ -127,14 +126,6 @@ class HodlDeactivationCode extends Component {
           for help
         </CelText>
 
-        <CelNumpad
-          field={"hodlCode"}
-          value={formData.hodlCode}
-          toggleKeypad={() => ({})}
-          updateFormField={actions.updateFormField}
-          setKeypadInput={actions.setKeypadInput}
-          purpose={KEYPAD_PURPOSES.VERIFICATION}
-        />
       </RegularLayout>
     );
   }

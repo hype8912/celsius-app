@@ -345,9 +345,9 @@ function maskEmail(email) {
 }
 
 /**
- * Changes comma to dot
+ * Format input amount
  *
- * @param {number | string} value
+ * @param {string} value
  * @returns {string}
  */
 function amountInputFieldFormat(value) {
@@ -365,9 +365,9 @@ function amountInputFieldFormat(value) {
   if (newValue[0] === "0" && newValue[1] !== "." && newValue[0] !== "0")
     newValue = newValue.substring(0, 0);
 
-  if ((newValue.match(/[.,]/g) || []).length > 1) {
-    newValue = newValue.slice(0, -1);
-  }
+  // if ((newValue.match(/[.,]/g) || []).length > 0) {
+  //   newValue = newValue.slice(0, -1);
+  // }
 
-  return newValue.toString()
+  return newValue
 }

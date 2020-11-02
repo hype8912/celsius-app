@@ -6,9 +6,9 @@ import { View, TouchableOpacity, TextInput } from "react-native";
 import BigNumber from "bignumber.js";
 
 import CoinSwitchStyle from "./CoinSwitch.styles";
-import CelText from "../CelText/CelText";
+import CelText from "../../atoms/CelText/CelText";
 import formatter from "../../../utils/formatter";
-import Icon from "../Icon/Icon";
+import Icon from "../../atoms/Icon/Icon";
 import {
   getColor,
   getScaledFont,
@@ -17,7 +17,7 @@ import {
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import { STORYBOOK } from "../../../../celsius-app-creds/beta-storybook/constants";
-import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
+import PredefinedAmounts from "../PredefinedAmounts/PredefinedAmounts";
 import { PREDEFINED_AMOUNTS } from "../../../constants/DATA";
 import * as appActions from "../../../redux/actions";
 
@@ -166,7 +166,7 @@ class CoinSwitch extends Component {
                   textAlign={"center"}
                   allowFontScaling
                   maxLength={20}
-                  keyboardType={KEYBOARD_TYPE.NUMERIC}
+                  keyboardType={KEYBOARD_TYPE.DECIMAL_PAD}
                   autoFocus={STORYBOOK}
                   value={upperValue}
                   onBlur={() => this.handleOnBlur()}

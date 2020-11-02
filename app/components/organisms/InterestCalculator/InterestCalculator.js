@@ -5,15 +5,14 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 
 import * as appActions from "../../../redux/actions";
-import { KEYPAD_PURPOSES, THEMES } from "../../../constants/UI";
+import { THEMES } from "../../../constants/UI";
 import CelText from "../../atoms/CelText/CelText";
 import Card from "../../atoms/Card/Card";
 import formatter from "../../../utils/formatter";
 import Separator from "../../atoms/Separator/Separator";
-import CoinSwitch from "../../atoms/CoinSwitch/CoinSwitch";
+import CoinSwitch from "../CoinSwitch/CoinSwitch";
 import SimpleSelect from "../../molecules/SimpleSelect/SimpleSelect";
 import InterestCalculatorStyle from "./InterestCalculator.styles";
-import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
@@ -309,7 +308,6 @@ class InterestCalculator extends Component {
 
           <CoinSwitch
             updateFormField={actions.updateFormField}
-            onAmountPress={actions.toggleKeypad}
             amountUsd={formData.amountUsd}
             amountCrypto={formData.amountCrypto}
             isUsd={formData.isUsd}
@@ -333,16 +331,6 @@ class InterestCalculator extends Component {
         ) : (
           <InterestOptions />
         )}
-
-        <CelNumpad
-          field={formData.isUsd ? "amountUsd" : "amountCrypto"}
-          value={formData.isUsd ? formData.amountUsd : formData.amountCrypto}
-          updateFormField={actions.updateFormField}
-          setKeypadInput={actions.setKeypadInput}
-          toggleKeypad={actions.toggleKeypad}
-          onPress={this.handleAmountChange}
-          purpose={KEYPAD_PURPOSES.INTEREST_CALCULATOR}
-        />
       </RegularLayout>
     );
   }

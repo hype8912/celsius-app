@@ -1,7 +1,7 @@
 import ACTIONS from "../../constants/ACTIONS";
 import API from "../../constants/API";
 import { apiError, startApiCall } from "../api/apiActions";
-import { showMessage, toggleKeypad } from "../ui/uiActions";
+import { showMessage } from "../ui/uiActions";
 import { updateFormField, updateFormFields } from "../forms/formsActions";
 import { navigateTo, navigateBack } from "../nav/navActions";
 import userSecurityService from "../../services/user-security-service";
@@ -104,7 +104,6 @@ function checkPIN(onSuccess, onError) {
       const { pin } = getState().forms.formData;
 
       dispatch(startApiCall(API.CHECK_PIN));
-      dispatch(toggleKeypad());
 
       await userSecurityService.checkPin(pin);
 
@@ -115,7 +114,6 @@ function checkPIN(onSuccess, onError) {
       if (err.status !== 429) {
         dispatch(showMessage("error", err.msg));
         dispatch(updateFormField("pin", ""));
-        dispatch(toggleKeypad());
       }
       dispatch(apiError(API.CHECK_PIN, err));
     }
@@ -131,7 +129,6 @@ function checkTwoFactor(onSuccess, onError) {
       const { code } = getState().forms.formData;
 
       dispatch(startApiCall(API.CHECK_TWO_FACTOR));
-      dispatch(toggleKeypad());
 
       await userSecurityService.checkTwoFactor(code);
 
@@ -142,7 +139,6 @@ function checkTwoFactor(onSuccess, onError) {
       dispatch(showMessage("error", err.msg));
       dispatch(apiError(API.CHECK_TWO_FACTOR, err));
       dispatch(updateFormField("code", ""));
-      dispatch(toggleKeypad());
     }
   };
 }
@@ -189,7 +185,6 @@ function changePin(onSuccess) {
       new_pin_confirm: formData.newPinConfirm,
     };
 
-    dispatch(toggleKeypad());
 
     if (profile.two_factor_enabled) {
       await dispatch(

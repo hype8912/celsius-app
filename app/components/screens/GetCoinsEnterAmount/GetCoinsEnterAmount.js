@@ -8,8 +8,7 @@ import * as appActions from "../../../redux/actions";
 import GetCoinsEnterAmountStyle from "./GetCoinsEnterAmount.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
-import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { KEYPAD_PURPOSES, MODALS } from "../../../constants/UI";
+import { MODALS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
@@ -83,8 +82,6 @@ class GetCoinsEnterAmount extends Component {
 
   handleNextStep = () => {
     const { actions, formData, currencyRatesShort } = this.props;
-
-    actions.toggleKeypad(false);
 
     const cryptoProp = formData.cryptoCoin.toLowerCase();
     const amountInUsd =
@@ -270,7 +267,6 @@ class GetCoinsEnterAmount extends Component {
 
   onPressAmountArea = (isFiatAmountArea = false) => {
     const { actions, formData } = this.props;
-    actions.toggleKeypad(true);
 
     if (isFiatAmountArea && formData.isFiat) return;
     if (!isFiatAmountArea && !formData.isFiat) return;
@@ -431,16 +427,6 @@ class GetCoinsEnterAmount extends Component {
         >
           {areAmountsCorrect ? "Buy Coins" : "Enter amount above"}
         </CelButton>
-        <CelNumpad
-          field={formData.isFiat ? "amountFiat" : "amountCrypto"}
-          value={formData.isFiat ? formData.amountFiat : formData.amountCrypto}
-          toggleKeypad={actions.toggleKeypad}
-          updateFormField={actions.updateFormField}
-          setKeypadInput={actions.setKeypadInput}
-          onPress={this.handleAmountChange}
-          purpose={KEYPAD_PURPOSES.BUY_COINS}
-          autofocus
-        />
         <GetCoinsEnterAmountInfoModal close={actions.closeModal} />
         <GetCoinsConfirmModal />
       </RegularLayout>

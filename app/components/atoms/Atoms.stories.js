@@ -15,7 +15,7 @@ import CelModalButtonStories from "./CelModalButton/CelModalButton.stories";
 import CelSwitchStories from "./CelSwitch/CelSwitch.stories";
 import CircleButtonStories from "./CircleButton/CircleButton.stories";
 import CoinIconStories from "./CoinIcon/CoinIcon.stories";
-import CoinSwitchStories from "./CoinSwitch/CoinSwitch.stories";
+import CoinSwitchStories from "../organisms/CoinSwitch/CoinSwitch.stories";
 import ContactRowStories from "./ContactRow/ContactRow.stories";
 import ContactSupportStories from "./ContactSupport/ContactSupport.stories";
 import EmptyStateStories from "./EmptyState/EmptyState.stories";

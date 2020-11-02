@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import CelText from "../../atoms/CelText/CelText";
 import ChangePinStyle from "../ChangePin/ChangePin.styles";
-import { KEYPAD_PURPOSES } from "../../../constants/UI";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
-import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import * as appActions from "../../../redux/actions";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -122,7 +120,7 @@ class RegisterSetPin extends Component {
 
   render() {
     const { loading, pinCreated } = this.state;
-    const { actions, formData, user } = this.props;
+    const { formData, user } = this.props;
 
     const field = !pinCreated ? "pin" : "pinConfirm";
     const screenText = this.setScreenText();
@@ -140,9 +138,11 @@ class RegisterSetPin extends Component {
               {screenText.subheadingText}
             </CelText>
 
-            <TouchableOpacity onPress={actions.toggleKeypad}>
+            {/* <TouchableOpacity onPress={actions.toggleKeypad}>*/}
+            <View>
               <HiddenField value={formData[field]} length={6} />
-            </TouchableOpacity>
+            </View>
+            {/* </TouchableOpacity>*/}
 
             {pinCreated && !loading && (
               <CelButton basic onPress={this.handleBack}>
@@ -163,15 +163,6 @@ class RegisterSetPin extends Component {
             )}
           </View>
 
-          <CelNumpad
-            field={field}
-            value={formData[field]}
-            updateFormField={actions.updateFormField}
-            setKeypadInput={actions.setKeypadInput}
-            toggleKeypad={actions.toggleKeypad}
-            onPress={this.handlePINChange}
-            purpose={KEYPAD_PURPOSES.VERIFICATION}
-          />
           <PinTooltip pin={formData[field]} user={user} />
         </View>
       </RegularLayout>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import { BigNumber } from "bignumber.js";
 
 import { connect } from "react-redux";
@@ -19,6 +19,7 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
 import { STORYBOOK } from "../../../../celsius-app-creds/beta-storybook/constants";
+import { KEYBOARD_TYPE } from "../../../constants/UI";
 
 let timeout;
 
@@ -91,13 +92,12 @@ class BorrowEnterAmount extends Component {
   }
 
   onPressPredefinedAmount = ({ label, value }) => {
-    const { formData, minimumLoanAmount, actions } = this.props;
+    const { formData, minimumLoanAmount } = this.props;
     let amount;
     if (value === "max")
       amount = formatter.floor10(formData.maxAmount, 0).toString();
     if (value === "min") amount = minimumLoanAmount.toString();
     this.handleAmountChange(amount, label);
-    actions.toggleKeypad(false);
   };
 
   getAmountColor = () => {
@@ -159,7 +159,6 @@ class BorrowEnterAmount extends Component {
         }
         onPress={async () => {
           actions.navigateTo(SCREENS.BORROW_COLLATERAL);
-          actions.toggleKeypad();
           actions.getLinkedBankAccount();
           await mixpanelAnalytics.loanType(formData.loanType);
           await mixpanelAnalytics.loanAmount({
@@ -231,10 +230,6 @@ class BorrowEnterAmount extends Component {
             )}
 
             <View style={{ width: "100%", marginTop: 20 }}>
-              <TouchableOpacity
-                onPress={actions.toggleKeypad}
-                style={{ width: "100%" }}
-              >
                 <View style={styles.coinIconWrapper}>
                   <CoinIcon />
                 </View>
@@ -248,9 +243,9 @@ class BorrowEnterAmount extends Component {
                   }}
                   textAlign={"center"}
                   allowFontScaling
-                  keyboardType={"decimal-pad"}
+                  keyboardType={KEYBOARD_TYPE.DECIMAL_PAD}
                   autoFocus={STORYBOOK}
-                  onChangeText={amount => actions.updateFormField("loanAmount", formatter.commaToDot(amount))}
+                  onChangeText={amount => actions.updateFormField("loanAmount", formatter.amountInputFieldFormat(amount))}
                 >
                   {formData.loanAmount}
                 </TextInput>
@@ -259,7 +254,6 @@ class BorrowEnterAmount extends Component {
                     {formData.coin}
                   </CelText>
                 </View>
-              </TouchableOpacity>
             </View>
           </View>
 

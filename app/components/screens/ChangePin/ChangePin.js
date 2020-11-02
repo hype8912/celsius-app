@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import _ from "lodash";
@@ -7,8 +7,6 @@ import _ from "lodash";
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
-import { KEYPAD_PURPOSES } from "../../../constants/UI";
 import ChangePinStyle from "./ChangePin.styles";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
 import CelButton from "../../atoms/CelButton/CelButton";
@@ -88,7 +86,7 @@ class ChangePin extends Component {
   };
 
   render() {
-    const { actions, user, formData } = this.props;
+    const {  user, formData } = this.props;
     const field = !formData.pinCreated ? "newPin" : "newPinConfirm";
     const headingText = !formData.pinCreated
       ? "Enter your 6-digits PIN"
@@ -97,7 +95,7 @@ class ChangePin extends Component {
       ? "Please enter your new PIN to proceed."
       : "Please repeat your new PIN.";
 
-    const onPressFunc = this.handlePINChange;
+    // const onPressFunc = this.handlePINChange;
     const style = ChangePinStyle();
 
     const isLoading = _.isEmpty(formData) || formData.loading;
@@ -121,9 +119,11 @@ class ChangePin extends Component {
                 {subheadingText}
               </CelText>
 
-              <TouchableOpacity onPress={actions.toggleKeypad}>
+              {/* <TouchableOpacity onPress={actions.toggleKeypad}>*/}
+              <View>
                 <HiddenField value={formData[field]} length={6} />
-              </TouchableOpacity>
+              </View>
+              {/* </TouchableOpacity>*/}
 
               {formData.pinCreated && !formData.loading && (
                 <CelButton basic onPress={this.handleBack}>
@@ -131,16 +131,6 @@ class ChangePin extends Component {
                 </CelButton>
               )}
             </View>
-
-            <CelNumpad
-              field={field}
-              value={this.props.formData[field]}
-              updateFormField={actions.updateFormField}
-              setKeypadInput={actions.setKeypadInput}
-              toggleKeypad={actions.toggleKeypad}
-              onPress={onPressFunc}
-              purpose={KEYPAD_PURPOSES.VERIFICATION}
-            />
 
             <PinTooltip pin={formData[field]} user={user} />
           </View>

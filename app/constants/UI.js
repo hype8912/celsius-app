@@ -6,6 +6,7 @@ const KEYBOARD_TYPE = {
   EMAIL: "email-address",
   PHONE: "phone-pad",
   NUMBER_PAD: "number-pad",
+  DECIMAL_PAD: "decimal-pad",
 };
 
 const MODALS = {
