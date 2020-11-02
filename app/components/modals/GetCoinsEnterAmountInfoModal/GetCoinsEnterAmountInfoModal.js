@@ -13,7 +13,7 @@ const GetCoinsEnterAmountInfoModal = props => {
         "This is an estimated amount. The actual amount will be determined by the exchange rate at the moment the order is processed. The amount shown includes Simplex’s 3.5% or $10 minimum fee with a special rate of 2.99% for EEA and UK residents.",
       ]}
       onYes={close}
-      heading={"Fee details"}
+      heading={"Additional Information"}
       yesCopy={"I Understand"}
       picture={require("../../../../assets/images/icons/get-coin-modal.png")}
       darkPicture={require("../../../../assets/images/icons/get-coin-modal-dark.png")}
