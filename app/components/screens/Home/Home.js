@@ -11,6 +11,7 @@ import CelsiusLoadingScreen from "../CelsiusLoadingScreen/CelsiusLoadingScreen";
 import appsFlyerUtil from "../../../utils/appsflyer-util";
 import { registerMixpanelUser } from "../../../utils/mixpanel-util";
 import { SCREENS } from "../../../constants/SCREENS";
+import { handleDeepLink } from "../../../utils/deepLink-util";
 
 @connect(
   state => ({
@@ -86,7 +87,7 @@ class Home extends Component {
     }
   }
 
-  goToWalletLanding = () => {
+  goToWalletLanding = async () => {
     const { actions, bannerProps } = this.props;
 
     // note :) this was used when we planned to force users to accept updated Terms of USe
@@ -102,7 +103,8 @@ class Home extends Component {
     });
 
     actions.resetToScreen(SCREENS.WALLET_LANDING);
-    actions.handleDeepLink();
+    // actions.handleDeepLink();
+    await handleDeepLink()
   };
 
   render = () => {
