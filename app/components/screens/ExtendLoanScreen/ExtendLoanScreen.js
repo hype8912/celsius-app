@@ -20,9 +20,8 @@ import Card from "../../atoms/Card/Card";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
 import { SCREENS } from "../../../constants/SCREENS";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import { EXTEND_LOAN } from "../../../constants/DATA";
+import { EXTEND_LOAN, LOAN_PAYMENT_TYPES } from "../../../constants/DATA";
 import { getColor, getFontSize } from "../../../utils/styles-util";
-import { LOAN_PAYMENT_TYPES } from "../../../constants/DATA";
 
 let timeout;
 
@@ -76,6 +75,42 @@ class ExtendLoanScreen extends Component {
     const loanId = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === loanId);
     return loan
+  }
+
+  onClickPredefinedAmount = ({ value, label }) => {
+    if (value === "6") {
+      this.setState({
+        months: EXTEND_LOAN.MIN_VALUE,
+        activePeriod: {
+          label
+        }
+      })
+    }
+    if (value === "36") {
+      this.setState({
+        months: EXTEND_LOAN.MAX_VALUE,
+        activePeriod: {
+          label
+        },
+      })
+    }
+  };
+
+  handleConfirmation = (loan, bankAccountInfo, newTotal) => {
+    const { actions } = this.props;
+    const { months } = this.state;
+    actions.updateFormFields({
+      collateralCoin: loan.coin,
+      ltv: loan.ltv,
+      interest: loan.interest,
+      loanAmount: loan.loan_amount,
+      termOfLoan: `${months}`,
+      bankInfo: bankAccountInfo.id ? bankAccountInfo.id : undefined,
+      coin: loan.coin_loan_asset,
+      loanType: loan.coin_loan_asset !== "USD" ? "STABLE_COIN_LOAN" : "USD_LOAN",
+      loanId: loan.id
+    });
+    actions.navigateTo(SCREENS.CONFIRM_EXTEND_LOAN, { newTotal })
   }
 
   handleAmountChange = (newValue) => {
@@ -133,44 +168,8 @@ class ExtendLoanScreen extends Component {
     })
   };
 
-  onPressPredefinedAmount = ({ value, label }) => {
-     if (value === "6") {
-      this.setState({
-        months: EXTEND_LOAN.MIN_VALUE,
-        activePeriod: {
-          label
-        }
-      })
-    }
-    if (value === "36") {
-      this.setState({
-        months: EXTEND_LOAN.MAX_VALUE,
-        activePeriod: {
-          label
-        },
-      })
-    }
-  };
-
-  handleConfirmation = (loan, bankAccountInfo, newTotal) => {
-  const { actions } = this.props;
-  const { months } = this.state;
-    actions.updateFormFields({
-      collateralCoin: loan.coin,
-      ltv: loan.ltv,
-      interest: loan.interest,
-      loanAmount: loan.loan_amount,
-      termOfLoan: `${months}`,
-      bankInfo: bankAccountInfo.id ? bankAccountInfo.id : undefined,
-      coin: loan.coin_loan_asset,
-      loanType: loan.coin_loan_asset !== "USD" ? "STABLE_COIN_LOAN" : "USD_LOAN",
-      loanId: loan.id
-    });
-    actions.navigateTo(SCREENS.CONFIRM_EXTEND_LOAN, { newTotal })
-  }
-
-
   extendLoanCalculateInterest = (loan, originatingDate, numberOfMonths) => {
+    // if something is undefined return null???
     const maturityDate = originatingDate.clone().add(numberOfMonths, "month");
     const loanTermInDays = maturityDate.diff(originatingDate, "days");
     const additionalInterest = new BigNumber(loan.interest)
@@ -191,10 +190,10 @@ class ExtendLoanScreen extends Component {
     }
   }
 
-  extendLoanCalculateInterest = () => {
+  onExtendLoanCalculateInterest = () => {
     const { months, loan } = this.state;
     const originatingDate = moment();
-    const interest = this.onExtendLoanCalculateInterest(loan, originatingDate, months);
+    const interest = this.extendLoanCalculateInterest(loan, originatingDate, months);
     return interest
   }
 
@@ -209,8 +208,8 @@ class ExtendLoanScreen extends Component {
     let color = "black"
 
     const predefinedAmount = [
-      { label: `6 months`, value: "6" },
-      { label: `36 months`, value: "36" },
+      { label: `6 months`, value: 6 },
+      { label: `36 months`, value: 36 },
     ];
     const interest = this.extendLoanCalculateInterest()
     if (months < 6 || months > 36) {
@@ -227,7 +226,7 @@ class ExtendLoanScreen extends Component {
             </CelText>
             <PredefinedAmounts
               data={predefinedAmount}
-              onSelect={this.onPressPredefinedAmount}
+              onSelect={this.onClickPredefinedAmount}
               activePeriod={activePeriod}
             />
           </View>
@@ -242,7 +241,7 @@ class ExtendLoanScreen extends Component {
                 <TextInput
                   keyboardType={KEYBOARD_TYPE.NUMBER_PAD}
                   autoFocus
-                  onChangeText={this.onhandleAmountChange}
+                  onChangeText={this.handleAmountChange}
                   maxLenght={2}
                   field={"term_of_loan"}
                   style={[style.textInput, { fontSize: getFontSize("H1"), color }]}
