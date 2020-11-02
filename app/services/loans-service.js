@@ -42,7 +42,7 @@ const loansService = {
  *
  */
 function apply(loanApplication) {
-  return axios.post(`${apiUrl}/loans/apply`, {
+  return axios.post(`${apiUrl}/loans/application`, {
     ...loanApplication,
   });
 }
