@@ -121,6 +121,9 @@ class GetCoinsConfirmModal extends Component {
                 <CelText type={"H7"} align={"left"} italic margin="5 0 0 0">
                   3.5% or $10.00 minimum
                 </CelText>
+                <CelText type={"H7"} align={"left"} italic margin="5 0 0 0">
+                  2.99% for EEA & UK residents
+                </CelText>
               </View>
               <CelText hideFromRecording type={"H6"} align={"right"} weight="bold">
                 {formatter.fiat(fee, formData.fiatCoin)}
