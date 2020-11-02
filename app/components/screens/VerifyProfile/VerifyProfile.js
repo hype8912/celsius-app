@@ -4,21 +4,18 @@ import {
   TouchableOpacity,
   Clipboard,
   BackHandler,
-  Image,
+  Image, TextInput,
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { NavigationEvents } from "react-navigation";
 import _ from "lodash";
 
 import * as appActions from "../../../redux/actions";
 import VerifyProfileStyle from "./VerifyProfile.styles";
 import CelText from "../../atoms/CelText/CelText";
-import CelNumpad from "../../molecules/CelNumpad/CelNumpad";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import {
-  BIOMETRIC_ERRORS,
-  KEYPAD_PURPOSES,
+  BIOMETRIC_ERRORS, KEYBOARD_TYPE,
   MODALS,
 } from "../../../constants/UI";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
@@ -34,10 +31,10 @@ import {
 import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
 import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
 import { SCREENS } from "../../../constants/SCREENS";
-import Constants from "../../../../constants";
+// import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
-const { STORYBOOK } = Constants;
+// const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
@@ -49,6 +46,7 @@ const { STORYBOOK } = Constants;
     theme: state.user.appSettings.theme,
     biometrics: state.biometrics.biometrics,
     deviceId: state.app.deviceId,
+    formData: state.forms.formData
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -67,13 +65,19 @@ class VerifyProfile extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
+    const { actions } = this.props
+    actions.initForm({
       value: "",
-      loading: false,
       verificationError: false,
       showLogOutBtn: false,
       hasSixDigitPin: false,
       disableBiometricsForUser: false,
+      forgotPin: false,
+      pin: "",
+      code: "",
+    })
+    this.state = {
+      loading: false,
     };
   }
 
@@ -94,19 +98,22 @@ class VerifyProfile extends Component {
     actions.getBiometricType();
 
     if (hasSixDigitPin || user.has_six_digit_pin)
-      this.setState({ hasSixDigitPin: true });
-    if (activeScreen) this.props.navigation.setParams({ hideBack: true });
+      actions.updateFormField("hasSixDigitPin", true)
+
+    if (activeScreen)
+      this.props.navigation.setParams({ hideBack: true });
+
     await this.handleBiometrics();
   };
 
   componentWillUpdate(nextProps) {
-    const { activeScreen } = this.props;
+    const { activeScreen, actions } = this.props;
 
     if (
       activeScreen !== nextProps.activeScreen &&
       nextProps.activeScreen === SCREENS.VERIFY_PROFILE
     ) {
-      this.setState({ value: "" });
+      actions.updateFormField("value", "")
     }
   }
 
@@ -116,24 +123,23 @@ class VerifyProfile extends Component {
       this.handleBackButtonClick
     );
   }
-
-  openKeypad = () => {
-    const { actions } = this.props;
-    actions.toggleKeypad(!STORYBOOK);
-  };
+  //
+  // openKeypad = () => {
+  //   const { actions } = this.props;
+  //   actions.toggleKeypad(!STORYBOOK);
+  // };
 
   onCheckSuccess = async () => {
     this.setState({ loading: true });
-    const { navigation, actions, previousScreen, deepLinkData } = this.props;
+    const { navigation, actions, previousScreen, deepLinkData, formData } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
     const activeScreen = navigation.getParam("activeScreen");
 
-    actions.updateFormField("loading", true);
 
     // If biometrics is changed on device, disable biometrics on BE for user
-    if (this.state.disableBiometricsForUser) {
+    if (formData.disableBiometricsForUser) {
       actions.disableBiometrics(true);
-      this.setState({ disableBiometricsForUser: false });
+      actions.updateFormField("disableBiometricsForUser", false)
     }
 
     // Check if app is opened from DeepLink
@@ -147,14 +153,11 @@ class VerifyProfile extends Component {
     if (activeScreen) {
       if (activeScreen === SCREENS.VERIFY_PROFILE) {
         this.setState({ loading: false });
-        actions.updateFormField("loading", false);
         actions.resetToScreen(previousScreen || SCREENS.WALLET_LANDING);
         return;
       }
 
       actions.navigateTo(activeScreen);
-      actions.updateFormField("loading", false);
-
       this.setState({ loading: false });
       return;
     }
@@ -167,12 +170,16 @@ class VerifyProfile extends Component {
 
   onCheckError = () => {
     const { actions } = this.props;
-    this.setState({ loading: false, value: "", verificationError: true });
+    this.setState({ loading: false});
+    actions.updateFormFields({
+      "value": "",
+      "verificationError": true
+    })
     const timeout = setTimeout(() => {
-      this.setState({ verificationError: false });
+      actions.updateFormField("verificationError", false)
 
       if (!this.shouldShow2FA()) {
-        actions.toggleKeypad(true);
+        // actions.toggleKeypad(true);
       }
 
       clearTimeout(timeout);
@@ -180,9 +187,9 @@ class VerifyProfile extends Component {
   };
 
   setForgotPin = () => {
-    const { verificationError } = this.state;
-    if (verificationError) {
-      this.setState({ forgotPin: true });
+    const { formData, actions } = this.state;
+    if (formData.verificationError) {
+      actions.updateFormField("forgotPin", true)
     }
   };
 
@@ -201,18 +208,18 @@ class VerifyProfile extends Component {
   handleBackButtonClick = () => true;
 
   handlePINChange = newValue => {
-    const { actions } = this.props;
-    const { hasSixDigitPin, verificationError, loading } = this.state;
-    const pinLength = hasSixDigitPin ? 6 : 4;
+    const { actions, formData } = this.props;
+    const { loading } = this.state;
+    const pinLength = formData.hasSixDigitPin ? 6 : 4;
 
     if (newValue.length > pinLength || loading) return;
 
-    if (newValue.length === 1 && verificationError) {
-      this.setState({ verificationError: false });
+    if (newValue.length === 1 && formData.verificationError) {
+      actions.updateFormField("verificationError", false)
     }
 
     actions.updateFormField("pin", newValue);
-    this.setState({ value: newValue });
+    actions.updateFormField("value", newValue)
 
     if (newValue.length === pinLength) {
       this.setState({ loading: true });
@@ -221,22 +228,20 @@ class VerifyProfile extends Component {
   };
 
   handle2FAChange = async newValue => {
-    const { actions } = this.props;
-    const { verificationError } = this.state;
+    const { actions, formData } = this.props;
     if (newValue.length > 6) {
       this.setState({ loading: false });
       return;
     }
 
-    if (newValue.length === 1 && verificationError) {
-      this.setState({ verificationError: false });
+    if (newValue.length === 1 && formData.verificationError) {
+      actions.updateFormField("verificationError", false)
     }
 
-    this.setState({ value: newValue });
-    actions.updateFormField("code", newValue);
+    actions.updateFormField("value", newValue);
     if (newValue.length === 6) {
       this.setState({ loading: true });
-      actions.toggleKeypad();
+      // actions.toggleKeypad();
       await actions.checkTwoFactor(this.onCheckSuccess, this.onCheckError);
       this.setState({ loading: false });
     }
@@ -274,7 +279,7 @@ class VerifyProfile extends Component {
     const hideBiometrics = navigation.getParam("hideBiometrics");
 
     if (biometricsEnabled && !hideBiometrics) {
-      actions.toggleKeypad(false);
+      // actions.toggleKeypad(false);
       try {
         const successfulBiometrics = await createBiometricsSignature(
           "Verification required"
@@ -282,9 +287,11 @@ class VerifyProfile extends Component {
         if (successfulBiometrics) {
           this.setState({
             loading: true,
-            disableBiometricsForUser: false,
-            value: "******",
           });
+          actions.updateFormFields({
+            "disableBiometricsForUser": false,
+            "value": "******",
+          })
           actions.checkBiometrics(this.onCheckSuccess, this.onCheckError);
         }
       } catch (error) {
@@ -306,22 +313,22 @@ class VerifyProfile extends Component {
         } else {
           mixpanelAnalytics.logError("handleBiometrics error", error)
           actions.openModal(MODALS.BIOMETRICS_NOT_RECOGNIZED_MODAL);
-          this.setState({ disableBiometricsForUser: true });
+          actions.updateFormField("disableBiometricsForUser", true)
         }
       }
     }
   };
 
   renderDots = length => {
-    const { actions } = this.props;
-    const { verificationError, value } = this.state;
-
+    const { formData, actions } = this.props
     const pinLength = length || 6;
+
+    if (formData.value.length === 6) actions.checkPIN(this.onCheckSuccess(), this.onCheckError())
     return (
-      <TouchableOpacity onPress={actions.toggleKeypad}>
+      <TouchableOpacity onPress={() => this.inputRef.focus()}>
         <HiddenField
-          value={value}
-          error={verificationError}
+          value={formData.value}
+          error={formData.verificationError}
           length={pinLength}
         />
       </TouchableOpacity>
@@ -376,7 +383,8 @@ class VerifyProfile extends Component {
   }
 
   renderPIN() {
-    const { loading, hasSixDigitPin } = this.state;
+    const { loading } = this.state;
+    const { formData } = this.props
     const style = VerifyProfileStyle();
 
     return (
@@ -388,7 +396,7 @@ class VerifyProfile extends Component {
           Please enter your PIN to proceed
         </CelText>
 
-        {this.renderDots(hasSixDigitPin ? 6 : 4)}
+        {this.renderDots(formData.hasSixDigitPin ? 6 : 4)}
         {this.renderBiometrics()}
         <View>
           <ContactSupport copy="Forgot PIN? Contact our support at app@celsius.network." />
@@ -433,15 +441,14 @@ class VerifyProfile extends Component {
   }
 
   render() {
-    const { value, loading } = this.state;
+    const { loading } = this.state;
     const { actions, navigation, appState, biometrics } = this.props;
     const hideBack = navigation.getParam("hideBack");
-
     const shouldShow2FA = this.shouldShow2FA();
-    const field = shouldShow2FA ? "code" : "pin";
-    const onPressFunc = shouldShow2FA
-      ? this.handle2FAChange
-      : this.handlePINChange;
+    // const field = shouldShow2FA ? "code" : "pin";
+    // const onPressFunc = shouldShow2FA
+    //   ? this.handle2FAChange
+    //   : this.handlePINChange;
     const style = VerifyProfileStyle();
 
     return (
@@ -451,17 +458,27 @@ class VerifyProfile extends Component {
           hideBack || appState.match(/inactive|background/) ? "hide" : "main"
         }
       >
-        <NavigationEvents onDidFocus={() => this.openKeypad()} />
+        {/* <NavigationEvents onDidFocus={() => this.openKeypad()} />*/}
         <View style={style.container}>
           {shouldShow2FA ? this.render2FA() : this.renderPIN()}
-          <CelNumpad
-            field={field}
-            value={value}
-            updateFormField={actions.updateFormField}
-            setKeypadInput={actions.setKeypadInput}
-            toggleKeypad={actions.toggleKeypad}
-            onPress={onPressFunc}
-            purpose={KEYPAD_PURPOSES.VERIFICATION}
+          {/* <CelNumpad*/}
+          {/*  field={field}*/}
+          {/*  value={value}*/}
+          {/*  updateFormField={actions.updateFormField}*/}
+          {/*  setKeypadInput={actions.setKeypadInput}*/}
+          {/*  toggleKeypad={actions.toggleKeypad}*/}
+          {/*  onPress={onPressFunc}*/}
+          {/*  purpose={KEYPAD_PURPOSES.VERIFICATION}*/}
+          {/*  editable={!loading}*/}
+          {/* />*/}
+          <TextInput
+            keyboardType={KEYBOARD_TYPE.NUMBER_PAD}
+            ref={input => {
+              this.inputRef = input;
+            }}
+            onChangeText={(num) => actions.updateFormField("value", num)}
+            style={{height: 0, opacity: 0}}
+            autoFocus
             editable={!loading}
           />
         </View>
