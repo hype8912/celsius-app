@@ -56,14 +56,8 @@ function applyForALoan() {
       loan_asset_short: formData.coin,
     };
     try {
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-        payload: formData.payload,
-        signature: formData.signature,
-      };
 
-      const res = await loansService.apply(loanApplication, verification);
+      const res = await loansService.apply(loanApplication);
       dispatch({ type: ACTIONS.APPLY_FOR_LOAN_SUCCESS });
 
       dispatch(setActiveLoan(res.data.loan.id));
