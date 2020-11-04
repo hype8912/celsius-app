@@ -10,6 +10,7 @@ import store from "../../redux/store";
 import appsFlyerUtil from "../appsflyer-util";
 import loggerUtil from "../logger-util";
 import { urlForCurrentUser, urlForCurrentSession } from "../uxcam-util";
+import { getTheme } from "../styles-util";
 
 const generalAnalytics = {
   buttonPressed,
@@ -48,7 +49,7 @@ function buttonPressed(button) {
 async function sessionStarted(trigger) {
   try {
     sessionTime = new moment();
-
+    const theme = getTheme();
     const uxCamUrl = await urlForCurrentUser();
 
     let userData = getUserData();
@@ -75,6 +76,7 @@ async function sessionStarted(trigger) {
         "Has referral link": !!userData.referral_link_id,
         "Has SSN": !!userData.ssn,
         "Has six digit pin": userData.has_six_digit_pin,
+        "Application theme": theme || "unknown",
         "User's UXCam url": uxCamUrl,
       });
       await sendEvent("$create_alias", { alias: userData.id });

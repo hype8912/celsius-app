@@ -92,6 +92,8 @@ import PaymentCelStories from "./PaymentCel/PaymentCel.stories";
 import SecurityFixNowStories from "./SecurityFixNow/SecurityFixNow.stories";
 import PrincipalPaymentStories from "./PrincipalPayment/PrincipalPayment.stories";
 import BiometricAuthentication from "./BiometricAuthentication/BiometricAuthentication.stories";
+import ConfirmExtendLoan from "./ConfirmExtendLoan/ConfirmExtendLoan.stories";
+import ExtendLoanScreen from "./ExtendLoanScreen/ExtendLoanScreen.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -161,6 +163,7 @@ storiesOf("WithdrawEnterAmount", module)
 
 storiesOf("MyCel", module)
   .add("None", MyCelStories.none)
+  .add("Bronze", MyCelStories.bronze)
   .add("Silver", MyCelStories.silver)
   .add("Gold", MyCelStories.gold)
   .add("Platinum", MyCelStories.platinum)
@@ -429,6 +432,7 @@ storiesOf("WithdrawAddressLabel", module).add(
 
 storiesOf("LoyaltyProgram", module)
   .add("None", LoyaltyProgramStories.none)
+  .add("Bronze", LoyaltyProgramStories.bronze)
   .add("Silver", LoyaltyProgramStories.silver)
   .add("Gold", LoyaltyProgramStories.gold)
   .add("Platinum", LoyaltyProgramStories.platinum);
@@ -483,6 +487,13 @@ storiesOf("BorrowLoanConfirm", module)
   .add("Stable coin", BorrowLoanConfirmStories.stableCoin)
   .add("USD - US Bank", BorrowLoanConfirmStories.usdUS)
   .add("USD - non-US Bank", BorrowLoanConfirmStories.usdNonUS);
+
+storiesOf("ConfirmExtendLoan", module)
+  .add("Stable coin", ConfirmExtendLoan.stableCoin)
+  .add("Dollar", ConfirmExtendLoan.dollar);
+
+storiesOf("ExtendLoanScreen", module)
+  .add("Regular", ExtendLoanScreen.regular)
 
 storiesOf("CellphoneEnter", module).add(
   "Regular",

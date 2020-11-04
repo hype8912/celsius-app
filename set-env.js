@@ -26,6 +26,8 @@ const ENV_FILES = {
 
   GOOGLE_SERVICES: "google-services.json",
   GOOGLE_INFO_PLIST: "GoogleService-Info.plist",
+  ANDROID_APPCENTER_CONFIG: "appcenter-config.json",
+  IOS_APPCENTER_CONFIG: "AppCenter-Config.plist",
 
   // These will be removed when we fix google packages
   GOOGLE_SERVICES_FALLBACK: "google-services.json",
@@ -70,12 +72,14 @@ function getDestination(fileKey) {
         __dirname,
         `android/app/src/main/res/values/${pathToFile}`
       );
-
+    case "ANDROID_APPCENTER_CONFIG":
+      return path.resolve(__dirname, `android/app/src/main/assets${pathToFile}`);
     case "GOOGLE_SERVICES":
     case "BUILD_GRADLE":
       return path.resolve(__dirname, `android/app/${pathToFile}`);
 
     case "GOOGLE_INFO_PLIST":
+    case "IOS_APPCENTER_CONFIG":
       return path.resolve(__dirname, `ios/${pathToFile}`);
 
     case "RCT_UI_IMAGE_VIEW_ANIMATED":

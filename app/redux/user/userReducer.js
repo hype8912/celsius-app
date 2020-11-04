@@ -130,6 +130,38 @@ export default (state = initialState, action) => {
         },
       };
 
+    case ACTIONS.ENABLE_TWO_FACTOR_SUCCESS:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          two_factor_enabled: true,
+        },
+        security: {
+          ...state.security,
+          twoFAStatus: {
+            isActive: true,
+            status: 'Active'
+          }
+        }
+      };
+    
+      case ACTIONS.DISABLE_TWO_FACTOR_SUCCESS:
+        return {
+          ...state,
+          profile: {
+            ...state.profile,
+            two_factor_enabled: false,
+          },
+          security: {
+            ...state.security,
+            twoFAStatus: {
+              isActive: false,
+              status: 'Inactive'
+            }
+          }
+        };
+
     case ACTIONS.TWITTER_GET_ACCESS_TOKEN:
       return {
         ...state,

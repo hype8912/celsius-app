@@ -54,9 +54,13 @@ function getTwoFactorSecret(pin) {
 function enableTwoFactor(code) {
   return async dispatch => {
     try {
+      dispatch(startApiCall(API.ENABLE_TWO_FACTOR));
       const success = await userSecurityService.enableTwoFactor(code);
+      dispatch({ type: ACTIONS.ENABLE_TWO_FACTOR_SUCCESS });
+
       return success;
     } catch (error) {
+      dispatch(apiError(API.ENABLE_TWO_FACTOR, error));
       dispatch(showMessage("error", error.msg));
     }
   };

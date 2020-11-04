@@ -114,6 +114,8 @@ import ExtendLoanScreen from "../components/screens/ExtendLoanScreen/ExtendLoanS
 import MarginCallOverviewScreen from "../components/screens/MarginCallOverviewScreen/MarginCallOverviewScreen";
 import SingleMarginCallScreen from "../components/screens/SingleMarginCallScreen/SingleMarginCallScreen";
 import BitWala from "../components/screens/BitWala/BitWala";
+import ConfirmExtendLoan from "../components/screens/ConfirmExtendLoan/ConfirmExtendLoan";
+
 
 export const screens = {
   /**
@@ -214,6 +216,7 @@ export const screens = {
   BorrowChooseLoan,
   BorrowCalculatorScreen,
   ExtendLoanScreen,
+  ConfirmExtendLoan,
   InterestPaymentOverviewScreen,
   MarginCallOverviewScreen,
   SingleMarginCallScreen,

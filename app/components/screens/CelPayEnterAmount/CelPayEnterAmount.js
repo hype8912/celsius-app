@@ -10,6 +10,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { CEL_PAY_TYPES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../organisms/CoinSwitch/CoinSwitch";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
+import { TIER_LEVELS } from "../../../constants/DATA";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
@@ -237,7 +238,7 @@ class CelPayEnterAmount extends Component {
           </View>
         </View>
 
-        {loyaltyInfo && loyaltyInfo.tier_level !== 0 && (
+        {loyaltyInfo && loyaltyInfo.tier.title !== TIER_LEVELS.NONE && (
           <LoseTierModal
             navigateToNextStep={this.navigateToNextStep}
             tierTitle={loyaltyInfo.tier.title}

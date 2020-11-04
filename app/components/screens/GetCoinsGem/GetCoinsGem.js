@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import qs from "qs";
 import _ from "lodash";
+import RNUxcam from 'react-native-ux-cam';
 
 import * as appActions from "../../../redux/actions";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
@@ -48,6 +49,11 @@ class GetCoinsGem extends Component {
     const { actions } = this.props;
 
     actions.getGemCoinAddress();
+    RNUxcam.pauseScreenRecording();
+  }
+
+  componentWillUnmount() {
+    RNUxcam.resumeScreenRecording();
   }
 
   onGemSuccess = async data => {
