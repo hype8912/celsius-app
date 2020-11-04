@@ -41,10 +41,9 @@ const loansService = {
  * @returns {Promise}
  *
  */
-function apply(loanApplication, verification) {
-  return axios.post(`${apiUrl}/loans/apply`, {
+function apply(loanApplication) {
+  return axios.post(`${apiUrl}/loans/application`, {
     ...loanApplication,
-    ...verification,
   });
 }
 

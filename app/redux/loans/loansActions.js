@@ -56,23 +56,9 @@ function applyForALoan() {
       loan_asset_short: formData.coin,
     };
     try {
-      const verification = {
-        pin: formData.pin,
-        twoFactorCode: formData.code,
-        payload: formData.payload,
-        signature: formData.signature,
-      };
 
-      const res = await loansService.apply(loanApplication, verification);
+      const res = await loansService.apply(loanApplication);
       dispatch({ type: ACTIONS.APPLY_FOR_LOAN_SUCCESS });
-
-      const allLoans = await loansService.getAllLoans();
-
-      dispatch({
-        type: ACTIONS.GET_ALL_LOANS_SUCCESS,
-        callName: API.GET_ALL_LOANS,
-        allLoans,
-      });
 
       dispatch(setActiveLoan(res.data.loan.id));
       dispatch(
@@ -82,6 +68,14 @@ function applyForALoan() {
         })
       );
       dispatch(showMessage("success", "Loan requested successfully!"));
+
+      const allLoans = await loansService.getAllLoans();
+
+      dispatch({
+        type: ACTIONS.GET_ALL_LOANS_SUCCESS,
+        callName: API.GET_ALL_LOANS,
+        allLoans,
+      });
 
       if (
         Number(formData.loanAmount) <= Number(automaticLoanLimit) &&
