@@ -39,6 +39,14 @@ class LoanTermsOfUse extends Component {
     customCenterComponent: { steps: 8, currentStep: 8, flowProgress: true },
   });
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: false
+    }
+  }
+
   componentDidMount() {
     const { actions } = this.props;
     actions.getLoanTermsOfUse();
@@ -90,17 +98,21 @@ class LoanTermsOfUse extends Component {
     };
   };
 
-  continue = () => {
+  continue = async () => {
     const { actions } = this.props;
+    this.setState({
+      loading: true
+    })
+    await actions.applyForALoan()
     mixpanelAnalytics.loanToUAgreed();
-
-    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-      onSuccess: () => actions.applyForALoan(),
-    });
+    this.setState({
+      loading: false
+    })
   };
 
   render() {
     const { formData, pdf, actions, loanTermsOfUse } = this.props;
+    const { loading } = this.state;
     const styles = LoanTermsOfUseStyle();
 
     if (!loanTermsOfUse || !pdf) return <LoadingScreen />;
@@ -201,6 +213,7 @@ class LoanTermsOfUse extends Component {
           onPress={this.continue}
           style={styles.requestButton}
           disabled={!canContinue}
+          loading={loading}
         >
           Request loan
         </CelButton>
