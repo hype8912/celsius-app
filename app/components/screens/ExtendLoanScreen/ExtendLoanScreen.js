@@ -56,7 +56,9 @@ class ExtendLoanScreen extends Component {
   }
 
   componentDidMount = async () => {
-    const { actions } = this.props;
+    const { actions, navigation } = this.props;
+    const id = navigation.getParam("id");
+    actions.setActiveLoan(id)
     actions.updateFormField("term_of_loan", 6)
     await actions.getLinkedBankAccount()
   }

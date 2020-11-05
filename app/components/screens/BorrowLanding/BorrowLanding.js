@@ -196,7 +196,7 @@ class BorrowLanding extends Component {
   };
 
   renderContent = () => {
-    const { xOffset, filterItem, isLoading } = this.state;
+    const { xOffset, filterItem } = this.state;
     const { actions, loyaltyInfo, activeLoan, callsInProgress } = this.props;
     const style = BorrowLandingStyle();
     const filteredLoans = this.handleFilter();
@@ -207,7 +207,7 @@ class BorrowLanding extends Component {
     const filter = filterItem || "ALL";
     return (
       <View>
-        {isLoading || loading ? (
+        {loading ? (
           <View
             style={{
               marginTop: 20,

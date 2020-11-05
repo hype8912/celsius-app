@@ -320,6 +320,7 @@ class LoanOverviewCard extends Component {
                   />
                 </View>
               </View>
+              { loan.loanPaymentSettings.interest_payment_asset !== "CEL" &&
               <View>
                 <Card
                   color={getColor(COLOR_KEYS.BACKGROUND)}
@@ -333,22 +334,27 @@ class LoanOverviewCard extends Component {
                       "USD"
                     )} if you paid interest in CEL.`}
                   </CelText>
-                  <CelText
-                    onPress={() =>
-                      navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
-                        id: loan.id,
-                        reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
-                      })
-                    }
-                    margin={"5 5 5 5"}
-                    type={"H6"}
-                    weight={"400"}
-                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-                  >
-                    Change payment type
-                  </CelText>
+                  {[LOAN_STATUS.ACTIVE].includes(
+                    loan.status
+                  ) && (
+                    <CelText
+                      onPress={() =>
+                        navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
+                          id: loan.id,
+                          reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
+                        })
+                      }
+                      margin={"5 5 5 5"}
+                      type={"H6"}
+                      weight={"400"}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+                    >
+                      Change payment type
+                    </CelText>
+                  )}
                 </Card>
               </View>
+              }
             </View>
           )}
 
@@ -363,11 +369,11 @@ class LoanOverviewCard extends Component {
               Loan Details
             </CelButton>
 
-            {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(
+            {[LOAN_STATUS.ACTIVE].includes(
               loan.status
             ) && <Separator vertical />}
 
-            {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(
+            {[LOAN_STATUS.ACTIVE].includes(
               loan.status
             ) && (
               <CelButton
