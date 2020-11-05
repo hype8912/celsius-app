@@ -23,8 +23,10 @@ function sendCsvEmail() {
  * @see https://documenter.getpostman.com/view/4207695/S11RLvpb#af790115-ee70-45a8-8693-93bbad0d2327
  *
  * @param {Object} query
- * @param {string} query.type - one of withdraw|received|in progress
- * @param {string} query.coin - eg. eth
+ * @param {string} query.type - one of received|withdraw|interest
+ * @param {string} query.coin - eg. BTC|ETH|XRP...
+ * @param {string} query.period - from TRANSACTION_FILTER_DATE
+ * @param {string} query.limit - limits number of transactions
  * @returns {Promise}
  */
 function getAll(query) {
