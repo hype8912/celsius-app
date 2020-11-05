@@ -33,12 +33,25 @@ class ChangePin extends Component {
   componentDidMount() {
     const { actions } = this.props;
     actions.updateFormFields({
+      pin: "",
       newPin: "",
       newPinConfirm: "",
       pinCreated: false,
       loading: false,
     });
   }
+
+  getVerificationType = () => {
+    const { user, navigation } = this.props;
+
+    // handling 426 error - PIN || 2FA
+    const typeFromNavigation = navigation.getParam("verificationType", null);
+
+    const typeFromUser = user.two_factor_enabled ? "2FA" : "PIN";
+    return typeFromNavigation || typeFromUser;
+  };
+
+  shouldShow2FA = () => this.getVerificationType() === "2FA";
 
   handlePINChange = newValue => {
     const { actions, user } = this.props;
@@ -55,6 +68,7 @@ class ChangePin extends Component {
     if (newValue.length === 6 && !pinScoreNotPassed) {
       this.handlePinFinish(newValue);
     }
+    // actions.updateFormField("pin", "")
   };
 
   handlePinFinish = async newValue => {
@@ -86,7 +100,7 @@ class ChangePin extends Component {
   };
 
   render() {
-    const {  user, formData } = this.props;
+    const {  user, formData, actions } = this.props;
     const field = !formData.pinCreated ? "newPin" : "newPinConfirm";
     const headingText = !formData.pinCreated
       ? "Enter your 6-digits PIN"
@@ -99,7 +113,7 @@ class ChangePin extends Component {
     const style = ChangePinStyle();
 
     const isLoading = _.isEmpty(formData) || formData.loading;
-
+    console.log("changePin: ", { formData });
     return (
       <RegularLayout padding="0 0 0 0" fabType={"hide"}>
         {isLoading ? (
@@ -121,7 +135,15 @@ class ChangePin extends Component {
 
               {/* <TouchableOpacity onPress={actions.toggleKeypad}>*/}
               <View>
-                <HiddenField value={formData[field]} length={6} />
+                <HiddenField
+                  value={formData && formData.code || formData.pin || ""}
+                  length={6}
+                  loading={formData && !formData.loading}
+                  updateFormField={actions.updateFormField}
+                  shouldShow2FA={this.shouldShow2FA}
+                  handle2FAChange={this.handle2FAChange}
+                  handlePINChange={this.handlePINChange}
+                />
               </View>
               {/* </TouchableOpacity>*/}
 

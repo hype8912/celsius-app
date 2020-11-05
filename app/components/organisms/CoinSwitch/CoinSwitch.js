@@ -204,11 +204,6 @@ class CoinSwitch extends Component {
             </View>
 
           </View>
-            <PredefinedAmounts
-              data={PREDEFINED_AMOUNTS}
-              onSelect={this.onPressPredefinedAmount}
-              activePeriod={"activePeriod"}
-            />
         </View>
     );
   };

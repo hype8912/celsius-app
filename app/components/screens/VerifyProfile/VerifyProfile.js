@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   Clipboard,
   BackHandler,
-  Image, TextInput,
+  Image,
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -15,7 +15,7 @@ import VerifyProfileStyle from "./VerifyProfile.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import {
-  BIOMETRIC_ERRORS, KEYBOARD_TYPE,
+  BIOMETRIC_ERRORS,
   MODALS,
 } from "../../../constants/UI";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
@@ -31,10 +31,7 @@ import {
 import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
 import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
 import { SCREENS } from "../../../constants/SCREENS";
-import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-
-const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
@@ -109,10 +106,16 @@ class VerifyProfile extends Component {
   }
 
   componentWillUnmount() {
+    const { actions } = this.props
     BackHandler.removeEventListener(
       "hardwareBackPress",
       this.handleBackButtonClick
     );
+
+    actions.updateFormFields({
+      pin: "",
+      code: "",
+    })
   }
 
   onCheckSuccess = async () => {
@@ -299,39 +302,22 @@ class VerifyProfile extends Component {
     }
   };
 
-  changeInputText = num => {
-    const { actions } = this.props;
-    actions.updateFormField(this.shouldShow2FA() ? "code" : "pin", num);
-    if (num.length === 6) {
-      if (this.shouldShow2FA()) this.handle2FAChange(num)
-
-      this.handlePINChange(num)
-    }
-  };
-
   renderDots = length => {
-    const { formData } = this.props;
+    const { formData, actions } = this.props;
     const { verificationError } = this.state;
     const pinLength = length || 6;
 
     return (
-      <TouchableOpacity onPress={() => this.inputRef.focus()}>
-        <TextInput
-          keyboardType={KEYBOARD_TYPE.NUMBER_PAD}
-          ref={input => {
-            this.inputRef = input;
-          }}
-          onChangeText={(num) => this.changeInputText(num)}
-          style={{height: 0, opacity: 0}}
-          autoFocus={!STORYBOOK}
-          editable={formData && !formData.loading}
-        />
         <HiddenField
-          value={formData && formData.code}
+          value={formData && formData.code || formData.pin || ""}
           error={verificationError}
           length={pinLength}
+          loading={formData && !formData.loading}
+          updateFormField={actions.updateFormField}
+          shouldShow2FA={this.shouldShow2FA}
+          handle2FAChange={this.handle2FAChange}
+          handlePINChange={this.handlePINChange}
         />
-      </TouchableOpacity>
     );
   };
 
