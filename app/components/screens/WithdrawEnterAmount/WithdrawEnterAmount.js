@@ -12,7 +12,6 @@ import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../organisms/CoinSwitch/CoinSwitch";
 import WithdrawalInfoModal from "../../modals/WithdrawalInfoModal/WithdrawalInfoModal";
 import { KYC_STATUSES, TIER_LEVELS } from "../../../constants/DATA";
-import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 import { openModal } from "../../../redux/ui/uiActions";
 import store from "../../../redux/store";
 import StaticScreen from "../StaticScreen/StaticScreen";
