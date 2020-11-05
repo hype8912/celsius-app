@@ -99,7 +99,7 @@ class LoanOverviewCard extends Component {
       previous5Payments = previousPayments.slice(-5);
     }
 
-    const canExtend = loan.installments_to_be_paid && loan.installments_to_be_paid.total && Number(loan.installments_to_be_paid.total) === 0;
+    const canExtend = loan.installments_to_be_paid && loan.installments_to_be_paid.total && Number(loan.installments_to_be_paid.total) === 0 && loan.loanPaymentSettings.loan_extension_allowed;
 
     const discountedInterest = (1 - celDiscount) * loan.monthly_payment;
     const savedAmount = loan.monthly_payment - discountedInterest;
