@@ -122,8 +122,8 @@ class TransactionsIntersection extends Component {
     );
 
     if (
-      loadingTransactionDetails ||
-      (transaction && transaction.id !== transactionId) ||
+      (loadingTransactionDetails &&
+      (transaction && transaction.id !== transactionId)) ||
       !transaction
     )
       return (
