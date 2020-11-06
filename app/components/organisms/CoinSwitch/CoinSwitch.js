@@ -2,8 +2,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, TouchableOpacity, TextInput } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import BigNumber from "bignumber.js";
+import NumericInput from '@wwdrew/react-native-numeric-textinput'
 
 import CoinSwitchStyle from "./CoinSwitch.styles";
 import CelText from "../../atoms/CelText/CelText";
@@ -15,8 +16,6 @@ import {
   getFontSize, widthPercentageToDP,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { KEYBOARD_TYPE } from "../../../constants/UI";
-import { STORYBOOK } from "../../../../celsius-app-creds/beta-storybook/constants";
 import PredefinedAmounts from "../PredefinedAmounts/PredefinedAmounts";
 import { PREDEFINED_AMOUNTS } from "../../../constants/DATA";
 import * as appActions from "../../../redux/actions";
@@ -53,13 +52,15 @@ class CoinSwitch extends Component {
     if (isUsd) {
       const amountCrypto  = new BigNumber(amount).dividedBy(coinRate)
       actions.updateFormFields({
-        "amountUsd": formatter.amountInputFieldFormat(amount),
+        // "amountUsd": formatter.amountInputFieldFormat(amount),
+        "amountUsd": amount,
         "amountCrypto": amountCrypto.toString()
       })
     } else {
       const amountUsd  = new BigNumber(amount).multipliedBy(coinRate)
       actions.updateFormFields({
-        "amountCrypto": formatter.amountInputFieldFormat(amount),
+        // "amountCrypto": formatter.amountInputFieldFormat(amount),
+        "amountCrypto": amount,
         "amountUsd": amountUsd.toString()
       })
     }
@@ -80,7 +81,7 @@ class CoinSwitch extends Component {
         actions.updateFormFields({
           "amountUsd": walletSummaryObj.amount_usd.toString(),
           "amountCrypto": walletSummaryObj.amount_usd.dividedBy(coinRate).toString()
-      })
+        })
       } else {
         actions.updateFormFields({
           "amountCrypto": walletSummaryObj.amount.toString(),
@@ -129,82 +130,99 @@ class CoinSwitch extends Component {
 
     const style = CoinSwitchStyle();
     return (
-        <View style={style.container}>
-          <View style={style.enterAmount}>
-            {!isUsd ? (
-              <Icon
-                name={`Icon${coin}`}
-                width="40"
-                height="40"
-                fill={COLOR_KEYS.HEADLINE}
-                style={{ marginBottom: 28 }}
-              />
-            ) : (
-              <View style={{
-                width: 50,
-              }}>
-                <CelText type={"H2"} weight={"600"} margin={"0 0 28 0"}>USD</CelText>
-              </View>
-
-            )}
-            <View>
-              <View
-                style={{
-                  height: getScaledFont(getFontSize("H1")),
-                  width: widthPercentageToDP("58%"),
-                  justifyContent: "center",
-                  marginVertical: 10,
-                }}
-              >
-                <TextInput
-                  style={[style.inputField, {
-                    fontSize: upperValue.length < 10 ? 35 : 25,
-                    color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
-                  }]}
-                  placeholderTextColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-                  placeholder={"0.00"}
-                  textAlign={"center"}
-                  allowFontScaling
-                  maxLength={20}
-                  keyboardType={KEYBOARD_TYPE.DECIMAL_PAD}
-                  autoFocus={STORYBOOK}
-                  value={upperValue}
-                  onBlur={() => this.handleOnBlur()}
-                  onChangeText={(amount) => this.handleEnteringAmount(amount)}
-                />
-              </View>
-              <View
-                style={{
-                  height: getScaledFont(getFontSize("H2")),
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <CelText
-                  align="center"
-                  type={lowerValue.length < 20 ? "H2" : "H5"}
-                  color={getColor(COLOR_KEYS.PARAGRAPH)}
-                >
-                  {doubleTilde && "≈"} {isUsd ? formatter.crypto(lowerValue, coin) : formatter.fiat(lowerValue, "USD")}
-                </CelText>
-
-              </View>
+      <View style={style.container}>
+        <View style={style.enterAmount}>
+          {!isUsd ? (
+            <Icon
+              name={`Icon${coin}`}
+              width="40"
+              height="40"
+              fill={COLOR_KEYS.HEADLINE}
+              style={{ marginBottom: 28 }}
+            />
+          ) : (
+            <View style={{
+              width: 50,
+            }}>
+              <CelText type={"H2"} weight={"600"} margin={"0 0 28 0"}>USD</CelText>
             </View>
 
+          )}
+          <View>
+            <View
+              style={{
+                height: getScaledFont(getFontSize("H1")),
+                width: widthPercentageToDP("58%"),
+                justifyContent: "center",
+                marginVertical: 10,
 
-            <View style={style.switchButton}>
-              <TouchableOpacity onPress={() => actions.updateFormField("isUsd", !isUsd)}>
-                <Icon
-                  name="Switch"
-                  width="25"
-                  height="25"
-                  fill={COLOR_KEYS.HEADLINE}
-                />
-              </TouchableOpacity>
+              }}
+            >
+               <NumericInput
+                onUpdate={(amount) => this.handleEnteringAmount(amount)}
+                decimalPlaces={4}
+                value={upperValue || "0.00"}
+                useGrouping={false}
+                style={[style.inputField, {
+                  textAlign: "center",
+                  fontSize: upperValue.length < 10 ? 35 : 25,
+                  color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+                }]}
+               />
+              {/* <TextInput*/}
+              {/*  style={[style.inputField, {*/}
+              {/*    fontSize: upperValue.length < 10 ? 35 : 25,*/}
+              {/*    color: getColor(COLOR_KEYS.PRIMARY_BUTTON),*/}
+              {/*  }]}*/}
+              {/*  placeholderTextColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}*/}
+              {/*  placeholder={"0.00"}*/}
+              {/*  textAlign={"center"}*/}
+              {/*  allowFontScaling*/}
+              {/*  maxLength={20}*/}
+              {/*  keyboardType={KEYBOARD_TYPE.NUMERIC}*/}
+              {/*  autoFocus={STORYBOOK}*/}
+              {/*  value={upperValue}*/}
+              {/*  onBlur={() => this.handleOnBlur()}*/}
+              {/*  onChangeText={(amount) => this.handleEnteringAmount(amount)}*/}
+              {/* />*/}
             </View>
+            <View
+              style={{
+                height: getScaledFont(getFontSize("H2")),
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CelText
+                align="center"
+                type={lowerValue.length < 20 ? "H2" : "H5"}
+                color={getColor(COLOR_KEYS.PARAGRAPH)}
+              >
+                {doubleTilde && "≈"} {isUsd ? formatter.crypto(lowerValue, coin) : formatter.fiat(lowerValue, "USD")}
+              </CelText>
 
+            </View>
           </View>
+
+
+          <View style={style.switchButton}>
+            <TouchableOpacity onPress={() => actions.updateFormField("isUsd", !isUsd)}>
+              <Icon
+                name="Switch"
+                width="25"
+                height="25"
+                fill={COLOR_KEYS.HEADLINE}
+              />
+            </TouchableOpacity>
+          </View>
+
         </View>
+        <PredefinedAmounts
+          data={PREDEFINED_AMOUNTS}
+          onSelect={this.onPressPredefinedAmount}
+          activePeriod={"activePeriod"}
+        />
+      </View>
     );
   };
 }
