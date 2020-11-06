@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Linking, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -90,7 +90,11 @@ class TaxReport extends Component {
         />
         <View style={style.footer}>
           <CelText align="center">Need help?</CelText>
-          <CelText align="center" link>
+          <CelText
+            align="center"
+            link
+            onPress={() => Linking.openURL("mailto:app@celsius.network")}
+          >
             Contact Support
           </CelText>
         </View>
