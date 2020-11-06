@@ -15,7 +15,7 @@ import MissingInfoCard from "../../atoms/MissingInfoCard/MissingInfoCard";
 import { KYC_STATUSES } from "../../../constants/DATA";
 import KYCTrigger from "../../molecules/KYCTrigger/KYCTrigger";
 import ExpandableItem from "../../molecules/ExpandableItem/ExpandableItem";
-import { hasPassedKYC } from "../../../utils/user-util/user-util";
+import { hasPassedKYC, isUSResident } from "../../../utils/user-util/user-util";
 import ProfileStyle from "./Profile.styles";
 import Icon from "../../atoms/Icon/Icon";
 import Constants from "../../../../constants";
@@ -260,6 +260,16 @@ class Profile extends Component {
             <CelText margin={"0 0 20 0"}>
               Receive your total transaction history report via email.
             </CelText>
+
+            {isUSResident() && (
+              <IconButton
+                onPress={() => actions.navigateTo(SCREENS.TAX_REPORT)}
+                margin="0 0 20 0"
+                icon="TaxReport"
+              >
+                Tax Report
+              </IconButton>
+            )}
 
             <IconButton
               onPress={() => this.sendCsvRequest()}
