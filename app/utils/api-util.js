@@ -237,7 +237,7 @@ async function responseInterceptor(res) {
       true
     );
     // eslint-disable-next-line no-console
-    console.log({ [res.config.url]: durations[res.config.url] });
+    // console.log({ [res.config.url]: durations[res.config.url] });
   }
 
   if (
@@ -398,7 +398,6 @@ async function handle426(err, reqConfig) {
   return new Promise((resolve, reject) => {
     // get active screen before rerouting
     const { activeScreen } = store.getState().nav;
-
     if (activeScreen !== SCREENS.VERIFY_PROFILE) {
       store.dispatch(
         actions.navigateTo(SCREENS.VERIFY_PROFILE, {

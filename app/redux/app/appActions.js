@@ -61,7 +61,7 @@ function loadCelsiusAssets() {
 // let startOfBackgroundTimer;
 
 function handleAppStateChange(nextAppState) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { profile } = getState().user;
     const { appState } = getState().app;
     // const { activeScreen } = getState().nav;
@@ -74,8 +74,9 @@ function handleAppStateChange(nextAppState) {
 
     if (profile && profile.has_pin) {
       if (nextAppState === "active") {
+        await appUtil.pollBackendStatus();
+        await dispatch(actions.getLoyaltyInfo());
         dispatch(actions.getUserStatus());
-        dispatch(actions.getLoyaltyInfo());
         dispatch(actions.getInitialCelsiusData());
         dispatch(actions.getCurrencyRates());
         dispatch(actions.closeModal());

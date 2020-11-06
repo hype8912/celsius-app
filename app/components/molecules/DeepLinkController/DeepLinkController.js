@@ -30,7 +30,7 @@ appsFlyerUtil.initSDK();
 class DeepLinkController extends Component {
 
   componentDidMount() {
-    this.handleBranchDeepLinks()
+    this.branchDeepLinkListener()
   }
 
  async componentDidUpdate(prevProps) {
@@ -42,9 +42,11 @@ class DeepLinkController extends Component {
       if (Platform.OS === "ios") {
         appsFlyer.trackAppLaunch();
       }
-      setTimeout(async ()=>{
+      // When app is in background mode, handle link after 5 seconds.
+      const timeout = setTimeout(async ()=>{
         await handleDeepLink()
-      }, 2000 )
+        clearTimeout(timeout)
+      }, 5000 )
     }
   }
 
@@ -52,8 +54,7 @@ class DeepLinkController extends Component {
   /**
    * Initialize & Subscribe to Branch
    */
-  handleBranchDeepLinks() {
-    console.log('usao u handleBranchDeepLinks')
+  branchDeepLinkListener() {
     try {
       Branch.subscribe(async deepLink => {
         if (
@@ -72,7 +73,7 @@ class DeepLinkController extends Component {
         await addDeepLinkData(deepLinkData)
       });
     } catch (error) {
-      mixpanelAnalytics.logError("branchUtil.initBranch", error);
+      mixpanelAnalytics.logError("branchDeepLinkListener", error);
     }
   }
 

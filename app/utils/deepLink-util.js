@@ -6,7 +6,6 @@ import store from "../redux/store";
 export { addDeepLinkData, handleDeepLink };
 
 async function addDeepLinkData(deepLinkData) {
-  console.log('deepLinkData: ', deepLinkData)
   const deepLink = JSON.stringify(deepLinkData)
   await setSecureStoreKey(STORAGE_KEYS.DEEPLINK_DATA, deepLink)
 }
@@ -14,7 +13,6 @@ async function addDeepLinkData(deepLinkData) {
 async function handleDeepLink() {
     const deepLink  = await getSecureStoreKey(STORAGE_KEYS.DEEPLINK_DATA);
     const deepLinkData = JSON.parse(deepLink)
-    console.log('handleDeepLInkData: ', deepLinkData)
     const user = store.getState().user.profile;
     if (deepLinkData) {
       if (!deepLinkData.type) return;
@@ -42,5 +40,4 @@ async function handleDeepLink() {
 
 async function clearDeepLinkData() {
   await deleteSecureStoreKey(STORAGE_KEYS.DEEPLINK_DATA)
-  console.log('clearDeepLink')
 }
