@@ -2,8 +2,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, TouchableOpacity, TextInput } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import BigNumber from "bignumber.js";
+import NumericInput from '@wwdrew/react-native-numeric-textinput'
 
 import CoinSwitchStyle from "./CoinSwitch.styles";
 import CelText from "../../atoms/CelText/CelText";
@@ -15,12 +16,9 @@ import {
   getFontSize, widthPercentageToDP,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-
+import PredefinedAmounts from "../PredefinedAmounts/PredefinedAmounts";
+import { PREDEFINED_AMOUNTS } from "../../../constants/DATA";
 import * as appActions from "../../../redux/actions";
-import { KEYBOARD_TYPE } from "../../../constants/UI";
-import Constants from "../../../../constants";
-
-const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
@@ -68,13 +66,51 @@ class CoinSwitch extends Component {
     }
   }
 
-  // handleOnBlur = () => {
-  //   const { formData, actions, coin } = this.props
-  //   actions.updateFormFields({
-  //     "amountUsd": formatter.fiat(formatter.amountInputFieldFormat(formData.amountUsd), "USD", { symbol: "" }),
-  //     "amountCrypto": formatter.crypto(formatter.amountInputFieldFormat(formData.amountCrypto), coin, { symbol: "" })
-  //   })
-  // }
+  onPressPredefinedAmount = ({ label, value }) => {
+    const { formData, walletSummary, currencyRatesShort, actions } = this.props;
+
+    if (!formData.coin) {
+      return actions.showMessage("info", "Please select a coin to withdraw.");
+    }
+    const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
+    const walletSummaryObj = walletSummary.coins.find(
+      c => c.short === formData.coin.toUpperCase()
+    );
+    if (label === "ALL") {
+      if (formData.isUsd) {
+        actions.updateFormFields({
+          "amountUsd": walletSummaryObj.amount_usd.toString(),
+          "amountCrypto": walletSummaryObj.amount_usd.dividedBy(coinRate).toString()
+        })
+      } else {
+        actions.updateFormFields({
+          "amountCrypto": walletSummaryObj.amount.toString(),
+          "amountUsd": walletSummaryObj.amount.multipliedBy(coinRate).toString()
+        })
+      }
+      return
+    }
+
+    if (formData.isUsd) {
+      actions.updateFormFields({
+        "amountUsd": value,
+        "amountCrypto": new BigNumber(value).dividedBy(coinRate).toString()
+      })
+    } else {
+      actions.updateFormFields({
+        "amountCrypto": new BigNumber(value).dividedBy(coinRate).toString(),
+        "amountUsd": value,
+      })
+    }
+  };
+
+  handleOnBlur = () => {
+    const { formData, actions, coin } = this.props
+    actions.updateFormFields({
+      "amountUsd": formatter.fiat(formatter.amountInputFieldFormat(formData.amountUsd), "USD", { symbol: "" }),
+      "amountCrypto": formatter.crypto(formatter.amountInputFieldFormat(formData.amountCrypto), coin, { symbol: "" })
+    })
+  }
 
   render() {
     const {
@@ -91,6 +127,7 @@ class CoinSwitch extends Component {
     const lowerValue = !isUsd
       ? `${amountUsd || ""}`
       : `${amountCrypto || ""}`;
+
     const style = CoinSwitchStyle();
     return (
       <View style={style.container}>
@@ -121,21 +158,33 @@ class CoinSwitch extends Component {
 
               }}
             >
-             <TextInput
-              style={[style.inputField, {
-                fontSize: upperValue.length < 10 ? 35 : 25,
-                color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
-              }]}
-              placeholderTextColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-              placeholder={"0.00"}
-              textAlign={"center"}
-              allowFontScaling
-              maxLength={20}
-              keyboardType={KEYBOARD_TYPE.NUMERIC}
-              autoFocus={!STORYBOOK}
-              value={upperValue}
-              onChangeText={(amount) => this.handleEnteringAmount(amount)}
-             />
+               <NumericInput
+                onUpdate={(amount) => this.handleEnteringAmount(amount)}
+                decimalPlaces={4}
+                value={upperValue || "0.00"}
+                useGrouping={false}
+                style={[style.inputField, {
+                  textAlign: "center",
+                  fontSize: upperValue.length < 10 ? 35 : 25,
+                  color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+                }]}
+               />
+              {/* <TextInput*/}
+              {/*  style={[style.inputField, {*/}
+              {/*    fontSize: upperValue.length < 10 ? 35 : 25,*/}
+              {/*    color: getColor(COLOR_KEYS.PRIMARY_BUTTON),*/}
+              {/*  }]}*/}
+              {/*  placeholderTextColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}*/}
+              {/*  placeholder={"0.00"}*/}
+              {/*  textAlign={"center"}*/}
+              {/*  allowFontScaling*/}
+              {/*  maxLength={20}*/}
+              {/*  keyboardType={KEYBOARD_TYPE.NUMERIC}*/}
+              {/*  autoFocus={STORYBOOK}*/}
+              {/*  value={upperValue}*/}
+              {/*  onBlur={() => this.handleOnBlur()}*/}
+              {/*  onChangeText={(amount) => this.handleEnteringAmount(amount)}*/}
+              {/* />*/}
             </View>
             <View
               style={{
@@ -168,6 +217,11 @@ class CoinSwitch extends Component {
           </View>
 
         </View>
+        <PredefinedAmounts
+          data={PREDEFINED_AMOUNTS}
+          onSelect={this.onPressPredefinedAmount}
+          activePeriod={"activePeriod"}
+        />
       </View>
     );
   };
