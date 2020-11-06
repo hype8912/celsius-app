@@ -115,6 +115,7 @@ import MarginCallOverviewScreen from "../components/screens/MarginCallOverviewSc
 import SingleMarginCallScreen from "../components/screens/SingleMarginCallScreen/SingleMarginCallScreen";
 import BitWala from "../components/screens/BitWala/BitWala";
 import ConfirmExtendLoan from "../components/screens/ConfirmExtendLoan/ConfirmExtendLoan";
+import TaxReport from "../components/screens/TaxReport/TaxReport";
 
 
 export const screens = {
@@ -254,6 +255,7 @@ export const screens = {
   SelectCountry,
   SelectState,
   PersonalInformation,
+  TaxReport,
 
   /**
    * Settings
