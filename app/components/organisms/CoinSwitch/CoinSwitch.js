@@ -84,7 +84,6 @@ class CoinSwitch extends Component {
       amountCrypto,
       doubleTilde,
       actions,
-      formData
     } = this.props;
     const upperValue = isUsd
       ? `${amountUsd || ""}`
@@ -92,7 +91,6 @@ class CoinSwitch extends Component {
     const lowerValue = !isUsd
       ? `${amountUsd || ""}`
       : `${amountCrypto || ""}`;
-    console.log({ formData }, { coin });
     const style = CoinSwitchStyle();
     return (
       <View style={style.container}>

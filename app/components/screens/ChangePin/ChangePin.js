@@ -113,7 +113,6 @@ class ChangePin extends Component {
     const style = ChangePinStyle();
 
     const isLoading = _.isEmpty(formData) || formData.loading;
-    console.log("changePin: ", { formData });
     return (
       <RegularLayout padding="0 0 0 0" fabType={"hide"}>
         {isLoading ? (

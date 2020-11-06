@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, TextInput } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import BigNumber from "bignumber.js";
@@ -8,7 +8,7 @@ import * as appActions from "../../../redux/actions";
 import GetCoinsEnterAmountStyle from "./GetCoinsEnterAmount.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
-import { MODALS } from "../../../constants/UI";
+import { KEYBOARD_TYPE, MODALS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
@@ -24,11 +24,13 @@ import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import store from "../../../redux/store";
 import GetCoinsEnterAmountInfoModal from "../../modals/GetCoinsEnterAmountInfoModal/GetCoinsEnterAmountInfoModal";
+import Constants from "../../../../constants";
+
+const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
     formData: state.forms.formData,
-    keypadOpen: state.ui.isKeypadOpen,
     currencyRatesShort: state.currencies.currencyRatesShort,
     buyCoinsSettings: state.generalData.buyCoinsSettings,
     depositCompliance: state.compliance.deposit,
@@ -270,7 +272,7 @@ class GetCoinsEnterAmount extends Component {
 
     if (isFiatAmountArea && formData.isFiat) return;
     if (!isFiatAmountArea && !formData.isFiat) return;
-
+    this.inputRef.focus()
     actions.updateFormFields({
       isFiat: isFiatAmountArea,
       amountFiat: "0",
@@ -297,6 +299,16 @@ class GetCoinsEnterAmount extends Component {
 
     return areCorrect;
   };
+
+  changeInputText = num => {
+    const { formData, actions } = this.props
+
+    if (formData.isFiat) {
+      actions.updateFormField("amountFiat", num)
+      return
+    }
+    actions.updateFormField("amountCrypto", num)
+  }
 
   render() {
     const { actions, formData, callInProgress, buyCoinsSettings } = this.props;
@@ -429,6 +441,16 @@ class GetCoinsEnterAmount extends Component {
         </CelButton>
         <GetCoinsEnterAmountInfoModal close={actions.closeModal} />
         <GetCoinsConfirmModal />
+        <TextInput
+          keyboardType={KEYBOARD_TYPE.NUMBER_PAD}
+          ref={input => {
+            this.inputRef = input;
+          }}
+          onChangeText={(num) => this.changeInputText(num)}
+          style={{height: 0, opacity: 0}}
+          autoFocus={!STORYBOOK}
+          editable={!isFetchingQuotes}
+        />
       </RegularLayout>
     );
   }
