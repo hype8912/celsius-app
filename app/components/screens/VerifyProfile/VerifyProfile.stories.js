@@ -10,7 +10,13 @@ const initialState = {
     profile: mockUserStore.profile.postman13,
     appSettings: mockUserStore.appSettings.postman13,
   },
-  forms: {},
+  forms: {
+    formData: {
+      pin: "",
+      code: "",
+      isUsd: true,
+    },
+  },
 };
 
 const navigationProps = {

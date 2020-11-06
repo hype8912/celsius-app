@@ -24,7 +24,6 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
     currencies: state.currencies.rates,
     interestCompliance: state.compliance.interest,
     currencyRatesShort: state.currencies.currencyRatesShort,
-    keypadOpen: state.ui.isKeypadOpen,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -284,7 +283,7 @@ class InterestCalculator extends Component {
 
   render() {
     const { coinSelectItems } = this.state;
-    const { actions, formData, keypadOpen, showCard, theme } = this.props;
+    const { actions, formData, showCard, theme } = this.props;
 
     const selectedCoin = formData.coin || "BTC";
 
@@ -314,11 +313,6 @@ class InterestCalculator extends Component {
             noUsdDecimals
             coin={selectedCoin}
             theme={theme}
-            amountColor={
-              keypadOpen
-                ? getColor(COLOR_KEYS.LINK)
-                : getColor(COLOR_KEYS.HEADLINE)
-            }
           />
         </View>
 

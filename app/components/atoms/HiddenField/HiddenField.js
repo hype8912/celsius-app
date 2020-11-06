@@ -60,8 +60,7 @@ class HiddenField extends Component {
         handlePINChange(num)
       }
     };
-    console.log({ value})
-  ;
+
     let i = 1;
     while (i <= length) {
       circles.push(

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import BigNumber from "bignumber.js";
 
 import * as appActions from "../../../redux/actions";
 import CelPayEnterAmountStyle from "./CelPayEnterAmount.styles";
@@ -10,12 +11,13 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { CEL_PAY_TYPES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../organisms/CoinSwitch/CoinSwitch";
 import BalanceView from "../../atoms/BalanceView/BalanceView";
-import { TIER_LEVELS } from "../../../constants/DATA";
+import { PREDEFINED_AMOUNTS, TIER_LEVELS } from "../../../constants/DATA";
 import celUtilityUtil from "../../../utils/cel-utility-util";
 import LoseTierModal from "../../modals/LoseTierModal/LoseTierModal";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { SCREENS } from "../../../constants/SCREENS";
+import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 
 @connect(
   state => ({
@@ -178,6 +180,45 @@ class CelPayEnterAmount extends Component {
     );
   };
 
+  // NOTE: move to util
+  onPressPredefinedAmount = ({ label, value }) => {
+    const { formData, walletSummary, currencyRatesShort, actions } = this.props;
+
+    if (!formData.coin) {
+      return actions.showMessage("info", "Please select a coin to withdraw.");
+    }
+    const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
+    const walletSummaryObj = walletSummary.coins.find(
+      c => c.short === formData.coin.toUpperCase()
+    );
+    if (label === "ALL") {
+      if (formData.isUsd) {
+        actions.updateFormFields({
+          "amountUsd": walletSummaryObj.amount_usd.toString(),
+          "amountCrypto": walletSummaryObj.amount_usd.dividedBy(coinRate).toString()
+        })
+      } else {
+        actions.updateFormFields({
+          "amountCrypto": walletSummaryObj.amount.toString(),
+          "amountUsd": walletSummaryObj.amount.multipliedBy(coinRate).toString()
+        })
+      }
+      return
+    }
+
+    if (formData.isUsd) {
+      actions.updateFormFields({
+        "amountUsd": value,
+        "amountCrypto": new BigNumber(value).dividedBy(coinRate).toString()
+      })
+    } else {
+      actions.updateFormFields({
+        "amountCrypto": new BigNumber(value).dividedBy(coinRate).toString(),
+        "amountUsd": value,
+      })
+    }
+  };
+
   render() {
     const { coinSelectItems } = this.state;
     const {
@@ -188,7 +229,6 @@ class CelPayEnterAmount extends Component {
       currencyRatesShort
     } = this.props;
     const coinRate = currencyRatesShort[formData.coin && formData.coin.toLowerCase() || "BTC"];
-
     const style = CelPayEnterAmountStyle();
     if (!formData.coin) return null;
     const coinData = walletSummary.coins.filter(
@@ -224,7 +264,11 @@ class CelPayEnterAmount extends Component {
                 coinRate={coinRate}
               />
             </View>
-
+            <PredefinedAmounts
+              data={PREDEFINED_AMOUNTS}
+              onSelect={this.onPressPredefinedAmount}
+              activePeriod={"activePeriod"}
+            />
             <CelButton
               margin="40 0 0 0"
               disabled={

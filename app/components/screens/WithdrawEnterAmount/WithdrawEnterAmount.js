@@ -11,7 +11,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import { EMPTY_STATES, MODALS } from "../../../constants/UI";
 import CoinSwitch from "../../organisms/CoinSwitch/CoinSwitch";
 import WithdrawalInfoModal from "../../modals/WithdrawalInfoModal/WithdrawalInfoModal";
-import { KYC_STATUSES, TIER_LEVELS } from "../../../constants/DATA";
+import { KYC_STATUSES, PREDEFINED_AMOUNTS, TIER_LEVELS } from "../../../constants/DATA";
 import { openModal } from "../../../redux/ui/uiActions";
 import store from "../../../redux/store";
 import StaticScreen from "../StaticScreen/StaticScreen";
@@ -28,6 +28,7 @@ import { renderHodlEmptyState } from "../../../utils/hodl-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
 import { SCREENS } from "../../../constants/SCREENS";
+import PredefinedAmounts from "../../organisms/PredefinedAmounts/PredefinedAmounts";
 
 @connect(
   state => ({
@@ -135,6 +136,45 @@ class WithdrawEnterAmount extends Component {
       actions.navigateTo(SCREENS.WITHDRAW_CREATE_ADDRESS);
     }
     if (modal) actions.closeModal();
+  };
+
+  // NOTE: move to util
+  onPressPredefinedAmount = ({ label, value }) => {
+    const { formData, walletSummary, currencyRatesShort, actions } = this.props;
+
+    if (!formData.coin) {
+      return actions.showMessage("info", "Please select a coin to withdraw.");
+    }
+    const coinRate = currencyRatesShort[formData.coin.toLowerCase()];
+    const walletSummaryObj = walletSummary.coins.find(
+      c => c.short === formData.coin.toUpperCase()
+    );
+    if (label === "ALL") {
+      if (formData.isUsd) {
+        actions.updateFormFields({
+          "amountUsd": walletSummaryObj.amount_usd.toString(),
+          "amountCrypto": walletSummaryObj.amount_usd.dividedBy(coinRate).toString()
+        })
+      } else {
+        actions.updateFormFields({
+          "amountCrypto": walletSummaryObj.amount.toString(),
+          "amountUsd": walletSummaryObj.amount.multipliedBy(coinRate).toString()
+        })
+      }
+      return
+    }
+
+    if (formData.isUsd) {
+      actions.updateFormFields({
+        "amountUsd": value,
+        "amountCrypto": new BigNumber(value).dividedBy(coinRate).toString()
+      })
+    } else {
+      actions.updateFormFields({
+        "amountCrypto": new BigNumber(value).dividedBy(coinRate).toString(),
+        "amountUsd": value,
+      })
+    }
   };
 
   render() {
@@ -247,6 +287,11 @@ class WithdrawEnterAmount extends Component {
                 />
               )}
             </View>
+            <PredefinedAmounts
+              data={PREDEFINED_AMOUNTS}
+              onSelect={this.onPressPredefinedAmount}
+              activePeriod={"activePeriod"}
+            />
 
             {!isAddressLocked ? (
               <View>
