@@ -237,7 +237,7 @@ async function responseInterceptor(res) {
       true
     );
     // eslint-disable-next-line no-console
-    // console.log({ [res.config.url]: durations[res.config.url] });
+    console.log({ [res.config.url]: durations[res.config.url] });
   }
 
   if (
