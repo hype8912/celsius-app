@@ -25,15 +25,7 @@ import { getColor, getFontSize } from "../../../utils/styles-util";
 
 let timeout;
 
-@connect(
-  state => ({
-    currencyRates: state.currencies.currencyRatesShort,
-    allLoans: state.loans.allLoans,
-    bankAccountInfo: state.user.bankAccountInfo,
-  }),
-  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
-)
-class ExtendLoanScreen extends Component {
+export class ExtendLoanScreen extends Component {
   static propTypes = {};
   static defaultProps = {};
 
@@ -47,11 +39,12 @@ class ExtendLoanScreen extends Component {
 
   constructor(props) {
     super(props);
-    props.actions.updateFormField("term_of_loan", "1");
+    props.actions.updateFormField("term_of_loan", "6");
+
 
     const loan = this.getLoan(props)
     this.state = {
-      activePeriod: { label: `6 months`, value: "6" },
+      activePeriod: { label: `6 months`, value: 6 },
       months: 6,
       loan
     }
@@ -137,11 +130,6 @@ class ExtendLoanScreen extends Component {
     this.setState({ months: Number(newValue) });
   };
 
-  calculateAdditionalInterest = (usdValue, coinRate, coin) => {
-    const rate = coin === "USD" ? 1 : coinRate;
-    return formatter.crypto(usdValue / rate, coin, {precision: 2});
-  };
-
   extendLoanDecrement = (current) => {
     if(current === 6) return 6
     return current - 1
@@ -169,7 +157,6 @@ class ExtendLoanScreen extends Component {
   };
 
   extendLoanCalculateInterest = (loan, originatingDate, numberOfMonths) => {
-    // if something is undefined return null???
     const maturityDate = originatingDate.clone().add(numberOfMonths, "month");
     const loanTermInDays = maturityDate.diff(originatingDate, "days");
     const additionalInterest = new BigNumber(loan.interest)
@@ -211,7 +198,7 @@ class ExtendLoanScreen extends Component {
       { label: `6 months`, value: 6 },
       { label: `36 months`, value: 36 },
     ];
-    const interest = this.extendLoanCalculateInterest()
+    const interest = this.onExtendLoanCalculateInterest()
     if (months < 6 || months > 36) {
       disabled = true
       color = getColor(COLOR_KEYS.NEGATIVE_STATE)
@@ -274,7 +261,7 @@ class ExtendLoanScreen extends Component {
               onPress={() => this.handleConfirmation(loan, bankAccountInfo, interest.totalNewInterest)}
               margin={"30 0 0 0"}
               iconRight={"IconArrowRight"}
-              iconRightWidth={20}
+              iconRightWidth={"20"}
               disabled={disabled}
             >
               Confirm
@@ -287,4 +274,11 @@ class ExtendLoanScreen extends Component {
   }
 }
 
-export default ExtendLoanScreen;
+export default connect(
+  state => ({
+    currencyRates: state.currencies.currencyRatesShort,
+    allLoans: state.loans.allLoans,
+    bankAccountInfo: state.user.bankAccountInfo,
+  }),
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
+)(ExtendLoanScreen);

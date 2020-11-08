@@ -110,7 +110,7 @@ import HodlDeactivationCode from "../components/screens/HodlDeactivationCode/Hod
 import TransactionsIntersection from "../components/screens/TransactionsIntersection/TransactionsIntersection";
 import CelHeading from "../components/organisms/CelHeading/CelHeading";
 import InterestPaymentOverviewScreen from "../components/screens/InterestPaymentOverviewScreen/InterestPaymentOverviewScreen";
-import ExtendLoanScreen from "../components/screens/ExtendLoanScreen/ExtendLoanScreen";
+import { ExtendLoanScreen } from "../components/screens/ExtendLoanScreen/ExtendLoanScreen";
 import MarginCallOverviewScreen from "../components/screens/MarginCallOverviewScreen/MarginCallOverviewScreen";
 import SingleMarginCallScreen from "../components/screens/SingleMarginCallScreen/SingleMarginCallScreen";
 import BitWala from "../components/screens/BitWala/BitWala";

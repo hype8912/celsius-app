@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 
-import ExtendLoanScreen from "./ExtendLoanScreen";
+import { ExtendLoanScreen } from "./ExtendLoanScreen";
 import ScreenStoryWrapper from "../../../../storybook/stories/ScreenStoryWrapper/ScreenStoryWrapper";
 import mockUserStore from "../../../../celsius-app-creds/mock-data/mockUserStore";
 import mockCurrenciesStore from "../../../../celsius-app-creds/mock-data/mockCurrenciesStore";
