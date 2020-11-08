@@ -1,4 +1,4 @@
-import { Platform } from "react-native";
+// import { Platform } from "react-native";
 import { IDFA } from "react-native-idfa";
 import Geolocation from "@react-native-community/geolocation";
 import { RESULTS } from "react-native-permissions";
@@ -48,29 +48,29 @@ function loadCelsiusAssets() {
  * Handles state change of the app
  * @param {string} nextAppState - one of active|inactive|background
  */
-const SCREENS_WITH_LATER_VERIFICATION = [
-  SCREENS.SIMPLEX,
-  SCREENS.TWO_FACTOR_SETTINGS,
-  SCREENS.REGISTER_SET_PIN,
-  SCREENS.CHANGE_PIN,
-  SCREENS.KYC_VERIFY_IDENTITY,
-];
-const ASK_FOR_PIN_SHORT = 5 * 60 * 1000;
-const ASK_FOR_PIN_LONG = 10 * 60 * 1000;
-let pinTimeout;
-let startOfBackgroundTimer;
+// const SCREENS_WITH_LATER_VERIFICATION = [
+//   SCREENS.SIMPLEX,
+//   SCREENS.TWO_FACTOR_SETTINGS,
+//   SCREENS.REGISTER_SET_PIN,
+//   SCREENS.CHANGE_PIN,
+//   SCREENS.KYC_VERIFY_IDENTITY,
+// ];
+// const ASK_FOR_PIN_SHORT = 5 * 60 * 1000;
+// const ASK_FOR_PIN_LONG = 10 * 60 * 1000;
+// let pinTimeout;
+// let startOfBackgroundTimer;
 
 function handleAppStateChange(nextAppState) {
   return (dispatch, getState) => {
     const { profile } = getState().user;
     const { appState } = getState().app;
-    const { activeScreen } = getState().nav;
+    // const { activeScreen } = getState().nav;
 
-    const askForPINAfter = SCREENS_WITH_LATER_VERIFICATION.includes(
-      activeScreen
-    )
-      ? ASK_FOR_PIN_LONG
-      : ASK_FOR_PIN_SHORT;
+    // const askForPINAfter = SCREENS_WITH_LATER_VERIFICATION.includes(
+    //   activeScreen
+    // )
+    //   ? ASK_FOR_PIN_LONG
+    //   : ASK_FOR_PIN_SHORT;
 
     if (profile && profile.has_pin) {
       if (nextAppState === "active") {
@@ -81,23 +81,23 @@ function handleAppStateChange(nextAppState) {
         dispatch(actions.closeModal());
         dispatch(actions.getBiometricType()); // Get biometric type on Biometric authentication screen when app state changes
 
-        if (Platform.OS === "ios") {
-          clearTimeout(pinTimeout);
-        }
-
-        if (
-          Platform.OS === "android" &&
-          new Date().getTime() - startOfBackgroundTimer > askForPINAfter
-        ) {
-          startOfBackgroundTimer = null;
-          dispatch(
-            actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-              hideBack: true,
-              activeScreen,
-              showLogOutBtn: true,
-            })
-          );
-        }
+        // if (Platform.OS === "ios") {
+        //   clearTimeout(pinTimeout);
+        // }
+        //
+        // if (
+        //   Platform.OS === "android" &&
+        //   new Date().getTime() - startOfBackgroundTimer > askForPINAfter
+        // ) {
+        //   startOfBackgroundTimer = null;
+        //   dispatch(
+        //     actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+        //       hideBack: true,
+        //       activeScreen,
+        //       showLogOutBtn: true,
+        //     })
+        //   );
+        // }
         mixpanelAnalytics.sessionStarted("Foreground");
         startRecording();
       }
@@ -108,22 +108,22 @@ function handleAppStateChange(nextAppState) {
         profile.has_pin &&
         appState === "active"
       ) {
-        if (Platform.OS === "ios") {
-          pinTimeout = setTimeout(() => {
-            dispatch(
-              actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-                hideBack: true,
-                activeScreen,
-                showLogOutBtn: true,
-              })
-            );
-            clearTimeout(pinTimeout);
-          }, askForPINAfter);
-        }
+        // if (Platform.OS === "ios") {
+        //   pinTimeout = setTimeout(() => {
+        //     dispatch(
+        //       actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+        //         hideBack: true,
+        //         activeScreen,
+        //         showLogOutBtn: true,
+        //       })
+        //     );
+        //     clearTimeout(pinTimeout);
+        //   }, askForPINAfter);
+        // }
 
-        if (Platform.OS === "android") {
-          startOfBackgroundTimer = new Date().getTime();
-        }
+        // if (Platform.OS === "android") {
+        //   startOfBackgroundTimer = new Date().getTime();
+        // }
 
         mixpanelAnalytics.sessionEnded("Background");
         stopRecordingAndUploadData();

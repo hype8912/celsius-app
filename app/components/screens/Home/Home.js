@@ -31,7 +31,6 @@ class Home extends Component {
 
   async componentDidMount() {
     const { actions } = this.props;
-
     await actions.getUserAppBootstrap();
     // must be first endpoint to be called
 

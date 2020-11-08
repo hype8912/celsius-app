@@ -1,1 +1,0 @@
-../../../Target Support Files/onfido-react-native-sdk/onfido-react-native-sdk-umbrella.h

@@ -21,7 +21,6 @@ import {
   getFontFamily,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { SCREENS } from "../../../constants/SCREENS";
 import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 
@@ -103,9 +102,7 @@ class LoanTermsOfUse extends Component {
     if (extend) {
       return actions.extendLoan(formData.loanId, formData.termOfLoan)
     }
-    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-      onSuccess: () => actions.applyForALoan(),
-    });
+    actions.applyForALoan()
   };
 
   render() {
@@ -114,10 +111,9 @@ class LoanTermsOfUse extends Component {
     const extend = navigation.getParam("extend");
 
     if (!loanTermsOfUse || !pdf) return <LoadingScreen />;
-    // API.APPLY_FOR_LOAN
     const isLoading =
       apiUtil.areCallsInProgress(
-        [API.EXTEND_LOAN],
+        [API.EXTEND_LOAN, API.APPLY_FOR_LOAN],
         callsInProgress
       );
 

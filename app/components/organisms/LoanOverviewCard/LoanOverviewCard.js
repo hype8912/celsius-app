@@ -99,6 +99,8 @@ class LoanOverviewCard extends Component {
       previous5Payments = previousPayments.slice(-5);
     }
 
+    const canExtend = loan.installments_to_be_paid && loan.installments_to_be_paid.total && Number(loan.installments_to_be_paid.total) === 0 && loan.loanPaymentSettings.loan_extension_allowed;
+
     const discountedInterest = (1 - celDiscount) * loan.monthly_payment;
     const savedAmount = loan.monthly_payment - discountedInterest;
 
@@ -318,6 +320,7 @@ class LoanOverviewCard extends Component {
                   />
                 </View>
               </View>
+              { loan.loanPaymentSettings.interest_payment_asset !== "CEL" &&
               <View>
                 <Card
                   color={getColor(COLOR_KEYS.BACKGROUND)}
@@ -331,22 +334,27 @@ class LoanOverviewCard extends Component {
                       "USD"
                     )} if you paid interest in CEL.`}
                   </CelText>
-                  <CelText
-                    onPress={() =>
-                      navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
-                        id: loan.id,
-                        reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
-                      })
-                    }
-                    margin={"5 5 5 5"}
-                    type={"H6"}
-                    weight={"400"}
-                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-                  >
-                    Change payment type
-                  </CelText>
+                  {[LOAN_STATUS.ACTIVE].includes(
+                    loan.status
+                  ) && (
+                    <CelText
+                      onPress={() =>
+                        navigateTo(SCREENS.CHOOSE_PAYMENT_METHOD, {
+                          id: loan.id,
+                          reason: LOAN_PAYMENT_REASONS.INTEREST_SETTINGS,
+                        })
+                      }
+                      margin={"5 5 5 5"}
+                      type={"H6"}
+                      weight={"400"}
+                      color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
+                    >
+                      Change payment type
+                    </CelText>
+                  )}
                 </Card>
               </View>
+              }
             </View>
           )}
 
@@ -361,11 +369,11 @@ class LoanOverviewCard extends Component {
               Loan Details
             </CelButton>
 
-            {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(
+            {[LOAN_STATUS.ACTIVE].includes(
               loan.status
             ) && <Separator vertical />}
 
-            {[LOAN_STATUS.ACTIVE, LOAN_STATUS.APPROVED].includes(
+            {[LOAN_STATUS.ACTIVE].includes(
               loan.status
             ) && (
               <CelButton
@@ -380,7 +388,7 @@ class LoanOverviewCard extends Component {
             )}
           </View>
 
-          {loan.status === LOAN_STATUS.ACTIVE &&
+          {loan.status === LOAN_STATUS.ACTIVE && canExtend &&
           <View style={{margin: 10}}>
             <CelButton
               margin={"10 0 0 0"}
