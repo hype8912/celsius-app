@@ -17,7 +17,6 @@ async function getDeepLinkData() {
   return deepLinkData
 }
 
-
 async function handleDeepLink() {
   const deepLinkData = await getDeepLinkData()
     if (deepLinkData) {

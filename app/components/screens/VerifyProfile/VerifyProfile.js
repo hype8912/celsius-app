@@ -25,7 +25,6 @@ import HiddenField from "../../atoms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
-import { DEEP_LINKS } from "../../../constants/DATA";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import {
   createBiometricsSignature,
@@ -36,7 +35,6 @@ import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedMo
 import { SCREENS } from "../../../constants/SCREENS";
 import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { getDeepLinkData, handleDeepLink } from "../../../utils/deepLink-util";
 
 const { STORYBOOK } = Constants;
 
@@ -134,15 +132,6 @@ class VerifyProfile extends Component {
     if (this.state.disableBiometricsForUser) {
       actions.disableBiometrics(true);
       this.setState({ disableBiometricsForUser: false });
-    }
-
-    // Check if app is opened from DeepLink
-    const deepLinkData = await getDeepLinkData()
-    if (deepLinkData) {
-      if (deepLinkData.type === DEEP_LINKS.NAVIGATE_TO) {
-        await handleDeepLink()
-        return;
-      }
     }
 
     if (activeScreen) {
