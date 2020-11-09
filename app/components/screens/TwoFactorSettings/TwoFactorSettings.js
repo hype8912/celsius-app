@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Linking } from "react-native";
+import { View, Linking, TouchableOpacity, Clipboard } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -21,6 +21,7 @@ import InfoBox from "../../atoms/InfoBox/InfoBox";
 import Icon from "../../atoms/Icon/Icon";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 const { STORYBOOK } = Constants;
 
@@ -124,20 +125,44 @@ class TwoFactorSettings extends Component {
           >
             {secret}
           </CelText>
-
-          {/*<View style={style.separatorWrapper}>*/}
-          {/*  <Separator margin={"10 0 0 0"} />*/}
-          {/*</View>*/}
-          {/*<CopyButton*/}
-          {/*  copyText={secret}*/}
-          {/*  onCopy={() =>*/}
-          {/*    actions.showMessage(*/}
-          {/*      "success",*/}
-          {/*      "The secret code copied to clipboard."*/}
-          {/*    )*/}
-          {/*  }*/}
-          {/*/>*/}
         </Card>
+
+        <View style={style.buttonsContainer}>
+
+          <Card styles={style.buttonCard}
+                margin={0,0,0,0}>
+            <View>
+              <ThemedImage
+                style={style.buttonIconHand}
+                lightSource={require("../../../../assets/images/hold-to-show.png")}
+                darkSource={require("../../../../assets/images/hold-to-show.png")}
+                unicornSource={require("../../../../assets/images/hold-to-show.png")}
+              />
+              <CelText align="center" link>Hold to show</CelText>
+            </View>
+          </Card>
+
+          <Card styles={style.buttonCard}
+                margin={1,0,0,0}>
+            <TouchableOpacity
+              onPress={() => {
+                Clipboard.setString(secret);
+                actions.showMessage("success", "The secret code copied ti clipboard.");
+              }}
+            >
+              <View>
+                <ThemedImage
+                  style={style.buttonIconCopy}
+                  lightSource={require("../../../../assets/images/ic_copy.png")}
+                  darkSource={require("../../../../assets/images/ic_copy.png")}
+                  unicornSource={require("../../../../assets/images/ic_copy.png")}
+                />
+                <CelText align="center" link>Copy code</CelText>
+              </View>
+            </TouchableOpacity>
+          </Card>
+
+        </View>
 
         <View style={style.buttonWrapper}>
           <CelButton
