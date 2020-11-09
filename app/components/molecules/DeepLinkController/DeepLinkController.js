@@ -15,7 +15,6 @@ appsFlyer.onInstallConversionData(data => {
 });
 appsFlyer.onAppOpenAttribution(async res => {
   if (res.data && res.data.type)
-    // store.dispatch(appActions.addDeepLinkData(res.data));
     await addDeepLinkData(res.data)
     loggerUtil.log("onAppOpenAttributionCanceller: ", res.data);
 });
@@ -52,7 +51,7 @@ class DeepLinkController extends Component {
 
 
   /**
-   * Initialize & Subscribe to Branch
+   * Branch deeplink listener
    */
   branchDeepLinkListener() {
     try {

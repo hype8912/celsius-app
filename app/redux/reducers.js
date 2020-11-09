@@ -27,7 +27,6 @@ import biometrics from "./biometrics/biometricsReducer";
 import auth from "./userAuth/userAuthReducer";
 import hodl from "./hodl/hodlReducer";
 import animations from "./animations/animationsReducer";
-import deepLink from "./deepLink/deepLinkReducer";
 import buyCoins from "./buyCoins/buyCoinsReducer";
 import Constants from "../../constants";
 // NOTE(fj): plop reduxGen importing new Reducer here
@@ -61,7 +60,6 @@ const appReducers = combineReducers({
   auth,
   hodl,
   animations,
-  deepLink,
   buyCoins,
   // NOTE(fj): plop reduxGen inserting new Reducer here
 });

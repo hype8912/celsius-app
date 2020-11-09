@@ -103,7 +103,6 @@ class Home extends Component {
     });
 
     actions.resetToScreen(SCREENS.WALLET_LANDING);
-    // actions.handleDeepLink();
     await handleDeepLink()
   };
 

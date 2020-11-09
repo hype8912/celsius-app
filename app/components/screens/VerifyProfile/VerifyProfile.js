@@ -36,14 +36,13 @@ import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedMo
 import { SCREENS } from "../../../constants/SCREENS";
 import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
-import { handleDeepLink } from "../../../utils/deepLink-util";
+import { getDeepLinkData, handleDeepLink } from "../../../utils/deepLink-util";
 
 const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
     appState: state.app.appState,
-    deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
     previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
@@ -125,7 +124,7 @@ class VerifyProfile extends Component {
 
   onCheckSuccess = async () => {
     this.setState({ loading: true });
-    const { navigation, actions, previousScreen, deepLinkData } = this.props;
+    const { navigation, actions, previousScreen } = this.props;
     const onSuccess = navigation.getParam("onSuccess");
     const activeScreen = navigation.getParam("activeScreen");
 
@@ -138,9 +137,9 @@ class VerifyProfile extends Component {
     }
 
     // Check if app is opened from DeepLink
-    if (!_.isEmpty(deepLinkData)) {
+    const deepLinkData = await getDeepLinkData()
+    if (deepLinkData) {
       if (deepLinkData.type === DEEP_LINKS.NAVIGATE_TO) {
-        // actions.handleDeepLink();
         await handleDeepLink()
         return;
       }

@@ -16,7 +16,6 @@ import {
 import userAuthService from "../../services/user-auth-service";
 import apiUtil from "../../utils/api-util";
 import { setFormErrors } from "../forms/formsActions";
-import branchUtil from "../../utils/branch-util";
 import mixpanelAnalytics from "../../utils/mixpanel-analytics";
 import { logoutUserMixpanel } from "../../utils/mixpanel-util";
 import userSecurityService from "../../services/user-security-service";
@@ -85,14 +84,11 @@ function registerUser() {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
-      const referralLinkId = branchUtil.getReferralId();
-
       const user = {
         first_name: formData.firstName,
         last_name: formData.lastName,
         email: formData.email,
         password: formData.password,
-        referral_link_id: referralLinkId || undefined,
         reCaptchaKey: formData.reCaptchaKey,
       };
       dispatch(startApiCall(API.REGISTER_USER));
