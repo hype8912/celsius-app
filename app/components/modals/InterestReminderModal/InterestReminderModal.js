@@ -81,7 +81,7 @@ class InterestReminderModal extends Component {
             {formatter.crypto(payment.cryptoAmountToPay, payment.coin.short)}
           </CelText>
           <CelText align={"center"}>
-            {formatter.fiat(activeLoan.monthly_payment, "USD")}
+            {formatter.fiat(activeLoan.installments_to_be_paid.total, "USD")}
           </CelText>
           <Separator margin={"5 0 5 0"} />
         </View>
