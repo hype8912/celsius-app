@@ -18,6 +18,9 @@ const base = {
   yearStatusContainer: {
     flexDirection: "column",
   },
+  contactSupportContainer: {
+    flexDirection: "row",
+  },
 };
 
 const themed = {
