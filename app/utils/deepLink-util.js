@@ -3,20 +3,26 @@ import { getSecureStoreKey, setSecureStoreKey, deleteSecureStoreKey } from "./st
 import * as actions from "../redux/actions";
 import store from "../redux/store";
 
-export { addDeepLinkData, handleDeepLink };
+export { addDeepLinkData, handleDeepLink, getDeepLinkData };
 
 async function addDeepLinkData(deepLinkData) {
   const deepLink = JSON.stringify(deepLinkData)
   await setSecureStoreKey(STORAGE_KEYS.DEEPLINK_DATA, deepLink)
 }
 
+async function getDeepLinkData() {
+  const deepLink = await getSecureStoreKey(STORAGE_KEYS.DEEPLINK_DATA)
+  const deepLinkData = JSON.parse(deepLink)
+
+  return deepLinkData
+}
+
+
 async function handleDeepLink() {
-    const deepLink  = await getSecureStoreKey(STORAGE_KEYS.DEEPLINK_DATA);
-    const deepLinkData = JSON.parse(deepLink)
-    const user = store.getState().user.profile;
+  const deepLinkData = await getDeepLinkData()
     if (deepLinkData) {
       if (!deepLinkData.type) return;
-
+      const user = store.getState().user.profile;
       switch (deepLinkData.type) {
         case DEEP_LINKS.NAVIGATE_TO:
           if (!user.id) return;
