@@ -9,7 +9,6 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import WalletDetailsCard from "../../organisms/WalletDetailsCard/WalletDetailsCard";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Icon from "../../atoms/Icon/Icon";
-import CelPayReceivedModal from "../../modals/CelPayReceivedModal/CelPayReceivedModal";
 import {
   MODALS,
   THEMES,
@@ -36,14 +35,7 @@ import { getSecureStoreKey } from "../../../utils/storage-util";
 
 @connect(
   state => {
-    const branchTransfer =
-      state.branch.transferHash &&
-      state.transfers.transfers[state.branch.transferHash]
-        ? state.transfers.transfers[state.branch.transferHash]
-        : null;
-
     return {
-      branchTransfer,
       appSettings: state.user.appSettings,
       currenciesRates: state.currencies.rates,
       walletSummary: state.wallet.summary,
@@ -218,7 +210,6 @@ class WalletLanding extends Component {
       currenciesRates,
       currenciesGraphs,
       user,
-      branchTransfer,
       depositCompliance,
       rejectionReasons,
       shouldAnimate,
@@ -299,7 +290,6 @@ class WalletLanding extends Component {
             {this.renderComingSoon()}
           </ExpandableItem>
         </View>
-        <CelPayReceivedModal transfer={branchTransfer} />
         <ReferralSendModal />
         <RejectionReasonsModal rejectionReasons={rejectionReasons} />
         <HodlModeModal />
