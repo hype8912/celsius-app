@@ -10,7 +10,6 @@ import PrepayDollarInterestModal from "../../modals/PrepayDollarInterestModal/Pr
 import {
   LOAN_PAYMENT_REASONS,
   MODALS,
-  COIN_CARD_TYPE,
 } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
@@ -21,7 +20,6 @@ import CelSwitch from "../../atoms/CelSwitch/CelSwitch";
 import Separator from "../../atoms/Separator/Separator";
 import Spinner from "../../atoms/Spinner/Spinner";
 import DollarPaymentModal from "../../modals/DollarPaymentModal/DollarPaymentModal";
-import loanPaymentUtil from "../../../utils/loanPayment-util";
 
 @connect(
   state => ({
@@ -103,22 +101,8 @@ class ChoosePaymentMethod extends Component {
     };
   };
 
-  resolve = (reason, id, payment, cel, loan) => {
-    const { actions } = this.props;
-    if (Number(loan.monthly_payment) > cel.amount_usd.toNumber()) {
-      return actions.navigateTo(SCREENS.DEPOSIT, {
-        coin: cel.short,
-        reason: LOAN_PAYMENT_REASONS.PRINCIPAL,
-        amountUsd: payment.additionalUsdAmount,
-        additionalCryptoAmount: payment.additionalCryptoAmount,
-      });
-    }
-    return actions.navigateTo(SCREENS.PAYMENT_CEL, { reason, id });
-  };
-
   getCardProps = () => {
-    const { actions, navigation, loyaltyInfo, walletSummary } = this.props;
-    const { loan } = this.state;
+    const { actions, navigation, loyaltyInfo } = this.props;
     const celDiscount = formatter.percentageDisplay(
       loyaltyInfo.tier.loanInterestBonus
     );
@@ -126,12 +110,6 @@ class ChoosePaymentMethod extends Component {
     const id = navigation.getParam("id");
     const reason = navigation.getParam("reason");
     const activeCards = this.getActiveCards();
-    const cel = walletSummary.coins.find(c => c.short === "CEL");
-    const payment = loanPaymentUtil.calculateAdditionalPayment(
-      loan,
-      COIN_CARD_TYPE.INTEREST,
-      cel
-    );
     const pay =
       reason !== LOAN_PAYMENT_REASONS.INTEREST_PREPAYMENT ? `pay` : `prepay`;
 
@@ -139,7 +117,7 @@ class ChoosePaymentMethod extends Component {
       {
         textButton: `${formatter.capitalize(pay)} with CEL`,
         explanation: `Pay up to ${celDiscount} less interest when you choose to ${pay} your monthly payment in CEL.`,
-        onPress: () => this.resolve(reason, id, payment, cel, loan),
+        onPress: () => actions.navigateTo(SCREENS.PAYMENT_CEL, { reason, id }),
         lightImage: require("../../../../assets/images/icons/cel.png"),
         darkImage: require("../../.././../assets/images/icons/cel-dark.png"),
         unicornImage: require("../../.././../assets/images/icons/cel-unicorn.png"),

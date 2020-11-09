@@ -51,6 +51,8 @@ class TierCard extends Component {
       (1 - loyaltyInfo.tier.loanInterestBonus) * monthly;
     const savedAmount = -1 * (monthly - discountedInterest);
 
+    if (loyaltyInfo.tier.title === "NONE") return null;
+
     let title;
     let color;
     if (loyaltyInfo.tier.title === TIER_LEVELS.BRONZE) {

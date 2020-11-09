@@ -23,6 +23,7 @@ import { PAYMENT_TYPE } from "../../../constants/DATA";
     loanSettings: state.loans.loanSettings,
     allLoans: state.loans.allLoans,
     currencyRates: state.currencies.rates,
+    walletSummary: state.wallet.summary,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -101,17 +102,19 @@ class PaymentCel extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { allLoans, currencyRates } = this.props;
+    const { allLoans, walletSummary } = this.props;
     const { isLoading } = this.state;
     const reason = navigation.getParam("reason");
     const id = navigation.getParam("id");
     const loan = allLoans.find(l => l.id === id);
 
-    const coin = currencyRates.find(c => c.short === "CEL");
+    const coin = walletSummary.coins.find(c => c.short === "CEL");
     const title =
       reason === LOAN_PAYMENT_REASONS.INTEREST_SETTINGS
         ? "Set Cel"
         : "Confirm Payment";
+
+    const canPay = coin.amount_usd.toNumber() > Number(loan.monthly_payment)
 
     return (
       <RegularLayout fabType={"hide"}>
@@ -125,6 +128,7 @@ class PaymentCel extends Component {
         {reason !== LOAN_PAYMENT_REASONS.INTEREST_SETTINGS && (
           <TierCard loanId={id} />
         )}
+        {canPay &&
         <CelButton
           margin={"20 0 0 0"}
           onPress={this.payInCel}
@@ -133,6 +137,7 @@ class PaymentCel extends Component {
         >
           {title}
         </CelButton>
+        }
         <CelText
           margin={"20 0 20 0"}
           align={"center"}
