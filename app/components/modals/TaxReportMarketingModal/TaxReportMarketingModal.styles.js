@@ -47,6 +47,7 @@ const base = {
     marginLeft: 35,
   },
   button: {
+    alignSelf: "flex-start",
     marginTop: heightPercentageToDP("5%"),
     marginBottom: heightPercentageToDP("2%"),
   },

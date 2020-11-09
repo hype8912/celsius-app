@@ -65,8 +65,14 @@ class TaxReportMarketingModal extends Component {
             "You are now able to download the tax report for the year 2019. Celsius provides you 1099s if you earned $600 or more in a given tax year."
           }
         </CelText>
+
         <CelButton
           style={style.button}
+          margin="10 0 2 0"
+          size="small"
+          iconRight="IconArrowRight"
+          iconRightWidth={18}
+          iconRightHeight={18}
           onPress={() => console.log("Download Report")}
         >
           {"Download Report"}
