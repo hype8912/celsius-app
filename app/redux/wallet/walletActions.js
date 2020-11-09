@@ -139,7 +139,7 @@ function setCoinWithdrawalAddress(flow = "withdrawal") {
         dispatch(
           showMessage(
             "warning",
-            `Open your email to confirm the setting of your ${formData.coin} withdrawal address. Note that withdrawals for ${formData.coin} will be locked for the next 24h due to not having 2FA set.`
+            `Open your email to confirm the setting of your ${formData.coin} withdrawal address. Note that withdrawals for ${formData.coin} will be locked for the next 24h due to our security protocols.`
           )
         );
       }

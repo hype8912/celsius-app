@@ -32,7 +32,6 @@ import { SCREENS } from "../../../constants/SCREENS";
   state => ({
     walletSummary: state.wallet.summary,
     formData: state.forms.formData,
-    is2FAEnabled: state.user.profile.two_factor_enabled,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -108,7 +107,7 @@ class WithdrawCreateAddress extends Component {
 
   render() {
     const { coin, balanceCrypto, balanceUsd } = this.state;
-    const { formData, actions, is2FAEnabled } = this.props;
+    const { formData, actions } = this.props;
     const style = WithdrawalAddressConfirmationStyle();
     let tagText;
     let placeHolderText;
@@ -206,10 +205,8 @@ class WithdrawCreateAddress extends Component {
                 color={"white"}
                 backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
                 titleText={
-                  is2FAEnabled
-                    ? "Note: we use a smart-contract to send ERC20 tokens, some wallets do not support such transactions."
-                    : "Due to not having 2FA set, for security reasons, withdrawal address will be locked for 24 hours. \n " +
-                      " \nNote: we use a smart-contract to send ERC20 tokens, some wallets do not support such transactions."
+                  "For security reasons, withdrawal address will be locked for 24 hours. \n " +
+                  " \nNote: we use a smart-contract to send ERC20 tokens, some wallets do not support such transactions."
                 }
                 left
               />
@@ -217,43 +214,24 @@ class WithdrawCreateAddress extends Component {
               <InfoBox
                 color={"white"}
                 backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
-                titleText={
-                  is2FAEnabled
-                    ? "Changing your withdrawal address will make a withdrawal of your coin unavailable for 24 hours."
-                    : "Due to not having 2FA set, for security reasons, withdrawal address will be locked for 24 hours."
-                }
+                titleText={"Changing your withdrawal address will make a withdrawal of your coin unavailable for 24 hours."}
                 left
               />
             )}
-            {is2FAEnabled && (
-              <View style={style.button}>
-                <CelButton
-                  disabled={!formData.withdrawAddress}
-                  // onPress={this.handeConfirmWithdrawal}
-                  onPress={() =>
-                    actions.openModal(MODALS.CONFIRM_WITHDRAWAL_ADDRESS_MODAL)
-                  }
-                >
-                  Confirm withdrawal
-                </CelButton>
-              </View>
-            )}
 
-            {!is2FAEnabled && (
-              <View style={style.button}>
-                <CelButton
-                  disabled={!formData.withdrawAddress}
-                  onPress={() => {
-                    actions.navigateTo(SCREENS.VERIFY_PROFILE, {
-                      onSuccess: () =>
-                        actions.setCoinWithdrawalAddress("wallet"),
-                    });
-                  }}
-                >
-                  Confirm address
-                </CelButton>
-              </View>
-            )}
+            <View style={style.button}>
+              <CelButton
+                disabled={!formData.withdrawAddress}
+                onPress={() => {
+                  actions.navigateTo(SCREENS.VERIFY_PROFILE, {
+                    onSuccess: () =>
+                      actions.setCoinWithdrawalAddress("wallet"),
+                  });
+                }}
+              >
+                Confirm address
+              </CelButton>
+            </View>
 
             <WithdrawWarningModal
               coin={formData.coin}
