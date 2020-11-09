@@ -9,7 +9,6 @@ import { navigateTo, resetToScreen } from "../nav/navActions";
 import { showMessage } from "../ui/uiActions";
 import { updateFormFields } from "../forms/formsActions";
 import { setSecureStoreKey } from "../../utils/storage-util";
-import branchUtil from "../../utils/branch-util";
 import userAuthService from "../../services/user-auth-service";
 import { getInitialCelsiusData } from "../generalData/generalDataActions";
 import { SCREENS } from "../../constants/SCREENS";
@@ -76,7 +75,6 @@ function registerUserTwitter() {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
-      const referralLinkId = branchUtil.getReferralId();
 
       const twitterUser = {
         email: formData.email,
@@ -87,7 +85,6 @@ function registerUserTwitter() {
         access_token: formData.accessToken,
         secret_token: formData.secretToken,
         twitter_screen_name: formData.twitter_screen_name,
-        referral_link_id: referralLinkId || undefined,
       };
 
       dispatch(startApiCall(API.REGISTER_USER_TWITTER));
@@ -218,7 +215,6 @@ function registerUserFacebook() {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
-      const referralLinkId = branchUtil.getReferralId();
 
       const facebookUser = {
         email: formData.email,
@@ -226,7 +222,6 @@ function registerUserFacebook() {
         last_name: formData.lastName,
         facebook_id: formData.facebookId,
         access_token: formData.accessToken,
-        referral_link_id: referralLinkId,
       };
 
       dispatch(startApiCall(API.REGISTER_USER_FACEBOOK));
@@ -321,7 +316,6 @@ function registerUserGoogle() {
   return async (dispatch, getState) => {
     try {
       const { formData } = getState().forms;
-      const referralLinkId = branchUtil.getReferralId();
 
       const googleUser = {
         email: formData.email,
@@ -330,7 +324,6 @@ function registerUserGoogle() {
         google_id: formData.googleId,
         profile_picture: formData.profilePicture,
         access_token: formData.accessToken,
-        referral_link_id: referralLinkId,
       };
 
       dispatch(startApiCall(API.REGISTER_USER_GOOGLE));
@@ -412,7 +405,7 @@ function loginSocialSuccess(network, token) {
  */
 function registerSocialSuccess(network, token, user) {
   startRecording();
-  
+
   return async dispatch => {
     await setSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY, token);
 

@@ -127,8 +127,7 @@ function registerTransferLink(deepLink) {
     try {
       // const { userActions } = getState().ui;
       const { profile } = getState().user;
-
-      if (!profile) {
+      if (!profile || (profile && !profile.id)) {
         dispatch(
           showMessage(
             "warning",

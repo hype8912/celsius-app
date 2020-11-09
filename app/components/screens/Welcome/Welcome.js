@@ -11,6 +11,7 @@ import CelButton from "../../atoms/CelButton/CelButton";
 import ReferralReceivedModal from "../../modals/ReferralReceivedModal/ReferralReceivedModal";
 import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 import { SCREENS } from "../../../constants/SCREENS";
+import { handleDeepLink } from "../../../utils/deepLink-util";
 
 @connect(
   state => ({
@@ -31,6 +32,7 @@ class Welcome extends Component {
 
   async componentDidMount() {
     StatusBar.setHidden(false);
+    await handleDeepLink()
   }
 
   onPressLogin = () => {

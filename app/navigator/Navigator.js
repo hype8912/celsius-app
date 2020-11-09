@@ -39,7 +39,7 @@ import GetCoinsEnterAmount from "../components/screens/GetCoinsEnterAmount/GetCo
 import GetCoinsTransactionDetails from "../components/screens/GetCoinsTransactionDetails/GetCoinsTransactionDetails";
 import GetCoinsGem from "../components/screens/GetCoinsGem/GetCoinsGem";
 import MyCel from "../components/screens/MyCel/MyCel";
-import Simplex from "../components/screens/Simplex/SimplexScreen";
+import SimplexScreen from "../components/screens/Simplex/SimplexScreen";
 import InterestCalculatorScreen from "../components/screens/InterestCalculatorScreen/InterestCalculatorScreen";
 import InterestRates from "../components/screens/InterestRates/InterestRates";
 import Deposit from "../components/screens/Deposit/Deposit";
@@ -182,7 +182,7 @@ export const screens = {
   GetCoinsLanding,
   GetCoinsEnterAmount,
   GetCoinsTransactionDetails,
-  Simplex,
+  SimplexScreen,
   GetCoinsGem,
 
   /**
