@@ -20,21 +20,21 @@ const getParamMock = jestFunction.mockReturnValue(1096)
 const  navigation = {
     getParam: getParamMock,
   }
+const wrapper = shallow(
+  <ExtendLoanScreen allLoans={baseProps.allLoans}
+                    bankAccountInfo={baseProps.bankAccountInfo}
+                    currencyRatesShort={baseProps.currencyRatesShort}
+                    actions={{
+                      updateFormField: updateFormFieldMock
+                    }}
+                    navigation={{
+                      getParam: getParamMock
+                    }}
+  />)
 
 describe(`ExtendLoanScreen`, () => {
   // #1
   it('onClickIncrement should increment value by one', () => {
-    const wrapper = shallow(
-      <ExtendLoanScreen allLoans={baseProps.allLoans}
-                        bankAccountInfo={baseProps.bankAccountInfo}
-                        currencyRatesShort={baseProps.currencyRatesShort}
-                        actions={{
-                          updateFormField: updateFormFieldMock
-                        }}
-                        navigation={{
-                          getParam: getParamMock
-                        }}
-      />)
     expect(wrapper.state("months")).toBe(6)
     expect(wrapper.find(CircleButton).length).toBe(2)
 
@@ -63,16 +63,6 @@ describe(`ExtendLoanScreen`, () => {
   })
   // #2
   it("should call extendLoanIncrement method and return value increased by one", () => {
-    const wrapper = shallow(<ExtendLoanScreen allLoans={baseProps.allLoans}
-                                              bankAccountInfo={baseProps.bankAccountInfo}
-                                              currencyRatesShort={baseProps.currencyRatesShort}
-                                              actions={{
-                                                updateFormField: updateFormFieldMock
-                                              }}
-                                              navigation={{
-                                                getParam: getParamMock
-                                              }}
-    />)
     const instance = wrapper.instance();
     const regularIncrementResult = instance.extendLoanIncrement(8)
     expect(regularIncrementResult).toBe(9)
@@ -81,16 +71,6 @@ describe(`ExtendLoanScreen`, () => {
   })
   // #3
   it("onClickIncrement should increment value by one", () => {
-    const wrapper = shallow(<ExtendLoanScreen allLoans={baseProps.allLoans}
-                                              bankAccountInfo={baseProps.bankAccountInfo}
-                                              currencyRatesShort={baseProps.currencyRatesShort}
-                                              actions={{
-                                                updateFormField: updateFormFieldMock
-                                              }}
-                                              navigation={{
-                                                getParam: getParamMock
-                                              }}
-    />)
     const instance = wrapper.instance();
     const spy = jestSpy(instance, 'extendLoanIncrement');
     instance.forceUpdate()
@@ -105,16 +85,6 @@ describe(`ExtendLoanScreen`, () => {
   })
 
   it("should call extendLoanDecrement method and return value decreased by one", () => {
-    const wrapper = shallow(<ExtendLoanScreen allLoans={baseProps.allLoans}
-                                              bankAccountInfo={baseProps.bankAccountInfo}
-                                              currencyRatesShort={baseProps.currencyRatesShort}
-                                              actions={{
-                                                updateFormField: updateFormFieldMock
-                                              }}
-                                              navigation={{
-                                                getParam: getParamMock
-                                              }}
-    />)
     const instance = wrapper.instance();
     const regularDecrementResult = instance.extendLoanDecrement(8)
     expect(regularDecrementResult).toBe(7)
@@ -123,16 +93,6 @@ describe(`ExtendLoanScreen`, () => {
   })
 
   it("should calculate extended loan interest", () => {
-    const wrapper = shallow(<ExtendLoanScreen allLoans={baseProps.allLoans}
-                                              bankAccountInfo={baseProps.bankAccountInfo}
-                                              currencyRatesShort={baseProps.currencyRatesShort}
-                                              actions={{
-                                                updateFormField: updateFormFieldMock
-                                              }}
-                                              navigation={{
-                                                getParam: getParamMock
-                                              }}
-    />)
     const instance = wrapper.instance();
     const interest = instance.extendLoanCalculateInterest(baseProps.allLoans[0], moment("2020-11-08T11:31:22.916"), 6)
     expect(interest).toStrictEqual({
@@ -142,16 +102,6 @@ describe(`ExtendLoanScreen`, () => {
     })
   })
   it("should return desired loan", () => {
-    const wrapper = shallow(<ExtendLoanScreen allLoans={baseProps.allLoans}
-                                              bankAccountInfo={baseProps.bankAccountInfo}
-                                              currencyRatesShort={baseProps.currencyRatesShort}
-                                              actions={{
-                                                updateFormField: updateFormFieldMock
-                                              }}
-                                              navigation={{
-                                                getParam: getParamMock
-                                              }}
-    />)
     const properties = {allLoans: baseProps.allLoans, navigation}
     const instance = wrapper.instance();
     const loan = instance.getLoan(properties);
