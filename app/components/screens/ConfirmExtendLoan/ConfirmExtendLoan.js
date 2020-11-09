@@ -28,6 +28,7 @@ import { LOAN_TYPES } from "../../../constants/DATA";
     callsInProgress: state.api.callsInProgress,
     bankAccountInfo: state.user.bankAccountInfo,
     formData: state.forms.formData,
+    activeLoan: state.loans.activeLoan,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) }),
 )
@@ -192,7 +193,7 @@ class ConfirmExtendLoan extends Component {
   };
 
   render() {
-    const { loan, actions, callsInProgress, navigation } = this.props;
+    const { loan, actions, callsInProgress, navigation, activeLoan } = this.props;
     const newTotal = navigation.getParam("newTotal");
     const style = ConfirmExtendLoanStyle();
 
@@ -207,6 +208,9 @@ class ConfirmExtendLoan extends Component {
       return <LoadingScreen />;
     }
 
+    const currentLoanTerm = activeLoan.amortization_table.length - 1
+    const totalRemainingMonths = currentLoanTerm + Number(loan.term_of_loan)
+
     return (
       <RegularLayout fabType={"hide"}>
         <View>
@@ -219,7 +223,7 @@ class ConfirmExtendLoan extends Component {
                   Term Length
                 </CelText>
                 <CelText type="H3" weight="600" align="center">
-                  {loan.term_of_loan} months
+                  {totalRemainingMonths} months
                 </CelText>
               </View>
 
