@@ -36,7 +36,6 @@
     "@react-native-community/slider": "^2.0.3",
     "@react-native-firebase/app": "7.0.1",
     "@react-native-firebase/messaging": "7.0.1",
-    "@wwdrew/react-native-numeric-textinput": "^1.1.0",
     "ajv": "^6.12.4",
     "appcenter": "3.1.1",
     "appcenter-analytics": "3.1.1",

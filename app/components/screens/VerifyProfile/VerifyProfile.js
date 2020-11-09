@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   Clipboard,
   BackHandler,
-  Image, TextInput,
+  Image,
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -15,7 +15,7 @@ import VerifyProfileStyle from "./VerifyProfile.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import {
-  BIOMETRIC_ERRORS, KEYBOARD_TYPE,
+  BIOMETRIC_ERRORS,
   MODALS,
 } from "../../../constants/UI";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
@@ -31,10 +31,8 @@ import {
 import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
 import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
 import { SCREENS } from "../../../constants/SCREENS";
-import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
-const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
@@ -65,6 +63,7 @@ class VerifyProfile extends Component {
 
   constructor(props) {
     super(props);
+    const { actions} = this.props
     this.state = {
       value: "",
       loading: false,
@@ -73,6 +72,12 @@ class VerifyProfile extends Component {
       hasSixDigitPin: false,
       disableBiometricsForUser: false,
     };
+
+    actions.initForm({
+      pin:"",
+      code: "",
+      pinConfirm: "",
+    })
   }
 
   componentWillMount() {
@@ -197,13 +202,12 @@ class VerifyProfile extends Component {
     if (newValue.length === 1 && verificationError) {
       this.setState({ verificationError: false });
     }
-
     actions.updateFormField("pin", newValue);
     this.setState({ value: newValue });
 
     if (newValue.length === pinLength) {
       this.setState({ loading: true });
-      // actions.checkPIN(this.onCheckSuccess, this.onCheckError);
+      actions.checkPIN(this.onCheckSuccess, this.onCheckError);
     }
   };
 
@@ -298,43 +302,17 @@ class VerifyProfile extends Component {
     }
   };
 
-  changeInputText = num => {
-    const { actions } = this.props;
-    let val = num
-    if (num.length > 6) {
-      val = num.slice(0, -(num.length - (num.length % 6)));
-    }
-
-    actions.updateFormField(this.shouldShow2FA() ? "code" : "pin", val);
-    if (val.length === 6) {
-      if (this.shouldShow2FA()) this.handle2FAChange(val)
-      this.handlePINChange(val)
-    }
-  };
-
   renderDots = length => {
-    const { formData } = this.props;
     const { verificationError } = this.state;
     const pinLength = length || 6;
-    let value = this.shouldShow2FA() ? formData.code : formData.pin
 
-    if (verificationError) value = ""
     return (
       <TouchableOpacity onPress={() => this.inputRef.focus()}>
-        <TextInput
-          keyboardType={KEYBOARD_TYPE.NUMBER_PAD}
-          ref={input => {
-            this.inputRef = input;
-          }}
-          onChangeText={(num) => this.changeInputText(num)}
-          style={{height: 0, opacity: 0}}
-          autoFocus={!STORYBOOK}
-          editable={formData && !formData.loading}
-        />
         <HiddenField
-          value={value || ""}
           error={verificationError}
           length={pinLength}
+          field={this.shouldShow2FA() ? "code" : "pin"}
+          handleVerification={this.shouldShow2FA() ? this.handle2FAChange : this.handlePINChange}
         />
       </TouchableOpacity>
     );
@@ -449,7 +427,6 @@ class VerifyProfile extends Component {
     const hideBack = navigation.getParam("hideBack");
 
     const shouldShow2FA = this.shouldShow2FA();
-
     const style = VerifyProfileStyle();
 
     return (
