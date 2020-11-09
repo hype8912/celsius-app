@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   Clipboard,
   BackHandler,
-  Image,
+  Image, TextInput,
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -15,7 +15,7 @@ import VerifyProfileStyle from "./VerifyProfile.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import {
-  BIOMETRIC_ERRORS,
+  BIOMETRIC_ERRORS, KEYBOARD_TYPE,
   MODALS,
 } from "../../../constants/UI";
 import HiddenField from "../../atoms/HiddenField/HiddenField";
@@ -31,7 +31,10 @@ import {
 import BiometricsAuthenticationModal from "../../modals/BiometricsAuthenticationModal/BiometricsAuthenticationModal";
 import BiometricsNotRecognizedModal from "../../modals/BiometricsNotRecognizedModal/BiometricsNotRecognizedModal";
 import { SCREENS } from "../../../constants/SCREENS";
+import Constants from "../../../../constants";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
+
+const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
@@ -106,16 +109,10 @@ class VerifyProfile extends Component {
   }
 
   componentWillUnmount() {
-    const { actions } = this.props
     BackHandler.removeEventListener(
       "hardwareBackPress",
       this.handleBackButtonClick
     );
-
-    actions.updateFormFields({
-      pin: "",
-      code: "",
-    })
   }
 
   onCheckSuccess = async () => {
@@ -195,7 +192,6 @@ class VerifyProfile extends Component {
     const { actions } = this.props;
     const { hasSixDigitPin, verificationError, loading } = this.state;
     const pinLength = hasSixDigitPin ? 6 : 4;
-
     if (newValue.length > pinLength || loading) return;
 
     if (newValue.length === 1 && verificationError) {
@@ -207,7 +203,7 @@ class VerifyProfile extends Component {
 
     if (newValue.length === pinLength) {
       this.setState({ loading: true });
-      actions.checkPIN(this.onCheckSuccess, this.onCheckError);
+      // actions.checkPIN(this.onCheckSuccess, this.onCheckError);
     }
   };
 
@@ -302,22 +298,45 @@ class VerifyProfile extends Component {
     }
   };
 
+  changeInputText = num => {
+    const { actions } = this.props;
+    let val = num
+    if (num.length > 6) {
+      val = num.slice(0, -(num.length - (num.length % 6)));
+    }
+
+    actions.updateFormField(this.shouldShow2FA() ? "code" : "pin", val);
+    if (val.length === 6) {
+      if (this.shouldShow2FA()) this.handle2FAChange(val)
+      this.handlePINChange(val)
+    }
+  };
+
   renderDots = length => {
-    const { formData, actions } = this.props;
+    const { formData } = this.props;
     const { verificationError } = this.state;
     const pinLength = length || 6;
+    let value = this.shouldShow2FA() ? formData.code : formData.pin
 
+    if (verificationError) value = ""
     return (
+      <TouchableOpacity onPress={() => this.inputRef.focus()}>
+        <TextInput
+          keyboardType={KEYBOARD_TYPE.NUMBER_PAD}
+          ref={input => {
+            this.inputRef = input;
+          }}
+          onChangeText={(num) => this.changeInputText(num)}
+          style={{height: 0, opacity: 0}}
+          autoFocus={!STORYBOOK}
+          editable={formData && !formData.loading}
+        />
         <HiddenField
-          value={formData && formData.code || formData.pin || ""}
+          value={value || ""}
           error={verificationError}
           length={pinLength}
-          loading={formData && !formData.loading}
-          updateFormField={actions.updateFormField}
-          shouldShow2FA={this.shouldShow2FA}
-          handle2FAChange={this.handle2FAChange}
-          handlePINChange={this.handlePINChange}
         />
+      </TouchableOpacity>
     );
   };
 
