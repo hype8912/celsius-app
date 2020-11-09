@@ -17,6 +17,10 @@ import Separator from "../../atoms/Separator/Separator";
 import loggerUtil from "../../../utils/logger-util";
 import { SCREENS } from "../../../constants/SCREENS";
 import Constants from "../../../../constants";
+import InfoBox from "../../atoms/InfoBox/InfoBox";
+import Icon from "../../atoms/Icon/Icon";
+import { COLOR_KEYS } from "../../../constants/COLORS";
+import { getColor } from "../../../utils/styles-util";
 
 const { STORYBOOK } = Constants;
 
@@ -24,7 +28,7 @@ const { STORYBOOK } = Constants;
   state => ({
     formData: state.forms.formData,
   }),
-  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) }),
 )
 class TwoFactorSettings extends Component {
   static propTypes = {
@@ -79,6 +83,31 @@ class TwoFactorSettings extends Component {
         <CelText align="center" type="H4">
           Scan the QR code or enter the code manually in your auth app.
         </CelText>
+
+        <InfoBox
+          backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
+          padding="15 15 15 15"
+          left
+        >
+          <View style={{ flexDirection: "row" }}>
+            <Icon
+              name={"WarningCircle"}
+              height="25"
+              width="25"
+              fill="#FFFFFF"
+            />
+            <View style={{ flexDirection: "column" }}>
+              <CelText weight="bold" color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
+                Warning: Do Not Screenshot
+              </CelText>
+              <CelText color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
+                For your security, it is strongly advised that you do NOT screenshot your two-factor authentication
+                code.
+              </CelText>
+            </View>
+          </View>
+        </InfoBox>
+
         <Card styles={{ alignItems: "center", marginTop: 25 }}>
           <View style={style.qrWrapper}>
             <QRCode
@@ -96,18 +125,18 @@ class TwoFactorSettings extends Component {
             {secret}
           </CelText>
 
-          <View style={style.separatorWrapper}>
-            <Separator margin={"10 0 0 0"} />
-          </View>
-          <CopyButton
-            copyText={secret}
-            onCopy={() =>
-              actions.showMessage(
-                "success",
-                "The secret code copied to clipboard."
-              )
-            }
-          />
+          {/*<View style={style.separatorWrapper}>*/}
+          {/*  <Separator margin={"10 0 0 0"} />*/}
+          {/*</View>*/}
+          {/*<CopyButton*/}
+          {/*  copyText={secret}*/}
+          {/*  onCopy={() =>*/}
+          {/*    actions.showMessage(*/}
+          {/*      "success",*/}
+          {/*      "The secret code copied to clipboard."*/}
+          {/*    )*/}
+          {/*  }*/}
+          {/*/>*/}
         </Card>
 
         <View style={style.buttonWrapper}>
