@@ -7,7 +7,6 @@ import twitter from "react-native-simple-twitter";
 import CodePush from "react-native-code-push";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
-import _ from "lodash";
 import Constants from "../../constants";
 import {
   deleteSecureStoreKey,
@@ -22,6 +21,7 @@ import { initUxCam } from "./uxcam-util";
 import { isUserLoggedIn } from "./user-util/user-util";
 import mixpanelAnalytics from "./mixpanel-analytics";
 import { STORAGE_KEYS } from "../constants/DATA";
+import { getDeepLinkData } from "./deepLink-util";
 
 const { TWITTER_CUSTOMER_KEY, TWITTER_SECRET_KEY } = Constants;
 
@@ -69,8 +69,8 @@ async function logoutOnEnvChange() {
  * Updates Celsius app to the newest code push version on app startup
  */
 async function updateCelsiusApp() {
-  const { deepLinkData } = store.getState().deepLink;
-  if (deepLinkData && !_.isEmpty(deepLinkData) && deepLinkData.type)
+  const deepLinkData = await getDeepLinkData()
+  if (deepLinkData && deepLinkData.type)
     return false;
 
   try {

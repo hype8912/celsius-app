@@ -36,7 +36,6 @@ import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 @connect(
   state => ({
     appState: state.app.appState,
-    deepLinkData: state.deepLink.deepLinkData,
     user: state.user.profile,
     previousScreen: state.nav.previousScreen,
     activeScreen: state.nav.activeScreen,
