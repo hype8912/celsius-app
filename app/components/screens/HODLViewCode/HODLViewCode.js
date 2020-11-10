@@ -73,7 +73,7 @@ class HODLViewCode extends Component {
 
   render() {
     const style = HODLViewCodeStyles();
-    const { emptyState, showHodlCodeOverlay } = this.state;
+    const { emptyState } = this.state;
     const { formData, actions, callsInProgress, hodlCode } = this.props;
 
     if (emptyState)
@@ -114,52 +114,25 @@ class HODLViewCode extends Component {
             </View>
           ) : (
             <Card margin={"20 0 20 0"}>
-
               <TouchableOpacity
                 activeOpacity={1}
                 onPressIn={() => this.setState({ showHodlCodeOverlay: false })}
                 onPressOut={() => this.setState({ showHodlCodeOverlay: true })}>
 
-                {this.state.showHodlCodeOverlay && <View
-                  style={{
-                    zIndex: 1,
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
-                  }}
-                >
-                  <View
-                    style={{
-                      zIndex: 1,
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      right: 0,
-                      flexDirection: "row",
-                      justifyContent: "center",
-                    }}>
-                    <ThemedImage
-                      style={{
-                        width: 22,
-                        height: 20,
-                        alignSelf: "center",
-                      }}
-                      lightSource={require("../../../../assets/images/hold-to-show.png")}
-                      darkSource={require("../../../../assets/images/hold-to-show.png")}
-                      unicornSource={require("../../../../assets/images/hold-to-show.png")}
+                {this.state.showHodlCodeOverlay &&
+                <View style={style.hodlCodeOverlay}>
+                  <View style={style.blurImageAndIconWrapper}>
+                    <ThemedImage style={style.buttonIconHand}
+                                 lightSource={require("../../../../assets/images/hold-to-show.png")}
+                                 darkSource={require("../../../../assets/images/hold-to-show.png")}
+                                 unicornSource={require("../../../../assets/images/hold-to-show.png")}
                     />
-                    <CelText link style={{ marginStart: 10, alignSelf: "center" }}>Long press to reveal</CelText>
+                    <CelText link style={style.longPressText}>Long press to reveal</CelText>
                   </View>
-                  <ImageBackground
-                    style={{ flex: 1 }}
-                    imageStyle={{ borderRadius: 6 }}
-                    source={require("../../../../assets/images/blur_hodl.png")} />
-                </View>
-
-                }
+                  <ImageBackground style={style.blurImage}
+                                   imageStyle={{ borderRadius: 6 }}
+                                   source={require("../../../../assets/images/blur_hodl.png")} />
+                </View>}
 
                 <View style={style.hodlCodeWrapper}>
                   <View style={style.codeWrapper}>

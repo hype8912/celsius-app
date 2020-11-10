@@ -21,6 +21,37 @@ const base = {
     justifyContent: "center",
     alignItems: "center",
   },
+  hodlCodeOverlay: {
+    zIndex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
+  blurImageAndIconWrapper: {
+    zIndex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  buttonIconHand: {
+    alignSelf:"center",
+    width: 22,
+    height: 20
+  },
+  longPressText: {
+    marginStart: 10,
+    alignSelf: "center"
+  },
+
+  blurImage: {
+    flex: 1,
+  }
 };
 
 const themed = {

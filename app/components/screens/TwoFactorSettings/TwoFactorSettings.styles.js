@@ -37,6 +37,17 @@ const base = {
     width: widthPercentageToDP("43%"),
   },
 
+  qrCodeBlur: {
+    zIndex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    backgroundColor: "white",
+    borderRadius: 6
+  },
+
   buttonIconHand: {
     alignSelf:"center",
     width: 22,

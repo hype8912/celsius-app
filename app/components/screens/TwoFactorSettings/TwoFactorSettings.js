@@ -87,8 +87,7 @@ class TwoFactorSettings extends Component {
         <InfoBox
           backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
           padding="15 15 15 15"
-          left
-        >
+          left>
           <View style={{ flexDirection: "row" }}>
             <Icon
               name={"WarningCircle"}
@@ -110,18 +109,14 @@ class TwoFactorSettings extends Component {
 
         <Card styles={{ alignItems: "center", marginTop: 25 }}>
           {this.state.qrOverlayVisible &&
-          <ImageBackground
-            style={{
-              zIndex: 1,
-              position: "absolute",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-            }}
-            imageStyle={{ borderRadius: 6 }}
-            source={require("../../../../assets/images/blur.png")}
-          />}
+          <View style={style.qrCodeBlur}>
+            <ImageBackground
+              style={{ flex: 1 }}
+              resizeMode={"contain"}
+              imageStyle={{ borderRadius: 6 }}
+              source={require("../../../../assets/images/blur.png")}
+            />
+          </View>}
 
           <View style={style.qrWrapper}>
             <QRCode
@@ -147,7 +142,6 @@ class TwoFactorSettings extends Component {
             <TouchableOpacity
               onPressIn={() => this.setState({ qrOverlayVisible: false })}
               onPressOut={() => this.setState({ qrOverlayVisible: true })}>
-
               <View>
                 <ThemedImage
                   style={style.buttonIconHand}
@@ -160,8 +154,7 @@ class TwoFactorSettings extends Component {
             </TouchableOpacity>
           </Card>
 
-          <Card styles={style.buttonCard}
-                margin={1,0,0,0}>
+          <Card styles={style.buttonCard} margin={0,0,0,0}>
             <TouchableOpacity
               onPress={() => {
                 Clipboard.setString(secret);
