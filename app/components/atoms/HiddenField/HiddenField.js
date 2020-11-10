@@ -17,39 +17,22 @@ const {STORYBOOK} = Constants
   }),
   dispatch => ({actions: bindActionCreators(appActions, dispatch)})
 )
-// function getCircleStyle(props, style, index) {
-//   const circleStyle = [style.basicCircle];
-//   if (props.value[index - 1]) circleStyle.push(style.activeCircle);
-//   if (index === props.length && props.value[index - 1])
-//     circleStyle.push(style.lastCircle);
-//
-//   if (!props.value[index - 1] && !props.error)
-//     circleStyle.push({ opacity: 0.3 });
-//
-//   if (props.error) {
-//     circleStyle.push(style.errorCircle);
-//   }
-//
-//   return circleStyle;
-// }
 
 class HiddenField extends Component {
   static propTypes = {
-    // value: PropTypes.string,
     handleVerification: PropTypes.func.isRequired,
     field: PropTypes.string.isRequired,
     length: PropTypes.number,
     error: PropTypes.bool,
     loading: PropTypes.bool,
-    // updateFormField: PropTypes.func,
     shouldShow2FA: PropTypes.bool,
-    // handleInputChange: PropTypes.func,
   }
 
-  getCircleStyle = (props, style, index) => {
-    const { formData, length, error } = this.props
 
-    const value = formData.pin || formData.code || formData.pinConfirm || ""
+  getCircleStyle = (props, style, index) => {
+    const { formData, length, error, field } = this.props
+
+    const value = formData[field] || ""
     const circleStyle = [style.basicCircle];
     if (value[index - 1]) circleStyle.push(style.activeCircle);
     if (index === length && value[index - 1])
@@ -67,7 +50,6 @@ class HiddenField extends Component {
 
   changeInputText = num => {
     const { actions, field, handleVerification } = this.props;
-
     if (num.length === 6) {
       handleVerification(num)
       actions.updateFormField(field, num);
@@ -83,8 +65,9 @@ class HiddenField extends Component {
       formData,
       length = 6,
       error,
+      field,
     } = this.props
-    const value = formData.pin || formData.code || formData.pinConfirm || ""
+    const value = formData[field] || ""
     let i = 1;
     while (i <= length) {
       circles.push(

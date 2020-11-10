@@ -140,7 +140,12 @@ class RegisterSetPin extends Component {
 
             {/* <TouchableOpacity onPress={actions.toggleKeypad}>*/}
             <View>
-              <HiddenField value={formData[field]} length={6} />
+              <HiddenField
+                length={6}
+                loading={!loading}
+                field={formData[field]}
+                handleVerification={this.handlePINChange}
+              />
             </View>
             {/* </TouchableOpacity>*/}
 

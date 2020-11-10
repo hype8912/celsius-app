@@ -33,7 +33,6 @@ class ChangePin extends Component {
   componentDidMount() {
     const { actions } = this.props;
     actions.updateFormFields({
-      pin: "",
       newPin: "",
       newPinConfirm: "",
       pinCreated: false,
@@ -54,12 +53,13 @@ class ChangePin extends Component {
   shouldShow2FA = () => this.getVerificationType() === "2FA";
 
   handlePINChange = newValue => {
-    const { actions, user } = this.props;
-
+    const { actions, user, formData } = this.props;
     if (newValue.length > 6) return;
 
-    const field = this.props.formData.pinCreated ? "newPinConfirm" : "newPin";
+    const field = formData.pinCreated ? "newPinConfirm" : "newPin";
     actions.updateFormField(field, newValue);
+    actions.updateFormField("pinCreated", true);
+
     // Check PIN strength
     const pinScoreNotPassed = !!securityUtil
       .calculatePinScore(newValue, user.date_of_birth)
@@ -68,7 +68,6 @@ class ChangePin extends Component {
     if (newValue.length === 6 && !pinScoreNotPassed) {
       this.handlePinFinish(newValue);
     }
-    // actions.updateFormField("pin", "")
   };
 
   handlePinFinish = async newValue => {
@@ -100,7 +99,7 @@ class ChangePin extends Component {
   };
 
   render() {
-    const {  user, formData, actions } = this.props;
+    const {  user, formData } = this.props;
     const field = !formData.pinCreated ? "newPin" : "newPinConfirm";
     const headingText = !formData.pinCreated
       ? "Enter your 6-digits PIN"
@@ -108,10 +107,7 @@ class ChangePin extends Component {
     const subheadingText = !formData.pinCreated
       ? "Please enter your new PIN to proceed."
       : "Please repeat your new PIN.";
-
-    // const onPressFunc = this.handlePINChange;
     const style = ChangePinStyle();
-
     const isLoading = _.isEmpty(formData) || formData.loading;
     return (
       <RegularLayout padding="0 0 0 0" fabType={"hide"}>
@@ -132,19 +128,14 @@ class ChangePin extends Component {
                 {subheadingText}
               </CelText>
 
-              {/* <TouchableOpacity onPress={actions.toggleKeypad}>*/}
               <View>
                 <HiddenField
-                  value={formData && formData.code || formData.pin || ""}
                   length={6}
                   loading={formData && !formData.loading}
-                  updateFormField={actions.updateFormField}
-                  shouldShow2FA={this.shouldShow2FA}
-                  handle2FAChange={this.handle2FAChange}
-                  handlePINChange={this.handlePINChange}
+                  field={!formData.pinCreated ? "newPin" : "newPinConfirm"}
+                  handleVerification={this.handlePINChange}
                 />
               </View>
-              {/* </TouchableOpacity>*/}
 
               {formData.pinCreated && !formData.loading && (
                 <CelButton basic onPress={this.handleBack}>
