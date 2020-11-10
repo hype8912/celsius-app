@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { ImageBackground, TouchableOpacity, View } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -18,6 +18,9 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import StaticScreen from "../StaticScreen/StaticScreen";
 import { COLOR_KEYS } from "../../../constants/COLORS";
+import InfoBox from "../../atoms/InfoBox/InfoBox";
+import Icon from "../../atoms/Icon/Icon";
+import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
 
 @connect(
   state => ({
@@ -25,7 +28,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
     hodlCode: state.hodl.hodlCode,
     callsInProgress: state.api.callsInProgress,
   }),
-  dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
+  dispatch => ({ actions: bindActionCreators(appActions, dispatch) }),
 )
 class HODLViewCode extends Component {
   static propTypes = {};
@@ -36,7 +39,7 @@ class HODLViewCode extends Component {
 
     this.state = {
       emptyState: false,
-      showHodlCode: false,
+      showHodlCodeOverlay: true,
     };
     props.navigation.setParams({ hideBack: false });
   }
@@ -70,7 +73,7 @@ class HODLViewCode extends Component {
 
   render() {
     const style = HODLViewCodeStyles();
-    const { emptyState, showHodlCode } = this.state;
+    const { emptyState, showHodlCodeOverlay } = this.state;
     const { formData, actions, callsInProgress, hodlCode } = this.props;
 
     if (emptyState)
@@ -80,7 +83,7 @@ class HODLViewCode extends Component {
 
     const loading = apiUtil.areCallsInProgress(
       [API.GET_HODL_CODE],
-      callsInProgress
+      callsInProgress,
     );
 
     return (
@@ -101,8 +104,8 @@ class HODLViewCode extends Component {
           </CelText>
           <CelText type={"H5"} align={"left"}>
             {"When you're ready to deactivate HODL Mode, you will need to enter the unique security code below. \n" +
-              "\n" +
-              "You will NOT be able to access this code once you enable HODL Mode, so you must securely store this code now and remember it in order to deactivate HODL Mode in the future."}
+            "\n" +
+            "You will NOT be able to access this code once you enable HODL Mode, so you must securely store this code now and remember it in order to deactivate HODL Mode in the future."}
           </CelText>
 
           {!hodlCode ? (
@@ -110,26 +113,88 @@ class HODLViewCode extends Component {
               <Spinner />
             </View>
           ) : (
-            <Card margin={"20 0 0 0"}>
-              <View style={style.hodlCodeWrapper}>
-                <View style={style.codeWrapper}>
-                  <CelText hideFromRecording align={"left"} type={"H2"} weight={"500"}>
-                    {showHodlCode ? hodlCode : "XXXXXXXX"}
-                  </CelText>
+            <Card margin={"20 0 20 0"}>
+
+              <TouchableOpacity
+                activeOpacity={1}
+                onPressIn={() => this.setState({ showHodlCodeOverlay: false })}
+                onPressOut={() => this.setState({ showHodlCodeOverlay: true })}>
+
+                {this.state.showHodlCodeOverlay && <View
+                  style={{
+                    zIndex: 1,
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                  }}
+                >
+                  <View
+                    style={{
+                      zIndex: 1,
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      right: 0,
+                      flexDirection: "row",
+                      justifyContent: "center",
+                    }}>
+                    <ThemedImage
+                      style={{
+                        width: 22,
+                        height: 20,
+                        alignSelf: "center",
+                      }}
+                      lightSource={require("../../../../assets/images/hold-to-show.png")}
+                      darkSource={require("../../../../assets/images/hold-to-show.png")}
+                      unicornSource={require("../../../../assets/images/hold-to-show.png")}
+                    />
+                    <CelText link style={{ marginStart: 10, alignSelf: "center" }}>Long press to reveal</CelText>
+                  </View>
+                  <ImageBackground
+                    style={{ flex: 1 }}
+                    imageStyle={{ borderRadius: 6 }}
+                    source={require("../../../../assets/images/blur_hodl.png")} />
                 </View>
-                <View style={style.textWrapper}>
-                  <CelText
-                    color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-                    onPress={() =>
-                      this.setState({ showHodlCode: !this.state.showHodlCode })
-                    }
-                  >
-                    {showHodlCode ? "HIDE" : "SHOW"}
-                  </CelText>
+
+                }
+
+                <View style={style.hodlCodeWrapper}>
+                  <View style={style.codeWrapper}>
+                    <CelText hideFromRecording align={"left"} type={"H2"} weight={"500"}>
+                      {hodlCode}
+                    </CelText>
+                  </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             </Card>
           )}
+
+          <InfoBox
+            backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
+            padding="15 15 15 15"
+            left
+          >
+            <View style={{ flexDirection: "row" }}>
+              <Icon
+                name={"WarningCircle"}
+                height="25"
+                width="25"
+                fill="#FFFFFF"
+              />
+              <View style={{ flexDirection: "column" }}>
+                <CelText weight="bold" color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
+                  Warning: Do Not Screenshot
+                </CelText>
+                <CelText color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
+                  For your security, it is strongly advised that you do NOT screenshot your two-factor authentication
+                  code.
+                </CelText>
+              </View>
+            </View>
+          </InfoBox>
 
           <Card margin={"20 0 20 0"} padding={"15 15 0 15"}>
             <CelCheckbox
@@ -137,7 +202,7 @@ class HODLViewCode extends Component {
               field={`agreeHodlMode`}
               value={formData.agreeHodlMode}
               uncheckedCheckBoxColor={getColor(
-                COLOR_KEYS.DOT_INDICATOR_INACTIVE
+                COLOR_KEYS.DOT_INDICATOR_INACTIVE,
               )}
               checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
               rightText={"I memorized my deactivation code"}
