@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Linking, TouchableOpacity, Clipboard } from "react-native";
+import { View, Linking, TouchableOpacity, Clipboard, Image, ImageBackground } from "react-native";
 // import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -110,6 +110,19 @@ class TwoFactorSettings extends Component {
         </InfoBox>
 
         <Card styles={{ alignItems: "center", marginTop: 25 }}>
+          <ImageBackground
+            style={{
+              zIndex: 1,
+              position: "absolute",
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+            }}
+            imageStyle={{ borderRadius: 6}}
+            source={require("../../../../assets/images/blur.png")}
+          />
+
           <View style={style.qrWrapper}>
             <QRCode
               value={qrCodeUrl}
