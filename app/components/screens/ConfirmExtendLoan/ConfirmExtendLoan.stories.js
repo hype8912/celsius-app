@@ -26,6 +26,7 @@ const initialState = {
 const stableCoin = () => {
   const state = _.cloneDeep(initialState);
   state.loans.loan = mockLoansStore.loan.stableCoin;
+  state.loans.activeLoan = mockLoansStore.allLoans.enimalnowlt3[0];
   state.forms.formData.loanType = LOAN_TYPES.STABLE_COIN_LOAN;
 
   return (
@@ -39,6 +40,7 @@ const stableCoin = () => {
 
 const dollar = () => {
   const state = _.cloneDeep(initialState);
+  state.loans.activeLoan = mockLoansStore.allLoans.enimalnowlt3[0];
   state.loans.loan = mockLoansStore.loan.USDnonUSBank;
   state.forms.formData.loanType = LOAN_TYPES.USD_LOAN;
 

@@ -87,6 +87,14 @@ class LoanOverviewCard extends Component {
     });
   };
 
+  extend = async (id) => {
+    const { actions } = this.props;
+    await actions.setActiveLoan(id);
+    actions.navigateTo(SCREENS.EXTEND_LOAN, {
+      id,
+    })
+  }
+
   render() {
     const { loan, navigateTo, index, length, celDiscount } = this.props;
     const { isLoading } = this.state;
@@ -394,11 +402,7 @@ class LoanOverviewCard extends Component {
               margin={"10 0 0 0"}
               size={"small"}
               color={"green"}
-              onPress={() =>
-                navigateTo(SCREENS.EXTEND_LOAN, {
-                  id: loan.id,
-                })
-              }
+              onPress={() => this.extend(loan.id)}
             >
               Extend the Loan
             </CelButton>
