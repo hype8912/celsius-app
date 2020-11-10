@@ -36,10 +36,10 @@ const PaymentListItem = ({ payment, upperText, type }) => {
   if (payment.type === LOAN_PAYMENT_TYPES.RECEIVING_PRINCIPAL_BACK)
     paymentType = {
       type: "Principal",
-      color: getColor(COLOR_KEYS.NEGATIVE_STATE),
+      color: getColor(COLOR_KEYS.POSITIVE_STATE),
       sign: "-",
     };
-
+  const statusColor = payment.status === "PAID" ? getColor(COLOR_KEYS.POSITIVE_STATE) : textColor || paymentType.color;
   return (
     <View>
       {upperText ? (
@@ -69,7 +69,7 @@ const PaymentListItem = ({ payment, upperText, type }) => {
             <CelText
               weight="500"
               type="H7"
-              color={textColor || paymentType.color}
+              color={statusColor}
             >
               {formatter.capitalize(payment.status)}
             </CelText>

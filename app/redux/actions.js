@@ -27,6 +27,5 @@ export * from "./biometrics/biometricsActions";
 export * from "./user/userProfileActions";
 export * from "./hodl/hodlActions";
 export * from "./animations/animationsActions";
-export * from "./deepLink/deepLinkActions";
 export * from "./buyCoins/buyCoinsActions";
 // NOTE(fj): plop reduxGen importing new Actions here
