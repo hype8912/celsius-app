@@ -24,7 +24,10 @@ import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import store from "../../../redux/store";
 import GetCoinsEnterAmountInfoModal from "../../modals/GetCoinsEnterAmountInfoModal/GetCoinsEnterAmountInfoModal";
+import AmountInput from "../../atoms/AmountInput/AmountInput";
+import Constants from "../../../../constants"
 
+const {STORYBOOK} = Constants
 @connect(
   state => ({
     formData: state.forms.formData,
@@ -427,6 +430,16 @@ class GetCoinsEnterAmount extends Component {
         >
           {areAmountsCorrect ? "Buy Coins" : "Enter amount above"}
         </CelButton>
+        <AmountInput
+          field={formData.isFiat ? "amountFiat" : "amountCrypto"}
+          style={{
+            opacity: 0,
+            height: 0,
+          }}
+          value={formData.isFiat ? formData.amountFiat : formData.amountCrypto}
+          autofocus={!STORYBOOK}
+          updateFormField={actions.updateFormField}
+        />
         <GetCoinsEnterAmountInfoModal close={actions.closeModal} />
         <GetCoinsConfirmModal />
       </RegularLayout>

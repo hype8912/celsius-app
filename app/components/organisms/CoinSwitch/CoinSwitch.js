@@ -48,13 +48,13 @@ class CoinSwitch extends Component {
       coinRate,
     } = this.props
     if (isUsd) {
-      const amountCrypto  = new BigNumber(amount).dividedBy(coinRate)
+      const amountCrypto  = amount && new BigNumber(amount).dividedBy(coinRate)
       actions.updateFormFields({
         "amountUsd": amount,
         "amountCrypto": amountCrypto.toString()
       })
     } else {
-      const amountUsd  = new BigNumber(amount).multipliedBy(coinRate)
+      const amountUsd  = amount &&  new BigNumber(amount).multipliedBy(coinRate)
       actions.updateFormFields({
         "amountCrypto": amount,
         "amountUsd": amountUsd.toString()
@@ -113,7 +113,7 @@ class CoinSwitch extends Component {
                 filed={isUsd ? "amountUsd" : "amountCrypto"}
                 updateFormField={actions.updateFormField}
                 onChange={this.handleEnteringAmount}
-                placeholder="0"
+                placeholder="0.00"
                 style={{
                   fontFamily: getFontFamily("light"),
                   color: getColor(COLOR_KEYS.PRIMARY_BUTTON),

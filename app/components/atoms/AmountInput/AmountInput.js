@@ -11,6 +11,8 @@ class AmountInput extends Component {
     updateFormField: PropTypes.func,
     onChange: PropTypes.func,
     style: PropTypes.instanceOf(Object),
+    maxLength: PropTypes.number,
+    autofocus: PropTypes.bool,
   };
 
   handleChangeText = (text) => {
@@ -31,7 +33,7 @@ class AmountInput extends Component {
     }
 
     // Don't allow invalid characters
-    if (!validCharacters.includes(lastCharacter)) {
+    if (!validCharacters.includes(lastCharacter) && amount !== "") {
       amount = value
     }
 
@@ -43,7 +45,7 @@ class AmountInput extends Component {
   }
 
   render() {
-    const { value, style, placeholder } = this.props
+    const { value, style, placeholder, maxLength, autofocus } = this.props
     return (
       <TextInput
         textAlign={"center"}
@@ -53,6 +55,8 @@ class AmountInput extends Component {
         onChangeText={this.handleChangeText}
         style={style}
         placeholder={placeholder}
+        maxLength={maxLength}
+        autofocus={autofocus}
       />
     );
   }
