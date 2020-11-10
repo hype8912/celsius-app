@@ -95,7 +95,6 @@ import BiometricAuthentication from "./BiometricAuthentication/BiometricAuthenti
 import ConfirmExtendLoan from "./ConfirmExtendLoan/ConfirmExtendLoan.stories";
 import ExtendLoanScreen from "./ExtendLoanScreen/ExtendLoanScreen.stories";
 import TaxReportStories from "./TaxReport/TaxReport.stories";
-import TaxReport from "./TaxReport/TaxReport";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
