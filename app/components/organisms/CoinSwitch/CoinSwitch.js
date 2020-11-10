@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, TouchableOpacity, TextInput } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import BigNumber from "bignumber.js";
 
 import CoinSwitchStyle from "./CoinSwitch.styles";
@@ -12,14 +12,11 @@ import Icon from "../../atoms/Icon/Icon";
 import {
   getColor,
   getScaledFont,
-  getFontSize, widthPercentageToDP,
+  getFontSize, widthPercentageToDP, getFontFamily
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import * as appActions from "../../../redux/actions";
-import { KEYBOARD_TYPE } from "../../../constants/UI";
-import Constants from "../../../../constants"
-
-const { STORYBOOK } = Constants
+import AmountInput from "../../atoms/AmountInput/AmountInput";
 
 @connect(
   state => ({
@@ -113,21 +110,19 @@ class CoinSwitch extends Component {
 
               }}
             >
-               <TextInput
-                style={[style.inputField, {
-                  fontSize: upperValue.length < 10 ? 35 : 25,
-                  color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
-                }]}
-                placeholderTextColor={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-                placeholder={"0.00"}
-                textAlign={"center"}
-                allowFontScaling
-                maxLength={20}
-                keyboardType={KEYBOARD_TYPE.NUMERIC}
-                autoFocus={STORYBOOK}
+              <AmountInput
                 value={upperValue}
-                onChangeText={(amount) => this.handleEnteringAmount(amount)}
-               />
+                filed={isUsd ? "amountUsd" : "amountCrypto"}
+                updateFormField={actions.updateFormField}
+                onChange={this.handleEnteringAmount}
+                placeholder="0"
+                style={{
+                  fontFamily: getFontFamily("light"),
+                  color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
+                  fontSize: upperValue.length < 10 ? 35 : 25,
+                  paddingVertical: 0,
+                }}
+              />
             </View>
             <View
               style={{
