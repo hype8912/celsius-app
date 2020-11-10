@@ -1,12 +1,10 @@
-import CameraRoll from "@react-native-community/cameraroll";
+// import CameraRoll from "@react-native-community/cameraroll";
 
 import ACTIONS from "../../constants/ACTIONS";
-import { apiError, startApiCall } from "../api/apiActions";
-import { showMessage } from "../ui/uiActions";
 import API from "../../constants/API";
 
 export {
-  getCameraRollPhotos,
+  // getCameraRollPhotos,
   takeCameraPhoto,
   flipCamera,
   activateCamera,
@@ -16,41 +14,41 @@ export {
 /**
  * Gets next batch of photos from Camera Roll
  */
-function getCameraRollPhotos() {
-  return async (dispatch, getState) => {
-    const { camera } = getState();
-
-    if (!camera.hasMore) return;
-
-    const config = {
-      after: camera.lastPhotoCursor,
-      first: 30,
-      assetType: "Photos",
-    };
-
-    dispatch(startApiCall(API.GET_CAMERA_ROLL));
-    try {
-      const photos = await CameraRoll.getPhotos(config);
-
-      // console.log('photos', photos)
-      dispatch(getCameraRollPhotosSuccess(photos));
-    } catch (err) {
-      dispatch(showMessage("error", err.msg));
-      dispatch(apiError(API.GET_CAMERA_ROLL, err));
-    }
-  };
-}
+// function getCameraRollPhotos() {
+//   return async (dispatch, getState) => {
+//     const { camera } = getState();
+//
+//     if (!camera.hasMore) return;
+//
+//     const config = {
+//       after: camera.lastPhotoCursor,
+//       first: 30,
+//       assetType: "Photos",
+//     };
+//
+//     dispatch(startApiCall(API.GET_CAMERA_ROLL));
+//     try {
+//       const photos = await CameraRoll.getPhotos(config);
+//
+//       // console.log('photos', photos)
+//       dispatch(getCameraRollPhotosSuccess(photos));
+//     } catch (err) {
+//       dispatch(showMessage("error", err.msg));
+//       dispatch(apiError(API.GET_CAMERA_ROLL, err));
+//     }
+//   };
+// }
 
 /**
  * Successful opening of Camera Roll
  */
-function getCameraRollPhotosSuccess(photos) {
-  return {
-    type: ACTIONS.GET_CAMERA_ROLL_SUCCESS,
-    callName: API.GET_CAMERA_ROLL,
-    photos,
-  };
-}
+// function getCameraRollPhotosSuccess(photos) {
+//   return {
+//     type: ACTIONS.GET_CAMERA_ROLL_SUCCESS,
+//     callName: API.GET_CAMERA_ROLL,
+//     photos,
+//   };
+// }
 
 /**
  * Takes camera photo

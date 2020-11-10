@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {
   View,
   TouchableOpacity,
-  Image,
   SafeAreaView,
   Dimensions,
   Platform,
@@ -37,9 +36,9 @@ const { height, width } = Dimensions.get("window");
 @connect(
   state => ({
     cameraType: state.camera.cameraType,
-    cameraRollLastPhoto: state.camera.cameraRollPhotos.length
-      ? state.camera.cameraRollPhotos[0]
-      : null,
+    // cameraRollLastPhoto: state.camera.cameraRollPhotos.length
+    //   ? state.camera.cameraRollPhotos[0]
+    //   : null,
     photo: state.camera.photo,
     cameraField: state.camera.cameraField,
     cameraHeading: state.camera.cameraHeading,
@@ -85,7 +84,7 @@ class CameraScreen extends Component {
 
     this.state = {
       hasCameraPermission: false,
-      hasCameraRollPermission: false,
+      // hasCameraRollPermission: false,
       takingPhoto: false,
       hasInitialPhoto: !!props.photo,
       size: {
@@ -99,7 +98,7 @@ class CameraScreen extends Component {
     const { actions } = this.props;
     actions.setFabType("hide");
     await this.getCameraPermissions();
-    await this.getCameraRollPermissions();
+    // await this.getCameraRollPermissions();
   }
 
   componentDidUpdate() {
@@ -124,20 +123,20 @@ class CameraScreen extends Component {
     }
   };
 
-  getCameraRollPermissions = async () => {
-    const { actions, cameraRollLastPhoto } = this.props;
-    const perm = await requestForPermission(ALL_PERMISSIONS.LIBRARY);
-
-    if (perm === RESULTS.GRANTED) {
-      if (!cameraRollLastPhoto) actions.getCameraRollPhotos();
-      this.setState({ hasCameraRollPermission: true });
-    } else {
-      actions.showMessage(
-        "warning",
-        "It looks like you denied Celsius app access to your camera roll. Please enable it in your phone settings."
-      );
-    }
-  };
+  // getCameraRollPermissions = async () => {
+  //   const { actions } = this.props;
+  //   const perm = await requestForPermission(ALL_PERMISSIONS.LIBRARY);
+  //
+  //   if (perm === RESULTS.GRANTED) {
+  //     // if (!cameraRollLastPhoto) actions.getCameraRollPhotos();
+  //     this.setState({ hasCameraRollPermission: true });
+  //   } else {
+  //     actions.showMessage(
+  //       "warning",
+  //       "It looks like you denied Celsius app access to your camera roll. Please enable it in your phone settings."
+  //     );
+  //   }
+  // };
 
   getMaskImage = mask => {
     switch (mask) {
@@ -314,7 +313,7 @@ class CameraScreen extends Component {
   };
 
   render() {
-    const { cameraType, actions, cameraRollLastPhoto } = this.props;
+    const { cameraType, actions } = this.props;
     const { takingPhoto } = this.state;
     const style = CameraScreenStyle();
     const Mask = this.renderMask;
@@ -338,13 +337,13 @@ class CameraScreen extends Component {
         <SafeAreaView style={style.bottomView}>
           <View style={style.actionBar}>
             <TouchableOpacity style={{ flex: 1 }} onPress={this.pickImage}>
-              {cameraRollLastPhoto && (
-                <Image
-                  source={{ uri: cameraRollLastPhoto.node.image.uri }}
-                  resizeMode="cover"
-                  style={{ width: 50, height: 50 }}
-                />
-              )}
+              {/* {cameraRollLastPhoto && (*/}
+              {/*  <Image*/}
+              {/*    source={{ uri: cameraRollLastPhoto.node.image.uri }}*/}
+              {/*    resizeMode="cover"*/}
+              {/*    style={{ width: 50, height: 50 }}*/}
+              {/*  />*/}
+              {/* )}*/}
             </TouchableOpacity>
 
             <TouchableOpacity
