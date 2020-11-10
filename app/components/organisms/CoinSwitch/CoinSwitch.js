@@ -50,14 +50,12 @@ class CoinSwitch extends Component {
     if (isUsd) {
       const amountCrypto  = new BigNumber(amount).dividedBy(coinRate)
       actions.updateFormFields({
-        // "amountUsd": formatter.amountInputFieldFormat(amount),
         "amountUsd": amount,
         "amountCrypto": amountCrypto.toString()
       })
     } else {
       const amountUsd  = new BigNumber(amount).multipliedBy(coinRate)
       actions.updateFormFields({
-        // "amountCrypto": formatter.amountInputFieldFormat(amount),
         "amountCrypto": amount,
         "amountUsd": amountUsd.toString()
       })

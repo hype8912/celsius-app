@@ -253,7 +253,6 @@ class VerifyProfile extends Component {
     const hideBiometrics = navigation.getParam("hideBiometrics");
 
     if (biometricsEnabled && !hideBiometrics) {
-      // actions.toggleKeypad(false);
       try {
         const successfulBiometrics = await createBiometricsSignature(
           "Verification required"

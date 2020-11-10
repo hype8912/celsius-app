@@ -138,7 +138,6 @@ class RegisterSetPin extends Component {
               {screenText.subheadingText}
             </CelText>
 
-            {/* <TouchableOpacity onPress={actions.toggleKeypad}>*/}
             <View>
               <HiddenField
                 length={6}
@@ -147,7 +146,6 @@ class RegisterSetPin extends Component {
                 handleVerification={this.handlePINChange}
               />
             </View>
-            {/* </TouchableOpacity>*/}
 
             {pinCreated && !loading && (
               <CelButton basic onPress={this.handleBack}>
