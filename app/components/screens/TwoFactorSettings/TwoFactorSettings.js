@@ -12,8 +12,6 @@ import TwoFactorSettingsStyle from "./TwoFactorSettings.styles";
 import CelButton from "../../atoms/CelButton/CelButton";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Card from "../../atoms/Card/Card";
-import CopyButton from "../../atoms/CopyButton/CopyButton";
-import Separator from "../../atoms/Separator/Separator";
 import loggerUtil from "../../../utils/logger-util";
 import { SCREENS } from "../../../constants/SCREENS";
 import Constants from "../../../../constants";
@@ -49,6 +47,7 @@ class TwoFactorSettings extends Component {
     this.state = {
       secretLoaded: !!secret,
       secret: secret || null,
+      qrOverlayVisible: true,
     };
   }
 
@@ -110,6 +109,7 @@ class TwoFactorSettings extends Component {
         </InfoBox>
 
         <Card styles={{ alignItems: "center", marginTop: 25 }}>
+          {this.state.qrOverlayVisible &&
           <ImageBackground
             style={{
               zIndex: 1,
@@ -119,9 +119,9 @@ class TwoFactorSettings extends Component {
               bottom: 0,
               right: 0,
             }}
-            imageStyle={{ borderRadius: 6}}
+            imageStyle={{ borderRadius: 6 }}
             source={require("../../../../assets/images/blur.png")}
-          />
+          />}
 
           <View style={style.qrWrapper}>
             <QRCode
@@ -144,15 +144,20 @@ class TwoFactorSettings extends Component {
 
           <Card styles={style.buttonCard}
                 margin={0,0,0,0}>
-            <View>
-              <ThemedImage
-                style={style.buttonIconHand}
-                lightSource={require("../../../../assets/images/hold-to-show.png")}
-                darkSource={require("../../../../assets/images/hold-to-show.png")}
-                unicornSource={require("../../../../assets/images/hold-to-show.png")}
-              />
-              <CelText align="center" link>Hold to show</CelText>
-            </View>
+            <TouchableOpacity
+              onPressIn={() => this.setState({ qrOverlayVisible: false })}
+              onPressOut={() => this.setState({ qrOverlayVisible: true })}>
+
+              <View>
+                <ThemedImage
+                  style={style.buttonIconHand}
+                  lightSource={require("../../../../assets/images/hold-to-show.png")}
+                  darkSource={require("../../../../assets/images/hold-to-show.png")}
+                  unicornSource={require("../../../../assets/images/hold-to-show.png")}
+                />
+                <CelText align="center" link>Hold to show</CelText>
+              </View>
+            </TouchableOpacity>
           </Card>
 
           <Card styles={style.buttonCard}
