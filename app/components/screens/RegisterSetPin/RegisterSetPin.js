@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 
 import CelText from "../../atoms/CelText/CelText";
 import ChangePinStyle from "../ChangePin/ChangePin.styles";
-import HiddenField from "../../atoms/HiddenField/HiddenField";
+import HiddenField from "../../organisms/HiddenField/HiddenField";
 import * as appActions from "../../../redux/actions";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";

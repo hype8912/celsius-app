@@ -19,7 +19,7 @@ import CoinSwitchStories from "../organisms/CoinSwitch/CoinSwitch.stories";
 import ContactRowStories from "./ContactRow/ContactRow.stories";
 import ContactSupportStories from "./ContactSupport/ContactSupport.stories";
 import EmptyStateStories from "./EmptyState/EmptyState.stories";
-import HiddenFieldStories from "./HiddenField/HiddenField.stories";
+import HiddenFieldStories from "../organisms/HiddenField/HiddenField.stories";
 import HorizontalSliderStories from "./HorizontalSlider/HorizontalSlider.stories";
 import IconStories from "./Icon/Icon.stories";
 import InfoBoxStories from "./InfoBox/InfoBox.stories";

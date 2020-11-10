@@ -12,15 +12,6 @@ class AmountInput extends Component {
     onChange: PropTypes.func,
     style: PropTypes.instanceOf(Object),
   };
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      // initial state
-    };
-
-    // binders
-  }
 
   handleChangeText = (text) => {
     const { value, onChange, field, updateFormField } = this.props

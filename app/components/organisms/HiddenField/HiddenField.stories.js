@@ -1,7 +1,7 @@
 import React from "react";
 
-import HiddenField from "../HiddenField/HiddenField";
-import StoryWrapper from "../StoryWrapper/StoryWrapper";
+import HiddenField from "./HiddenField";
+import StoryWrapper from "../../atoms/StoryWrapper/StoryWrapper";
 
 const HiddenFieldStories = () => (
   <StoryWrapper title="HiddenField">

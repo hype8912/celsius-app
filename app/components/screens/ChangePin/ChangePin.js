@@ -8,7 +8,7 @@ import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import ChangePinStyle from "./ChangePin.styles";
-import HiddenField from "../../atoms/HiddenField/HiddenField";
+import HiddenField from "../../organisms/HiddenField/HiddenField";
 import CelButton from "../../atoms/CelButton/CelButton";
 import PinTooltip from "../../molecules/PinTooltip/PinTooltip";
 import securityUtil from "../../../utils/security-util";

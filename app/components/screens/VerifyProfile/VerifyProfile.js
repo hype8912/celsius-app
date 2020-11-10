@@ -18,7 +18,7 @@ import {
   BIOMETRIC_ERRORS,
   MODALS,
 } from "../../../constants/UI";
-import HiddenField from "../../atoms/HiddenField/HiddenField";
+import HiddenField from "../../organisms/HiddenField/HiddenField";
 import Spinner from "../../atoms/Spinner/Spinner";
 import CelButton from "../../atoms/CelButton/CelButton";
 import ContactSupport from "../../atoms/ContactSupport/ContactSupport";
