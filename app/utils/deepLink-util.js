@@ -55,6 +55,7 @@ function checkReferralDeeplink () {
       if (deepLink) {
         counter = 0
         await handleDeepLink();
+        clearInterval(interval)
       } else {
         counter--
       }

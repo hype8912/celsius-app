@@ -82,7 +82,7 @@ function handleAppStateChange(nextAppState) {
         stopRecordingAndUploadData();
       }
     }
-
+    // Referral deeplink check
     if (activeScreen === SCREENS.WELCOME && nextAppState === "active") {
       checkReferralDeeplink()
     }
