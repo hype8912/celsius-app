@@ -3,7 +3,7 @@ import { getSecureStoreKey, setSecureStoreKey, deleteSecureStoreKey } from "./st
 import * as actions from "../redux/actions";
 import store from "../redux/store";
 
-export { addDeepLinkData, handleDeepLink, getDeepLinkData };
+export { addDeepLinkData, handleDeepLink, getDeepLinkData, checkReferralDeeplink };
 
 async function addDeepLinkData(deepLinkData) {
   const deepLink = JSON.stringify(deepLinkData)
@@ -22,19 +22,19 @@ async function handleDeepLink() {
     if (deepLinkData) {
       if (!deepLinkData.type) return;
       const user = store.getState().user.profile;
+
       switch (deepLinkData.type) {
         case DEEP_LINKS.NAVIGATE_TO:
           if (!user.id) return;
-
           store.dispatch(actions.resetToScreen(deepLinkData.screen));
-          clearDeepLinkData();
+          await clearDeepLinkData();
           return;
 
         case DEEP_LINKS.TRANSFER:
         case DEEP_LINKS.INDIVIDUAL_REFERRAL:
         case DEEP_LINKS.COMPANY_REFERRAL:
           store.dispatch(actions.registerBranchLink(deepLinkData));
-          clearDeepLinkData()
+          await clearDeepLinkData()
           return;
 
         default:
@@ -45,4 +45,21 @@ async function handleDeepLink() {
 
 async function clearDeepLinkData() {
   await deleteSecureStoreKey(STORAGE_KEYS.DEEPLINK_DATA)
+}
+
+function checkReferralDeeplink () {
+  let counter = 10
+  const interval = setInterval(async ()=> {
+    if (counter > 0) {
+      const deepLink = await getDeepLinkData()
+      if (deepLink) {
+        counter = 0
+        await handleDeepLink();
+      } else {
+        counter--
+      }
+    } else {
+      clearInterval(interval)
+    }
+  },1000)
 }
