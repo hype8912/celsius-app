@@ -17,7 +17,7 @@ const icons = {
   "mail-active": require("../../../../assets/images/icons/mail-active.png"),
 };
 
-class CelAnimatedSwitch extends Component {
+class CelSegmentedControl extends Component {
   static propTypes = {
     options: PropTypes.instanceOf(Object),
     onValueChange: PropTypes.func,
@@ -101,4 +101,4 @@ class CelAnimatedSwitch extends Component {
   }
 }
 
-export default CelAnimatedSwitch;
+export default CelSegmentedControl;
