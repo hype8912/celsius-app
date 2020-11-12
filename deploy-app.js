@@ -21,7 +21,7 @@ const codePushChannels = {
 };
 
 // Setting desired environment
-execSync(`yarn set:env --env=${ENV}`, { encoding: "utf-8", stdio: "inherit" });
+// execSync(`yarn set:env --env=${ENV}`, { encoding: "utf-8", stdio: "inherit" });
 
 // Codepush iOS App
 if (!androidOnly) {

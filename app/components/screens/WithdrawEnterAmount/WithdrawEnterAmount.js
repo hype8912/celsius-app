@@ -347,6 +347,12 @@ class WithdrawEnterAmount extends Component {
           />
           <View style={style.wrapper}>
             <View>
+              <Card color={getColor(COLOR_KEYS.LINK)}>
+                <CelText color={getColor(COLOR_KEYS.WHITE)}>
+                  Celsius is currently updating its DNS servers. During this time, withdrawals are temporarily unavailable. This process is expected to last up to 24 hours.
+                </CelText>
+              </Card>
+
               <CoinPicker
                 type={"basic"}
                 onChange={this.handleCoinChange}

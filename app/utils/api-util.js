@@ -237,7 +237,7 @@ async function responseInterceptor(res) {
       true
     );
     // eslint-disable-next-line no-console
-    console.log({ [res.config.url]: durations[res.config.url] });
+    // console.log({ [res.config.url]: durations[res.config.url] });
   }
 
   if (
@@ -298,11 +298,11 @@ async function errorInterceptor(serverError) {
     }
   }
 
-  mixpanelAnalytics.apiError({
-    ...err,
-    url: serverError.config && serverError.config.url,
-    method: serverError.config && serverError.config.method,
-  });
+  // mixpanelAnalytics.apiError({
+  //   ...err,
+  //   url: serverError.config && serverError.config.url,
+  //   method: serverError.config && serverError.config.method,
+  // });
 
   if (err.status === 401) handle401(err);
   if (err.status === 403) {
