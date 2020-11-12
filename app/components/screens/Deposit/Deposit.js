@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import moment from "moment";
 
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import * as appActions from "../../../redux/actions";
@@ -27,6 +28,7 @@ import apiUtil from "../../../utils/api-util";
 import API from "../../../constants/API";
 import AdditionalAmountCard from "../../molecules/AdditionalAmountCard/AdditionalAmountCard";
 import { renderAdditionalDepositCardContent } from "../../../utils/ui-util";
+import BCHForkCard from "../../atoms/BCHForkCard/BCHForkCard";
 
 @connect(
   state => ({
@@ -168,6 +170,8 @@ class Deposit extends Component {
       callsInProgress
     );
 
+    const isBCHBlocked = formData.selectedCoin === "BCH" && moment().isAfter(moment("14-nov-20"))
+
     return (
       <RegularLayout padding={"20 20 100 20"}>
         {isMarginCall ? this.renderPayCard() : null}
@@ -190,7 +194,9 @@ class Deposit extends Component {
           </View>
         )}
 
-        {formData.displayAddress && !isFetching ? (
+        {isBCHBlocked && <BCHForkCard type="transfers" />}
+
+        {!isBCHBlocked && formData.displayAddress && !isFetching ? (
           <View>
             <DepositAddressCard
               address={formData.displayAddress}

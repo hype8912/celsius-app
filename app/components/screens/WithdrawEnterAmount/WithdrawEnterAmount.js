@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import BigNumber from "bignumber.js";
+import moment from "moment";
 
 import * as appActions from "../../../redux/actions";
 import WithdrawEnterAmountStyle from "./WithdrawEnterAmount.styles";
@@ -31,6 +32,7 @@ import { renderHodlEmptyState } from "../../../utils/hodl-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { getColor } from "../../../utils/styles-util";
 import { SCREENS } from "../../../constants/SCREENS";
+import BCHForkCard from "../../atoms/BCHForkCard/BCHForkCard";
 
 @connect(
   state => ({
@@ -336,6 +338,9 @@ class WithdrawEnterAmount extends Component {
       hours = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[0];
       minutes = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[1];
     }
+
+    const isBCHBlocked = formData.coin === "BCH" && moment().isAfter(moment("5-nov-20"))
+
     return (
       <RegularLayout padding="0 0 0 0">
         <View style={style.container}>
@@ -357,7 +362,9 @@ class WithdrawEnterAmount extends Component {
                 navigateTo={actions.navigateTo}
               />
 
-              {!isAddressLocked && (
+              {isBCHBlocked && <BCHForkCard type="withdrawals" />}
+
+              {!isBCHBlocked && !isAddressLocked && (
                 <CoinSwitch
                   updateFormField={actions.updateFormField}
                   onAmountPress={actions.toggleKeypad}
@@ -374,68 +381,72 @@ class WithdrawEnterAmount extends Component {
               )}
             </View>
 
-            {!isAddressLocked ? (
+            {!isBCHBlocked && (
               <View>
-                <PredefinedAmounts
-                  data={PREDIFINED_AMOUNTS}
-                  onSelect={this.onPressPredefinedAmount}
-                  activePeriod={activePeriod}
-                />
+                {!isAddressLocked ? (
+                  <View>
+                    <PredefinedAmounts
+                      data={PREDIFINED_AMOUNTS}
+                      onSelect={this.onPressPredefinedAmount}
+                      activePeriod={activePeriod}
+                    />
 
-                <CelButton
-                  margin="40 0 0 0"
-                  disabled={
-                    !(formData.amountUsd && Number(formData.amountUsd) > 0)
-                  }
-                  onPress={this.handleNextStep}
-                  iconRight={
-                    formData.amountUsd && Number(formData.amountUsd) > 0
-                      ? "IconArrowRight"
-                      : ""
-                  }
-                >
-                  {formData.amountUsd && Number(formData.amountUsd) > 0
-                    ? "Check wallet address"
-                    : "Enter amount above"}
-                </CelButton>
-              </View>
-            ) : (
-              <View>
-                <CircleButton
-                  style={{ marginTop: 50 }}
-                  icon="TransactionLocked"
-                  iconSize={35}
-                />
-
-                <CelText
-                  margin="20 0 15 0"
-                  align="center"
-                  type="H2"
-                  weight={"bold"}
-                >
-                  Address Locked
-                </CelText>
-
-                <CelText align="center">
-                  {`You have recently changed your ${coin} withdrawal address.`}
-                </CelText>
-
-                {hours && minutes && (
-                  <Card margin="10 0 0 0">
-                    <CelText align="center" type="H6">
-                      Due to our security protocols, your address will be active
-                      in
-                    </CelText>
+                    <CelButton
+                      margin="40 0 0 0"
+                      disabled={
+                        !(formData.amountUsd && Number(formData.amountUsd) > 0)
+                      }
+                      onPress={this.handleNextStep}
+                      iconRight={
+                        formData.amountUsd && Number(formData.amountUsd) > 0
+                          ? "IconArrowRight"
+                          : ""
+                      }
+                    >
+                      {formData.amountUsd && Number(formData.amountUsd) > 0
+                        ? "Check wallet address"
+                        : "Enter amount above"}
+                    </CelButton>
+                  </View>
+                ) : (
+                  <View>
+                    <CircleButton
+                      style={{ marginTop: 50 }}
+                      icon="TransactionLocked"
+                      iconSize={35}
+                    />
 
                     <CelText
-                      margin="10 0 0 0"
+                      margin="20 0 15 0"
                       align="center"
-                      type="H3"
+                      type="H2"
                       weight={"bold"}
                     >
-                      {`${hours}h ${minutes}m.`}
+                      Address Locked
                     </CelText>
-                  </Card>
+
+                    <CelText align="center">
+                      {`You have recently changed your ${coin} withdrawal address.`}
+                    </CelText>
+
+                    {hours && minutes && (
+                      <Card margin="10 0 0 0">
+                        <CelText align="center" type="H6">
+                          Due to our security protocols, your address will be active
+                          in
+                        </CelText>
+
+                        <CelText
+                          margin="10 0 0 0"
+                          align="center"
+                          type="H3"
+                          weight={"bold"}
+                        >
+                          {`${hours}h ${minutes}m.`}
+                        </CelText>
+                      </Card>
+                    )}
+                  </View>
                 )}
               </View>
             )}

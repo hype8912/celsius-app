@@ -22,7 +22,6 @@ import {
   getFontFamily,
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
-import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
   state => ({
