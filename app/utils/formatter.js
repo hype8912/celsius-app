@@ -19,7 +19,6 @@ export default {
   hideTextExceptFirstNLetters,
   maskEmail,
   fiat,
-  amountInputFieldFormat,
 };
 
 /**
@@ -344,30 +343,3 @@ function maskEmail(email) {
   }`;
 }
 
-/**
- * Format input amount
- *
- * @param {string} value
- * @returns {string}
- */
-function amountInputFieldFormat(value) {
-  let newValue;
-
-  if (value.includes(".") && value.includes(",")) {
-    newValue = value;
-  } else {
-    newValue = value.replace(",", ".");
-  }
-
-  if (newValue[0] === "0" && newValue[1] === "0")
-    newValue = newValue.slice(0, -1);
-
-  if (newValue[0] === "0" && newValue[1] !== "." && newValue[0] !== "0")
-    newValue = newValue.substring(0, 0);
-
-  // if ((newValue.match(/[.,]/g) || []).length > 0) {
-  //   newValue = newValue.slice(0, -1);
-  // }
-
-  return newValue
-}
