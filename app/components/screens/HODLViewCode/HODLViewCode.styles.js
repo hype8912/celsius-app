@@ -52,6 +52,14 @@ const base = {
   blurImage: {
     flex: 1,
   },
+
+  warningContainer: {
+    flexDirection: "row"
+  },
+
+  warningText: {
+    flexDirection: "column"
+  },
 };
 
 const themed = {

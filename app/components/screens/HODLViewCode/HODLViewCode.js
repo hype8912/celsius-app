@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { ImageBackground, TouchableOpacity, View } from "react-native";
-// import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
 import * as appActions from "../../../redux/actions";
 import HODLViewCodeStyles from "./HODLViewCode.styles";
 import CelText from "../../atoms/CelText/CelText";
@@ -150,14 +148,14 @@ class HODLViewCode extends Component {
             padding="15 15 15 15"
             left
           >
-            <View style={{ flexDirection: "row" }}>
+            <View style={style.warningContainer}>
               <Icon
                 name={"WarningCircle"}
                 height="25"
                 width="25"
                 fill="#FFFFFF"
               />
-              <View style={{ flexDirection: "column" }}>
+              <View style={style.warningText}>
                 <CelText weight="bold" color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
                   Warning: Do Not Screenshot
                 </CelText>

@@ -82,14 +82,14 @@ class TwoFactorSettings extends Component {
           backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
           padding="15 15 15 15"
           left>
-          <View style={{ flexDirection: "row" }}>
+          <View style={style.warningContainer}>
             <Icon
               name={"WarningCircle"}
               height="25"
               width="25"
               fill="#FFFFFF"
             />
-            <View style={{ flexDirection: "column" }}>
+            <View style={style.warningText}>
               <CelText weight="bold" color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
                 Warning: Do Not Screenshot
               </CelText>
@@ -105,7 +105,7 @@ class TwoFactorSettings extends Component {
           {this.state.qrOverlayVisible &&
           <View style={style.qrCodeBlur}>
             <ImageBackground
-              style={{ flex: 1 }}
+              style={style.imageBlur}
               resizeMode={"contain"}
               source={require("../../../../assets/images/blur.png")}
             />

@@ -48,6 +48,10 @@ const base = {
     borderRadius: 6
   },
 
+  imageBlur: {
+    flex: 1
+  },
+
   buttonIconHand: {
     alignSelf:"center",
     width: 22,
@@ -58,6 +62,14 @@ const base = {
     alignSelf:"center",
     width: 16,
     height: 20
+  },
+
+  warningContainer: {
+    flexDirection: "row"
+  },
+
+  warningText: {
+    flexDirection: "column"
   },
 };
 
