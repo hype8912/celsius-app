@@ -46,14 +46,15 @@ function sendCsvEmail() {
  * @param {Object} query
  * @param {string} query.type - one of received|withdraw|interest
  * @param {string} query.coin - eg. BTC|ETH|XRP...
+ * @param {string} query.period - from TRANSACTION_FILTER_DATE
+ * @param {string} query.limit - limits number of transactions
  */
 function getAllTransactions(query = {}) {
   return async dispatch => {
     try {
-      const { type, coin, period } = query;
       dispatch(startApiCall(API.GET_ALL_TRANSACTIONS));
 
-      const response = await transactionsService.getAll({ type, coin, period });
+      const response = await transactionsService.getAll(query);
 
       dispatch({
         type: ACTIONS.GET_ALL_TRANSACTIONS_SUCCESS,

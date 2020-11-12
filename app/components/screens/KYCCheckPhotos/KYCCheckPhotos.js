@@ -9,6 +9,7 @@ import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CelButton from "../../atoms/CelButton/CelButton";
 import { isForPrimeTrustKYC } from "../../../utils/user-util/user-util";
 import { SCREENS } from "../../../constants/SCREENS";
+import KYCCheckPhotosStyle from "./KYCCheckPhotos.styles";
 
 @connect(
   state => ({
@@ -49,6 +50,7 @@ class KYCCheckPhotos extends Component {
   };
 
   render() {
+    const style = KYCCheckPhotosStyle();
     const { actions, kycDocuments } = this.props;
 
     const frontImage = this.getImageSource(kycDocuments.front);
@@ -64,33 +66,19 @@ class KYCCheckPhotos extends Component {
           Check if your photos are visible and all the details are easy to read.
         </CelText>
 
-        <View
-          style={{
-            alignItems: "center",
-          }}
-        >
+        <View style={style.photoWrapper}>
           <Image
-            resizeMode="cover"
-            style={{
-              width: 300,
-              height: 180,
-              borderRadius: 15,
-              marginBottom: 30,
-            }}
+            resizeMode="center"
+            style={style.photo}
             source={frontImage}
           />
 
           {backImage && (
-            <View>
+            <View style={style.photoWrapper}>
               <Image
-                resizeMode="cover"
+                resizeMode="center"
                 source={backImage}
-                style={{
-                  width: 300,
-                  height: 180,
-                  overflow: "hidden",
-                  borderRadius: 15,
-                }}
+                style={style.photo}
               />
             </View>
           )}

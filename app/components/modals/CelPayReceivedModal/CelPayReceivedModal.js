@@ -13,7 +13,17 @@ import CelPayReceivedModalStyle from "../CelPayReceivedModal/CelPayReceivedModal
 import { SCREENS } from "../../../constants/SCREENS";
 
 @connect(
-  () => ({}),
+  (state) => {
+    const transfer =
+      state.branch.transferHash &&
+      state.transfers.transfers[state.branch.transferHash]
+        ? state.transfers.transfers[state.branch.transferHash]
+        : null;
+
+    return {
+      transfer,
+    }
+  },
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class CelPayReceivedModal extends Component {

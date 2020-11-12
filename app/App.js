@@ -23,6 +23,7 @@ import StoryBook from "./components/screens/Storybook/Storybook";
 import { SCREENS } from "./constants/SCREENS";
 import { STORAGE_KEYS } from "./constants/DATA";
 import { startRecording } from "./utils/uxcam-util";
+import CelPayReceivedModal from "./components/modals/CelPayReceivedModal/CelPayReceivedModal";
 
 const { STORYBOOK } = Constants;
 
@@ -136,6 +137,7 @@ const CelsiusApplication = () => (
       />
       <Message />
       <FabIntersection />
+      <CelPayReceivedModal />
     </React.Fragment>
     <DeepLinkController />
     {remotePushController()}
