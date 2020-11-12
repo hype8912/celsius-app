@@ -12,18 +12,17 @@ const initialState = {
   },
   forms: {
     formData: {},
-    }
+  },
 };
 
 const state = _.cloneDeep(initialState);
 
 const regular = () => {
-
   return (
     <ScreenStoryWrapper
       screenName="TaxReport"
-      screen={ TaxReport }
-      state={ state }
+      screen={TaxReport}
+      state={state}
     />
   );
 };

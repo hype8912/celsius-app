@@ -94,6 +94,7 @@ import PrincipalPaymentStories from "./PrincipalPayment/PrincipalPayment.stories
 import BiometricAuthentication from "./BiometricAuthentication/BiometricAuthentication.stories";
 import ConfirmExtendLoan from "./ConfirmExtendLoan/ConfirmExtendLoan.stories";
 import ExtendLoanScreen from "./ExtendLoanScreen/ExtendLoanScreen.stories";
+import TaxReportStories from "./TaxReport/TaxReport.stories";
 
 // Link to screens spreadsheet
 // https://docs.google.com/spreadsheets/d/17kUJoGJvZJlHQcAi62mVN6Td2tBXAZ2acly_VmeUse0/edit#gid=0
@@ -492,8 +493,7 @@ storiesOf("ConfirmExtendLoan", module)
   .add("Stable coin", ConfirmExtendLoan.stableCoin)
   .add("Dollar", ConfirmExtendLoan.dollar);
 
-storiesOf("ExtendLoanScreen", module)
-  .add("Regular", ExtendLoanScreen.regular)
+storiesOf("ExtendLoanScreen", module).add("Regular", ExtendLoanScreen.regular);
 
 storiesOf("CellphoneEnter", module).add(
   "Regular",
@@ -613,3 +613,5 @@ storiesOf("PrincipalPayment", module).add(
 storiesOf("BiometricAuthentication", module)
   .add("TouchID", BiometricAuthentication.touchId)
   .add("FaceID", BiometricAuthentication.faceId);
+
+storiesOf("Tax Report", module).add("Tax Report", TaxReportStories.regular);
