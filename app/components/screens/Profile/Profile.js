@@ -29,6 +29,10 @@ import {
   requestForPermission,
 } from "../../../utils/device-permissions";
 import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
+import InfoModal from "../../modals/InfoModalNew/InfoModal";
+import Card from "../../atoms/Card/Card";
+import { getColor } from "../../../utils/styles-util";
+import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 
 @connect(
   state => ({
@@ -38,6 +42,7 @@ import ThemedImage from "../../atoms/ThemedImage/ThemedImage";
       ? state.user.profile.kyc.status
       : KYC_STATUSES.collecting,
     callsInProgress: state.api.callsInProgress,
+    formData: state.forms.formData,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
@@ -136,6 +141,36 @@ class Profile extends Component {
     await requestForPermission(ALL_PERMISSIONS.CAMERA);
     await requestForPermission(ALL_PERMISSIONS.LIBRARY);
     actions.navigateTo(SCREENS.CAMERA_SCREEN, { onSave: this.saveCameraPhoto });
+  };
+
+  configureTaxReportOptInOptOutModal = () => {
+    return (
+      <InfoModal
+        name={MODALS.TAX_REPORT_OPT_IN_OPT_OUT_MODAL}
+        picture={require("../../../../assets/images/tax-report-opt-out.png")}
+        darkPicture={require("../../../../assets/images/tax-report-opt-out-dark.png")}
+        pictureDimensions={{ height: 40, width: 40 }}
+        heading={"Opt-out of sending via email"}
+        paragraphs={[
+          "Before we send you the e-statement, we need your confirmation that you no longer wish to receive the report by mail. Once confirmed the report will not be send by email.",
+        ]}
+        yesCopy={"Confirm"}
+        onYes={this.props.actions.closeModal}
+      >
+        <Card color={getColor(COLOR_KEYS.BACKGROUND)}>
+          <CelCheckbox
+            onChange={(field, value) =>
+              this.props.actions.updateFormField(field, value)
+            }
+            field={`eStatementTaxReport`}
+            value={this.props.formData.eStatementTaxReport}
+            uncheckedCheckBoxColor={getColor(COLOR_KEYS.DOT_INDICATOR_INACTIVE)}
+            checkedCheckBoxColor={getColor(COLOR_KEYS.POSITIVE_STATE)}
+            rightText={"I want to receive tax statement via email"}
+          />
+        </Card>
+      </InfoModal>
+    );
   };
 
   render() {
@@ -373,6 +408,7 @@ class Profile extends Component {
 
         <ReferralSendModal />
         <RegisterPromoCodeModal type={"celsius"} />
+        {this.configureTaxReportOptInOptOutModal()}
       </RegularLayout>
     );
   }
