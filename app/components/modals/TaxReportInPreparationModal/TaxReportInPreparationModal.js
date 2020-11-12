@@ -12,7 +12,7 @@ import { getColor } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
-  state => ({}),
+  () => ({}),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class TaxReportInPreparationModal extends Component {

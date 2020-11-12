@@ -37,6 +37,14 @@ class TaxReport extends Component {
     actions.closeModal();
   };
 
+  showMessage = () => {
+    const { actions, user } = this.props;
+    actions.showMessage(
+      "info",
+      `Check your email. We've started creating your report and will email it to ${user.email} when is ready. This could take a few minutes.`
+    );
+  };
+
   render() {
     const data = [
       {

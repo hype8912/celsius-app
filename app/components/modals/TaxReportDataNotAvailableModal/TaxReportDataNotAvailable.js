@@ -13,7 +13,7 @@ import Icon from "../../atoms/Icon/Icon";
 import InfoBox from "../../atoms/InfoBox/InfoBox";
 
 @connect(
-  state => ({}),
+  () => ({}),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class TaxReportDataNotAvailableModal extends Component {

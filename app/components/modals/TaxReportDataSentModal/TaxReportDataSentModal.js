@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View } from "react-native";
+import { View, Linking } from "react-native";
 
 import PropTypes from "prop-types";
 import { MODALS } from "../../../constants/UI";
@@ -14,7 +14,7 @@ import { COLOR_KEYS } from "../../../constants/COLORS";
 import TaxReportDataSentModalStyle from "./TaxReportDataSentModal.styles";
 
 @connect(
-  state => ({}),
+  () => ({}),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) })
 )
 class TaxReportDataSentModal extends Component {
