@@ -27,6 +27,7 @@ const InfoModal = props => {
     yesLoading,
     noLoading,
     noButtonStyle,
+    children,
   } = props;
 
   const style = InfoModalStyle();
@@ -63,6 +64,8 @@ const InfoModal = props => {
             {noCopy}
           </CelButton>
         ) : null}
+
+        {children && <View style={style.childrenContainer}>{children}</View>}
 
         <View style={style.buttonWrapper}>
           {yesCopy ? (

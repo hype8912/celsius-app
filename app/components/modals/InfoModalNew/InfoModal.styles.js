@@ -8,6 +8,7 @@ const base = {
     height: 50,
     flexDirection: "row",
   },
+  childrenContainer: { marginHorizontal: 20 },
 };
 
 const themed = {
