@@ -220,7 +220,7 @@ class ConfirmExtendLoan extends Component {
             <View style={style.horizontalCardContainer}>
               <View style={style.horizontalCardItem}>
                 <CelText type="H6" weight="300" align="center">
-                  Term Length
+                  Total Term Length
                 </CelText>
                 <CelText type="H3" weight="600" align="center">
                   {totalRemainingMonths} months
@@ -519,13 +519,9 @@ class ConfirmExtendLoan extends Component {
           {this.renderBankInfo()}
 
           <Card>
-            <CelText type="H6" weight="300" align="center">
-              {loan.coin}
               <CelText type="H6" weight="300" align="center">
-                {" "}
                 Margin Call at
               </CelText>
-            </CelText>
             <CelText type="H3" weight="700" align="center" margin="5 0 10 0">
               {formatter.usd(loan.margin_call_price)}
             </CelText>
