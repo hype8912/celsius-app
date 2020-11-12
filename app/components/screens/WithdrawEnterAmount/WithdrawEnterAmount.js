@@ -339,7 +339,7 @@ class WithdrawEnterAmount extends Component {
       minutes = withdrawalAddresses[formData.coin].will_unlock_in.split(":")[1];
     }
 
-    const isBCHBlocked = formData.coin === "BCH" && moment().isAfter(moment("5-nov-20"))
+    const isBCHBlocked = formData.coin === "BCH" && moment().isAfter(moment("14-nov-20"))
 
     return (
       <RegularLayout padding="0 0 0 0">
