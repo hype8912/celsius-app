@@ -17,36 +17,31 @@ class AmountInput extends Component {
   handleChangeText = (text) => {
     const { onChange, field, updateFormField } = this.props
     let amount = text
-    const lastCharacter = amount[amount.length - 1]
-    // const validCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", ","]
+    let lastCharacter = amount[amount.length - 1]
+    const validCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", ","]
+    // console.log({ lastCharacter });
 
+    // Replace ",' to "."
     if (lastCharacter === ",") {
       amount = amount.replace(",", ".");
     }
 
-    // Don't allow non decimal numbers to start with zero
-    // if (amount[0] === "0" && amount[1] !== "." || amount[1] !== ",") {
-    //   // [amount.slice(0, 1), ".", amount.slice(1)].join("")
-    //   amount = amount.slice(0, -1)
-    // }
-
-
     // Don't allow amount to start with multiple zeros
-    // if (amount[0] === '0' && amount[1] === '0') {
-    //   amount = value
-    // }
+    if (amount[0] === "0" && amount[1] === "0" ) {
+      amount = amount.slice(0, -1)
+    }
 
+    lastCharacter = amount[amount.length - 1]
 
-    // Don't allow multiple decimal dots
-    // if (lastCharacter === '.' && amount.indexOf('.') !== amount.length - 1) {
-    //   amount = value
-    // }
-
+    // Don't allow to have multiple decimal dots
+    if (((amount.match(/./g) || []).length - 1) > 1 && lastCharacter === ".") {
+      amount = amount.slice(0, -1)
+    }
 
     // Don't allow invalid characters
-    // if (!validCharacters.includes(lastCharacter) && amount !== "") {
-    //   amount = value
-    // }
+    if (!validCharacters.includes(lastCharacter) && amount !== "") {
+      amount = amount.slice(0, -1)
+    }
 
     if (onChange) {
       onChange(amount)
