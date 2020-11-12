@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { View, Linking, TouchableOpacity, Clipboard, Image, ImageBackground } from "react-native";
-// import PropTypes from 'prop-types';
+import { View, Linking, TouchableOpacity, Clipboard,ImageBackground } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
-
 import * as appActions from "../../../redux/actions";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
@@ -25,15 +23,11 @@ const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
-    formData: state.forms.formData,
+    formData: state.forms.formData
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) }),
 )
 class TwoFactorSettings extends Component {
-  static propTypes = {
-    // text: PropTypes.string
-  };
-  static defaultProps = {};
 
   static navigationOptions = () => ({
     title: "Auth App",
@@ -113,7 +107,6 @@ class TwoFactorSettings extends Component {
             <ImageBackground
               style={{ flex: 1 }}
               resizeMode={"contain"}
-              imageStyle={{ borderRadius: 6 }}
               source={require("../../../../assets/images/blur.png")}
             />
           </View>}
@@ -138,7 +131,7 @@ class TwoFactorSettings extends Component {
         <View style={style.buttonsContainer}>
 
           <Card styles={style.buttonCard}
-                margin={0,0,0,0}>
+                margin={"0 0 0 0"}>
             <TouchableOpacity
               onPressIn={() => this.setState({ qrOverlayVisible: false })}
               onPressOut={() => this.setState({ qrOverlayVisible: true })}>
@@ -154,7 +147,7 @@ class TwoFactorSettings extends Component {
             </TouchableOpacity>
           </Card>
 
-          <Card styles={style.buttonCard} margin={0,0,0,0}>
+          <Card styles={style.buttonCard} margin={"0 0 0 0"}>
             <TouchableOpacity
               onPress={() => {
                 Clipboard.setString(secret);

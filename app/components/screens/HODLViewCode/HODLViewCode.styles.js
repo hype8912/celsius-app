@@ -40,18 +40,18 @@ const base = {
     justifyContent: "center",
   },
   buttonIconHand: {
-    alignSelf:"center",
+    alignSelf: "center",
     width: 22,
-    height: 20
+    height: 20,
   },
   longPressText: {
     marginStart: 10,
-    alignSelf: "center"
+    alignSelf: "center",
   },
 
   blurImage: {
     flex: 1,
-  }
+  },
 };
 
 const themed = {
