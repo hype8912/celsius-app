@@ -459,6 +459,7 @@ const ERC_20_COINS = {
   MANA: "mana",
   UNI: "uni",
   UMA: "uma",
+  COMP: "comp",
 };
 
 const LINKS_TO_BUY = {
