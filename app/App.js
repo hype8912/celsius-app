@@ -84,10 +84,9 @@ class App extends Component {
     const updateInProgress = await appUtil.updateCelsiusApp();
     if (updateInProgress) return;
 
-    // const token = await getSecureStoreKey(
-    //   STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY
-    // );
-    const token = null
+    const token = await getSecureStoreKey(
+      STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY
+    );
     if (!token) {
       return store.dispatch(actions.navigateTo(SCREENS.WELCOME));
     }

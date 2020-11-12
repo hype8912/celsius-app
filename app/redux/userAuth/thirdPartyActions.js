@@ -162,7 +162,6 @@ function twitterOpen() {
  * @returns {Object} - Action
  */
 function twitterGetAccessToken(tokens) {
-  console.log({ tokens })
   return {
     type: ACTIONS.TWITTER_GET_ACCESS_TOKEN,
     twitter_tokens: tokens,
@@ -413,7 +412,7 @@ function loginSocialSuccess(network, token) {
  */
 function registerSocialSuccess(network, token, user) {
   startRecording();
-
+  
   return async dispatch => {
     await setSecureStoreKey(STORAGE_KEYS.SECURITY_STORAGE_AUTH_KEY, token);
 

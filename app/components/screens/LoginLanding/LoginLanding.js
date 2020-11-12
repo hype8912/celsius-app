@@ -16,9 +16,6 @@ import API from "../../../constants/API";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import BuildVersion from "../../molecules/BuildVersion/BuildVersion";
 import { SCREENS } from "../../../constants/SCREENS";
-import Card from "../../atoms/Card/Card";
-import { getColor } from "../../../utils/styles-util";
-import { COLOR_KEYS } from "../../../constants/COLORS";
 
 @connect(
   state => ({
@@ -93,7 +90,6 @@ class LoginLanding extends Component {
 
   disabledButton = () => {
     const { callsInProgress } = this.props;
-    return true;
     return apiUtil.areCallsInProgress(
       [
         API.LOGIN_USER,
@@ -152,13 +148,6 @@ class LoginLanding extends Component {
               {this.titleCopy().subTitle}
             </CelText>
           </View>
-
-          <Card color={getColor(COLOR_KEYS.LINK)}>
-            <CelText color={getColor(COLOR_KEYS.WHITE)}>
-              Celsius is currently updating its DNS servers. During this time, our systems will be temporarily unavailable. This process is expected to last up to 24 hours.
-            </CelText>
-          </Card>
-
           <View style={style.buttons}>
             <LoginButton
               text={
