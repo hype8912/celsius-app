@@ -44,6 +44,7 @@ class TaxReportMarketingModal extends Component {
 
   renderContent = () => {
     const style = TaxReportMarketingModalStyle();
+    const { actions } = this.props;
 
     return (
       <View style={style.wrapper}>
@@ -73,15 +74,13 @@ class TaxReportMarketingModal extends Component {
           iconRight="IconArrowRight"
           iconRightWidth={18}
           iconRightHeight={18}
-          onPress={() => console.log("Download Report")}
+          onPress={() => actions.closeModal()}
         >
           {"Download Report"}
         </CelButton>
         <CelText
           color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
-          onPress={() => {
-            console.log("Remind me later");
-          }}
+          onPress={() => actions.closeModal()}
         >
           Remind me later
         </CelText>
