@@ -12,11 +12,12 @@ import Icon from "../../atoms/Icon/Icon";
 import {
   getColor,
   getScaledFont,
-  getFontSize, widthPercentageToDP, getFontFamily
+  getFontSize, widthPercentageToDP
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import * as appActions from "../../../redux/actions";
 import AmountInput from "../../atoms/AmountInput/AmountInput";
+import { KEYBOARD_TYPE } from "../../../constants/UI";
 
 @connect(
   state => ({
@@ -102,7 +103,7 @@ class CoinSwitch extends Component {
             <View
               style={{
                 height: getScaledFont(getFontSize("H1")),
-                width: widthPercentageToDP("58%"),
+                width: widthPercentageToDP("65%"),
                 justifyContent: "center",
                 marginVertical: 10,
 
@@ -113,13 +114,12 @@ class CoinSwitch extends Component {
                 filed={isUsd ? "amountUsd" : "amountCrypto"}
                 updateFormField={actions.updateFormField}
                 onChange={this.handleEnteringAmount}
+                keyboardType={KEYBOARD_TYPE.NUMERIC}
                 placeholder="0.00"
-                style={{
-                  fontFamily: getFontFamily("light"),
-                  color: getColor(COLOR_KEYS.PRIMARY_BUTTON),
-                  fontSize: upperValue.length < 10 ? 35 : 25,
-                  paddingVertical: 0,
-                }}
+                maxLength={18} // NOTE check with product
+                style={[style.inputField, {
+                  fontSize: upperValue.length < 12 ? 35 : 18,
+                }]}
               />
             </View>
             <View

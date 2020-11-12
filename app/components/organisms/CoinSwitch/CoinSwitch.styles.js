@@ -1,4 +1,4 @@
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getFontFamily, getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
@@ -24,9 +24,10 @@ const base = {
     backgroundColor: COLOR_KEYS.CARDS,
   },
   inputField: {
-    flex: 1,
-    fontWeight: "600",
+    fontFamily: getFontFamily("light"),
+    color: COLOR_KEYS.PRIMARY_BUTTON,
     paddingVertical: 0,
+    marginLeft: 22,
   },
 };
 

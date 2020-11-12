@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput } from "react-native";
+import { View } from "react-native";
 import { BigNumber } from "bignumber.js";
 
 import { connect } from "react-redux";
@@ -18,8 +18,8 @@ import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import { SCREENS } from "../../../constants/SCREENS";
-import { STORYBOOK } from "../../../../celsius-app-creds/beta-storybook/constants";
 import { KEYBOARD_TYPE } from "../../../constants/UI";
+import AmountInput from "../../atoms/AmountInput/AmountInput";
 
 let timeout;
 
@@ -153,7 +153,7 @@ class BorrowEnterAmount extends Component {
 
     return (
       <CelButton
-        disabled={
+        disabled={!Number(formData.loanAmount) ||
           Number(formData.loanAmount) < Number(minimumLoanAmount) ||
           !formData.coin
         }
@@ -233,22 +233,18 @@ class BorrowEnterAmount extends Component {
                 <View style={styles.coinIconWrapper}>
                   <CoinIcon />
                 </View>
-                <TextInput
-                  style={{
-                    borderRadius: 8,
-                    flex: 1,
-                    fontSize: 35,
-                    fontWeight: "600",
-                    color: getColor(COLOR_KEYS.PRIMARY_BUTTON)
-                  }}
-                  textAlign={"center"}
-                  allowFontScaling
-                  keyboardType={KEYBOARD_TYPE.DECIMAL_PAD}
-                  autoFocus={STORYBOOK}
-                  onChangeText={amount => actions.updateFormField("loanAmount", formatter.amountInputFieldFormat(amount))}
-                >
-                  {formData.loanAmount}
-                </TextInput>
+              <AmountInput
+                style={{
+                  borderRadius: 8,
+                  flex: 1,
+                  fontSize: 35,
+                  fontWeight: "600",
+                  color: getColor(COLOR_KEYS.PRIMARY_BUTTON)
+                }}
+                keyboardType={KEYBOARD_TYPE.NUMERIC}
+                onChange={amount => actions.updateFormField("loanAmount", amount)}
+                value={formData.loanAmount && formData.loanAmount.toString()}
+              />
                 <View style={styles.coinTextWrapper}>
                   <CelText color={getColor(COLOR_KEYS.PARAGRAPH)} type="H3">
                     {formData.coin}
