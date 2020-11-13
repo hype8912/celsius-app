@@ -8,7 +8,7 @@ import * as appActions from "../../../redux/actions";
 import GetCoinsEnterAmountStyle from "./GetCoinsEnterAmount.styles";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
 import CoinPicker from "../../molecules/CoinPicker/CoinPicker";
-import { MODALS } from "../../../constants/UI";
+import { KEYBOARD_TYPE, MODALS } from "../../../constants/UI";
 import formatter from "../../../utils/formatter";
 import CelButton from "../../atoms/CelButton/CelButton";
 import CelText from "../../atoms/CelText/CelText";
@@ -434,6 +434,7 @@ class GetCoinsEnterAmount extends Component {
           field={formData.isFiat ? "amountFiat" : "amountCrypto"}
           style={style.amountInput}
           value={formData.isFiat ? formData.amountFiat : formData.amountCrypto}
+          keyboardType={KEYBOARD_TYPE.NUMERIC}
           autofocus={!STORYBOOK}
           updateFormField={actions.updateFormField}
         />
