@@ -2,6 +2,7 @@
 import React from "react";
 import RNUxcam from "react-native-ux-cam";
 import Constants from "../../constants";
+import store from "../redux/store";
 import mixpanelAnalytics from "./mixpanel-analytics";
 import { isUserLoggedIn } from "./user-util/user-util";
 
@@ -24,8 +25,22 @@ async function startRecording() {
 
   try {
     await RNUxcam.startWithKey(UXCAM_APP_KEY);
+    await setUXCamParams();
   } catch (err) {
     mixpanelAnalytics.logError("startRecording", err);
+  }
+}
+
+async function setUXCamParams() {
+  if (!UXCAM_APP_KEY) return;
+  if (!isUserLoggedIn()) return;
+
+  const { profile } = store.getState().user;
+
+  try {
+    await RNUxcam.setUserIdentity(profile.id);
+  } catch (err) {
+    mixpanelAnalytics.logError("setUXCamParams", err);
   }
 }
 
@@ -55,7 +70,7 @@ async function urlForCurrentSession() {
 
 async function stopRecordingAndUploadData() {
   if (!UXCAM_APP_KEY) return;
-  
+
   try {
     await RNUxcam.stopSessionAndUploadData();
   } catch (err) {

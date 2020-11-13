@@ -18,6 +18,7 @@ function calculateAdditionalPayment(
   cardType = undefined,
   additionalCoin = undefined
 ) {
+  // should divide into calculate/Interest/Principal/MarginCall/
   const walletSummary = store.getState().wallet.summary;
   const currencies = store.getState().currencies.rates;
   const { formData } = store.getState().forms;
@@ -38,7 +39,7 @@ function calculateAdditionalPayment(
   let amountToPay;
 
   if (loan) {
-    amountToPay = loan.installments_to_be_paid.total;
+    amountToPay = loan.installments_to_be_paid.total === 0 ? Number(loan.monthly_payment) : Number(loan.installments_to_be_paid.total) + Number(loan.monthly_payment);
   }
 
   if (!additionalCoin) {

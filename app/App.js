@@ -15,7 +15,6 @@ import { remotePushController } from "./utils/push-notifications-util";
 import FabIntersection from "./components/organisms/FabIntersection/FabIntersection";
 import apiUtil from "./utils/api-util";
 import appUtil from "./utils/app-util";
-import branchUtil from "./utils/branch-util";
 import { disableAccessibilityFontScaling } from "./utils/styles-util";
 import { getSecureStoreKey } from "./utils/storage-util";
 import Constants from "../constants";
@@ -58,7 +57,6 @@ class App extends Component {
     appUtil.logoutOnEnvChange();
     appUtil.initInternetConnectivityListener();
     apiUtil.initInterceptors();
-    store.dispatch(branchUtil.initBranch());
 
     disableAccessibilityFontScaling();
     store.dispatch(actions.isGoodForAnimations());

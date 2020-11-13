@@ -87,7 +87,7 @@ export const SCREENS = {
   SELECT_COIN: "SelectCoin",
   SELECT_COUNTRY: "SelectCountry",
   SELECT_STATE: "SelectState",
-  SIMPLEX: "Simplex",
+  SIMPLEX: "SimplexScreen",
   SIX_DIGIT_PIN_EXPLANATION: "SixDigitPinExplanation",
   SPLASH_SCREEN: "SplashScreen",
   STATIC_SCREEN: "StaticScreen", // NOTE: not used with navigateTo\
