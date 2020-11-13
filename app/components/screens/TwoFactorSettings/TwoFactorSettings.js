@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Linking, TouchableOpacity, Clipboard,ImageBackground } from "react-native";
+import { View, Linking, TouchableOpacity, Clipboard, ImageBackground } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import QRCode from "react-native-qrcode-svg";
@@ -23,7 +23,7 @@ const { STORYBOOK } = Constants;
 
 @connect(
   state => ({
-    formData: state.forms.formData
+    formData: state.forms.formData,
   }),
   dispatch => ({ actions: bindActionCreators(appActions, dispatch) }),
 )
@@ -62,6 +62,32 @@ class TwoFactorSettings extends Component {
     }
   }
 
+  showWarningMessage = (style) => {
+    return <InfoBox
+      backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
+      padding="15 15 15 15"
+      left
+    >
+      <View style={style.warningContainer}>
+        <Icon
+          name={"WarningCircle"}
+          height="25"
+          width="25"
+          fill="#FFFFFF"
+        />
+        <View style={style.warningText}>
+          <CelText weight="bold" color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
+            Warning: Do Not Screenshot
+          </CelText>
+          <CelText color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
+            For your security, it is strongly advised that you do NOT screenshot your two-factor authentication
+            code.
+          </CelText>
+        </View>
+      </View>
+    </InfoBox>;
+  };
+
   getQRCode = secret =>
     `otpauth://totp/Celsius?secret=${secret}&issuer=Celsius`;
 
@@ -78,30 +104,9 @@ class TwoFactorSettings extends Component {
           Scan the QR code or enter the code manually in your auth app.
         </CelText>
 
-        <InfoBox
-          backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
-          padding="15 15 15 15"
-          left>
-          <View style={style.warningContainer}>
-            <Icon
-              name={"WarningCircle"}
-              height="25"
-              width="25"
-              fill="#FFFFFF"
-            />
-            <View style={style.warningText}>
-              <CelText weight="bold" color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
-                Warning: Do Not Screenshot
-              </CelText>
-              <CelText color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
-                For your security, it is strongly advised that you do NOT screenshot your two-factor authentication
-                code.
-              </CelText>
-            </View>
-          </View>
-        </InfoBox>
+        {this.showWarningMessage(style)}
 
-        <Card styles={{ alignItems: "center", marginTop: 25 }}>
+        <Card styles={style.qrCard}>
           {this.state.qrOverlayVisible &&
           <View style={style.qrCodeBlur}>
             <ImageBackground

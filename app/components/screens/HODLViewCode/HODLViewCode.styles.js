@@ -1,4 +1,5 @@
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getPadding, getThemedStyle } from "../../../utils/styles-util";
+import { StyleSheet } from "react-native";
 
 const base = {
   container: {
@@ -10,6 +11,14 @@ const base = {
     marginTop: 20,
     marginBottom: 20,
   },
+
+  rootView: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    ...StyleSheet.flatten(getPadding("20 20 100 20"))
+  },
+
   hodlCodeWrapper: {
     flexDirection: "row",
   },
@@ -51,14 +60,16 @@ const base = {
 
   blurImage: {
     flex: 1,
+    backgroundColor: "white",
+
   },
 
   warningContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
 
   warningText: {
-    flexDirection: "column"
+    flexDirection: "column",
   },
 };
 

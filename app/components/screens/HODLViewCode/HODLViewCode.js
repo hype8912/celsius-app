@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { ImageBackground, TouchableOpacity, View } from "react-native";
+import { ImageBackground,TouchableWithoutFeedback, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as appActions from "../../../redux/actions";
 import HODLViewCodeStyles from "./HODLViewCode.styles";
 import CelText from "../../atoms/CelText/CelText";
 import RegularLayout from "../../layouts/RegularLayout/RegularLayout";
-import { getColor, getPadding } from "../../../utils/styles-util";
+import { getColor } from "../../../utils/styles-util";
 import { EMPTY_STATES } from "../../../constants/UI";
 import CelCheckbox from "../../atoms/CelCheckbox/CelCheckbox";
 import Card from "../../atoms/Card/Card";
@@ -69,6 +69,34 @@ class HODLViewCode extends Component {
     }
   };
 
+  function;
+
+  showWarningMessage = (style) => {
+    return <InfoBox
+      backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
+      padding="15 15 15 15"
+      left
+    >
+      <View style={style.warningContainer}>
+        <Icon
+          name={"WarningCircle"}
+          height="25"
+          width="25"
+          fill="#FFFFFF"
+        />
+        <View style={style.warningText}>
+          <CelText weight="bold" color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
+            Warning: Do Not Screenshot
+          </CelText>
+          <CelText color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
+            For your security, it is strongly advised that you do NOT screenshot your two-factor authentication
+            code.
+          </CelText>
+        </View>
+      </View>
+    </InfoBox>;
+  };
+
   render() {
     const style = HODLViewCodeStyles();
     const { emptyState } = this.state;
@@ -85,13 +113,8 @@ class HODLViewCode extends Component {
     );
 
     return (
-      <RegularLayout padding={"0 0 0 0"}>
-        <View
-          style={[
-            { flex: 1, width: "100%", height: "100%" },
-            { ...getPadding("20 20 100 20") },
-          ]}
-        >
+      <RegularLayout padding={"0 1 0 0"}>
+        <View style={style.rootView}>
           <CelText
             align={"left"}
             margin={"10 0 10 0"}
@@ -112,60 +135,37 @@ class HODLViewCode extends Component {
             </View>
           ) : (
             <Card margin={"20 0 20 0"}>
-              <TouchableOpacity
-                activeOpacity={1}
+              <TouchableWithoutFeedback
                 onPressIn={() => this.setState({ showHodlCodeOverlay: false })}
                 onPressOut={() => this.setState({ showHodlCodeOverlay: true })}>
+                <View>
+                  {this.state.showHodlCodeOverlay &&
+                  <View style={style.hodlCodeOverlay}>
+                    <View style={style.blurImageAndIconWrapper}>
+                      <ThemedImage style={style.buttonIconHand}
+                                   lightSource={require("../../../../assets/images/hold-to-show.png")}
+                                   darkSource={require("../../../../assets/images/hold-to-show.png")}
+                                   unicornSource={require("../../../../assets/images/hold-to-show.png")}
+                      />
+                      <CelText link style={style.longPressText}>Long press to reveal</CelText>
+                    </View>
+                    <ImageBackground style={style.blurImage}
+                                     source={require("../../../../assets/images/blur_hodl.png")} />
+                  </View>}
 
-                {this.state.showHodlCodeOverlay &&
-                <View style={style.hodlCodeOverlay}>
-                  <View style={style.blurImageAndIconWrapper}>
-                    <ThemedImage style={style.buttonIconHand}
-                                 lightSource={require("../../../../assets/images/hold-to-show.png")}
-                                 darkSource={require("../../../../assets/images/hold-to-show.png")}
-                                 unicornSource={require("../../../../assets/images/hold-to-show.png")}
-                    />
-                    <CelText link style={style.longPressText}>Long press to reveal</CelText>
-                  </View>
-                  <ImageBackground style={style.blurImage}
-                                   imageStyle={{ borderRadius: 6 }}
-                                   source={require("../../../../assets/images/blur_hodl.png")} />
-                </View>}
-
-                <View style={style.hodlCodeWrapper}>
-                  <View style={style.codeWrapper}>
-                    <CelText hideFromRecording align={"left"} type={"H2"} weight={"500"}>
-                      {hodlCode}
-                    </CelText>
+                  <View style={style.hodlCodeWrapper}>
+                    <View style={style.codeWrapper}>
+                      <CelText hideFromRecording align={"left"} type={"H2"} weight={"500"}>
+                        {hodlCode}
+                      </CelText>
+                    </View>
                   </View>
                 </View>
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             </Card>
           )}
 
-          <InfoBox
-            backgroundColor={getColor(COLOR_KEYS.ALERT_STATE)}
-            padding="15 15 15 15"
-            left
-          >
-            <View style={style.warningContainer}>
-              <Icon
-                name={"WarningCircle"}
-                height="25"
-                width="25"
-                fill="#FFFFFF"
-              />
-              <View style={style.warningText}>
-                <CelText weight="bold" color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
-                  Warning: Do Not Screenshot
-                </CelText>
-                <CelText color={getColor(COLOR_KEYS.WHITE)} margin={"0 20 0 10"}>
-                  For your security, it is strongly advised that you do NOT screenshot your two-factor authentication
-                  code.
-                </CelText>
-              </View>
-            </View>
-          </InfoBox>
+          {this.showWarningMessage(style)}
 
           <Card margin={"20 0 20 0"} padding={"15 15 0 15"}>
             <CelCheckbox

@@ -5,6 +5,11 @@ const base = {
   container: {
     flex: 1,
   },
+
+  qrCard: {
+    alignItems: "center",
+    marginTop: 25,
+  },
   qrWrapper: {
     marginTop: 15,
     marginBottom: 10,
@@ -29,7 +34,7 @@ const base = {
   buttonsContainer: {
     flexDirection: "row",
     height: 74,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
 
   buttonCard: {
@@ -45,31 +50,31 @@ const base = {
     bottom: 0,
     right: 0,
     backgroundColor: "white",
-    borderRadius: 6
+    borderRadius: 6,
   },
 
   imageBlur: {
-    flex: 1
+    flex: 1,
   },
 
   buttonIconHand: {
-    alignSelf:"center",
+    alignSelf: "center",
     width: 22,
-    height: 20
+    height: 20,
   },
 
   buttonIconCopy: {
-    alignSelf:"center",
+    alignSelf: "center",
     width: 16,
-    height: 20
+    height: 20,
   },
 
   warningContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
 
   warningText: {
-    flexDirection: "column"
+    flexDirection: "column",
   },
 };
 
