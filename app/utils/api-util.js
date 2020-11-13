@@ -272,6 +272,16 @@ async function responseInterceptor(res) {
  * Intercepts every error response from server
  */
 async function errorInterceptor(serverError) {
+  console.log({ raw: serverError.raw_error })
+
+  if (!serverError.raw_error) {
+    console.log("hello")
+    store.dispatch(actions.toggleMaintenanceMode(
+      "Sorry for the inconvenience",
+      "              Celsius is currently updating its DNS servers. During this time, our systems will be temporarily unavailable. This process is expected to last up to 24 hours. We are still working really hard to fix all the problems."
+    ));
+  }
+
   const defaultMsg = "Oops, it looks like something went wrong!";
   const defaultError = {
     slug: "UNKNOWN_SERVER_ERROR",
@@ -298,11 +308,11 @@ async function errorInterceptor(serverError) {
     }
   }
 
-  mixpanelAnalytics.apiError({
-    ...err,
-    url: serverError.config && serverError.config.url,
-    method: serverError.config && serverError.config.method,
-  });
+  // mixpanelAnalytics.apiError({
+  //   ...err,
+  //   url: serverError.config && serverError.config.url,
+  //   method: serverError.config && serverError.config.method,
+  // });
 
   if (err.status === 401) handle401(err);
   if (err.status === 403) {
