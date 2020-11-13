@@ -1,5 +1,6 @@
-import { getPadding, getThemedStyle } from "../../../utils/styles-util";
 import { StyleSheet } from "react-native";
+import { getPadding, getThemedStyle } from "../../../utils/styles-util";
+
 
 const base = {
   container: {
