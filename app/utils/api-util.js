@@ -280,6 +280,16 @@ async function errorInterceptor(serverError) {
     raw_error: serverError,
   };
 
+  if (!serverError.raw_error) {
+    const e = serverError.toJSON()
+    if (e.message === "Network Error") {
+      return store.dispatch(actions.toggleMaintenanceMode(
+        "Sorry for the inconvenience",
+        "Celsius is currently updating its DNS servers. During this time, our systems will be temporarily offline to ensure the security of your holdings. This process will take no longer than 24 hours."
+      ));
+    }
+  }
+
   let err = serverError.response ? serverError.response.data : null;
   err = !err && serverError.msg ? serverError : err;
   err = err || defaultError;
@@ -298,11 +308,11 @@ async function errorInterceptor(serverError) {
     }
   }
 
-  mixpanelAnalytics.apiError({
-    ...err,
-    url: serverError.config && serverError.config.url,
-    method: serverError.config && serverError.config.method,
-  });
+  // mixpanelAnalytics.apiError({
+  //   ...err,
+  //   url: serverError.config && serverError.config.url,
+  //   method: serverError.config && serverError.config.method,
+  // });
 
   if (err.status === 401) handle401(err);
   if (err.status === 403) {

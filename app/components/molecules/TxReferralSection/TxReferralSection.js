@@ -20,7 +20,6 @@ class TxReferralSection extends Component {
   render() {
     const style = ReferralSectionStyle();
     const { transaction } = this.props;
-
     const participant = transaction.type.includes("REFERRED")
       ? transaction.referral_data.referrer
       : transaction.referral_data.referred;
@@ -69,10 +68,10 @@ class TxReferralSection extends Component {
               </View>
             </View>
           ) : null}
+
           {transaction.type.includes("HODL") && (
             <CelText style={{ marginTop: 20 }} type="H5">
-              If {formatter.hideTextExceptFirstNLetters(participant.first_name)}{" "}
-              keeps initial transfer until
+              If you keep initial transfer until
               <CelText
                 type="H5"
                 color={getColor(COLOR_KEYS.HEADLINE)}
@@ -82,6 +81,7 @@ class TxReferralSection extends Component {
             </CelText>
           )}
         </Card>
+
         {transaction.type.includes("PENDING") && (
           <Card>
             <CelText type="H5">
