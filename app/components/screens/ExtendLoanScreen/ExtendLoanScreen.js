@@ -232,12 +232,21 @@ class ExtendLoanScreen extends Component {
             />
           </View>
           <View>
-            <Card size={"twoThirds"} color={COLOR_KEYS.BACKGROUND}>
-              <CelText type={"H6"}>{`Additional interest: ${formatter.crypto(interest.additionalInterest, loan.coin_loan_asset, { precision: 2} )}`}</CelText>
+            <Card size={"threeQuarters"} noBorder color={COLOR_KEYS.BACKGROUND}>
+              <View style={style.content}>
+                <CelText type={"H6"}>{`Additional interest:`}</CelText>
+                <CelText type={"H6"}>{formatter.usd(interest.additionalInterest, { precision: 2} )}</CelText>
+              </View>
               <Separator margin={"10 0 10 0"}/>
-              <CelText type={"H6"}>{`New monthly interest: ${formatter.crypto(interest.monthlyInterest, loan.coin_loan_asset, { precision: 2} )}`}</CelText>
+              <View style={style.content}>
+                <CelText type={"H6"}>{`New monthly interest:`}</CelText>
+                <CelText type={"H6"}>{formatter.usd(interest.monthlyInterest, { precision: 2} )}</CelText>
+              </View>
               <Separator margin={"10 0 10 0"}/>
-              <CelText type={"H6"}>{`Total interest : ${formatter.crypto(interest.totalNewInterest, loan.coin_loan_asset, { precision: 2} )}`}</CelText>
+              <View style={style.content}>
+                <CelText type={"H6"}>{`Total interest:`}</CelText>
+                <CelText type={"H6"}>{formatter.usd(interest.totalNewInterest, { precision: 2} )}</CelText>
+              </View>
             </Card>
 
           </View>

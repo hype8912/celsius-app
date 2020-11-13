@@ -9,6 +9,7 @@ const base = {
   wrapper: { justifyContent: "space-around", alignItems: "center" },
   circleWrapper: {marginVertical: 30, flexDirection: "row", justifyContent: "center", alignItems: "center" },
   input: {alignItems: "center"},
+  content: {flexDirection: "row", justifyContent: "space-between"}
 };
 
 const themed = {

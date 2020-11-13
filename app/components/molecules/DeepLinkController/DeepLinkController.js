@@ -7,7 +7,7 @@ import appsFlyer from "react-native-appsflyer";
 import loggerUtil from "../../../utils/logger-util";
 import * as appActions from "../../../redux/actions";
 import appsFlyerUtil from "../../../utils/appsflyer-util";
-import { addDeepLinkData, handleDeepLink } from "../../../utils/deepLink-util";
+import { addDeepLinkData } from "../../../utils/deepLink-util";
 import mixpanelAnalytics from "../../../utils/mixpanel-analytics";
 
 appsFlyer.onInstallConversionData(data => {
@@ -41,11 +41,6 @@ class DeepLinkController extends Component {
       if (Platform.OS === "ios") {
         appsFlyer.trackAppLaunch();
       }
-      // When app is in background mode, handle link after 5 seconds.
-      const timeout = setTimeout(async ()=>{
-        await handleDeepLink()
-        clearTimeout(timeout)
-      }, 5000 )
     }
   }
 
