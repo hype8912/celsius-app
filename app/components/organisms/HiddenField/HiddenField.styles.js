@@ -24,6 +24,10 @@ const base = {
   errorCircle: {
     backgroundColor: COLOR_KEYS.NEGATIVE_STATE,
   },
+  amountInput: {
+    height: 0,
+    opacity: 0
+  }
 };
 
 const themed = {

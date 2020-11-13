@@ -11,8 +11,6 @@ import formatter from "../../../utils/formatter";
 import Icon from "../../atoms/Icon/Icon";
 import {
   getColor,
-  getScaledFont,
-  getFontSize, widthPercentageToDP
 } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 import * as appActions from "../../../redux/actions";
@@ -89,25 +87,17 @@ class CoinSwitch extends Component {
               width="40"
               height="40"
               fill={COLOR_KEYS.HEADLINE}
-              style={{ marginBottom: 28 }}
+              style={style.icon}
             />
           ) : (
-            <View style={{
-              width: 50,
-            }}>
+            <View style={style.noIcon}>
               <CelText type={"H2"} weight={"600"} margin={"0 0 28 0"}>USD</CelText>
             </View>
 
           )}
           <View>
             <View
-              style={{
-                height: getScaledFont(getFontSize("H1")),
-                width: widthPercentageToDP("65%"),
-                justifyContent: "center",
-                marginVertical: 10,
-
-              }}
+              style={style.amountInputWrapper}
             >
               <AmountInput
                 value={upperValue}
@@ -123,11 +113,7 @@ class CoinSwitch extends Component {
               />
             </View>
             <View
-              style={{
-                height: getScaledFont(getFontSize("H2")),
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              style={style.lowerValue}
             >
               <CelText
                 align="center"

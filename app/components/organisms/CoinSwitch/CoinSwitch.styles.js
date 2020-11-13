@@ -1,4 +1,10 @@
-import { getFontFamily, getThemedStyle } from "../../../utils/styles-util";
+import {
+  getFontFamily,
+  getFontSize,
+  getScaledFont,
+  getThemedStyle,
+  widthPercentageToDP,
+} from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
@@ -28,6 +34,23 @@ const base = {
     color: COLOR_KEYS.PRIMARY_BUTTON,
     paddingVertical: 0,
     marginLeft: 22,
+  },
+  icon: {
+    marginBottom: 28,
+  },
+  amountInputWrapper: {
+    height: getScaledFont(getFontSize("H1")),
+    width: widthPercentageToDP("65%"),
+    justifyContent: "center",
+    marginVertical: 10,
+  },
+  lowerValue: {
+    height: getScaledFont(getFontSize("H2")),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noIcon: {
+    width: 50,
   },
 };
 

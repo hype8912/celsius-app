@@ -295,14 +295,14 @@ class VerifyProfile extends Component {
     const pinLength = length || 6;
 
     return (
-      <TouchableOpacity onPress={() => this.inputRef.focus()}>
+      <View>
         <HiddenField
           error={verificationError}
           length={pinLength}
           field={this.shouldShow2FA() ? "code" : "pin"}
           handleVerification={this.shouldShow2FA() ? this.handle2FAChange : this.handlePINChange}
         />
-      </TouchableOpacity>
+      </View>
     );
   };
 

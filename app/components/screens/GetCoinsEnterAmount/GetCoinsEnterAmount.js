@@ -432,10 +432,7 @@ class GetCoinsEnterAmount extends Component {
         </CelButton>
         <AmountInput
           field={formData.isFiat ? "amountFiat" : "amountCrypto"}
-          style={{
-            opacity: 0,
-            height: 0,
-          }}
+          style={style.amountInput}
           value={formData.isFiat ? formData.amountFiat : formData.amountCrypto}
           autofocus={!STORYBOOK}
           updateFormField={actions.updateFormField}

@@ -229,18 +229,12 @@ class BorrowEnterAmount extends Component {
               />
             )}
 
-            <View style={{ width: "100%", marginTop: 20 }}>
+            <View style={styles.amountInputWrapper}>
                 <View style={styles.coinIconWrapper}>
                   <CoinIcon />
                 </View>
               <AmountInput
-                style={{
-                  borderRadius: 8,
-                  flex: 1,
-                  fontSize: 35,
-                  fontWeight: "600",
-                  color: getColor(COLOR_KEYS.PRIMARY_BUTTON)
-                }}
+                style={styles.amountInput}
                 keyboardType={KEYBOARD_TYPE.NUMERIC}
                 onChange={amount => actions.updateFormField("loanAmount", amount)}
                 value={formData.loanAmount && formData.loanAmount.toString()}

@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { getThemedStyle } from "../../../utils/styles-util";
+import { getColor, getThemedStyle } from "../../../utils/styles-util";
 import { COLOR_KEYS } from "../../../constants/COLORS";
 
 const base = {
@@ -19,6 +19,17 @@ const base = {
     width: "20%",
     alignItems: "center",
     justifyContent: "center",
+  },
+  amountInput: {
+    borderRadius: 8,
+    flex: 1,
+    fontSize: 35,
+    fontWeight: "600",
+    color: getColor(COLOR_KEYS.PRIMARY_BUTTON)
+  },
+  amountInputWrapper: {
+    width: "100%",
+    marginTop: 20
   },
 };
 

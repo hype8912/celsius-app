@@ -35,6 +35,10 @@ const base = {
   text: {
     color: COLOR_KEYS.HEADLINE,
   },
+  amountInput: {
+    opacity: 0,
+    height: 0,
+  }
 };
 
 const themed = {

@@ -89,7 +89,7 @@ class HiddenField extends Component {
             this.inputRef = input;
           }}
           onChangeText={(num) => this.changeInputText(num)}
-          style={{height: 0, opacity: 0}}
+          style={style.amountInput}
           autoFocus={!STORYBOOK}
         />
       </View>
