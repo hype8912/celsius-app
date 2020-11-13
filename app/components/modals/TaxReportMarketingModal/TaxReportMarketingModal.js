@@ -59,12 +59,11 @@ class TaxReportMarketingModal extends Component {
           type="H2"
           style={style.title}
         >
-          {"Your tax report is ready"}
+          Your tax report is ready
         </CelText>
         <CelText weight="light" align="center" style={style.subtitle}>
-          {
-            "You are now able to download the tax report for the year 2019. Celsius provides you 1099s if you earned $600 or more in a given tax year."
-          }
+          You are now able to download the tax report for the year 2019. Celsius
+          provides you 1099s if you earned $600 or more in a given tax year.
         </CelText>
 
         <CelButton
@@ -76,7 +75,7 @@ class TaxReportMarketingModal extends Component {
           iconRightHeight={18}
           onPress={() => actions.closeModal()}
         >
-          {"Download Report"}
+          Download Report
         </CelButton>
         <CelText
           color={getColor(COLOR_KEYS.PRIMARY_BUTTON)}
