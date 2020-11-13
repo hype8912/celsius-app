@@ -272,14 +272,6 @@ async function responseInterceptor(res) {
  * Intercepts every error response from server
  */
 async function errorInterceptor(serverError) {
-
-  if (!serverError.raw_error) {
-    return store.dispatch(actions.toggleMaintenanceMode(
-      "Sorry for the inconvenience",
-      "Celsius is currently updating its DNS servers. During this time, our systems will be temporarily unavailable. This process is expected to last up to 24 hours. We are still working really hard to fix all the problems."
-    ));
-  }
-
   const defaultMsg = "Oops, it looks like something went wrong!";
   const defaultError = {
     slug: "UNKNOWN_SERVER_ERROR",
