@@ -18,6 +18,7 @@ import {
   startRecording,
   stopRecordingAndUploadData,
 } from "../../utils/uxcam-util";
+import { checkReferralDeeplink, handleDeepLink } from "../../utils/deepLink-util";
 
 export {
   loadCelsiusAssets,
@@ -53,6 +54,7 @@ function handleAppStateChange(nextAppState) {
   return async (dispatch, getState) => {
     const { profile } = getState().user;
     const { appState } = getState().app;
+    const { activeScreen } = getState().nav;
 
     if (profile && profile.has_pin) {
       if (nextAppState === "active") {
@@ -66,18 +68,23 @@ function handleAppStateChange(nextAppState) {
 
         mixpanelAnalytics.sessionStarted("Foreground");
         startRecording();
+
+        // If user is logged in and app is open, check deep link
+        await handleDeepLink()
       }
 
       if (
         nextAppState.match(/inactive|background/) &&
-        profile &&
-        profile.has_pin &&
         appState === "active"
       ) {
 
         mixpanelAnalytics.sessionEnded("Background");
         stopRecordingAndUploadData();
       }
+    }
+    // Referral deeplink check
+    if (activeScreen === SCREENS.WELCOME && nextAppState === "active") {
+      checkReferralDeeplink()
     }
 
     dispatch({

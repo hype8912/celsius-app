@@ -64,12 +64,13 @@ class InterestReminderModal extends Component {
     const style = InterestReminderModalStyle();
     const payment = loanPaymentUtil.calculateAdditionalPayment(activeLoan);
     if (!activeLoan || !activeLoan.installments_to_be_paid || !loanSettings) return null;
-    const instalmentsToBePaid = activeLoan.installments_to_be_paid;
+    const instalmentsToBePaid = activeLoan.installments_to_be_paid
     const isDay = isSameDay.sevenDays || isSameDay.threeDays;
     const buttonTitle = payment.hasEnough ? "Pay Interest" : "Deposit More";
     const content = loanSettings.automatic_interest_payment
       ? `Automatic Interest Payment Due is in ${isDay} Days`
       : `Interest Payment Due is in ${isDay} Days`;
+    const usdToPay = activeLoan.installments_to_be_paid.total === 0 ? Number(activeLoan.monthly_payment) : Number(activeLoan.installments_to_be_paid.total) + Number(activeLoan.monthly_payment);
 
     return (
       <CelModal name={MODALS.LOAN_ALERT_MODAL}>
@@ -81,7 +82,7 @@ class InterestReminderModal extends Component {
             {formatter.crypto(payment.cryptoAmountToPay, payment.coin.short)}
           </CelText>
           <CelText align={"center"}>
-            {formatter.fiat(activeLoan.monthly_payment, "USD")}
+            {formatter.fiat(usdToPay, "USD")}
           </CelText>
           <Separator margin={"5 0 5 0"} />
         </View>
