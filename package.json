@@ -40,7 +40,7 @@
     "appcenter": "3.1.1",
     "appcenter-analytics": "3.1.1",
     "appcenter-crashes": "3.1.1",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bignumber.js": "^9.0.0",
     "check-prop-types": "^1.1.2",
     "country-data": "^0.0.31",
