@@ -58,7 +58,7 @@
     "expo-permissions": "^7.0.0",
     "jest-enzyme": "^7.1.2",
     "js-base64": "^2.5.1",
-    "jsrsasign": "^8.0.12",
+    "jsrsasign": "^10.2.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
